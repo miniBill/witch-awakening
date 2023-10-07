@@ -10,7 +10,7 @@ import Gradients
 import Html
 import Html.Attributes
 import Images
-import Theme exposing (cyan, gradientText, quote, speech)
+import Theme exposing (bebasNeue, celticHand, cyan, gradientText, morpheus, quote, speech)
 import Url
 
 
@@ -139,7 +139,7 @@ title : Element msg
 title =
     column [ width fill ]
         [ paragraph
-            [ Font.family [ Font.typeface "Bebas Neue" ]
+            [ bebasNeue
             , Font.size 180
             , Font.center
             , moveDown 16
@@ -161,7 +161,7 @@ title =
             , Element.paddingEach { left = 0, top = 0, right = 0, bottom = 10 }
             ]
             [ paragraph
-                [ Font.family [ Font.typeface "Morpheus" ]
+                [ morpheus
                 , Font.size 52
                 ]
                 [ gradientText 4 Gradients.grayGradient "Heavy Metal"
@@ -195,12 +195,8 @@ intro =
             [ width <| fillPortion 2
             , alignRight
             ]
-            [ paragraph [] [ text "It's been one of those days. Whatever that means for you, you just woke up on the wrong side of the bed and it's been downhill since then. First you stubbed a toe before you left your bedroom, then you dropped your lunch somehow. Everything's just been off today, something isn't quite right and you feel like you aren't used to your body for some reason, as though not used to the length of your arms, your height feels abnormal. It's like when you think of a word too hard and now it suddenly seems strange. Weird but tolerable on its own, you were really looking forward to lunch and now it's all over the floor. However you'd normally react to that, you eventually take a deep breath and go for a walk. It just feels appropriate, you want to get out and don't care where you go." ]
-            , paragraph []
-                [ text "30 minutes later you're leaning on a railing overlooking a large public pond breathing in some calming crisp air as a light mist seems to be building up helping to drown the world out just a little, and the off feeling of the day fades into the background. As it does, before your very eyes you see a shimmering distortion over the water that unfurls like a curtain revealing a small building in the middle of the pond, a narrow wood boardwalk leading to its door where an "
-                , text <| quote "Open"
-                , text " sign hangs on the door."
-                ]
+            [ Theme.paragraph "It's been one of those days. Whatever that means for you, you just woke up on the wrong side of the bed and it's been downhill since then. First you stubbed a toe before you left your bedroom, then you dropped your lunch somehow. Everything's just been off today, something isn't quite right and you feel like you aren't used to your body for some reason, as though not used to the length of your arms, your height feels abnormal. It's like when you think of a word too hard and now it suddenly seems strange. Weird but tolerable on its own, you were really looking forward to lunch and now it's all over the floor. However you'd normally react to that, you eventually take a deep breath and go for a walk. It just feels appropriate, you want to get out and don't care where you go."
+            , Theme.paragraph """30 minutes later you're leaning on a railing overlooking a large public pond breathing in some calming crisp air as a light mist seems to be building up helping to drown the world out just a little, and the off feeling of the day fades into the background. As it does, before your very eyes you see a shimmering distortion over the water that unfurls like a curtain revealing a small building in the middle of the pond, a narrow wood boardwalk leading to its door where an "Open" sign hangs on the door."""
             , paragraph []
                 [ text "You're pretty sure that wasn't there ten seconds ago, disregarding that you watched to appear in no uncertain terms. It appears to be a kind of shop with a display window full of antiques, and it says it's open... obviously, "
                 , el [ Font.italic ] <| text "you should probably check it out. "
@@ -225,7 +221,7 @@ trueForm : Element msg
 trueForm =
     column [ width fill ]
         [ row
-            [ Font.family [ Font.typeface "Celtic Hand" ]
+            [ celticHand
             , Font.size 36
             , centerX
             , spacing 8
