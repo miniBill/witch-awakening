@@ -2,9 +2,10 @@ module Main exposing (Flags, Model, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, centerX, column, el, fill, htmlAttribute, image, paragraph, rgb, rgb255, scrollbars, text, width)
+import Element exposing (Element, centerX, column, fill, htmlAttribute, image, paragraph, rgb, scrollbars, text, width)
 import Element.Background as Background
 import Element.Font as Font
+import Gradients
 import Html
 import Html.Attributes
 import Images
@@ -107,10 +108,14 @@ title =
             [ Font.family [ Font.typeface "Bebas Neue" ]
             , Font.size 140
             , Font.center
-            , style "background" "linear-gradient(to bottom, #443D09 0%, #F4EB6F 25%, #A88E2A 50%, #D9C955 75%, #CCB545 100%)"
+            , Gradients.titleGradient
+                |> List.map rgbToString
+                |> String.join ", "
+                |> (\joined -> "linear-gradient(to bottom, " ++ joined ++ ")")
+                |> style "background"
             , style "-webkit-background-clip" "text"
             , style "-webkit-text-fill-color" "transparent"
-            , style "-webkit-text-stroke" "3px black"
+            , style "-webkit-text-stroke" "4px black"
             ]
             [ text "Witch Awakening 3.x" ]
         , text "By [OutrageousBears](https://old.reddit.com/user/OutrageousBears) [gray](Heavy Metal) & [orange](Witch Party) Update"
@@ -118,12 +123,15 @@ title =
         ]
 
 
-hex : Int -> Element.Color
-hex value =
-    rgb255
-        (value // 65536)
-        (modBy 256 (value // 256))
-        (modBy 256 value)
+rgbToString : ( Int, Int, Int ) -> String
+rgbToString ( r, g, b ) =
+    "rgb("
+        ++ String.fromInt r
+        ++ " "
+        ++ String.fromInt g
+        ++ " "
+        ++ String.fromInt b
+        ++ ")"
 
 
 style : String -> String -> Element.Attribute msg

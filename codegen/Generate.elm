@@ -27,15 +27,100 @@ toFiles flags =
             Err [ { title = "Invalid flags", description = "Could not decode flags" } ]
 
         Ok (Generate.Directory { files }) ->
-            case Dict.get "sizes" files of
-                Just sizes ->
-                    images sizes
+            files
+                |> Dict.toList
+                |> Result.Extra.combineMap
+                    (\( fileName, fileContent ) ->
+                        case fileName of
+                            "sizes" ->
+                                images fileContent
+                                    |> Result.map
+                                        (\file ->
+                                            ( [ file ], [] )
+                                        )
 
-                Nothing ->
-                    Err [ { title = "Missing file", description = "File `sizes` is missing" } ]
+                            _ ->
+                                if String.endsWith "_gradient.ppm" fileName then
+                                    gradient (String.dropRight (String.length "_gradient.ppm") fileName) fileContent
+                                        |> Result.map (\declaration -> ( [], [ declaration ] ))
+
+                                else
+                                    Err
+                                        [ { title = "Unexpected file"
+                                          , description = "File " ++ fileName ++ " unexpected, don't know how to handle it"
+                                          }
+                                        ]
+                    )
+                |> Result.map
+                    (\list ->
+                        let
+                            gradients : Elm.File
+                            gradients =
+                                Elm.file [ "Gradients" ]
+                                    (List.concatMap Tuple.second list)
+                        in
+                        { info = []
+                        , files = gradients :: List.concatMap Tuple.first list
+                        }
+                    )
 
 
-images : String -> Result (List { title : String, description : String }) { info : List String, files : List Elm.File }
+gradient :
+    String
+    -> String
+    -> Result (List Generate.Error) Elm.Declaration
+gradient name content =
+    case
+        content
+            |> String.dropLeft 1
+            |> String.split "\n"
+            |> List.map
+                (\line ->
+                    line
+                        |> String.split " "
+                        |> List.filter (\number -> not (String.isEmpty number))
+                        |> List.filterMap String.toInt
+                )
+            |> List.filter (\line -> not (List.isEmpty line))
+    of
+        [ 3 ] :: [ 1, _ {- height -} ] :: [ 255 ] :: rows ->
+            rows
+                |> Result.Extra.combineMap
+                    (\row ->
+                        case row of
+                            [ r, g, b ] ->
+                                Ok ( r, g, b )
+
+                            _ ->
+                                Err
+                                    [ { title = "Invalid row"
+                                      , description =
+                                            "Row \""
+                                                ++ String.join " " (List.map String.fromInt row)
+                                                ++ "\" is not valid"
+                                      }
+                                    ]
+                    )
+                |> Result.map
+                    (\triples ->
+                        triples
+                            |> List.map
+                                (\( r, g, b ) ->
+                                    Elm.triple
+                                        (Elm.int r)
+                                        (Elm.int g)
+                                        (Elm.int b)
+                                )
+                            |> Elm.list
+                            |> Elm.declaration (name ++ "Gradient")
+                            |> Elm.expose
+                    )
+
+        _ ->
+            Err [ { title = "Invalid file", description = "Could not parse file" } ]
+
+
+images : String -> Result (List Generate.Error) Elm.File
 images sizes =
     let
         fromLine : String -> String -> Result String ( Int, Elm.Expression, Elm.Declaration )
@@ -103,16 +188,12 @@ images sizes =
                             |> Elm.declaration "list"
                             |> Elm.expose
                 in
-                { info = []
-                , files =
-                    [ Elm.file [ "Images" ]
-                        (listDeclaration
-                            :: List.map
-                                (\( _, _, declaration ) -> declaration)
-                                declarations
-                        )
-                    ]
-                }
+                Elm.file [ "Images" ]
+                    (listDeclaration
+                        :: List.map
+                            (\( _, _, declaration ) -> declaration)
+                            declarations
+                    )
             )
 
 
