@@ -4,7 +4,6 @@ module Generate exposing (main)
 
 import Dict
 import Elm
-import Elm.Declare
 import Gen.CodeGen.Generate as Generate
 import Json.Decode exposing (Decoder, Value)
 import Result.Extra
@@ -123,33 +122,35 @@ gradient name content =
 images : String -> Result (List Generate.Error) Elm.File
 images sizes =
     let
-        fromLine : String -> String -> Result String ( Int, Elm.Expression, Elm.Declaration )
+        fromLine : String -> String -> Result String Elm.Declaration
         fromLine filePath size =
             let
-                maybeNumber =
+                fileName : Maybe String
+                fileName =
                     filePath
                         |> String.split "/"
                         |> List.drop 1
-                        |> List.concatMap (String.split "-")
+                        |> List.concatMap (String.split ".")
                         |> List.head
-                        |> Maybe.andThen String.toInt
             in
             case
-                ( maybeNumber
+                ( fileName
                 , List.map String.toInt <| String.split "x" size
                 )
             of
-                ( Just number, [ Just width, Just height ] ) ->
+                ( Just name, [ Just width, Just height ] ) ->
                     let
-                        { declaration, value } =
+                        declaration : Elm.Declaration
+                        declaration =
                             [ ( "width", Elm.int width )
                             , ( "height", Elm.int height )
-                            , ( "url", Elm.string filePath )
+                            , ( "src", Elm.string filePath )
                             ]
                                 |> Elm.record
-                                |> Elm.Declare.value ("image_" ++ String.fromInt number)
+                                |> Elm.declaration name
+                                |> Elm.expose
                     in
-                    Ok ( number, value, declaration )
+                    Ok declaration
 
                 _ ->
                     Err <| "Unexpected size: " ++ size
@@ -178,21 +179,10 @@ images sizes =
             )
         |> Result.map
             (\declarations ->
-                let
-                    listDeclaration : Elm.Declaration
-                    listDeclaration =
-                        declarations
-                            |> List.sortBy (\( number, _, _ ) -> number)
-                            |> List.map (\( _, value, _ ) -> value)
-                            |> Elm.list
-                            |> Elm.declaration "list"
-                            |> Elm.expose
-                in
                 Elm.file [ "Images" ]
-                    (listDeclaration
-                        :: List.map
-                            (\( _, _, declaration ) -> declaration)
-                            declarations
+                    (List.map
+                        (\declaration -> declaration)
+                        declarations
                     )
             )
 

@@ -4,4 +4,5 @@ build
 codegen/Gen
 public/*.png
 public/*.jpg
+public/raw
 generated
