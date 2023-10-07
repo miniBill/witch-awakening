@@ -2,7 +2,7 @@ module Main exposing (Flags, Model, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, centerX, column, el, fill, htmlAttribute, image, paragraph, rgb, rgb255, scrollbars, text, width)
+import Element exposing (Element, alignRight, centerX, column, el, fill, htmlAttribute, image, inFront, moveDown, newTabLink, paragraph, px, rgb, rgb255, row, scrollbars, text, width)
 import Element.Background as Background
 import Element.Font as Font
 import Gradients
@@ -133,39 +133,56 @@ innerView _ =
 title : Element msg
 title =
     column
-        [ Font.center
-        , centerX
-        , Background.color <| rgb 0.4 0 0
-        , width fill
+        [ width fill
         ]
         [ paragraph
             [ Font.family [ Font.typeface "Bebas Neue" ]
             , Font.size 180
             , Font.center
-
-            -- , style "-webkit-text-stroke" "4px black"
+            , moveDown 10
             ]
             [ gradientText 8 Gradients.titleGradient "Witch Awakening 3.x"
             ]
-        , paragraph [ Font.center ]
-            [ cyan "By [OutrageousBears](https://old.reddit.com/user/OutrageousBears)"
+        , row
+            [ width fill
+            , inFront <|
+                paragraph
+                    [ alignRight
+                    , Font.alignLeft
+                    , width <| px 400
+                    , Font.size 14
+                    , Element.paddingEach { left = 0, top = 0, right = 100, bottom = 0 }
+                    , moveDown 10
+                    ]
+                    [ cyan "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
+                    ]
             ]
-        , paragraph
-            [ Font.family [ Font.typeface "Morpheus" ]
-            , Font.size 50
-
-            -- , style "text-shadow" "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000"
-            -- , style "-webkit-text-stroke" "1.2px black"
+            [ column [ centerX ]
+                [ paragraph
+                    [ Font.family [ Font.typeface "Morpheus" ]
+                    , Font.size 50
+                    ]
+                    [ gradientText 4 Gradients.grayGradient "Heavy Metal"
+                    , text " "
+                    , gradientText 4 Gradients.yellowGradient "&"
+                    , text " "
+                    , gradientText 4 Gradients.orangeGradient "Witch Party"
+                    , text " "
+                    , gradientText 4 Gradients.yellowGradient "Update"
+                    ]
+                , paragraph
+                    [ Font.alignRight
+                    , width fill
+                    , Font.size 14
+                    , Font.underline
+                    ]
+                    [ newTabLink []
+                        { label = cyan "By OutrageousBears"
+                        , url = "https://old.reddit.com/user/OutrageousBears"
+                        }
+                    ]
+                ]
             ]
-            [ gradientText 4 Gradients.grayGradient "Heavy Metal"
-            , text " "
-            , gradientText 4 Gradients.yellowGradient "&"
-            , text " "
-            , gradientText 4 Gradients.orangeGradient "Witch Party"
-            , text " "
-            , gradientText 4 Gradients.yellowGradient "Update"
-            ]
-        , text "[cyan](TL;DR You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course.)"
         ]
 
 
