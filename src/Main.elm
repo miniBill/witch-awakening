@@ -2,7 +2,7 @@ module Main exposing (Flags, Model, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, alignRight, centerX, column, el, fill, fillPortion, moveDown, newTabLink, paragraph, px, rgb, row, scrollbars, text, textColumn, width)
+import Element exposing (Element, alignRight, centerX, column, el, fill, fillPortion, moveDown, newTabLink, paragraph, px, rgb, row, scrollbars, spacing, text, textColumn, width)
 import Element.Background as Background
 import Element.Font as Font
 import Gradients
@@ -186,7 +186,7 @@ title =
 
 intro : Element msg
 intro =
-    row []
+    row [ spacing 10 ]
         [ Theme.image [ width fill ] Images.penelope
         , textColumn
             [ width <| fillPortion 2
@@ -216,7 +216,10 @@ intro =
 
 trueForm : Element msg
 trueForm =
-    text "TODO"
+    column []
+        [ el [ Font.family [ Font.typeface "Celtic Hand" ] ] <|
+            gradientText 4 Gradients.blueGradient "TRUE FROM - CLASS"
+        ]
 
 
 subscriptions : Model -> Sub Msg
