@@ -2,8 +2,10 @@ module Main exposing (Flags, Model, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, centerX, column, htmlAttribute, image, paragraph, scrollbars, text)
+import Element exposing (Element, centerX, column, el, fill, htmlAttribute, image, paragraph, rgb, rgb255, scrollbars, text, width)
+import Element.Background as Background
 import Element.Font as Font
+import Html
 import Html.Attributes
 import Images
 import Url
@@ -65,14 +67,28 @@ view : Model -> Browser.Document Msg
 view model =
     { title = ""
     , body =
-        [ Element.layout [] <| innerView model
+        [ Html.node "style"
+            []
+            [ Html.text """
+            @font-face {
+                font-family: "Bebas Neue";
+                src: url("public/BebasNeue-Regular.otf");
+            }
+            """
+            ]
+        , Element.layout [] <| innerView model
         ]
     }
 
 
 innerView : Model -> Element Msg
 innerView _ =
-    column [ scrollbars ] <|
+    column
+        [ scrollbars
+        , Font.color <| rgb 1 1 1
+        , Background.color <| rgb 0 0 0
+        ]
+    <|
         title
             :: intro
             :: trueForm
@@ -81,11 +97,38 @@ innerView _ =
 
 title : Element msg
 title =
-    column [ Font.center, centerX ]
-        [ paragraph [ Font.center ] [ text "Witch Awakening 3.x" ]
+    column
+        [ Font.center
+        , centerX
+        , Background.color <| rgb 0.2 0 0
+        , width fill
+        ]
+        [ paragraph
+            [ Font.family [ Font.typeface "Bebas Neue" ]
+            , Font.size 140
+            , Font.center
+            , style "background" "linear-gradient(to bottom, #443D09 0%, #F4EB6F 25%, #A88E2A 50%, #D9C955 75%, #CCB545 100%)"
+            , style "-webkit-background-clip" "text"
+            , style "-webkit-text-fill-color" "transparent"
+            , style "-webkit-text-stroke" "3px black"
+            ]
+            [ text "Witch Awakening 3.x" ]
         , text "By [OutrageousBears](https://old.reddit.com/user/OutrageousBears) [gray](Heavy Metal) & [orange](Witch Party) Update"
         , text "[cyan](TL;DR You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course.)"
         ]
+
+
+hex : Int -> Element.Color
+hex value =
+    rgb255
+        (value // 65536)
+        (modBy 256 (value // 256))
+        (modBy 256 value)
+
+
+style : String -> String -> Element.Attribute msg
+style key value =
+    Element.htmlAttribute <| Html.Attributes.style key value
 
 
 intro : Element msg
