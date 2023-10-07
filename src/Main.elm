@@ -2,11 +2,13 @@ module Main exposing (Flags, Model, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, alignRight, centerX, column, el, fill, fillPortion, moveDown, newTabLink, paragraph, px, rgb, row, scrollbars, spacing, text, textColumn, width)
+import Element exposing (Element, alignRight, centerX, centerY, column, el, fill, fillPortion, height, moveDown, newTabLink, padding, paragraph, px, rgb, rgb255, row, scrollbars, spacing, text, textColumn, width)
 import Element.Background as Background
+import Element.Border as Border
 import Element.Font as Font
 import Gradients
 import Html
+import Html.Attributes
 import Images
 import Theme exposing (cyan, gradientText, speech)
 import Url
@@ -14,7 +16,7 @@ import Url
 
 type Msg
     = UrlClicked UrlRequest
-    | UrlChanged Url.Url
+    | UrlChanged --Url.Url
 
 
 type alias Model =
@@ -30,7 +32,7 @@ main =
     Browser.application
         { init = init
         , onUrlRequest = UrlClicked
-        , onUrlChange = UrlChanged
+        , onUrlChange = \_ -> UrlChanged
         , update = update
         , view = view
         , subscriptions = subscriptions
@@ -60,7 +62,7 @@ update msg model =
                     , Nav.load url
                     )
 
-        UrlChanged _ ->
+        UrlChanged ->
             ( model, Cmd.none )
 
 
@@ -111,7 +113,8 @@ view model =
             }
             """
             ]
-        , Element.layout [] <| innerView model
+        , Element.layout [ Font.size 16 ]
+            (innerView model)
         ]
     }
 
@@ -123,6 +126,8 @@ innerView _ =
         , scrollbars
         , Font.color <| rgb 1 1 1
         , Background.color <| rgb 0 0 0
+        , spacing 8
+        , padding 8
         ]
         [ title
         , intro
@@ -132,16 +137,14 @@ innerView _ =
 
 title : Element msg
 title =
-    column
-        [ width fill
-        ]
+    column [ width fill ]
         [ paragraph
             [ Font.family [ Font.typeface "Bebas Neue" ]
             , Font.size 180
             , Font.center
-            , moveDown 14
+            , moveDown 16
             ]
-            [ gradientText 8 Gradients.titleGradient "Witch Awakening 3.x"
+            [ gradientText 8 Gradients.titleGradient "Witch Awakening"
             ]
         , column
             [ centerX
@@ -159,7 +162,7 @@ title =
             ]
             [ paragraph
                 [ Font.family [ Font.typeface "Morpheus" ]
-                , Font.size 50
+                , Font.size 52
                 ]
                 [ gradientText 4 Gradients.grayGradient "Heavy Metal"
                 , text " "
@@ -216,10 +219,45 @@ intro =
 
 trueForm : Element msg
 trueForm =
-    column []
-        [ el [ Font.family [ Font.typeface "Celtic Hand" ] ] <|
-            gradientText 4 Gradients.blueGradient "TRUE FROM - CLASS"
+    column [ width fill ]
+        [ row
+            [ Font.family [ Font.typeface "Celtic Hand" ]
+            , Font.size 36
+            , centerX
+            , spacing 8
+            ]
+            [ hr, gradientText 4 Gradients.blueGradient "TRUE FROM - CLASS", hr ]
+        , paragraph [ Theme.orangeSpeech ]
+            [ text "\"Ahh, yes... Oh, "
+            , el [ Font.italic ] <| text "wow"
+            , text "! You have an incredible amount of untapped power waiting. First things first: You'll need your true form! We used to simply wait for it to emerge, but these days we can poke and prod the right places to provoke a controlled early awakening. Most witches have multiple potential true forms and one gets locked in when they finally awaken, but with a controlled environment we can force one of the others. Your options don't represent all possible outcomes, but let's see what you have available. First up is what type of witch you are, you can think of it like a \"Class\" of witch.\""
+            ]
+        , paragraph [] [ text """
+
+Your witch type determines your method by which you can naturally progress over time towards a power cap. You will have the same power cap and starting power regardless of type “and you're lucky!
+
+You've got more than most witches, and it looks like you might be capable of using Rank 5 magic, the average witch only reaches rank 3", You can pre-spend up to your power cap to confirm you have the potential for something to unlock someday, if you wish. It's up to you how well adapted you are to your starting abilities, perhaps you want to study them for some time before you have a full grasp on them?
+
+Choose one.""" ]
         ]
+
+
+hr : Element msg
+hr =
+    el
+        [ width <| px 200
+        , height <| px 1
+        , centerY
+        , Border.color <| rgb255 0x00 0xE4 0xFF
+        , Border.widthEach
+            { top = 1
+            , bottom = 0
+            , left = 0
+            , right = 0
+            }
+        , Element.htmlAttribute <| Html.Attributes.style "box-shadow" "0px 0px 1px 1px #00E4FF"
+        ]
+        Element.none
 
 
 subscriptions : Model -> Sub Msg
