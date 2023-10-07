@@ -2,7 +2,8 @@ module Frontend exposing (app)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, column, htmlAttribute, image, scrollbars)
+import Element exposing (Element, centerX, column, el, htmlAttribute, image, paragraph, scrollbars, text)
+import Element.Font as Font
 import Html.Attributes
 import Images
 import Lamdera
@@ -81,7 +82,29 @@ view model =
 innerView : FrontendModel -> Element FrontendMsg
 innerView _ =
     column [ scrollbars ] <|
-        List.map viewImage Images.list
+        title
+            :: intro
+            :: trueForm
+            :: List.map viewImage Images.list
+
+
+title : Element msg
+title =
+    column [ Font.center, centerX ]
+        [ paragraph [ Font.center ] [ text "Witch Awakening 3.x" ]
+        , text "By [OutrageousBears](https://old.reddit.com/user/OutrageousBears) [gray](Heavy Metal) & [orange](Witch Party) Update"
+        , text "[cyan](TL;DR You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course.)"
+        ]
+
+
+intro : Element msg
+intro =
+    text "TODO"
+
+
+trueForm : Element msg
+trueForm =
+    text "TODO"
 
 
 viewImage : { width : Int, height : Int, url : String } -> Element msg
