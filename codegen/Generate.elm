@@ -2,24 +2,41 @@ module Generate exposing (main)
 
 {-| -}
 
+import Dict
 import Elm
 import Elm.Declare
 import Gen.CodeGen.Generate as Generate
+import Json.Decode exposing (Decoder, Value)
 import Result.Extra
 
 
-main : Program String () ()
+main : Program Value () ()
 main =
     Generate.withFeedback toFiles
 
 
 toFiles :
-    String
+    Value
     ->
         Result
             (List Generate.Error)
             { info : List String, files : List Elm.File }
-toFiles sizes =
+toFiles flags =
+    case Json.Decode.decodeValue directoryDecoder flags of
+        Err _ ->
+            Err [ { title = "Invalid flags", description = "Could not decode flags" } ]
+
+        Ok (Generate.Directory { files }) ->
+            case Dict.get "sizes" files of
+                Just sizes ->
+                    images sizes
+
+                Nothing ->
+                    Err [ { title = "Missing file", description = "File `sizes` is missing" } ]
+
+
+images : String -> Result (List { title : String, description : String }) { info : List String, files : List Elm.File }
+images sizes =
     let
         fromLine : String -> String -> Result String ( Int, Elm.Expression, Elm.Declaration )
         fromLine filePath size =
@@ -97,3 +114,36 @@ toFiles sizes =
                     ]
                 }
             )
+
+
+directoryDecoder : Decoder Generate.Directory
+directoryDecoder =
+    Json.Decode.lazy
+        (\_ ->
+            Json.Decode.oneOf
+                [ Json.Decode.map Ok Json.Decode.string
+                , Json.Decode.map Err directoryDecoder
+                ]
+                |> Json.Decode.dict
+                |> Json.Decode.map
+                    (\entries ->
+                        entries
+                            |> Dict.toList
+                            |> List.foldl
+                                (\( name, entry ) ( dirAcc, fileAcc ) ->
+                                    case entry of
+                                        Ok file ->
+                                            ( dirAcc, ( name, file ) :: fileAcc )
+
+                                        Err directory ->
+                                            ( ( name, directory ) :: dirAcc, fileAcc )
+                                )
+                                ( [], [] )
+                            |> (\( dirAcc, fileAcc ) ->
+                                    Generate.Directory
+                                        { directories = Dict.fromList dirAcc
+                                        , files = Dict.fromList fileAcc
+                                        }
+                               )
+                    )
+        )
