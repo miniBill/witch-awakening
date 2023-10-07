@@ -1,4 +1,4 @@
-module Theme exposing (cyan, gradientText, image, orangeSpeech, speech)
+module Theme exposing (cyan, gradientText, image, orangeSpeech, quote, speech)
 
 import Element exposing (Attribute, Element, el, rgb255, text)
 import Element.Font as Font
@@ -48,9 +48,14 @@ rgbToString ( r, g, b ) =
 speech : String -> Element msg
 speech value =
     el [ orangeSpeech ] <|
-        (text <| "\"" ++ value ++ "\"")
+        (text <| quote value)
 
 
 orangeSpeech : Attribute msg
 orangeSpeech =
     Font.color <| rgb255 0xF8 0x80 0x00
+
+
+quote : String -> String
+quote value =
+    "“" ++ value ++ "”"
