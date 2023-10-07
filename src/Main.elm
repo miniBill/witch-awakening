@@ -2,7 +2,7 @@ module Main exposing (Flags, Model, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, centerX, column, fill, htmlAttribute, image, paragraph, rgb, scrollbars, text, width)
+import Element exposing (Element, centerX, column, el, fill, htmlAttribute, image, paragraph, rgb, rgb255, scrollbars, text, width)
 import Element.Background as Background
 import Element.Font as Font
 import Gradients
@@ -73,7 +73,41 @@ view model =
             [ Html.text """
             @font-face {
                 font-family: "Bebas Neue";
-                src: url("public/BebasNeue-Regular.otf");
+                src: url("public/BebasNeue.otf");
+            }
+
+            @font-face {
+                font-family: "Morpheus";
+                src: url("public/Morpheus.ttf");
+            }
+
+            @font-face {
+                font-family: "Celtic Hand";
+                src: url("public/CelticHand.ttf");
+            }
+
+            .outlined {
+                position: relative;
+                color: transparent;
+            }
+
+            .outlined:after {
+                background: none;
+                content: attr(data-text);
+                left: 0;
+                position: absolute;
+                z-index: 1;
+                -webkit-text-stroke: var(--text-stroke);
+            }
+
+            .outlined:before {
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-image: var(--background);
+                content: attr(data-text);
+                left: 0;
+                position: absolute;
+                z-index: 2;
             }
             """
             ]
@@ -101,26 +135,58 @@ title =
     column
         [ Font.center
         , centerX
-        , Background.color <| rgb 0.2 0 0
+        , Background.color <| rgb 0.4 0 0
         , width fill
         ]
         [ paragraph
             [ Font.family [ Font.typeface "Bebas Neue" ]
-            , Font.size 140
+            , Font.size 180
             , Font.center
-            , Gradients.titleGradient
-                |> List.map rgbToString
-                |> String.join ", "
-                |> (\joined -> "linear-gradient(to bottom, " ++ joined ++ ")")
-                |> style "background"
-            , style "-webkit-background-clip" "text"
-            , style "-webkit-text-fill-color" "transparent"
-            , style "-webkit-text-stroke" "4px black"
+
+            -- , style "-webkit-text-stroke" "4px black"
             ]
-            [ text "Witch Awakening 3.x" ]
-        , text "By [OutrageousBears](https://old.reddit.com/user/OutrageousBears) [gray](Heavy Metal) & [orange](Witch Party) Update"
+            [ gradientText 8 Gradients.titleGradient "Witch Awakening 3.x"
+            ]
+        , paragraph [ Font.center ]
+            [ cyan "By [OutrageousBears](https://old.reddit.com/user/OutrageousBears)"
+            ]
+        , paragraph
+            [ Font.family [ Font.typeface "Morpheus" ]
+            , Font.size 50
+
+            -- , style "text-shadow" "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000"
+            -- , style "-webkit-text-stroke" "1.2px black"
+            ]
+            [ gradientText 4 Gradients.grayGradient "Heavy Metal"
+            , text " "
+            , gradientText 4 Gradients.yellowGradient "&"
+            , text " "
+            , gradientText 4 Gradients.orangeGradient "Witch Party"
+            , text " "
+            , gradientText 4 Gradients.yellowGradient "Update"
+            ]
         , text "[cyan](TL;DR You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course.)"
         ]
+
+
+cyan : String -> Element msg
+cyan value =
+    el [ Font.color <| rgb255 0x04 0xD4 0xED ] <| text value
+
+
+gradientText : Float -> List ( Int, Int, Int ) -> String -> Element msg
+gradientText outlineSize gradient value =
+    Element.html <|
+        Html.span
+            [ Html.Attributes.class "outlined"
+            , Html.Attributes.attribute "data-text" value
+            , gradient
+                |> List.map rgbToString
+                |> String.join ", "
+                |> (\joined -> "--text-stroke: " ++ String.fromFloat outlineSize ++ "px #000; --background: linear-gradient(to bottom, " ++ joined ++ ")")
+                |> Html.Attributes.attribute "style"
+            ]
+            [ Html.text value ]
 
 
 rgbToString : ( Int, Int, Int ) -> String
@@ -132,11 +198,6 @@ rgbToString ( r, g, b ) =
         ++ " "
         ++ String.fromInt b
         ++ ")"
-
-
-style : String -> String -> Element.Attribute msg
-style key value =
-    Element.htmlAttribute <| Html.Attributes.style key value
 
 
 intro : Element msg
