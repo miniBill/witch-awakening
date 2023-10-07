@@ -1,47 +1,48 @@
-module Frontend exposing (app)
+module Main exposing (Flags, Model, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, centerX, column, el, htmlAttribute, image, paragraph, scrollbars, text)
+import Element exposing (Element, centerX, column, htmlAttribute, image, paragraph, scrollbars, text)
 import Element.Font as Font
 import Html.Attributes
 import Images
-import Lamdera
-import Types exposing (..)
 import Url
 
 
-app :
-    { init : Lamdera.Url -> Nav.Key -> ( FrontendModel, Cmd FrontendMsg )
-    , view : FrontendModel -> Browser.Document FrontendMsg
-    , update : FrontendMsg -> FrontendModel -> ( FrontendModel, Cmd FrontendMsg )
-    , updateFromBackend : ToFrontend -> FrontendModel -> ( FrontendModel, Cmd FrontendMsg )
-    , subscriptions : FrontendModel -> Sub FrontendMsg
-    , onUrlRequest : UrlRequest -> FrontendMsg
-    , onUrlChange : Url.Url -> FrontendMsg
-    }
-app =
-    Lamdera.frontend
+type Msg
+    = UrlClicked UrlRequest
+    | UrlChanged Url.Url
+
+
+type alias Model =
+    { key : Nav.Key }
+
+
+type alias Flags =
+    {}
+
+
+main : Program Flags Model Msg
+main =
+    Browser.application
         { init = init
         , onUrlRequest = UrlClicked
         , onUrlChange = UrlChanged
         , update = update
-        , updateFromBackend = updateFromBackend
         , view = view
         , subscriptions = subscriptions
         }
 
 
-init : Url.Url -> Nav.Key -> ( FrontendModel, Cmd FrontendMsg )
-init _ key =
+init : flags -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init _ _ key =
     ( { key = key
-      , position = ( 0, 0 )
       }
     , Cmd.none
     )
 
 
-update : FrontendMsg -> FrontendModel -> ( FrontendModel, Cmd FrontendMsg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         UrlClicked urlRequest ->
@@ -59,18 +60,8 @@ update msg model =
         UrlChanged _ ->
             ( model, Cmd.none )
 
-        NoOpFrontendMsg ->
-            ( model, Cmd.none )
 
-
-updateFromBackend : ToFrontend -> FrontendModel -> ( FrontendModel, Cmd FrontendMsg )
-updateFromBackend msg model =
-    case msg of
-        NoOpToFrontend ->
-            ( model, Cmd.none )
-
-
-view : FrontendModel -> Browser.Document FrontendMsg
+view : Model -> Browser.Document Msg
 view model =
     { title = ""
     , body =
@@ -79,7 +70,7 @@ view model =
     }
 
 
-innerView : FrontendModel -> Element FrontendMsg
+innerView : Model -> Element Msg
 innerView _ =
     column [ scrollbars ] <|
         title
@@ -115,6 +106,6 @@ viewImage { url } =
         }
 
 
-subscriptions : FrontendModel -> Sub FrontendMsg
+subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.none

@@ -21,15 +21,28 @@ toFiles :
             { info : List String, files : List Elm.File }
 toFiles sizes =
     let
-        fromLine : String -> String -> String -> Result String ( Int, Elm.Expression, Elm.Declaration )
-        fromLine publicNumber fileCode size =
-            case List.map String.toInt <| (List.drop 1 <| String.split "/" publicNumber) ++ String.split "x" size of
-                [ Just number, Just width, Just height ] ->
+        fromLine : String -> String -> Result String ( Int, Elm.Expression, Elm.Declaration )
+        fromLine filePath size =
+            let
+                maybeNumber =
+                    filePath
+                        |> String.split "/"
+                        |> List.drop 1
+                        |> List.concatMap (String.split "-")
+                        |> List.head
+                        |> Maybe.andThen String.toInt
+            in
+            case
+                ( maybeNumber
+                , List.map String.toInt <| String.split "x" size
+                )
+            of
+                ( Just number, [ Just width, Just height ] ) ->
                     let
                         { declaration, value } =
                             [ ( "width", Elm.int width )
                             , ( "height", Elm.int height )
-                            , ( "url", Elm.string <| String.fromInt number ++ " - " ++ fileCode )
+                            , ( "url", Elm.string filePath )
                             ]
                                 |> Elm.record
                                 |> Elm.Declare.value ("image_" ++ String.fromInt number)
@@ -45,11 +58,11 @@ toFiles sizes =
         |> Result.Extra.combineMap
             (\line ->
                 case String.split " " line of
-                    publicNumber :: "-" :: fileCode :: "PNG" :: size :: _ ->
-                        fromLine publicNumber fileCode size
+                    filePath :: "PNG" :: size :: _ ->
+                        fromLine filePath size
 
-                    publicNumber :: "-" :: fileCode :: "JPEG" :: size :: _ ->
-                        fromLine publicNumber fileCode size
+                    filePath :: "JPEG" :: size :: _ ->
+                        fromLine filePath size
 
                     _ ->
                         Err <| "Wrong line: " ++ line
