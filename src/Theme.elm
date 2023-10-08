@@ -1,4 +1,4 @@
-module Theme exposing (bebasNeue, blocks, borderColor, choice, classToColor, column, gradientText, image, intToColor, morpheus, padding, row, rythm, wrappedRow)
+module Theme exposing (bebasNeue, blocks, borderColor, captureIt, choice, classToColor, column, gradientText, image, intToColor, morpheus, padding, row, rythm, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Border as Border
@@ -84,6 +84,11 @@ bebasNeue =
 morpheus : Attribute msg
 morpheus =
     Font.family [ Font.typeface "Morpheus" ]
+
+
+captureIt : Attribute msg
+captureIt =
+    Font.family [ Font.typeface "Capture It" ]
 
 
 blocks : List (Attribute msg) -> String -> Element msg

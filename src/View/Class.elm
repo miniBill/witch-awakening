@@ -14,7 +14,10 @@ import Types exposing (Choice(..), Class(..))
 
 viewClass : Maybe Class -> Element Choice
 viewClass class =
-    Theme.column [ width fill ]
+    Theme.column
+        [ width fill
+        , spacing <| Theme.rythm * 2
+        ]
         [ Theme.blocks [] <| String.Multiline.here """
             # True Form - Class
 

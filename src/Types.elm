@@ -36,6 +36,8 @@ classToString class =
 
 type Race
     = Neutral
+    | Daeva
+    | Ifrit
 
 
 raceToString : Race -> String
@@ -43,6 +45,12 @@ raceToString race =
     case race of
         Neutral ->
             "Neutral"
+
+        Daeva ->
+            "Daeva"
+
+        Ifrit ->
+            "Ifrit"
 
 
 type Size
@@ -68,6 +76,8 @@ type Affinity
     = Soul
     | Body
     | Life
+    | Fire
+    | Necro
 
 
 affinityToString : Affinity -> String
@@ -81,3 +91,9 @@ affinityToString affinity =
 
         Life ->
             "Life"
+
+        Fire ->
+            "Fire"
+
+        Necro ->
+            "Necro"

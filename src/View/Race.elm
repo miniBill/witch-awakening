@@ -1,6 +1,6 @@
 module View.Race exposing (viewRace)
 
-import Element exposing (Element, alignTop, centerX, el, fill, height, inFront, moveUp, px, rgb, spacing, width)
+import Element exposing (Element, alignTop, centerX, el, fill, height, inFront, px, rgb, rgb255, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -14,7 +14,10 @@ import Types exposing (Affinity(..), Choice(..), Race(..), Size(..))
 
 viewRace : Maybe Race -> Element Choice
 viewRace race =
-    Theme.column [ width fill ]
+    Theme.column
+        [ width fill
+        , spacing <| Theme.rythm * 2
+        ]
         [ Theme.blocks [] <| String.Multiline.here """
             # True Form - Race
 
@@ -27,36 +30,73 @@ viewRace race =
             [ width fill
             , spacing <| Theme.rythm * 3
             ]
-            [ neutral race ]
+            (List.map (raceBox race)
+                [ neutral
+                , daeva
+                , ifrit
+                ]
+            )
         ]
 
 
-neutral : Maybe Race -> Element Choice
-neutral race =
-    raceBox race
-        { race = Neutral
-        , image = Images.neutral
-        , tank = Medium
-        , affinities = [ Soul, Body ]
-        , charge = Medium
-        , content = """
-            The overwhelming majority of witches are Neutrals. There is nothing visually abnormal about them (by default). Even some witches who have the option to awaken as another race may want to choose to be Neutral for its baseline casual existence, no new dependencies or anything abnormal to consider. They're effectively the "Human" witch, but witches refer to them as neutral rather than human to distinguish them from the mundane. They age slower than humans, at half the rate, and do so very gracefully, and they tend to be more attractive than the average human, and are harder to kill, with more efficient biology to reduce inconveniences with less biological requirements than normal by 25%, and prevent dying from a papercut, or from a tiny air bubble in the wrong place.
+neutral : RaceDetails
+neutral =
+    { race = Neutral
+    , image = Images.neutral
+    , tank = Medium
+    , affinities = [ Soul, Body ]
+    , charge = Medium
+    , content = """
+        The overwhelming majority of witches are Neutrals. There is nothing visually abnormal about them (by default). Even some witches who have the option to awaken as another race may want to choose to be Neutral for its baseline casual existence, no new dependencies or anything abnormal to consider. They're effectively the “Human” witch, but witches refer to them as neutral rather than human to distinguish them from the mundane. They age slower than humans, at half the rate, and do so very gracefully, and they tend to be more attractive than the average human, and are harder to kill, with more efficient biology to reduce inconveniences with less biological requirements than normal by 25%, and prevent dying from a papercut, or from a tiny air bubble in the wrong place.
 
-            Neutrals draw Mana from Sleep, recovering around 1% of their Mana per hour of sleep, doubling per hour. 2 hours is more impactful than two 1 hour naps for example, regaining 16% for their 5th hour for a total of 31%, then 63% total for 6hrs.
-    """
-        }
+        __Neutrals draw Mana__ from Sleep, recovering around 1% of their Mana per hour of sleep, doubling per hour. 2 hours is more impactful than two 1 hour naps for example, regaining 16% for their 5th hour for a total of 31%, then 63% total for 6hrs.
+        """
+    }
+
+
+daeva : RaceDetails
+daeva =
+    { race = Daeva
+    , image = Images.daeva
+    , tank = Medium
+    , affinities = [ Body, Life ]
+    , charge = High
+    , content = """
+        Daeva are to humans, what huntans are to monkeys. They're peak evolution and represent the perfection of body and overflowing spark of life. Unlike the other witch types, they're unnatural for the excess humanity, not the addition of anything new. Where the others may have scales or feathers, you take normal human traits and take them further, with a body like a comic book heroine, a goddess in the flesh, free of any imperfections and basic inconveniences of mortality. They flatly don't age, forever maintaining a mature but youthful physique. The average daeva height sits around 6ft 6inches up to 8, but short daeva can happen. They're physically around twice as strong as a human male bodybuilder, without an obvious change in their body tone, and seem to have endless stamina. They feel emotions more strongly, while being in better control of them.
+
+        __Daeva draw Mana__ from Emotions, either the presence of high emotions in others, or singular high emotions directed at them. ie; An excited crowd vs a lover are both high.
+        """
+    }
+
+
+ifrit : RaceDetails
+ifrit =
+    { race = Ifrit
+    , image = Images.ifrit
+    , tank = High
+    , affinities = [ Fire, Necro ]
+    , charge = Low
+    , content = """
+        Ifriti are beings native to the elemental plane of fire. Their connection manifests in the most obvious manner of the hitches, as their bodies are burned away in their awakening, their body becoming a living conflagration of flame made flesh anchored and governed by a core skull. They bleed plasma and smoke while limbs severed from their core flicker away like dying flames. The fire of their bodies is slightly above room temp and does not burn, and is tangible enough to touch, feeling like normal flesh, though their hair is more gaseous and warmer. Their body is only a little transparent, enough to see the skull but not all the way through them. They inherently do not age, but can “eat” flammable fuel sources along with traditionally edible materials. Damage to the body is superficial and mended by absorbing flames, though damage to the skull must be healed by traditional means.
+
+        __Ifriti draw Mana__ from Burning, the release of energy released by matter through buming caused by the witch.
+        """
+    }
+
+
+type alias RaceDetails =
+    { race : Race
+    , image : Image
+    , tank : Size
+    , affinities : List Affinity
+    , charge : Size
+    , content : String
+    }
 
 
 raceBox :
     Maybe Race
-    ->
-        { race : Race
-        , image : Image
-        , tank : Size
-        , affinities : List Affinity
-        , charge : Size
-        , content : String
-        }
+    -> RaceDetails
     -> Element Choice
 raceBox selected { race, image, content } =
     let
@@ -85,7 +125,7 @@ raceBox selected { race, image, content } =
             , bottomRight = 8
             }
         , if isSelected then
-            Border.glow (rgb 1 1 1) 8
+            Border.glow (rgb255 243 234 111) 8
 
           else
             Border.width 0
@@ -99,12 +139,11 @@ raceBox selected { race, image, content } =
                     , inFront <|
                         el
                             [ alignTop
-                            , Theme.morpheus
+                            , Theme.captureIt
                             , Font.size 56
                             , centerX
-                            , moveUp 8
                             ]
-                            (gradientText 4 Gradients.yellowGradient <|
+                            (gradientText 6 Gradients.yellowGradient <|
                                 Types.raceToString race
                             )
                     , Background.image image.src
