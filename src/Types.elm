@@ -1,4 +1,4 @@
-module Types exposing (Choice(..), Class(..), Model, Race(..), classToString, raceToString)
+module Types exposing (Affinity(..), Choice(..), Class(..), Model, Race(..), Size(..), affinityToString, classToString, raceToString, sizeToString)
 
 import Browser.Navigation
 
@@ -43,3 +43,41 @@ raceToString race =
     case race of
         Neutral ->
             "Neutral"
+
+
+type Size
+    = Low
+    | Medium
+    | High
+
+
+sizeToString : Size -> String
+sizeToString size =
+    case size of
+        Low ->
+            "Low"
+
+        Medium ->
+            "Med"
+
+        High ->
+            "High"
+
+
+type Affinity
+    = Soul
+    | Body
+    | Life
+
+
+affinityToString : Affinity -> String
+affinityToString affinity =
+    case affinity of
+        Soul ->
+            "Soul"
+
+        Body ->
+            "Body"
+
+        Life ->
+            "Life"
