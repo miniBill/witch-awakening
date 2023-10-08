@@ -79,15 +79,8 @@ morpheus =
 
 paragraph : String -> Element msg
 paragraph input =
-    case
-        Parser.run
-            (Parser.succeed identity
-                |= paragraphParser
-                |. Parser.end
-            )
-            input
-    of
-        Err _ ->
+    case Parser.run paragraphParser input of
+        Err e ->
             Element.paragraph
                 [ Font.color <| rgb 1 0 0 ]
                 [ text input ]
@@ -102,33 +95,60 @@ paragraph input =
 
 
 type Piece
-    = Speech Piece
-    | Cyan Piece
-    | Italic Piece
+    = Speech (List Piece)
+    | Cyan (List Piece)
+    | Italic (List Piece)
     | Text String
 
 
 paragraphParser : Parser (List Piece)
 paragraphParser =
-    Parser.sequence
-        { start = ""
-        , item =
+    many quoteParser
+
+
+many : Parser a -> Parser (List a)
+many parser =
+    Parser.loop []
+        (\acc ->
             Parser.oneOf
-                [ Parser.succeed Speech
-                    |. Parser.symbol "\""
-                    |= insideParser
-                    |. Parser.symbol "\""
-                , insideParser
+                [ Parser.succeed
+                    (\e ->
+                        Parser.Loop (e :: acc)
+                    )
+                    |= parser
+                , Parser.succeed
+                    (\_ ->
+                        Parser.Done <| List.reverse acc
+                    )
+                    |= Parser.end
                 ]
-        , end = ""
-        , separator = ""
-        , trailing = Parser.Optional
-        , spaces = Parser.succeed ()
-        }
+        )
 
 
-insideParser : Parser Piece
-insideParser =
+quoteParser : Parser Piece
+quoteParser =
+    Parser.oneOf
+        [ Parser.succeed Speech
+            |. Parser.symbol "\""
+            |= many (italicParser [ '"' ])
+            |. Parser.symbol "\""
+        , italicParser []
+        ]
+
+
+italicParser : List Char -> Parser Piece
+italicParser waitFor =
+    Parser.oneOf
+        [ Parser.succeed Italic
+            |. Parser.symbol "_"
+            |= many (insideParser ('_' :: waitFor))
+            |. Parser.symbol "_"
+        , insideParser waitFor
+        ]
+
+
+insideParser : List Char -> Parser Piece
+insideParser waitFor =
     Parser.succeed
         (\chomped ->
             let
@@ -138,8 +158,8 @@ insideParser =
             Text chomped
         )
         |= Parser.getChompedString
-            (Parser.chompIf (\c -> c /= '"')
-                |. Parser.chompWhile (\c -> c /= '"')
+            (Parser.chompIf (\c -> not (List.member c waitFor))
+                |. Parser.chompWhile (\c -> not (List.member c waitFor))
             )
 
 
@@ -149,17 +169,16 @@ viewPiece piece =
         Speech children ->
             Html.span
                 [ Html.Attributes.style "color" "#F88000" ]
-                [ Html.text "“", viewPiece children, Html.text "”" ]
+                (Html.text "“" :: List.map viewPiece children ++ [ Html.text "”" ])
 
         Cyan children ->
             Html.span
                 [ Html.Attributes.style "color" "#04D4ED" ]
-                [ viewPiece children ]
+                (List.map viewPiece children)
 
         Italic children ->
-            Html.i
-                []
-                [ viewPiece children ]
+            Html.i []
+                (List.map viewPiece children)
 
         Text value ->
             Html.text value
