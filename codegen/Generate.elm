@@ -72,7 +72,7 @@ gradient name content =
     case
         content
             |> String.dropLeft 1
-            |> String.split "\n"
+            |> String.lines
             |> List.map
                 (\line ->
                     line
@@ -156,7 +156,7 @@ images sizes =
                     Err <| "Unexpected size: " ++ size
     in
     sizes
-        |> String.split "\n"
+        |> String.lines
         |> List.filter (\line -> not (String.isEmpty line))
         |> Result.Extra.combineMap
             (\line ->

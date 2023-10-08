@@ -1,10 +1,11 @@
-module Theme exposing (bebasNeue, celticHand, cyan, gradientText, image, morpheus, orangeSpeech, paragraph, quote, speech)
+module Theme exposing (bebasNeue, celticHand, cyan, gradientText, image, morpheus, orangeSpeech, paragraph, paragraphs)
 
-import Element exposing (Attribute, Element, el, rgb, rgb255, text)
+import Element exposing (Attribute, Element, column, el, fill, rgb, rgb255, spacing, text, width)
 import Element.Font as Font
 import Html exposing (Html)
 import Html.Attributes
 import Parser exposing ((|.), (|=), Parser)
+import Set exposing (Set)
 
 
 image : List (Attribute msg) -> { a | src : String } -> Element msg
@@ -46,20 +47,9 @@ rgbToString ( r, g, b ) =
         ++ ")"
 
 
-speech : String -> Element msg
-speech value =
-    el [ orangeSpeech ] <|
-        (text <| quote value)
-
-
 orangeSpeech : Attribute msg
 orangeSpeech =
     Font.color <| rgb255 0xF8 0x80 0x00
-
-
-quote : String -> String
-quote value =
-    "“" ++ value ++ "”"
 
 
 celticHand : Attribute msg
@@ -77,33 +67,104 @@ morpheus =
     Font.family [ Font.typeface "Morpheus" ]
 
 
+paragraphs : List (Attribute msg) -> String -> Element msg
+paragraphs attrs input =
+    input
+        |> String.split "\n\n"
+        |> List.map paragraph
+        |> column (spacing 8 :: width fill :: attrs)
+
+
 paragraph : String -> Element msg
 paragraph input =
     case Parser.run paragraphParser input of
-        Err e ->
+        Err _ ->
             Element.paragraph
                 [ Font.color <| rgb 1 0 0 ]
                 [ text input ]
 
-        Ok pieces ->
+        Ok ( pieces, { center } ) ->
             pieces
                 |> List.map viewPiece
                 |> Html.span []
                 |> Element.html
                 |> List.singleton
-                |> Element.paragraph []
+                |> Element.paragraph
+                    [ if center then
+                        Font.center
+
+                      else
+                        Font.alignLeft
+                    ]
 
 
 type Piece
     = Speech (List Piece)
     | Cyan (List Piece)
     | Italic (List Piece)
+    | Bold (List Piece)
     | Text String
 
 
-paragraphParser : Parser (List Piece)
+paragraphParser : Parser ( List Piece, { center : Bool } )
 paragraphParser =
-    many quoteParser
+    Parser.succeed (\center pieces -> ( pieces, { center = center } ))
+        |= Parser.oneOf
+            [ Parser.succeed True
+                |. Parser.symbol "[center]"
+            , Parser.succeed False
+            ]
+        |= mainParser
+
+
+mainParser : Parser (List Piece)
+mainParser =
+    Parser.oneOf
+        [ Parser.succeed Speech
+            |. Parser.symbol "\""
+            |= innerParser '"'
+            |. Parser.symbol "\""
+        , Parser.succeed Italic
+            |. Parser.symbol "_"
+            |= innerParser '_'
+            |. Parser.symbol "_"
+        , Parser.succeed Bold
+            |. Parser.symbol "*"
+            |= innerParser '*'
+            |. Parser.symbol "*"
+        , Parser.succeed Cyan
+            |. Parser.symbol "{cyan "
+            |= innerParser '}'
+            |. Parser.symbol "}"
+        , Parser.succeed Text
+            |= Parser.getChompedString
+                (Parser.succeed ()
+                    |. Parser.chompIf (\c -> not (Set.member c special))
+                    |. Parser.chompWhile (\c -> not (Set.member c special))
+                )
+        ]
+        |> many
+
+
+innerParser : Char -> Parser (List Piece)
+innerParser until =
+    Parser.chompWhile (\c -> c /= until)
+        |> Parser.getChompedString
+        |> Parser.andThen
+            (\chomped ->
+                case Parser.run mainParser chomped of
+                    Ok res ->
+                        Parser.succeed res
+
+                    Err deadEnds ->
+                        Parser.problem <| "Error in inner parser: " ++ Parser.deadEndsToString deadEnds
+            )
+
+
+special : Set Char
+special =
+    [ '_', '"', '*', '{' ]
+        |> Set.fromList
 
 
 many : Parser a -> Parser (List a)
@@ -125,44 +186,6 @@ many parser =
         )
 
 
-quoteParser : Parser Piece
-quoteParser =
-    Parser.oneOf
-        [ Parser.succeed Speech
-            |. Parser.symbol "\""
-            |= many (italicParser [ '"' ])
-            |. Parser.symbol "\""
-        , italicParser []
-        ]
-
-
-italicParser : List Char -> Parser Piece
-italicParser waitFor =
-    Parser.oneOf
-        [ Parser.succeed Italic
-            |. Parser.symbol "_"
-            |= many (insideParser ('_' :: waitFor))
-            |. Parser.symbol "_"
-        , insideParser waitFor
-        ]
-
-
-insideParser : List Char -> Parser Piece
-insideParser waitFor =
-    Parser.succeed
-        (\chomped ->
-            let
-                _ =
-                    Debug.log "chomped" chomped
-            in
-            Text chomped
-        )
-        |= Parser.getChompedString
-            (Parser.chompIf (\c -> not (List.member c waitFor))
-                |. Parser.chompWhile (\c -> not (List.member c waitFor))
-            )
-
-
 viewPiece : Piece -> Html msg
 viewPiece piece =
     case piece of
@@ -178,6 +201,10 @@ viewPiece piece =
 
         Italic children ->
             Html.i []
+                (List.map viewPiece children)
+
+        Bold children ->
+            Html.b []
                 (List.map viewPiece children)
 
         Text value ->

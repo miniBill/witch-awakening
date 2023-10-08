@@ -2,7 +2,7 @@ module Main exposing (Flags, Model, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, alignRight, centerX, centerY, column, el, fill, fillPortion, height, moveDown, newTabLink, padding, paragraph, px, rgb, rgb255, row, scrollbars, spacing, text, textColumn, width)
+import Element exposing (Element, alignRight, centerX, centerY, column, el, fill, fillPortion, height, moveDown, newTabLink, padding, paragraph, px, rgb, rgb255, row, scrollbars, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -10,7 +10,8 @@ import Gradients
 import Html
 import Html.Attributes
 import Images
-import Theme exposing (bebasNeue, celticHand, cyan, gradientText, morpheus, quote, speech)
+import String.Multiline
+import Theme exposing (bebasNeue, celticHand, cyan, gradientText, morpheus)
 import Url
 
 
@@ -191,29 +192,13 @@ intro : Element msg
 intro =
     row [ spacing 10 ]
         [ Theme.image [ width fill ] Images.penelope
-        , textColumn
-            [ width <| fillPortion 2
-            , alignRight
-            ]
-            [ Theme.paragraph "It's been one of those days. Whatever that means for you, you just woke up on the wrong side of the bed and it's been downhill since then. First you stubbed a toe before you left your bedroom, then you dropped your lunch somehow. Everything's just been off today, something isn't quite right and you feel like you aren't used to your body for some reason, as though not used to the length of your arms, your height feels abnormal. It's like when you think of a word too hard and now it suddenly seems strange. Weird but tolerable on its own, you were really looking forward to lunch and now it's all over the floor. However you'd normally react to that, you eventually take a deep breath and go for a walk. It just feels appropriate, you want to get out and don't care where you go."
-            , Theme.paragraph """30 minutes later you're leaning on a railing overlooking a large public pond breathing in some calming crisp air as a light mist seems to be building up helping to drown the world out just a little, and the off feeling of the day fades into the background. As it does, before your very eyes you see a shimmering distortion over the water that unfurls like a curtain revealing a small building in the middle of the pond, a narrow wood boardwalk leading to its door where an "Open" sign hangs on the door."""
-            , paragraph []
-                [ text "You're pretty sure that wasn't there ten seconds ago, disregarding that you watched to appear in no uncertain terms. It appears to be a kind of shop with a display window full of antiques, and it says it's open... obviously, "
-                , el [ Font.italic ] <| text "you should probably check it out. "
-                , el [ Font.bold ] <| cyan "[Y/N] [N... Game Over.] [Y]"
-                , text " Stepping onto the wood, it seems real enough. The polished wooden door doesn't creak when you open it but it chimes a little bell while you soak in the assault of information in the room inside. For one, it's much larger than the outside suggested, and it's cram packed full of tables, counters, shelves, filled with antiques illuminated in a reddish glow from the many silk drapes over the windows filtering the light. From behind a counter you see a sleepy looking woman, resting with her cheek in one palm until a "
-                , el [ Font.bold, Font.italic ] <| text <| quote "Mooo!"
-                , text " from an unseen source somewhere shakes her awake and she jolts up "
-                , speech "Wha- OH!"
-                , text " She perks up 0-10 and locks eyes on you "
-                , speech "A new witch at this hour! Goodness! I wasn't expecting anyone until tomorrow."
-                , text " Witch? She is dressed as though it were Halloween with her comically large hat and by kringle himself you've never seen so much cleavage in your life. Sensing some incredulousness, she continues without skipping a beat. "
-                , speech "Don't worry, I get it, I do this for a living. Walking up new witches is my thing. Free of charge, with just a little bit of guided meditation and you're in for a new life of magic, and seeing what the world is really like..."
-                , text " She snaps her fingers and an equally voluptuous maid with a cowbell choker appears pushing a cushioned chair, and the lights dim leaving only purple candle-like flames hovering around the strange woman. "
-                , speech "Just relax... take my hand, and look into my eyes. That's right."
-                , text " ..."
-                ]
-            ]
+        , Theme.paragraphs [ width <| fillPortion 2 ] <| String.Multiline.here """
+            It's been one of those days. Whatever that means for you, you just woke up on the wrong side of the bed and it's been downhill since then. First you stubbed a toe before you left your bedroom, then you dropped your lunch somehow. Everything's just been off today, something isn't quite right and you feel like you aren't used to your body for some reason, as though not used to the length of your arms, your height feels abnormal. It's like when you think of a word too hard and now it suddenly seems strange. Weird but tolerable on its own, you were really looking forward to lunch and now it's all over the floor. However you'd normally react to that, you eventually take a deep breath and go for a walk. It just feels appropriate, you want to get out and don't care where you go.
+
+            30 minutes later you're leaning on a railing overlooking a large public pond breathing in some calming crisp air as a light mist seems to be building up helping to drown the world out just a little, and the off feeling of the day fades into the background. As it does, before your very eyes you see a shimmering distortion over the water that unfurls like a curtain revealing a small building in the middle of the pond, a narrow wood boardwalk leading to its door where an “Open” sign hangs on the door.
+
+            You're pretty sure that wasn't there ten seconds ago, disregarding that you watched to appear in no uncertain terms. It appears to be a kind of shop with a display window full of antiques, and it says it's open... obviously, _you should probably check it out._ {cyan [Y/N] [N... Game Over.] [Y]} Stepping onto the wood, it seems real enough. The polished wooden door doesn't creak when you open it but it chimes a little bell while you soak in the assault of information in the room inside. For one, it's much larger than the outside suggested, and it's cram packed full of tables, counters, shelves, filled with antiques illuminated in a reddish glow from the many silk drapes over the windows filtering the light. From behind a counter you see a sleepy looking woman, resting with her cheek in one palm until a _*Mooo!*_ from an unseen source somewhere shakes her awake and she jolts up "Wha- OH!" She perks up 0-10 and locks eyes on you "A new witch at this hour! Goodness! I wasn't expecting anyone until tomorrow." Witch? She is dressed as though it were Halloween with her comically large hat and by kringle himself you've never seen so much cleavage in your life. Sensing some incredulousness, she continues without skipping a beat. "Don't worry, I get it, I do this for a living. Walking up new witches is my thing. Free of charge, with just a little bit of guided meditation and you're in for a new life of magic, and seeing what the world is really like..." She snaps her fingers and an equally voluptuous maid with a cowbell choker appears pushing a cushioned chair, and the lights dim leaving only purple candle-like flames hovering around the strange woman. "Just relax... take my hand, and look into my eyes. That's right." ...
+            """
         ]
 
 
@@ -227,29 +212,13 @@ trueForm =
             , spacing 8
             ]
             [ hr, gradientText 4 Gradients.blueGradient "TRUE FROM - CLASS", hr ]
-        , paragraph [ Theme.orangeSpeech ]
-            [ text "“Ahh, yes... Oh, "
-            , el [ Font.italic ] <| text "wow"
-            , text "! You have an incredible amount of untapped power waiting. First things first: You'll need your true form! We used to simply wait for it to emerge, but these days we can poke and prod the right places to provoke a controlled early awakening. Most witches have multiple potential true forms and one gets locked in when they finally awaken, but with a controlled environment we can force one of the others. Your options don't represent all possible outcomes, but let's see what you have available. First up is what type of witch you are, you can think of it like a ‘Class’ of witch.”"
-            ]
-        , paragraph []
-            [ text "Your witch type determines your method by which you "
-            , el [ Font.italic ] <| text "can naturally progress over time"
-            , text " towards a power cap. "
-            , el [ Font.italic ] <| text "You"
-            , text " will have the same power cap and starting power regardless of type "
-            , el [ Theme.orangeSpeech ] <| text "“and you're lucky!"
-            , el [ Theme.orangeSpeech ] <| text "You've got more than most witches, and it looks like you might be capable of using Rank 5 magic, the "
-            , el [ Theme.orangeSpeech, Font.italic ] <| text "average"
-            , el [ Theme.orangeSpeech ] <| text " witch only reaches rank 3”"
-            , text ", You can pre-spend up to your power cap to confirm you have the potential for something to unlock someday, if you wish. It's up to you how well adapted you are to your starting abilities, perhaps you want to study them for some time before you have a full grasp on them?"
-            ]
-        , paragraph
-            [ Font.center
-            , Font.italic
-            , Font.bold
-            ]
-            [ cyan "Choose one." ]
+        , Theme.paragraphs [] <| String.Multiline.here """
+            "Ahh, yes... Oh, _wow_! You have an incredible amount of untapped power waiting. First things first: You'll need your true form! We used to simply wait for it to emerge, but these days we can poke and prod the right places to provoke a controlled early awakening. Most witches have multiple potential true forms and one gets locked in when they finally awaken, but with a controlled environment we can force one of the others. Your options don't represent all possible outcomes, but let's see what you have available. First up is what type of witch you are, you can think of it like a “Class” of witch."
+
+            Your witch type determines your method by which you _can naturally progress over time_ towards a power cap. _You_ will have the same power cap and starting power regardless of type "and you're lucky! You've got more than most witches, and it looks like you might be capable of using Rank 5 magic, the _average_ witch only reaches rank 3", You can pre-spend up to your power cap to confirm you have the potential for something to unlock someday, if you wish. It's up to you how well adapted you are to your starting abilities, perhaps you want to study them for some time before you have a full grasp on them?
+
+            [center]{cyan _*Choose one.*_}
+            """
         ]
 
 
