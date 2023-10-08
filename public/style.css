@@ -1,0 +1,44 @@
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("BebasNeue.otf");
+}
+
+@font-face {
+  font-family: "Morpheus";
+  src: url("Morpheus.ttf");
+}
+
+@font-face {
+  font-family: "Celtic Hand";
+  src: url("CelticHand.ttf");
+}
+
+@font-face {
+  font-family: "Capture It";
+  src: url("CaptureIt.ttf");
+}
+
+.outlined {
+  position: relative;
+  color: transparent;
+}
+
+.outlined:after {
+  background: none;
+  content: attr(data-text);
+  left: 0;
+  position: absolute;
+  z-index: 1;
+  -webkit-text-stroke: var(--text-stroke);
+}
+
+.outlined:before {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: var(--background);
+  content: attr(data-text);
+  left: 0;
+  position: absolute;
+  z-index: 2;
+}

@@ -9,7 +9,6 @@ import Element.Font as Font
 import Element.Input as Input
 import Element.Lazy
 import Gradients
-import Html
 import Images exposing (Image)
 import String.Multiline
 import Theme exposing (gradientText)
@@ -74,55 +73,7 @@ view : Model -> Browser.Document Msg
 view model =
     { title = ""
     , body =
-        [ Html.node "style"
-            []
-            [ Html.text """
-            @font-face {
-                font-family: "Bebas Neue";
-                src: url("public/BebasNeue.otf");
-            }
-
-            @font-face {
-                font-family: "Morpheus";
-                src: url("public/Morpheus.ttf");
-            }
-
-            @font-face {
-                font-family: "Celtic Hand";
-                src: url("public/CelticHand.ttf");
-            }
-
-            @font-face {
-                font-family: "Capture It";
-                src: url("public/CaptureIt.ttf");
-            }
-
-            .outlined {
-                position: relative;
-                color: transparent;
-            }
-
-            .outlined:after {
-                background: none;
-                content: attr(data-text);
-                left: 0;
-                position: absolute;
-                z-index: 1;
-                -webkit-text-stroke: var(--text-stroke);
-            }
-
-            .outlined:before {
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-image: var(--background);
-                content: attr(data-text);
-                left: 0;
-                position: absolute;
-                z-index: 2;
-            }
-            """
-            ]
-        , Element.layoutWith
+        [ Element.layoutWith
             { options =
                 [ Element.focusStyle
                     { borderColor = Nothing
@@ -146,14 +97,14 @@ innerView model =
         , Background.color <| rgb 0 0 0
         , Theme.padding
         ]
-        [ title
-        , intro
-        , Element.Lazy.lazy trueForm model.class
+        [ viewTitle
+        , viewIntro
+        , Element.Lazy.lazy viewClass model.class
         ]
 
 
-title : Element msg
-title =
+viewTitle : Element msg
+viewTitle =
     Element.column [ width fill ]
         [ paragraph
             [ Theme.bebasNeue
@@ -204,8 +155,8 @@ title =
         ]
 
 
-intro : Element msg
-intro =
+viewIntro : Element msg
+viewIntro =
     Theme.row []
         [ Theme.image [ width fill ] Images.penelope
         , Theme.blocks [ width <| fillPortion 2 ] <| String.Multiline.here """
@@ -218,8 +169,8 @@ intro =
         ]
 
 
-trueForm : Maybe Class -> Element Msg
-trueForm class =
+viewClass : Maybe Class -> Element Msg
+viewClass class =
     Theme.column [ width fill ]
         [ Theme.blocks [] <| String.Multiline.here """
             # True Form - Class
