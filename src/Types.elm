@@ -39,6 +39,7 @@ type Race
     | Daeva
     | Ifrit
     | Siren
+    | Naiad
 
 
 raceToString : Race -> String
@@ -55,6 +56,9 @@ raceToString race =
 
         Siren ->
             "Siren"
+
+        Naiad ->
+            "Naiad"
 
 
 type Size
@@ -88,6 +92,7 @@ type Affinity
     | Nature
     | Necro
     | Soul
+    | Water
     | Wind
 
 
@@ -126,6 +131,9 @@ affinityToString affinity =
 
         Soul ->
             "Soul"
+
+        Water ->
+            "Water"
 
         Wind ->
             "Wind"

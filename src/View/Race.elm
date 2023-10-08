@@ -1,6 +1,6 @@
 module View.Race exposing (viewRace)
 
-import Element exposing (Element, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, rgb255, row, spacing, text, width)
+import Element exposing (Attribute, Element, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, rgb255, row, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -35,6 +35,7 @@ viewRace race =
                 , daeva
                 , ifrit
                 , siren
+                , naiad
                 ]
             )
         ]
@@ -100,6 +101,21 @@ siren =
     }
 
 
+naiad : RaceDetails
+naiad =
+    { race = Naiad
+    , image = Images.naiad
+    , tank = High
+    , affinities = [ Water, Beast ]
+    , charge = High
+    , content = """
+        Naiads are essentially mermaids. Their bodies have very fine scales that range from barely perceptible or providing a scant shimmer when hit by the light, to larger scales, typically concentrated around the back and surfaces facing away, leaving soft exposed skin facing forward fading with a gradient into scales at their shoulders and back, that glitter like precious metal or crystal coins. Naiads age normally outside of water, but when submerged in water they age backwards three times as fast, to their prime, equivalent to human at 20. A dead Naiad with a mostly intact body can be submerged in water to slowly bring them pack over a few days to a few weeks depending on severity. All naiads can focus to transfigure their legs into a long scaled tail with a fan-like fin for rapid swimming, exceeding 60mph, or 52.1 knots, on average. They absorb oxygen from water through their skin.
+
+        __Naiads draw Mana__ from Submersion, recharging while immersed in water or rain, based on coverage and quantity.
+        """
+    }
+
+
 type alias RaceDetails =
     { race : Race
     , image : Image
@@ -131,7 +147,7 @@ raceBox selected { race, image, tank, affinities, charge, content } =
     in
     Input.button
         [ height fill
-        , width fill
+        , width <| Element.minimum 300 fill
         , Font.color <| rgb 0 0 0
         , Background.color <| rgb 1 1 1
         , Border.roundEach
@@ -150,7 +166,7 @@ raceBox selected { race, image, tank, affinities, charge, content } =
             Element.column [ height fill ]
                 [ el
                     [ width fill
-                    , height <| px 400
+                    , height <| px 600
                     , Border.rounded roundness
                     , inFront <|
                         el
@@ -193,24 +209,37 @@ raceBox selected { race, image, tank, affinities, charge, content } =
 
 viewTank : Size -> Element Choice
 viewTank size =
-    el
-        [ Theme.morpheus
-        , Font.size 30
-        , Element.onLeft <| Theme.image [ moveUp 10 ] Images.tank
-        ]
-    <|
-        Theme.gradientText 4 Gradients.blueGradient <|
-            Types.sizeToString size
+    viewSize []
+        Images.tank
+        (List.map
+            (\( r, g, b ) -> ( r // 2, g * 3 // 5, b ))
+            Gradients.blueGradient
+        )
+        size
 
 
 viewCharge : Size -> Element Choice
 viewCharge size =
+    viewSize [ moveRight 30 ]
+        Images.charge
+        Gradients.yellowGradient
+        size
+
+
+viewSize :
+    List (Attribute msg)
+    -> Image
+    -> List ( Int, Int, Int )
+    -> Size
+    -> Element msg
+viewSize attrs image gradient size =
     el
-        [ Theme.morpheus
-        , Font.size 30
-        , Element.onLeft <| Theme.image [ moveUp 10 ] Images.charge
-        , moveRight 30
-        ]
+        ([ Theme.morpheus
+         , Font.size 20
+         , Element.onLeft <| Theme.image [ moveUp 10 ] image
+         ]
+            ++ attrs
+        )
     <|
-        Theme.gradientText 4 Gradients.yellowGradient <|
+        Theme.gradientText 4 gradient <|
             Types.sizeToString size

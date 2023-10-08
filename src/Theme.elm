@@ -306,6 +306,9 @@ viewAffinity affinity =
                 Soul ->
                     Images.affinitySoul
 
+                Water ->
+                    Images.affinityWater
+
                 Wind ->
                     Images.affinityWind
     in
