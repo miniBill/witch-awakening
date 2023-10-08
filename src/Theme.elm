@@ -1,11 +1,27 @@
-module Theme exposing (bebasNeue, celticHand, cyan, gradientText, image, morpheus, orangeSpeech, paragraph, paragraphs)
+module Theme exposing (bebasNeue, celticHand, colors, column, cyan, gradientText, image, morpheus, padding, paragraphs, row, wrappedRow)
 
-import Element exposing (Attribute, Element, column, el, fill, rgb, rgb255, spacing, text, width)
+import Element exposing (Attribute, Element, el, fill, rgb, rgb255, text, width)
 import Element.Font as Font
+import Hex
 import Html exposing (Html)
 import Html.Attributes
 import Parser exposing ((|.), (|=), Parser)
 import Set exposing (Set)
+
+
+rythm : number
+rythm =
+    8
+
+
+padding : Attribute msg
+padding =
+    Element.padding rythm
+
+
+spacing : Attribute msg
+spacing =
+    Element.spacing rythm
 
 
 image : List (Attribute msg) -> { a | src : String } -> Element msg
@@ -47,11 +63,6 @@ rgbToString ( r, g, b ) =
         ++ ")"
 
 
-orangeSpeech : Attribute msg
-orangeSpeech =
-    Font.color <| rgb255 0xF8 0x80 0x00
-
-
 celticHand : Attribute msg
 celticHand =
     Font.family [ Font.typeface "Celtic Hand" ]
@@ -72,7 +83,7 @@ paragraphs attrs input =
     input
         |> String.split "\n\n"
         |> List.map paragraph
-        |> column (spacing 8 :: width fill :: attrs)
+        |> column (spacing :: width fill :: attrs)
 
 
 paragraph : String -> Element msg
@@ -186,17 +197,38 @@ many parser =
         )
 
 
+colors :
+    { academic : Int
+    , sorceress : Int
+    , warlock : Int
+    , speech : Int
+    , cyan : Int
+    }
+colors =
+    { academic = 0xD7FF
+    , sorceress = 0x00FF0022
+    , warlock = 0x0027B01C
+    , speech = 0x00F88000
+    , cyan = 0x0004D4ED
+    }
+
+
+toCss : Int -> String
+toCss rgb =
+    "#" ++ String.padLeft 6 '0' (Hex.toString rgb)
+
+
 viewPiece : Piece -> Html msg
 viewPiece piece =
     case piece of
         Speech children ->
             Html.span
-                [ Html.Attributes.style "color" "#F88000" ]
+                [ Html.Attributes.style "color" <| toCss colors.speech ]
                 (Html.text "“" :: List.map viewPiece children ++ [ Html.text "”" ])
 
         Cyan children ->
             Html.span
-                [ Html.Attributes.style "color" "#04D4ED" ]
+                [ Html.Attributes.style "color" <| toCss colors.cyan ]
                 (List.map viewPiece children)
 
         Italic children ->
@@ -209,3 +241,18 @@ viewPiece piece =
 
         Text value ->
             Html.text value
+
+
+column : List (Attribute msg) -> List (Element msg) -> Element msg
+column attrs children =
+    Element.column (spacing :: attrs) children
+
+
+row : List (Attribute msg) -> List (Element msg) -> Element msg
+row attrs children =
+    Element.row (spacing :: attrs) children
+
+
+wrappedRow : List (Attribute msg) -> List (Element msg) -> Element msg
+wrappedRow attrs children =
+    Element.wrappedRow (spacing :: attrs) children
