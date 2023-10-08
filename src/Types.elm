@@ -38,6 +38,7 @@ type Race
     = Neutral
     | Daeva
     | Ifrit
+    | Siren
 
 
 raceToString : Race -> String
@@ -51,6 +52,9 @@ raceToString race =
 
         Ifrit ->
             "Ifrit"
+
+        Siren ->
+            "Siren"
 
 
 type Size
