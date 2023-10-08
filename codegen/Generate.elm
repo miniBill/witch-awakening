@@ -4,6 +4,7 @@ module Generate exposing (main)
 
 import Dict
 import Elm
+import Elm.Annotation
 import Gen.CodeGen.Generate as Generate
 import Json.Decode exposing (Decoder, Value)
 import Result.Extra
@@ -147,6 +148,7 @@ images sizes =
                             , ( "src", Elm.string filePath )
                             ]
                                 |> Elm.record
+                                |> Elm.withType (Elm.Annotation.named [] "Image")
                                 |> Elm.declaration name
                                 |> Elm.expose
                     in
@@ -180,9 +182,18 @@ images sizes =
         |> Result.map
             (\declarations ->
                 Elm.file [ "Images" ]
-                    (List.map
-                        (\declaration -> declaration)
-                        declarations
+                    (Elm.expose
+                        (Elm.alias "Image"
+                            (Elm.Annotation.record
+                                [ ( "width", Elm.Annotation.int )
+                                , ( "height", Elm.Annotation.int )
+                                , ( "src", Elm.Annotation.string )
+                                ]
+                            )
+                        )
+                        :: List.map
+                            (\declaration -> declaration)
+                            declarations
                     )
             )
 
