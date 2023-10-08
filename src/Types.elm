@@ -1,11 +1,17 @@
-module Types exposing (Class(..), Model, classToString)
+module Types exposing (Choice(..), Class(..), Model, Race(..), classToString, raceToString)
 
 import Browser.Navigation
+
+
+type Choice
+    = Class (Maybe Class)
+    | Race (Maybe Race)
 
 
 type alias Model =
     { key : Browser.Navigation.Key
     , class : Maybe Class
+    , race : Maybe Race
     }
 
 
@@ -26,3 +32,14 @@ classToString class =
 
         Warlock ->
             "Warlock"
+
+
+type Race
+    = Neutral
+
+
+raceToString : Race -> String
+raceToString race =
+    case race of
+        Neutral ->
+            "Neutral"

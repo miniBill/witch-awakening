@@ -21,8 +21,8 @@ type Piece
 
 
 type Color
-    = Choice
-    | Class Class
+    = ChoiceColor
+    | ClassColor Class
 
 
 blockParser : Parser Block
@@ -66,13 +66,13 @@ mainParser =
         , Parser.succeed Colored
             |. Parser.symbol "{"
             |= Parser.oneOf
-                [ Parser.succeed Choice
+                [ Parser.succeed ChoiceColor
                     |. Parser.symbol "choice"
-                , Parser.succeed (Class Academic)
+                , Parser.succeed (ClassColor Academic)
                     |. Parser.symbol "academic"
-                , Parser.succeed (Class Sorceress)
+                , Parser.succeed (ClassColor Sorceress)
                     |. Parser.symbol "sorceress"
-                , Parser.succeed (Class Warlock)
+                , Parser.succeed (ClassColor Warlock)
                     |. Parser.symbol "warlock"
                 ]
             |. Parser.symbol " "

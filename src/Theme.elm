@@ -1,13 +1,13 @@
 module Theme exposing (bebasNeue, blocks, borderColor, choice, classToColor, column, gradientText, image, intToColor, morpheus, padding, row, rythm, wrappedRow)
 
-import Element exposing (Attribute, Color, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
+import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Border as Border
 import Element.Font as Font
 import Gradients
 import Hex
 import Html exposing (Html)
 import Html.Attributes
-import MarkMini exposing (Block(..), Piece(..))
+import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
 import Types exposing (Class(..))
 
@@ -167,10 +167,10 @@ viewPiece piece =
                 colorInt : Int
                 colorInt =
                     case color of
-                        MarkMini.Choice ->
+                        ChoiceColor ->
                             colors.choice
 
-                        MarkMini.Class class ->
+                        ClassColor class ->
                             classToColor class
             in
             Html.span
@@ -248,7 +248,7 @@ borderColor color =
     Border.color <| intToColor color
 
 
-intToColor : Int -> Color
+intToColor : Int -> Element.Color
 intToColor color =
     rgb255
         (color // 65536)
