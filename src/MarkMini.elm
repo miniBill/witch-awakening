@@ -17,7 +17,7 @@ type Piece
     | Underlined (List Piece)
     | Bold (List Piece)
     | Text String
-    | Number String
+    | Number Int
 
 
 type Color
@@ -59,7 +59,15 @@ mainParser =
             |. Parser.symbol "*"
             |= innerParser '*'
             |. Parser.symbol "*"
-        , Parser.succeed Number
+        , Parser.succeed
+            (\str ->
+                case String.toInt str of
+                    Nothing ->
+                        Text ("[" ++ str ++ "]")
+
+                    Just i ->
+                        Number i
+            )
             |. Parser.symbol "["
             |= Parser.getChompedString (Parser.chompWhile (\c -> c /= ']'))
             |. Parser.symbol "]"

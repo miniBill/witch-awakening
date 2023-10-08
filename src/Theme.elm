@@ -202,7 +202,7 @@ viewPiece piece =
                 [ Html.Attributes.style "font-family" "\"Capture It\""
                 , Html.Attributes.style "font-size" "20px"
                 ]
-                [ gradientTextHtml 4 Gradients.yellowGradient value ]
+                [ gradientTextHtml 4 Gradients.yellowGradient (String.fromInt value) ]
 
 
 column : List (Attribute msg) -> List (Element msg) -> Element msg
