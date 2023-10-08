@@ -99,7 +99,7 @@ toUrl model =
     ]
         |> List.filterMap identity
         |> Url.Builder.toQuery
-        |> (\query -> "/" ++ query)
+        |> (\query -> "#" ++ String.dropLeft 1 query)
 
 
 view : Model -> Browser.Document Msg

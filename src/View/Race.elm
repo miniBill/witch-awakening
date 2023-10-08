@@ -1,6 +1,6 @@
 module View.Race exposing (viewRace)
 
-import Element exposing (Element, alignTop, centerX, el, fill, height, inFront, px, rgb, rgb255, spacing, width)
+import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, rgb255, row, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -8,7 +8,7 @@ import Element.Input as Input
 import Gradients
 import Images exposing (Image)
 import String.Multiline
-import Theme exposing (gradientText)
+import Theme exposing (gradientText, viewAffinity)
 import Types exposing (Affinity(..), Choice(..), Race(..), Size(..))
 
 
@@ -98,7 +98,7 @@ raceBox :
     Maybe Race
     -> RaceDetails
     -> Element Choice
-raceBox selected { race, image, content } =
+raceBox selected { race, image, tank, affinities, charge, content } =
     let
         isSelected : Bool
         isSelected =
@@ -149,6 +149,15 @@ raceBox selected { race, image, content } =
                     , Background.image image.src
                     ]
                     Element.none
+                , Theme.row [ centerX ]
+                    [ viewTank tank
+                    , row [ moveDown 4 ]
+                        (List.intersperse
+                            (text " - ")
+                            (List.map viewAffinity affinities)
+                        )
+                    , viewCharge charge
+                    ]
                 , Theme.blocks
                     [ height fill
                     , Theme.padding
@@ -164,3 +173,28 @@ raceBox selected { race, image, content } =
                     else
                         Just race
         }
+
+
+viewTank : Size -> Element Choice
+viewTank size =
+    el
+        [ Theme.morpheus
+        , Font.size 30
+        , Element.onLeft <| Theme.image [ moveUp 10 ] Images.tank
+        ]
+    <|
+        Theme.gradientText 4 Gradients.blueGradient <|
+            Types.sizeToString size
+
+
+viewCharge : Size -> Element Choice
+viewCharge size =
+    el
+        [ Theme.morpheus
+        , Font.size 30
+        , Element.onLeft <| Theme.image [ moveUp 10 ] Images.charge
+        , moveRight 30
+        ]
+    <|
+        Theme.gradientText 4 Gradients.yellowGradient <|
+            Types.sizeToString size

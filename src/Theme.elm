@@ -1,15 +1,17 @@
-module Theme exposing (bebasNeue, blocks, borderColor, captureIt, choice, classToColor, column, gradientText, image, intToColor, morpheus, padding, row, rythm, wrappedRow)
+module Theme exposing (bebasNeue, blocks, borderColor, captureIt, choice, classToColor, column, gradientText, image, intToColor, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
+import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Gradients
 import Hex
 import Html exposing (Html)
 import Html.Attributes
+import Images
 import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
-import Types exposing (Class(..))
+import Types exposing (Affinity(..), Class(..))
 
 
 rythm : number
@@ -264,3 +266,26 @@ intToColor color =
 style : String -> String -> Attribute msg
 style key value =
     Element.htmlAttribute <| Html.Attributes.style key value
+
+
+viewAffinity : Affinity -> Element msg
+viewAffinity affinity =
+    let
+        badge =
+            case affinity of
+                Life ->
+                    Images.affinityLife
+
+                Soul ->
+                    Images.affinitySoul
+
+                Body ->
+                    Images.affinityBody
+
+                Fire ->
+                    Images.affinityFire
+
+                Necro ->
+                    Images.affinityNecro
+    in
+    image [] badge
