@@ -7,4 +7,5 @@ public/*.jpg
 public/*.otf
 public/*.ttf
 public/raw
+public/originals
 generated

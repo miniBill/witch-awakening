@@ -1,12 +1,15 @@
-module Theme exposing (bebasNeue, celticHand, colors, column, cyan, gradientText, image, morpheus, padding, paragraphs, row, wrappedRow)
+module Theme exposing (bebasNeue, blocks, borderColor, choice, classToColor, column, gradientText, image, morpheus, padding, row, wrappedRow)
 
-import Element exposing (Attribute, Element, el, fill, rgb, rgb255, text, width)
+import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
+import Element.Border as Border
 import Element.Font as Font
+import Gradients
 import Hex
 import Html exposing (Html)
 import Html.Attributes
-import Parser exposing ((|.), (|=), Parser)
-import Set exposing (Set)
+import MarkMini exposing (Block(..), Piece(..))
+import Parser exposing ((|.))
+import Types exposing (Class(..))
 
 
 rythm : number
@@ -32,24 +35,29 @@ image attrs { src } =
         }
 
 
-cyan : String -> Element msg
-cyan value =
+choice : String -> Element msg
+choice value =
     el [ Font.color <| rgb255 0x04 0xD4 0xED ] <| text value
 
 
 gradientText : Float -> List ( Int, Int, Int ) -> String -> Element msg
 gradientText outlineSize gradient value =
     Element.html <|
-        Html.span
-            [ Html.Attributes.class "outlined"
-            , Html.Attributes.attribute "data-text" value
-            , gradient
-                |> List.map rgbToString
-                |> String.join ", "
-                |> (\joined -> "--text-stroke: " ++ String.fromFloat outlineSize ++ "px #000; --background: linear-gradient(to bottom, " ++ joined ++ ")")
-                |> Html.Attributes.attribute "style"
-            ]
-            [ Html.text value ]
+        gradientTextHtml outlineSize gradient value
+
+
+gradientTextHtml : Float -> List ( Int, Int, Int ) -> String -> Html msg
+gradientTextHtml outlineSize gradient value =
+    Html.span
+        [ Html.Attributes.class "outlined"
+        , Html.Attributes.attribute "data-text" value
+        , gradient
+            |> List.map rgbToString
+            |> String.join ", "
+            |> (\joined -> "--text-stroke: " ++ String.fromFloat outlineSize ++ "px #000; --background: linear-gradient(to bottom, " ++ joined ++ ")")
+            |> Html.Attributes.attribute "style"
+        ]
+        [ Html.text value ]
 
 
 rgbToString : ( Int, Int, Int ) -> String
@@ -78,23 +86,26 @@ morpheus =
     Font.family [ Font.typeface "Morpheus" ]
 
 
-paragraphs : List (Attribute msg) -> String -> Element msg
-paragraphs attrs input =
+blocks : List (Attribute msg) -> String -> Element msg
+blocks attrs input =
     input
         |> String.split "\n\n"
-        |> List.map paragraph
+        |> List.map block
         |> column (spacing :: width fill :: attrs)
 
 
-paragraph : String -> Element msg
-paragraph input =
-    case Parser.run paragraphParser input of
+block : String -> Element msg
+block input =
+    case Parser.run (MarkMini.blockParser |. Parser.end) input of
         Err _ ->
             Element.paragraph
                 [ Font.color <| rgb 1 0 0 ]
                 [ text input ]
 
-        Ok ( pieces, { center } ) ->
+        Ok (SectionTitle value) ->
+            viewSectionTitle value
+
+        Ok (Paragraph { pieces, center }) ->
             pieces
                 |> List.map viewPiece
                 |> Html.span []
@@ -109,113 +120,38 @@ paragraph input =
                     ]
 
 
-type Piece
-    = Speech (List Piece)
-    | Cyan (List Piece)
-    | Italic (List Piece)
-    | Bold (List Piece)
-    | Text String
-
-
-paragraphParser : Parser ( List Piece, { center : Bool } )
-paragraphParser =
-    Parser.succeed (\center pieces -> ( pieces, { center = center } ))
-        |= Parser.oneOf
-            [ Parser.succeed True
-                |. Parser.symbol "[center]"
-            , Parser.succeed False
-            ]
-        |= mainParser
-
-
-mainParser : Parser (List Piece)
-mainParser =
-    Parser.oneOf
-        [ Parser.succeed Speech
-            |. Parser.symbol "\""
-            |= innerParser '"'
-            |. Parser.symbol "\""
-        , Parser.succeed Italic
-            |. Parser.symbol "_"
-            |= innerParser '_'
-            |. Parser.symbol "_"
-        , Parser.succeed Bold
-            |. Parser.symbol "*"
-            |= innerParser '*'
-            |. Parser.symbol "*"
-        , Parser.succeed Cyan
-            |. Parser.symbol "{cyan "
-            |= innerParser '}'
-            |. Parser.symbol "}"
-        , Parser.succeed Text
-            |= Parser.getChompedString
-                (Parser.succeed ()
-                    |. Parser.chompIf (\c -> not (Set.member c special))
-                    |. Parser.chompWhile (\c -> not (Set.member c special))
-                )
-        ]
-        |> many
-
-
-innerParser : Char -> Parser (List Piece)
-innerParser until =
-    Parser.chompWhile (\c -> c /= until)
-        |> Parser.getChompedString
-        |> Parser.andThen
-            (\chomped ->
-                case Parser.run mainParser chomped of
-                    Ok res ->
-                        Parser.succeed res
-
-                    Err deadEnds ->
-                        Parser.problem <| "Error in inner parser: " ++ Parser.deadEndsToString deadEnds
-            )
-
-
-special : Set Char
-special =
-    [ '_', '"', '*', '{' ]
-        |> Set.fromList
-
-
-many : Parser a -> Parser (List a)
-many parser =
-    Parser.loop []
-        (\acc ->
-            Parser.oneOf
-                [ Parser.succeed
-                    (\e ->
-                        Parser.Loop (e :: acc)
-                    )
-                    |= parser
-                , Parser.succeed
-                    (\_ ->
-                        Parser.Done <| List.reverse acc
-                    )
-                    |= Parser.end
-                ]
-        )
-
-
 colors :
     { academic : Int
     , sorceress : Int
     , warlock : Int
     , speech : Int
-    , cyan : Int
+    , choice : Int
     }
 colors =
-    { academic = 0xD7FF
-    , sorceress = 0x00FF0022
-    , warlock = 0x0027B01C
+    { academic = 0x001A77FF
+    , sorceress = 0x00FF0000
+    , warlock = 0x0019AD00
     , speech = 0x00F88000
-    , cyan = 0x0004D4ED
+    , choice = 0x0004D4ED
     }
 
 
 toCss : Int -> String
 toCss rgb =
     "#" ++ String.padLeft 6 '0' (Hex.toString rgb)
+
+
+classToColor : Class -> Int
+classToColor class =
+    case class of
+        Academic ->
+            colors.academic
+
+        Sorceress ->
+            colors.sorceress
+
+        Warlock ->
+            colors.warlock
 
 
 viewPiece : Piece -> Html msg
@@ -226,13 +162,27 @@ viewPiece piece =
                 [ Html.Attributes.style "color" <| toCss colors.speech ]
                 (Html.text "“" :: List.map viewPiece children ++ [ Html.text "”" ])
 
-        Cyan children ->
+        Colored color children ->
+            let
+                colorInt : Int
+                colorInt =
+                    case color of
+                        MarkMini.Choice ->
+                            colors.choice
+
+                        MarkMini.Class class ->
+                            classToColor class
+            in
             Html.span
-                [ Html.Attributes.style "color" <| toCss colors.cyan ]
+                [ Html.Attributes.style "color" <| toCss colorInt ]
                 (List.map viewPiece children)
 
         Italic children ->
             Html.i []
+                (List.map viewPiece children)
+
+        Underlined children ->
+            Html.u []
                 (List.map viewPiece children)
 
         Bold children ->
@@ -241,6 +191,11 @@ viewPiece piece =
 
         Text value ->
             Html.text value
+
+        Number value ->
+            Html.span
+                [ Html.Attributes.style "font-family" "\"Capture It\"" ]
+                [ gradientTextHtml 2 Gradients.yellowGradient value ]
 
 
 column : List (Attribute msg) -> List (Element msg) -> Element msg
@@ -256,3 +211,45 @@ row attrs children =
 wrappedRow : List (Attribute msg) -> List (Element msg) -> Element msg
 wrappedRow attrs children =
     Element.wrappedRow (spacing :: attrs) children
+
+
+viewSectionTitle : String -> Element msg
+viewSectionTitle label =
+    row
+        [ celticHand
+        , Font.size 36
+        , width fill
+        ]
+        [ hr, gradientText 4 Gradients.blueGradient label, hr ]
+
+
+hr : Element msg
+hr =
+    el
+        [ width fill
+        , height <| px 1
+        , centerY
+        , Border.color <| rgb255 0x00 0xE4 0xFF
+        , Border.widthEach
+            { top = 1
+            , bottom = 0
+            , left = 0
+            , right = 0
+            }
+        , style "box-shadow" "0px 0px 1px 1px #00E4FF"
+        ]
+        Element.none
+
+
+borderColor : Int -> Attribute msg
+borderColor color =
+    Border.color <|
+        rgb255
+            (color // 65536)
+            (modBy 256 (color // 256))
+            (modBy 256 color)
+
+
+style : String -> String -> Attribute msg
+style key value =
+    Element.htmlAttribute <| Html.Attributes.style key value
