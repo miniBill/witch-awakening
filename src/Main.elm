@@ -2,7 +2,7 @@ module Main exposing (Flags, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, fillPortion, height, inFront, moveDown, moveUp, newTabLink, paragraph, px, rgb, rgba, scrollbars, spacing, text, width)
+import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, fillPortion, height, inFront, moveDown, moveUp, newTabLink, paragraph, px, rgb, scrollbars, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
