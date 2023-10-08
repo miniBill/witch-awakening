@@ -169,6 +169,9 @@ images sizes =
                     filePath :: "JPEG" :: size :: _ ->
                         fromLine filePath size
 
+                    filePath :: "WEBP" :: size :: _ ->
+                        fromLine filePath size
+
                     _ ->
                         Err <| "Wrong line: " ++ line
             )
