@@ -1,6 +1,6 @@
-module Theme exposing (bebasNeue, blocks, borderColor, choice, classToColor, column, gradientText, image, morpheus, padding, row, wrappedRow)
+module Theme exposing (bebasNeue, blocks, borderColor, choice, classToColor, column, gradientText, image, intToColor, morpheus, padding, row, rythm, wrappedRow)
 
-import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
+import Element exposing (Attribute, Color, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Border as Border
 import Element.Font as Font
 import Gradients
@@ -245,11 +245,15 @@ hr =
 
 borderColor : Int -> Attribute msg
 borderColor color =
-    Border.color <|
-        rgb255
-            (color // 65536)
-            (modBy 256 (color // 256))
-            (modBy 256 color)
+    Border.color <| intToColor color
+
+
+intToColor : Int -> Color
+intToColor color =
+    rgb255
+        (color // 65536)
+        (modBy 256 (color // 256))
+        (modBy 256 color)
 
 
 style : String -> String -> Attribute msg

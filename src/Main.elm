@@ -2,11 +2,12 @@ module Main exposing (Flags, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, fillPortion, height, inFront, moveDown, moveUp, newTabLink, paragraph, px, rgb, scrollbars, text, width)
+import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, fillPortion, height, inFront, moveDown, moveUp, newTabLink, paragraph, px, rgb, rgba, scrollbars, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Element.Lazy
 import Gradients
 import Html
 import Images exposing (Image)
@@ -18,8 +19,8 @@ import Url
 
 type Msg
     = UrlClicked UrlRequest
-    | UrlChanged
-    | Class Class --Url.Url
+    | UrlChanged --Url.Url
+    | Class (Maybe Class)
 
 
 type alias Flags =
@@ -66,7 +67,7 @@ update msg model =
             ( model, Cmd.none )
 
         Class class ->
-            ( { model | class = Just class }, Cmd.none )
+            ( { model | class = class }, Cmd.none )
 
 
 view : Model -> Browser.Document Msg
@@ -121,14 +122,23 @@ view model =
             }
             """
             ]
-        , Element.layout [ Font.size 16 ]
+        , Element.layoutWith
+            { options =
+                [ Element.focusStyle
+                    { borderColor = Nothing
+                    , backgroundColor = Nothing
+                    , shadow = Nothing
+                    }
+                ]
+            }
+            [ Font.size 16 ]
             (innerView model)
         ]
     }
 
 
 innerView : Model -> Element Msg
-innerView _ =
+innerView model =
     Theme.column
         [ width fill
         , scrollbars
@@ -138,7 +148,7 @@ innerView _ =
         ]
         [ title
         , intro
-        , trueForm
+        , Element.Lazy.lazy trueForm model.class
         ]
 
 
@@ -208,8 +218,8 @@ intro =
         ]
 
 
-trueForm : Element Msg
-trueForm =
+trueForm : Maybe Class -> Element Msg
+trueForm class =
     Theme.column [ width fill ]
         [ Theme.blocks [] <| String.Multiline.here """
             # True Form - Class
@@ -218,61 +228,64 @@ trueForm =
 
             Your witch type determines your method by which you _can naturally progress over time_ towards a power cap. _You_ will have the same power cap and starting power regardless of type "and you're lucky! You've got more than most witches, and it looks like you might be capable of using Rank 5 magic, the _average_ witch only reaches rank 3", You can pre-spend up to your power cap to confirm you have the potential for something to unlock someday, if you wish. It's up to you how well adapted you are to your starting abilities, perhaps you want to study them for some time before you have a full grasp on them?
 
-            [center]{cyan _*Choose one.*_}
+            [center]{choice _*Choose one.*_}
             """
-        , Theme.wrappedRow [ width fill ]
-            [ academic
-            , sorceress
-            , warlock
+        , Theme.wrappedRow
+            [ width fill
+            , spacing <| Theme.rythm * 3
+            ]
+            [ academic class
+            , sorceress class
+            , warlock class
             ]
         ]
 
 
-academic : Element Msg
-academic =
-    classBox
+academic : Maybe Class -> Element Msg
+academic class =
+    classBox class
         { class = Academic
         , image = Images.academic
         , content = """
         Academics are studious and focus easily on tasks, while training and studying to further their magic. Their thorough approach to magic tends to be slower if you want to have a life outside of studies, but the most rewarding as they comprehend in more depth and their growth is in their own hands, advancing as slow or fast as the time and effort they put in. Academics gain 1 {academic _*Focus*_} for every day in which they averaged 4 hours of study, 2 for 8 hours. You can use focus to buy a Power point for 10 Focus. This cost increases by 10 Focus per purchase. (10, 20, 30, etc)
 
-        __Start with [30] power__. Player academics eventually cap out at 100 power before other factors like complications. Any option marked with the blue icon has a flat cost reduction of -2 Power to its price, which can reduce it to 0, or become a gain of 1 point, or complications give 2 more power. This applies only once per option. Once per Magic specialization, once per perk, etc, and always applies first.
+        __Start with [30] power__. Player academics eventually cap out at [100] _power_ before other factors like complications. Any option marked with the {academic *blue*} icon has a flat cost reduction of [-2] Power to its price, which can reduce it to [0], or become a gain of [1] point, or complications give [2] more power. This applies only once per option. Once per Magic specialization, once per perk, etc, and always applies first.
 
-        Advantage: General use magic and classics. Academics favor mixed bags like Potions, Runes, and Portals. Any magic marked with blue used by an academic produces twice the yield or is half as time consuming, mana draining, or tiresome to use. Two potions for the price of one, two runes for the price of one, ect. Any duration of a blue marked magic effect applied by you, to you or to another, lasts twice as long For example, double the duration of a temporary potion.
+        *Advantage*: General use magic and classics. Academics favor mixed bags like Potions, Runes, and Portals. Any magic marked with blue used by an academic produces twice the yield or is half as time consuming, mana draining, or tiresome to use. Two potions for the price of one, two runes for the price of one, ect. Any duration of a blue marked magic effect applied by you, to you or to another, lasts twice as long For example, double the duration of a temporary potion.
 
         An Academic can study to master any two schools of magic for free, but takes time to learn equal to if you were saving the power to buy it, but no Power is spent.
         """
         }
 
 
-sorceress : Element Msg
-sorceress =
-    classBox
+sorceress : Maybe Class -> Element Msg
+sorceress class =
+    classBox class
         { class = Sorceress
         , image = Images.sorceress
         , content = """
-    Sorceresses are inherently imbued with magic as natural extensions of their will so they tend to be more in tune with their bodies and grow through tactile training. They're naturals but tend to have less of a tangible understanding of how and why magic works or interesting implications of magical theory. Fireballs go boom, ain't gotta explain sheit. Sorceresses gain 1 for every day in which they averaged 1 hour of straining practice, 2 for 4 hours. You can use Might to buy a Power point for 10 Might. This cost increases by 10 Might per purchase. (10, 20, 30, etc)
+    Sorceresses are inherently imbued with magic as natural extensions of their will so they tend to be more in tune with their bodies and grow through tactile training. They're naturals but tend to have less of a tangible understanding of how and why magic works or interesting implications of magical theory. Fireballs go boom, ain't gotta explain sheit. Sorceresses gain 1 {sorceress _*Might*_} for every day in which they averaged 1 hour of straining practice, 2 for 4 hours. You can use Might to buy a Power point for 10 Might. This cost increases by 10 Might per purchase. (10, 20, 30, etc)
 
-    Start with 30 power. Player sorceresses eventually cap out at 100 power before other factors like complications. Any option marked with the red icon has a flat cost reduction of -2 Power to its price, which can reduce it to 0, or become a gain of 1 point, or complications give 2 more power. This applies only once per option. Once per Magic specialization, once per perk, etc, and always applies first.
+    __Start with [30] power__. Player sorceresses eventually cap out at [100] _power_ before other factors like complications. Any option marked with the {sorceress *red*} icon has a flat cost reduction of [-2] Power to its price, which can reduce it to [0], or become a gain of [1] point, or complications give [2] more power. This applies only once per option. Once per Magic specialization, once per perk, etc, and always applies first.
 
-    Advantage: Inner power and direct combat usage. Sorceresses favor direct magic like Elementalist magic. They are not limited by affinity when buying elementalist magics of affinities they do not have, and one that matches their affinities can be taken for free.
+    *Advantage*: Inner power and direct combat usage. Sorceresses favor direct magic like Elementalist magic. They are not limited by affinity when buying elementalist magics of affinities they do not have, and one that matches their affinities can be taken for free.
 
     Sorceresses have stronger and more unique auras that are like beacons to anyone who can detect them. This aura can color any elemental magic the sorceress uses, such as white flames, gold stone, black water, or prismatic wind. This includes Naturalism. If they choose to use colored elementalism, then that magic is 50% more damaging, with 50% larger areas of effect and range.
     """
         }
 
 
-warlock : Element Msg
-warlock =
-    classBox
+warlock : Maybe Class -> Element Msg
+warlock class =
+    classBox class
         { class = Warlock
         , image = Images.warlock
         , content = """
-    Warlocks are endowed with power from some third party. Their power can't be taken back afterward anymore than such an entity might be capable of stealing power from any other witch. Instead of studying, or training, they spend time in service, partnership, employ, or worship to a patron. They grow by gaining with their patron(s), by doing quests, the Warlock gains Favor equal to the Reward value of the quest, Warlocks can trade Favor 1-1 directly for Power due to the scarcity, being dependent on Quests. A Warlock can continue to do quests without a quest slot, but doing so offers no rewards except Favor.
+    Warlocks are endowed with power from some third party. Their power can't be taken back afterward anymore than such an entity might be capable of stealing power from any other witch. Instead of studying, or training, they spend time in service, partnership, employ, or worship to a patron. They grow by gaining with their patron(s), by doing quests, the Warlock gains {warlock _*Favor*_} equal to the Reward value of the quest, Warlocks can trade Favor 1-1 directly for Power due to the scarcity, being dependent on Quests. A Warlock can continue to do quests without a quest slot, but doing so offers no rewards except Favor.
 
-    Start with 30 power. Player warlocks eventually cap out at 100 power before other factors like complications. Any option marked with the icon has a flat cost reduction of -2 Power to its price, which can reduce it to 0, or become a gain of 1 point, or complications give 2 more power. This applies only once per option. Once per Magic specialization, once per perk, etc, and always applies first.
+    __Start with [30] power__. Player warlocks eventually cap out at [100] _power_ before other factors like complications. Any option marked with the icon has a flat cost reduction of [-2] Power to its price, which can reduce it to [0], or become a gain of [1] point, or complications give [2] more power. This applies only once per option. Once per Magic specialization, once per perk, etc, and always applies first.
 
-    Advantage: Darker and external magics, Relic usage. Warlocks favor indirect power like Hexes and Curses. They have a personalized brand they can mark on any relic they own or willing creature. They always know the location of one of their marks and when anyone else touches it, and a stronger sensation like an alarm if any harm comes to it. Branded creatures can be affected by the warlock's magic at any distance and the mark can be the target of things such as scrying even if the warlock doesn't know where it is.
+    *Advantage*: Darker and external magics, Relic usage. Warlocks favor indirect power like Hexes and Curses. They have a personalized brand they can mark on any relic they own or willing creature. They always know the location of one of their marks and when anyone else touches it, and a stronger sensation like an alarm if any harm comes to it. Branded creatures can be affected by the warlock's magic at any distance and the mark can be the target of things such as scrying even if the warlock doesn't know where it is.
 
     Warlocks can immediately start with 20 Reward Points to purchase relics that are infused in their own soul, summoned the same way as Mothergifts. (See Witchery)
     """
@@ -280,23 +293,44 @@ warlock =
 
 
 classBox :
-    { class : Class
-    , image : Image
-    , content : String
-    }
+    Maybe Class
+    ->
+        { class : Class
+        , image : Image
+        , content : String
+        }
     -> Element Msg
-classBox { class, image, content } =
+classBox selected { class, image, content } =
+    let
+        isSelected : Bool
+        isSelected =
+            case selected of
+                Nothing ->
+                    False
+
+                Just selectedClass ->
+                    selectedClass == class
+
+        roundness : Int
+        roundness =
+            72
+    in
     Input.button
         [ height fill
         , width fill
         , Font.color <| rgb 0 0 0
         , Background.color <| rgb 1 1 1
         , Border.roundEach
-            { topLeft = 64
-            , topRight = 64
+            { topLeft = roundness
+            , topRight = roundness
             , bottomLeft = 8
             , bottomRight = 8
             }
+        , if isSelected then
+            Border.glow (Theme.intToColor <| Theme.classToColor class) 8
+
+          else
+            Border.width 0
         ]
         { label =
             Element.column [ height fill ]
@@ -305,7 +339,7 @@ classBox { class, image, content } =
                     , Theme.borderColor <| Theme.classToColor class
                     , width fill
                     , height <| px 400
-                    , Border.rounded 64
+                    , Border.rounded roundness
                     , inFront <|
                         el
                             [ alignBottom
@@ -326,7 +360,14 @@ classBox { class, image, content } =
                     ]
                     content
                 ]
-        , onPress = Just <| Class class
+        , onPress =
+            Just <|
+                Class <|
+                    if isSelected then
+                        Nothing
+
+                    else
+                        Just class
         }
 
 
