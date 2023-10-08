@@ -73,27 +73,55 @@ sizeToString size =
 
 
 type Affinity
-    = Soul
+    = All
+    | Beast
+    | Blood
     | Body
-    | Life
     | Fire
+    | Life
+    | Metal
+    | Mind
+    | Nature
     | Necro
+    | Soul
+    | Wind
 
 
 affinityToString : Affinity -> String
 affinityToString affinity =
     case affinity of
-        Soul ->
-            "Soul"
+        All ->
+            "???"
+
+        Beast ->
+            "Beast"
+
+        Blood ->
+            "Blood"
 
         Body ->
             "Body"
 
-        Life ->
-            "Life"
-
         Fire ->
             "Fire"
 
+        Life ->
+            "Life"
+
+        Metal ->
+            "Metal"
+
+        Mind ->
+            "Mind"
+
+        Nature ->
+            "Nature"
+
         Necro ->
             "Necro"
+
+        Soul ->
+            "Soul"
+
+        Wind ->
+            "Wind"

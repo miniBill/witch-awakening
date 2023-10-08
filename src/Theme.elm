@@ -1,14 +1,13 @@
 module Theme exposing (bebasNeue, blocks, borderColor, captureIt, choice, classToColor, column, gradientText, image, intToColor, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
-import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Gradients
 import Hex
 import Html exposing (Html)
 import Html.Attributes
-import Images
+import Images exposing (Image)
 import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
 import Types exposing (Affinity(..), Class(..))
@@ -29,7 +28,7 @@ spacing =
     Element.spacing rythm
 
 
-image : List (Attribute msg) -> { a | src : String } -> Element msg
+image : List (Attribute msg) -> Image -> Element msg
 image attrs { src } =
     Element.image attrs
         { src = src
@@ -271,13 +270,17 @@ style key value =
 viewAffinity : Affinity -> Element msg
 viewAffinity affinity =
     let
+        badge : Image
         badge =
             case affinity of
-                Life ->
-                    Images.affinityLife
+                All ->
+                    Images.affinityAll
 
-                Soul ->
-                    Images.affinitySoul
+                Beast ->
+                    Images.affinityBeast
+
+                Blood ->
+                    Images.affinityBlood
 
                 Body ->
                     Images.affinityBody
@@ -285,7 +288,25 @@ viewAffinity affinity =
                 Fire ->
                     Images.affinityFire
 
+                Life ->
+                    Images.affinityLife
+
+                Metal ->
+                    Images.affinityMetal
+
+                Mind ->
+                    Images.affinityMind
+
+                Nature ->
+                    Images.affinityNature
+
                 Necro ->
                     Images.affinityNecro
+
+                Soul ->
+                    Images.affinitySoul
+
+                Wind ->
+                    Images.affinityWind
     in
     image [] badge

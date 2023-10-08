@@ -1,6 +1,6 @@
 module View.Race exposing (viewRace)
 
-import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, rgb255, row, spacing, text, width)
+import Element exposing (Element, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, rgb255, row, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
