@@ -1,9 +1,10 @@
 module View.Complications exposing (viewComplications)
 
-import Element exposing (Element, alignBottom, centerX, el, fill, height, moveUp, spacing, text, width)
+import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, height, moveDown, moveUp, padding, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (ComplicationCategory(..), ComplicationName(..))
+import Element.Input as Input
+import Generated.Types as Types exposing (ComplicationCategory, ComplicationName(..))
 import Gradients
 import List.Extra
 import String.Multiline
@@ -36,6 +37,12 @@ viewComplications complications =
 
             Complications make your life more difficult. Every Complication taken grants POWER shown in the corner.
 
+            When taking world shifts, you're altering the nature of the particular version of Witch Awakening's reality that you enter into. The others may exist independently, but this one will be your home dimension.
+
+            World shifts of course won't be seen in-universe as complications shown by Penelope, rather, they will be points of fact that Penelope points out similar to how she pointed out the information about the masquerade and other setting details.
+
+            You can always choose if a World Shift affects the mundane and magical world alike, or only affects the magical world. (Only affecting the mundane world would be too inconsequential.)
+
             """
         , [ brutality, masquerade ]
             |> List.map (complicationBox complications)
@@ -54,8 +61,8 @@ type alias ComplicationDetails =
 
 
 type Content
-    = WithTiers String (List String) String
-    | Single String
+    = WithTiers String (List ( String, Int )) String
+    | Single String Int
 
 
 brutality : ComplicationDetails
@@ -64,7 +71,10 @@ brutality =
     , content =
         WithTiers
             "The world is shifted towards _brutality_ to a chosen tier:"
-            [ "AAA" ]
+            [ ( "Violence is more widespread, people are quicker to react aggressively to get their way, being more forceful in pursuit of their interests and less understanding of slights", 1 )
+            , ( "Killing becomes more commonplace. Enemies are considerably more likely to kill you outright before or after other interests, such as drawing it out for fun, witches value life less due to their ways to cheat death, so witches often kill other witches", 2 )
+            , ( "Death is ubiquitous, ever present. Most people know several people who have been killed and it's very common practice to confirm kills of witches, ensuring their method of cheating death is voided", 6 )
+            ]
             ""
     }
 
@@ -74,8 +84,11 @@ masquerade =
     { name = Masquerade
     , content =
         WithTiers
-            "The world is shifted towards _brutality_ to a chosen tier:"
-            [ "AAA" ]
+            "The _Masquerade_ is laced with Covenant and Curse-like effects."
+            [ ( "Revealing magic to strangers is auto-punished via pain response. Using magic to run key parts of a business among mortals is auto-punished by rasure of products or facilities. Can apply Rank 1 curses", 1 )
+            , ( "Revealing to associates is auto-punished, strangers causes extra pain. Magic in business now includes parts of the production line or marketing Can apply Rank 3 curses", 2 )
+            , ( "Revealing to close relationships is now auto-punished. Associates with extra pain, strangers may leave you unconscious after intense pain. Magic in business includes basic conveniences in running your shop. Can apply Rank 5 curses", 4 )
+            ]
             ""
     }
 
@@ -100,9 +113,7 @@ complicationBox selected { name, content } =
                 Nothing
 
             else
-                category
-                    |> Theme.complicationCategoryToColor
-                    |> Just
+                Just color
 
         msg : Maybe ( Complication, Bool )
         msg =
@@ -110,35 +121,65 @@ complicationBox selected { name, content } =
                 ( _, Just complication ) ->
                     Just ( complication, False )
 
-                ( Single _, Nothing ) ->
+                ( Single _ _, Nothing ) ->
                     Just ( { name = name, kind = Nontiered }, True )
 
                 ( WithTiers _ _ _, Nothing ) ->
-                    Just ( { name = name, kind = Tiered 1 }, True )
+                    Nothing
+
+        gradient : List ( Int, Int, Int )
+        gradient =
+            Theme.complicationCategoryToGradient category
+
+        color : Int
+        color =
+            Theme.complicationCategoryToColor category
     in
     Theme.card
         { glow = glow
         , imageAttrs =
             [ Border.width 4
-            , Theme.borderColor <| Theme.complicationCategoryToColor category
+            , Theme.borderColor color
             ]
         , imageHeight = 400
         , image = Types.complicationNameToImage name
         , inFront =
-            [ el
+            [ Element.column
+                [ alignTop
+                , Font.size 28
+                , centerX
+                , moveDown 8
+                ]
+                [ el [ centerX, Theme.captureIt ] <|
+                    gradientText 4 gradient <|
+                        Types.complicationCategoryToString category
+                , el [ centerX ] <|
+                    gradientText 4 Gradients.yellowGradient <|
+                        String.join "/" <|
+                            List.map
+                                (\gain -> "+" ++ String.fromInt gain)
+                            <|
+                                case content of
+                                    WithTiers _ tiers _ ->
+                                        List.map Tuple.second tiers
+
+                                    Single _ gain ->
+                                        [ gain ]
+                ]
+            , el
                 [ alignBottom
                 , Theme.celticHand
-                , Font.size 56
+                , Font.size 32
                 , centerX
                 , moveUp 8
                 ]
-                (gradientText 4 (Theme.complicationCategoryToGradient category) <|
+                (gradientText 4 gradient <|
                     Types.complicationNameToString name
                 )
             ]
         , content =
             case content of
-                Single block ->
+                Single block _ ->
                     [ Theme.blocks
                         [ height fill
                         , Theme.padding
@@ -146,7 +187,42 @@ complicationBox selected { name, content } =
                         block
                     ]
 
-                _ ->
-                    [ text "TODO" ]
+                WithTiers before tiers after ->
+                    [ Theme.column [ height fill, Theme.padding ] <|
+                        Theme.blocks [] before
+                            :: List.indexedMap
+                                (\tier ( label, _ ) ->
+                                    let
+                                        complication : Complication
+                                        complication =
+                                            { name = name
+                                            , kind = Tiered (tier + 1)
+                                            }
+
+                                        isTierSelected : Bool
+                                        isTierSelected =
+                                            List.member complication selected
+                                    in
+                                    Input.button
+                                        (if isTierSelected then
+                                            [ Theme.backgroundColor color, Border.rounded 4, padding 4 ]
+
+                                         else
+                                            [ Border.rounded 4, padding 4 ]
+                                        )
+                                        { label =
+                                            Theme.blocks []
+                                                ("- *Tier "
+                                                    ++ String.fromInt (tier + 1)
+                                                    ++ "*: "
+                                                    ++ label
+                                                    ++ "."
+                                                )
+                                        , onPress = Just ( complication, not isTierSelected )
+                                        }
+                                )
+                                tiers
+                            ++ [ Theme.blocks [] after ]
+                    ]
         , onPress = msg
         }

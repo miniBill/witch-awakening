@@ -1,4 +1,4 @@
-module Theme exposing (bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToColor, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToColor, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Background as Background
@@ -256,6 +256,11 @@ hr =
 borderColor : Int -> Attribute msg
 borderColor color =
     Border.color <| intToColor color
+
+
+backgroundColor : Int -> Attribute msg
+backgroundColor color =
+    Background.color <| intToColor color
 
 
 intToColor : Int -> Element.Color

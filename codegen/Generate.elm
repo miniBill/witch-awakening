@@ -96,7 +96,7 @@ enums =
     , enum "Size" [ "Low", "Med", "High" ]
     , enumWith "Affinity" affinities [ ( "All", "???" ) ] True
     , enum "ComplicationCategory" [ "WorldShift" ]
-    , enum "ComplicationName" [ "Brutality", "Masquerade", "TrueNames" ]
+    , enumWith "ComplicationName" [ "Brutality", "Masquerade", "TrueNames" ] [] True
     ]
         |> List.concat
 

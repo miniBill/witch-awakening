@@ -105,8 +105,9 @@ toUrl model =
                 )
                 value
     in
-    [ [ pair "class" Types.classToString model.class ]
-    , [ pair "race" Types.raceToString model.race ]
+    [ [ pair "class" Types.classToString model.class
+      , pair "race" Types.raceToString model.race
+      ]
     , List.map
         (pair "complication"
             (\{ name, kind } ->

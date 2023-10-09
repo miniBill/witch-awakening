@@ -1,8 +1,7 @@
-module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, complicationKindToString, complicationNameToCategory, complicationNameToImage)
+module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, complicationKindToString, complicationNameToCategory)
 
 import Browser.Navigation
 import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), Race)
-import Images exposing (Image)
 
 
 type Choice
@@ -51,17 +50,3 @@ complicationNameToCategory name =
 
         TrueNames ->
             WorldShift
-
-
-complicationNameToImage : ComplicationName -> Image
-complicationNameToImage name =
-    case name of
-        Brutality ->
-            Images.complicationBrutality
-
-        _ ->
-            let
-                _ =
-                    Debug.todo
-            in
-            Images.complicationBrutality
