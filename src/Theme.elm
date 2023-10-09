@@ -1,9 +1,10 @@
-module Theme exposing (bebasNeue, blocks, borderColor, captureIt, card, cardAttributes, choice, classToColor, column, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
+module Theme exposing (bebasNeue, blocks, borderColor, captureIt, card, cardAttributes, cardContent, choice, classToColor, column, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Element.Input as Input
 import Generated.Types as Types exposing (Affinity, Class(..))
 import Gradients
 import Hex
@@ -300,20 +301,45 @@ cardAttributes glow =
 
 
 card :
+    { onPress : Maybe msg
+    , glow : Maybe Int
+    , imageHeight : Int
+    , imageAttrs : List (Attribute msg)
+    , image : Image
+    , inFront : List (Element msg)
+    , content : List (Element msg)
+    }
+    -> Element msg
+card config =
+    case config.onPress of
+        Just msg ->
+            Input.button
+                (cardAttributes config.glow)
+                { label = cardContent config.imageAttrs config
+                , onPress = Just msg
+                }
+
+        Nothing ->
+            el (cardAttributes config.glow) <|
+                cardContent config.imageAttrs config
+
+
+cardContent :
     List (Attribute msg)
     ->
-        { height : Int
-        , image : Image
-        , inFront : List (Element msg)
-        , content : List (Element msg)
+        { a
+            | imageHeight : Int
+            , image : Image
+            , inFront : List (Element msg)
+            , content : List (Element msg)
         }
     -> Element msg
-card attrs config =
+cardContent attrs config =
     Element.column [ height fill ]
         (el
             (width fill
                 :: Border.rounded cardRoundness
-                :: height (px config.height)
+                :: height (px config.imageHeight)
                 :: Background.image config.image.src
                 :: List.map Element.inFront config.inFront
                 ++ attrs

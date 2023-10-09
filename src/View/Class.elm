@@ -118,34 +118,32 @@ classBox selected { class, content } =
             else
                 Just class
     in
-    Input.button
-        (Theme.cardAttributes glow)
-        { label =
-            Theme.card
-                [ Border.width 8
-                , Theme.borderColor <| Theme.classToColor class
+    Theme.card
+        { glow = glow
+        , imageAttrs =
+            [ Border.width 8
+            , Theme.borderColor <| Theme.classToColor class
+            ]
+        , imageHeight = 400
+        , image = Types.classToImage class
+        , inFront =
+            [ el
+                [ alignBottom
+                , Theme.morpheus
+                , Font.size 56
+                , centerX
+                , moveUp 8
                 ]
-                { height = 400
-                , image = Types.classToImage class
-                , inFront =
-                    [ el
-                        [ alignBottom
-                        , Theme.morpheus
-                        , Font.size 56
-                        , centerX
-                        , moveUp 8
-                        ]
-                        (gradientText 4 Gradients.yellowGradient <|
-                            Types.classToString class
-                        )
-                    ]
-                , content =
-                    [ Theme.blocks
-                        [ height fill
-                        , Theme.padding
-                        ]
-                        content
-                    ]
-                }
+                (gradientText 4 Gradients.yellowGradient <|
+                    Types.classToString class
+                )
+            ]
+        , content =
+            [ Theme.blocks
+                [ height fill
+                , Theme.padding
+                ]
+                content
+            ]
         , onPress = Just msg
         }

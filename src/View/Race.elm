@@ -583,42 +583,40 @@ raceBox selected { race, tank, affinities, charge, content } =
             else
                 Just race
     in
-    Input.button
-        (Theme.cardAttributes glow)
-        { label =
-            Theme.card []
-                { height = 600
-                , image = Types.raceToImage race
-                , inFront =
-                    [ el
-                        [ alignTop
-                        , Theme.captureIt
-                        , Font.size 56
-                        , centerX
-                        ]
-                        (gradientText 6 Gradients.yellowGradient <|
-                            Types.raceToString race
-                        )
+    Theme.card
+        { glow = glow
+        , imageAttrs = []
+        , imageHeight = 600
+        , image = Types.raceToImage race
+        , inFront =
+            [ el
+                [ alignTop
+                , Theme.captureIt
+                , Font.size 56
+                , centerX
+                ]
+                (gradientText 6 Gradients.yellowGradient <|
+                    Types.raceToString race
+                )
+            ]
+        , content =
+            [ Theme.row [ centerX ]
+                [ viewTank tank
+                , Theme.row
+                    [ moveDown 2
+                    , Border.width 4
+                    , Border.rounded 999
+                    , Background.color <| rgb 0 0 0
                     ]
-                , content =
-                    [ Theme.row [ centerX ]
-                        [ viewTank tank
-                        , Theme.row
-                            [ moveDown 2
-                            , Border.width 4
-                            , Border.rounded 999
-                            , Background.color <| rgb 0 0 0
-                            ]
-                            (List.map viewAffinity affinities)
-                        , viewCharge charge
-                        ]
-                    , Theme.blocks
-                        [ height fill
-                        , Theme.padding
-                        ]
-                        content
-                    ]
-                }
+                    (List.map viewAffinity affinities)
+                , viewCharge charge
+                ]
+            , Theme.blocks
+                [ height fill
+                , Theme.padding
+                ]
+                content
+            ]
         , onPress = Just msg
         }
 
