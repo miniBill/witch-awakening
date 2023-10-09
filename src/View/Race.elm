@@ -4,7 +4,6 @@ import Element exposing (Attribute, Element, alignTop, centerX, el, fill, height
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Element.Input as Input
 import Generated.Types as Types exposing (Affinity(..), Race(..), Size(..))
 import Gradients
 import Images exposing (Image)

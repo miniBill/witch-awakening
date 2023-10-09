@@ -1,4 +1,4 @@
-module Theme exposing (bebasNeue, blocks, borderColor, captureIt, card, cardAttributes, cardContent, choice, classToColor, column, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
+module Theme exposing (bebasNeue, blocks, borderColor, captureIt, card, choice, classToColor, column, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Background as Background
@@ -279,27 +279,6 @@ cardRoundness =
     72
 
 
-cardAttributes : Maybe Int -> List (Attribute msg)
-cardAttributes glow =
-    [ height fill
-    , width <| Element.minimum 300 <| Element.maximum 400 fill
-    , Font.color <| rgb 0 0 0
-    , Background.color <| rgb 1 1 1
-    , Border.roundEach
-        { topLeft = cardRoundness
-        , topRight = cardRoundness
-        , bottomLeft = 8
-        , bottomRight = 8
-        }
-    , case glow of
-        Just color ->
-            Border.glow (intToColor color) 8
-
-        Nothing ->
-            Border.width 0
-    ]
-
-
 card :
     { onPress : Maybe msg
     , glow : Maybe Int
@@ -311,39 +290,48 @@ card :
     }
     -> Element msg
 card config =
+    let
+        cardAttributes : List (Attribute msg)
+        cardAttributes =
+            [ height fill
+            , width <| Element.minimum 300 <| Element.maximum 400 fill
+            , Font.color <| rgb 0 0 0
+            , Background.color <| rgb 1 1 1
+            , Border.roundEach
+                { topLeft = cardRoundness
+                , topRight = cardRoundness
+                , bottomLeft = 8
+                , bottomRight = 8
+                }
+            , case config.glow of
+                Just color ->
+                    Border.glow (intToColor color) 8
+
+                Nothing ->
+                    Border.width 0
+            ]
+
+        content : Element msg
+        content =
+            Element.column [ height fill ]
+                (el
+                    (width fill
+                        :: Border.rounded cardRoundness
+                        :: height (px config.imageHeight)
+                        :: Background.image config.image.src
+                        :: List.map Element.inFront config.inFront
+                        ++ config.imageAttrs
+                    )
+                    Element.none
+                    :: config.content
+                )
+    in
     case config.onPress of
-        Just msg ->
-            Input.button
-                (cardAttributes config.glow)
-                { label = cardContent config.imageAttrs config
-                , onPress = Just msg
+        Just _ ->
+            Input.button cardAttributes
+                { label = content
+                , onPress = config.onPress
                 }
 
         Nothing ->
-            el (cardAttributes config.glow) <|
-                cardContent config.imageAttrs config
-
-
-cardContent :
-    List (Attribute msg)
-    ->
-        { a
-            | imageHeight : Int
-            , image : Image
-            , inFront : List (Element msg)
-            , content : List (Element msg)
-        }
-    -> Element msg
-cardContent attrs config =
-    Element.column [ height fill ]
-        (el
-            (width fill
-                :: Border.rounded cardRoundness
-                :: height (px config.imageHeight)
-                :: Background.image config.image.src
-                :: List.map Element.inFront config.inFront
-                ++ attrs
-            )
-            Element.none
-            :: config.content
-        )
+            el cardAttributes content

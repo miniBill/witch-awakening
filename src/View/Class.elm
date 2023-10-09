@@ -3,7 +3,6 @@ module View.Class exposing (viewClass)
 import Element exposing (Element, alignBottom, centerX, el, fill, height, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
-import Element.Input as Input
 import Generated.Types as Types exposing (Class(..))
 import Gradients
 import String.Multiline
