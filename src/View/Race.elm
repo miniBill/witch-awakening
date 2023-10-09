@@ -42,6 +42,9 @@ viewRace race =
                 , lamia
                 , aurai
                 , nymph
+                , gorgon
+                , luxal
+                , kekubi
                 ]
             )
         ]
@@ -183,6 +186,50 @@ nymph =
         Nymphs have very fine scales similar to the Naiad, but without the larger scales, only the fine scales that cause a slight glitter in the light, and counter-intuitively make their skin feel a little more silky in the spots where they're present. The obvious difference would be the presence of slender fin-like horns that give them an intuition towards what a person desires. Nymphs age 10x faster than humans, but water washes away age on contact to roughly the equivalent of a human's 18, more youthful than most witch types get. They do not require any nutrition to sustain themselves, instead relying only on an inherent ability to imbue water with mana to instill it with arcane nutrients, giving it a milky look. A dead nymph can be restored to life through physical intimacy based on the desire, like True Love's Kiss for example, among others.
 
         __Nymphs draw Mana__ from Desire, whenever desire is directed at them, or instigated by them, whether it's flirting or a good sales pitch for a new car, proportional to intensity and distance.
+        """
+    }
+
+
+gorgon : RaceDetails
+gorgon =
+    { race = Gorgon
+    , tank = Med
+    , affinities = [ Beast, Necro ]
+    , charge = Low
+    , content = """
+        Gorgons are known for the snakes growing in or replacing their hair, and some may or may not have bodily scales ranging from fine to large scales at their backs or around joints. Gorgons don't choose a tertiary affinity, but from Earth, Nature, Water, or Metal, they determine the nature of the gorgon's petrifying gaze. Any type of Stone, Wood, Ice, or Metal up to the rarity of gold. Unless protected by some means such as a Warding rune, any creature that directly sees the Gorgon's eyes becomes petrified to the chosen element until dispelled by some means Petrified creatures are in suspended animation with no needs, but are aware and can feel. Gorgons do not age so long as they have a humanoid in stasis. A slain gorgon self-petrifies and slowly self-repairs until whole at a rate of a papercut per minute. Once whole, they resurrect, cracking to reveal a new body equivalent to an 18 year old, unless they were under.
+
+        __Gorgons draw Mana__ from Petrification, while a creature is petrified their lost time passively provides the Gorgon with energy.
+        """
+    }
+
+
+luxal : RaceDetails
+luxal =
+    { race = Luxal
+    , tank = Med
+    , affinities = [ Metal, Life ]
+    , charge = Med
+    , content = """
+        Luxin have an associated metal the way an Oread or Siren have an associated animal. Their bones are formed of this metal, and they can have random metal growths visible on their skin or growing from their body such as a visible metal plate over their sternum, or dotted along their spine, or growths like horns or crowns. Their irises are literal gemstones that match the large gemstone that forms their heart equivalent. They don't bleed or burn. Metals melt like butter in their mouth, which they eat in addition to normal food. So long as they eat metal, they don't age for the day. Age can be regressed with overconsumption of metals. A dead Luxal can regrow from their gem heart if submerged in a molten pool of their associated metal, emerging whole as though aging from 0, gaining 1 year per hour spent submerged up to 24.
+
+        __Luxin draw Mana__ from Opulence, passively charging from the presence of “wealth” though it has nothing to do with monetary value, but precious metals and stones amplified by skill in working them.
+        """
+    }
+
+
+kekubi : RaceDetails
+kekubi =
+    { race = Kekubi
+    , tank = Med
+    , affinities = [ Fire, Body ]
+    , charge = High
+    , content = """
+        Kekubi look like living shadows having elemental bodies composed entirely of concentrated pitch black ash, soot, and smoke, which can emanate from them in response to negative thoughts or emotion. Any magic they use can reflect this, being reskinned into black particulates. Such blackened magic is 10% more effective. This soot emanation can cause a bother with blackening things they touch if they aren't under control. Damage to their bodies is superficial (No critical damage) but comparable overall damage can disperse their body causing death, they can remotely operate severed limbs within a 20m radius. They age like elves, and if slain they crumble into ash to reform over 24 hours if the ashes aren't scattered, or within 24 hours of at least 50% of their ashes being recombined
+
+        For some reason, if they are close to a Doll, they can form Magic Friendship free.
+
+        __Kekubi draw Mana__ from Immolation, burning their own body as though they were coal, harmlessly resting on flames with their body absorbing smoke
         """
     }
 
