@@ -2,9 +2,10 @@ module Generate exposing (main)
 
 {-| -}
 
-import Dict
+import Dict exposing (Dict)
 import Elm
 import Elm.Annotation
+import Elm.Case
 import Gen.CodeGen.Generate as Generate
 import Json.Decode exposing (Decoder, Value)
 import Result.Extra
@@ -54,15 +55,71 @@ toFiles flags =
                 |> Result.map
                     (\list ->
                         let
-                            gradients : Elm.File
-                            gradients =
+                            gradientsFile : Elm.File
+                            gradientsFile =
                                 Elm.file [ "Gradients" ]
                                     (List.concatMap Tuple.second list)
+
+                            enumsFile : Elm.File
+                            enumsFile =
+                                Elm.file [ "Generated", "Types" ]
+                                    enums
                         in
                         { info = []
-                        , files = gradients :: List.concatMap Tuple.first list
+                        , files = gradientsFile :: enumsFile :: List.concatMap Tuple.first list
                         }
                     )
+
+
+enums : List Elm.Declaration
+enums =
+    [ enum "Class" [ "Academic", "Sorceress", "Warlock" ]
+    , enum "Race" [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai" ]
+    , enum "Size" [ "Low", "Med", "High" ]
+    , enumWith "Affinity" [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ] [ ( "All", "???" ) ]
+    ]
+        |> List.concat
+
+
+enum : String -> List String -> List Elm.Declaration
+enum name cases =
+    enumWith name cases []
+
+
+enumWith : String -> List String -> List ( String, String ) -> List Elm.Declaration
+enumWith name cases exceptions =
+    let
+        type_ : Elm.Annotation.Annotation
+        type_ =
+            Elm.Annotation.named [] name
+
+        exceptionsDict : Dict String String
+        exceptionsDict =
+            Dict.fromList exceptions
+    in
+    [ Elm.customType name (List.map (\case_ -> Elm.variant case_) cases)
+    , (\value ->
+        Elm.Case.custom value
+            type_
+            (List.map
+                (\case_ ->
+                    Elm.Case.branch0 case_ <|
+                        Elm.string <|
+                            Maybe.withDefault case_ <|
+                                Dict.get case_ exceptionsDict
+                )
+                cases
+            )
+      )
+        |> Elm.fn ( String.toLower name, Just type_ )
+        |> Elm.declaration (String.toLower name ++ "ToString")
+    ]
+        |> List.map
+            (Elm.exposeWith
+                { exposeConstructor = True
+                , group = Just name
+                }
+            )
 
 
 gradient :

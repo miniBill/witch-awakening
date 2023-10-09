@@ -5,11 +5,12 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Generated.Types as Types exposing (Affinity(..), Race(..), Size(..))
 import Gradients
 import Images exposing (Image)
 import String.Multiline
 import Theme exposing (gradientText, viewAffinity)
-import Types exposing (Affinity(..), Choice(..), Race(..), Size(..))
+import Types exposing (Choice(..))
 
 
 viewRace : Maybe Race -> Element Choice
@@ -49,9 +50,9 @@ neutral : RaceDetails
 neutral =
     { race = Neutral
     , image = Images.neutral
-    , tank = Medium
+    , tank = Med
     , affinities = [ Soul, Body ]
-    , charge = Medium
+    , charge = Med
     , content = """
         The overwhelming majority of witches are Neutrals. There is nothing visually abnormal about them (by default). Even some witches who have the option to awaken as another race may want to choose to be Neutral for its baseline casual existence, no new dependencies or anything abnormal to consider. They're effectively the “Human” witch, but witches refer to them as neutral rather than human to distinguish them from the mundane. They age slower than humans, at half the rate, and do so very gracefully, and they tend to be more attractive than the average human, and are harder to kill, with more efficient biology to reduce inconveniences with less biological requirements than normal by 25%, and prevent dying from a papercut, or from a tiny air bubble in the wrong place.
 
@@ -64,7 +65,7 @@ daeva : RaceDetails
 daeva =
     { race = Daeva
     , image = Images.daeva
-    , tank = Medium
+    , tank = Med
     , affinities = [ Body, Life ]
     , charge = High
     , content = """
@@ -156,7 +157,7 @@ lamia =
     , image = Images.lamia
     , tank = High
     , affinities = [ Fire, Beast ]
-    , charge = Medium
+    , charge = Med
     , content = """
         Lamiæ are like twin counterparts to the Naiad with a bit of an inversion; Lamiæ by default have the lower body of a snake comparable to the Naiad's tail but around a third+ longer, being 5-7 times the length of their human upper body. Their body itself may or may not have scales, but they usually have slitted irises and retractile fangs with a venom that induces sleep. Lamiæ can lay an egg that grows a young new body, catching their soul to hatch if later slain.
 
@@ -169,7 +170,7 @@ aurai : RaceDetails
 aurai =
     { race = Aurai
     , image = Images.aurai
-    , tank = Medium
+    , tank = Med
     , affinities = [ Wind, Necro ]
     , charge = High
     , content = """

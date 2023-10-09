@@ -3,6 +3,7 @@ module Theme exposing (bebasNeue, blocks, borderColor, captureIt, choice, classT
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Types exposing (Affinity(..), Class(..))
 import Gradients
 import Hex
 import Html exposing (Html)
@@ -10,7 +11,6 @@ import Html.Attributes
 import Images exposing (Image)
 import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
-import Types exposing (Affinity(..), Class(..))
 
 
 rythm : number

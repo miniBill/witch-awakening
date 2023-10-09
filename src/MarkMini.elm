@@ -1,8 +1,8 @@
 module MarkMini exposing (Block(..), Color(..), Piece(..), blockParser)
 
+import Generated.Types exposing (Class(..))
 import Parser exposing ((|.), (|=), Parser)
 import Set exposing (Set)
-import Types exposing (Class(..))
 
 
 type Block

@@ -6,6 +6,7 @@ import Element exposing (Element, alignRight, centerX, fill, fillPortion, moveDo
 import Element.Background as Background
 import Element.Font as Font
 import Element.Lazy
+import Generated.Types as Types
 import Gradients
 import Images
 import String.Multiline
