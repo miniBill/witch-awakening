@@ -36,6 +36,7 @@ viewRace race =
                 , ifrit
                 , siren
                 , naiad
+                , dryad
                 ]
             )
         ]
@@ -97,6 +98,21 @@ siren =
         Sirens are beings of wind and music, melodies carried by the wind, and have a connection to birds. Their bodies grow leathers in a similar pattern as Nymphs grow scales, though some go further with leather plumage sufficient to be relatively modest without clothing, and are able to transfigure themselves into the form of a specific bird they're associated with and hybrid states between the two. Whatever the bird type, Sirens are all well known for melodic voices that are deeply pleasant to outright hypnotically attractive. Sirens age at half human rates, and reverse their age through nesting in cocoons of feathers that reverses a year per day. A dead siren who is still intact enough can be nursed back to life by breathing into them a few times a day for 1-3 days depending on severity.
 
         __Sirens draw Mana__ from Breath, whenever they take someone's breath away, when someone forgets to take a breath, when otherwise unable to breathe, or when the Siren overtly draws the breath from their lungs, within a few inches of their lips.
+        """
+    }
+
+
+dryad : RaceDetails
+dryad =
+    { race = Dryad
+    , image = Images.dryad
+    , tank = High
+    , affinities = [ Nature, Earth ]
+    , charge = Low
+    , content = """
+        Dryads have plantlike bodies given human form, from which leaves or bark can grow. Many have branches or twigs forming horns or crowns, tiaras, and diadems, that can include berries or fruits. Dryads age normally but are able to assume the form of a tree, in which they can gain any nutrients from light and soil, and de-age at 10x the rate they'd age. The presence of a dryad prevents the growth of infectious diseases and enhances the growth of plants and creatures by 200%, growing with added Vitality. Fruits are sweeter and larger, animals are larger and healthier, etc. All dryads additionally have an internal seed the size of avocado pit. If they die, this pit will grow into a large underground pod with a radiant flower, that will regrow the dryad's body over 3 months to roughly the equivalent of an 8 year old human. They'll regain their memories over a week.
+
+        __Dryads draw Mana__ from Nurture, from the growth of other living things directly contributable to the Dryad's effort, whether it's tending to plants, or feeding a person.
         """
     }
 

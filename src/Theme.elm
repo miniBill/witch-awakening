@@ -285,6 +285,9 @@ viewAffinity affinity =
                 Body ->
                     Images.affinityBody
 
+                Earth ->
+                    Images.affinityEarth
+
                 Fire ->
                     Images.affinityFire
 

@@ -40,6 +40,7 @@ type Race
     | Ifrit
     | Siren
     | Naiad
+    | Dryad
 
 
 raceToString : Race -> String
@@ -59,6 +60,9 @@ raceToString race =
 
         Naiad ->
             "Naiad"
+
+        Dryad ->
+            "Dryad"
 
 
 type Size
@@ -85,6 +89,7 @@ type Affinity
     | Beast
     | Blood
     | Body
+    | Earth
     | Fire
     | Life
     | Metal
@@ -110,6 +115,9 @@ affinityToString affinity =
 
         Body ->
             "Body"
+
+        Earth ->
+            "Earth"
 
         Fire ->
             "Fire"
