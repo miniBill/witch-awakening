@@ -173,6 +173,20 @@ aurai =
     }
 
 
+nymph : RaceDetails
+nymph =
+    { race = Nymph
+    , tank = Low
+    , affinities = [ Water, Life ]
+    , charge = High
+    , content = """
+        Nymphs have very fine scales similar to the Naiad, but without the larger scales, only the fine scales that cause a slight glitter in the light, and counter-intuitively make their skin feel a little more silky in the spots where they're present. The obvious difference would be the presence of slender fin-like horns that give them an intuition towards what a person desires. Nymphs age 10x faster than humans, but water washes away age on contact to roughly the equivalent of a human's 18, more youthful than most witch types get. They do not require any nutrition to sustain themselves, instead relying only on an inherent ability to imbue water with mana to instill it with arcane nutrients, giving it a milky look. A dead nymph can be restored to life through physical intimacy based on the desire, like True Love's Kiss for example, among others.
+
+        __Nymphs draw Mana__ from Desire, whenever desire is directed at them, or instigated by them, whether it's flirting or a good sales pitch for a new car, proportional to intensity and distance.
+        """
+    }
+
+
 type alias RaceDetails =
     { race : Race
     , tank : Size
@@ -234,7 +248,7 @@ raceBox selected { race, tank, affinities, charge, content } =
                             (gradientText 6 Gradients.yellowGradient <|
                                 Types.raceToString race
                             )
-                    , Background.image <| (Types.raceToImage race).src
+                    , Background.image (Types.raceToImage race).src
                     ]
                     Element.none
                 , Theme.row [ centerX ]

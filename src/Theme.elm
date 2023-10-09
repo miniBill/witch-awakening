@@ -3,7 +3,7 @@ module Theme exposing (bebasNeue, blocks, borderColor, captureIt, choice, classT
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types exposing (Affinity(..), Class(..))
+import Generated.Types as Types exposing (Affinity(..), Class(..))
 import Gradients
 import Hex
 import Html exposing (Html)
@@ -269,50 +269,4 @@ style key value =
 
 viewAffinity : Affinity -> Element msg
 viewAffinity affinity =
-    let
-        badge : Image
-        badge =
-            case affinity of
-                All ->
-                    Images.affinityAll
-
-                Beast ->
-                    Images.affinityBeast
-
-                Blood ->
-                    Images.affinityBlood
-
-                Body ->
-                    Images.affinityBody
-
-                Earth ->
-                    Images.affinityEarth
-
-                Fire ->
-                    Images.affinityFire
-
-                Life ->
-                    Images.affinityLife
-
-                Metal ->
-                    Images.affinityMetal
-
-                Mind ->
-                    Images.affinityMind
-
-                Nature ->
-                    Images.affinityNature
-
-                Necro ->
-                    Images.affinityNecro
-
-                Soul ->
-                    Images.affinitySoul
-
-                Water ->
-                    Images.affinityWater
-
-                Wind ->
-                    Images.affinityWind
-    in
-    image [] badge
+    image [] (Types.affinityToImage affinity)

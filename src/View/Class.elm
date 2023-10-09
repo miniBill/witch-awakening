@@ -40,7 +40,6 @@ viewClass class =
 
 type alias ClassDetails =
     { class : Class
-    , image : Image
     , content : String
     }
 
@@ -48,7 +47,6 @@ type alias ClassDetails =
 academic : ClassDetails
 academic =
     { class = Academic
-    , image = Images.academic
     , content = """
         Academics are studious and focus easily on tasks, while training and studying to further their magic. Their thorough approach to magic tends to be slower if you want to have a life outside of studies, but the most rewarding as they comprehend in more depth and their growth is in their own hands, advancing as slow or fast as the time and effort they put in. Academics gain 1 {academic _*Focus*_} for every day in which they averaged 4 hours of study, 2 for 8 hours. You can use focus to buy a Power point for 10 Focus. This cost increases by 10 Focus per purchase. (10, 20, 30, etc)
 
@@ -64,7 +62,6 @@ academic =
 sorceress : ClassDetails
 sorceress =
     { class = Sorceress
-    , image = Images.sorceress
     , content = """
         Sorceresses are inherently imbued with magic as natural extensions of their will so they tend to be more in tune with their bodies and grow through tactile training. They're naturals but tend to have less of a tangible understanding of how and why magic works or interesting implications of magical theory. Fireballs go boom, ain't gotta explain sheit. Sorceresses gain 1 {sorceress _*Might*_} for every day in which they averaged 1 hour of straining practice, 2 for 4 hours. You can use Might to buy a Power point for 10 Might. This cost increases by 10 Might per purchase. (10, 20, 30, etc)
 
@@ -80,7 +77,6 @@ sorceress =
 warlock : ClassDetails
 warlock =
     { class = Warlock
-    , image = Images.warlock
     , content = """
         Warlocks are endowed with power from some third party. Their power can't be taken back afterward anymore than such an entity might be capable of stealing power from any other witch. Instead of studying, or training, they spend time in service, partnership, employ, or worship to a patron. They grow by gaining with their patron(s), by doing quests, the Warlock gains {warlock _*Favor*_} equal to the Reward value of the quest, Warlocks can trade Favor 1-1 directly for Power due to the scarcity, being dependent on Quests. A Warlock can continue to do quests without a quest slot, but doing so offers no rewards except Favor.
 
@@ -97,7 +93,7 @@ classBox :
     Maybe Class
     -> ClassDetails
     -> Element Choice
-classBox selected { class, image, content } =
+classBox selected { class, content } =
     let
         isSelected : Bool
         isSelected =
@@ -148,7 +144,7 @@ classBox selected { class, image, content } =
                             (gradientText 4 Gradients.yellowGradient <|
                                 Types.classToString class
                             )
-                    , Background.image image.src
+                    , Background.image (Types.classToImage class).src
                     ]
                     Element.none
                 , Theme.blocks
