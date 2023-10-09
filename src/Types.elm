@@ -50,3 +50,12 @@ complicationNameToCategory name =
 
         TrueNames ->
             WorldShift
+
+        Monsters ->
+            WorldShift
+
+        Population ->
+            WorldShift
+
+        Bonk ->
+            WorldShift

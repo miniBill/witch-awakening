@@ -39,7 +39,7 @@ viewComplications complications =
 
             Complications make your life more difficult. {choice *Every Complication taken grants POWER shown in the corner.*}
             """
-        , [ brutality, masquerade, trueNames ]
+        , [ brutality, masquerade, trueNames, monsters, population, bonk ]
             |> List.map (complicationBox complications)
             |> Theme.wrappedRow
                 [ centerX
@@ -105,6 +105,48 @@ trueNames =
             [ ( "If someone knows another's True Name, both feel more drawn to one another, making it easy to always notice them in a crowd, and subtly be guided to them if looking", 1 )
             , ( "Speaking someone's True Name can affect them similar to the Suggestion perk, and they're more susceptible to persuasion against usual interest", 3 )
             , ( "Speaking a True Name can let you affect the named target with magic regardless of distance. If warded, they feel when the ward is no longer blocking them", 8 )
+            ]
+            ""
+    }
+
+
+monsters : ComplicationDetails
+monsters =
+    { name = Monsters
+    , content =
+        WithTiers
+            "_Monsters_ become more common and widespread, increasing rates. This does not mean that the monsters are terrorizing the place, and many might not even kill, but they cause problems in general. The Veil still hides them from humans and the humans from most monsters, usually."
+            [ ( "Almost every city has at least a handful of active monsters, towns may have 1-3. Monsters that target humans are _Uncommon_", 1 )
+            , ( "Cities may have dozens of active monsters while towns deal with up to a handful Monsters targeting humans are _somewhat uncommon_", 2 )
+            , ( "Cities can be infested with various monsters while towns have to deal with a few every week or 1/day. Monsters targeting humans are _common_", 4 )
+            ]
+            ""
+    }
+
+
+population : ComplicationDetails
+population =
+    { name = Population
+    , content =
+        WithTiers
+            "The _population_ of witches is decreased, increasing the burden on individual witches to maintain supernatural balances while increasing individual attention."
+            [ ( "-50%. The size of all factions is cut in half, except the ORC and Alphazon who only have half the witch asses", 1 )
+            , ( "There are only a few dozen witches with ranks 4+ in any given magic, throughout all realms of the living. Total pop of witches is less than a country", 2 )
+            , ( "There is now only a single witch with rank 5 in any given magic specialization. You yourself can only choose one, the rest are capped, and if you choose a companion with r5 in your chosen special, their rank is reduced to 4. Total witch population measured in hundreds", 3 )
+            ]
+            ""
+    }
+
+
+bonk : ComplicationDetails
+bonk =
+    { name = Bonk
+    , content =
+        WithTiers
+            "The world is shifted towards a degree of _lewdity_, you can determine for yourself if this affects just Witchdom, or the mundane world as well."
+            [ ( "Eroticism is more common. Public ads use more innuendo or nudity. PDA is a little more handsy. Hookup culture somehow even more common. Seen as a normal topic for chats", 1 )
+            , ( "Ads might be straight up explicit. PDA might include foreplay. Hide-the-pickle is often a casual pastime among friends", 2 )
+            , ( "Almost all ads are explicit. Hide-the-pickle is as common as a handshake or hug and an expected norm or you're seen as a strange prude for not engaging with it. Pass once? Maybe an off day. Repeatedly? Okay something is suspicious", 3 )
             ]
             ""
     }

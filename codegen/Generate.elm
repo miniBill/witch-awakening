@@ -90,13 +90,17 @@ enums =
         affinities : List String
         affinities =
             [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ]
+
+        complicationNames : List String
+        complicationNames =
+            [ "Brutality", "Masquerade", "TrueNames", "Monsters", "Population", "Bonk" ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
     , enum "Size" [ "Low", "Med", "High" ]
     , enumWith "Affinity" affinities [ ( "All", "???" ) ] True
     , enum "ComplicationCategory" [ "WorldShift" ]
-    , enumWith "ComplicationName" [ "Brutality", "Masquerade", "TrueNames" ] [] True
+    , enumWith "ComplicationName" complicationNames [ ( "Bonk", "*Bonk*" ) ] True
     ]
         |> List.concat
 
