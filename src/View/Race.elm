@@ -27,28 +27,18 @@ viewRace race =
             This is very simply just to give you a suggestion for perspective on how much magic you could expect to use. High Mana means a bigger tank, but charge is how fast it is filled. So high tank might be good for going all in while a low tank but high charge might have the endurance to go for longer. This is roughly balanced by how easy the charge source is to come by and how well it can stack up on itself.
             
             """
-        , Theme.wrappedRow
-            [ width fill
-            , spacing <| Theme.rythm * 3
-            ]
-            (List.map (raceBox race)
-                [ neutral
-                , daeva
-                , ifrit
-                , siren
-                , naiad
-                , dryad
-                , oread
-                , lamia
-                , aurai
-                , nymph
-                , gorgon
-                , luxal
-                , kekubi
-                , sylph
-                , undine
+        , [ [ neutral, daeva, ifrit, siren, naiad ]
+          , [ dryad, oread, lamia, aurai, nymph ]
+          , [ gorgon, luxal, kekubi, sylph, undine ]
+          , [ sprite, empusa, lilin, erinyes, hannya ]
+          , [ taura, wulong, dravir, doll, vanir ]
+          ]
+            |> List.concat
+            |> List.map (raceBox race)
+            |> Theme.wrappedRow
+                [ width fill
+                , spacing <| Theme.rythm * 3
                 ]
-            )
         ]
 
 
@@ -264,6 +254,150 @@ undine =
     }
 
 
+sprite : RaceDetails
+sprite =
+    { race = Sprite
+    , tank = Med
+    , affinities = [ Nature, Life ]
+    , charge = Med
+    , content = """
+        Sprites typically denizens of the faewild, Sprites are inherently tiny, about an inch tall, and have an associated winged insect that skews their appearance. All Sprites have wings while a wasp sprite might grow a smooth chitin plating covering their back and limbs to one extent or another. Whatever the insect, all Sprites can produce both silk webbing and honey, and both can be combined to produce hive materials. They have retractile stingers in their wrists that can inject a paralytic venom, which when combined with their honey can form a thick wax that firms up when worked like dough. Bathing in their honey reverses and prevents aging around prime. A dead sprite can be buried in a honey to revive in 3-7 days based on severity.
+
+        __Sprites draw Mana__ from Fermentation, of their honey. The traditional method being to store cells made of their own wax and silk full of honey for 7 days, becoming like a mana potion restoring 15% of their mana capacity per drop (About 2 cups equivalent). Sprites produce 1 Tbsp a day.
+        """
+    }
+
+
+empusa : RaceDetails
+empusa =
+    { race = Empusa
+    , tank = High
+    , affinities = [ Blood, Necro ]
+    , charge = High
+    , content = """
+        Empusas are a form of vampire born in intense negative emotion and torment. Unlike other witch types, a witch Empusa is frozen in their prior mortal forms, though the witch power still results in male mortals becoming female counterparts if they don't have Elephant Trunk, as well as being more physically fit. They don't age, frozen at the age they Awoke, their bodies cold and lifeless with no biological function other than optional lung capacity for scent and speech. Their eyes have an unnatural glow, the color based on the witch's individual aura, and they have slender hollow fangs with which they suck blood They store up to 5x their body weight in blood without any visual bloat, and are 100% as fast per 1x bodyweight of blood stored. A dead Empusa can be soaked in blood to reanimate them within a minute.
+
+        __Empusas draw Mana__ from Blood, draining the equivalent of one whole human to death fully charges their mana. Animals are a tenth as effective. An Empusa relies on their mana and will die if fully depleted but their charge also mends their body
+        """
+    }
+
+
+lilin : RaceDetails
+lilin =
+    { race = Lilin
+    , tank = High
+    , affinities = [ Fire, Mind ]
+    , charge = Low
+    , content = """
+        Lilin witches can trace their way back to infernal lineages- to a family line that escaped or earned their way out of hell. They have different types of horns and leathery wings, and tail(s) in different styles, and skin tinted some unnatural color. Markings on their body brand them as free demons. They have a second set of transparent eyelids that give them thermal vision, and they can't be burned, entirely comfortable lounging in or on lava flows. They do not age, and if slain they do find themselves back in hell to serve time for any misdeeds, but anyone who knows their name and the marking on their body can summon them with Consortation 3. If summoned, they don't have to return when dismissed, but summoners can include a pact they have to accept if they want to be summoned.
+
+        __Lilin draw Mana__ from Taboo, when they draw pleasure from scenarios that they themselves believe is wrong when observed by another who also believes it is wrong. Such as seducing someone into cheating on another, or public indecency.
+        """
+    }
+
+
+erinyes : RaceDetails
+erinyes =
+    { race = Erinyes
+    , tank = Med
+    , affinities = [ Wind, Blood ]
+    , charge = High
+    , content = """
+        Erinyes witches can trace their Way back to celestial lineages- to a fallen angel, a past incarnation of themselves. They have boney dark feathered wings and their skin is marked with inky black stains showing where their tears fell in the process of branding them with celestial runes identifying their sin and punishment. The celestial faction may or may not be related to the celestials behind Abrahamic religions. Erinyes cease aging between 18-26 and if slain, can re-awaken from a new mortal host somewhere unless ritually sacrificed, which stops their reincarnation for a century. Erinyes have a peculiar effect wherein the last person to physically harm them receives a mirror of any further harm to the Erinyes for 24hrs.
+
+        __Erinyes draw Mana__ from Pain, when they cause another being physical or emotional torment, amplified by vocal expressions of that suffering; ie screams or crying. Note; This could be consensual in the case of certain tastes, or a something like a scream house attraction where some are there for it Or they might even be a physical therapist.
+        """
+    }
+
+
+hannya : RaceDetails
+hannya =
+    { race = Hannya
+    , tank = High
+    , affinities = [ Water, Mind ]
+    , charge = Med
+    , content = """
+        Hannya are known as raging drunkards heavily addicted to alcohol, almost always blushed with at least a light buzz. They have long slender horns that also 'blush' like their cheeks. This blush effect is amplified into overdrive when they experience strong passions, turning bright red when enflamed by anger, which easily applies to most combat scenarios among other things as they have a habit of working themselves up. The redder they get, the more physical prowess they have, both in strength, and dexterity, and general stamina. They actually age in reverse, but whenever they are completely drunken their age will change to represent how they imagine themselves or want to be on a whim until they become sober. A dead Hannya can be brought back to life by first mending the body, then dousing with ice cold water.
+
+        __Hannya draw Mana__ from Alcoholism, drinking alcohol isn't just a quirk but their primary energy source. They aren't immune to getting drunk, but don't experience hangovers.
+        """
+    }
+
+
+taura : RaceDetails
+taura =
+    { race = Taura
+    , tank = Low
+    , affinities = [ Nature, Beast ]
+    , charge = Med
+    , content = """
+        Taurai are very obvious at a glance for their large animal lower ‘halves' where the upper torso of a human from the hips up replace an animal head and neck, the whole body shoulders-down of another animal replacing what would be their human legs. They may or may not have animal features on their head or back as well up to the extent of being Sphinx-like. This can be any legged animal from lizard or spider to rabbit or horse. This is usually a hooved animal but pawed animals aren't that rare, and spider taura are fairly common in places. Their lower bodies are generally powerful and have a high sprint speed and endurance.
+
+        __Taura draw Mana__ from Conservation, when acting in harmony with a natural state of being, which generally revolves around sustainability and continuity of life, land protecting nature or historical artifacts or buildings 60+ years old. Non-invasive improvements or protections will cause a passive mana gain for 100x the time it took to build/fix/set up. High charge while actively guarding within a 100m area.
+        """
+    }
+
+
+wulong : RaceDetails
+wulong =
+    { race = Wulong
+    , tank = High
+    , affinities = [ Beast, Mind ]
+    , charge = Med
+    , content = """
+        Wulong are exclusively a type of witch, associated with the asian lung dragons Wulong have jagged but usually smooth tipped horns like deer, or coral, and stained or painted-like arms up past their elbows that can look like stained glass or tie-dye, and they have long tails with a strip of soft fur ending in a tuft. Wulong are able to fly by force of will with somewhat strenuous effort equivalent to a full sprint Their blood is an ink the same color as the dominant color of their horns and arms. Wulong age like Elves, slowing from age 3 until reaching 18 at 100. Aslain wulong can be reborn from a painting or statue that the wulong had formed a bond with using a drop of blood. Post-death, If someone with enough passion and knowledge of the wulong's body creates an accurate masterwork, they can be reborn without a prior bonded work of art, from no remains.
+
+        __Wulong draw Mana__ from Artistry, charging in proximity to works of art. Any work of art, made with creative and/or meaningful intent imbued with subjective value of the creator. Paintings, Storybooks, Statues, etc.
+        """
+    }
+
+
+dravir : RaceDetails
+dravir =
+    { race = Dravir
+    , tank = Low
+    , affinities = [ Beast, All ]
+    , charge = Med
+    , content = """
+        Draviri are what happens when those princesses end up sacrificed to the dragon with no hero(ine) to save the day. Leaving the details aside, Draviri have the horns, tail, and scales of a dragon, typically having full claws on their hands and feet. Draviri pick their secondary elemental affinity, which is manifest in a breath weapon that affects a 15ft cone or 30ft line of flame [Fire], lightning [Wind], cold and ice [Water], stone/metal shrapnel (Earth) [Metal], or poison gas / thorns [Nature] For every 10 years of life, this area increases by 5ft. Their dense draconic muscle gives them strength and stamina like a Daeva Draviri age like Elves, and if slain an egg can be found within their body that will hatch the reborn dravir within a year in the right conditions, until hatched or destroyed.
+
+        __Dravir draw Mana__ from Destruction, when they undo the work and labor that went into producing something of value based on its value and purpose to someone else. This includes the taking of life, particularly human or witch life, which briefly provides a High charge rate.
+        """
+    }
+
+
+doll : RaceDetails
+doll =
+    { race = Doll
+    , tank = Low
+    , affinities = [ Soul, Necro ]
+    , charge = High
+    , content = """
+        Dolls are artificial beings. If you've awakened into a Doll form, your soul is likely a reincarnation of a soul used in the creation of a Doll in the past but it could be exposure to experimental energies that corrupted your witch type. Dolls get their name as most Dolls are literally ball jointed dolls of wood or porcelain but dolls can also be fully organic made of sewn flesh of different bodyparts, others are clockwork, or recently Alphazon has been making fullsynth dolls. Black market deals in Asia have been making dolls with limited self-governance and selling them.
+
+        Dolls don't age or have biological functions by default, though some can have living organic parts. A doll can't die, only cease function. If repaired then they regain function. They have all normal senses, even touch- Pain or pleasure both, but a maker can adjust these along with personality elements or even memory,
+
+        __Dolls draw Mana__ from Service, obeying a request or command from a sapient being endows them with charge and gives them a dopamine hit comparable to sugar.
+        """
+    }
+
+
+vanir : RaceDetails
+vanir =
+    { race = Vanir
+    , tank = High
+    , affinities = [ Water, Nature ]
+    , charge = High
+    , content = """
+        Vanir are beings associated with winter, and hidden groves of life amid the frost. The presence of a vanir will allow plantlife to thrive in the cold and while creatures will still feel cold, they won't suffer actual harm, including themselves, though they don't feel discomfort at all with the cold. Their bodies are blue, white, or gray emitting a cold chill, from which ice crystals form like scales, spikes, or horns.
+
+        Vanir age normally until their apparent age freezes randomly between 18-25. A slain vanir flash freezes and shatters into a mist of ice crystals. Somewhere within the nearest tundra (such as a snowcapped mountain peak), a new body will form out of ice over 3 months, then crack to free them with new life.
+
+        __Vanir draw Mana__ from Resistance, when acting against a natural state of being both in nature and in social dynamics, such as going against popular opinion, or resisting baser natural desires, not wearing many layers in the cold, or turning down that slice of cheesecake.
+        """
+    }
+
+
 type alias RaceDetails =
     { race : Race
     , tank : Size
@@ -330,11 +464,13 @@ raceBox selected { race, tank, affinities, charge, content } =
                     Element.none
                 , Theme.row [ centerX ]
                     [ viewTank tank
-                    , row [ moveDown 4 ]
-                        (List.intersperse
-                            (text " - ")
-                            (List.map viewAffinity affinities)
-                        )
+                    , Theme.row
+                        [ moveDown 2
+                        , Border.width 4
+                        , Border.rounded 999
+                        , Background.color <| rgb 0 0 0
+                        ]
+                        (List.map viewAffinity affinities)
                     , viewCharge charge
                     ]
                 , Theme.blocks
