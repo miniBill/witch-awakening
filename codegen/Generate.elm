@@ -77,42 +77,26 @@ enums =
         races : List String
         races =
             [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph" ]
+
+        affinities : List String
+        affinities =
+            [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ]
     in
-    [ enum "Class" [ "Academic", "Sorceress", "Warlock" ]
-    , enum "Race" races
-    , [ (\race ->
-            races
-                |> List.map
-                    (\case_ ->
-                        Elm.Case.branch0 case_
-                            (Elm.value
-                                { importFrom = [ "Images" ]
-                                , name = String.toLower case_
-                                , annotation =
-                                    Just
-                                        (Elm.Annotation.named [ "Images" ] "Image")
-                                }
-                            )
-                    )
-                |> Elm.Case.custom race (Elm.Annotation.named [] "Race")
-        )
-            |> Elm.fn ( "race", Just <| Elm.Annotation.named [] "Race" )
-            |> Elm.declaration "raceToImage"
-            |> Elm.exposeWith { group = Just "Race", exposeConstructor = False }
-      ]
+    [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
+    , enumWith "Race" races [] True
     , enum "Size" [ "Low", "Med", "High" ]
-    , enumWith "Affinity" [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ] [ ( "All", "???" ) ]
+    , enumWith "Affinity" affinities [ ( "All", "???" ) ] True
     ]
         |> List.concat
 
 
 enum : String -> List String -> List Elm.Declaration
 enum name cases =
-    enumWith name cases []
+    enumWith name cases [] False
 
 
-enumWith : String -> List String -> List ( String, String ) -> List Elm.Declaration
-enumWith name cases exceptions =
+enumWith : String -> List String -> List ( String, String ) -> Bool -> List Elm.Declaration
+enumWith name cases exceptions toImage =
     let
         type_ : Elm.Annotation.Annotation
         type_ =
@@ -121,30 +105,74 @@ enumWith name cases exceptions =
         exceptionsDict : Dict String String
         exceptionsDict =
             Dict.fromList exceptions
-    in
-    [ Elm.customType name (List.map (\case_ -> Elm.variant case_) cases)
-    , (\value ->
-        Elm.Case.custom value
-            type_
-            (List.map
-                (\case_ ->
-                    Elm.Case.branch0 case_ <|
-                        Elm.string <|
-                            Maybe.withDefault case_ <|
-                                Dict.get case_ exceptionsDict
-                )
+
+        lowerName : String
+        lowerName =
+            String.toLower name
+
+        typeDeclaration : Elm.Declaration
+        typeDeclaration =
+            Elm.customType name (List.map (\case_ -> Elm.variant case_) cases)
+
+        toStringDeclaration : Elm.Declaration
+        toStringDeclaration =
+            (\value ->
+                Elm.Case.custom value
+                    type_
+                    (List.map
+                        (\case_ ->
+                            Elm.Case.branch0 case_ <|
+                                Elm.string <|
+                                    Maybe.withDefault case_ <|
+                                        Dict.get case_ exceptionsDict
+                        )
+                        cases
+                    )
+            )
+                |> Elm.fn ( lowerName, Just type_ )
+                |> Elm.declaration (lowerName ++ "ToString")
+
+        toImageDeclaration : Elm.Declaration
+        toImageDeclaration =
+            (\value ->
                 cases
+                    |> List.map
+                        (\case_ ->
+                            Elm.Case.branch0 case_
+                                (Elm.value
+                                    { importFrom = [ "Images" ]
+                                    , name = lowerName ++ case_
+                                    , annotation =
+                                        Just
+                                            (Elm.Annotation.named [ "Images" ] "Image")
+                                    }
+                                )
+                        )
+                    |> Elm.Case.custom value (Elm.Annotation.named [] name)
             )
-      )
-        |> Elm.fn ( String.toLower name, Just type_ )
-        |> Elm.declaration (String.toLower name ++ "ToString")
-    ]
-        |> List.map
-            (Elm.exposeWith
-                { exposeConstructor = True
-                , group = Just name
-                }
-            )
+                |> Elm.fn
+                    ( lowerName
+                    , Just <| Elm.Annotation.named [] name
+                    )
+                |> Elm.declaration (lowerName ++ "ToImage")
+                |> Elm.exposeWith { group = Just name, exposeConstructor = False }
+    in
+    if toImage then
+        [ typeDeclaration
+        , toStringDeclaration
+        , toImageDeclaration
+        ]
+
+    else
+        [ typeDeclaration
+        , toStringDeclaration
+        ]
+            |> List.map
+                (Elm.exposeWith
+                    { exposeConstructor = True
+                    , group = Just name
+                    }
+                )
 
 
 gradient :
