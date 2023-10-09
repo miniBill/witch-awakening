@@ -1,6 +1,6 @@
 module View.Race exposing (viewRace)
 
-import Element exposing (Attribute, Element, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, spacing, width)
+import Element exposing (Attribute, Element, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, rgb, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -41,6 +41,7 @@ viewRace race =
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
+            |> Element.map Race
         ]
 
 
@@ -554,7 +555,7 @@ type alias RaceDetails =
 raceBox :
     Maybe Race
     -> RaceDetails
-    -> Element Choice
+    -> Element (Maybe Race)
 raceBox selected { race, tank, affinities, charge, content } =
     let
         isSelected : Bool
@@ -573,57 +574,56 @@ raceBox selected { race, tank, affinities, charge, content } =
 
             else
                 Nothing
+
+        msg : Maybe Race
+        msg =
+            if isSelected then
+                Nothing
+
+            else
+                Just race
     in
     Input.button
         (Theme.cardAttributes glow)
         { label =
-            Element.column [ height fill ]
-                [ el
-                    [ width fill
-                    , height <| px 600
-                    , Border.rounded Theme.cardRoundness
-                    , inFront <|
-                        el
-                            [ alignTop
-                            , Theme.captureIt
-                            , Font.size 56
-                            , centerX
-                            ]
-                            (gradientText 6 Gradients.yellowGradient <|
-                                Types.raceToString race
-                            )
-                    , Background.image (Types.raceToImage race).src
-                    ]
-                    Element.none
-                , Theme.row [ centerX ]
-                    [ viewTank tank
-                    , Theme.row
-                        [ moveDown 2
-                        , Border.width 4
-                        , Border.rounded 999
-                        , Background.color <| rgb 0 0 0
+            Theme.card []
+                { height = 600
+                , image = Types.raceToImage race
+                , inFront =
+                    [ el
+                        [ alignTop
+                        , Theme.captureIt
+                        , Font.size 56
+                        , centerX
                         ]
-                        (List.map viewAffinity affinities)
-                    , viewCharge charge
+                        (gradientText 6 Gradients.yellowGradient <|
+                            Types.raceToString race
+                        )
                     ]
-                , Theme.blocks
-                    [ height fill
-                    , Theme.padding
+                , content =
+                    [ Theme.row [ centerX ]
+                        [ viewTank tank
+                        , Theme.row
+                            [ moveDown 2
+                            , Border.width 4
+                            , Border.rounded 999
+                            , Background.color <| rgb 0 0 0
+                            ]
+                            (List.map viewAffinity affinities)
+                        , viewCharge charge
+                        ]
+                    , Theme.blocks
+                        [ height fill
+                        , Theme.padding
+                        ]
+                        content
                     ]
-                    content
-                ]
-        , onPress =
-            Just <|
-                Race <|
-                    if isSelected then
-                        Nothing
-
-                    else
-                        Just race
+                }
+        , onPress = Just msg
         }
 
 
-viewTank : Size -> Element Choice
+viewTank : Size -> Element msg
 viewTank size =
     viewSize []
         Images.tank
@@ -634,7 +634,7 @@ viewTank size =
         size
 
 
-viewCharge : Size -> Element Choice
+viewCharge : Size -> Element msg
 viewCharge size =
     viewSize [ moveRight 30 ]
         Images.charge

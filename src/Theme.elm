@@ -1,4 +1,4 @@
-module Theme exposing (bebasNeue, blocks, borderColor, captureIt, cardAttributes, cardRoundness, choice, classToColor, column, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
+module Theme exposing (bebasNeue, blocks, borderColor, captureIt, card, cardAttributes, choice, classToColor, column, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Background as Background
@@ -297,3 +297,27 @@ cardAttributes glow =
         Nothing ->
             Border.width 0
     ]
+
+
+card :
+    List (Attribute msg)
+    ->
+        { height : Int
+        , image : Image
+        , inFront : List (Element msg)
+        , content : List (Element msg)
+        }
+    -> Element msg
+card attrs config =
+    Element.column [ height fill ]
+        (el
+            (width fill
+                :: Border.rounded cardRoundness
+                :: height (px config.height)
+                :: Background.image config.image.src
+                :: List.map Element.inFront config.inFront
+                ++ attrs
+            )
+            Element.none
+            :: config.content
+        )

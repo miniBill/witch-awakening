@@ -1,14 +1,13 @@
 module View.Class exposing (viewClass)
 
-import Element exposing (Element, alignBottom, centerX, el, fill, height, inFront, moveUp, px, spacing, width)
-import Element.Background as Background
+import Element exposing (Element, alignBottom, centerX, el, fill, height, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Generated.Types as Types exposing (Class(..))
 import Gradients
 import String.Multiline
-import Theme exposing (cardAttributes, cardRoundness, gradientText)
+import Theme exposing (gradientText)
 import Types exposing (Choice(..))
 
 
@@ -27,13 +26,13 @@ viewClass class =
 
             [center]{choice _*Choose one.*_}
             """
-        , Theme.wrappedRow
-            [ centerX
-            , spacing <| Theme.rythm * 3
-            ]
-            (List.map (classBox class)
-                [ academic, sorceress, warlock ]
-            )
+        , [ academic, sorceress, warlock ]
+            |> List.map (classBox class)
+            |> Theme.wrappedRow
+                [ centerX
+                , spacing <| Theme.rythm * 3
+                ]
+            |> Element.map Class
         ]
 
 
@@ -91,7 +90,7 @@ warlock =
 classBox :
     Maybe Class
     -> ClassDetails
-    -> Element Choice
+    -> Element (Maybe Class)
 classBox selected { class, content } =
     let
         isSelected : Bool
@@ -110,43 +109,43 @@ classBox selected { class, content } =
 
             else
                 Nothing
+
+        msg : Maybe Class
+        msg =
+            if isSelected then
+                Nothing
+
+            else
+                Just class
     in
     Input.button
-        (cardAttributes glow)
+        (Theme.cardAttributes glow)
         { label =
-            Element.column [ height fill ]
-                [ el
-                    [ Border.width 8
-                    , Theme.borderColor <| Theme.classToColor class
-                    , width fill
-                    , height <| px 400
-                    , Border.rounded cardRoundness
-                    , inFront <|
-                        el
-                            [ alignBottom
-                            , Theme.morpheus
-                            , Font.size 56
-                            , centerX
-                            , moveUp 8
-                            ]
-                            (gradientText 4 Gradients.yellowGradient <|
-                                Types.classToString class
-                            )
-                    , Background.image (Types.classToImage class).src
-                    ]
-                    Element.none
-                , Theme.blocks
-                    [ height fill
-                    , Theme.padding
-                    ]
-                    content
+            Theme.card
+                [ Border.width 8
+                , Theme.borderColor <| Theme.classToColor class
                 ]
-        , onPress =
-            Just <|
-                Class <|
-                    if isSelected then
-                        Nothing
-
-                    else
-                        Just class
+                { height = 400
+                , image = Types.classToImage class
+                , inFront =
+                    [ el
+                        [ alignBottom
+                        , Theme.morpheus
+                        , Font.size 56
+                        , centerX
+                        , moveUp 8
+                        ]
+                        (gradientText 4 Gradients.yellowGradient <|
+                            Types.classToString class
+                        )
+                    ]
+                , content =
+                    [ Theme.blocks
+                        [ height fill
+                        , Theme.padding
+                        ]
+                        content
+                    ]
+                }
+        , onPress = Just msg
         }
