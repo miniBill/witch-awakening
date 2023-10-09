@@ -39,6 +39,7 @@ viewRace race =
                 , dryad
                 , oread
                 , lamia
+                , aurai
                 ]
             )
         ]
@@ -159,7 +160,22 @@ lamia =
     , content = """
         Lamiæ are like twin counterparts to the Naiad with a bit of an inversion; Lamiæ by default have the lower body of a snake comparable to the Naiad's tail but around a third+ longer, being 5-7 times the length of their human upper body. Their body itself may or may not have scales, but they usually have slitted irises and retractile fangs with a venom that induces sleep. Lamiæ can lay an egg that grows a young new body, catching their soul to hatch if later slain.
 
-        Lamiæ draw Mana from Consumption, the swallowing of live creatures up to the size of an adult man, which depending on the potency of a Lamia's distortion, leaves no visible stretching past the throat. Creatures inside passively charge the Lamia's mana based on the strength of its soul, making most animals non-viable and mortal humans the baseline. A human will charge the Lamia to full over 8 hours, at which point they'd die after growing weaker. They can be released before then. A witch would charge in 1 hour while surviving up to 24hr.
+        __Lamiæ draw Mana__ from Consumption, the swallowing of live creatures up to the size of an adult man, which depending on the potency of a Lamia's distortion, leaves no visible stretching past the throat. Creatures inside passively charge the Lamia's mana based on the strength of its soul, making most animals non-viable and mortal humans the baseline. A human will charge the Lamia to full over 8 hours, at which point they'd die after growing weaker. They can be released before then. A witch would charge in 1 hour while surviving up to 24hr.
+        """
+    }
+
+
+aurai : RaceDetails
+aurai =
+    { race = Aurai
+    , image = Images.aurai
+    , tank = Medium
+    , affinities = [ Wind, Necro ]
+    , charge = High
+    , content = """
+        Aurae are closely associated with the faewilds. Their irises are like kaleidoscopic gemstones, and have slender claw-like nails. Their voice innately carries with it a withering drain that steals a year of life per half second of exposure, which restores the Aurai's own age to around age 20, banking excess drain. Their screams can induce a horrific vision where the listener is displaced to a random point in time at least 100 years in the past, for anywhere from 1 week to the rest of their life, remaining until they find a glowing butterfly never more than 1 mile away that serves as an anchor, only to return to the moment after they heard the scream, then drop dead if slain in the past at any point. This never affects the existing timeline. When slain, they experience this vision themself and finding the butterfly resurrects them.
+
+        __Aurae draw Mana__ from Displacement, gaining power through the corrective measures involved in covering up paradoxes in the timeline as it mends itself from disruptions caused by sending a being backward in time.
         """
     }
 

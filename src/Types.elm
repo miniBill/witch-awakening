@@ -43,6 +43,7 @@ type Race
     | Dryad
     | Oread
     | Lamia
+    | Aurai
 
 
 raceToString : Race -> String
@@ -71,6 +72,9 @@ raceToString race =
 
         Lamia ->
             "Lamia"
+
+        Aurai ->
+            "Aurai"
 
 
 type Size
