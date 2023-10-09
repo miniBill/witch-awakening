@@ -45,6 +45,8 @@ viewRace race =
                 , gorgon
                 , luxal
                 , kekubi
+                , sylph
+                , undine
                 ]
             )
         ]
@@ -230,6 +232,34 @@ kekubi =
         For some reason, if they are close to a Doll, they can form Magic Friendship free.
 
         __Kekubi draw Mana__ from Immolation, burning their own body as though they were coal, harmlessly resting on flames with their body absorbing smoke
+        """
+    }
+
+
+sylph : RaceDetails
+sylph =
+    { race = Sylph
+    , tank = High
+    , affinities = [ Wind, Soul ]
+    , charge = Low
+    , content = """
+        Sylphs might look normal at a glance, the more slender frame can be excused, and the pointed ears are no big deal, but then their hair is perpetually floating ethereally, being weightless, as is their body overall. Slight gusts become significant issues, which Sylphs combat by focusing to partially etherealize, straddling the line between the material and spirit world, unaffected by the wind and invisible to those that can't perceive spirits. They can will themselves to move omnidirectionally, but can't phase through matter. They don't age, remaining around 18 equivalent. A dead sylph's body disappears leaving the spirit in place, which crystallizes into a cocoon of spirit matter. They age a year per day spent in the crystal, from 0. It will shatter on its own when they reach 18.
+
+        __Sylphs draw Mana__ from Spirits, being near high concentrations of naturally occurring spirits or spirit matter, places with history and tragedy. The site of mass graves or terrible battles or old ruins of a building with enough importance or meaning that it left spirit matter echo in the spirit world.
+        """
+    }
+
+
+undine : RaceDetails
+undine =
+    { race = Undine
+    , tank = Low
+    , affinities = [ Water, Body ]
+    , charge = High
+    , content = """
+         Undine are are comparable to the Ifrit, with elemental bodies entirely composed of water, concentrated into a gelatinous form that can feel like a normal body to the touch, although slick as though oiled lor wet, but if they lose focus their form becomes more and more liquid on a sliding scale. They have a preferred true shape for their appearance, but they can freely focus to adopt any shape with the same volume, though they can separate to reduce their volume or absorb water to add volume up to the volume of a whale. Their water body has all normal senses. They don't age and have a clear marble as a core. Damage to their body is superficial, but the core can be shattered, without an inherent means of revival if that happens.
+
+        __Undine draw Mana__ from Purification, where water based substances that come in contact with an Undine are purified of other elements and contaminants, leaving pure water with trace minerals. Can't help with anything larger than a pea, but does eliminate sand or dirt as well.
         """
     }
 
