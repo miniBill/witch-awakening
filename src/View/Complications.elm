@@ -47,7 +47,6 @@ viewComplications complications =
                 ]
             |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
         , Theme.blocks [] <| String.Multiline.here """
-
             When taking world shifts, you're altering the nature of the particular version of Witch Awakening's reality that you enter into. The others may exist independently, but this one will be your home dimension.
 
             World shifts of course won't be seen in-universe as complications shown by Penelope, rather, they will be points of fact that Penelope points out similar to how she pointed out the information about the masquerade and other setting details.
