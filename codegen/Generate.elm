@@ -9,6 +9,7 @@ import Elm.Case
 import Gen.CodeGen.Generate as Generate
 import Json.Decode exposing (Decoder, Value)
 import Result.Extra
+import String.Extra
 
 
 main : Program Value () ()
@@ -94,6 +95,8 @@ enums =
     , enumWith "Race" races [] True
     , enum "Size" [ "Low", "Med", "High" ]
     , enumWith "Affinity" affinities [ ( "All", "???" ) ] True
+    , enum "ComplicationCategory" [ "WorldShift" ]
+    , enum "ComplicationName" [ "Brutality", "Masquerade", "TrueNames" ]
     ]
         |> List.concat
 
@@ -116,11 +119,15 @@ enumWith name cases exceptions toImage =
 
         lowerName : String
         lowerName =
-            String.toLower name
+            String.Extra.decapitalize name
 
         typeDeclaration : Elm.Declaration
         typeDeclaration =
-            Elm.customType name (List.map (\case_ -> Elm.variant case_) cases)
+            Elm.customType name
+                (List.map
+                    (\case_ -> Elm.variant case_)
+                    cases
+                )
 
         toStringDeclaration : Elm.Declaration
         toStringDeclaration =
@@ -129,10 +136,10 @@ enumWith name cases exceptions toImage =
                     type_
                     (List.map
                         (\case_ ->
-                            Elm.Case.branch0 case_ <|
-                                Elm.string <|
-                                    Maybe.withDefault case_ <|
-                                        Dict.get case_ exceptionsDict
+                            Dict.get case_ exceptionsDict
+                                |> Maybe.withDefault (String.Extra.humanize case_)
+                                |> Elm.string
+                                |> Elm.Case.branch0 case_
                         )
                         cases
                     )
