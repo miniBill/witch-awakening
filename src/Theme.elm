@@ -1,6 +1,7 @@
-module Theme exposing (bebasNeue, blocks, borderColor, captureIt, choice, classToColor, column, gradientText, image, intToColor, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
+module Theme exposing (bebasNeue, blocks, borderColor, captureIt, cardAttributes, cardRoundness, choice, classToColor, column, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
+import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (Affinity, Class(..))
@@ -270,3 +271,29 @@ style key value =
 viewAffinity : Affinity -> Element msg
 viewAffinity affinity =
     image [] (Types.affinityToImage affinity)
+
+
+cardRoundness : Int
+cardRoundness =
+    72
+
+
+cardAttributes : Maybe Int -> List (Attribute msg)
+cardAttributes glow =
+    [ height fill
+    , width <| Element.minimum 300 <| Element.maximum 400 fill
+    , Font.color <| rgb 0 0 0
+    , Background.color <| rgb 1 1 1
+    , Border.roundEach
+        { topLeft = cardRoundness
+        , topRight = cardRoundness
+        , bottomLeft = 8
+        , bottomRight = 8
+        }
+    , case glow of
+        Just color ->
+            Border.glow (intToColor color) 8
+
+        Nothing ->
+            Border.width 0
+    ]

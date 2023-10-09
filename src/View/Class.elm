@@ -1,6 +1,6 @@
 module View.Class exposing (viewClass)
 
-import Element exposing (Element, alignBottom, centerX, el, fill, height, inFront, moveUp, px, rgb, spacing, width)
+import Element exposing (Element, alignBottom, centerX, el, fill, height, inFront, moveUp, px, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -8,7 +8,7 @@ import Element.Input as Input
 import Generated.Types as Types exposing (Class(..))
 import Gradients
 import String.Multiline
-import Theme exposing (gradientText)
+import Theme exposing (cardAttributes, cardRoundness, gradientText)
 import Types exposing (Choice(..))
 
 
@@ -103,27 +103,16 @@ classBox selected { class, content } =
                 Just selectedClass ->
                     selectedClass == class
 
-        roundness : Int
-        roundness =
-            72
+        glow : Maybe Int
+        glow =
+            if isSelected then
+                Just <| Theme.classToColor class
+
+            else
+                Nothing
     in
     Input.button
-        [ height fill
-        , width <| Element.minimum 300 <| Element.maximum 400 fill
-        , Font.color <| rgb 0 0 0
-        , Background.color <| rgb 1 1 1
-        , Border.roundEach
-            { topLeft = roundness
-            , topRight = roundness
-            , bottomLeft = 8
-            , bottomRight = 8
-            }
-        , if isSelected then
-            Border.glow (Theme.intToColor <| Theme.classToColor class) 8
-
-          else
-            Border.width 0
-        ]
+        (cardAttributes glow)
         { label =
             Element.column [ height fill ]
                 [ el
@@ -131,7 +120,7 @@ classBox selected { class, content } =
                     , Theme.borderColor <| Theme.classToColor class
                     , width fill
                     , height <| px 400
-                    , Border.rounded roundness
+                    , Border.rounded cardRoundness
                     , inFront <|
                         el
                             [ alignBottom

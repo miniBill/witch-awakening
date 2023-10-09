@@ -1,6 +1,6 @@
 module View.Race exposing (viewRace)
 
-import Element exposing (Attribute, Element, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, rgb255, spacing, width)
+import Element exposing (Attribute, Element, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -566,33 +566,22 @@ raceBox selected { race, tank, affinities, charge, content } =
                 Just selectedRace ->
                     selectedRace == race
 
-        roundness : Int
-        roundness =
-            72
+        glow : Maybe Int
+        glow =
+            if isSelected then
+                Just 0x00F3EA6F
+
+            else
+                Nothing
     in
     Input.button
-        [ height fill
-        , width <| Element.minimum 300 <| Element.maximum 400 fill
-        , Font.color <| rgb 0 0 0
-        , Background.color <| rgb 1 1 1
-        , Border.roundEach
-            { topLeft = roundness
-            , topRight = roundness
-            , bottomLeft = 8
-            , bottomRight = 8
-            }
-        , if isSelected then
-            Border.glow (rgb255 243 234 111) 8
-
-          else
-            Border.width 0
-        ]
+        (Theme.cardAttributes glow)
         { label =
             Element.column [ height fill ]
                 [ el
                     [ width fill
                     , height <| px 600
-                    , Border.rounded roundness
+                    , Border.rounded Theme.cardRoundness
                     , inFront <|
                         el
                             [ alignTop
