@@ -3,7 +3,7 @@ module Theme exposing (bebasNeue, blocks, borderColor, captureIt, choice, classT
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (Affinity(..), Class(..))
+import Generated.Types as Types exposing (Affinity, Class(..))
 import Gradients
 import Hex
 import Html exposing (Html)

@@ -7,7 +7,6 @@ import Element.Font as Font
 import Element.Input as Input
 import Generated.Types as Types exposing (Class(..))
 import Gradients
-import Images exposing (Image)
 import String.Multiline
 import Theme exposing (gradientText)
 import Types exposing (Choice(..))
