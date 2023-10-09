@@ -1,11 +1,11 @@
-module Theme exposing (bebasNeue, blocks, borderColor, captureIt, card, choice, classToColor, column, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
+module Theme exposing (bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToColor, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (Affinity, Class(..))
+import Generated.Types as Types exposing (Affinity, Class(..), ComplicationCategory(..))
 import Gradients
 import Hex
 import Html exposing (Html)
@@ -130,17 +130,19 @@ block input =
 
 colors :
     { academic : Int
-    , sorceress : Int
-    , warlock : Int
-    , speech : Int
     , choice : Int
+    , sorceress : Int
+    , speech : Int
+    , warlock : Int
+    , worldShift : Int
     }
 colors =
     { academic = 0x001A77FF
-    , sorceress = 0x00FF0000
-    , warlock = 0x0019AD00
-    , speech = 0x00F88000
     , choice = 0x0004D4ED
+    , sorceress = 0x00FF0000
+    , speech = 0x00F88000
+    , warlock = 0x0019AD00
+    , worldShift = 0x006ED32A
     }
 
 
@@ -313,7 +315,7 @@ card config =
 
         content : Element msg
         content =
-            Element.column [ height fill ]
+            Element.column [ height fill, width fill ]
                 (el
                     (width fill
                         :: Border.rounded cardRoundness
@@ -335,3 +337,17 @@ card config =
 
         Nothing ->
             el cardAttributes content
+
+
+complicationCategoryToColor : ComplicationCategory -> Int
+complicationCategoryToColor category =
+    case category of
+        WorldShift ->
+            colors.worldShift
+
+
+complicationCategoryToGradient : ComplicationCategory -> List ( Int, Int, Int )
+complicationCategoryToGradient category =
+    case category of
+        WorldShift ->
+            Gradients.greenGradient

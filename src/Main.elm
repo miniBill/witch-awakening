@@ -9,12 +9,14 @@ import Element.Lazy
 import Generated.Types as Types
 import Gradients
 import Images
+import List.Extra
 import String.Multiline
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Model)
 import Url
 import Url.Builder exposing (QueryParameter)
 import View.Class as Class
+import View.Complications as Complications
 import View.Race as Race
 
 
@@ -45,6 +47,7 @@ init _ _ key =
     ( { key = key
       , class = Nothing
       , race = Nothing
+      , complications = []
       }
     , Cmd.none
     )
@@ -73,11 +76,18 @@ update msg model =
                 newModel : Model
                 newModel =
                     case choice of
-                        Class class ->
+                        ChoiceClass class ->
                             { model | class = class }
 
-                        Race race ->
+                        ChoiceRace race ->
                             { model | race = race }
+
+                        ChoiceComplication complication selected ->
+                            if selected then
+                                { model | complications = complication :: model.complications }
+
+                            else
+                                { model | complications = List.Extra.remove complication model.complications }
             in
             ( newModel
             , Nav.replaceUrl model.key (toUrl newModel)
@@ -95,9 +105,18 @@ toUrl model =
                 )
                 value
     in
-    [ pair "class" Types.classToString model.class
-    , pair "race" Types.raceToString model.race
+    [ [ pair "class" Types.classToString model.class ]
+    , [ pair "race" Types.raceToString model.race ]
+    , List.map
+        (pair "complication"
+            (\{ name, kind } ->
+                Types.complicationNameToString name ++ Types.complicationKindToString kind
+            )
+            << Just
+        )
+        model.complications
     ]
+        |> List.concat
         |> List.filterMap identity
         |> Url.Builder.toQuery
         |> (\query -> "#" ++ String.dropLeft 1 query)
@@ -135,6 +154,7 @@ innerView model =
         , viewIntro
         , Element.Lazy.lazy Class.viewClass model.class
         , Element.Lazy.lazy Race.viewRace model.race
+        , Element.Lazy.lazy Complications.viewComplications model.complications
         ]
         |> Element.map Choice
 

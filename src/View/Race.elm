@@ -40,7 +40,7 @@ viewRace race =
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
-            |> Element.map Race
+            |> Element.map ChoiceRace
         ]
 
 

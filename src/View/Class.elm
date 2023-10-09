@@ -31,7 +31,7 @@ viewClass class =
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
-            |> Element.map Class
+            |> Element.map ChoiceClass
         ]
 
 
