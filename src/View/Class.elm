@@ -28,7 +28,7 @@ viewClass class =
             [center]{choice _*Choose one.*_}
             """
         , Theme.wrappedRow
-            [ width fill
+            [ centerX
             , spacing <| Theme.rythm * 3
             ]
             (List.map (classBox class)
@@ -109,7 +109,7 @@ classBox selected { class, content } =
     in
     Input.button
         [ height fill
-        , width fill
+        , width <| Element.minimum 300 <| Element.maximum 400 fill
         , Font.color <| rgb 0 0 0
         , Background.color <| rgb 1 1 1
         , Border.roundEach
