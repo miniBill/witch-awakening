@@ -39,7 +39,7 @@ viewComplications complications =
 
             Complications make your life more difficult. {choice *Every Complication taken grants POWER shown in the corner.*}
             """
-        , [ brutality, masquerade ]
+        , [ brutality, masquerade, trueNames ]
             |> List.map (complicationBox complications)
             |> Theme.wrappedRow
                 [ centerX
@@ -88,9 +88,23 @@ masquerade =
     , content =
         WithTiers
             "The _Masquerade_ is laced with Covenant and Curse-like effects."
-            [ ( "Revealing magic to strangers is auto-punished via pain response. Using magic to run key parts of a business among mortals is auto-punished by rasure of products or facilities. Can apply Rank 1 curses", 1 )
+            [ ( "Revealing magic to strangers is auto-punished via pain response. Using magic to run key parts of a business among mortals is auto-punished by erasure of products or facilities. Can apply Rank 1 curses", 1 )
             , ( "Revealing to associates is auto-punished, strangers causes extra pain. Magic in business now includes parts of the production line or marketing Can apply Rank 3 curses", 2 )
             , ( "Revealing to close relationships is now auto-punished. Associates with extra pain, strangers may leave you unconscious after intense pain. Magic in business includes basic conveniences in running your shop. Can apply Rank 5 curses", 4 )
+            ]
+            ""
+    }
+
+
+trueNames : ComplicationDetails
+trueNames =
+    { name = TrueNames
+    , content =
+        WithTiers
+            "_True Names_ become more important for any magical being. Your True Name is instinctually known to you once you Awaken. You can be coerced into providing your true name."
+            [ ( "If someone knows another's True Name, both feel more drawn to one another, making it easy to always notice them in a crowd, and subtly be guided to them if looking", 1 )
+            , ( "Speaking someone's True Name can affect them similar to the Suggestion perk, and they're more susceptible to persuasion against usual interest", 3 )
+            , ( "Speaking a True Name can let you affect the named target with magic regardless of distance. If warded, they feel when the ward is no longer blocking them", 8 )
             ]
             ""
     }
