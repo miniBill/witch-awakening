@@ -76,7 +76,13 @@ enums =
     let
         races : List String
         races =
-            [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine" ]
+            [ [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad" ]
+            , [ "Dryad", "Oread", "Lamia", "Aurai", "Nymph" ]
+            , [ "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine" ]
+            , [ "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya" ]
+            , [ "Taura", "Wulong", "Dravir", "Doll", "Vanir" ]
+            ]
+                |> List.concat
 
         affinities : List String
         affinities =
