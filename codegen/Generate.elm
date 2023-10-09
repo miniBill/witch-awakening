@@ -157,22 +157,23 @@ enumWith name cases exceptions toImage =
                 |> Elm.declaration (lowerName ++ "ToImage")
                 |> Elm.exposeWith { group = Just name, exposeConstructor = False }
     in
-    if toImage then
+    (if toImage then
         [ typeDeclaration
         , toStringDeclaration
         , toImageDeclaration
         ]
 
-    else
+     else
         [ typeDeclaration
         , toStringDeclaration
         ]
-            |> List.map
-                (Elm.exposeWith
-                    { exposeConstructor = True
-                    , group = Just name
-                    }
-                )
+    )
+        |> List.map
+            (Elm.exposeWith
+                { exposeConstructor = True
+                , group = Just name
+                }
+            )
 
 
 gradient :
