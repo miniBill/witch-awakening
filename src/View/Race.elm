@@ -604,6 +604,7 @@ raceBox selected { race, tank, affinities, charge, content } =
                 , Theme.row
                     [ moveDown 2
                     , Border.width 4
+                    , Border.color <| rgb 0 0 0
                     , Border.rounded 999
                     , Background.color <| rgb 0 0 0
                     ]
