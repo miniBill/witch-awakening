@@ -41,6 +41,7 @@ viewRace race =
                 , oread
                 , lamia
                 , aurai
+                , nymph
                 ]
             )
         ]
@@ -49,7 +50,6 @@ viewRace race =
 neutral : RaceDetails
 neutral =
     { race = Neutral
-    , image = Images.neutral
     , tank = Med
     , affinities = [ Soul, Body ]
     , charge = Med
@@ -64,7 +64,6 @@ neutral =
 daeva : RaceDetails
 daeva =
     { race = Daeva
-    , image = Images.daeva
     , tank = Med
     , affinities = [ Body, Life ]
     , charge = High
@@ -79,7 +78,6 @@ daeva =
 ifrit : RaceDetails
 ifrit =
     { race = Ifrit
-    , image = Images.ifrit
     , tank = High
     , affinities = [ Fire, Necro ]
     , charge = Low
@@ -94,7 +92,6 @@ ifrit =
 siren : RaceDetails
 siren =
     { race = Siren
-    , image = Images.siren
     , tank = High
     , affinities = [ Wind, Beast ]
     , charge = High
@@ -109,7 +106,6 @@ siren =
 naiad : RaceDetails
 naiad =
     { race = Naiad
-    , image = Images.naiad
     , tank = High
     , affinities = [ Water, Beast ]
     , charge = High
@@ -124,7 +120,6 @@ naiad =
 dryad : RaceDetails
 dryad =
     { race = Dryad
-    , image = Images.dryad
     , tank = High
     , affinities = [ Nature, Earth ]
     , charge = Low
@@ -139,7 +134,6 @@ dryad =
 oread : RaceDetails
 oread =
     { race = Oread
-    , image = Images.oread
     , tank = High
     , affinities = [ Earth, Beast ]
     , charge = High
@@ -154,7 +148,6 @@ oread =
 lamia : RaceDetails
 lamia =
     { race = Lamia
-    , image = Images.lamia
     , tank = High
     , affinities = [ Fire, Beast ]
     , charge = Med
@@ -169,7 +162,6 @@ lamia =
 aurai : RaceDetails
 aurai =
     { race = Aurai
-    , image = Images.aurai
     , tank = Med
     , affinities = [ Wind, Necro ]
     , charge = High
@@ -183,7 +175,6 @@ aurai =
 
 type alias RaceDetails =
     { race : Race
-    , image : Image
     , tank : Size
     , affinities : List Affinity
     , charge : Size
@@ -195,7 +186,7 @@ raceBox :
     Maybe Race
     -> RaceDetails
     -> Element Choice
-raceBox selected { race, image, tank, affinities, charge, content } =
+raceBox selected { race, tank, affinities, charge, content } =
     let
         isSelected : Bool
         isSelected =
@@ -243,7 +234,7 @@ raceBox selected { race, image, tank, affinities, charge, content } =
                             (gradientText 6 Gradients.yellowGradient <|
                                 Types.raceToString race
                             )
-                    , Background.image image.src
+                    , Background.image <| (Types.raceToImage race).src
                     ]
                     Element.none
                 , Theme.row [ centerX ]

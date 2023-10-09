@@ -73,8 +73,33 @@ toFiles flags =
 
 enums : List Elm.Declaration
 enums =
+    let
+        races : List String
+        races =
+            [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph" ]
+    in
     [ enum "Class" [ "Academic", "Sorceress", "Warlock" ]
-    , enum "Race" [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai" ]
+    , enum "Race" races
+    , [ (\race ->
+            races
+                |> List.map
+                    (\case_ ->
+                        Elm.Case.branch0 case_
+                            (Elm.value
+                                { importFrom = [ "Images" ]
+                                , name = String.toLower case_
+                                , annotation =
+                                    Just
+                                        (Elm.Annotation.named [ "Images" ] "Image")
+                                }
+                            )
+                    )
+                |> Elm.Case.custom race (Elm.Annotation.named [] "Race")
+        )
+            |> Elm.fn ( "race", Just <| Elm.Annotation.named [] "Race" )
+            |> Elm.declaration "raceToImage"
+            |> Elm.exposeWith { group = Just "Race", exposeConstructor = False }
+      ]
     , enum "Size" [ "Low", "Med", "High" ]
     , enumWith "Affinity" [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ] [ ( "All", "???" ) ]
     ]
