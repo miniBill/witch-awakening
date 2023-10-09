@@ -55,6 +55,8 @@ mainParser =
             |. Parser.symbol "_"
             |= innerParser '_'
             |. Parser.symbol "_"
+        , Parser.succeed (Text "\"")
+            |. Parser.symbol "\\\""
         , Parser.succeed Bold
             |. Parser.symbol "*"
             |= innerParser '*'
@@ -118,6 +120,7 @@ special =
     , '*'
     , '{'
     , '['
+    , '\\'
     ]
         |> Set.fromList
 

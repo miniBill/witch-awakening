@@ -1,6 +1,6 @@
 module View.Race exposing (viewRace)
 
-import Element exposing (Attribute, Element, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, rgb255, row, spacing, text, width)
+import Element exposing (Attribute, Element, alignTop, centerX, el, fill, height, inFront, moveDown, moveRight, moveUp, px, rgb, rgb255, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -32,6 +32,8 @@ viewRace race =
           , [ gorgon, luxal, kekubi, sylph, undine ]
           , [ sprite, empusa, lilin, erinyes, hannya ]
           , [ taura, wulong, dravir, doll, vanir ]
+          , [ changeling, elf, orc, pharon, jotun ]
+          , [ hollow, dwarf, wither, mimi, sword ]
           ]
             |> List.concat
             |> List.map (raceBox race)
@@ -394,6 +396,148 @@ vanir =
         Vanir age normally until their apparent age freezes randomly between 18-25. A slain vanir flash freezes and shatters into a mist of ice crystals. Somewhere within the nearest tundra (such as a snowcapped mountain peak), a new body will form out of ice over 3 months, then crack to free them with new life.
 
         __Vanir draw Mana__ from Resistance, when acting against a natural state of being both in nature and in social dynamics, such as going against popular opinion, or resisting baser natural desires, not wearing many layers in the cold, or turning down that slice of cheesecake.
+        """
+    }
+
+
+changeling : RaceDetails
+changeling =
+    { race = Changeling
+    , tank = Med
+    , affinities = [ Body, Mind ]
+    , charge = Med
+    , content = """
+        Some universes only produce Witches as changelings, albeit usually under different mechanics. Changelings look like human children anywhere from 0 to 14, and are notably able to freely shapeshift in the blink of an eye to assume any other appearance that matches that description, including perfectly copying the appearance of another at a glance. A changeling cannot physically age past 14 or even use transformation magic to push past it and are biologically immortal. A slain changeling will re-awaken from a mortal human child randomly within the same plane/realm. (ie; Earth), replacing them. The replaced soul and mind will find itself in The Nursery (A realm).
+
+        __Changelings draw Mana__ from Identity, any interactions had wherein another believes the changeling to be someone that they knew. An impatient changeling is able to sow doubt and uncertainty in order to briefly spike mana gain to High. Worth noting that changelings very often have the *Charge Swap* perk, or seek out a way to gain it. It costs 3p less for them.
+        """
+    }
+
+
+elf : RaceDetails
+elf =
+    { race = Elf
+    , tank = High
+    , affinities = [ Body, Nature ]
+    , charge = Med
+    , content = """
+        Elves once ruled Earth, as plentiful as modern humans currently are, with great empires of megalithic works and a global atmospheric energy grid... anyway, surviving elves come in Sun, Moon, and Sky varieties. Suns are golden-bronze skinned and favor forests. Moons are silvery-plum skinned and favor subterranean living, typically short. Sky elves are fair skinned and taller than most. Elves start out aging like humans but rapidly slow down. 100 is equivalent to a human's 18, while they might look 30 at 1,000 and never exceed looking like 40. A slain elf will resurrect at the last Elven Lifeshrine they interacted with (Or their parent if they haven't yet). Lifeshrines are rare on Earth, but most factions will have at least one. Also, Elves are *not* lewd, they're a proud & noble people darn it.
+
+        __Elves draw Mana__ from Meditation, entering a trance-like state where they look conscious but immobile with eyes glazed over. They charge 25% Mana per hour, and an hour of trance is comparable to 2 hours of deep restful sleep.
+        """
+    }
+
+
+orc : RaceDetails
+orc =
+    { race = Orc
+    , tank = High
+    , affinities = [ Body, Earth ]
+    , charge = Low
+    , content = """
+        Orcs were widely present along with the elves with a hostile relationship back then. Orcs come in three colors, green with tusks, red with horns, and blue with neither. Exceptions exist, and half-breeds often have very muted colors like a tint to a more typical skin tone. They typically have elf-like ears, but are known for being strongly built and large in stature with an average height of 6'8\\". They have low light vision capable of seeing in dark with the faintest light source, and can go without any air for hours, or days on thin air. Orcs have a sense for ore and faultlines. Orcs age normally, but when an orc dies they are reborn from the closest member of their family tree to rapidly age back to 20 equivalent within 3 months.
+
+        __Orcs draw Mana__ from Birth, fueled by the growth of new life created by the orc More effective for female orcs growing it themselves, male orcs have about a tenth the same energy gain while a currently pregnant orc gains charge very rapidly then it levels out into background charge as the offspring grow.
+        """
+    }
+
+
+pharon : RaceDetails
+pharon =
+    { race = Pharon
+    , tank = High
+    , affinities = [ Beast, Soul ]
+    , charge = Low
+    , content = """
+        Pharon are animal-headed people that have been treated as gods in some human cultures. They have human bodies but the head and neck of an animal creature, somewhat opposite to the taura. This can be any animal including insects, if it's an animal, it's valid. They'll have any abnormal features and functions the animal head would normally have, from a beetle's mandibles to the eyes and neck rotation of an owl. They age as normal but are capable of creating ambrosia by distilling light between their hands. A Pharon consuming ambrosia will cease aging for 3 days during which time for each additional “Serving” they'll age in reverse at an increasing rate. If slain, ambrosia can return their body to life if placed inside the body (or in the ash pile).
+
+        __Pharon draw Mana__ from Renown, fueled by their notoriety one way or another but increases proportional to intensity of feelings. The greater the respect, fear, reverence, or even hate and so on, the higher the charge in that moment of thought. They can feel their name spoken.
+        """
+    }
+
+
+jotun : RaceDetails
+jotun =
+    { race = Jotun
+    , tank = Med
+    , affinities = [ Body, Blood ]
+    , charge = Low
+    , content = """
+        Jotun are a truly ancient race that reigned prior to the antediluvian elven kingdoms where they were slaves. They can grow to 15 meters in height on demand with a around a 15% mana drain, negligible drain to return to normal. Proportional strength and speed. They can remain in either size indefinitely. Jotun cease aging} at 31 for males, 21 for females, though they all share the same max height. If slain, a jotun has a second body 1/30th off their size located where a heart would be encased in a crystal-like calcium shell impervious to most things short of a rift blade. This shell cracks to free and wake the body reborn in 3 days if slain at full size, 3 weeks if slain in human size.
+
+        __Jotun draw Mana__ from Flesh. Any meat will provide Charge but, naturally, creatures with greater souls give greater charge... humans, or more still, witches Animal meats low, human is medium, witch is high. Charge is passive while digesting. Humanoid flesh gives them a spine-tingling sense of bliss that can be addictive. leading to some unpleasantries.
+        """
+    }
+
+
+hollow : RaceDetails
+hollow =
+    { race = Hollow
+    , tank = High
+    , affinities = [ Soul, Metal ]
+    , charge = Low
+    , content = """
+        Hollows are a race of people that are a merger of spirit and metal. They have bodies that behave like spirits, and spirits that behave like bodies. Their physical body is invisible and intangible, but bound to a suit of armor, and casts a colored glow based on their aura. Their spirit form on the other hand, has biological processes, which is how Hollows reproduce. In their spirit form with any other spirit. Their physical form carrying the offspring will have a visible orb of metal with a will-o-wisp-like glow around it, internally within their own suit of armor which will then grow over time as it collects metals and minerals. They eat spirit matter to survive, much like a Spirit Beast, but can consume spirit objects, not just ‘living’ spirits. The armor heals the way a body would, or with healing magics. Their spirit can remove the armor, but can only move within 30ft of it. A Hollow “Dies” if their armor is destroyed to the point of unusability, but can be brought back to life by reforging their armor if any part of it remains to incorporate in it.
+
+        __Hollows draw Mana__ from Ore. They place raw ore within their armor where it suspends and breaks down over time, and is used for the armor's integrity.
+        """
+    }
+
+
+dwarf : RaceDetails
+dwarf =
+    { race = Dwarf
+    , tank = Med
+    , affinities = [ Earth, Metal ]
+    , charge = High
+    , content = """
+        Dwarves are a short race that stands between 3-4f tall. They have larger eyes proportionally to most humanoids. They're very long lived like elves but they stay more youthful for longer, never growing more from their youthful state until they begin wrinkling with old age after 300+ years. The main way to tell a Dwarf's age is the length of their hair (or beard for males, & muscles, more pronounced in males). Every dwarf has an associated metal up to the rarity of gold, which grows in fine threads like hair, including the beard of male dwarves, and their bones are all high carbon steel, their muscle sinews dense with incorporated metals, making them extremely hardy and durable as though armored with bones that very rarely break, though heavier than an Orc They seem to have boundless stamina and laser focus their pursuits.
+
+        They have low-light vision & don't need air. A dead Dwarf given a dwarven burial (even if no body remains) can be reborn to a relative, to regain memories at age 10. Someone can volunteer at the funeral.
+
+        __Dwarves draw Mana__ from Community, the presence of other dwarves or creatures with this charge method. Low with 1 other, Med with 6, High with 20+.
+"""
+    }
+
+
+wither : RaceDetails
+wither =
+    { race = Wither
+    , tank = High
+    , affinities = [ Necro, Metal ]
+    , charge = Med
+    , content = """
+        Withers are cursed people as a result of the horrific actions of their ancestors or past incarnation of themselves. They'll be born thinking they're Neutral but will be plagued with bad fortunes and health issues. At around age 18, they'll die of a mysterious condition only to rise again in 3 days to a cold body with blackened limbs rotting on the bone. They're no longer unlucky, but their undead body continually tries to rot from the extremities inward, they'd have skeletal fingers by the time their shoulders begin to blacken, over a week duration, They can delay and reverse decay through cannibalizing humanoid flesh leaving behind a skeleton, to regrow their own and remain whole for 1 week. An arm for an arm, body for body, ect. They can do this at a distance of 30ft. They have an aura of decay that makes people feel ill, and rapidly rusts metals. A nail would be dustin a minute They cannot die, they continue to reanimate every full moon unless impaled on a gold or silver spike with coins over the eyes / eye sockets.
+
+        __Withers draw Mana__ from Rot, empowered by the presence of rotting organic matter, particularly meats, proportional to the quantity, & the sapience of the body in life.
+        """
+    }
+
+
+mimi : RaceDetails
+mimi =
+    { race = Mimi
+    , tank = Low
+    , affinities = [ Beast, Life ]
+    , charge = High
+    , content = """
+        Mimis are animal people much like Oreads, but lack the Earth connection, and come in two flavors of Amazons and Halflings, some subspecies being over 6f| tall while the others rarely exceed 4"8" Like Oreads, they have an associated animal that they attribute, usually mammals but it could be any natural animal. They're almost always lighthearted people full of life and vibrance, where Oreads can often be a melancholic sort, introverts to the Mimi's extroversion (On average). They can be impulsive and seem to naturally have improved luck hard to quantify, otherwise they benefit from typical tropes associated with their animal reference, having about 2 “Traits” (Stacks with Familiarity) other than physical characteristics which don't count against this. Mimi's stop aging at roughly 18 for halflings, or between 25-35 for amazons. A dead mimi can be brought back to life by erecting a shrine to them, and a tear drop.
+
+        __Mimis draw Mana__ from Headpats, Belly Rubs, and Back Scratches, or similar forms of contact, recovering 5% of their mana capacity per second of contact. A Mimi can headpat themselves for 0.5%, but this makes them feel depressed and teary for some reason.
+        """
+    }
+
+
+sword : RaceDetails
+sword =
+    { race = Sword
+    , tank = Low
+    , affinities = [ Metal, Blood ]
+    , charge = Low
+    , content = """
+        Wait what? Oh I've heard of these before. Huh, you may be a Sword Yeah, a sentient sword and a living relic. “Swords” have a humanoid body that can visually look like any other race shown here, but they adopt a sword form that is their true form. If unconscious or slain, they'd adopt their sword form. They have no biological needs, but do age up until age 20 equivalent, their sword form starting out as a knife and will grow with their body over time into some type of sword based on their personality, Can include polearms, just swords with long handles, and axes, weird swords with long handles, or hammers... swords with very weird flat blades. Don't ask questions, just stab. Their sword form heals over time, damage reflecting in their humanoid body. Adead sword can be brought to life by using the inert sword to take a life. In sword form, they have all their magic abilities without requiring hands, and all magic manifests in some sword related way. They can synchronize with the thoughts and intentions a wielder.
+
+        __Swords draw Mana__ from Battle, gaining MP during conflict. Increases to Med after 2 minutes, & High after 10 minutes.
         """
     }
 

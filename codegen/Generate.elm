@@ -81,6 +81,8 @@ enums =
             , [ "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine" ]
             , [ "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya" ]
             , [ "Taura", "Wulong", "Dravir", "Doll", "Vanir" ]
+            , [ "Changeling", "Elf", "Orc", "Pharon", "Jotun" ]
+            , [ "Hollow", "Dwarf", "Wither", "Mimi", "Sword" ]
             ]
                 |> List.concat
 
