@@ -39,35 +39,38 @@ complicationKindToString kind =
             ""
 
 
-complicationNameToCategory : ComplicationName -> ComplicationCategory
+complicationNameToCategory : ComplicationName -> Maybe ComplicationCategory
 complicationNameToCategory name =
     case name of
         Brutality ->
-            WorldShift
+            Just WorldShift
 
         Masquerade ->
-            WorldShift
+            Just WorldShift
 
         TrueNames ->
-            WorldShift
+            Just WorldShift
 
         Monsters ->
-            WorldShift
+            Just WorldShift
 
         Population ->
-            WorldShift
+            Just WorldShift
 
         Bonk ->
-            WorldShift
+            Just WorldShift
 
         StoryArc ->
-            GameMode
+            Just GameMode
 
         EarlyBird ->
-            GameMode
+            Just GameMode
 
         SkillTree ->
-            GameMode
+            Just GameMode
 
         Constellation ->
-            GameMode
+            Just GameMode
+
+        _ ->
+            Nothing

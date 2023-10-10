@@ -1,10 +1,10 @@
 module View.Complications exposing (viewComplications)
 
-import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, height, moveDown, moveUp, padding, spacing, width)
+import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, padding, px, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (ComplicationCategory, ComplicationName(..))
+import Generated.Types as Types exposing (Class(..), ComplicationCategory, ComplicationName(..))
 import Gradients
 import List.Extra
 import String.Multiline
@@ -34,6 +34,8 @@ viewComplications complications =
             "Now.... Let's see if we can spot any {choice _*complications*_} with your true form." {choice Complications raise your POWER CAP to a max of +30}, OR {choice grant additional Starting Points} _within your Power Cap_ separately.
 
             Complications make your life more difficult. {choice *Every Complication taken grants POWER shown in the corner.*}
+
+            # World Shifts
             """
         , [ complicationBox complications brutality
           , complicationBox complications masquerade
@@ -62,7 +64,7 @@ viewComplications complications =
                 ]
             |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
         , Theme.blocks [] <| String.Multiline.here """
-            # Game mode
+            # Game Mode
 
             {choice You can only choose one game mode, or none to play the default way. Each supports a different type of player, and what you might want out of it.}
             """
@@ -106,11 +108,22 @@ viewComplications complications =
                 , spacing <| Theme.rythm * 3
                 ]
             |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
+        , Theme.blocks [] "# More Complications"
+        , [ dysfunction
+          , vulnerability
+          ]
+            |> List.map (complicationBox complications)
+            |> Theme.wrappedRow
+                [ centerX
+                , spacing <| Theme.rythm * 3
+                ]
+            |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
         ]
 
 
 type alias ComplicationDetails =
     { name : ComplicationName
+    , class : Maybe Class
     , content : Content
     }
 
@@ -118,11 +131,13 @@ type alias ComplicationDetails =
 type Content
     = WithTiers String (List ( String, Int )) String
     | Single Int String
+    | WithChoices String (List ( String, Int )) String
 
 
 brutality : ComplicationDetails
 brutality =
     { name = Brutality
+    , class = Nothing
     , content =
         WithTiers
             "The world is shifted towards _brutality_ to a chosen tier:"
@@ -137,6 +152,7 @@ brutality =
 masquerade : ComplicationDetails
 masquerade =
     { name = Masquerade
+    , class = Nothing
     , content =
         WithTiers
             "The _Masquerade_ is laced with Covenant and Curse-like effects."
@@ -151,6 +167,7 @@ masquerade =
 trueNames : ComplicationDetails
 trueNames =
     { name = TrueNames
+    , class = Nothing
     , content =
         WithTiers
             "_True Names_ become more important for any magical being. Your True Name is instinctually known to you once you Awaken. You can be coerced into providing your true name."
@@ -165,6 +182,7 @@ trueNames =
 monsters : ComplicationDetails
 monsters =
     { name = Monsters
+    , class = Nothing
     , content =
         WithTiers
             "_Monsters_ become more common and widespread, increasing rates. This does not mean that the monsters are terrorizing the place, and many might not even kill, but they cause problems in general. The Veil still hides them from humans and the humans from most monsters, usually."
@@ -179,6 +197,7 @@ monsters =
 population : ComplicationDetails
 population =
     { name = Population
+    , class = Nothing
     , content =
         WithTiers
             "The _population_ of witches is decreased, increasing the burden on individual witches to maintain supernatural balances while increasing individual attention."
@@ -193,6 +212,7 @@ population =
 bonk : ComplicationDetails
 bonk =
     { name = Bonk
+    , class = Nothing
     , content =
         WithTiers
             "The world is shifted towards a degree of _lewdity_, you can determine for yourself if this affects just Witchdom, or the mundane world as well."
@@ -207,6 +227,7 @@ bonk =
 storyArc : ComplicationDetails
 storyArc =
     { name = StoryArc
+    , class = Nothing
     , content =
         Single 0
             """
@@ -225,6 +246,7 @@ storyArc =
 earlyBird : ComplicationDetails
 earlyBird =
     { name = EarlyBird
+    , class = Nothing
     , content =
         Single 0
             """
@@ -240,6 +262,7 @@ earlyBird =
 skillTree : ComplicationDetails
 skillTree =
     { name = SkillTree
+    , class = Nothing
     , content =
         Single 0
             """
@@ -253,6 +276,7 @@ skillTree =
 constellation : ComplicationDetails
 constellation =
     { name = Constellation
+    , class = Nothing
     , content =
         Single 0
             """
@@ -272,17 +296,44 @@ constellation =
     }
 
 
+dysfunction : ComplicationDetails
+dysfunction =
+    { name = Dysfunction
+    , class = Just Sorceress
+    , content =
+        Single 12
+            """
+            "WHOA I was wrong, I'm so sorry. You ARE witch, you'll get Witch Type as normal, you have lot of power... but... it looks like your maximum rank is 0... It's not unheard of." You only benefit from Rank 0 effects of magic, and are otherwise incapable of putting any ranks into any magic specializations, or any perks with a cost greater than 4. (after counting affinity and type discounts). No impact on Relics, Gadgetry, Integration, Type perks, or Metamorphosis.
+            """
+    }
+
+
+vulnerability : ComplicationDetails
+vulnerability =
+    { name = Vulnerability
+    , class = Just Academic
+    , content =
+        WithChoices
+            "Choose one serious Weakness. Weakness bypasses Affinity resistances, negating it."
+            [ ( "*Pyre*: You catch fire as though made of dry straw and lint.", 4 )
+            , ( "*Melt*: Water melts you as though it were an incredible acid, but only when recognizable as water and not another product, such as “Beer”, or “Soda”", 4 )
+            , ( "*Iron*: Iron and all its forms that would still be called iron, sear you as though white hot, and can bum through you. An iron blade passing through you with ease.", 4 )
+            ]
+            ""
+    }
+
+
 complicationBox :
     List Complication
     -> ComplicationDetails
     -> Element ( Complication, Bool )
-complicationBox selected { name, content } =
+complicationBox selected { name, class, content } =
     let
         isSelected : Maybe Complication
         isSelected =
             List.Extra.find (\sel -> sel.name == name) selected
 
-        category : ComplicationCategory
+        category : Maybe ComplicationCategory
         category =
             Types.complicationNameToCategory name
 
@@ -306,13 +357,38 @@ complicationBox selected { name, content } =
                 ( WithTiers _ _ _, Nothing ) ->
                     Nothing
 
+                ( WithChoices _ _ _, Nothing ) ->
+                    Nothing
+
         gradient : List ( Int, Int, Int )
         gradient =
-            Theme.complicationCategoryToGradient category
+            category
+                |> Maybe.map Theme.complicationCategoryToGradient
+                |> Maybe.withDefault Gradients.blueGradient
 
         color : Int
         color =
-            Theme.complicationCategoryToColor category
+            category
+                |> Maybe.map Theme.complicationCategoryToColor
+                |> Maybe.withDefault Theme.colors.folk
+
+        gainGradient : Element msg
+        gainGradient =
+            (case content of
+                WithTiers _ tiers _ ->
+                    List.map Tuple.second tiers
+
+                WithChoices _ choices _ ->
+                    List.map Tuple.second choices
+
+                Single gain _ ->
+                    [ gain ]
+            )
+                |> List.filter ((/=) 0)
+                |> List.Extra.unique
+                |> List.map (\gain -> "+" ++ String.fromInt gain)
+                |> String.join "/"
+                |> gradientText 4 Gradients.yellowGradient
     in
     Theme.card
         { glow = glow
@@ -323,28 +399,36 @@ complicationBox selected { name, content } =
         , imageHeight = 400
         , image = Types.complicationNameToImage name
         , inFront =
-            [ Element.column
-                [ alignTop
-                , Font.size 28
-                , centerX
-                , moveDown 8
-                ]
-                [ el [ centerX, Theme.captureIt ] <|
-                    gradientText 4 gradient <|
-                        Types.complicationCategoryToString category
-                , (case content of
-                    WithTiers _ tiers _ ->
-                        List.map Tuple.second tiers
+            [ case class of
+                Nothing ->
+                    Element.none
 
-                    Single gain _ ->
-                        [ gain ]
-                  )
-                    |> List.filter ((/=) 0)
-                    |> List.map (\gain -> "+" ++ String.fromInt gain)
-                    |> String.join "/"
-                    |> gradientText 4 Gradients.yellowGradient
-                    |> el [ centerX ]
-                ]
+                Just c ->
+                    el [ alignBottom ] <|
+                        Theme.image [ width <| px 40 ] <|
+                            Theme.classToBadge c
+            , case category of
+                Just c ->
+                    Element.column
+                        [ alignTop
+                        , Font.size 28
+                        , centerX
+                        , moveDown 8
+                        ]
+                        [ el [ centerX, Theme.captureIt ] <|
+                            gradientText 4 gradient <|
+                                Types.complicationCategoryToString c
+                        , el [ centerX, Theme.captureIt ] gainGradient
+                        ]
+
+                Nothing ->
+                    el
+                        [ moveDown 16
+                        , moveRight 16
+                        , Font.size 28
+                        , Theme.captureIt
+                        ]
+                        gainGradient
             , el
                 [ alignBottom
                 , Theme.celticHand
@@ -363,7 +447,7 @@ complicationBox selected { name, content } =
                         [ height fill
                         , Theme.padding
                         ]
-                        block
+                        (String.Multiline.here block)
                     ]
 
                 WithTiers before tiers after ->
@@ -401,6 +485,42 @@ complicationBox selected { name, content } =
                                         }
                                 )
                                 tiers
+                            ++ [ Theme.blocks [] after ]
+                    ]
+
+                WithChoices before choices after ->
+                    [ Theme.column [ height fill, Theme.padding ] <|
+                        Theme.blocks [] before
+                            :: List.indexedMap
+                                (\choice ( label, _ ) ->
+                                    let
+                                        complication : Complication
+                                        complication =
+                                            { name = name
+                                            , kind = Tiered (choice + 1)
+                                            }
+
+                                        isChoiceSelected : Bool
+                                        isChoiceSelected =
+                                            List.member complication selected
+                                    in
+                                    Input.button
+                                        (if isChoiceSelected then
+                                            [ Theme.backgroundColor color, Border.rounded 4, padding 4 ]
+
+                                         else
+                                            [ Border.rounded 4, padding 4 ]
+                                        )
+                                        { label =
+                                            Theme.blocks []
+                                                ("- "
+                                                    ++ label
+                                                    ++ "."
+                                                )
+                                        , onPress = Just ( complication, not isChoiceSelected )
+                                        }
+                                )
+                                choices
                             ++ [ Theme.blocks [] after ]
                     ]
         , onPress = msg
