@@ -93,7 +93,18 @@ enums =
 
         complicationNames : List String
         complicationNames =
-            [ "Brutality", "Masquerade", "TrueNames", "Monsters", "Population", "Bonk", "StoryArc", "EarlyBird", "SkillTree", "Constellation", "Dysfunction", "Vulnerability", "Rejection", "Crutch", "Restriction", "Hunted", "Dislikeable", "MonsterBait", "BlackSwan", "SpellSink", "LikeADuck", "LikeARock", "EyeCatcher", "SillyGoose", "HardLessons", "ColdHeart", "Hideous", "WitchMark" ]
+            [ [ "Brutality", "Masquerade", "TrueNames", "Monsters" ]
+            , [ "Population", "Bonk", "StoryArc", "EarlyBird" ]
+            , [ "SkillTree", "Constellation", "Dysfunction", "Vulnerability" ]
+            , [ "Rejection", "Crutch", "Restriction", "Hunted" ]
+            , [ "Dislikeable", "MonsterBait", "BlackSwan", "SpellSink" ]
+            , [ "LikeADuck", "LikeARock", "EyeCatcher", "SillyGoose" ]
+            , [ "HardLessons", "ColdHeart", "Hideous", "WitchMark" ]
+            , [ "Nemesis", "Addiction", "SensoryDisability", "PhysicalDisability" ]
+            , [ "SensoryShock", "AdoringFan", "VeryDere", "Requirement" ]
+            , [ "Unveiled", "Nightmares", "Kryptonite", "FitWitch" ]
+            ]
+                |> List.concat
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
