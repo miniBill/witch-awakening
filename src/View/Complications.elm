@@ -1,10 +1,10 @@
 module View.Complications exposing (viewComplications)
 
-import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, padding, px, spacing, width)
+import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveLeft, moveRight, moveUp, padding, px, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (Class(..), ComplicationCategory, ComplicationName(..))
+import Generated.Types as Types exposing (Class(..), ComplicationCategory, ComplicationName(..), Slot(..))
 import Gradients
 import List.Extra
 import String.Multiline
@@ -34,35 +34,7 @@ viewComplications complications =
             "Now.... Let's see if we can spot any {choice _*complications*_} with your true form." {choice Complications raise your POWER CAP to a max of +30}, OR {choice grant additional Starting Points} _within your Power Cap_ separately.
 
             Complications make your life more difficult. {choice *Every Complication taken grants POWER shown in the corner.*}
-
-            # World Shifts
             """
-        , [ complicationBox complications brutality
-          , complicationBox complications masquerade
-          , complicationBox complications trueNames
-          , complicationBox complications monsters
-          , complicationBox complications population
-          , complicationBox complications bonk
-          , Theme.blocks
-                [ width <| Element.maximum 400 fill
-                , alignTop
-                , Border.width 1
-                , Theme.padding
-                , Theme.borderColor Theme.colors.worldShift
-                ]
-                (String.Multiline.here """
-                    When taking world shifts, you're altering the nature of the particular version of Witch Awakening's reality that you enter into. The others may exist independently, but this one will be your home dimension.
-
-                    World shifts of course won't be seen in-universe as complications shown by Penelope, rather, they will be points of fact that Penelope points out similar to how she pointed out the information about the masquerade and other setting details.
-
-                    You can always choose if a World Shift affects the mundane and magical world alike, or only affects the magical world. (Only affecting the mundane world would be too inconsequential.)
-                    """)
-          ]
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rythm * 3
-                ]
-            |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
         , Theme.blocks [] <| String.Multiline.here """
             # Game Mode
 
@@ -90,7 +62,7 @@ viewComplications complications =
                     - (epic) {epic *EPIC*} slots use a purple token.
                     - (white) {white White} tokens are for variable options granting or requiring slots of a custom value based on the Power granted or required of the option in question, can use multiple slots per individual segments of a variable option, like each 4p class of Summer School.
 
-                    *Folk* = 1-4p. *Noble* = 5-8p. *Heroic* = 9-12p. *Epic* = 13-20.
+                    *Folk* = 1-4p. *Noble* = 5-8p. *Heroic* = 9-12p. *Epic* = 13+.
 
                     You can also use this to break down any slot gains from sources that may have given you power later on.
 
@@ -101,6 +73,33 @@ viewComplications complications =
                     In _Skill Tree mode_, you can reserve the slots from complications for later use.
 
                     *Options with a cost of 0* or less that would normally be free as a result of your class, can be treated as a white token “Free” slot.
+                    """)
+          ]
+            |> Theme.wrappedRow
+                [ centerX
+                , spacing <| Theme.rythm * 3
+                ]
+            |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
+        , Theme.blocks [] "# World Shifts"
+        , [ complicationBox complications brutality
+          , complicationBox complications masquerade
+          , complicationBox complications trueNames
+          , complicationBox complications monsters
+          , complicationBox complications population
+          , complicationBox complications bonk
+          , Theme.blocks
+                [ width <| Element.maximum 400 fill
+                , alignTop
+                , Border.width 1
+                , Theme.padding
+                , Theme.borderColor Theme.colors.worldShift
+                ]
+                (String.Multiline.here """
+                    When taking world shifts, you're altering the nature of the particular version of Witch Awakening's reality that you enter into. The others may exist independently, but this one will be your home dimension.
+
+                    World shifts of course won't be seen in-universe as complications shown by Penelope, rather, they will be points of fact that Penelope points out similar to how she pointed out the information about the masquerade and other setting details.
+
+                    You can always choose if a World Shift affects the mundane and magical world alike, or only affects the magical world. (Only affecting the mundane world would be too inconsequential.)
                     """)
           ]
             |> Theme.wrappedRow
@@ -372,8 +371,8 @@ complicationBox selected { name, class, content } =
                 |> Maybe.map Theme.complicationCategoryToColor
                 |> Maybe.withDefault Theme.colors.folk
 
-        gainGradient : Element msg
-        gainGradient =
+        gains : List Int
+        gains =
             (case content of
                 WithTiers _ tiers _ ->
                     List.map Tuple.second tiers
@@ -386,9 +385,19 @@ complicationBox selected { name, class, content } =
             )
                 |> List.filter ((/=) 0)
                 |> List.Extra.unique
+
+        gainGradient : Element msg
+        gainGradient =
+            gains
                 |> List.map (\gain -> "+" ++ String.fromInt gain)
                 |> String.join "/"
                 |> gradientText 4 Gradients.yellowGradient
+
+        viewSlot : Slot -> Element msg
+        viewSlot slot =
+            el [ alignRight, moveLeft 4, moveDown 4 ] <|
+                Theme.image [ width <| px 32 ] <|
+                    Types.slotToImage slot
     in
     Theme.card
         { glow = glow
@@ -407,6 +416,15 @@ complicationBox selected { name, class, content } =
                     el [ alignBottom ] <|
                         Theme.image [ width <| px 40 ] <|
                             Theme.classToBadge c
+            , case gains of
+                [] ->
+                    Element.none
+
+                [ g ] ->
+                    viewSlot (gainToSlot g)
+
+                _ ->
+                    viewSlot White
             , case category of
                 Just c ->
                     Element.column
@@ -467,12 +485,15 @@ complicationBox selected { name, class, content } =
                                             List.member complication selected
                                     in
                                     Input.button
-                                        (if isTierSelected then
-                                            [ Theme.backgroundColor color, Border.rounded 4, padding 4 ]
+                                        [ if isTierSelected then
+                                            Theme.backgroundColor color
 
-                                         else
-                                            [ Border.rounded 4, padding 4 ]
-                                        )
+                                          else
+                                            Border.width 1
+                                        , Border.width 1
+                                        , Border.rounded 4
+                                        , padding 4
+                                        ]
                                         { label =
                                             Theme.blocks []
                                                 ("- *Tier "
@@ -525,3 +546,18 @@ complicationBox selected { name, class, content } =
                     ]
         , onPress = msg
         }
+
+
+gainToSlot : Int -> Slot
+gainToSlot gain =
+    if gain <= 4 then
+        Folk
+
+    else if gain <= 8 then
+        Noble
+
+    else if gain <= 12 then
+        Heroic
+
+    else
+        Epic
