@@ -93,7 +93,7 @@ enums =
 
         complicationNames : List String
         complicationNames =
-            [ "Brutality", "Masquerade", "TrueNames", "Monsters", "Population", "Bonk", "StoryArc", "EarlyBird", "SkillTree", "Constellation", "Dysfunction", "Vulnerability", "Rejection", "Crutch", "Restriction" ]
+            [ "Brutality", "Masquerade", "TrueNames", "Monsters", "Population", "Bonk", "StoryArc", "EarlyBird", "SkillTree", "Constellation", "Dysfunction", "Vulnerability", "Rejection", "Crutch", "Restriction", "Hunted", "Dislikeable", "MonsterBait", "BlackSwan", "SpellSink", "LikeADuck", "LikeARock", "EyeCatcher", "SillyGoose", "HardLessons", "ColdHeart", "Hideous", "WitchMark" ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True

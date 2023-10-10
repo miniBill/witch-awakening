@@ -113,6 +113,19 @@ viewComplications complications =
           , rejection
           , crutch
           , restriction
+          , hunted
+          , dislikeable
+          , monsterBait
+          , blackSwan
+          , spellSink
+          , likeADuck
+          , likeARock
+          , eyeCatcher
+          , sillyGoose
+          , hardLessons
+          , coldHeart
+          , hideous
+          , witchMark
           ]
             |> List.map (complicationBox complications)
             |> Theme.wrappedRow
@@ -357,6 +370,142 @@ restriction =
     }
 
 
+hunted : ComplicationDetails
+hunted =
+    { name = Hunted
+    , class = Just Warlock
+    , content = Single 8 """
+        You're actively being hunted by a _revenant_ witch hunter. He has somehow bonded to you as his next target. He bonds to one witch at a time and relentlessly hunts that witch until their True Death. He's killed many before. He'll intelligently stalk and take notes until he thinks it's time to strike and learn what he can. He “respawns” every full moon with his soulbound diviner's map. He may cooperate with your enemy.
+        """
+    }
+
+
+dislikeable : ComplicationDetails
+dislikeable =
+    { name = Dislikeable
+    , class = Just Warlock
+    , content = Single 2 """
+        Something about you rubs people the wrong way, it's harder to find wholesome true friends or lovers on a real personal level. Companions cost +2p to buy and will take longer to form serious relations.
+        """
+    }
+
+
+monsterBait : ComplicationDetails
+monsterBait =
+    { name = MonsterBait
+    , class = Just Academic
+    , content = Single 4 """
+        Something about your awakened soul is like a siren's call to monstrous entities. Different monsters may be after you for and per witch type. Monster encounters greatly increased.
+        """
+    }
+
+
+blackSwan : ComplicationDetails
+blackSwan =
+    { name = BlackSwan
+    , class = Just Sorceress
+    , content = Single 4 """
+        Things very often go wrong around you. It can feel like you're very unlucky, yet also more lucky in avoiding death in the moment to moment, but will be taking that gamble a lot more often. You're often in the wrong place at the wrong time and end up inserting yourself into situations by accident.
+        """
+    }
+
+
+spellSink : ComplicationDetails
+spellSink =
+    { name = SpellSink
+    , class = Just Warlock
+    , content = Single 2 """
+        You're like a hole in the ether of magic, it just disappears within you. You're immune to direct magics, beneficial and harmful No buffs, healing, neither mind control or paralysis. It takes more effort for you to use magic being twice as fatiguing and costly.
+        """
+    }
+
+
+likeADuck : ComplicationDetails
+likeADuck =
+    { name = LikeADuck
+    , class = Just Sorceress
+    , content = Single 2 """
+        You're lightweight, weighing as supernaturally buoyant in water, Difficult to dive, and you're easier to manhandle. or get knocked around by various effects, including a windy day
+
+        If Sylph, you'd actively float like a helium balloon.
+        """
+    }
+
+
+likeARock : ComplicationDetails
+likeARock =
+    { name = LikeARock
+    , class = Just Academic
+    , content = Single 2 """
+        You're twice as heavy, and sink through water as though it were air, yet move through it twice as slow as though walking through jello. Not incompatible with duck. With both, you'll be lightweight to enemies, heavy otherwise, and sink in water.
+        """
+    }
+
+
+eyeCatcher : ComplicationDetails
+eyeCatcher =
+    { name = EyeCatcher
+    , class = Just Sorceress
+    , content = Single 2 """
+        You draw more attention in anything you do. Wherever you go, you turn heads. You're physically more attractive than normal sure, but your presence itself is more magnetic in nature, presence.
+
+        In short, anything you do to draw attention to yourself draws significantly more attention Meaning you're easy to track if anyone sees you, as you leave an impression and most people will notice and remember it. It's very difficult to “blend in” to crowds, and something stands out about you even through transformations. Like, damn, that's a cute or elegant cat, ect, and if you cover yourself too much then that itself is notable.
+        """
+    }
+
+
+sillyGoose : ComplicationDetails
+sillyGoose =
+    { name = SillyGoose
+    , class = Just Academic
+    , content = Single 2 """
+        Your true form is younger than normal, anywhere between 6 and 14, but on top of that it's abnormally hard for people to take you seriously. You tend to melt hearts when they see you and it seems to dumb people down, similar to seeing a really adorable kitten and instinctively talking down, magnified a few times. They're generally dismissive with presumption that you're being imaginative, or mistaken about something. If it's any consolation, they'll likewise resist believing you did something wrong, depending, You are more excitable and do have an overactive imagination. For 1p instead of 2, you can only have the age curse. Persistent.
+        """
+    }
+
+
+hardLessons : ComplicationDetails
+hardLessons =
+    { name = HardLessons
+    , class = Just Academic
+    , content = Single 8 """
+        Magic just refuses to "click" fo you, struggling harder to learn or train your magic, or keep managing to do something to displease your patron, the effect is the same: You have half the rate of Power gain from your witch type, and once you cement the ability in question, you still take longer to get the hang of actually utilizing the magic properly, requiring more practical practice before at full efficiency.
+        """
+    }
+
+
+coldHeart : ComplicationDetails
+coldHeart =
+    { name = ColdHeart
+    , class = Just Warlock
+    , content = Single 2 """
+        Your empathy is muffled, it's harder to see things from the perspective of others and to recognize the emotions in others that aren't obvious, but things like mood changes and facial expressions. You're quick to see people in black and white; Either allies, or enemies, and if people aren't as skilled or powerful as you, you instinctively think less of them. This can manifest as a tyrant, or as mother knows best, elitist with a reflex of wanting control either way
+        """
+    }
+
+
+hideous : ComplicationDetails
+hideous =
+    { name = Hideous
+    , class = Just Warlock
+    , content = Single 8 """
+        Your appearance is seriously unfortunate. You look *very* old, plus choose at least 5: Hunched back. Large hooked nose. Warty. Crazy eyes. Ratty hair. Gnarled limbs. Crooked jaw. Jagged teeth. Snaggletooth. Fungal growths. Bone growths. Pustules. Bunion. Cankles. Leathery skin. Wookie hair. Yellowed woody nails. Persistent with shapechanging, you still look worn and ugly.
+        """
+    }
+
+
+witchMark : ComplicationDetails
+witchMark =
+    { name = WitchMark
+    , class = Just Sorceress
+    , content = Single 2 """
+        A peculiar birthmark resembling a third nipple somewhere on your body. Those in the know can identify it as a mark of a witch. Their err of course being not all witches have one.
+
+        Yes, if you must know, they're as sensitive as a real one, so be a little careful with it. No I'm not telling where mine is! Some witches try removing them and they just reappear. Hex witches are able to move it for you, if you wish. I knew a witch whose mark was on her forehead, poor gal, until we found her and helped out with a relocation. Persistent.
+        """
+    }
+
+
 complicationBox :
     List Complication
     -> ComplicationDetails
@@ -430,8 +579,8 @@ complicationBox selected { name, class, content } =
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
-            el [ alignRight, moveLeft 4, moveDown 4 ] <|
-                Theme.image [ width <| px 32 ] <|
+            el [ alignRight ] <|
+                Theme.image [ width <| px 40 ] <|
                     Types.slotToImage slot
     in
     Theme.card
