@@ -351,7 +351,7 @@ card config =
         cardAttributes : List (Attribute msg)
         cardAttributes =
             [ height fill
-            , width <| Element.minimum 300 <| Element.maximum 400 fill
+            , width <| Element.minimum 320 <| Element.maximum 400 fill
             , Font.color <| rgb 0 0 0
             , Background.color <| rgb 1 1 1
             , Border.roundEach
