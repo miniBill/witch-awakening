@@ -5,7 +5,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (Affinity, Class(..), ComplicationCategory(..))
+import Generated.Types as Types exposing (Affinity, Class(..), ComplicationCategory(..), Slot(..))
 import Gradients
 import Hex
 import Html exposing (Html)
@@ -104,7 +104,7 @@ blocks attrs input =
 
 block : String -> Element msg
 block input =
-    case Parser.run (MarkMini.blockParser |. Parser.end) input of
+    case Parser.run (MarkMini.blockParser |. Parser.end) (String.trim input) of
         Err _ ->
             Element.paragraph
                 [ Font.color <| rgb 1 0 0 ]
@@ -112,6 +112,19 @@ block input =
 
         Ok (SectionTitle value) ->
             viewSectionTitle value
+
+        Ok (UnorderedList lines) ->
+            lines
+                |> List.map
+                    (\line ->
+                        line
+                            |> List.map viewPiece
+                            |> Html.li []
+                    )
+                |> Html.ul []
+                |> Element.html
+                |> List.singleton
+                |> Element.paragraph []
 
         Ok (Paragraph { pieces, center }) ->
             pieces
@@ -131,17 +144,29 @@ block input =
 colors :
     { academic : Int
     , choice : Int
+    , epic : Int
+    , folk : Int
+    , gameMode : Int
+    , heroic : Int
+    , noble : Int
     , sorceress : Int
     , speech : Int
     , warlock : Int
+    , white : Int
     , worldShift : Int
     }
 colors =
     { academic = 0x001A77FF
     , choice = 0x0004D4ED
+    , epic = 0x00C32DE6
+    , folk = 0x004DE1FF
+    , gameMode = 0x00AA08B9
+    , heroic = 0x00F2D706
+    , noble = 0x0014E602
     , sorceress = 0x00FF0000
     , speech = 0x00F88000
     , warlock = 0x0019AD00
+    , white = 0x00FFFFFF
     , worldShift = 0x006ED32A
     }
 
@@ -182,6 +207,9 @@ viewPiece piece =
 
                         ClassColor class ->
                             classToColor class
+
+                        SlotColor slot ->
+                            slotToColor slot
             in
             Html.span
                 [ Html.Attributes.style "color" <| toCss colorInt ]
@@ -202,12 +230,34 @@ viewPiece piece =
         Text value ->
             Html.text value
 
+        Slot slot ->
+            Html.img [ Html.Attributes.src (Types.slotToImage slot).src ] []
+
         Number value ->
             Html.span
                 [ Html.Attributes.style "font-family" "\"Capture It\""
                 , Html.Attributes.style "font-size" "20px"
                 ]
                 [ gradientTextHtml 4 Gradients.yellowGradient (String.fromInt value) ]
+
+
+slotToColor : Slot -> Int
+slotToColor slot =
+    case slot of
+        Folk ->
+            colors.folk
+
+        Noble ->
+            colors.noble
+
+        Heroic ->
+            colors.heroic
+
+        Epic ->
+            colors.epic
+
+        White ->
+            colors.white
 
 
 column : List (Attribute msg) -> List (Element msg) -> Element msg
@@ -350,9 +400,15 @@ complicationCategoryToColor category =
         WorldShift ->
             colors.worldShift
 
+        GameMode ->
+            colors.gameMode
+
 
 complicationCategoryToGradient : ComplicationCategory -> List ( Int, Int, Int )
 complicationCategoryToGradient category =
     case category of
         WorldShift ->
             Gradients.greenGradient
+
+        GameMode ->
+            Gradients.purpleGradient

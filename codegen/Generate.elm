@@ -93,14 +93,15 @@ enums =
 
         complicationNames : List String
         complicationNames =
-            [ "Brutality", "Masquerade", "TrueNames", "Monsters", "Population", "Bonk" ]
+            [ "Brutality", "Masquerade", "TrueNames", "Monsters", "Population", "Bonk", "StoryArc", "EarlyBird", "SkillTree", "Constellation" ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
     , enum "Size" [ "Low", "Med", "High" ]
     , enumWith "Affinity" affinities [ ( "All", "???" ) ] True
-    , enum "ComplicationCategory" [ "WorldShift" ]
+    , enum "ComplicationCategory" [ "WorldShift", "GameMode" ]
     , enumWith "ComplicationName" complicationNames [ ( "Bonk", "*Bonk*" ) ] True
+    , enumWith "Slot" [ "Folk", "Noble", "Heroic", "Epic", "White" ] [] True
     ]
         |> List.concat
 

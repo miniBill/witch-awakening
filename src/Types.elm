@@ -59,3 +59,15 @@ complicationNameToCategory name =
 
         Bonk ->
             WorldShift
+
+        StoryArc ->
+            GameMode
+
+        EarlyBird ->
+            GameMode
+
+        SkillTree ->
+            GameMode
+
+        Constellation ->
+            GameMode

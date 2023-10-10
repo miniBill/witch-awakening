@@ -18,6 +18,10 @@
   src: url("CaptureIt.ttf");
 }
 
+ul {
+  margin: 0;
+}
+
 .outlined {
   position: relative;
   color: transparent;
