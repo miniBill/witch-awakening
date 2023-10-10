@@ -110,6 +110,9 @@ viewComplications complications =
         , Theme.blocks [] "# More Complications"
         , [ dysfunction
           , vulnerability
+          , rejection
+          , crutch
+          , restriction
           ]
             |> List.map (complicationBox complications)
             |> Theme.wrappedRow
@@ -228,8 +231,7 @@ storyArc =
     { name = StoryArc
     , class = Nothing
     , content =
-        Single 0
-            """
+        Single 0 """
             Your Starting Power is reduced to 10 points, which cannot be increased with complications. Instead, your Power Cap is increased to [150], and Complications can increase your Power Cap by up to +60.
 
             You cannot start with a magic at more than Rank 3 or perks worth more than 6p before discounts, but they unlock at milestones.
@@ -247,8 +249,7 @@ earlyBird =
     { name = EarlyBird
     , class = Nothing
     , content =
-        Single 0
-            """
+        Single 0 """
             Incompatible with _Story Arc_. Rather than start less and end more, you get it all over with from the get go.
 
             Your Power Cap matches your Starting Power, but your *Starting Power is increased to [75]*. This means that what you start with is what you get, only acquiring companions and relics via quests later on. Simplifies things greatly, removing growth methods. _You can still benefit from *complications*_ increasing starting power, so up to _+30p_, but not even wishes will grant you any additional power points once you start.
@@ -263,8 +264,7 @@ skillTree =
     { name = SkillTree
     , class = Nothing
     , content =
-        Single 0
-            """
+        Single 0 """
             You abandon your Power all together. You instead rely on SLOTS: _*Mode-Arc*_.
 
             You begin with one _folk_ magic slot & 1 *folk* slot for a perk. You also gain 3 folk slots based on class. *Academics* use these for Magic. *Sorceresses* use these for Perks. *Warlocks* use these for Relics After you've completed 4 quests, your starting magic & perk slot increase to *Noble*. After 4 more, they become *Heroic*. After 3 more, they become *Epic*. Your 3 class slots lag behind by 4 tier becoming Heroic when you gain Epic for your starters. You gain an extra slot every time you complete a quest equal to that quest's tier. Skill Tree mode users can spend 3 slots of a lower tier for 1 of a higher tier, or break 1 higher tier slot into 2 lower tier slots.
@@ -277,8 +277,7 @@ constellation =
     { name = Constellation
     , class = Nothing
     , content =
-        Single 0
-            """
+        Single 0 """
             You abandon your Power all together. You instead rely on SLOTS: _*Mode-Early*_.
 
             You start out with a static amount of slots, for one-and-done players that want the simplest experience and with an up-front build. Nothing else to consider, no mathing out Power, just a bundle of slots to use. You have:
@@ -300,8 +299,7 @@ dysfunction =
     { name = Dysfunction
     , class = Just Sorceress
     , content =
-        Single 12
-            """
+        Single 12 """
             "WHOA I was wrong, I'm so sorry. You ARE witch, you'll get Witch Type as normal, you have lot of power... but... it looks like your maximum rank is 0... It's not unheard of." You only benefit from Rank 0 effects of magic, and are otherwise incapable of putting any ranks into any magic specializations, or any perks with a cost greater than 4. (after counting affinity and type discounts). No impact on Relics, Gadgetry, Integration, Type perks, or Metamorphosis.
             """
     }
@@ -319,6 +317,43 @@ vulnerability =
             , ( "*Iron*: Iron and all its forms that would still be called iron, sear you as though white hot, and can bum through you. An iron blade passing through you with ease.", 4 )
             ]
             ""
+    }
+
+
+rejection : ComplicationDetails
+rejection =
+    { name = Rejection
+    , class = Just Warlock
+    , content =
+        Single 2 """
+            Nature doesn't like you. Non-feline animals will flee the area Domesticated animals like dogs get agitated and bark at you Predators may attack. Plants seem more sickly flowers close. Bugs bother or sting you more often.
+
+            Familiars aren't affected.
+            """
+    }
+
+
+crutch : ComplicationDetails
+crutch =
+    { name = Crutch
+    , class = Just Academic
+    , content =
+        Single 2 """
+            You can't use magic on your own, you have to rely on a specially prepared magical medium; Wands, Staves, Tomes, Crystal Balls, Decks of arcana cards, and so on. Without a medium, you cannot use magic.
+            """
+    }
+
+
+restriction : ComplicationDetails
+restriction =
+    { name = Restriction
+    , class = Just Sorceress
+    , content =
+        Single 2 """
+            You are incapable of learning any magic from one chosen archetype. Potions, Hexes, ect. You can take this up to 3 times. This includes a magic's rank 0 effect normally available to all witches. This cannot restrict you from Faction magic of factions you don't belong to.
+
+            For example, you could restrict _Wands_ only if you chose Hawthome as your faction.
+            """
     }
 
 
