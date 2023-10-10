@@ -17,3 +17,14 @@ codegen/Gen/Basics.elm: codegen/elm.codegen.json
 build/elm-codegen-flags/%.ppm: extract/%.png
 	mkdir -p build/elm-codegen-flags
 	convert $^ -compress none $@
+
+.PHONY: build
+build:
+	rm -rf out
+	mkdir -p out
+	mkdir -p out/public
+	mkdir -p out/build
+	yarn elm-watch make --optimize
+	cp index.html favicon.ico out
+	cp public/*.* out/public
+	cp build/main.js out/build
