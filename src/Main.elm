@@ -173,16 +173,6 @@ viewTitle =
             ]
         , Element.column
             [ centerX
-            , Element.onRight <|
-                paragraph
-                    [ alignRight
-                    , Font.alignLeft
-                    , width <| px 320
-                    , Font.size 14
-                    , Element.paddingEach { left = 20, top = 10, right = 0, bottom = 0 }
-                    ]
-                    [ Theme.choice "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
-                    ]
             , Element.paddingEach { left = 0, top = 0, right = 0, bottom = 10 }
             ]
             [ paragraph
@@ -207,6 +197,14 @@ viewTitle =
                     { label = Theme.choice "By OutrageousBears"
                     , url = "https://old.reddit.com/user/OutrageousBears"
                     }
+                ]
+            , paragraph
+                [ alignRight
+                , Font.alignLeft
+                , Font.size 14
+                , Element.paddingEach { left = 20, top = 10, right = 0, bottom = 0 }
+                ]
+                [ Theme.choice "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
                 ]
             ]
         ]
