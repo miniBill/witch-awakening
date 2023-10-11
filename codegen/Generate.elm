@@ -7,6 +7,7 @@ import Elm
 import Elm.Annotation
 import Elm.Case
 import Gen.CodeGen.Generate as Generate
+import Gen.Maybe
 import Json.Decode exposing (Decoder, Value)
 import Result.Extra
 import String.Extra
@@ -170,6 +171,26 @@ enumWith name cases exceptions toImage =
                 |> Elm.fn ( lowerName, Just type_ )
                 |> Elm.declaration (lowerName ++ "ToString")
 
+        fromStringDeclaration : Elm.Declaration
+        fromStringDeclaration =
+            (\value ->
+                Elm.Case.string value
+                    { cases =
+                        List.map
+                            (\case_ ->
+                                ( Dict.get case_ exceptionsDict
+                                    |> Maybe.withDefault (String.Extra.humanize case_)
+                                , Gen.Maybe.make_.just <| Elm.val case_
+                                )
+                            )
+                            cases
+                    , otherwise = Gen.Maybe.make_.nothing
+                    }
+                    |> Elm.withType (Elm.Annotation.maybe type_)
+            )
+                |> Elm.fn ( lowerName, Just Elm.Annotation.string )
+                |> Elm.declaration (lowerName ++ "FromString")
+
         toImageDeclaration : Elm.Declaration
         toImageDeclaration =
             (\value ->
@@ -198,12 +219,14 @@ enumWith name cases exceptions toImage =
     (if toImage then
         [ typeDeclaration
         , toStringDeclaration
+        , fromStringDeclaration
         , toImageDeclaration
         ]
 
      else
         [ typeDeclaration
         , toStringDeclaration
+        , fromStringDeclaration
         ]
     )
         |> List.map
