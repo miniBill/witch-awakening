@@ -9,6 +9,7 @@ type Choice
     | ChoiceRace (Maybe Race)
     | ChoiceGameMode (Maybe GameMode)
     | ChoiceComplication Complication Bool
+    | ChoiceTypePerk Race Bool
 
 
 type alias Model =
@@ -17,6 +18,7 @@ type alias Model =
     , race : Maybe Race
     , gameMode : Maybe GameMode
     , complications : List Complication
+    , typePerks : List Race
     }
 
 

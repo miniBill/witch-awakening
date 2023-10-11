@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, image, morpheus, padding, row, rythm, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, image, morpheus, padding, row, rythm, style, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Background as Background

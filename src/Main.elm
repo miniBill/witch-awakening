@@ -19,6 +19,7 @@ import View.Class as Class
 import View.Complications as Complications
 import View.GameMode as GameMode
 import View.Race as Race
+import View.TypePerks as TypePerks
 
 
 type Msg
@@ -50,6 +51,7 @@ init _ _ key =
       , race = Nothing
       , gameMode = Nothing
       , complications = []
+      , typePerks = []
       }
     , Cmd.none
     )
@@ -93,6 +95,13 @@ update msg model =
 
                             else
                                 { model | complications = List.Extra.remove complication model.complications }
+
+                        ChoiceTypePerk race selected ->
+                            if selected then
+                                { model | typePerks = race :: model.typePerks }
+
+                            else
+                                { model | typePerks = List.Extra.remove race model.typePerks }
             in
             ( newModel
             , Nav.replaceUrl model.key (toUrl newModel)
@@ -102,29 +111,32 @@ update msg model =
 toUrl : Model -> String
 toUrl model =
     let
-        pair : String -> (a -> String) -> Maybe a -> Maybe QueryParameter
+        pair : String -> (a -> String) -> Maybe a -> List QueryParameter
         pair key f value =
-            Maybe.map
-                (\v ->
-                    Url.Builder.string key (f v)
-                )
-                value
+            case value of
+                Just v ->
+                    [ Url.Builder.string key (f v) ]
+
+                Nothing ->
+                    []
+
+        list : String -> (a -> String) -> List a -> List QueryParameter
+        list key f values =
+            List.map
+                (\value -> Url.Builder.string key (f value))
+                values
     in
-    [ [ pair "class" Types.classToString model.class
-      , pair "race" Types.raceToString model.race
-      , pair "gameMode" Types.gameModeToString model.gameMode
-      ]
-    , List.map
-        (pair "complication"
-            (\{ name, kind } ->
-                Types.complicationNameToString name ++ Types.complicationKindToString kind
-            )
-            << Just
+    [ pair "class" Types.classToString model.class
+    , pair "race" Types.raceToString model.race
+    , pair "gameMode" Types.gameModeToString model.gameMode
+    , list "complication"
+        (\{ name, kind } ->
+            Types.complicationNameToString name ++ Types.complicationKindToString kind
         )
         model.complications
+    , list "typePerk" Types.raceToString model.typePerks
     ]
         |> List.concat
-        |> List.filterMap identity
         |> Url.Builder.toQuery
         |> (\query -> "#" ++ String.dropLeft 1 query)
 
@@ -163,6 +175,7 @@ innerView model =
         , Element.Lazy.lazy Race.viewRace model.race
         , Element.Lazy.lazy GameMode.viewGameMode model.gameMode
         , Element.Lazy.lazy Complications.viewComplications model.complications
+        , Element.Lazy.lazy TypePerks.viewTypePerks model.typePerks
         ]
         |> Element.map Choice
 
