@@ -3,6 +3,7 @@
   "automatically created by": "elm-review suppress",
   "learn more": "elm-review suppress --help",
   "suppressions": [
+    { "count": 1, "filePath": "src/View/Complications.elm" },
     { "count": 1, "filePath": "src/View/Race.elm" }
   ]
 }
