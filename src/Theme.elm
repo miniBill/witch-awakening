@@ -230,8 +230,29 @@ viewPiece piece =
         Text value ->
             Html.text value
 
+        Link target ->
+            let
+                cut : String
+                cut =
+                    if String.startsWith "https://" target then
+                        String.dropLeft 8 target
+
+                    else if String.startsWith "http://" target then
+                        String.dropLeft 7 target
+
+                    else if String.startsWith "mailto:" target then
+                        String.dropLeft 7 target
+
+                    else
+                        target
+            in
+            Html.a [ Html.Attributes.href target ] [ Html.text cut ]
+
         Slot slot ->
             Html.img [ Html.Attributes.src (Types.slotToImage slot).src ] []
+
+        Affinity affinity ->
+            Html.img [ Html.Attributes.src (Types.affinityToImage affinity).src ] []
 
         Number value ->
             Html.span

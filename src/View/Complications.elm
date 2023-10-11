@@ -800,7 +800,7 @@ complicationBox selected { name, class, content } =
                     Element.none
 
                 [ g ] ->
-                    viewSlot (gainToSlot g)
+                    viewSlot (Types.gainToSlot g)
 
                 _ ->
                     viewSlot White
@@ -925,18 +925,3 @@ complicationBox selected { name, class, content } =
                     ]
         , onPress = msg
         }
-
-
-gainToSlot : Int -> Slot
-gainToSlot gain =
-    if gain <= 4 then
-        Folk
-
-    else if gain <= 8 then
-        Noble
-
-    else if gain <= 12 then
-        Heroic
-
-    else
-        Epic

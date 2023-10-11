@@ -1,7 +1,7 @@
-module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, complicationKindToString, complicationNameToCategory)
+module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, complicationKindToString, complicationNameToCategory, gainToSlot)
 
 import Browser.Navigation
-import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), GameMode, Race)
+import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), GameMode, Race, Slot(..))
 
 
 type Choice
@@ -66,3 +66,18 @@ complicationNameToCategory name =
 
         _ ->
             Nothing
+
+
+gainToSlot : Int -> Slot
+gainToSlot gain =
+    if gain <= 4 then
+        Folk
+
+    else if gain <= 8 then
+        Noble
+
+    else if gain <= 12 then
+        Heroic
+
+    else
+        Epic

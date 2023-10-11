@@ -1,6 +1,6 @@
 module MarkMini exposing (Block(..), Color(..), Piece(..), blockParser)
 
-import Generated.Types exposing (Class(..), Slot(..))
+import Generated.Types as Types exposing (Affinity, Class(..), Slot(..))
 import Parser exposing ((|.), (|=), Parser)
 import Result.Extra
 import Set exposing (Set)
@@ -19,7 +19,9 @@ type Piece
     | Underlined (List Piece)
     | Bold (List Piece)
     | Slot Slot
+    | Affinity Affinity
     | Text String
+    | Link String
     | Number Int
 
 
@@ -107,7 +109,16 @@ mainParser =
             (\str ->
                 case String.toInt str of
                     Nothing ->
-                        Text ("[" ++ str ++ "]")
+                        case Types.affinityFromString str of
+                            Nothing ->
+                                if String.startsWith "http" str then
+                                    Link str
+
+                                else
+                                    Text ("[" ++ str ++ "]")
+
+                            Just affinity ->
+                                Affinity affinity
 
                     Just i ->
                         Number i
