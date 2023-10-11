@@ -97,6 +97,8 @@ mainParser =
             |. Parser.symbol "_"
         , Parser.succeed (Text "\"")
             |. Parser.symbol "\\\""
+        , Parser.succeed (Text "*")
+            |. Parser.symbol "\\*"
         , Parser.succeed Bold
             |. Parser.symbol "*"
             |= innerParser '*'

@@ -113,6 +113,8 @@ viewComplications complications =
           , [ eyeCatcher, sillyGoose, hardLessons, coldHeart, hideous, witchMark ]
           , [ nemesis, addiction, sensoryDisability, physicalDisability, sensoryShock, adoringFan ]
           , [ veryDere, requirement, unveiled, nightmares, kryptonite, fitWitch ]
+          , [ branded, noPrivacy, bloodFeud, marked, defeated, fixation ]
+          , [ allNatural, witchknight, inadequacy, dysphoria, betrayal, compulsion ]
           ]
             |> List.concat
             |> List.map (complicationBox complications)
@@ -661,6 +663,154 @@ fitWitch =
     , content = Single 2 """ 
             Your magic ability is more closely intertwined with your physical ability. In order to grow your magical ability, you have to maintain your physique the old fashioned way: Exercise. While magic can shape your body, this has no bearing on the magic. For every day you don't exercise for 1 hour or more, you lose 10% overall magic effectiveness. (Damage, range, area, duration ect). For every 5 hours of overall exercise of minimum 30 minute intervals to count towards the total, you raise it by 10% up to 100%. Exercise counts if it's sufficiently strenuous and makes you sweat (If you would be capable of sweating or not). This only stacks to a reduction of -50% at the worst, but can stack to -100% for an extra +2.
                         """
+    }
+
+
+branded : ComplicationDetails
+branded =
+    { name = Branded
+    , class = Just Sorceress
+    , content = Single 8 """
+        Sorry to burst your bubble, but you're not a witch. I've removed the veil from you because I want to run a little experiment... To turn you into a witch that may or may not be more powerful than most witches, and I can only do it on a human that didn't already have a witch spark.
+
+        I'm not doing this for free, the process I devised incorporates a slave crest written into your very soul, You will be my... lifelong unpaid employee with benefits. I treat my things very well, and you'll usually have autonomy, I'm hardly a task master. But that's the deal. I'll turn you into a witch, but you'll be MY witch, unable to act against my wishes in any way, \\*_Penelope will not have this ritual if you did not select this complication._
+        """
+    }
+
+
+noPrivacy : ComplicationDetails
+noPrivacy =
+    { name = NoPrivacy
+    , class = Just Academic
+    , content = Single 8 """
+        I've been under a lot of scrutiny lately, there's a good chance that some bad actors are watching me right now and by performing this ritual, it will advertise your witch awakening across open channels. All your information about you will be leaked, they'll know everything about you on quite the intimate level. They'll see everything that you select in this process, from my perspective, a third person perspective, seeing your face and body. Knowing your weaknesses and strengths, your magic, what quests are in your future, and what factions you're likely to interact with later. On the plus side, your allies will be closer, but so will your enemies, and they'll know where you are for the first week.
+        """
+    }
+
+
+bloodFeud : ComplicationDetails
+bloodFeud =
+    { name = BloodFeud
+    , class = Just Warlock
+    , content = Single 4 """
+        You'll be part of a magical lineage that has major deeply rooted beef with another magical lineage. This rival lineage will despise yours on an instinctual level with the whispering echos of their ancestors reinforcing their bias to highlight any little thing about you that might annoy them in some way, which applies to you about them as well. Resisting this will be akin to resisting an actual legitimate phobia, a deep visceral emotional response.
+
+        You'll constantly feel the instinct to hate them, and undermine them in whatever they're trying to achieve. You'll often find yourself wondering what they're currently up to, nothing good of course. Describe this other lineage. They'll be just as strong as yours.
+    """
+    }
+
+
+marked : ComplicationDetails
+marked =
+    { name = Marked
+    , class = Just Warlock
+    , content = Single 2 """
+        You'll very soon find yourself with a bounty on your head, If you're aligned more with law, the bounty will stem from _Hespatia Alphazon, and the Outsiders_. If you're aligned more with chaos, then the bounty will stem from the _Watchers, ORC, and the Alliance_. _Independents_ and divisive elements of _Hawthorne_ and _Arcadia_ will also be involved on either side. _Lunabella_ is unlikely to be involved in either direction unless you've antagonized them.
+
+        The bounty will make your life very chaotic to slowly taper off after months or years of engaging with would-be bounty collectors, diminishing over time as you prove to be too strong a mark for most of the hunters or assassins.
+        """
+    }
+
+
+defeated : ComplicationDetails
+defeated =
+    { name = Defeated
+    , class = Just Academic
+    , content = Single 6 """
+        You're fate-bound to suffer a major defeat at some point and you'll be at the mercy of your enemy for some amount of time, until they will decide to kill you in a predestined death. What is not predestined, is whether they interrupt your method of cheating death. Whatever your method they will at least ensure that you do die, so an Immortality Curse would be overcome for example. You'll want to make preparations and plans such that your method of cheating death can be preserved or recovered from the scene and into safe hands, such as having Companions steal your body back, or intercepting your dryad's seed or draviri egg for example. This could occur during a Quest, without failing the quest.
+        """
+    }
+
+
+fixation : ComplicationDetails
+fixation =
+    { name = Fixation
+    , class = Just Sorceress
+    , content =
+        WithChoices """
+        You will have a particular fixation that influences your thoughts frequently, shaping how you view the world and others around you, influencing your opinions of people or places, and relations"""
+            [ ( "*Violence*. You're fixated on at least the thought of violence. You often think about what it would be like to harm people, destroy things.", 2 )
+            , ( "*Eroticism*. Fixated on lewd thoughts and behaviors, you'll often think about what people look like under those robes & what sort of things you'd do on that broom.", 2 )
+            , ( "*Curiosity*. Driven crazy by not knowing something, you can't stand secrets or things you've told you can't see. Gossipy or voyeury.", 2 )
+            , ( "*Paranoia*. The world is so big all of a sudden, threats anywhere, who can really be trusted?", 2 )
+            ]
+            ""
+    }
+
+
+allNatural : ComplicationDetails
+allNatural =
+    { name = AllNatural
+    , class = Just Sorceress
+    , content = Single 8 """
+        Looks like we cannot trigger your awakening... I'm.. so sorry. Your witch identity is heavily buried within you, outside of our reach. You will require a natural awakening. Somewhat like childbirth, some people have it easy, most go through a lot of trauma... and then there are those who have especially traumatic ordeals that put them at the brink of death, assuming they survive. You are the latter. At some point in time after your meeting with Penelope, which you will forget about until you awaken, you'll experience extreme hardships that push past your limits, which may also be a good excuse as the source of other complications, resulting in you naturally awakening before (or after) you would have died.
+        """
+    }
+
+
+witchknight : ComplicationDetails
+witchknight =
+    { name = Witchknight
+    , class = Just Warlock
+    , content = Single 4 """
+        You're not actually a witch, you're a _Witchknight_. A true witch who might not have even experienced an awakening yet, bonded to you by rejecting their witchdom on a subconscious level in accordance to what would be their true wishes, or it was orchestrated by a 3rd party such as gods, or themselves in a prior life that they wiped or sealed the memories of. You have all the benefits of being witch, but your source of power is a very mortal human boy or girl, either a child you're guardian of, or a romantic interest, some manner of close relationship of the source. If your source dies, you lose your magic until they can be resurrected somehow, if ever. Since you aren't actually a witch, you do not have to pay for _Elephant Trunk_ if you wish for it.
+        """
+    }
+
+
+inadequacy : ComplicationDetails
+inadequacy =
+    { name = Inadequacy
+    , class = Just Academic
+    , content = Single 2 """
+        No matter how objectively powerful or capable you may be, you will be plagued with imposter syndrome, feeling like you don't belong, that you're nothing special and that others would be better suited to any given situation you find yourself. You'll always suggest others take the role you'd be best at and try to stick to the back or cheer another on, only stepping in if others insist but you'll still doubt yourself all along the way. Won? A fluke.
+
+        You'll never feel like you're good enough, at least not until you find someone that loves you deeply and encourages you to be your best after they've won your trust through perseverance, and you can trust them right? If not, you may as well act like you do, what's the alternative?
+        """
+    }
+
+
+dysphoria : ComplicationDetails
+dysphoria =
+    { name = Dysphoria
+    , class = Just Academic
+    , content = Single 2 """
+        The changes brought on by awakening click in your brain in the wrong way, cementing the idea in your head that this body is alien to you, that this isn't right. Who is that in the mirror?
+
+        You'll be unable to assume your past form regardless of magic, including _Transformation Sequence_ which will just give you a different human body. The body may be objectively better in every way but you wont feel like you deserve it, or that it was stolen from somebody else.
+
+        You'll have a phantom limb-like sensation where the body doesn't align with your psychological awareness of self. You'll always feel like an imposter of your own body, at least until you find true love that can bridge this gap in your mind... if you let it.
+        """
+    }
+
+
+betrayal : ComplicationDetails
+betrayal =
+    { name = Betrayal
+    , class = Just Warlock
+    , content = Single 4 """
+        A bad omen, you have a major betrayal in your future. One figure you trust and will not expect will completely blindside you with a serious betrayal that will come at a heavy cost to you on many levels. They will be someone you cared about and trusted as well as you could trust anybody. It will be random among your closest relationships or most respected individuals. This does not necessarily mean they think ill of you, perhaps they were forced, perhaps they were talked into it with lies and framing. Perhaps they thought they were doing the right thing. Perhaps they ARE doing the right thing.
+
+        There is room for redemption, but the setback will cost you nonetheless, whether or not you lose that person for good is another story.
+        """
+    }
+
+
+compulsion : ComplicationDetails
+compulsion =
+    { name = Compulsion
+    , class = Just Sorceress
+    , content =
+        WithChoices """
+            Somewhat of an advanced case of Addiction, you will have a particular compulsion that you can only overcome with great need only once in a while. The more infrequent the more overwhelming the compulsion is. This is measured by frequency:"""
+            [ ( "*Rare*: 1p encountered an average of once each year", 1 )
+            , ( "*Very uncommon*: 2p encountered an average of once a month", 2 )
+            , ( "*Uncommon*: 4p encountered an average of once a day", 4 )
+            , ( "*Common*: 8p you're likely to run into your compulsion multiple times a day", 8 )
+            ]
+            """
+            - *Finite*: -50% Your compulsion is a finite exposure of things you only do once. Example: To eat every pie you see vs Eat every NEW type of pie you see.
+            """
     }
 
 

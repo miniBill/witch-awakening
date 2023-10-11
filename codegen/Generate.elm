@@ -103,6 +103,9 @@ enums =
             , [ "Nemesis", "Addiction", "SensoryDisability", "PhysicalDisability" ]
             , [ "SensoryShock", "AdoringFan", "VeryDere", "Requirement" ]
             , [ "Unveiled", "Nightmares", "Kryptonite", "FitWitch" ]
+            , [ "Branded", "NoPrivacy", "BloodFeud", "Marked" ]
+            , [ "Defeated", "Fixation", "AllNatural", "Witchknight" ]
+            , [ "Inadequacy", "Dysphoria", "Betrayal", "Compulsion" ]
             ]
                 |> List.concat
     in
