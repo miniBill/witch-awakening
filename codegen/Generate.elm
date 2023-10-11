@@ -117,7 +117,7 @@ enums =
     , enum "Size" [ "Low", "Med", "High" ]
     , enumWith "Affinity" affinities [ ( "All", "???" ) ] True
     , enum "ComplicationCategory" [ "WorldShift" ]
-    , enumWith "ComplicationName" complicationNames [ ( "Bonk", "*Bonk*" ) ] True
+    , enumWith "ComplicationName" complicationNames [ ( "Bonk", "*Bonk*" ), ( "LikeADuck", "Like a duck" ), ( "LikeARock", "Like a rock" ) ] True
     , enumWith "GameMode" gameModes [] True
     , enumWith "Slot" [ "Folk", "Noble", "Heroic", "Epic", "White" ] [] True
     ]
