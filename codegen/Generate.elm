@@ -94,8 +94,7 @@ enums =
         complicationNames : List String
         complicationNames =
             [ [ "Brutality", "Masquerade", "TrueNames", "Monsters" ]
-            , [ "Population", "Bonk", "StoryArc", "EarlyBird" ]
-            , [ "SkillTree", "Constellation", "Dysfunction", "Vulnerability" ]
+            , [ "Population", "Bonk", "Dysfunction", "Vulnerability" ]
             , [ "Rejection", "Crutch", "Restriction", "Hunted" ]
             , [ "Dislikeable", "MonsterBait", "BlackSwan", "SpellSink" ]
             , [ "LikeADuck", "LikeARock", "EyeCatcher", "SillyGoose" ]
@@ -108,13 +107,18 @@ enums =
             , [ "Inadequacy", "Dysphoria", "Betrayal", "Compulsion" ]
             ]
                 |> List.concat
+
+        gameModes : List String
+        gameModes =
+            [ "StoryArc", "EarlyBird", "SkillTree", "Constellation" ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
     , enum "Size" [ "Low", "Med", "High" ]
     , enumWith "Affinity" affinities [ ( "All", "???" ) ] True
-    , enum "ComplicationCategory" [ "WorldShift", "GameMode" ]
+    , enum "ComplicationCategory" [ "WorldShift" ]
     , enumWith "ComplicationName" complicationNames [ ( "Bonk", "*Bonk*" ) ] True
+    , enumWith "GameMode" gameModes [] True
     , enumWith "Slot" [ "Folk", "Noble", "Heroic", "Epic", "White" ] [] True
     ]
         |> List.concat

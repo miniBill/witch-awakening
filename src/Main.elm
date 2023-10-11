@@ -2,7 +2,7 @@ module Main exposing (Flags, Msg, main)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, alignRight, centerX, fill, fillPortion, moveDown, newTabLink, paragraph, px, rgb, scrollbars, text, width)
+import Element exposing (Element, alignRight, centerX, fill, fillPortion, moveDown, newTabLink, paragraph, rgb, scrollbars, text, width)
 import Element.Background as Background
 import Element.Font as Font
 import Element.Lazy
@@ -17,6 +17,7 @@ import Url
 import Url.Builder exposing (QueryParameter)
 import View.Class as Class
 import View.Complications as Complications
+import View.GameMode as GameMode
 import View.Race as Race
 
 
@@ -47,6 +48,7 @@ init _ _ key =
     ( { key = key
       , class = Nothing
       , race = Nothing
+      , gameMode = Nothing
       , complications = []
       }
     , Cmd.none
@@ -82,6 +84,9 @@ update msg model =
                         ChoiceRace race ->
                             { model | race = race }
 
+                        ChoiceGameMode gameMode ->
+                            { model | gameMode = gameMode }
+
                         ChoiceComplication complication selected ->
                             if selected then
                                 { model | complications = complication :: model.complications }
@@ -107,6 +112,7 @@ toUrl model =
     in
     [ [ pair "class" Types.classToString model.class
       , pair "race" Types.raceToString model.race
+      , pair "gameMode" Types.gameModeToString model.gameMode
       ]
     , List.map
         (pair "complication"
@@ -155,6 +161,7 @@ innerView model =
         , viewIntro
         , Element.Lazy.lazy Class.viewClass model.class
         , Element.Lazy.lazy Race.viewRace model.race
+        , Element.Lazy.lazy GameMode.viewGameMode model.gameMode
         , Element.Lazy.lazy Complications.viewComplications model.complications
         ]
         |> Element.map Choice

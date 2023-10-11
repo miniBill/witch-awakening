@@ -1,12 +1,13 @@
 module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, complicationKindToString, complicationNameToCategory)
 
 import Browser.Navigation
-import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), Race)
+import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), GameMode, Race)
 
 
 type Choice
     = ChoiceClass (Maybe Class)
     | ChoiceRace (Maybe Race)
+    | ChoiceGameMode (Maybe GameMode)
     | ChoiceComplication Complication Bool
 
 
@@ -14,6 +15,7 @@ type alias Model =
     { key : Browser.Navigation.Key
     , class : Maybe Class
     , race : Maybe Race
+    , gameMode : Maybe GameMode
     , complications : List Complication
     }
 
@@ -59,18 +61,6 @@ complicationNameToCategory name =
 
         Bonk ->
             Just WorldShift
-
-        StoryArc ->
-            Just GameMode
-
-        EarlyBird ->
-            Just GameMode
-
-        SkillTree ->
-            Just GameMode
-
-        Constellation ->
-            Just GameMode
 
         _ ->
             Nothing

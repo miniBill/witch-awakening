@@ -400,18 +400,12 @@ complicationCategoryToColor category =
         WorldShift ->
             colors.worldShift
 
-        GameMode ->
-            colors.gameMode
-
 
 complicationCategoryToGradient : ComplicationCategory -> List ( Int, Int, Int )
 complicationCategoryToGradient category =
     case category of
         WorldShift ->
             Gradients.greenGradient
-
-        GameMode ->
-            Gradients.purpleGradient
 
 
 classToBadge : Class -> Image
