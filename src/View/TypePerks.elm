@@ -17,10 +17,10 @@ viewTypePerks typePerks =
         [ width fill
         , spacing <| Theme.rythm * 2
         , Element.paddingEach { top = Theme.rythm, left = 0, right = 0, bottom = 0 }
-        , Theme.style "background-image" <| "url(\"" ++ Images.typePerksBackground.src ++ "\")"
-        , Theme.style "background-repeat" "no-repeat"
-        , Theme.style "background-position" "top"
-        , Theme.style "background-size" "100%"
+        , Theme.style "background-image" <| "url(\"" ++ Images.typePerksBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
+        , Theme.style "background-repeat" "no-repeat, no-repeat"
+        , Theme.style "background-position" "top, bottom"
+        , Theme.style "background-size" "100%, 100%"
         ]
         [ Theme.blocks [] "# Type Perks"
         , Theme.blocks
