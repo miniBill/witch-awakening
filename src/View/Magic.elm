@@ -47,7 +47,10 @@ viewMagics selected =
             |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)
         , Theme.row
             [ Theme.padding
-            , Background.image Images.magicElementalism.src
+            , Theme.style "background-image" <| "url(\"" ++ Images.magicElementalism.src ++ "\")"
+            , Theme.style "background-repeat" "no-repeat"
+            , Theme.style "background-position" "top"
+            , Theme.style "background-size" "100%, 100%"
             ]
             [ let
                 color : Element.Color
@@ -331,6 +334,7 @@ viewRank selected { name, class } rankIndex label =
         , Border.width 1
         , Border.rounded 4
         , padding 4
+        , width fill
         ]
         { label =
             column []
