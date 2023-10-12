@@ -20,12 +20,12 @@ type Affinities
 
 all : List Details
 all =
-    [ alchemy, runes, curses, hexes, witchery, familiarity, necromancy, consortation, portals, divination, aethernautics, metamorphosis ]
+    [ alchemy, runes, curses, hexes, witchery, familiarity, necromancy, consortation, portals, divination, aethernautics ]
 
 
 elementalism : List Details
 elementalism =
-    [ firecalling, windkeeping, waterworking, earthmoving, naturalism, psychotics, metallurgy ]
+    [ firecalling, windkeeping, waterworking, earthmoving, naturalism, metamorphosis, psychotics, metallurgy ]
 
 
 alchemy : Details
@@ -51,13 +51,9 @@ alchemy =
         , """
         With rank 3 your potions are based on the conceptual intentions of the potion rather than physical properties of a mundane effect. A painkiller isn't just blocking chemical receptors, but uses magic to target the mind's ability to feel pain. A healing potion isn't encouraging a natural process, but physically goes in to force the knitting of flesh and bone. Simple effects are 100% effective to the intended effect. Healing can heal any injury with enough time at a rate of a papercut per second for up to an hour per dose. Can create Grenade or “splash” potions that explode with a potion effect within a 10m area, or a literal explosion of force, fire, ice, acid, or electricity with the same level of damage. Adept potions can be made from rare special order type ingredients, or K1000. Grenades cost 5x as much to make.
         """
-        , """
-        """
         , """ master Curatives can cure any disease, mend any injury, and restore the recently deceased to life. Master Stimulants can boost any attribute or quality by 300% or grant perfect focus or memory, remove and prevent fatigue for up to 24hr. Aphrodisiac effects are full blown love potions connecting anyone who partakes of the same batch of potion. Master novelties can instantly and painlessly provide any cosmetic surgery effect as though it were natural and can include traits in the animal kingdom; Cat eyes, fox ears, etc. Grenade potions can now have effect area of 30m, on impact as before, or on a timer, or by pressure (Mine).
 
         Master potions are made from supernatural ingredients requiring witch connections in the magical worlds to acquire probably involving services or questing, or K10,000.
-        """
-        , """
         """
         , """ Arch-Curatives can restore youth and prevent aging, or instantly rejuvenate a body to peak health as an immediate full-heal, or restore the long-dead to life so long as a body is available. Arch-Stimulants can boost any attribute by 500% for up to 24hr, or perfect a skill for a month. Love potions could induce up to and including overwhelming addiction for another person or for a sensation. Arch-Novelties could completely grant a true physical redesign of a body to your precise specifications, or could cut, paste, delete, fabricate, or modify any memory. Place a memory into a potion form to share it, or make a person forget ever knowing you, or their last week, ect. Grenade potions can now affect a 300m area that stacks with concentrated combination potions and you can design them to have a propulsion aspect to them, turning them into rockets.
 
