@@ -319,7 +319,7 @@ nemesis : Details
 nemesis =
     { name = Nemesis
     , class = Just Sorceress
-    , content = Single 8 """ 
+    , content = Single 8 """
             Oh no. It's been a long time since I've seen anyone with this in their fate. Your awakening will provoke a paired awakening in another individual. It can be anyone in your life that you would hesitate to kill. If you have. nobody, or by chance, it can be an entirely new being retroactively woven into your life and you will have new memories of them that you can't distinguish from your old life. You WILL care about them, and they will care about you to an extent, but they will resent you deep to their core. They don't want you to die, but they will want you to fail or suffer. If you have something good, they want it for theirself. If you succeed at something, they want to be better at it than you. Expect to never have peace unless there is an equilibrium between you and them. They have any and every special ability you have, including drawbacks, perks, relics. They'll have roughly equivalent companions. Turning their heart will take a LONG storyarc, if at all.
             """
     }
@@ -329,7 +329,7 @@ addiction : Details
 addiction =
     { name = Addiction
     , class = Just Warlock
-    , content = Single 2 """ 
+    , content = Single 2 """
             You have an addiction of some form. You cannot go more than a week without it willingly, and that's a good week. It's usually a daily habit and you won't feel like yourself without having engaged with it, Whether it is a substance or stimuli. It can be a drug, or it could be coffee, or lewd actions. You have a 25% chance of being incapable of resisting your addiction whenever it crops up which increases by 5% with every repeat exposure until you give in. An addiction to lewd things for example, would count any attractive sight as an exposure. This doesn't mean immediate gratification but when you have a reasonable moment to indulge, while going a little out of your way to have the opportunity. The addiction can't be something generally seen as productive or healthy (Honestly). This can be taken up to 3 times.
             """
     }
@@ -339,8 +339,8 @@ sensoryDisability : Details
 sensoryDisability =
     { name = SensoryDisability
     , class = Just Academic
-    , content = Single 2 """ 
-            You have a sense that doesn’t function properly. Any of the 5 senses. Compared to sight; You'd be very nearsighted and have to squint to read normal sized text from around 1ft Hearing would mean you'd not notice someone whispering 5ft away, and their casual speaking volume would be muffled. With scent, you can only faintly smell something directly under your nose. With touch, you feel only about 10% the pleasure or pain someone else would and wouldn't notice a squirrel climbing up your leg, and you'd only faintly feel a cat digging its claws into your back. Stepping on a leggo would be tolerable. With taste, you only taste extremes, So you might have to enjoy food in other ways like with heat or texture, or very oversaturated flavors. For 5p, you're completely missing a sense instead.
+    , content = Single 2 """
+            You have a sense that doesn't function properly. Any of the 5 senses. Compared to sight; You'd be very nearsighted and have to squint to read normal sized text from around 1ft Hearing would mean you'd not notice someone whispering 5ft away, and their casual speaking volume would be muffled. With scent, you can only faintly smell something directly under your nose. With touch, you feel only about 10% the pleasure or pain someone else would and wouldn't notice a squirrel climbing up your leg, and you'd only faintly feel a cat digging its claws into your back. Stepping on a leggo would be tolerable. With taste, you only taste extremes, So you might have to enjoy food in other ways like with heat or texture, or very oversaturated flavors. For 5p, you're completely missing a sense instead.
 
             Can take up to 3 times
             """
@@ -351,7 +351,7 @@ physicalDisability : Details
 physicalDisability =
     { name = PhysicalDisability
     , class = Just Academic
-    , content = Single 2 """ 
+    , content = Single 2 """
             For some reason your true form is missing a limb as a core part of your identity, your true form is a manifestation of the reality of your being, so it's a little more important than that.
 
             Replacements wont work and it persists through transformation magic. Inorganic prosthetics do work, or a symbiotic lifeform that could operate on its own
@@ -365,7 +365,7 @@ sensoryShock : Details
 sensoryShock =
     { name = SensoryShock
     , class = Just Sorceress
-    , content = Single 2 """ 
+    , content = Single 2 """
             Opposite to sensory disability, one of your senses is acutely hyperaware. Can't take with the same sense as you have a sensory disability. If vision, you see very sharply and at great distance but you get overwhelmed with complex colors and patterns and with too much movement to take in all at once, excellent low light vision but sudden bright light can blind you like daggers to the eyes. If scent, you can smell a campfire from miles away but strong unpleasant odours can completely overwhelm you, with some scents worse than others such as garlic. If touch, you might be perpetually uncomfortable by all but masterwork silk clothing and the finest cottons, and more sensitive to pain. Etc.
             """
     }
@@ -375,7 +375,7 @@ adoringFan : Details
 adoringFan =
     { name = AdoringFan
     , class = Just Sorceress
-    , content = Single 2 """ 
+    , content = Single 2 """
             You have a fan. A bit of a simpleton, he's completely devoted to you. Or rather, the idea of you. He's unattractive to you but really wants in your pants even if he has a girlfriend or wife already. He will consume any media that has you in it religiously, while also stalking you in his free time. Telescopic cameras from the tree or adjacent building level stalking, and will to the best of his not insignificant ability, break into properties or online accounts just to observe. maybe steal personal effects, not based on monetary value, but out of his obsession for you.
 
             Depending on how you handle this, he may go more insane and daring, or he might be kept in line and managed as a basic nuisance. If he dies, he'll be replaced with another like him, on top of any normal stalkers you may attract the old fashioned way. If you were involved with their death, the next will be more daring than the last, which can stack to the point they become literal monsters hunting you.
@@ -387,7 +387,7 @@ veryDere : Details
 veryDere =
     { name = VeryDere
     , class = Just Sorceress
-    , content = Single 2 """ 
+    , content = Single 2 """
             However you actually feel inside it's very hard for you to express positive emotions directed at another person and you can't take compliments well. You're easily flustered, embarrassed, aroused, or cheered up by others, and your natural response is the appearance of being agitated and to reject and distance yourself from the scenario. You feel like you shouldn't be feeling these things and like it's a failure or open weakness if you give in to them or let others notice your true feelings.
 
             ...In simple terms, you've become a tsundere
@@ -402,7 +402,7 @@ requirement =
     { name = Requirement
     , class = Just Warlock
     , content =
-        WithChoices """ 
+        WithChoices """
             Above and beyond an addiction, you have a requirement necessary for your survival the way a human requires food, water, and air.
             """
             [ ( "For 4p, you require it as often as food", 4 )
@@ -421,7 +421,7 @@ unveiled : Details
 unveiled =
     { name = Unveiled
     , class = Just Sorceress
-    , content = Single 4 """ 
+    , content = Single 4 """
             The veil doesn't hide you. Humans will see you clearly as you are and any act of magic. If your appearance is changed, your mortal ID doesn't change and anyone that knew you noticed the differences if any.
 
             Normally the veil would hide unnatural features while something like a guy becoming a gal would be made normal for most humans affected by the veil though inconsistencies and glitches can happen now and then especially when pressed or given cause to remember otherwise. Likewise for using magic in front of humans. This still stresses the veil and can lead to masquerade violations eventually if abused, and you never know when a medium is present, or someone resists.
@@ -434,7 +434,7 @@ nightmares : Details
 nightmares =
     { name = Nightmares
     , class = Just Academic
-    , content = Single 6 """ 
+    , content = Single 6 """
             You'll have a split soul torn between our universe, and a mundane universe where magic doesn't exist. When you sleep, which you'll require at regular intervals regardless of magic or perks, (At least once a week) you'll “Wake” in the other world, an alt-Earth where Soviet Russia conquered the world as the first to develop nukes. If you aren't useful to society, you're considered a parasite... and are suspicion for past ramblings about the other world and magic prior to you “waking up”. Try not to end up lobotomized and turned into an automata slave, which can happen for a variety of causes, including accusations of anti-Party conspiracy or an officer's word Whenever you die, you relive it again from the point you originally entered it to do it all over.
             """
     }
@@ -444,7 +444,7 @@ kryptonite : Details
 kryptonite =
     { name = Kryptonite
     , class = Just Warlock
-    , content = Single 0 """ 
+    , content = Single 0 """
             Some witches express magic on a wavelength that can be disrupted by some substance. You have a kryptonite. It can be rare but it's not rare enough that your enemies can't make use of it. Its rarity affects the power gain:
 
             - Very common: +10.
@@ -479,7 +479,7 @@ fitWitch : Details
 fitWitch =
     { name = FitWitch
     , class = Just Sorceress
-    , content = Single 2 """ 
+    , content = Single 2 """
             Your magic ability is more closely intertwined with your physical ability. In order to grow your magical ability, you have to maintain your physique the old fashioned way: Exercise. While magic can shape your body, this has no bearing on the magic. For every day you don't exercise for 1 hour or more, you lose 10% overall magic effectiveness. (Damage, range, area, duration ect). For every 5 hours of overall exercise of minimum 30 minute intervals to count towards the total, you raise it by 10% up to 100%. Exercise counts if it's sufficiently strenuous and makes you sweat (If you would be capable of sweating or not). This only stacks to a reduction of -50% at the worst, but can stack to -100% for an extra +2.
                         """
     }
