@@ -1,4 +1,4 @@
-module Data.Magic exposing (Details, all, intro, slotDescription)
+module Data.Magic exposing (Affinities(..), Details, all, elementalism, elementalismIntro, intro, slotDescription)
 
 import Generated.Types exposing (Affinity(..), Class(..), Magic(..))
 
@@ -7,15 +7,25 @@ type alias Details =
     { name : Magic
     , star : Bool
     , class : Class
-    , affinities : List Affinity
+    , affinities : Affinities
     , description : String
     , ranks : List String
     }
 
 
+type Affinities
+    = Regular (List Affinity)
+    | Alternative (List (List Affinity))
+
+
 all : List Details
 all =
-    [ alchemy, runes, curses, hexes ]
+    [ alchemy, runes, curses, hexes, witchery, familiarity, necromancy, consortation, portals, divination, aethernautics, metamorphosis ]
+
+
+elementalism : List Details
+elementalism =
+    [ firecalling, windkeeping, waterworking, earthmoving, naturalism, psychotics, metallurgy ]
 
 
 alchemy : Details
@@ -23,7 +33,7 @@ alchemy =
     { name = Alchemy
     , star = False
     , class = Academic
-    , affinities = [ Water, Nature, Life ]
+    , affinities = Regular [ Water, Nature, Life ]
     , description = """
         Or “Potions”, a classic magic employed by witches, many would say particularly iconic. I'll provide you a large, cast iron cauldron and stirrer, plus a big electric hotplate (For modem witches with no chimneys). You can sell potions to people, but be careful to ensure that they're seen as a mumbo-jumbo unscientific remedy by most people I recommend selling it as homeopathic natural medicine that would ruin profit margins if it were widespread. Sprinkle some extra conspiracy about how the government could kill you if they spread the secret, which isn't entirely untrue in your case. So long as you don't hand out more outlandish potions you should be fine.
 
@@ -42,12 +52,14 @@ alchemy =
         With rank 3 your potions are based on the conceptual intentions of the potion rather than physical properties of a mundane effect. A painkiller isn't just blocking chemical receptors, but uses magic to target the mind's ability to feel pain. A healing potion isn't encouraging a natural process, but physically goes in to force the knitting of flesh and bone. Simple effects are 100% effective to the intended effect. Healing can heal any injury with enough time at a rate of a papercut per second for up to an hour per dose. Can create Grenade or “splash” potions that explode with a potion effect within a 10m area, or a literal explosion of force, fire, ice, acid, or electricity with the same level of damage. Adept potions can be made from rare special order type ingredients, or K1000. Grenades cost 5x as much to make.
         """
         , """
-        Rank 4 master Curatives can cure any disease, mend any injury, and restore the recently deceased to life. Master Stimulants can boost any attribute or quality by 300% or grant perfect focus or memory, remove and prevent fatigue for up to 24hr. Aphrodisiac effects are full blown love potions connecting anyone who partakes of the same batch of potion. Master novelties can instantly and painlessly provide any cosmetic surgery effect as though it were natural and can include traits in the animal kingdom; Cat eyes, fox ears, etc. Grenade potions can now have effect area of 30m, on impact as before, or on a timer, or by pressure (Mine).
+        """
+        , """ master Curatives can cure any disease, mend any injury, and restore the recently deceased to life. Master Stimulants can boost any attribute or quality by 300% or grant perfect focus or memory, remove and prevent fatigue for up to 24hr. Aphrodisiac effects are full blown love potions connecting anyone who partakes of the same batch of potion. Master novelties can instantly and painlessly provide any cosmetic surgery effect as though it were natural and can include traits in the animal kingdom; Cat eyes, fox ears, etc. Grenade potions can now have effect area of 30m, on impact as before, or on a timer, or by pressure (Mine).
 
         Master potions are made from supernatural ingredients requiring witch connections in the magical worlds to acquire probably involving services or questing, or K10,000.
         """
         , """
-        Rank 5 Arch-Curatives can restore youth and prevent aging, or instantly rejuvenate a body to peak health as an immediate full-heal, or restore the long-dead to life so long as a body is available. Arch-Stimulants can boost any attribute by 500% for up to 24hr, or perfect a skill for a month. Love potions could induce up to and including overwhelming addiction for another person or for a sensation. Arch-Novelties could completely grant a true physical redesign of a body to your precise specifications, or could cut, paste, delete, fabricate, or modify any memory. Place a memory into a potion form to share it, or make a person forget ever knowing you, or their last week, ect. Grenade potions can now affect a 300m area that stacks with concentrated combination potions and you can design them to have a propulsion aspect to them, turning them into rockets.
+        """
+        , """ Arch-Curatives can restore youth and prevent aging, or instantly rejuvenate a body to peak health as an immediate full-heal, or restore the long-dead to life so long as a body is available. Arch-Stimulants can boost any attribute by 500% for up to 24hr, or perfect a skill for a month. Love potions could induce up to and including overwhelming addiction for another person or for a sensation. Arch-Novelties could completely grant a true physical redesign of a body to your precise specifications, or could cut, paste, delete, fabricate, or modify any memory. Place a memory into a potion form to share it, or make a person forget ever knowing you, or their last week, ect. Grenade potions can now affect a 300m area that stacks with concentrated combination potions and you can design them to have a propulsion aspect to them, turning them into rockets.
 
         Arch potions are made from very rare ingredients such as dragon's blood, angel hair, succubus hors, flowers that blossom only once every few years, etc, note: it needs to have some reasonable thread of logic for the desired potion effect. You can't use dragons blood for everything. A full heal might require Phoenix Feather, for example. Or K100,000.
         """
@@ -60,7 +72,7 @@ runes =
     { name = Runes
     , star = False
     , class = Academic
-    , affinities = [ Soul, Mind, Metal ]
+    , affinities = Regular [ Soul, Mind, Metal ]
     , description = """
         Also known as “charms”, or “Enchantment”. A rune is a special word or phrase of power concentrated into a symbol that echos its meaning through spiritual channels that run deep into the fabric that holds reality together. Fragments of a dialect based on the First Language, possessing a sliver of that authority over the reality that we know. Simply knowing of a rune isn't enough to utilize it, but requires practice to deeply harmonize your own contemplations to achieve understanding of that rune. To utilize runes, Witches prepare a ritual circle on which they place an item they wish to inscribe the rune onto, or placing the ritual circle on a surface around where you want to inscribe it, along with the necessary reagents to invoke the rune in question, and then place the rune on the item in some manner. Sewing, engraving, staining, or so on. The enchantment only lasts as long as the rune itself physically does, so more permanent methods of application are preferred. The ritual takes 1 minute, 10 minutes, 100 minutes, 1000 minutes, and 10000 minutes to complete, respective to rank. Rituals can be paused and continued, **and use 4x equivalent ingredients to a potion of its rank in the ritual process.** 75% of the ritual time can be passive, such as letting incense bum out, or gold dust to slowly melt into the item being enchanted, or other ritual elements not directly associated with the object, but such as performing a separate sub-ritual to harvest an ingredient or combine two ingredients into a necessary one.
         """
@@ -89,7 +101,7 @@ curses =
     { name = Curses
     , star = False
     , class = Warlock
-    , affinities = [ Necro, Nature, Mind ]
+    , affinities = Regular [ Necro, Nature, Mind ]
     , description = """
         Curses aren't evil, just misunderstood. So you made a guy throw up or every day of his life a waking nightmare. Is that really so much different than simply stabbing someone? That guy you fireballed? Probably disfigured and in pain for the rest of their life. That lightning bolt? Lifelong neurological complications. Honestly, who's the real monster here? The primary curses are Sickness, Pariah, Madness, Disaster, and Spellbind. They grow in power as you rank up your Curses magic, though you can always still cast them at a lower rank, which will generally be quicker and easier to cast. To use a curse, you must chant the particular words for the curse for 2 seconds while keeping a finger pointed at your target, and while within 30ft (10m), unless otherwise stated. Curses can be given Conditions in how they apply. ie; Only occurs on the next full moon, when they say a word, when someone else says a word near them, when they cause someone harm, or go within a certain distance, or so on. Itonly triggers once unless it has a duration, in which case you can choose a window for when it activates and divide the duration up between activations. You can also stack curses to add triggers, activations, or duration.
         """
@@ -111,7 +123,7 @@ hexes =
     { name = Hexes
     , star = True
     , class = Warlock
-    , affinities = [ Body, Beast, Blood ]
+    , affinities = Regular [ Body, Beast, Blood ]
     , description = """
         Also known as “Transmutation”, these spells transform something into something else using the base logic of “Inequivalent Exchange”. You will need a Medium, usually a lump of raw material, part of which will vanish when you cast the spell. You can cast most hexes the reverse way unless otherwise stated. (ie; Flesh-to-Stone can also tum Stone-to-Flesh). Hexes that can't be reversed in that manner can still be undone by recasting the hex on that target. Casting a hex is as fatiguing as jogging 1 mile per rank used. If you want to try to leverage transmutation to make money, I'd recommend against doing so on any significant scale, as financial institutions and agencies are more adept than you'd expect at tracking assets, easily leading to masquerade violations. Just use it tastefully or for your own private usage, you shouldn't have any problems unless you go off trying to use it as a crutch you center a business around making people wonder about your sources. Any polymorph spell cast on an intelligent creature can be undone by any other polymorph spell cast on that same creature, even without knowing they were polymorphed before; They'd instead revert.
 
@@ -154,99 +166,121 @@ hexes =
     }
 
 
-raw : String
-raw =
-    """
-        WITCHERY*
-
-        Academic - ???
-
+witchery : Details
+witchery =
+    { name = Witchery
+    , star = True
+    , class = Academic
+    , affinities = Regular [ All ]
+    , description = """
         A long time ago one of the very first witches to exist was very kind and motherly. She wove a spell to effect all her descendants, in flesh and in spirit which includes almost every witch to exist as her children became the dominant lineage and other families married in. Like Ghengis Khan, you know, if he were a sweet mom.
 
         Rank 0: All witches with rare exceptions can meditate to call upon these mothergifts; The Garment, The Hat, and the Rod. Your garment is a single piece article of clothing like a robe, dress, toga, or so on. Your hat is a wide brimmed hat in some fashion. Your rod is anything between a wand and a staff that makes spelicasting slightly less fatiguing and slightly more potent. Without practice, ranks in witchery, the way they appear when you first manifest them is as they will always be, and they're very plain by default. Experienced witchery practitioners can modify them for you, like a tailor. Takes 10 minutes of meditation to summon. They always appear fully repaired when summoned.
-        RANK 1
-
+        """
+    , ranks =
+        [ """
         You deepen your connection to the Mothergifts, allowing you to summon them and dismiss them at your leisure with a visual flair that varies from witch to witch. When the Garment is summoned, it replaces your current clothes in totality, save for magical items and charms, so either enchant your underoos or keep your garment modest. The hat just replaces any headwear that gets in the way. Whatever your Rod is, you can now shift it between its base, and the form of a broomstick. This broomstick can carry your weight + 50%, at the speed of a bicycle. You can meditate for 10 minutes to alter your mothergifts into a preferable design.
-        RANK 2
-
+        """
+        , """
         Your garment now provides protection against the natural elements. You will never be too hot or cold while wearing them, they dry off in seconds, and self-clean, and now self-repair without having to resummon. Your broomstick can now fly at 60mph, and projects a shield of air that stops wind, bugs, rain, and other small airborne things up to slightly slower than an arrow. Your broomstick will automatically catch you from a fall, if there's room to do so. It can carry three times your bodyweight now, allowing a second passenger. Only takes a minute now to meditate on changing the design of your gifts, and your garment can be multiple pieces that disappear if separated from the rest.
-        RANK 3
-
+        """
+        , """
         You expand your mothergift to the extent that you can tap the pocket dimension from which they appear, allowing you to store anything you could carry in its space, so long as you can fit it into your robes or hat in a way that it can't be seen by anyone else. You conjure them back in the same manner, drawing your wand from your sleeve for example, or pulling a rabbit out of your hat. There is no breathable air in this space but biological functions are paused, including thought. Your broomstick can now go 200mph and the air shield now provides oxygen, pressure control, and air conditioning. It also provides an air cushion to ride in comfort without the discomfort of, well, I'll leave it at that. Your broomstick can also become a magic carpet instead, capable of supporting more passengers but traveling at half the speed, and up to 6x your bodyweight, 8x for carpet. You can now summon/unsummon in the blink of an eye, changing the design of your gifts in the process.
-        RANK 4
-
+        """
+        , """
         Your garment is now able to turn you invisible like an invisibility cloak, and while on your broom or carpet this extends to any passengers and the broom/carpet itself. You can now travel without fear of being seen. Avoid restricted airspace, as some sensors can pick you up, but radar and visual perception wont. Thermal is the easiest, especially if you're blasting your AC in your airshield. Your broomstick can lift 10x your bodyweight, or 15x for carpet, flying up to 600mph. Can modify the appearance of a willing witch's garment or hat.
-        RANK 5
-
+        """
+        , """
         You are now also able to pull your hat down over yourself or turtle under your robes to disappear into your pocket dimension in the Aether, a starry void with no gravity, and no shadows, everything is perfectly illuminated from all angles. With meditation you can change this pocket space similar to changing the appearance of your gifts. To do so first find something real that you want to copy including just a view of a forest for example, and meditate with it in view to make a snapshot, adding it to assets you can draw on to add to your pocket world, adding gravity, landscape, ect. Things you manifest in this way don't really exist and can't leave or do physical harm to something real, but you can still feel them with all your senses and interact normally. While riding your broomstick or carpet, you can remove your garment or hat and throw it in front of you to have it ripple open like a portal you can fly through, taking your passengers into this space. You can also disguise your garment as a curtain door people pass through to walk into your realm on their own. Perfect for the illusion of a shop bigger on the inside than outside. Once inside anyone can leave by willing themselves home, to appear inside any residence or business they or a family member owns or rents, including yourself, or you can appear where you left, your hat or garment still there to emerge from unless you pulled them along with you.
+        """
+        ]
+    }
 
-        FAMILIARITY*
 
-        Sorceress - Beast / Soul / Nature
-
+familiarity : Details
+familiarity =
+    { name = Familiarity
+    , star = True
+    , class = Sorceress
+    , affinities = Regular [ Beast, Soul, Nature ]
+    , description = """
         There's an old spell, one of the first ever cast by a witch. It's almost too easy to cast and never seems to leave a witch's memory. A witch instinctively can figure it out for themselves just trying to use magic without direction as a rank 0 magic: Find Familiar. You can conjure a helpful benevolent spirit being, that may or may not parasitically conjoin with your own soul. It manifests in an animal form you can choose when you summon it. Cat, crab, crow, cow, bat, butterfly, dragonfly, frog / toad, hawk, horse, lizard, octopus, owl, snake, fish, rat, raven, sea horse, spider, weasel, ferret, goat, sheep, dog... or equivalent animals (Mockingbird > Raven, Squid > Octopus) It looks like a normal animal of your chosen type, but demonstrably has greater intelligence. It's as smart as a trained dog and utterly loyal to you, and your survival and thriving is in its best interest as its life is tied to yours. If its body dies you can resummon, or dismiss, it casually, and it doesn't age. You pick whether it is male or female. Familiars can interact with spirits. Reminder that this is rank 0. Any witch can have a familiar at this baseline.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         You lose any allergy to any animals you may have had, as well as lactose intolerance, and you can now telepathically communicate emotions and intentions through your soulbond, even when it is dismissed. You can use magic through your familiar, such as having your familiar do the pointing while you chant a curse.
-
-        RANK 2
+        """, """
 
         You can now talk to any of the above listed animals that are familiar options. (Not just your choice of animal). They understand your meaning, and you understand theirs. (No
 
         need for chicken squawking. Unless you're into that, idk). Most animals won't just do what you ask without incentive and their intelligence is limited. Even your familiar tends to
 
         behave in line with its respective animal by default and could use a bit of convincing depending on your relationship.
-        RANK 3
+        """, """
 
         Some of your familiar's qualities rub off on you, based on things that its species is known for and not actually the physiology of the animal, such as night vision and being able to jump high and land well for cats. Climbing and eating anything for goats (You'd be able to digest things and/or pass them harmlessly so long as you're able to swallow it and it isn't overtly toxic). Lighter body and better memory and intelligence for crows. (Flight is too much, no, but something like water breathing if your familiar is aquatic okay). Yes, a cow familiar does enlarge your breasts, h-hey! Eyes up here, also makes you stronger. Choose any 2 relevant animal traits. If future options grant any more forms for your familiar, you can pick one quality of similar power level to add to yourself. There is not hard rules on what constitutes a valid trait other than some reasonable cause, and it not being more potent than what's shown here.
-        RANK 4
+        """, """
 
         You gain the ability to shapeshift into your chosen animal. It's just an animal, it doesn't have special powers, but you can still cast curses, maintain the effects of potions, drink potions, wear charms, ect. It has some distinctive markings and resemblances to you but most people won't look twice. This goes both ways, your familiar now has the ability to shapeshift into a human! It gains human level intelligence (in both forms), and has all the personality traits that humans stereotypically associate with that animal, though it's still subservient towards you and obeys most commands with some room for mischief or stubbornness based on their personality. Looks wise, they'd have human traits that you'd associate with their animal. Lets just say my familiar gets as busty as me! You and your familiar both can adopt features from either/or forms in a blend, such as maintaining cat ears or a tail in human form. This is one of the primary reasons familiar spirits form these bonds with witches, they love to explore the world and are grateful for the opportunity to adopt a human form and their improved intelligence. Some may even fall in love with their masters!
-        RANK 5
+        """, """
 
         Whatever your familiar choice, this magic is originated with cats and that extends to this; The gift of 9 lives. If you die by any means, you'll wake up young again in your own bed. You can gain extra lives by saving a cat's life, though never going above a reserve of 9 lives. A good way to stock up is by adopting cats from certain animal shelters, where they were sure to meet an untimely end. Look up which are kill shelters or not. If you see a dying cat (or any other animal, or child) you can use one of your 9 lives on it. You also age very gracefully, like a cat, and won't start to look or feel old until you're in your 70's, and you might even look like you're still in your 20's depending on how you treat yourself, no more than 45 even if you didn't take care of yourself. At any point when you're over the age of 60, you can simply mentally use up a life to replenish your body without unpleasantries. Additionally, you can now shapeshift into any form your familiar possesses, other than a Metamorphosis form.
 
+        """ ]
+    }
 
-        NECROMANCY*
 
-        Warlock - Necro / Blood / Soul
-
+necromancy : Details
+necromancy =
+    { name = Necromancy
+    , star = True
+    , class = Warlock
+    , affinities = Regular [ Necro, Blood, Soul ]
+    , description = """
         Necromancy! The magic of souls, undeath, and viscera! Bending organic matter to your whim for your own ends and contesting the very nature of mortality, Now with less grave robbing, and Necromancy has an innate Rank 0 effect for all witches: All witches are capable of seeing through the veil separating life from the dead, to see ghosts and spirit creatures (Including most demons and other things out to get you that most humans can't see). Most spirits are collected by reapers and escorted to the afterlife of a deity that claimed them, while unclaimed souls go to limbo until granted passage to an actual afterlife. But some spirits flee from their reapers or their death went unnoticed, which is dangerous, as predatory spirits can prey on the weak and the spirit can be consumed, or get twisted over time to become a spirit beast itself.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         Beginner necros are able to weaken the veil so even humans can see spirits, as well as force spirits capable of hiding from witches to become visible. They can reanimate small corpses of animals for as long as they maintain the effect, up to 3 at once, to behave as they did in life with an echo of their life force imprinted on the body. If you visit any grave, you can use “Communion” to attempt to speak with the spirit from wherever they are in the afterlife or spirit world, but they can not notice, ignore you like an unknown number, or may not exist anymore. Be careful who, or what, you contact...
-        RANK 2
+        """, """
 
         With just rank 2, A necro can now purify corrupted or faded spirits that they manage to subdue in some manner with a 1 minute ritual that can restore the original intelligence, as well as optionally mark them so a reaper will find them to guide them on. Can now reanimate medium sized animals, up to 9. Reanimated bodies need not be composed of the same body, but can be amalgamations. With a word of command, you can control bone within 120 meters with up to the force of an arrow or swing of a weapon, up to 3 skeletons of mass.
-        RANK 3
+        """, """
 
         The necromancer is now able to reanimate human sized remains, up to 27, and Ifa spirit is available, you can bind it to a reanimated construct to give that soul a physical form, and doing so means you don't have to maintain the animating effect though it still counts to the limit, but won't fall apart if you are unconscious, and it now can't be dispelled. You can engrave the bones with runes if you know it. Souls need to be convinced to cooperate with you, you don't have unnatural influence over their choices with this alone. Your manipulation of bone also extends to dead flesh, within 340 meters and up to the mass of 3 whale skeletons, which can now have the force of a cannonball. You can spontaneously generate bone matter equivalent to a human skeleton with a minor mana cost and a second or two of focus.
-        RANK 4
+        """, """
 
         Now capable of reanimating up to 81 constructs up to the size of whales. Bodies or bound spirits will magically emulate biological and supernatural functions they had in life up to your own power level. You can now act as a reaper to send a spirit to an afterlife you know about, though a deity in charge can reject it unless doing you a favor. You can now control living flesh and bone in order to rip bones from the living or cause excruciating pain to those who are unprotected, such as via warding runes like most witches, within 600m in line of sight up to the mass of 10 whales with the force of an artillery shell. You can sense flesh and bone within 60m through walls. Constructs now don't require focus, can spontaneously generate as much bone as you can control.
-        RANK 5
+        """, """
 
         You gain the ability to become a lich. You can craft a phylactery you can put your soul into, which can be any object with a minimum size of a ring, so long as it's one solid object as opposed to a composite ie; A stone slab vs a slab of tiled pieces of stone. Small objects can be hidden and moved easily but a large object might be harder to destroy, or perhaps even notice as being special. While you have a phylactery, any damage done to your body is superficial, you can continue to remote operate your body even when all flesh is stripped away leaving only bones, even just a single skull. At any time you can abandon your body to instantly snap back to the phylactery and regrow a new body over the course of a few days. If your witch type has other methods of life extension, you can choose which occurs first, or switch that method to occur next to the phylactery instead of a usual location and from any distance. The phylactery must have a path to the open sky (or equivalent in the cas of other planes), but it doesn't need to be a straight path; It could be at the bottom of a dungeon labyrinth, and the path can be as narrow as 1 inch for up to 10ft at a time. Damage to the phylactery is true damage to you, proportional to the damage on that object. You'll feel proportional pain, and if destroyed, you die unless you have other means of cheating death as backup. Since your soul is sequestered away, effects that ‘kill immortals’ have no bearing on your lichdom. If your meat suit dies on you it can still be a viable target for healing magics to wake it back up, but it functions as normal even if you were to lose organic parts like eyes and ears, an undead body would still feel if it has flesh. Your reanimation can now animate beasts of any size from dragons to leviathans and you have no cap on the number of individual reanimated constructs. Sense flesh and bone within 240m, and control within line of sight with the mass of 50 blue whale skeletons. If you have a pocketspace, you can use it as an afterlife for spirits, though it can be a little unsecure compared to a real afterlife.
 
+        """ ]
+    }
 
-        CONSORTATION
 
-        Warlock - Blood / Beast / Soul
-
+consortation : Details
+consortation =
+    { name = Consortation
+    , star = False
+    , class = Warlock
+    , affinities = Regular [ Blood, Beast, Soul ]
+    , description = """
         Just because you can do something, doesn't always mean you should. Demonology. To summon a demon you'll need a summoning circle away from sunlight, and with fire in the area equivalent to 4 torches (or 16 candles), or more. Demons also appreciate incense, mood music, and mood lighting. Summoning them is fatiguing, but dismissing them is simple, like lifting something heavy and then just letting go. When summoned you have a psychic bond allowing two-way telepathic communication and know when the other wants to talk. They can't refuse your coms, but you can refuse theirs. You have to provide your payment up front, after which they are bound into service until they fulfill their bargain.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         You can summon Imps. The minorest of minor demons of Wrath, Gluttony, Greed, Sloth, or Lust, with personality and interests to match. They're 6 inches tall and exert up to 10lbs of force, flying magically irrespective of their tiny wings. Greed likes shiny things, sloth just wants free time to lounge with food for an hour per hour of service, lust just wants internet access, or a show, maybe a grab or two, gluttony wants a full sized meal they can lounge in and eat beyond their fill. Wrath wants to cause harm. Greed wants a shiny trinket. Based on 24 hours of service per imp. They have decent skills relevant to their Sin type. Lust gives decent massages, gluttony is a reasonable cook, ect.
-        RANK 2
+        """, """
 
         You can summon a Foliot, a minor demon of envy. Foliots are adept at thievery and will happily take small belongings from specified people and deliver them to you. As payment they will usually take something else precious from the target while they're at it, or you can offer something important to you instead. They're the size of a teenager and you can summon up to 3. They can work together to steal larger objects like a fridge. They are invisible on demand and can make objects or others invisible with a touch for up to 1hr.
-        RANK 3
+        """, """
 
         You can summon the classic; A Succubus, or Incubus. Adept at seduction and ruining relationships, most like to summon them.... for personal use. They take any kind of sex as payment for their services, which can be on the job. They're excellent infiltrators if at all possible to get in via seduction or physical appeal. You can also summon a Nabasu, demons of gluttony that are 5-star chefs, and they want to watch you overeat as payment, to the point of discomfort at least once for a week of service. Succubi, incubi, and nabasu have physical forms that look human, but witches and mediums can see their true forms in reflections. You have to provide the ingredients for a nabasu to do its job. It will do shopping itself if you provide the funds, but wants extra payment to do so, which generally involves creepily rubbing your belly after overeating, and of course, eating roughly half of what it buys for itself.
-        RANK 4
+        """, """
 
         You can summon a Balor, a greater demon of Wrath. It cannot be controlled or tamed, it seeks only destruction and the implicit contract in summoning it is that it does its thing, and if you get in its way, it gets you. It's the size of a house, flies, and breathes fire. It can throw a car half a mile and is immune to nonmagical weaponry, heat, and explosive force. You can loosely direct it in a direction you summon it in or by speaking the name of one target in the process of casting, and it will act like a bull in a china shop as a living explosion crashing its way towards the named target, deliberately causing as much collateral damage as it can. Lasts 10 minutes, no more no less. You can also summon Astarothi, sloth demons in the form of attractive but emotionless mute maids or butlers that do absolutely anything you want. They can serve you in almost all home related aspects but are non-communicative. They encourage laziness and want you to laze around doing nothing productive per hour of their own labor 1:1 basis. If you won't be lazy, they will, until dismissed or you resume lazing, up to 12 can coexist on the same payment.
-        RANK 5
+        """, """
 
         You're good enough now to summon a Greater Desire demon. The Greater Demon (who would have a unique name), wants your fealty, dedicating yourself to offering souls in
 
@@ -259,48 +293,64 @@ raw =
         As a Dalihiah, you can breed fusion demons: Demons with the traits of any two, including accepting either payment. The methods are up to your imagination.
 
         Note: Wishes from ANY sources cannot directly stack with any other prior wish. So no wish could grant more than 33 Power, including directly wishing for, say, a specific perk.
+        """ ]
+    }
 
-        PORTALS
 
-        Academic - Life / Nature / Mind
-
+portals : Details
+portals =
+    { name = Portals
+    , star = False
+    , class = Academic
+    , affinities = Regular [ Life, Nature, Mind ]
+    , description = """
         The magic of portals is sometimes called gatekeeping, planeswalking, or helldiving. By default, all witches are able to see most basic level hidden portals or rifts, and can enter them where normal mundane humans would pass through most as though it weren't there, oblivious, sometimes experiencing vertigo or deja vu. Portals can be hidden anywhere in any number of forms with three main archetypes; Portkeys, which are objects spatially bound to another location that act like a ferry shifting between locations at regular or random intervals. Gateways, which are arches or door frames enchanted to act as a portal when triggered. And Rifts, which are wounds in timespace cut through by a witch on demand, or anomalous natural events. Rifts open as fast as you can complete its outline. Their outer edges are the sharpest "objects" known to witchdom.
 
         Creating a rift is roughly as fatiguing as 2 jumping jacks, and 1 more jumping jack per 10 seconds active, and they cannot be made to intersect existing solid matter. A rift can be damaged from the back or sides, or objects too large to fit, with durability shown per rank. Creating a portkey or gateway takes a ritual sacrificing objects of monetary value equal fo 10S per mile linked. Portals are stationary, and can come in any variety of themes and behaviors based on the witch that created it.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         With rank 1, you are able to create rifts 6 inches in diameter within 6ft of you connected to another point you can see within 300ft of you, or that you are very familiar within within 60ft. Plenty of uses for these guys, probably the most common is retrieving drinks from the fridge. Paper-like durability. You can create 1 Portkey or Gateway linking 1 location to another location you have been, within 50 miles.
-        RANK 2
+        """, """
 
         At rank 2, you can create rifts that are up to 12 inches in diameter at double the range, and 3 portkeys or gateways which can now work within 200 miles. You can open a 1-way rifts to a proxima, a dimension that is adjacent to an Elemental Plane (As in, they're like a window from your side). You can tap the proxima of the elemental plane of fire, and the elemental plane of Ice. Fire Proxima rifts can be between 150 to 500f, or 65-260c, degrees hot, which you control with your intentions creating the portal deeper into the proxima. Makes for good hot plates or grill tops. Ice Proxima rifts are between 32 to -80f, or 0-62c. Make great ice trays. Glass-like durability.
-        RANK 3
+        """, """
 
         At rank 3, you can now create rifts without having to trace the outline by force of will but they're 4x as fatiguing this way, entry rift being within 60m. A flicker of color varying from witch to witch ripples out in a spherical area of the same diameter as the rift being opened a moment before the rift snaps open, a process of about 1.5 seconds. Your rifts can be up to 3ftin diameter, doubling the range again. You can create up to 6 portkeys or gateways now, linking points up to 800 miles apart. You can now tap the Storm Proxima, creating electrical rifts that can power a city block at once. Reminder that since it is one way, you can hook jumper cables to it. Inch-thick steel durability.
-        RANK 4
+        """, """
 
         At rank 4, you can now create two-way rifts to proximas, but moving through them is like moving through a wall of jello, requiring a level of force to push through with non-trivial effort. Your one-way rifts are like 6 inch tungsten plates if damaged. Your rifts can be up to 7ftin diameter, that are equivalent to 1ftof titanium plating. You can make up to 32 portkeys or gateways. You can now link portkeys or gateways to anywhere you have been, in any dimension or extraplanar realm you've been. You can now tap the Water Proxima, creating rifts functioning like water hydrants. Water rifts cease functioning after 12 seconds when submerged, so they automatically stop if flooded out. Your rifts now have a range of 10 miles provided you can visualize the location sufficiently.
-        RANK 5
+        """, """
 
         With rank 5, you have no limit on the number of portkeys or gateways you can produce. Your rifts are now up to 14ft in diameter and connect to anywhere you have spent more than 72 hours at, or that you can sufficiently visualize, or you can blindly connect a rift to somewhere a set distance and direction from you (provided the rift does not intersect solid matter). Additionally, you can create permanent rifts that have no drain up to 12 inches in diameter, but they retain glass-like fragility. Your non-permanent rifts up to 3ft are impervious. You can now delve closer to the true elemental planes. Fire: 6,000f. Cold: -420.69f. Storm: Power all Tokyo at once. Water. 12 fire hydrants, potentially at high pressure if focused, cutting within 60m with laser-like focus. New plane: Void- Absolute nothingness. Tap into the Void itself, not an Elemental Plane, but nonetheless accessible. Pulls things in like a black hole with an event horizon that's 3x the diameter of the rift itself and a pull felt with exponential intensity at twice that distance. You can hear it whispering sometimes, as can anyone that can see it, occasionally making witnesses feel compelled to walk into it. Things fade in the Void, disappearing in 24 hours.
+        """ ]
+    }
 
-        DIVINATION
 
-        Warlock - Soul / Life / Mind (This magic can also have no affinity, and be taken by human Alphazon agents with observers.)
+divination : Details
+divination =
+    { name = Divination
+    , star = False
+    , class = Warlock
+    , affinities = Regular [ Soul, Life, Mind ]
+    , description = """
+        {choice This magic can also have no affinity, and be taken by human Alphazon agents with observers.}
 
         Also known as tactical magic, Divination is magic of knowledge, information, data. This school of magic presents data to the caster in a manner adapted to their sensibilities and expectations. Past witches used to rely on acquiring data through stargazing, runecasting, smoke, reflections, or crystal balls, but conceptual refinement of modern witches (At your option) allows direct data interpretation within your own minds eye in your field of view.
 
         Divination has a RANK 0 effect: Sending. A witch can telepathically attempt to link with any intelligent being they have met to attempt to message them via text, voice, live image, or with r5: telepresence, as though you were face to face, even seeing their local surroundings. Sending can be rejected or the sender blocked.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         Divination begins with the spell Identify: A quick spell needing only a single word chant, it will provide basic public details about a target you can see. Such as publicly recognized names and 1 popular detail. As simple as identifying a rock, followed by an obvious observation about it. Can give you the name of a public figure and a factoid about why they're a public figure, and their most known title. Such as - "Alyssia, Queen of X, known to have stolen the crown from her sister by subversion."
-        RANK 2
+        """, """
 
         Identify: Can now reveal magical qualities of items or active magical effects, the type of magic, affinities involved, and expected effects.
 
         You also now gain the Status spell, which reveals any ongoing effects that alter the normal function of the target, up to the caster's ranks in Divination. For example: Burned, Poisoned, Diseased, Cursed.
 
         You have the spell Augury, which can give you a Positive, Negative, or Neutral response to a question regarding events in the next 30 minutes.
-        RANK 3
+        """, """
 
         Identify: Can now passively toggle effects, with things such as seeing names over people's heads, or in your preferred display method, and priority relevant information.
 
@@ -313,7 +363,7 @@ raw =
         Augury can apply to the next 12 hours.
 
         Gain the spell Foresight, with a quick ritual chant you can enter a precognitive battle meditation allowing you to see .5 second into the future, with visual shadows leading events.
-        RANK 4
+        """, """
 
         Identity: Unless masked by wards or countermeasures, identify now reveals private information like your private name (Not True Name), main place of residence, factions, and your ranks in magic specializations, perks, owned relics, and major relations (Companions, Family, Romantic entanglements, etc).
 
@@ -328,7 +378,7 @@ raw =
         Augury can apply to the next 48 hours, and you can feel rough Bad Omens of significantly harmful events within the next month. By holding someone's hand you can fish for omens specific to them.
 
         Foresight extends 1.5 seconds ahead. With focused concentration you can actively play out a predicted series of events for up to 1 hour ahead, only a few seconds would have passed in your mind. However, it cannot incorporate unknown factors. If an unknown factor would alter events, those events appear distorted proportionally to how badly something Is interfering.
-        RANK 5
+        """, """
 
         Identify: Identify now reveals True Names. Identifying a magic effect identifies the original caster. Identifies Complications and similar weaknesses. It Identifies a person's Disposition, their favorability towards you (Hostile, disliked, neutral, amicable, ally, low level love, high level love, etc).or to others relevant to you or nearby.
 
@@ -345,22 +395,29 @@ raw =
         Augury can apply to the next week. You can feel bad omens of significantly harmful events within the next year. Catastrophic events within 5 years. Apocalyptic within 100, and you feel a rough idea of the broad strokes of what will happen without detail. You can use Augury on omens to try to narrow in on a sharper picture of the truth of what happens. You can now fish for Good Omens roughly correlated to a subject held in mind, such as "Will I find love?" or "Will I get the job", etc, generally limited to yes/no/maybe impressions.
 
         Foresight can extend to 3 seconds ahead and includes tactile information, such as feeling an echo of a surprise attack yet to come from behind. You can predictively skim ahead up to a 24 hour period. Unknown factors now appear as local distortions around silhouettes of the unknown elements themselves, but you can roughly see what happens such that "A humanoid figure will appear the window in 3 hours", however missing information can also be presented this way, such as a known figure being treated as an unknown because they won't be there as expected. Your Foresight can also now be anchored to a bad omen to observe a 24 hour window of events centered on that omen. Actions taken can of course alter events, or reveal unknown factors on repeat viewings.
+        """ ]
+    }
 
-        AETHERNAUTICS
 
-        Academic - ???
-
+aethernautics : Details
+aethernautics =
+    { name = Aethernautics
+    , star = False
+    , class = Academic
+    , affinities = Regular [ All ]
+    , description = """
         Aethernautics is the magical studies of cosmological principles, planar physics, and spatial It's field of magic used to safely explore the aether as well as long employed by astrologists and astronomers since ancient times to better glen insights from the stars above. Its utility in exploring space rather than the aether is a relatively more recent phenomenon, as space proves more difficult to navigate than the aether.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         You learn the ability to receive the true name of cosmic bodies. If you see a star, planet, asteroid, etc, you can instinctively recognize its true name. You can name a cosmic body to instinctively sense its position in the sky and its distance to you. You gain a sharper mind for intuitively comprehending spatial geometry and distances.
-        RANK 2
+        """, """
 
         You can now passively maintain the awareness of 3 cosmic body in your minds eye at once to have an accurate understanding of your position on a cosmic scale. Through meditation, you can isolate your body from the effects of the vacuum of space, from temperature and pressure, to radiation, and particle impact of mundane matter moving at over mach 8 up to light speed. By focusing in a direction when free floating, you can move in that direction at walking pace.
-        RANK 3
+        """, """
 
         You can passively maintain awareness of up to 100 cosmic bodies at once for a sharper understanding of your position with ample room for tracking bodies for curiosity’s sake or any reason, which can now include any object you can see or are sufficiently aware of that is not fixed to a superior body (ie: A satellite in space, but not a building on the ground, or a flying plane. A moon, but not an astronaut or rover. etc.) unless it has some means of shielding itself from detection. Your free-floating movement is now up to the speed of your witchery broom, or you could of course simply use your broom itself. You now have spatial comprehension and magical connection sufficient that you can harmlessly create folds in space to link two points of space you can see, which lasts until you lose focus. If you have portals, this can be used for permanent fixed folds in space as a gateway. A fold is the size of a doorway and has no effect on the area that might conceptually be within the folded area itself. From the vantage of the fold, you can see space magnify or twist to the intended destination on the other side of the fold as though bringing that point in space closer to yourself.
-        RANK 4
+        """, """
 
         You can maintain awareness of thousands of cosmic bodies. You gain the ability to exit an aetheric sphere, including the boundary of a pocketspace such as in witchery 5, to view a colorful space-like void of cosmic constructs, clouds, and crystal spheres- aetheric spheres. You can learn their true name the way you learn the name of cosmic bodies, allowing you to maintain relativity in this space beyond classical spatial awareness, to find your way in the infinite expanse of conceptual realities. Each sphere is another reality, or rogue demiplane, pocketspace, plane, or realm. If you know the true name of one such body or the creator entity who made one, you can comprehend its position to you allowing you to arbitrarily move through the aether to find that sphere, and unless protected, you can enter it.
 
@@ -371,7 +428,7 @@ raw =
         The aethernaut's space folding can now fold areas the size of a football field, creating large wall-like folds of space leading elsewhere, or creating geometries that can cover that area, such as pinching or twisting off that space entirely to fold the surroundings in on itself and hiding that football field sized area. Any aethernaut can perceive these twists and unfold them. This may also create areas of expanding space, such that a hallway could be twisted in a way that attempted movement continuously appears to elongate the space, or create repeating patterns. This can do shenaniganry such as turning around to see a continuation of what's in front of you, where one came from lost. These twists can still be anchored as gates. Twisted areas interfere with teleportation and planar magics, preventing use within, putting an area on planar lockdown.
 
         Additionally, you can alter the relationship with gravity of yourself or another being or object you touch, redirecting it into a new direction relative to a new surface or point, which can be incorporated into twisted areas allowing relative gravity to any given surface, or static surfaces within the area.
-        RANK 5
+        """, """
 
         Awareness of millions of cosmic bodies. If you know the true name of a witch of the same rank as you or less, you can breach the spheres containing their pocketspaces to force entry if otherwise protected. Once in, you can create normal portals to let others in.
 
@@ -395,127 +452,168 @@ raw =
 
         Elementalist magics cannot be taken for the Restriction complication unless you have the affinity for it.
 
+        """ ]
+    }
 
-        FIRECALLING
 
-        Sorceress - Fire / Metal + Wind
-
+firecalling : Details
+firecalling =
+    { name = Firecalling
+    , star = False
+    , class = Sorceress
+    , affinities = Alternative [ [ Fire ], [ Metal, Wind ] ]
+    , description = """
         Elemental magic of Fire. Every rank in Firecalling reduces harm from Heat sources by 50% until you're immune to natural sources of heat at rank 3, where you could lay on lava if you wished, but resistance to magical sources of heat continues to be reduced by half per rank. If you have the Pyre weakness, you do not benefit from this resistance except in respect to hot sunny days, hot sands, or other non-fire heat sources.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         To start, you gain the ability to control candle size flames, including adding or subtracting candle size mass from a fire, within 30m of yourself. You can produce balls of compact flame in your hands that you can lob by hand within throwing range. They burst on impact with very little kinetic force but the flames spread like a molotov, around a 1 meter splash. Has negligible mana drain.
-        RANK 2
+        """, """
 
         Control grows to the size of a torch within a 100m radius of yourself, which includes the balls of flame you can summon, which you can now telekinetically manipulate to do things such as put them in orbit around you, hover nearby like a handless torch, or just as self-propelled firebolts. They now have kinetic force equivalent to a solid human punch and the spread of flame grows to cover a 3 meter area. You also gain the ability to hold your hand out and cast a very wide 160 degree 5 meter cone of flame hot enough to cause 2nd degree bums in 2 seconds of exposure, 3rd in 4.
-        RANK 3
+        """, """
 
         Control encompasses the size of a beach ball at a distance of 1,000f/300m Your firebolts can now have a 5 meter splash with force equivalent to a horse's kick. The buming hands cone grows to 10 meters, and you can now conjure a short lived ball of flame the size of a beach ball that actively ignites flammable materials within 5 meters of it while leaving a 1 meter wide trail of flame 3 meters tall wherever you make it travel via your control, that's as hot as the buming hands while obscuring vision. You can use jets of flame to boost jumps by up to an additional 5 meters or doubling the force of a melee impact.
-        RANK 4
+        """, """
 
         Control is now the size of an elephant or large truck at a distance of 1 mile. Your firebolts burst with the force of a 40mph car crash spreading flame within 10 meters. Burning hands cone grows to 30 meters. It and your wall of fire are twice as hot. The wall is 2 meters wide and 6 meters tall. Your boosting jets add up to 15 meters of jump or sustain a glide, and can triple the force of a melee impact. You can now concentrate flame into a pinpoint of heat in front of your hands, fingers, or eyes, to project a thin searing ray of fire that can melt a hole through steel at a rate of an inch per second with mana drain comparable to the stamina loss of jumping jacks.
-        RANK 5
+        """, """
 
         Generate fire out of nothing (No air?). Control fire in an area equal to a public pool at once at a distance of 10 miles, meaning you could very quickly bathe whole city blocks or forests in an inferno, or rapidly suppress the blaze of a building on fire. Firebolts are now full fledged fireballs with the force of a 60mph car crash with 20 meters of flame. You can set preset flight paths for them to take that they will continue to carry out until they are stopped by something or you dismiss it. Burning hands has a 50 meter cone. Wall of fire is up to 4 meters wide and 12 meters tall. Both are 3 times as hot as rank 4. Boost jets can now provide flight 120mph or flight (or boost flight by 120mph) or quadruple the force of a melee impact.
 
         You now lear to create self-sustaining feedback loops of flame as spheres that grow in power with time and distance, swelling from the size of a pinpoint bead of fire, to swirling miniature suns up to around 300m in diameter, doubling its current size per 10 meters traveled or 1 second of flight, whichever is slower. They burst with a shockwave that can level brick walls, in an area of 3x the size of the ball, with flames hot enough to melt steel beams in 6 seconds, though the fireball of the explosion only lasts 2 while igniting things in the area. Twice as hot and forceful within the area directly hit. The primary use case of course, is to cast these beads to the sky, and let them rain down on an area for bombardment. High mana drain. Low mana capacity could launch 2 before bottoming out. Med-5, High could launch 12. (But the Low likely has high charge rate to sustain a light bombardment for longer over time). Yes this was a long roundabout explanation of how to cast a classic Meteor Strike/Swarm, though that's a bit of a misnomer as meteors are rocks. Performing this on Earth is almost guaranteed to be a masquerade violation. Curses 5 can at least pass as natural disasters.
+        """ ]
+    }
 
-        WINDKEEPING
 
-        Sorceress - Wind / Nature + Soul
-
+windkeeping : Details
+windkeeping =
+    { name = Windkeeping
+    , star = False
+    , class = Sorceress
+    , affinities = Alternative [ [ Wind ], [ Nature, Soul ] ]
+    , description = """
         Elemental magic of the winds. Every rank in Windkeeping reduces harm from air pressure sources, electrical currents, and your need for air by 50% and provides a buffer against winds until you're immune to natural sources of air pressure at rank 3, where you could comfortably survive in the vacuum of space and natural lightning (and radiation) causes you no harm, but resistance to magical sources of winds and shock continues to be reduced by half per rank.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         Control a light breeze comparable to a common house fan within 30m, and whether it is warm or cool, like a hot or chilly day. You're able to concentrate winds in a short range of your hands to act as though you had a mundane knife or hammer in hand. You can launch projectiles equivalent to a basic slingshot. Negligible drain. (A Sylph, but not Like a Duck, could be light enough to use this wind control to fly)
-        RANK 2
+        """, """
 
         Control a blusterous breeze comparable to several high power fans, that can be hot enough to redden skin and dry moisture or cold enough to form a light frost where there is moisture, within 100m. Your control of concentrated winds can now emulate full size swords and sledgehammers, or leave stabilized air patterns equivalent to mundane objects such as a chair that can't be seen, similar to Pantomime. You can launch projectiles comparable to a 501b bow, or like a strike with a baseball bat. You're able to generate a static charge on demand, sufficient to make hair stand up and have a minor zap when you touch a doorknob. You can reduce your weight to become lightless enough that you can move yourself with your wind control with light mana drain, or no mana drain with Like a Duck.
-        RANK 3
+        """, """
 
         Control a hurricane force gale capable of knocking over vans or people within 300m, equivalent to 6-10 jet engines in total wind at once. Concentrated winds have the same effect as before but you can now project your own wind constructs like projectiles; Launch wide blades of wind or narrow thrusts, or blunt concussive force, or spinning buzzsaws of wind. You launch projectiles with the speed and force of common firearms or cannons for the case of larger projectiles. You can produce electrical charge equivalent to a tazer you can apply to your wind constructs or on touch. You are now immune to G-Force, allowing for high acceleration to launch yourself with winds, or sudden direction shifts.
-        RANK 4
+        """, """
 
         Control a strong cyclone force wind capable of lifting common street vehicles out to a mile away, equivalent to a somewhat slender tornado in total wind at once. If a cloud is in Teach you can alter the temperature to cause it to rain or hail like a light storm. Concentrated winds can now form large masses such as a blade up to 10 meters long or a mass of blunt force equivalent to a car. You can launch projectiles with the force of high power rifles, or throw larger things like a car up to around 10 meters or a person a few dozen, or yourself to provide an explosive burst of speed. You can create small sized real tornados with a mild mana cost that act independently or under influence of your wind control, more like very strong dust devils. You can produce electrical charge equivalent to touching a standard power line which could stop a human's heart or be used like a defibrillator.
-        RANK 5
+        """, """
 
         You can now generate air out of nothing. Control a unnaturally strong gusts of wind capable of toppling brick walls let alone ripping roofs off out to 10 miles away, equivalent to a somewhat thick tornado in total wind at once. You can move, burst, or gather clouds in range, your range increasing to be more around 30 miles vertically and 20 diagonally. By skewing the temperature and using hot winds below to send more humidity up to the clouds, you might sculpt storms and provoke rain, snow, or hail up to a heavy storm or blizzard. You can charge these clouds to cause thunderstorms. Your wind constructs can be up to 30 meters long or have the blunt force of a bus. Launch projectiles like high power artillery. Charge targets you can see such that lightning strikes gravitate towards them like a lightning rod, or your own electricity from within a few meters of yourself, generating charge in the air that then bridges the gap or as imbued into your wind constructs, being as potent as a natural lightning bolt. Create proper tornadoes on demand of normal size, or twist and build clouds until you can brew large supercells that can encompass towns.
 
         I'm sure I needn't remind you about the masquerade violation that would occur if you mess with the weather on Earth let alone take a pet tornado through a walk in the city. But with careful tact, at least it could be less unnatural than giant fireballs.
 
+        """ ]
+    }
 
-        WATERWORKING
 
-        Sorceress - Water / Life + Wind
-
+waterworking : Details
+waterworking =
+    { name = Waterworking
+    , star = False
+    , class = Sorceress
+    , affinities = Alternative [ [ Water ], [ Life, Wind ] ]
+    , description = """
         Elemental magic of water. Every rank in Waterworking reduces harm from water pressure and sources of cold, and protection against water by 50%, until you're immune to natural sources of water, water pressure, and cold at rank 3, where you could comfortably survive in the deep abyss of the ocean or in the middle of a blizzard, but resistance to magical sources of water or cold continues to be reduced by half per rank.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         Control water equivalent to 1-2 cups, or a small water balloon, within a 30 meter area. You can spread it out over a volume of a 5 meter thin mist, or condense such an area of air moisture into water. Useful for instantly drying yourself out of a shower. (Maybe multiple uses to dry clothes) Within 5 meters of yourself, your influence is strong enough can cause this water to form high pressure edges or points as you force it into miniature riptides to cause cutting or piercing damage comparable to if you had a knife or needle.
-        RANK 2
+        """, """
 
         Water control can cover up to a gallon, or moisture in a 10 meter volume within 100m. You can now force a change in state to solid, similar to changing the state to gaseous. This false ice is just a few degrees colder than it was as water, it's just stabilized into a solid. You can form objects out of this ice though they'll rapidly melt if you stop maintaining the effect passively. Your offensive reach with riptides increases to 15 meters. You can form pressurized spheres of water that burst when you stop concentrating on it, with the force of having a thick foam mattress thrown at someone and drenching everything in a public pool's worth of water, sufficient to knock most people down and douse large fires. This water is spontaneously generated false matter that will slowly disappear as if rapidly evaporating over 10 minutes, but is viable for your water control. Can breathe water.
-        RANK 3
+        """, """
 
         Control up to a home pool's worth of water, or moisture in an area equivalent to a football field within 300m. Forced ice can now be below freezing in temperature, and when you would turn water into vapor you can heat it into steam, or you can force ice or steam to remain a liquid well past boiling or freezing points. Down to 0 degrees F, or up to 250 degrees F. Your riptides can reach 60m away, and your pressurized water bombs now have the force of a bulldozer in up to a 30 meters with an olympic pool's worth of water at heavy mana cost, or just the public pool's worth for a medium cost but the same force. You can now force natural water to double itself, easily causing an overflow or solving a town's water shortage for a time, this is true water. With your water control you could easily move more water than it would suggest to create whirlpools and maelstroms.
-        RANK 4
+        """, """
 
         Control the equivalent of an olympic pool and all air moisture within a mile. Ice/Steam/Water can be -200f or +450f. Riptides reach within 300m. Water bombs and water duplication are now a sustained effect continuously generating water until you stop concentrating on it. Your water control can easily pressurize water with the force of up to artillery shells, your icicles could pierce concrete walls. You can easily control water with precision such that you could walk on the surface of water or lift yourself on columns of water or ice, or surf on clouds of intense steam, skate on ice created beneath your feet, or so on.
-        RANK 5
+        """, """
 
         You can now generate water out of nothing completely on demand without relying on water bombs and all water created is true water. Control the equivalent of 10 olympic pools. at once, within 10km. Your ice can reach absolute zero and your steam can be up to 1,000f. Riptides match the full reach of your water control. Bursts of water can match modern conventional explosives while your icicles could have the force (and hardening) to pierce iron bunkers. You can set up walls of water that prevent the movement of water past it, or act as currents flowing in a given direction. You could use this to create reversed waterfalls for example, or "Ceilings" of water below the surface, or otherwise creating dry areas where there was water, to walk across lake bottom or just prevent water from flowing back to fill an area where you're working on something. These remain stable within range of your control, by maintaining one for 24 hours you can make them permanent until dispelled, or after 1 year of sustaining they will return even after dispelled, being just a temporary disruption.
 
         You are now able to pent up control over water to store produced water to release all at once, or influence large bodies of water all at once with your control set ahead of time for when you release it. Just as you can create, you can destroy, and destroyed water can be converted to stored water to contribute to sudden releases. With set up, you could easily cause major tsunamis affecting whole coasts, or with extra care you might sculpt it just right to afflict only one city or one harbor. Do mind the masquerade.
 
+        """ ]
+    }
 
-        EARTHMOVING
 
-        Sorceress - Earth / Nature + Body
-
+earthmoving : Details
+earthmoving =
+    { name = Earthmoving
+    , star = False
+    , class = Sorceress
+    , affinities = Alternative [ [ Earth ], [ Nature, Body ] ]
+    , description = """
         Elemental magic of earth. Every rank in Earthmoving reduces harm from earthen materials and any source of blunt force trauma by 50%, until you're immune to natural at rank 3, where you could survive a fall from any height if you landed on earth, including concrete, and a falling boulder would do no harm to you (You decide if you meld into it, it bounces off like styrofoam, or shatters), but resistance to magical sources of earth continues to be reduced by half per rank.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         Control a simple bucket's worth of dirt, sand, mud, and marble-sized pebbles within a 30 meter area. This can be in a single loose mass, or up to 4 loose masses at once. You can blast this earthen material with force equivalent to dumping a bucket, or a slingshot in the case of focusing on single decent sized pebbles. You can pretty effectively dig loose earth quite quickly, until you reach bedrock or large stones, and don't diss the power of pocket-sand, or instantly cleaning a shiny rock and letting them orbit your head.
-        RANK 2
+        """, """
 
         Control a bathtub’s worth of earthen material up to the size of golfballs controlled in up to 10 loose masses at once within 100m. The force is comparable to ball muskets and blunderbusses in bursts. You can do a quick chant and tap a larger stone to reduce its weight by 90% in your hands, it regains its weight when it leaves your hands. You can also use your bare hands on an affected stone to mold it as though it were clay.
-        RANK 3
+        """, """
 
         Control a home poot's worth of earthen material, individually up to the size of a basketball sized stone, within 300m. Force equivalent to a cannonball or sandblaster. No longer requires a chant to affect stone, just simple intentions, and you can use your earth control to mold stone as though it were clay or rip out chunks of a size you can control. With a specific spell that takes a few seconds to focus on, you can cause slabs of stone to erupt from the ground 1m thick and 15m long, or up to 8 individual lances of stone, 4m tall.
-        RANK 4
+        """, """
 
         Control a public pool's worth of earth, about 4x rank 3, individually up to car sized stones, within a mile. You can hurl car sized stones comparably to a trebuchet, with your stones hitting with artillery-like force. You can rapidly shape stone into new shapes with enough sudden force behind movements that forming a spike can be comparable to a spear thrust, or forming many small spikes and causing them to launch like bullets. You can summon stone slabs like before, now without any more than a gesture, or focusing for a few seconds to summon stones from the ground that are up to Sm thick, 60m long, and 15m tall, or up to 30 individual lances of stone. You can also do the inverse to create fissures with twice the dimensions. You can likewise focus to build up turbulence in the earth causing quake in a 30m diameter area within control range that starts as a rumble. The force of the rumble and the dimensions double every few seconds of concentration until the shaking is enough to level basic unprotected structures after 4 minutes and max out at 2km. You could easily ride on propelled slabs of stone, or launch yourself into the air great distances.
-        RANK 5
+        """, """
 
         Control a city block's worth of earth with individual stones up to the size of small homes, within 10 miles, with force sufficient to throw such a stone with the speed of an arrow, while smaller stones might be simple to high caliber bullets. A stone lance could penetrate an iron bunker. You can also explosively multiply pressures inside stones to cause them to explode with artillery like force, sending shrapnel flying. You can now casually summon the slabs or fissures from rank 4, or focus for longer to create stone walls up to 10m thick, 300m long, and 40m tall, or up to 80 individual lances of stone, or fissures 20m wide, 600m long, and 80m deep. You can permanently rob the weight from stone in an area of a size you can control, leaving them weightless or lighter than air to an extent that you can create lift stones useful as cores to flying ships. You can meditate with a chant allowing you to increase the area you can influence with this effect by double per second, until you can affect up to a 10 mile area at once, allowing the creation of floating islands. Your earthquakes can now scale to reach 10miles as well with force sufficient that standing on the ground is like trying to ride a mechanical bull, most structures not protected by magical means of earthquake proofing cannot endure this. The earthquake can also continue independently of your concentration for up to 3x as long as you spent concentrating on it You can choose to not release this force while you concentrate to instead build up a sudden shock though with reduced area to a 5 mile area, which may be sufficient to pulverize a mountainside into a great landslide and may be a bit of meat grinder to anything within 2m of the ground surface during the intense few seconds the shock is in effect. Naturally, it's strongly advised not to do this anywhere on earth...
+        """ ]
+    }
 
-        NATURALISM
 
-        Sorceress - Nature / Life + Water
-
+naturalism : Details
+naturalism =
+    { name = Naturalism
+    , star = False
+    , class = Sorceress
+    , affinities = Alternative [ [ Nature ], [ Life, Water ] ]
+    , description = """
         Elemental magic of plants and woods. Every rank in Naturalism reduces harm from plant based materials and chemicals derived from plants or animals as well as diseases, and aggression of animals, by 50%, until you're immune to natural sources at rank 3, where you could comfortably lay on a bed of poisonous thorns and the most belligerent of bears would be ambivalent or friendly toward you unless manipulated, but resistance to magical sources continues to be reduced by half per rank.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         Control plant matter equivalent to a 3m of rope moving with about the speed and dexterity of a snake, within 30m. Focus on a plant to increase its growth rate by 25% for its current life or harvest cycle. By talking to plants during their growth, you can either boost beneficial aspects of the plant, or harmful aspects of the plant, by 50% when it matures. You can talk to intelligent animals like certain dogs, cats, dolphins, etc, and they somewhat accurately understand the meaning of your words. Includes Fungi
-        RANK 2
+        """, """
 
         Control plant matter equivalent to 10m of rope or a very large bush, up to 3 independent plants or vines, with the dexterity of octopus tentacles, within 100m. Plant growth can be boosted by 150% for 2 cycles. Talking to plants can boost effects by 100% and can now work at any time in its life cycle up until blooming or ripening when you would harvest. Intelligent animals accurately understand your intentions and you get an idea of theirs. Less intelligent animals can get a general idea of what you mean in simple terms. You can take a single trait from one animal or plant, and imbed it into a seed or pregnant animal and the offspring or new plant will possess that trait. (Animal to animal, plant to plant)
-        RANK 3
+        """, """
 
         Control plant matter equivalent to an aspen tree, up to 9 independent plants or vines within 300m. Wood can bend unnaturally, and the controlled plant matter can stretch up to 25%, with the speed of a snake's strike and fully prehensile. In addition to the stretching, you can induce growth at a rate of 10% per second (Max new growth caps out at equal to your maximum plant control per second), and within the natural possibility for a plant to achieve. Any animal can understand you, gaining human level intelligence when you talk to it and while acting on something you've asked it to do. You can cause non-magical plants to bloom, produce, or spore early, on demand, with boosted effects by 300%. You can take and implant up to 2 traits at once into a new life.
-        RANK 4
+        """, """
 
         Control plant matter equivalent to a mature spruce tree and up to 20 independent plants or vines. within a mile. The controlled plant matter is as hard as wood, or if wood then 5x as hard. Can stretch up to +100% of its natural reach or length. Vines could move as fast as a bullet, though not prehensile, moving more normally to perform fine actions or grapple. You can actively induce growth as you desire it up to the speed of control, and these plants can grow up to twice as large as normal before factoring stretch. Includes the size of produce and flowers, etc. You can permanently Awaken animals to full human intelligence and implanted with 1 "human" skill you wish at time of awakening. You can do the same with plants. You can implant up to 3 traits at once, one of which becomes Hereditary, passed on, or one trait into a currently living creature or plant.
-        RANK 5
+        """, """
 
         Control plant matter equivalent to twice the size of a mature Redwood tree and up to 60 individual plants or vines at once, within 10 miles. Wood is 16x harder under your influence, stretching up to 500% natural reach. Plants under your influence have 600% greater size than normal before accounting for stretch, only regarding height- Vines, roots, or branches have no maximum length so long as supported. Vines can exert sufficient force to claw into stone bedrock and you can spontaneously produce any other plant feature you have come across onto any other plant you are controlling. Make a great tree branch behaving like a vine grow large toxin filled thorns, or bloom large mushroom. caps producing clouds of paralytic spores. You can cause produce to grow out of immature plants, ie; An apple seed growing a single shoot that ends in a ripe apple that has the health benefits of ginger. With momentary focus and a brief chant, you can divide your plant mass control limit into countless individual plants such as single blades of grass, and have each grow fully into a mature tree, even individual redwoods, that each bypass your control limit for the purpose of near instantaneously growing to full mature size and given one command to continue to act on. Any awakened plant can control itself as though by your level of control as far as its speed and prehensile dexterity is concerned, though its growth remains as you last left it. You could very easily cause massive overgrowth to overtake a city with streets patrolled by treants. Use with caution to avoid breaking the masquerade, at least while on earth. Plant control is the active influence, an entire plant need not fit in the limit, just the part you're controlling.
+        """ ]
+    }
 
-        METAMORPHOSIS
 
-        Sorceress - Beast
-
+metamorphosis : Details
+metamorphosis =
+    { name = Metamorphosis
+    , star = False
+    , class = Sorceress
+    , affinities = Regular [ Beast ]
+    , description = """
         Metamorphosis is a school of magic built around shapeshifting the self. While Hexes can be used on yourself as well, Metamorphosis focuses on invoking inherent natures within the witch. As such, it is exclusive to witch types that possess the [Beast] affinity or witches with Improved Familiar, in which case this form is what the familiar itself can take. Siren, Naiad, Oread, Lamia, Gorgon, Taura, Mimi, Wulong, and Dravir. Naiads contain the form of the Leviathan. Sirens, Oreads, Taura, Mimis, and Pharon contain the form of a Zooarch, Lamia and Gorgons have the form of the Basilisk. Wulong and Dravir have the form of the Dragon, asian long and european classic respectively. A Hybrid can adopt the form as normal. A Hybrid of 2 Beast types chooses one unless they buy this again, though they can visually adapt its appearance to be a mixed form. If they bought it twice they can turn into either, or tum into a full hybrid beast. Likewise if you have Improved Familiar and qualify yourself, both the familiar and the witch could have a form, bought separately. Each Metamorphosis form is considered Rank 5 magic and costs 15 points as though it had all 5 ranks as such, meaning it costs 9p if you have the Beast affinity (which you should to be eligible for it in most cases). It takes a flat rate of 20% of your mana capacity to assume the form or trigger your familiar's form, which can be indefinitely maintained. Transforming back costs nothing and refunds 10% the mana cost.
-
-        RANK 5
+        """
+    , ranks = [ """
 
         Leviathan: Can also be available to Taura with aquatic animal halves. Colossal terrors of the ocean, leviathans are over a mile in length and have the width of 5 blue whales. Their appearances beyond that vary a lot. They may or may not have a roughly humanoid "head" portion with or without a portion of the humanoid torso, comparable not to a taura or naiad, but more like a sphinx. They often have a number of tentacles and fins concentrated around the "head" region of their length and then lightly spread throughout the rest of their length, which is scaled with diamond-like scales the size of dinner plates. Extremely hard, but could shatter with heavy blunt impacts effectively ignoring damage short of an armor piercing missile, but once overcome provides no protection in that spot. They are uncomfortable to the point of pain when in normal or low atmospheric pressure, at home in crushing oceanic depths, immune to high pressure and temperature extremes of water. Inversely, they're actually also comfortable in vacuum despite their issues with low pressure.
 
@@ -531,49 +629,64 @@ raw =
 
         Dragon: Transform into a scaled beast the size of a A380 airliner in the case of Classic European dragons, or as wide as a nuclear submarine and as long as an aircraft carrier in the case of Asian Longs. Their scales are equivalent to 4 inch thick mythril plating and they have an elemental breath of flame [Fire], lightning [Wind], cold and ice [Water], or metal shrapnel [Metal], poison gas or wood splinters / thorns [Nature]. If dravir, this is the same breath affinity as they already chose, a wulong gains one now when in this form, and can keep it when not in dragon form, not having an additional affinity from it. A familiar can choose one when this is taken. This breath affects a 300m cone, 1,200m line 5ft wide, or lobbed bursts within 1,200m that burst for 60m diameter. The resulting damage can melt a tank in 2 seconds (Fire or lightning), freeze the tank into brittle glass (water(ice)), or have the raw force to crumple or shred a tank (Ice, water, or metal). They fly at 300mph by default, adding your Witchery broom speed if applicable.
 
+        """ ]
+    }
 
-        PSYCHOTICS
 
-        Sorceress - Mind / Life + Soul
-
+psychotics : Details
+psychotics =
+    { name = Psychotics
+    , star = False
+    , class = Sorceress
+    , affinities = Alternative [ [ Mind ], [ Life, Soul ] ]
+    , description = """
         Elemental magic of the psyche. Every rank in Psychotics reduces harm from memetic hazards (Which includes observations of intrastellar phenomenon and Outsider Entities), psychological trauma, telekinetic assault, and psionic constructs by 50%, until you're immune to natural sources at rank 3, but resistance to magical sources continue to be reduced by half per rank. Unless otherwise specified, all Psychotic effects require minor concentration that doesn't take much effort.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         Control psychic vibrations sufficient to make small objects disappear from one sense, up to the size of a softball, in one person's mind. You're able to make the same small objects instead look like another object. Make an 2 of hearts look like an ace of spades, or a pokemon card. You can also twist psionic wavelengths in someone's mind sufficient to cause a headache, which you can link to an associated pattern in the brain, such as the sight of a chair or a certain thought.
-        RANK 2
+        """, """
 
         You can now affect objects up to the size of a beachball disappear from two people's minds, using two senses. You can likewise induce headaches (conditional or not) into two people at once, with two different conditions if desired. The headache is now strong enough to be strongly uncomfortable and lightly disorienting. You can now manifest psionic constructs that behave like any mundane uncomplex object, within 5 meters of yourself. Such as a psychic dagger. You can physically interact with your own psychic constructs, but they phase through other objects and creatures: Doing so disrupts neurological processes, making an arm feel numb for example, and more clumsy, as though intoxicated, especially if the psychic dagger passed through their brain. This is considered a direct magic effect, blocked by Warding runes. Lasts up to 12 minutes.
-        RANK 3
+        """, """
 
         Psychic vibrations affect up to the size of the average car from up to 6 people’s minds using 3 senses. Induce headaches in up to 6 people at once, with any number of optional Conditions. These headaches are now dizzying migraines. Psychic constructs can now exist within 30m of yourself and can include projectile objects like psychic bows and arrows, or firearms. Numbness lasting up to 1 hour. You are now capable of localized twists in the psychic fields to switch your position in space with that of a space you can see within 60 meters. Teleportation.
-        RANK 4
+        """, """
 
         Psychic vibrations affect up to the size of a suburban house from up to 30 people at once, using all 5 basic senses. Induce headaches in up to 30 people at once. These headaches cause the eyes, ears, nose, and mouth to bleed lightly and are maddeningly painful. So long as the headache has a conditional modifier set, it can also be made permanent, removable by magic that can cure mental illnesses or curses. Psychic constructs can now exist within 90m of yourself, and now instead of numbing, an affected nerve or limb can't be felt at all as though it weren't there. A headshots lights out. Lasts up to 12 hours. You can teleport within 1 mile. At rank 4, you're now capable of inserting a psychic construct into someone's brain to view their mindscape, a realm of thought and memory where you can explore to find memories and opinions in networks of associations. If you use psychic constructs within here to destroy something, it is forgotten, or you can use your ability to twist psychic vibrations to create new associations and false memories.
-        RANK 5
+        """, """
 
         Psychic vibrations affect up to the size of a skyscraper, and is now a passive effect generated by a field you imbue the object itself with, allowing it to affect any number of observers and without your concentration. Your "headaches" can now cause people's heads to explode, which with conditional modifiers you can make give painful warnings and a number of "strikes" before the big pop. Psychic constructs can exist anywhere you are able to observe, and you can teleport within this same range. You can now do mass edits to a mindscape to edit things along basic conditions or filters. You can blanket nuke a mindscape for complete ego death. Though mindscapes are backed up in the soul, and could be restored by some healers and the soul might "Bleed" emotional memory. Likewise you can fabricate an entire identity and false life within them. In a similar vein, you can enter the psychic plane of existence via your teleportation to see an ethereal realm similar to the spirit world, full of emotional constructs, echoing memories, and thought patterns of individuals living in the material. A ghost like mirage of yourself echos your position in the material world, so you aren't invisible. In this place if you use your psychic vibrations to shroud a person or object from the psychic plane at large. Doing so erases memory and knowledge of that person or object from any unprotected mind. So most mortals, and new or neglectful witches who don't have a warding rune or psychotics who created a shroud around their own mind, protecting them from this and constructs.
+        """ ]
+    }
 
-        METALLURGY
 
-        Sorceress - Metal / Fire + Earth
-
+metallurgy : Details
+metallurgy =
+    { name = Metallurgy
+    , star = False
+    , class = Sorceress
+    , affinities = Alternative [ [ Metal ], [ Fire, Earth ] ]
+    , description = """
         Elemental magic of metal, of Iron and Steel, of Gold and Silver. Every rank in Metallurgy reduces damage from metal sources by 50% until you're immune to natural and primitive sources at rank 3, so simple metal weapons will not harm you, neither will small arms fire, but resistance to magical or high-power sources of metal continue to be reduced by half per rank. If you chose to take the Iron vulnerability, then it ignores this.
-        RANK 1
-
+    """
+    , ranks =
+        [ """
         Control a handful of coins worth of metal, moving and levitating it with comparable speed to physically moving it around with your hand, within 30m. You start out with the ability of cold forging, any metal under your control you can freely weld and merge to other metals, easily welding metal to metal or patching damaged metal objects, or sharpening blades.
-        RANK 2
+        """, """
 
         Control metal equivalent to a longsword, with speed comparable to an arrow, within 100m, moving beyond that on its own power if thrown with this effect. Your cold forging is now seamless, as though part of the original form, and now you have a sense for metal within your control range larger than a coin. With focus you can sense and control fine metal traces within loose material like dirt and sand, and extract it with your control and turn it into something usable with cold forging, such as needles or outright blades.
-        RANK 3
+        """, """
 
         Control metal equivalent to a full knight's armor- And that of an armored warhorse. Or roughly a car's worth of metal, within 300m. Large projectiles like the car at throwing speed, while you bullet sized objects can be moved with common bullet speeds (9mm). Your cold forging can process raw ores into pure metals, ingots or otherwise and you can draw metal out from stone at a depth of 3ft/ 1m, rather than just dirt or sand. With time you could separate alloys into their base components, or cold forge alloys from base metals. At this rank, you can also learn to create a form of puremetal gunpowder devised by a the first gunwitch, John Moses Browning. You can incorporate this in your creations to create cannons or actual firearms, it may take some skill to consistently get the right ratios both for the powder, mass you want to move, and the strength of a given barrel. You can produce a handful of powder at once with a minor mana cost, bear that in mind for if you want to quickly construct a cannon.
-        RANK 4
+        """, """
 
         Control metal equivalent to a 3 busses or a cohort of mounted knights, within 1 mile. You can hurl large full metal ballistas at the speed of a bullet, or small projectiles at high velocity rifle speeds. You no longer take any extra effort to split or meld alloys, becoming a standard part of your cold forging, and you can draw and extract metals from throughout the environment within your control range, filtering trace metals from deep in the ground beneath you for example. You can now form motion metals, an active infusion that allows solid metal to actively mold and conform to movements instigated from one side of the metal, such as from within a solid armor encasement without gaps or the need for joints. You can now create a barrels worth of puremetal powder at once and learn to infuse the powder to magnify its explosive potential by a factor of 10. You could easily create a solid row of cannons on demand, presuming you master the skill in precisely calculating the ratios still.
-        RANK 5
+        """, """
 
         Control metal equivalent to a train 25 cars long, within 10 miles. You can hur ballistas with the speed of a rifle bullet, or small rods at extraordinary velocities- railgun shots. Your cold forging can now forge metals out of thin air, materializing metals as you need them without having to draw on existing metals, though drawing on existing metals is less mana intensive. You can now make motion metals that respond to any kinetic force and feed in on itself to act in a designated manner, such as self-reinforcing to make a thin sheet of metal provide the resistance as a much harder and thicker layer of metal, transferring some of the force of an incoming attack into its own resilience, or a motion metal that applies the force of its own movement into additional rotational energy for continued acceleration, forming drill or saw effects or emulating rifling for either increased speed and flight paths, r for more damaging attacks from cutting buzz saw motions, or piercing spin of a drill lance, or forgoing the theatrics, simply amplify the force of a normal blade as though it were up to 10x its actual weight. The mana expense is low but it all stacks up. You can of course leverage your metal control to do similar drill effects and movements, but motion metals are just more empowered and take less of your own focus, to the extent that if you overdo it it could be difficult to interrupt. fou can use motion metals to form the barrels of guns and cannons to resist far stronger explosions within to handle far stronger projectiles, and a motion metal cannonball may even reach the moon, or you could create an normal array a full heavy bombardment of cannons, creating over a dozen barrels worth of puremetal powder at one time. Additionally, you can cold forge metals into roughly similar metals. You can turn Lead to Gold.
-        """
+        """ ]
+    }
 
 
 intro : String
@@ -585,7 +698,7 @@ intro =
 
     Note that these are the possibilities isolated for you, not all witches would have the same opportunities you do. You are exceptional and have more options, and to a higher ceiling than most. Rank 3 in one or two specializations would be considered a capable witch. There are whispers of witches with rank 6 magic, while 7+ are the domain of gods, who are very real.
 
-    {choice Each rank in a magic specialization below costs power equal to its rank, in sequential order}. le; Rank 5 magic costs 15 points in total, rank 3 would be a total of 6p. {choice All Specializations have associated Affinities tagged}. If you have one of these affinities, the magic costs half the power, {choice *rounding up*}. [???] are universally discounted to all affinities.
+    {choice Each rank in a magic specialization below costs power equal to its rank, in sequential order}. le; Rank 5 magic costs 15 points in total, rank 3 would be a total of 6p. {choice All Specializations have associated Affinities tagged}. If you have one of these affinities, the magic costs half the power, {choice *rounding up*}. [All] are universally discounted to all affinities.
 
     For every Rank 5 magic, you must have at least one other magic at Rank 4. For every rank 4, you need 1 magic of rank 3 or less. This does not apply to the either Slot game mode changes, which behave in isolation. Slots stand on their own. This applies to the player, but non-player characters need not adhere to player mechanics and can be presumed to have various less notable magical traits not listed.
 
@@ -600,3 +713,18 @@ intro =
 slotDescription : String
 slotDescription =
     "If playing in a Slot Mode (Skill Tree or Constellation), Magic instead costs a Slot as shown. Folk slots can buy rank 2 magics. You can have white “Free” slots granting rank 1 magic as granted by your Class discount on options that would cost 0."
+
+
+elementalismIntro : String
+elementalismIntro =
+    """
+    The magic presented here in this section is referred to as Elementalism. These single-affinity or monotype magics operate just a little differently from other schools of magic, in that any witch other than sorceresses are incapable of learning more than one elementalist magic that they do not have the affinity for.
+
+    Each magic will show an OR clause. You can qualify for Affinity discounts if you possess both component affinities, including taking it without the primary monotype affinity.
+
+    If you have more than one elementalist magic, you can combine effects to create combination magic. Such as Firecalling and Earthmoving for lava effects, Windkeeping and Waterworking for storm effects. This is beyond the scope of what the cyoa can detail and up to reasonable interpretation with wiggle room for creative liberties. You can also perform Harmony magic, combining elements of cooperating witches, twice as potent as normal.
+
+    Witches with an elemental magic at rank 3 are often called Hazards. Rank 4 are Disasters, and Rank 5 can be labeled as Calamities. This designation can influence the weight of consequences placed on you for reckless behavior, people don't trust living weapons with a track record of being careless when many lives can be at stake if you prove unstable, or outright malevolent. Witches with Curses also receive this designation, as well as others on a case by case basis, such as some grenadier alchemists.
+
+    Elementalist magics cannot be taken for the Restriction complication unless you have the affinity for it.
+    """

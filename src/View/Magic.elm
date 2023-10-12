@@ -1,7 +1,7 @@
 module View.Magic exposing (viewMagics)
 
-import Data.Magic as Magic
-import Element exposing (Element, centerX, column, el, fill, height, moveDown, moveLeft, moveRight, moveUp, padding, px, rgb, spacing, width)
+import Data.Magic as Magic exposing (Affinities(..))
+import Element exposing (Element, alignBottom, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveLeft, moveRight, moveUp, padding, px, rgb, rgba, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -10,6 +10,7 @@ import Generated.Types as Types exposing (Slot(..))
 import Gradients
 import Html
 import Html.Attributes
+import Images
 import List.Extra
 import Theme
 import Types exposing (Choice(..), RankedMagic)
@@ -41,6 +42,36 @@ viewMagics selected =
             ]
             Magic.slotDescription
         , Magic.all
+            |> List.indexedMap (magicBox selected)
+            |> Theme.column []
+            |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)
+        , Theme.row
+            [ Theme.padding
+            , Background.image Images.magicElementalism.src
+            ]
+            [ let
+                color : Element.Color
+                color =
+                    rgba 0 0 0 0.5
+              in
+              Theme.column
+                [ Theme.padding
+                , width <| Element.minimum 480 <| fillPortion 1
+                , Background.color color
+                , Border.shadow
+                    { offset = ( 0, 0 )
+                    , size = 5
+                    , blur = 5
+                    , color = color
+                    }
+                ]
+                [ el [ Font.size 40, Theme.morpheus ] <|
+                    Theme.gradientText 1 Gradients.blueGradient "Elementalism"
+                , Theme.blocks [] Magic.elementalismIntro
+                ]
+            , el [ width <| fillPortion 3 ] Element.none
+            ]
+        , Magic.elementalism
             |> List.indexedMap (magicBox selected)
             |> Theme.column []
             |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)
@@ -221,12 +252,12 @@ magicTitle { name, star, class, affinities } =
         , Font.size 40
         , centerX
         , Element.onLeft <|
-            Theme.row [ moveLeft 8 ]
+            Theme.row [ moveLeft 8, alignBottom ]
                 [ Theme.image
-                    [ width <| px 32 ]
+                    [ width <| px 32, centerY ]
                     (Theme.classToBadge class)
                 , if star then
-                    el [ Font.size 48, moveUp 8 ] <|
+                    el [ Font.size 48, moveUp 8, centerY ] <|
                         Theme.gradientText 1 Gradients.yellowGradient "★"
 
                   else
@@ -235,13 +266,38 @@ magicTitle { name, star, class, affinities } =
         , Element.onRight <|
             Theme.row
                 [ moveRight 8
-                , moveDown 8
+                , moveDown 4
+                , centerY
                 ]
-                (List.map Theme.viewAffinity affinities)
+                (viewAffinities affinities)
         ]
         (Theme.gradientText 4 Gradients.yellowGradient <|
             Types.magicToString name
         )
+
+
+viewAffinities : Affinities -> List (Element msg)
+viewAffinities affinities =
+    case affinities of
+        Regular afs ->
+            List.map Theme.viewAffinity afs
+
+        Alternative alternatives ->
+            alternatives
+                |> List.map
+                    (\afs ->
+                        afs
+                            |> List.map Theme.viewAffinity
+                            |> List.intersperse
+                                (el [ Font.size 24, moveUp 8 ] <|
+                                    Theme.gradientText 2 Gradients.yellowGradient " + "
+                                )
+                    )
+                |> List.intersperse
+                    [ el [ Font.size 24 ] <|
+                        Theme.gradientText 2 Gradients.yellowGradient " OR "
+                    ]
+                |> List.concat
 
 
 viewRank : List RankedMagic -> Magic.Details -> Int -> String -> Element ( RankedMagic, Bool )
