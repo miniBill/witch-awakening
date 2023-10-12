@@ -146,7 +146,7 @@ mainParser =
             |= Parser.oneOf
                 [ Parser.succeed Kisses
                     |= Parser.getChompedString
-                        (Parser.chompIf Char.isDigit
+                        (Parser.chompIf (\c -> Char.isDigit c || c == ' ')
                             |. Parser.chompWhile (\c -> Char.isDigit c || c == ',')
                         )
                 , Parser.succeed (Text "K")
