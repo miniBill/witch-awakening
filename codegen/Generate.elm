@@ -50,7 +50,7 @@ toFiles flags =
                                 else
                                     Err
                                         [ { title = "Unexpected file"
-                                          , description = "File " ++ fileName ++ " unexpected, don't know how to handle it"
+                                          , description = "File " ++ fileName ++ " unexpected, don’t know how to handle it"
                                           }
                                         ]
                     )
