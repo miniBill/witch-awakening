@@ -265,7 +265,7 @@ viewPiece piece =
 
         Kisses value ->
             Html.span []
-                [ Html.b [] [ Html.i [] [ Html.text "₭" ] ]
+                [ Html.b [] [ Html.i [] [ Html.text "₭ " ] ]
                 , Html.text value
                 ]
 

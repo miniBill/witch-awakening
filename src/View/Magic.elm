@@ -1,7 +1,7 @@
 module View.Magic exposing (viewMagics)
 
 import Data.Magic as Magic
-import Element exposing (Element, centerX, centerY, column, el, fill, height, moveDown, moveLeft, moveRight, padding, px, rgb, spacing, width)
+import Element exposing (Element, centerX, column, el, fill, height, moveDown, moveLeft, moveRight, moveUp, padding, px, rgb, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -215,27 +215,29 @@ viewContent selected ({ name, description, ranks } as details) =
 
 
 magicTitle : Magic.Details -> Element msg
-magicTitle { name, class, affinities } =
+magicTitle { name, star, class, affinities } =
     el
         [ Theme.morpheus
         , Font.size 40
         , centerX
         , Element.onLeft <|
-            Theme.image
-                [ width <| px 32
-                , moveLeft 8
-                , moveDown 4
-                , centerY
+            Theme.row [ moveLeft 8 ]
+                [ Theme.image
+                    [ width <| px 32 ]
+                    (Theme.classToBadge class)
+                , if star then
+                    el [ Font.size 48, moveUp 8 ] <|
+                        Theme.gradientText 1 Gradients.yellowGradient "★"
+
+                  else
+                    Element.none
                 ]
-            <|
-                Theme.classToBadge class
         , Element.onRight <|
             Theme.row
                 [ moveRight 8
                 , moveDown 8
                 ]
-            <|
-                List.map Theme.viewAffinity affinities
+                (List.map Theme.viewAffinity affinities)
         ]
         (Theme.gradientText 4 Gradients.yellowGradient <|
             Types.magicToString name

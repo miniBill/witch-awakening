@@ -5,6 +5,7 @@ import Generated.Types exposing (Affinity(..), Class(..), Magic(..))
 
 type alias Details =
     { name : Magic
+    , star : Bool
     , class : Class
     , affinities : List Affinity
     , description : String
@@ -14,12 +15,13 @@ type alias Details =
 
 all : List Details
 all =
-    [ alchemy, runes, curses ]
+    [ alchemy, runes, curses, hexes ]
 
 
 alchemy : Details
 alchemy =
     { name = Alchemy
+    , star = False
     , class = Academic
     , affinities = [ Water, Nature, Life ]
     , description = """
@@ -56,6 +58,7 @@ alchemy =
 runes : Details
 runes =
     { name = Runes
+    , star = False
     , class = Academic
     , affinities = [ Soul, Mind, Metal ]
     , description = """
@@ -84,6 +87,7 @@ runes =
 curses : Details
 curses =
     { name = Curses
+    , star = False
     , class = Warlock
     , affinities = [ Necro, Nature, Mind ]
     , description = """
@@ -102,50 +106,57 @@ curses =
     }
 
 
-raw : String
-raw =
-    """
-        HEXES*
-
-        Warlock - Body / Beast / Blood
-
-        Also known as "Transmutation”, these spells transform something into something else using the base logic of ‘Inequivalent Exchange”. You will need a Medium, usually a lump of raw material, part of which will vanish when you cast the spell. You can cast most hexes the reverse way unless otherwise stated. (ie; Flesh-to-Stone can also tum Stone-to-Flesh). Hexes that can't be reversed in that manner can still be undone by recasting the hex on that target. Casting a hex is as fatiguing as jogging 1 mile per rank used. If you want to try to leverage transmutation to make money, I'd recommend against doing so on any significant scale, as financial institutions and agencies are more adept than you'd expect at tracking assets, easily leading to masquerade violations. Just use it tastefully or for your own private usage, you shouldn't have any problems unless you go off trying to use it as a crutch you center a business around making people wonder about your sources. Any polymorph spell cast on an intelligent creature can be undone by any other polymorph spell cast on that same creature, even without knowing they were polymorphed before; They'd instead revert.
+hexes : Details
+hexes =
+    { name = Hexes
+    , star = True
+    , class = Warlock
+    , affinities = [ Body, Beast, Blood ]
+    , description = """
+        Also known as “Transmutation”, these spells transform something into something else using the base logic of “Inequivalent Exchange”. You will need a Medium, usually a lump of raw material, part of which will vanish when you cast the spell. You can cast most hexes the reverse way unless otherwise stated. (ie; Flesh-to-Stone can also tum Stone-to-Flesh). Hexes that can't be reversed in that manner can still be undone by recasting the hex on that target. Casting a hex is as fatiguing as jogging 1 mile per rank used. If you want to try to leverage transmutation to make money, I'd recommend against doing so on any significant scale, as financial institutions and agencies are more adept than you'd expect at tracking assets, easily leading to masquerade violations. Just use it tastefully or for your own private usage, you shouldn't have any problems unless you go off trying to use it as a crutch you center a business around making people wonder about your sources. Any polymorph spell cast on an intelligent creature can be undone by any other polymorph spell cast on that same creature, even without knowing they were polymorphed before; They'd instead revert.
 
         Rank 0 Effect: Any witch is capable of transmuting raw mana into minting their own Witch Kisses. Takes 6 minutes per K1, metals aren't required, only your mana. Has a very minor mana drain. Just need to learn how, with a level of focus while drawing a circle to start the conversion.
-        RANK 1
-
+        """
+    , ranks =
+        [ """
         Medium: Any wood. Each spell uses roughly a twig's worth to transform up to 1 cubic foot of material. Or K5, 5 Witch Kisses.
 
         Hexes: Stone-to-mud. Clay-to-glass. Iron-to-tin. Salt-to-sugar. Polymorph.
 
-        Polymorph can target living creatures up to the size of an adult cat, and turn them into a other animal up to half or double the mass.
-        RANK 2
-
+        Polymorph can target living creatures up to the size of an adult cat, and turn them into a other animal up to half or double the mass."""
+        , """
         Medium: Any metal. Each spell uses roughly 4 quarters worth of metal per cubic foot of material being transmuted. Or K25.
 
         Hexes: Cloth-to-leather. Water-to-milk. Paper-to-plastic. Copper-to-bronze. Fuel-to-bread (Fuel being any combustible material to its calorie count worth of bread).
 
         Polymorph can affect creatures up to the size of a child, and can transmute into anything living born of your imagination within the scope of effectiveness of a normal animal.
-        RANK 3
-
+        """
+        , """
         Medium: Jewelry-quality quartz or topaz. Uses about 0.1 cubic CM per cast. Or K100.
 
         Hexes: Egg-to-chocolate. Water-to-gasoline. Vegetable-to-meat. (Cooked veg produces cooked meat, raw meat produces raw veg). You can also now cast Animate Objects, which animates objects weighing up to 15lbs each with a basic loop comparable to programming. They will continue to try to perform this loop until you dismiss it or the object is destroyed, and they can hover and fly as part of this. They can be given up to 3 commands that cause them to shift loops to another programmed response. Recommend saving 1 for a stop function. Their levitation can support up to 25Ibs of weight. Walking can support up to 75!bs. Rolling on wheels or crawling on 5+ limbs can support up to 100Ibs. You can also create loops wherein a director object issues and dismisses directives to other objects. Example: A dish sponge that animates dirty dishes, washes them, and causes them to march to the shelves where they de-animate. This example pushes the limit in complexity.
 
         Polymorph can affect creatures up to the size of a human adult, into any smaller creature (Minimum size: mouse). Can now be used to reshape objects without changing material.
-        RANK 4
-
+        """
+        , """
         Medium: Ebony, ivory, amber, petrified wood, fossiles, or fulgurite. Roughly 100 grams per cubic foot of material or spell cast. Or K1,000.
 
         Hexes: Wood-to-cheese. Cloth-to-air. Steel-to-cloth. fruit-to-treat. (Tum a fruit into ice cream or candies). Can cast Golemwork to animate statues. Statues are as agile and mobile as a human person is. For every 7ft, reduce its mobility by 50%. It exerts force proportional to its mass and speed, and as durable as its material. Creating a golem requires human sacrifice to animate it unless you have Necromancy to bind a spirit that way instead. Alternatively, you can animate it without a soul and it will behave like Animate Objects instead, relying on basic program-like actions like a machine, or rough video game Al.
 
         Polymorph can affect any living creature into any other, from a tardigrade up to a blue whale in size, or into an inanimate object.
-        RANK 5
-
+        """
+        , """
         Medium: Platinum or jewelry quality diamond, sapphire, ruby, emerald, citrine, or opal. 0.1 cubic CM per cast. Or K10,000.
 
         Hexes: Old-to-young. Water-to-wine (or any beverage people drink). Lead-to-gold. Flesh-to-stone. New spell: Counterfeit. Duplicate any object using medium. Magical effects aren't copied. Requires equal platinum for any platinum part of the object being duplicated. Duplicated blood is generic blood (No ritual benefits), duplicated K are inert coins.
+        """
+        ]
+    }
 
+
+raw : String
+raw =
+    """
         WITCHERY*
 
         Academic - ???

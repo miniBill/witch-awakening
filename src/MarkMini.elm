@@ -145,7 +145,10 @@ mainParser =
             |. Parser.symbol "K"
             |= Parser.oneOf
                 [ Parser.succeed Kisses
-                    |= Parser.getChompedString (Parser.chompWhile (\c -> Char.isDigit c || c == ','))
+                    |= Parser.getChompedString
+                        (Parser.chompIf Char.isDigit
+                            |. Parser.chompWhile (\c -> Char.isDigit c || c == ',')
+                        )
                 , Parser.succeed (Text "K")
                 ]
         , Parser.succeed Colored
