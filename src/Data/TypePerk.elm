@@ -1,4 +1,4 @@
-module Data.TypePerks exposing (Details, all)
+module Data.TypePerk exposing (Details, all)
 
 import Generated.Types exposing (Race(..))
 

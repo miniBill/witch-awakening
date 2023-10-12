@@ -15,11 +15,11 @@ import Types exposing (Choice(..), Model)
 import Url
 import Url.Builder exposing (QueryParameter)
 import View.Class as Class
-import View.Complications as Complications
+import View.Complication as Complications
 import View.GameMode as GameMode
 import View.Magic as Magic
 import View.Race as Race
-import View.TypePerks as TypePerks
+import View.TypePerk as TypePerk
 
 
 type Msg
@@ -188,7 +188,7 @@ innerView model =
         , Element.Lazy.lazy Race.viewRace model.race
         , Element.Lazy.lazy GameMode.viewGameMode model.gameMode
         , Element.Lazy.lazy Complications.viewComplications model.complications
-        , Element.Lazy.lazy TypePerks.viewTypePerks model.typePerks
+        , Element.Lazy.lazy TypePerk.viewTypePerks model.typePerks
         , Element.Lazy.lazy Magic.viewMagics model.magic
         ]
         |> Element.map Choice

@@ -1,4 +1,4 @@
-module View.Complications exposing (viewComplications)
+module View.Complication exposing (viewComplications)
 
 import Data.Complication as Complication exposing (Content(..))
 import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, padding, px, spacing, width)

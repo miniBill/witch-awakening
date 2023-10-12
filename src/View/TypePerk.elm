@@ -1,6 +1,6 @@
-module View.TypePerks exposing (viewTypePerks)
+module View.TypePerk exposing (viewTypePerks)
 
-import Data.TypePerks as TypePerks
+import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, px, rgb, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
@@ -32,7 +32,7 @@ viewTypePerks typePerks =
             , Border.rounded Theme.rythm
             ]
             "These are particular perks that can be optionally taken by a witch of a given racial type. If hybridized (via later perk), you can purchase type perks of both types."
-        , TypePerks.all
+        , TypePerk.all
             |> List.map (typePerkBox typePerks)
             |> Theme.wrappedRow
                 [ width fill
@@ -44,7 +44,7 @@ viewTypePerks typePerks =
 
 typePerkBox :
     List Race
-    -> TypePerks.Details
+    -> TypePerk.Details
     -> Element ( Race, Bool )
 typePerkBox selected { race, cost, content } =
     let
