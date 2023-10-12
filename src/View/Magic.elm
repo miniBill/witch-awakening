@@ -199,7 +199,7 @@ magicImage : Magic.Details -> Element msg
 magicImage { name } =
     el
         [ height fill
-        , width <| px 300
+        , width <| px 320
         , Background.image (Types.magicToImage name).src
         ]
         Element.none
@@ -268,7 +268,7 @@ viewRank selected { name, class } rankIndex label =
         rankedMagic : RankedMagic
         rankedMagic =
             { name = name
-            , rank = rank + 1
+            , rank = rank
             }
 
         isTierSelected : Bool
