@@ -21,22 +21,7 @@ viewMagics selected =
         [ width fill
         , spacing <| Theme.rythm * 2
         ]
-        [ Theme.blocks [] """
-            # The Magic
-
-            "Time for the fun part. We've isolated your true form and primed it for emergence, but that's only a small part of what you can actually do. The magic varies from witch to witch, we'll run through the possibilities so I can get a sense of what's resonating with you. It's a pretty reliable method of detecting what you'll be capable of in the future as you explore your abilities and grow your talents."
-
-            Note that these are the possibilities isolated for you, not all witches would have the same opportunities you do. You are exceptional and have more options, and to a higher ceiling than most. Rank 3 in one or two specializations would be considered a capable witch. There are whispers of witches with rank 6 magic, while 7+ are the domain of gods, who are very real.
-
-            {choice Each rank in a magic specialization below costs power equal to its rank, in sequential order}. le; Rank 5 magic costs 15 points in total, rank 3 would be a total of 6p. {choice All Specializations have associated Affinities tagged}. If you have one of these affinities, the magic costs half the power, {choice *rounding up*}. [???] are universally discounted to all affinities.
-
-            For every Rank 5 magic, you must have at least one other magic at Rank 4. For every rank 4, you need 1 magic of rank 3 or less. This does not apply to the either Slot game mode changes, which behave in isolation. Slots stand on their own. This applies to the player, but non-player characters need not adhere to player mechanics and can be presumed to have various less notable magical traits not listed.
-
-            {choice [star] next to the name show that a magic specialization has a universal “Rank 0” effect, which IS available to nearly every witch}, though this does not imply any innate skill with the magic specialization that was built on top of some aspect of that magic.
-
-            If you have at least 1 rank in a Magic Specialization, you can spend _Focus_, _Might_, or _Favor_ to temporarily “power up” to use the higher rank of magic, equal to what the Power cost would be to unlock that rank (e.g.: 5 power = 5 Focus). You can use it for 10 minutes, or extend it for an additional 10 minutes by pushing past your limits resulting in unconsciousness when time runs out.
-
-            {center} {choice Don't like math? Have a reference table.}"""
+        [ Theme.blocks [] Magic.intro
         , Theme.wrappedRow [ width fill ]
             [ costTable
                 |> Element.html

@@ -30,13 +30,7 @@ viewComplications complications =
                     , Theme.padding
                     , Theme.borderColor Theme.colors.worldShift
                     ]
-                    """
-                    When taking world shifts, you're altering the nature of the particular version of Witch Awakening's reality that you enter into. The others may exist independently, but this one will be your home dimension.
-
-                    World shifts of course won't be seen in-universe as complications shown by Penelope, rather, they will be points of fact that Penelope points out similar to how she pointed out the information about the masquerade and other setting details.
-
-                    You can always choose if a World Shift affects the mundane and magical world alike, or only affects the magical world. (Only affecting the mundane world would be too inconsequential.)
-                    """
+                    Complication.worldShiftsDescription
                ]
           )
             |> Theme.wrappedRow

@@ -1,4 +1,4 @@
-module Data.Complication exposing (Content(..), Details, all, intro, worldShifts)
+module Data.Complication exposing (Content(..), Details, all, intro, worldShifts, worldShiftsDescription)
 
 import Generated.Types exposing (Class(..), ComplicationName(..))
 
@@ -651,4 +651,15 @@ intro =
     "Now.... Let's see if we can spot any {choice _*complications*_} with your true form." {choice Complications raise your POWER CAP to a max of +30}, OR {choice grant additional Starting Points} _within your Power Cap_ separately.
 
     Complications make your life more difficult. {choice *Every Complication taken grants POWER shown in the corner.*}
+    """
+
+
+worldShiftsDescription : String
+worldShiftsDescription =
+    """
+    When taking world shifts, you're altering the nature of the particular version of Witch Awakening's reality that you enter into. The others may exist independently, but this one will be your home dimension.
+
+    World shifts of course won't be seen in-universe as complications shown by Penelope, rather, they will be points of fact that Penelope points out similar to how she pointed out the information about the masquerade and other setting details.
+
+    You can always choose if a World Shift affects the mundane and magical world alike, or only affects the magical world. (Only affecting the mundane world would be too inconsequential.)
     """
