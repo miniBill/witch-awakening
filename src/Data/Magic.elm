@@ -1,4 +1,4 @@
-module Data.Magic exposing (Details, all, intro)
+module Data.Magic exposing (Details, all, intro, slotDescription)
 
 import Generated.Types exposing (Affinity(..), Class(..), Magic(..))
 
@@ -34,7 +34,8 @@ alchemy =
             With rank 1 you can make simple Curatives, Stimulants, and Novelties. Curatives can replicate the effect of any non-addictive and over-the-counter drugs such as allergy pills and basic painkillers. Stimulants are the same but for effects that boost performance past normal; including caffeine. Simple Novelties can duplicate the effects of mundane store bought items under $10, in potion form. For example, a whoopie cushion potion may cause a similar effect under a given condition, such as public speaking. Or you could make things like dyes for food, hair, clothes with vivid or natural-looking colors. For any beneficial effect you can also make a potion doing the harmful opposite. Simple potions can be made from simple grocery store items, or K10, 10 _Witch Kisses_. Effects can last anywhere from an hour to 24 hours, or instantaneous changes.
             """
         , """
-            With rank 2, you can make the same potions as rank 1 but supernaturally boosted to 3x standard effectiveness without complications. You could create alcohol that never causes alcohol poisoning or hangovers for example, painkillers 3x better at killing pain without risk of overdosing. Your healing poultices provide boosted healing at 3x the rate without scarring, and antibiotics or disinfectant 3x more potent. You can emulate prescription pharmaceuticals as well as basic firework gunpowders. Basic potions can be made from the type of ingredients that are more niche store items you might have to shop around to find, or K100."""
+            With rank 2, you can make the same potions as rank 1 but supernaturally boosted to 3x standard effectiveness without complications. You could create alcohol that never causes alcohol poisoning or hangovers for example, painkillers 3x better at killing pain without risk of overdosing. Your healing poultices provide boosted healing at 3x the rate without scarring, and antibiotics or disinfectant 3x more potent. You can emulate prescription pharmaceuticals as well as basic firework gunpowders. Basic potions can be made from the type of ingredients that are more niche store items you might have to shop around to find, or K100.
+            """
         , """
             With rank 3 your potions are based on the conceptual intentions of the potion rather than physical properties of a mundane effect. A painkiller isn't just blocking chemical receptors, but uses magic to target the mind's ability to feel pain. A healing potion isn't encouraging a natural process, but physically goes in to force the knitting of flesh and bone. Simple effects are 100% effective to the intended effect. Healing can heal any injury with enough time at a rate of a papercut per second for up to an hour per dose. Can create Grenade or “splash” potions that explode with a potion effect within a 10m area, or a literal explosion of force, fire, ice, acid, or electricity with the same level of damage. Adept potions can be made from rare special order type ingredients, or K1000. Grenades cost 5x as much to make.
             """
@@ -46,7 +47,8 @@ alchemy =
         , """
             Rank 5 Arch-Curatives can restore youth and prevent aging, or instantly rejuvenate a body to peak health as an immediate full-heal, or restore the long-dead to life so long as a body is available. Arch-Stimulants can boost any attribute by 500% for up to 24hr, or perfect a skill for a month. Love potions could induce up to and including overwhelming addiction for another person or for a sensation. Arch-Novelties could completely grant a true physical redesign of a body to your precise specifications, or could cut, paste, delete, fabricate, or modify any memory. Place a memory into a potion form to share it, or make a person forget ever knowing you, or their last week, ect. Grenade potions can now affect a 300m area that stacks with concentrated combination potions and you can design them to have a propulsion aspect to them, turning them into rockets.
 
-            Arch potions are made from very rare ingredients such as dragon's blood, angel hair, succubus hors, flowers that blossom only once every few years, etc, note: it needs to have some reasonable thread of logic for the desired potion effect. You can't use dragons blood for everything. A full heal might require Phoenix Feather, for example. Or K100,000."""
+            Arch potions are made from very rare ingredients such as dragon's blood, angel hair, succubus hors, flowers that blossom only once every few years, etc, note: it needs to have some reasonable thread of logic for the desired potion effect. You can't use dragons blood for everything. A full heal might require Phoenix Feather, for example. Or K100,000.
+            """
         ]
     }
 
@@ -573,4 +575,10 @@ intro =
 
     If you have at least 1 rank in a Magic Specialization, you can spend _Focus_, _Might_, or _Favor_ to temporarily “power up” to use the higher rank of magic, equal to what the Power cost would be to unlock that rank (e.g.: 5 power = 5 Focus). You can use it for 10 minutes, or extend it for an additional 10 minutes by pushing past your limits resulting in unconsciousness when time runs out.
 
-    {center} {choice Don't like math? Have a reference table.}"""
+    {center} {choice Don't like math? Have a reference table.}
+    """
+
+
+slotDescription : String
+slotDescription =
+    "If playing in a Slot Mode (Skill Tree or Constellation), Magic instead costs a Slot as shown. Folk slots can buy rank 2 magics. You can have white “Free” slots granting rank 1 magic as granted by your Class discount on options that would cost 0."

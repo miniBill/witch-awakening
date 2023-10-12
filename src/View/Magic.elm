@@ -39,7 +39,7 @@ viewMagics selected =
             , Theme.borderColor Theme.colors.gameMode
             , Font.color <| rgb 1 1 1
             ]
-            "If playing in a Slot Mode (Skill Tree or Constellation), Magic instead costs a Slot as shown. Folk slots can buy rank 2 magics. You can have white “Free” slots granting rank 1 magic as granted by your Class discount on options that would cost 0."
+            Magic.slotDescription
         , Magic.all
             |> List.indexedMap (magicBox selected)
             |> Theme.column []

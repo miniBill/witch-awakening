@@ -546,8 +546,7 @@ fixation =
     { name = Fixation
     , class = Just Sorceress
     , content =
-        WithChoices """
-        You will have a particular fixation that influences your thoughts frequently, shaping how you view the world and others around you, influencing your opinions of people or places, and relations"""
+        WithChoices "You will have a particular fixation that influences your thoughts frequently, shaping how you view the world and others around you, influencing your opinions of people or places, and relations"
             [ ( "*Violence*. You're fixated on at least the thought of violence. You often think about what it would be like to harm people, destroy things.", 2 )
             , ( "*Eroticism*. Fixated on lewd thoughts and behaviors, you'll often think about what people look like under those robes & what sort of things you'd do on that broom.", 2 )
             , ( "*Curiosity*. Driven crazy by not knowing something, you can't stand secrets or things you've told you can't see. Gossipy or voyeury.", 2 )
@@ -620,8 +619,7 @@ compulsion =
     { name = Compulsion
     , class = Just Sorceress
     , content =
-        WithChoices """
-            Somewhat of an advanced case of Addiction, you will have a particular compulsion that you can only overcome with great need only once in a while. The more infrequent the more overwhelming the compulsion is. This is measured by frequency:"""
+        WithChoices "Somewhat of an advanced case of Addiction, you will have a particular compulsion that you can only overcome with great need only once in a while. The more infrequent the more overwhelming the compulsion is. This is measured by frequency:"
             [ ( "*Rare*: 1p encountered an average of once each year", 1 )
             , ( "*Very uncommon*: 2p encountered an average of once a month", 2 )
             , ( "*Uncommon*: 4p encountered an average of once a day", 4 )
