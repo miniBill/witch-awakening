@@ -63,15 +63,7 @@ viewComplications complications =
                 ]
             |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
         , Theme.blocks [] "# Generic Complications"
-        , [ [ dysfunction, vulnerability, rejection, crutch, restriction, hunted ]
-          , [ dislikeable, monsterBait, blackSwan, spellSink, likeADuck, likeARock ]
-          , [ eyeCatcher, sillyGoose, hardLessons, coldHeart, hideous, witchMark ]
-          , [ nemesis, addiction, sensoryDisability, physicalDisability, sensoryShock, adoringFan ]
-          , [ veryDere, requirement, unveiled, nightmares, kryptonite, fitWitch ]
-          , [ branded, noPrivacy, bloodFeud, marked, defeated, fixation ]
-          , [ allNatural, witchknight, inadequacy, dysphoria, betrayal, compulsion ]
-          ]
-            |> List.concat
+        , [ dysfunction, vulnerability, rejection, crutch, restriction, hunted, dislikeable, monsterBait, blackSwan, spellSink, likeADuck, likeARock, eyeCatcher, sillyGoose, hardLessons, coldHeart, hideous, witchMark, nemesis, addiction, sensoryDisability, physicalDisability, sensoryShock, adoringFan, veryDere, requirement, unveiled, nightmares, kryptonite, fitWitch, branded, noPrivacy, bloodFeud, marked, defeated, fixation, allNatural, witchknight, inadequacy, dysphoria, betrayal, compulsion ]
             |> List.map (complicationBox complications)
             |> Theme.wrappedRow
                 [ centerX
