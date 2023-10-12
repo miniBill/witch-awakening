@@ -78,15 +78,7 @@ enums =
     let
         races : List String
         races =
-            [ [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad" ]
-            , [ "Dryad", "Oread", "Lamia", "Aurai", "Nymph" ]
-            , [ "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine" ]
-            , [ "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya" ]
-            , [ "Taura", "Wulong", "Dravir", "Doll", "Vanir" ]
-            , [ "Changeling", "Elf", "Orc", "Pharon", "Jotun" ]
-            , [ "Hollow", "Dwarf", "Wither", "Mimi", "Sword" ]
-            ]
-                |> List.concat
+            [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine", "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya", "Taura", "Wulong", "Dravir", "Doll", "Vanir", "Changeling", "Elf", "Orc", "Pharon", "Jotun", "Hollow", "Dwarf", "Wither", "Mimi", "Sword" ]
 
         affinities : List String
         affinities =
@@ -94,20 +86,7 @@ enums =
 
         complicationNames : List String
         complicationNames =
-            [ [ "Brutality", "Masquerade", "TrueNames", "Monsters" ]
-            , [ "Population", "Bonk", "Dysfunction", "Vulnerability" ]
-            , [ "Rejection", "Crutch", "Restriction", "Hunted" ]
-            , [ "Dislikeable", "MonsterBait", "BlackSwan", "SpellSink" ]
-            , [ "LikeADuck", "LikeARock", "EyeCatcher", "SillyGoose" ]
-            , [ "HardLessons", "ColdHeart", "Hideous", "WitchMark" ]
-            , [ "Nemesis", "Addiction", "SensoryDisability", "PhysicalDisability" ]
-            , [ "SensoryShock", "AdoringFan", "VeryDere", "Requirement" ]
-            , [ "Unveiled", "Nightmares", "Kryptonite", "FitWitch" ]
-            , [ "Branded", "NoPrivacy", "BloodFeud", "Marked" ]
-            , [ "Defeated", "Fixation", "AllNatural", "Witchknight" ]
-            , [ "Inadequacy", "Dysphoria", "Betrayal", "Compulsion" ]
-            ]
-                |> List.concat
+            [ "Brutality", "Masquerade", "TrueNames", "Monsters", "Population", "Bonk", "Dysfunction", "Vulnerability", "Rejection", "Crutch", "Restriction", "Hunted", "Dislikeable", "MonsterBait", "BlackSwan", "SpellSink", "LikeADuck", "LikeARock", "EyeCatcher", "SillyGoose", "HardLessons", "ColdHeart", "Hideous", "WitchMark", "Nemesis", "Addiction", "SensoryDisability", "PhysicalDisability", "SensoryShock", "AdoringFan", "VeryDere", "Requirement", "Unveiled", "Nightmares", "Kryptonite", "FitWitch", "Branded", "NoPrivacy", "BloodFeud", "Marked", "Defeated", "Fixation", "AllNatural", "Witchknight", "Inadequacy", "Dysphoria", "Betrayal", "Compulsion" ]
 
         gameModes : List String
         gameModes =

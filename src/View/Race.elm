@@ -26,15 +26,7 @@ viewRace race =
             This is very simply just to give you a suggestion for perspective on how much magic you could expect to use. High Mana means a bigger tank, but charge is how fast it is filled. So high tank might be good for going all in while a low tank but high charge might have the endurance to go for longer. This is roughly balanced by how easy the charge source is to come by and how well it can stack up on itself.
             
             """
-        , [ [ neutral, daeva, ifrit, siren, naiad ]
-          , [ dryad, oread, lamia, aurai, nymph ]
-          , [ gorgon, luxal, kekubi, sylph, undine ]
-          , [ sprite, empusa, lilin, erinyes, hannya ]
-          , [ taura, wulong, dravir, doll, vanir ]
-          , [ changeling, elf, orc, pharon, jotun ]
-          , [ hollow, dwarf, wither, mimi, sword ]
-          ]
-            |> List.concat
+        , [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword ]
             |> List.map (raceBox race)
             |> Theme.wrappedRow
                 [ width fill
