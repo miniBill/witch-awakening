@@ -43,7 +43,7 @@ blockParser =
             |. Parser.spaces
             |= unorderedListParser
         , Parser.succeed (\pieces -> Paragraph { pieces = pieces, center = True })
-            |. Parser.symbol "[center]"
+            |. Parser.symbol "{center}"
             |= mainParser
         , Parser.succeed (\pieces -> Paragraph { pieces = pieces, center = False })
             |= mainParser

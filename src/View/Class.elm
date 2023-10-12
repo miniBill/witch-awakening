@@ -23,7 +23,7 @@ viewClass class =
 
             Your witch type determines your method by which you _can naturally progress over time_ towards a power cap. _You_ will have the same power cap and starting power regardless of type "and you're lucky! You've got more than most witches, and it looks like you might be capable of using Rank 5 magic, the _average_ witch only reaches rank 3", You can pre-spend up to your power cap to confirm you have the potential for something to unlock someday, if you wish. It's up to you how well adapted you are to your starting abilities, perhaps you want to study them for some time before you have a full grasp on them?
 
-            [center]{choice _*Choose one.*_}
+            {center}{choice _*Choose one.*_}
             """
         , [ academic, sorceress, warlock ]
             |> List.map (classBox class)

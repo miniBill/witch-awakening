@@ -129,12 +129,12 @@ toUrl model =
     [ pair "class" Types.classToString model.class
     , pair "race" Types.raceToString model.race
     , pair "gameMode" Types.gameModeToString model.gameMode
+    , list "typePerk" Types.raceToString model.typePerks
     , list "complication"
         (\{ name, kind } ->
             Types.complicationNameToString name ++ Types.complicationKindToString kind
         )
         model.complications
-    , list "typePerk" Types.raceToString model.typePerks
     ]
         |> List.concat
         |> Url.Builder.toQuery
