@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, image, morpheus, padding, row, rythm, style, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, maybeButton, morpheus, padding, row, rythm, style, viewAffinity, wrappedRow)
 
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Background as Background
@@ -404,15 +404,23 @@ card config =
                     :: config.content
                 )
     in
+    maybeButton cardAttributes
+        { label = content
+        , onPress = config.onPress
+        }
+
+
+maybeButton :
+    List (Attribute msg)
+    -> { label : Element msg, onPress : Maybe msg }
+    -> Element msg
+maybeButton attrs config =
     case config.onPress of
         Just _ ->
-            Input.button cardAttributes
-                { label = content
-                , onPress = config.onPress
-                }
+            Input.button attrs config
 
         Nothing ->
-            el cardAttributes content
+            el attrs config.label
 
 
 complicationCategoryToColor : ComplicationCategory -> Int

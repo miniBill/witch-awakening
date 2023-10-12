@@ -1,7 +1,7 @@
-module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, complicationKindToString, complicationNameToCategory, gainToSlot)
+module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, RankedMagic, complicationKindToString, complicationNameToCategory, gainToSlot)
 
 import Browser.Navigation
-import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), GameMode, Race, Slot(..))
+import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), GameMode, Magic, Race, Slot(..))
 
 
 type Choice
@@ -10,6 +10,7 @@ type Choice
     | ChoiceGameMode (Maybe GameMode)
     | ChoiceComplication Complication Bool
     | ChoiceTypePerk Race Bool
+    | ChoiceMagic RankedMagic Bool
 
 
 type alias Model =
@@ -19,12 +20,19 @@ type alias Model =
     , gameMode : Maybe GameMode
     , complications : List Complication
     , typePerks : List Race
+    , magic : List RankedMagic
     }
 
 
 type alias Complication =
     { name : ComplicationName
     , kind : ComplicationKind
+    }
+
+
+type alias RankedMagic =
+    { name : Magic
+    , rank : Int
     }
 
 

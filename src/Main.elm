@@ -18,6 +18,7 @@ import Url.Builder exposing (QueryParameter)
 import View.Class as Class
 import View.Complications as Complications
 import View.GameMode as GameMode
+import View.Magic as Magic
 import View.Race as Race
 import View.TypePerks as TypePerks
 
@@ -52,6 +53,7 @@ init _ _ key =
       , gameMode = Nothing
       , complications = []
       , typePerks = []
+      , magic = []
       }
     , Cmd.none
     )
@@ -102,6 +104,13 @@ update msg model =
 
                             else
                                 { model | typePerks = List.Extra.remove race model.typePerks }
+
+                        ChoiceMagic magic selected ->
+                            if selected then
+                                { model | magic = magic :: model.magic }
+
+                            else
+                                { model | magic = List.Extra.remove magic model.magic }
             in
             ( newModel
             , Nav.replaceUrl model.key (toUrl newModel)
@@ -135,6 +144,11 @@ toUrl model =
             Types.complicationNameToString name ++ Types.complicationKindToString kind
         )
         model.complications
+    , list "magic"
+        (\{ name, rank } ->
+            Types.magicToString name ++ String.fromInt rank
+        )
+        model.magic
     ]
         |> List.concat
         |> Url.Builder.toQuery
@@ -176,6 +190,7 @@ innerView model =
         , Element.Lazy.lazy GameMode.viewGameMode model.gameMode
         , Element.Lazy.lazy Complications.viewComplications model.complications
         , Element.Lazy.lazy TypePerks.viewTypePerks model.typePerks
+        , Element.Lazy.lazy Magic.viewMagics model.magic
         ]
         |> Element.map Choice
 

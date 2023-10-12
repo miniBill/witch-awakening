@@ -91,6 +91,10 @@ enums =
         gameModes : List String
         gameModes =
             [ "StoryArc", "EarlyBird", "SkillTree", "Constellation" ]
+
+        magics : List String
+        magics =
+            [ "Aethernautics", "Alchemy", "Consortation", "Curses", "Divination", "Earthmoving", "Familiarity", "Firecalling", "Hexes", "Metallurgy", "Metamorphosis", "Naturalism", "Necromancy", "Portals", "Psychotics", "Runes", "Waterworking", "Windkeeping", "Witchery" ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
@@ -99,7 +103,8 @@ enums =
     , enum "ComplicationCategory" [ "WorldShift" ]
     , enumWith "ComplicationName" complicationNames [ ( "Bonk", "*Bonk*" ), ( "LikeADuck", "Like a duck" ), ( "LikeARock", "Like a rock" ) ] True
     , enumWith "GameMode" gameModes [] True
-    , enumWith "Slot" [ "Folk", "Noble", "Heroic", "Epic", "White" ] [] True
+    , enumWith "Slot" [ "White", "Folk", "Noble", "Heroic", "Epic" ] [] True
+    , enumWith "Magic" magics [] True
     ]
         |> List.concat
 
