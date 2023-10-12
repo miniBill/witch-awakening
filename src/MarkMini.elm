@@ -23,6 +23,7 @@ type Piece
     | Text String
     | Link String
     | Number Int
+    | Kisses String
 
 
 type Color
@@ -140,6 +141,13 @@ mainParser =
                     |. Parser.symbol ")"
                 , Parser.succeed (Text "(")
                 ]
+        , Parser.succeed identity
+            |. Parser.symbol "K"
+            |= Parser.oneOf
+                [ Parser.succeed Kisses
+                    |= Parser.getChompedString (Parser.chompWhile (\c -> Char.isDigit c || c == ','))
+                , Parser.succeed (Text "K")
+                ]
         , Parser.succeed Colored
             |. Parser.symbol "{"
             |= Parser.oneOf
@@ -199,6 +207,7 @@ special =
     , '['
     , '\\'
     , '('
+    , 'K'
     ]
         |> Set.fromList
 

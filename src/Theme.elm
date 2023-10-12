@@ -263,6 +263,12 @@ viewPiece piece =
                 ]
                 [ gradientTextHtml 4 Gradients.yellowGradient (String.fromInt value) ]
 
+        Kisses value ->
+            Html.span []
+                [ Html.b [] [ Html.i [] [ Html.text "₭" ] ]
+                , Html.text value
+                ]
+
 
 slotToColor : Slot -> Int
 slotToColor slot =
