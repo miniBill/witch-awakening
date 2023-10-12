@@ -6,7 +6,6 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (Class)
 import Gradients
-import String.Multiline
 import Theme exposing (gradientText)
 import Types exposing (Choice(..))
 
@@ -17,7 +16,7 @@ viewClass class =
         [ width fill
         , spacing <| Theme.rythm * 2
         ]
-        [ Theme.blocks [] <| String.Multiline.here """
+        [ Theme.blocks [] """
             # True Form - Class
 
             "Ahh, yes... Oh, _wow_! You have an incredible amount of untapped power waiting. First things first: You'll need your true form! We used to simply wait for it to emerge, but these days we can poke and prod the right places to provoke a controlled early awakening. Most witches have multiple potential true forms and one gets locked in when they finally awaken, but with a controlled environment we can force one of the others. Your options don't represent all possible outcomes, but let's see what you have available. First up is what type of witch you are, you can think of it like a “Class” of witch."

@@ -5,7 +5,6 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (GameMode(..))
 import Gradients
-import String.Multiline
 import Theme exposing (gradientText)
 import Types exposing (Choice(..))
 
@@ -16,7 +15,7 @@ viewGameMode gameMode =
         [ width fill
         , spacing <| Theme.rythm * 2
         ]
-        [ Theme.blocks [] <| String.Multiline.here """
+        [ Theme.blocks [] """
             # Game Mode
 
             {choice You can only choose one game mode, or none to play the default way. Each supports a different type of player, and what you might want out of it.}
@@ -32,7 +31,7 @@ viewGameMode gameMode =
                 , Theme.padding
                 , Theme.borderColor Theme.colors.gameMode
                 ]
-                (String.Multiline.here """
+                """
                     Slot modes ignore the requirement of 3 ➡️ 4 ➡️ 5 for acquiring magics. A slot is a slot and stands on its own, and is meant to be simplified
                 
                     Slots mode is quite simplified.
@@ -54,7 +53,7 @@ viewGameMode gameMode =
                     In _Skill Tree mode_, you can reserve the slots from complications for later use.
 
                     *Options with a cost of 0* or less that would normally be free as a result of your class, can be treated as a white token “Free” slot.
-                    """)
+                    """
           ]
             |> Theme.wrappedRow
                 [ centerX
@@ -208,7 +207,7 @@ gameModeBox selected { name, content } =
                 [ height fill
                 , Theme.padding
                 ]
-                (String.Multiline.here content)
+                content
             ]
         , onPress = Just msg
         }

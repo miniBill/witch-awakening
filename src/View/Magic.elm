@@ -11,7 +11,6 @@ import Gradients
 import Html
 import Html.Attributes
 import List.Extra
-import String.Multiline
 import Theme
 import Types exposing (Choice(..), RankedMagic)
 
@@ -22,7 +21,7 @@ viewMagics selected =
         [ width fill
         , spacing <| Theme.rythm * 2
         ]
-        [ Theme.blocks [] <| String.Multiline.here """
+        [ Theme.blocks [] """
             # The Magic
 
             "Time for the fun part. We've isolated your true form and primed it for emergence, but that's only a small part of what you can actually do. The magic varies from witch to witch, we'll run through the possibilities so I can get a sense of what's resonating with you. It's a pretty reliable method of detecting what you'll be capable of in the future as you explore your abilities and grow your talents."
@@ -301,7 +300,7 @@ viewRank selected { name, class } rankIndex label =
                     Theme.gradientText 2
                         Gradients.yellowGradient
                         ("Rank " ++ String.fromInt rank)
-                , Theme.blocks [] <| String.Multiline.here label
+                , Theme.blocks [] label
                 ]
         , onPress = Just ( rankedMagic, not isTierSelected )
         }

@@ -13,6 +13,7 @@ import Html.Attributes
 import Images exposing (Image)
 import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
+import String.Multiline
 
 
 rythm : number
@@ -97,6 +98,7 @@ captureIt =
 blocks : List (Attribute msg) -> String -> Element msg
 blocks attrs input =
     input
+        |> String.Multiline.here
         |> String.split "\n\n"
         |> List.map block
         |> column (spacing :: width fill :: attrs)

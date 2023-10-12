@@ -6,7 +6,6 @@ import Element.Font as Font
 import Generated.Types as Types exposing (Race(..), Slot)
 import Gradients
 import Images
-import String.Multiline
 import Theme exposing (gradientText)
 import Types exposing (Choice(..))
 
@@ -31,8 +30,7 @@ viewTypePerks typePerks =
             , width <| Element.maximum 600 fill
             , Border.rounded Theme.rythm
             ]
-          <|
-            String.Multiline.here """
+            """
             These are particular perks that can be optionally taken by a witch of a given racial type. If hybridized (via later perk), you can purchase type perks of both types.
             """
         , [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword ]
