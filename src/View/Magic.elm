@@ -68,8 +68,13 @@ viewMagics selected =
                     , color = color
                     }
                 ]
-                [ el [ Font.size 40, Theme.morpheus ] <|
-                    Theme.gradientText 1 Gradients.blueGradient "Elementalism"
+                [ el
+                    [ Font.size 58
+                    , Theme.morpheus
+                    , Theme.style "letter-spacing" ".15em"
+                    ]
+                  <|
+                    Theme.gradientText 4 Gradients.blueGradient "Elementalism"
                 , Theme.blocks [] Magic.elementalismIntro
                 ]
             , el [ width <| fillPortion 3 ] Element.none
