@@ -627,13 +627,13 @@ slotDescription =
 elementalismIntro : String
 elementalismIntro =
     """
-    The magic presented here in this section is referred to as Elementalism. These single-affinity or monotype magics operate just a little differently from other schools of magic, in that any witch other than sorceresses are incapable of learning more than one elementalist magic that they do not have the affinity for.
+    The magic presented here in this section is referred to as Elementalism. These single-affinity or monotype magics operate just a little differently from other schools of magic, in that {choice any witch other than sorceresses are incapable of learning more than one elementalist magic _that they do not have the affinity for_}.
 
-    Each magic will show an OR clause. You can qualify for Affinity discounts if you possess both component affinities, including taking it without the primary monotype affinity.
+    Each magic will show an OR clause. {choice You can qualify for Affinity discounts if you possess both component affinities}, including taking it without the primary monotype affinity.
 
-    If you have more than one elementalist magic, you can combine effects to create combination magic. Such as Firecalling and Earthmoving for lava effects, Windkeeping and Waterworking for storm effects. This is beyond the scope of what the cyoa can detail and up to reasonable interpretation with wiggle room for creative liberties. You can also perform Harmony magic, combining elements of cooperating witches, twice as potent as normal.
+    If you have more than one elementalist magic, you can combine effects to create combination magic. Such as Firecalling and Earthmoving for lava effects, Windkeeping and Waterworking for storm effects. This is beyond the scope of what the cyoa can detail and up to reasonable interpretation with wiggle room for creative liberties. {choice You can also perform _Harmony_ magic, combining elements of cooperating witches, twice as potent as normal}.
 
-    Witches with an elemental magic at rank 3 are often called Hazards. Rank 4 are Disasters, and Rank 5 can be labeled as Calamities. This designation can influence the weight of consequences placed on you for reckless behavior, people don’t trust living weapons with a track record of being careless when many lives can be at stake if you prove unstable, or outright malevolent. Witches with Curses also receive this designation, as well as others on a case by case basis, such as some grenadier alchemists.
+    Witches with an elemental magic at rank 3 are often called _Hazards_. Rank 4 are _Disasters_, and Rank 5 can be labeled as _Calamities_. This designation can influence the weight of consequences placed on you for reckless behavior, people don’t trust living weapons with a track record of being careless when many lives can be at stake if you prove unstable, or outright malevolent. Witches with _Curses_ also receive this designation, as well as others on a case by case basis, such as some grenadier alchemists.
 
-    Elementalist magics cannot be taken for the Restriction complication unless you have the affinity for it.
+    {choice Elementalist magics cannot be taken for the _Restriction_} complication unless you have the affinity for it.
     """
