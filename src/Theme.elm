@@ -14,6 +14,7 @@ import Html.Attributes
 import Images exposing (Image)
 import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
+import String.Extra
 import String.Multiline
 
 
@@ -311,6 +312,7 @@ viewSectionTitle label =
         [ celticHand
         , Font.size 36
         , width fill
+        , Element.htmlAttribute <| Html.Attributes.id (String.Extra.underscored label)
         ]
         [ hr, gradientText 4 Gradients.blueGradient label, hr ]
 

@@ -2,15 +2,17 @@ module Main exposing (Flags, main)
 
 import AppUrl exposing (AppUrl)
 import Browser exposing (UrlRequest(..))
+import Browser.Dom
 import Browser.Navigation as Nav
 import Dict
-import Element exposing (Element, fill, height, rgb, scrollbarY, width)
+import Element exposing (Element, fill, rgb, width)
 import Element.Background as Background
 import Element.Font as Font
 import Element.Lazy
 import Generated.Types as Types
 import List.Extra
 import Maybe.Extra
+import Task
 import Theme
 import Types exposing (Choice(..), Model, Msg(..))
 import Url
@@ -78,6 +80,21 @@ update msg model =
 
         ToggleMenu ->
             ( { model | menuOpen = not model.menuOpen }, Cmd.none )
+
+        ScrollTo id ->
+            ( model
+            , Task.andThen
+                (\{ element } ->
+                    Browser.Dom.setViewport
+                        0
+                        (element.y - Theme.rythm)
+                )
+                (Browser.Dom.getElement id)
+                |> Task.attempt (\_ -> Nop)
+            )
+
+        Nop ->
+            ( model, Cmd.none )
 
 
 updateOnChoice : Choice -> Model -> Model
@@ -263,8 +280,6 @@ innerView : Model -> Element Msg
 innerView model =
     Theme.column
         [ width fill
-        , height fill
-        , scrollbarY
         , Font.color <| rgb 1 1 1
         , Background.color <| rgb 0 0 0
         , Theme.padding

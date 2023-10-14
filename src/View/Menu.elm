@@ -11,6 +11,7 @@ import Generated.Types exposing (GameMode(..), Race)
 import Gradients
 import List.Extra
 import Maybe.Extra
+import String.Extra
 import Theme
 import Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..))
 
@@ -63,15 +64,31 @@ viewMenu model =
 viewCalculations : Model -> Element Msg
 viewCalculations model =
     let
-        row : String -> (Model -> Maybe Int) -> Element msg
+        row : String -> (Model -> Maybe Int) -> Element Msg
         row label toValue =
             case toValue model of
                 Nothing ->
                     Element.none
 
                 Just value ->
+                    let
+                        target : String
+                        target =
+                            case label of
+                                "Initial power" ->
+                                    "game_mode"
+
+                                "Power cap" ->
+                                    "game_mode"
+
+                                _ ->
+                                    String.Extra.underscored label
+                    in
                     Theme.row [ width fill ]
-                        [ el [ Font.bold ] <| text label
+                        [ Input.button []
+                            { onPress = Just <| ScrollTo target
+                            , label = el [ Font.bold ] <| text label
+                            }
                         , rightNumber value
                         ]
 

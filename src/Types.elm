@@ -10,6 +10,8 @@ type Msg
     | UrlChanged --Url.Url
     | Choice Choice
     | ToggleMenu
+    | ScrollTo String
+    | Nop
 
 
 type Choice
