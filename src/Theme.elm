@@ -1,5 +1,6 @@
 module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, maybeButton, morpheus, padding, row, rythm, style, viewAffinity, wrappedRow)
 
+import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Background as Background
 import Element.Border as Border
@@ -350,6 +351,26 @@ intToColor color =
         (modBy 256 color)
 
 
+intToBackground : Int -> Element.Color
+intToBackground color =
+    let
+        hsla : { hue : Float, saturation : Float, lightness : Float, alpha : Float }
+        hsla =
+            Color.rgb255
+                (color // 65536)
+                (modBy 256 (color // 256))
+                (modBy 256 color)
+                |> Color.toHsla
+
+        rgba : { red : Float, green : Float, blue : Float, alpha : Float }
+        rgba =
+            { hsla | lightness = 0.9 }
+                |> Color.fromHsla
+                |> Color.toRgba
+    in
+    Element.rgba rgba.red rgba.green rgba.blue rgba.alpha
+
+
 style : String -> String -> Attribute msg
 style key value =
     Element.htmlAttribute <| Html.Attributes.style key value
@@ -382,7 +403,12 @@ card config =
             [ height fill
             , width <| Element.minimum 320 <| Element.maximum 400 fill
             , Font.color <| rgb 0 0 0
-            , Background.color <| rgb 1 1 1
+            , case config.glow of
+                Just color ->
+                    Background.color <| intToBackground color
+
+                Nothing ->
+                    Background.color <| rgb 1 1 1
             , Border.roundEach
                 { topLeft = cardRoundness
                 , topRight = cardRoundness
