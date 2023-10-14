@@ -278,7 +278,7 @@ hardLessons =
     { name = HardLessons
     , class = Just Academic
     , content = Single 8 """
-        Magic just refuses to "click" fo you, struggling harder to learn or train your magic, or keep managing to do something to displease your patron, the effect is the same: You have half the rate of Power gain from your witch type, and once you cement the ability in question, you still take longer to get the hang of actually utilizing the magic properly, requiring more practical practice before at full efficiency.
+        Magic just refuses to “click” fo you, struggling harder to learn or train your magic, or keep managing to do something to displease your patron, the effect is the same: You have half the rate of Power gain from your witch type, and once you cement the ability in question, you still take longer to get the hang of actually utilizing the magic properly, requiring more practical practice before at full efficiency.
         """
     }
 
