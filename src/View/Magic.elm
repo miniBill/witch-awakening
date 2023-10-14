@@ -310,49 +310,53 @@ viewAffinities affinities =
 
 viewRank : List RankedMagic -> Magic.Details -> Int -> String -> Element ( RankedMagic, Bool )
 viewRank selected { name, class } rankIndex label =
-    let
-        rank : Int
-        rank =
-            rankIndex + 1
+    if String.isEmpty label then
+        Element.none
 
-        rankedMagic : RankedMagic
-        rankedMagic =
-            { name = name
-            , rank = rank
-            }
+    else
+        let
+            rank : Int
+            rank =
+                rankIndex + 1
 
-        isTierSelected : Bool
-        isTierSelected =
-            List.member rankedMagic selected
-    in
-    Input.button
-        [ if isTierSelected then
-            let
-                color : Int
-                color =
-                    Theme.classToColor class
-            in
-            Theme.backgroundColor color
+            rankedMagic : RankedMagic
+            rankedMagic =
+                { name = name
+                , rank = rank
+                }
 
-          else
-            Border.width 1
-        , Border.width 1
-        , Border.rounded 4
-        , padding 4
-        , width fill
-        ]
-        { label =
-            column []
-                [ el
-                    [ Theme.captureIt
-                    , Font.size 20
-                    , centerX
+            isTierSelected : Bool
+            isTierSelected =
+                List.member rankedMagic selected
+        in
+        Input.button
+            [ if isTierSelected then
+                let
+                    color : Int
+                    color =
+                        Theme.classToColor class
+                in
+                Theme.backgroundColor color
+
+              else
+                Border.width 1
+            , Border.width 1
+            , Border.rounded 4
+            , padding 4
+            , width fill
+            ]
+            { label =
+                column []
+                    [ el
+                        [ Theme.captureIt
+                        , Font.size 20
+                        , centerX
+                        ]
+                      <|
+                        Theme.gradientText 2
+                            Gradients.yellowGradient
+                            ("Rank " ++ String.fromInt rank)
+                    , Theme.blocks [] label
                     ]
-                  <|
-                    Theme.gradientText 2
-                        Gradients.yellowGradient
-                        ("Rank " ++ String.fromInt rank)
-                , Theme.blocks [] label
-                ]
-        , onPress = Just ( rankedMagic, not isTierSelected )
-        }
+            , onPress = Just ( rankedMagic, not isTierSelected )
+            }

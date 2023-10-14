@@ -22,7 +22,7 @@ type Piece
     | Affinity Affinity
     | Text String
     | Link String
-    | Number Int
+    | Number String
     | Kisses String
 
 
@@ -115,6 +115,9 @@ mainParser =
                                 if String.startsWith "http" str then
                                     Link str
 
+                                else if str == "OR" then
+                                    Number str
+
                                 else
                                     Text ("[" ++ str ++ "]")
 
@@ -122,7 +125,7 @@ mainParser =
                                 Affinity affinity
 
                     Just i ->
-                        Number i
+                        Number <| String.fromInt i
             )
             |. Parser.symbol "["
             |= Parser.getChompedString (Parser.chompWhile (\c -> c /= ']'))
