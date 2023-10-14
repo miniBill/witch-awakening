@@ -184,7 +184,7 @@ sprite =
     { race = Sprite
     , cost = 2
     , content = """
-        You can grow in size up to a height of 4'10" / 147.32 cm. Still short, but now you can properly interact with normal civilization Your production of silk and honey is upscaled appropriately. and while your venom and honey has more volume, proportional quantity is still required, being diluted, though the honey is just as flavorful and with the same texture. Proportionally, a full sized Sprite could produce about two bathtubs worth of honey per day. Honey production is on demand though an individual could have an overproduction problem. For 2p less, you could have a persistent honey leak.
+        You can grow in size up to a height of 4'10\\" / 147.32 cm. Still short, but now you can properly interact with normal civilization Your production of silk and honey is upscaled appropriately. and while your venom and honey has more volume, proportional quantity is still required, being diluted, though the honey is just as flavorful and with the same texture. Proportionally, a full sized Sprite could produce about two bathtubs worth of honey per day. Honey production is on demand though an individual could have an overproduction problem. For 2p less, you could have a persistent honey leak.
         """
     }
 
