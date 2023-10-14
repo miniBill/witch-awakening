@@ -234,7 +234,7 @@ likeADuck =
     { name = LikeADuck
     , class = Just Sorceress
     , content = Single 2 """
-        You’re lightweight, weighing as supernaturally buoyant in water, Difficult to dive, and you’re easier to manhandle. or get knocked around by various effects, including a windy day
+        You’re lightweight, weighing as supernaturally buoyant in water. Difficult to dive, and you’re easier to manhandle or get knocked around by various effects, including a windy day
 
         If Sylph, you’d actively float like a helium balloon.
         """
