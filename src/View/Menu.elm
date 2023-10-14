@@ -27,11 +27,15 @@ viewMenu model =
 
         menuLabel : String
         menuLabel =
-            case Maybe.map String.fromInt power of
-                Just p ->
-                    "[" ++ p ++ "]"
+            case
+                ( Maybe.map String.fromInt power
+                , Maybe.map String.fromInt (powerCap model)
+                )
+            of
+                ( Just p, Just c ) ->
+                    "[" ++ p ++ "] [/] [" ++ c ++ "]"
 
-                Nothing ->
+                _ ->
                     "(epic)"
     in
     Theme.column
@@ -162,6 +166,32 @@ viewCalculations model =
         ]
 
 
+calculatePower : Model -> Maybe Int
+calculatePower model =
+    [ initialPower
+    , typePerksValue
+    , magicsValue
+    ]
+        |> Maybe.Extra.traverse (\f -> f model)
+        |> Maybe.map List.sum
+
+
+initialPower : Model -> Maybe Int
+initialPower model =
+    case ( model.gameMode, complicationsValue model ) of
+        ( Nothing, Just complications ) ->
+            Just <| 30 + complications - model.towardsCap
+
+        ( Just StoryArc, Just complications ) ->
+            Just <| 10 + complications - model.towardsCap
+
+        ( Just EarlyBird, Just complications ) ->
+            Just <| 75 + complications - model.towardsCap
+
+        _ ->
+            Nothing
+
+
 powerCap : Model -> Maybe Int
 powerCap model =
     case model.gameMode of
@@ -173,37 +203,6 @@ powerCap model =
 
         Just EarlyBird ->
             Just <| 75 + model.towardsCap
-
-        Just SkillTree ->
-            Nothing
-
-        Just Constellation ->
-            Nothing
-
-
-calculatePower : Model -> Maybe Int
-calculatePower model =
-    [ initialPower
-    , complicationsValue
-    , \{ towardsCap } -> Just -towardsCap
-    , typePerksValue
-    , magicsValue
-    ]
-        |> Maybe.Extra.traverse (\f -> f model)
-        |> Maybe.map List.sum
-
-
-initialPower : Model -> Maybe Int
-initialPower model =
-    case model.gameMode of
-        Nothing ->
-            Just 30
-
-        Just StoryArc ->
-            Just 10
-
-        Just EarlyBird ->
-            Just 75
 
         Just SkillTree ->
             Nothing
