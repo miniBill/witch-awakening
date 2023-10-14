@@ -444,7 +444,8 @@ kryptonite : Details
 kryptonite =
     { name = Kryptonite
     , class = Just Warlock
-    , content = Single 0 """
+    , content =
+        WithChoices """
             Some witches express magic on a wavelength that can be disrupted by some substance. You have a kryptonite. It can be rare but it’s not rare enough that your enemies can’t make use of it. Its rarity affects the power gain:
 
             - Very common: +10.
@@ -472,6 +473,8 @@ kryptonite =
             - These suggestions persist after exposure ends: +2
             - Death while exposed prevents passive methods of death circumvention: +6.
             """
+            (List.map (\i -> ( "-", i )) (List.range 7 31))
+            ""
     }
 
 

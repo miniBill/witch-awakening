@@ -1,7 +1,7 @@
 module View.Complication exposing (viewComplications)
 
 import Data.Complication as Complication exposing (Content(..))
-import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, padding, px, spacing, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, moveDown, moveRight, moveUp, padding, px, spacing, text, width)
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
@@ -53,7 +53,7 @@ complicationBox :
     List Complication
     -> Complication.Details
     -> Element ( Complication, Bool )
-complicationBox selected { name, class, content } =
+complicationBox selected ({ name, class, content } as complication) =
     let
         isSelected : Maybe Complication
         isSelected =
@@ -74,8 +74,8 @@ complicationBox selected { name, class, content } =
         msg : Maybe ( Complication, Bool )
         msg =
             case ( content, isSelected ) of
-                ( _, Just complication ) ->
-                    Just ( complication, False )
+                ( _, Just selectedComplication ) ->
+                    Just ( selectedComplication, False )
 
                 ( Single _ _, Nothing ) ->
                     Just ( { name = name, kind = Nontiered }, True )
@@ -115,10 +115,17 @@ complicationBox selected { name, class, content } =
 
         gainGradient : Element msg
         gainGradient =
-            gains
-                |> List.map (\gain -> "+" ++ String.fromInt gain)
-                |> String.join "/"
-                |> gradientText 4 Gradients.yellowGradient
+            if List.length gains > 5 then
+                (List.take 1 gains ++ List.take 1 (List.reverse gains))
+                    |> List.map (\gain -> "+" ++ String.fromInt gain)
+                    |> String.join "/.../"
+                    |> gradientText 4 Gradients.yellowGradient
+
+            else
+                gains
+                    |> List.map (\gain -> "+" ++ String.fromInt gain)
+                    |> String.join "/"
+                    |> gradientText 4 Gradients.yellowGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -185,91 +192,127 @@ complicationBox selected { name, class, content } =
                     Types.complicationNameToString name
                 )
             ]
-        , content =
-            case content of
-                Single _ block ->
-                    [ Theme.blocks
-                        [ height fill
-                        , Theme.padding
-                        ]
-                        block
-                    ]
-
-                WithTiers before tiers after ->
-                    [ Theme.column [ height fill, Theme.padding ] <|
-                        Theme.blocks [] before
-                            :: List.indexedMap
-                                (\tier ( label, _ ) ->
-                                    let
-                                        complication : Complication
-                                        complication =
-                                            { name = name
-                                            , kind = Tiered (tier + 1)
-                                            }
-
-                                        isTierSelected : Bool
-                                        isTierSelected =
-                                            List.member complication selected
-                                    in
-                                    Input.button
-                                        [ if isTierSelected then
-                                            Theme.backgroundColor color
-
-                                          else
-                                            Border.width 1
-                                        , Border.width 1
-                                        , Border.rounded 4
-                                        , padding 4
-                                        ]
-                                        { label =
-                                            Theme.blocks []
-                                                ("- *Tier "
-                                                    ++ String.fromInt (tier + 1)
-                                                    ++ "*: "
-                                                    ++ label
-                                                    ++ "."
-                                                )
-                                        , onPress = Just ( complication, not isTierSelected )
-                                        }
-                                )
-                                tiers
-                            ++ [ Theme.blocks [] after ]
-                    ]
-
-                WithChoices before choices after ->
-                    [ Theme.column [ height fill, Theme.padding ] <|
-                        Theme.blocks [] before
-                            :: List.indexedMap
-                                (\choice ( label, _ ) ->
-                                    let
-                                        complication : Complication
-                                        complication =
-                                            { name = name
-                                            , kind = Tiered (choice + 1)
-                                            }
-
-                                        isChoiceSelected : Bool
-                                        isChoiceSelected =
-                                            List.member complication selected
-                                    in
-                                    Input.button
-                                        (if isChoiceSelected then
-                                            [ Theme.backgroundColor color, Border.rounded 4, padding 4 ]
-
-                                         else
-                                            [ Border.rounded 4, padding 4 ]
-                                        )
-                                        { label =
-                                            Theme.blocks []
-                                                ("- "
-                                                    ++ label
-                                                    ++ "."
-                                                )
-                                        , onPress = Just ( complication, not isChoiceSelected )
-                                        }
-                                )
-                                choices
-                            ++ [ Theme.blocks [] after ]
-                    ]
+        , content = viewContent selected complication color
         , onPress = msg
         }
+
+
+viewContent : List Complication -> Complication.Details -> Int -> List (Element ( Complication, Bool ))
+viewContent selected { content, name } color =
+    case content of
+        Single _ block ->
+            [ Theme.blocks
+                [ height fill
+                , Theme.padding
+                ]
+                block
+            ]
+
+        WithTiers before tiers after ->
+            [ Theme.column [ height fill, Theme.padding ] <|
+                Theme.blocks [] before
+                    :: List.indexedMap
+                        (\tier ( label, _ ) ->
+                            let
+                                complication : Complication
+                                complication =
+                                    { name = name
+                                    , kind = Tiered (tier + 1)
+                                    }
+
+                                isTierSelected : Bool
+                                isTierSelected =
+                                    List.member complication selected
+                            in
+                            Input.button
+                                [ if isTierSelected then
+                                    Theme.backgroundColor color
+
+                                  else
+                                    Border.width 1
+                                , Border.width 1
+                                , Border.rounded 4
+                                , padding 4
+                                ]
+                                { label =
+                                    Theme.blocks []
+                                        ("- *Tier "
+                                            ++ String.fromInt (tier + 1)
+                                            ++ "*: "
+                                            ++ label
+                                            ++ "."
+                                        )
+                                , onPress = Just ( complication, not isTierSelected )
+                                }
+                        )
+                        tiers
+                    ++ [ Theme.blocks [] after ]
+            ]
+
+        WithChoices before choices after ->
+            let
+                choicesView : List (Element ( Complication, Bool ))
+                choicesView =
+                    if List.all (\( label, _ ) -> label == "-") choices then
+                        [ el [ Font.bold ] <| text "Result:"
+                        , choices
+                            |> List.indexedMap viewChoice
+                            |> Theme.wrappedRow []
+                        ]
+
+                    else
+                        List.indexedMap viewChoice choices
+
+                viewChoice : Int -> ( String, Int ) -> Element ( Complication, Bool )
+                viewChoice choice ( label, value ) =
+                    let
+                        complication : Complication
+                        complication =
+                            { name = name
+                            , kind = Tiered (choice + 1)
+                            }
+
+                        isChoiceSelected : Bool
+                        isChoiceSelected =
+                            List.member complication selected
+
+                        attrs : List (Attribute msg) -> List (Attribute msg)
+                        attrs =
+                            if isChoiceSelected then
+                                (::) (Theme.backgroundColor color)
+
+                            else
+                                identity
+                    in
+                    Input.button
+                        (attrs
+                            [ Border.rounded 4
+                            , padding 4
+                            , Border.width 1
+                            , if label == "-" then
+                                width <| px 24
+
+                              else
+                                width fill
+                            ]
+                        )
+                        { label =
+                            if label == "-" then
+                                el [ centerX, centerY, Theme.captureIt ] <|
+                                    Theme.gradientText 4 Gradients.yellowGradient <|
+                                        String.fromInt value
+
+                            else
+                                Theme.blocks []
+                                    ("- "
+                                        ++ label
+                                        ++ "."
+                                    )
+                        , onPress = Just ( complication, not isChoiceSelected )
+                        }
+            in
+            [ Theme.column [ height fill, Theme.padding ] <|
+                Theme.blocks [] before
+                    :: choicesView
+                    ++ [ Theme.blocks [] after ]
+            ]
