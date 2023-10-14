@@ -4,7 +4,7 @@ import Generated.Types exposing (Affinity(..), Race(..), Size(..))
 
 
 type alias Details =
-    { race : Race
+    { name : Race
     , tank : Size
     , affinities : List Affinity
     , charge : Size
@@ -19,7 +19,7 @@ all =
 
 neutral : Details
 neutral =
-    { race = Neutral
+    { name = Neutral
     , tank = Med
     , affinities = [ Soul, Body ]
     , charge = Med
@@ -33,7 +33,7 @@ neutral =
 
 daeva : Details
 daeva =
-    { race = Daeva
+    { name = Daeva
     , tank = Med
     , affinities = [ Body, Life ]
     , charge = High
@@ -47,7 +47,7 @@ daeva =
 
 ifrit : Details
 ifrit =
-    { race = Ifrit
+    { name = Ifrit
     , tank = High
     , affinities = [ Fire, Necro ]
     , charge = Low
@@ -61,7 +61,7 @@ ifrit =
 
 siren : Details
 siren =
-    { race = Siren
+    { name = Siren
     , tank = High
     , affinities = [ Wind, Beast ]
     , charge = High
@@ -75,7 +75,7 @@ siren =
 
 naiad : Details
 naiad =
-    { race = Naiad
+    { name = Naiad
     , tank = High
     , affinities = [ Water, Beast ]
     , charge = High
@@ -89,7 +89,7 @@ naiad =
 
 dryad : Details
 dryad =
-    { race = Dryad
+    { name = Dryad
     , tank = High
     , affinities = [ Nature, Earth ]
     , charge = Low
@@ -103,7 +103,7 @@ dryad =
 
 oread : Details
 oread =
-    { race = Oread
+    { name = Oread
     , tank = High
     , affinities = [ Earth, Beast ]
     , charge = High
@@ -117,7 +117,7 @@ oread =
 
 lamia : Details
 lamia =
-    { race = Lamia
+    { name = Lamia
     , tank = High
     , affinities = [ Fire, Beast ]
     , charge = Med
@@ -131,7 +131,7 @@ lamia =
 
 aurai : Details
 aurai =
-    { race = Aurai
+    { name = Aurai
     , tank = Med
     , affinities = [ Wind, Necro ]
     , charge = High
@@ -145,7 +145,7 @@ aurai =
 
 nymph : Details
 nymph =
-    { race = Nymph
+    { name = Nymph
     , tank = Low
     , affinities = [ Water, Life ]
     , charge = High
@@ -159,7 +159,7 @@ nymph =
 
 gorgon : Details
 gorgon =
-    { race = Gorgon
+    { name = Gorgon
     , tank = Med
     , affinities = [ Beast, Necro ]
     , charge = Low
@@ -173,7 +173,7 @@ gorgon =
 
 luxal : Details
 luxal =
-    { race = Luxal
+    { name = Luxal
     , tank = Med
     , affinities = [ Metal, Life ]
     , charge = Med
@@ -187,7 +187,7 @@ luxal =
 
 kekubi : Details
 kekubi =
-    { race = Kekubi
+    { name = Kekubi
     , tank = Med
     , affinities = [ Fire, Body ]
     , charge = High
@@ -203,7 +203,7 @@ kekubi =
 
 sylph : Details
 sylph =
-    { race = Sylph
+    { name = Sylph
     , tank = High
     , affinities = [ Wind, Soul ]
     , charge = Low
@@ -217,7 +217,7 @@ sylph =
 
 undine : Details
 undine =
-    { race = Undine
+    { name = Undine
     , tank = Low
     , affinities = [ Water, Body ]
     , charge = High
@@ -231,7 +231,7 @@ undine =
 
 sprite : Details
 sprite =
-    { race = Sprite
+    { name = Sprite
     , tank = Med
     , affinities = [ Nature, Life ]
     , charge = Med
@@ -245,7 +245,7 @@ sprite =
 
 empusa : Details
 empusa =
-    { race = Empusa
+    { name = Empusa
     , tank = High
     , affinities = [ Blood, Necro ]
     , charge = High
@@ -259,7 +259,7 @@ empusa =
 
 lilin : Details
 lilin =
-    { race = Lilin
+    { name = Lilin
     , tank = High
     , affinities = [ Fire, Mind ]
     , charge = Low
@@ -273,7 +273,7 @@ lilin =
 
 erinyes : Details
 erinyes =
-    { race = Erinyes
+    { name = Erinyes
     , tank = Med
     , affinities = [ Wind, Blood ]
     , charge = High
@@ -287,7 +287,7 @@ erinyes =
 
 hannya : Details
 hannya =
-    { race = Hannya
+    { name = Hannya
     , tank = High
     , affinities = [ Water, Mind ]
     , charge = Med
@@ -301,7 +301,7 @@ hannya =
 
 taura : Details
 taura =
-    { race = Taura
+    { name = Taura
     , tank = Low
     , affinities = [ Nature, Beast ]
     , charge = Med
@@ -315,7 +315,7 @@ taura =
 
 wulong : Details
 wulong =
-    { race = Wulong
+    { name = Wulong
     , tank = High
     , affinities = [ Beast, Mind ]
     , charge = Med
@@ -329,7 +329,7 @@ wulong =
 
 dravir : Details
 dravir =
-    { race = Dravir
+    { name = Dravir
     , tank = Low
     , affinities = [ Beast, All ]
     , charge = Med
@@ -343,7 +343,7 @@ dravir =
 
 doll : Details
 doll =
-    { race = Doll
+    { name = Doll
     , tank = Low
     , affinities = [ Soul, Necro ]
     , charge = High
@@ -359,7 +359,7 @@ doll =
 
 vanir : Details
 vanir =
-    { race = Vanir
+    { name = Vanir
     , tank = High
     , affinities = [ Water, Nature ]
     , charge = High
@@ -375,7 +375,7 @@ vanir =
 
 changeling : Details
 changeling =
-    { race = Changeling
+    { name = Changeling
     , tank = Med
     , affinities = [ Body, Mind ]
     , charge = Med
@@ -389,7 +389,7 @@ changeling =
 
 elf : Details
 elf =
-    { race = Elf
+    { name = Elf
     , tank = High
     , affinities = [ Body, Nature ]
     , charge = Med
@@ -403,7 +403,7 @@ elf =
 
 orc : Details
 orc =
-    { race = Orc
+    { name = Orc
     , tank = High
     , affinities = [ Body, Earth ]
     , charge = Low
@@ -417,7 +417,7 @@ orc =
 
 pharon : Details
 pharon =
-    { race = Pharon
+    { name = Pharon
     , tank = High
     , affinities = [ Beast, Soul ]
     , charge = Low
@@ -431,7 +431,7 @@ pharon =
 
 jotun : Details
 jotun =
-    { race = Jotun
+    { name = Jotun
     , tank = Med
     , affinities = [ Body, Blood ]
     , charge = Low
@@ -445,7 +445,7 @@ jotun =
 
 hollow : Details
 hollow =
-    { race = Hollow
+    { name = Hollow
     , tank = High
     , affinities = [ Soul, Metal ]
     , charge = Low
@@ -459,7 +459,7 @@ hollow =
 
 dwarf : Details
 dwarf =
-    { race = Dwarf
+    { name = Dwarf
     , tank = Med
     , affinities = [ Earth, Metal ]
     , charge = High
@@ -475,7 +475,7 @@ dwarf =
 
 wither : Details
 wither =
-    { race = Wither
+    { name = Wither
     , tank = High
     , affinities = [ Necro, Metal ]
     , charge = Med
@@ -489,7 +489,7 @@ wither =
 
 mimi : Details
 mimi =
-    { race = Mimi
+    { name = Mimi
     , tank = Low
     , affinities = [ Beast, Life ]
     , charge = High
@@ -503,7 +503,7 @@ mimi =
 
 sword : Details
 sword =
-    { race = Sword
+    { name = Sword
     , tank = Low
     , affinities = [ Metal, Blood ]
     , charge = Low

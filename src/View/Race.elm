@@ -33,7 +33,7 @@ raceBox :
     Maybe Race
     -> Race.Details
     -> Element (Maybe Race)
-raceBox selected { race, tank, affinities, charge, content } =
+raceBox selected { name, tank, affinities, charge, content } =
     let
         isSelected : Bool
         isSelected =
@@ -42,7 +42,7 @@ raceBox selected { race, tank, affinities, charge, content } =
                     False
 
                 Just selectedRace ->
-                    selectedRace == race
+                    selectedRace == name
 
         glow : Maybe Int
         glow =
@@ -58,13 +58,13 @@ raceBox selected { race, tank, affinities, charge, content } =
                 Nothing
 
             else
-                Just race
+                Just name
     in
     Theme.card
         { glow = glow
         , imageAttrs = []
         , imageHeight = 600
-        , image = Types.raceToImage race
+        , image = Types.raceToImage name
         , inFront =
             [ el
                 [ alignTop
@@ -73,7 +73,7 @@ raceBox selected { race, tank, affinities, charge, content } =
                 , centerX
                 ]
                 (gradientText 6 Gradients.yellowGradient <|
-                    Types.raceToString race
+                    Types.raceToString name
                 )
             ]
         , content =

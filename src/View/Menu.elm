@@ -1,19 +1,21 @@
 module View.Menu exposing (viewMenu)
 
 import Data.Complication as Complication exposing (Content(..))
+import Data.Magic as Magic exposing (Affinities(..))
+import Data.Race as Race
 import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types exposing (GameMode(..), Race)
+import Generated.Types exposing (Affinity(..), Class, GameMode(..), Race)
 import Gradients
 import List.Extra
 import Maybe.Extra
 import String.Extra
 import Theme
-import Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..))
+import Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedMagic)
 
 
 viewMenu : Model -> Element Msg
@@ -66,40 +68,49 @@ viewCalculations model =
     let
         row : String -> (Model -> Maybe Int) -> Element Msg
         row label toValue =
+            let
+                target : String
+                target =
+                    case label of
+                        "Initial power" ->
+                            "Game Mode"
+
+                        "Power cap" ->
+                            "Game Mode"
+
+                        "Magic" ->
+                            "The Magic"
+
+                        _ ->
+                            label
+            in
             case toValue model of
                 Nothing ->
-                    Element.none
-
-                Just value ->
-                    let
-                        target : String
-                        target =
-                            case label of
-                                "Initial power" ->
-                                    "game_mode"
-
-                                "Power cap" ->
-                                    "game_mode"
-
-                                _ ->
-                                    String.Extra.underscored label
-                    in
                     Theme.row [ width fill ]
                         [ Input.button []
-                            { onPress = Just <| ScrollTo target
+                            { onPress = Just <| ScrollTo <| String.Extra.underscored target
                             , label = el [ Font.bold ] <| text label
                             }
-                        , rightNumber value
+                        , rightNumber "?"
                         ]
 
-        rightNumber : Int -> Element msg
+                Just value ->
+                    Theme.row [ width fill ]
+                        [ Input.button []
+                            { onPress = Just <| ScrollTo <| String.Extra.underscored target
+                            , label = el [ Font.bold ] <| text label
+                            }
+                        , rightNumber <| String.fromInt value
+                        ]
+
+        rightNumber : String -> Element msg
         rightNumber value =
             el
                 [ alignRight
                 , Theme.captureIt
                 , Font.size 20
                 ]
-                (Theme.gradientText 4 Gradients.yellowGradient <| String.fromInt value)
+                (Theme.gradientText 4 Gradients.yellowGradient value)
     in
     Theme.column
         [ Background.color <| rgb 1 1 1
@@ -137,7 +148,7 @@ viewCalculations model =
                     Theme.row []
                         [ paragraph [ Font.bold ]
                             [ text "Assign power to cap instead of initial"
-                            , rightNumber model.towardsCap
+                            , rightNumber <| String.fromInt model.towardsCap
                             ]
                         ]
             , min = 0
@@ -146,6 +157,7 @@ viewCalculations model =
             , step = Just 1
             , thumb = Input.defaultThumb
             }
+        , row "Magic" magicsValue
         , el [ alignBottom, width fill ] <| row "Result" calculatePower
         ]
 
@@ -175,6 +187,7 @@ calculatePower model =
     , complicationsValue
     , \{ towardsCap } -> Just -towardsCap
     , typePerksValue
+    , magicsValue
     ]
         |> Maybe.Extra.traverse (\f -> f model)
         |> Maybe.map List.sum
@@ -247,10 +260,97 @@ typePerkValue race =
         |> Maybe.map (\{ cost } -> -cost)
 
 
+magicsValue : Model -> Maybe Int
+magicsValue model =
+    let
+        affinities : List Affinity
+        affinities =
+            case model.race of
+                Nothing ->
+                    [ All ]
+
+                Just race ->
+                    Race.all
+                        |> List.Extra.find (\{ name } -> name == race)
+                        |> Maybe.map .affinities
+                        |> Maybe.withDefault []
+                        |> (::) All
+    in
+    maybeSum (magicValue affinities model.class) .magic model
+
+
+magicValue : List Affinity -> Maybe Class -> RankedMagic -> Maybe Int
+magicValue affinities class { name, rank } =
+    combinedMagics
+        |> List.Extra.find (\magic -> magic.name == name)
+        |> Maybe.andThen
+            (\magic ->
+                let
+                    isClass : Bool
+                    isClass =
+                        Just magic.class == class
+
+                    isAffinity : Bool
+                    isAffinity =
+                        case magic.affinities of
+                            Regular regular ->
+                                List.any
+                                    (\affinity -> List.member affinity affinities)
+                                    regular
+
+                            Alternative alternatives ->
+                                alternatives
+                                    |> List.any
+                                        (\alternative ->
+                                            List.all
+                                                (\affinity -> List.member affinity affinities)
+                                                alternative
+                                        )
+
+                    cases : Int -> Int -> Int -> Int -> Int
+                    cases basicCost affinityCost classCost bothCost =
+                        if isClass then
+                            if isAffinity then
+                                bothCost
+
+                            else
+                                classCost
+
+                        else if isAffinity then
+                            affinityCost
+
+                        else
+                            basicCost
+                in
+                case rank of
+                    1 ->
+                        Just <| cases -1 -1 1 1
+
+                    2 ->
+                        Just <| cases -3 -2 -1 0
+
+                    3 ->
+                        Just <| cases -6 -4 -4 -2
+
+                    4 ->
+                        Just <| cases -10 -6 -8 -4
+
+                    5 ->
+                        Just <| cases -15 -9 -13 -7
+
+                    _ ->
+                        Nothing
+            )
+
+
+combinedMagics : List Magic.Details
+combinedMagics =
+    Magic.all ++ Magic.elementalism
+
+
 maybeSum : (item -> Maybe Int) -> (Model -> List item) -> Model -> Maybe Int
 maybeSum toValue selector model =
     model
         |> selector
-        |> List.filterMap toValue
-        |> List.sum
-        |> Just
+        |> Maybe.Extra.traverse toValue
+        |> Maybe.map List.sum
