@@ -1,13 +1,16 @@
 module Main exposing (Flags, Msg, main)
 
+import AppUrl exposing (AppUrl)
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Element exposing (Element, fill, height, rgb, scrollbarY, scrollbars, width)
+import Dict
+import Element exposing (Element, fill, height, rgb, scrollbarY, width)
 import Element.Background as Background
 import Element.Font as Font
 import Element.Lazy
 import Generated.Types as Types
 import List.Extra
+import Maybe.Extra
 import Theme
 import Types exposing (Choice(..), Model)
 import Url
@@ -44,15 +47,8 @@ main =
 
 
 init : flags -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init _ _ key =
-    ( { key = key
-      , class = Nothing
-      , race = Nothing
-      , gameMode = Nothing
-      , complications = []
-      , typePerks = []
-      , magic = []
-      }
+init _ url key =
+    ( parseUrl key url
     , Cmd.none
     )
 
@@ -155,7 +151,82 @@ toUrl model =
     ]
         |> List.concat
         |> Url.Builder.toQuery
-        |> (\query -> "#" ++ String.dropLeft 1 query)
+
+
+parseUrl : Nav.Key -> Url.Url -> Model
+parseUrl navKey url =
+    let
+        appUrl : AppUrl
+        appUrl =
+            AppUrl.fromUrl url
+
+        parseOne : String -> (String -> Maybe a) -> Maybe a
+        parseOne key parser =
+            case parseMany key parser of
+                [ one ] ->
+                    Just one
+
+                _ ->
+                    Nothing
+
+        parseMany : String -> (String -> Maybe a) -> List a
+        parseMany key parser =
+            Dict.get key appUrl.queryParameters
+                |> Maybe.andThen (Maybe.Extra.traverse parser)
+                |> Maybe.withDefault []
+
+        pair : (String -> Maybe a) -> (a -> Maybe Int -> Maybe b) -> String -> Maybe b
+        pair parser builder value =
+            let
+                ( before, after ) =
+                    value
+                        |> String.toList
+                        |> List.Extra.break Char.isDigit
+            in
+            Maybe.andThen
+                (\parsed ->
+                    let
+                        number : Maybe Int
+                        number =
+                            String.toInt (String.fromList after)
+                    in
+                    builder parsed number
+                )
+                (parser <| String.fromList before)
+
+        parseComplication : String -> Maybe Types.Complication
+        parseComplication =
+            pair Types.complicationNameFromString <|
+                \name maybeTier ->
+                    { name = name
+                    , kind =
+                        maybeTier
+                            |> Maybe.map Types.Tiered
+                            |> Maybe.withDefault
+                                Types.Nontiered
+                    }
+                        |> Just
+
+        parseMagic : String -> Maybe Types.RankedMagic
+        parseMagic =
+            pair Types.magicFromString <|
+                \magic maybeRank ->
+                    maybeRank
+                        |> Maybe.map
+                            (\rank ->
+                                { name = magic
+                                , rank = rank
+                                }
+                            )
+    in
+    { key = navKey
+    , class = parseOne "class" Types.classFromString
+    , race = parseOne "race" Types.raceFromString
+    , gameMode = parseOne "gameMode" Types.gameModeFromString
+    , complications = parseMany "complications" parseComplication
+    , typePerks = parseMany "typePerks" Types.raceFromString
+    , magic = parseMany "magic" parseMagic
+    }
 
 
 view : Model -> Browser.Document Msg
