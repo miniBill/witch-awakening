@@ -198,11 +198,7 @@ familiarity =
         [ """
         You lose any allergy to any animals you may have had, as well as lactose intolerance, and you can now telepathically communicate emotions and intentions through your soulbond, even when it is dismissed. You can use magic through your familiar, such as having your familiar do the pointing while you chant a curse.
         """, """
-        You can now talk to any of the above listed animals that are familiar options. (Not just your choice of animal). They understand your meaning, and you understand theirs. (No
-
-        need for chicken squawking. Unless you’re into that, idk). Most animals won’t just do what you ask without incentive and their intelligence is limited. Even your familiar tends to
-
-        behave in line with its respective animal by default and could use a bit of convincing depending on your relationship.
+        You can now talk to any of the above listed animals that are familiar options. (Not just your choice of animal). They understand your meaning, and you understand theirs. (No need for chicken squawking. Unless you’re into that, idk). Most animals won’t just do what you ask without incentive and their intelligence is limited. Even your familiar tends to behave in line with its respective animal by default and could use a bit of convincing depending on your relationship.
         """, """
         Some of your familiar’s qualities rub off on you, based on things that its species is known for and not actually the physiology of the animal, such as night vision and being able to jump high and land well for cats. Climbing and eating anything for goats (You’d be able to digest things and/or pass them harmlessly so long as you’re able to swallow it and it isn’t overtly toxic). Lighter body and better memory and intelligence for crows. (Flight is too much, no, but something like water breathing if your familiar is aquatic okay). Yes, a cow familiar does enlarge your breasts, h-hey! Eyes up here, also makes you stronger. Choose any 2 relevant animal traits. If future options grant any more forms for your familiar, you can pick one quality of similar power level to add to yourself. There is not hard rules on what constitutes a valid trait other than some reasonable cause, and it not being more potent than what’s shown here.
         """, """
