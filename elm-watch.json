@@ -7,6 +7,5 @@
             "output": "build/main.js"
         }
     },
-    "port": 16666,
-    "serve": "."
+    "port": 16666
 }

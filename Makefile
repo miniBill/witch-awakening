@@ -28,3 +28,7 @@ build:
 	cp index.html favicon.ico out
 	cp public/*.* out/public
 	cp build/main.js out/build
+
+.PHONY: run
+run: generated/Images.elm
+	sh -c "tmux new-session 'yarn elm-watch hot' \; split-window 'python -m http.server 8001'"
