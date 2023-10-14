@@ -230,8 +230,8 @@ parseUrl navKey url =
     , class = parseOne "class" Types.classFromString
     , race = parseOne "race" Types.raceFromString
     , gameMode = parseOne "gameMode" Types.gameModeFromString
-    , complications = parseMany "complications" parseComplication
-    , typePerks = parseMany "typePerks" Types.raceFromString
+    , complications = parseMany "complication" parseComplication
+    , typePerks = parseMany "typePerk" Types.raceFromString
     , magic = parseMany "magic" parseMagic
     }
 
