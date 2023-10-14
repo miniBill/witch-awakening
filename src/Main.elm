@@ -1,4 +1,4 @@
-module Main exposing (Flags, Msg, main)
+module Main exposing (Flags, main)
 
 import AppUrl exposing (AppUrl)
 import Browser exposing (UrlRequest(..))
@@ -12,7 +12,7 @@ import Generated.Types as Types
 import List.Extra
 import Maybe.Extra
 import Theme
-import Types exposing (Choice(..), Model)
+import Types exposing (Choice(..), Model, Msg(..))
 import Url
 import Url.Builder exposing (QueryParameter)
 import View.Class as Class
@@ -20,14 +20,9 @@ import View.Complication as Complications
 import View.GameMode as GameMode
 import View.Intro as Intro
 import View.Magic as Magic
+import View.Menu as Menu
 import View.Race as Race
 import View.TypePerk as TypePerk
-
-
-type Msg
-    = UrlClicked UrlRequest
-    | UrlChanged --Url.Url
-    | Choice Choice
 
 
 type alias Flags =
@@ -81,6 +76,9 @@ update msg model =
             , Nav.replaceUrl model.key (toUrl newModel)
             )
 
+        ToggleMenu ->
+            ( { model | menuOpen = not model.menuOpen }, Cmd.none )
+
 
 updateOnChoice : Choice -> Model -> Model
 updateOnChoice choice model =
@@ -115,6 +113,9 @@ updateOnChoice choice model =
             else
                 { model | magic = List.Extra.remove magic model.magic }
 
+        TowardsCap towardsCap ->
+            { model | towardsCap = towardsCap }
+
 
 toUrl : Model -> String
 toUrl model =
@@ -134,7 +135,8 @@ toUrl model =
                 (\value -> Url.Builder.string key (f value))
                 values
     in
-    [ pair "class" Types.classToString model.class
+    [ pair "towardsCap" String.fromInt (Just model.towardsCap)
+    , pair "class" Types.classToString model.class
     , pair "race" Types.raceToString model.race
     , pair "gameMode" Types.gameModeToString model.gameMode
     , list "typePerk" Types.raceToString model.typePerks
@@ -227,6 +229,8 @@ parseUrl navKey url =
                             )
     in
     { key = navKey
+    , menuOpen = False
+    , towardsCap = Maybe.withDefault 0 <| parseOne "towardsCap" String.toInt
     , class = parseOne "class" Types.classFromString
     , race = parseOne "race" Types.raceFromString
     , gameMode = parseOne "gameMode" Types.gameModeFromString
@@ -249,7 +253,7 @@ view model =
                     }
                 ]
             }
-            [ Font.size 16 ]
+            [ Font.size 16, Element.inFront (Menu.viewMenu model) ]
             (innerView model)
         ]
     }

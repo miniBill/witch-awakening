@@ -1,7 +1,15 @@
-module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, RankedMagic, complicationKindToString, complicationNameToCategory, gainToSlot)
+module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, Msg(..), RankedMagic, complicationKindToString, complicationNameToCategory, gainToSlot)
 
+import Browser exposing (UrlRequest)
 import Browser.Navigation
 import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), GameMode, Magic, Race, Slot(..))
+
+
+type Msg
+    = UrlClicked UrlRequest
+    | UrlChanged --Url.Url
+    | Choice Choice
+    | ToggleMenu
 
 
 type Choice
@@ -11,10 +19,13 @@ type Choice
     | ChoiceComplication Complication Bool
     | ChoiceTypePerk Race Bool
     | ChoiceMagic RankedMagic Bool
+    | TowardsCap Int
 
 
 type alias Model =
     { key : Browser.Navigation.Key
+    , towardsCap : Int
+    , menuOpen : Bool
     , class : Maybe Class
     , race : Maybe Race
     , gameMode : Maybe GameMode
