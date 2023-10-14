@@ -1,7 +1,7 @@
 module View.Magic exposing (viewMagics)
 
 import Data.Magic as Magic exposing (Affinities(..))
-import Element exposing (Element, alignBottom, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveLeft, moveRight, moveUp, padding, px, rgb, rgba, spacing, width)
+import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveRight, moveUp, padding, px, rgb, rgba, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -255,33 +255,33 @@ viewContent selected ({ name, description, ranks } as details) =
 
 magicTitle : Magic.Details -> Element msg
 magicTitle { name, star, class, affinities } =
-    el
+    Theme.wrappedRow
         [ Theme.morpheus
         , Font.size 40
         , centerX
-        , Element.onLeft <|
-            Theme.row [ moveLeft 8, alignBottom ]
-                [ Theme.image
-                    [ width <| px 32, centerY ]
-                    (Theme.classToBadge class)
-                , if star then
-                    el [ Font.size 48, moveUp 8, centerY ] <|
-                        Theme.gradientText 1 Gradients.yellowGradient "★"
-
-                  else
-                    Element.none
-                ]
-        , Element.onRight <|
-            Theme.row
-                [ moveRight 8
-                , moveDown 4
-                , centerY
-                ]
-                (viewAffinities affinities)
         ]
-        (Theme.gradientText 4 Gradients.yellowGradient <|
-            Types.magicToString name
-        )
+        [ Theme.row [ centerX ]
+            [ Theme.image
+                [ width <| px 32, centerY ]
+                (Theme.classToBadge class)
+            , if star then
+                el [ Font.size 48, moveUp 8, centerY ] <|
+                    Theme.gradientText 1 Gradients.yellowGradient "★"
+
+              else
+                Element.none
+            , el [] <|
+                Theme.gradientText 4 Gradients.yellowGradient <|
+                    Types.magicToString name
+            ]
+        , Theme.row
+            [ moveRight 8
+            , moveDown 4
+            , centerY
+            , centerX
+            ]
+            (viewAffinities affinities)
+        ]
 
 
 viewAffinities : Affinities -> List (Element msg)

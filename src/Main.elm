@@ -282,7 +282,7 @@ innerView model =
         [ width fill
         , Font.color <| rgb 1 1 1
         , Background.color <| rgb 0 0 0
-        , Theme.padding
+        , Element.padding 16
         ]
         [ Intro.viewTitle
         , Intro.viewIntro
