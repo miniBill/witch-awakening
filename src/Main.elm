@@ -151,6 +151,13 @@ toUrl model =
     ]
         |> List.concat
         |> Url.Builder.toQuery
+        |> (\s ->
+                if String.isEmpty s then
+                    "/"
+
+                else
+                    s
+           )
 
 
 parseUrl : Nav.Key -> Url.Url -> Model
