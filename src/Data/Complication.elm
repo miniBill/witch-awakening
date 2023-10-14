@@ -134,9 +134,9 @@ vulnerability =
     , content =
         WithChoices
             "Choose one serious Weakness. Weakness bypasses Affinity resistances, negating it."
-            [ ( "*Pyre*: You catch fire as though made of dry straw and lint.", 4 )
+            [ ( "*Pyre*: You catch fire as though made of dry straw and lint", 4 )
             , ( "*Melt*: Water melts you as though it were an incredible acid, but only when recognizable as water and not another product, such as “Beer”, or “Soda”", 4 )
-            , ( "*Iron*: Iron and all its forms that would still be called iron, sear you as though white hot, and can bum through you. An iron blade passing through you with ease.", 4 )
+            , ( "*Iron*: Iron and all its forms that would still be called iron, sear you as though white hot, and can bum through you. An iron blade passing through you with ease", 4 )
             ]
             ""
     }
@@ -547,9 +547,9 @@ fixation =
     , class = Just Sorceress
     , content =
         WithChoices "You will have a particular fixation that influences your thoughts frequently, shaping how you view the world and others around you, influencing your opinions of people or places, and relations"
-            [ ( "*Violence*. You’re fixated on at least the thought of violence. You often think about what it would be like to harm people, destroy things.", 2 )
-            , ( "*Eroticism*. Fixated on lewd thoughts and behaviors, you’ll often think about what people look like under those robes & what sort of things you’d do on that broom.", 2 )
-            , ( "*Curiosity*. Driven crazy by not knowing something, you can’t stand secrets or things you’ve told you can’t see. Gossipy or voyeury.", 2 )
+            [ ( "*Violence*. You’re fixated on at least the thought of violence. You often think about what it would be like to harm people, destroy things", 2 )
+            , ( "*Eroticism*. Fixated on lewd thoughts and behaviors, you’ll often think about what people look like under those robes & what sort of things you’d do on that broom", 2 )
+            , ( "*Curiosity*. Driven crazy by not knowing something, you can’t stand secrets or things you’ve told you can’t see. Gossipy or voyeury", 2 )
             , ( "*Paranoia*. The world is so big all of a sudden, threats anywhere, who can really be trusted?", 2 )
             ]
             ""
