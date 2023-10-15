@@ -115,7 +115,7 @@ complicationBox selected ({ name, class, content } as complication) =
 
         gainGradient : Element msg
         gainGradient =
-            if List.length gains > 5 then
+            if List.length gains >= 4 then
                 (List.take 1 gains ++ List.take 1 (List.reverse gains))
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/.../"
@@ -254,7 +254,7 @@ viewContent selected { content, name } color =
                 choicesView : List (Element ( Complication, Bool ))
                 choicesView =
                     if List.all (\( label, _ ) -> label == "-") choices then
-                        [ el [ Font.bold ] <| text "Result:"
+                        [ el [ Font.bold ] <| text "Cost:"
                         , choices
                             |> List.indexedMap viewChoice
                             |> Theme.wrappedRow []

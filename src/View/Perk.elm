@@ -61,7 +61,7 @@ perkBox :
     List RankedPerk
     -> Perk.Details
     -> Element ( RankedPerk, Bool )
-perkBox selected ({ name, affinity, class, content } as perk) =
+perkBox selected ({ name, affinity, class, content, isMeta } as perk) =
     let
         isSelected : Maybe RankedPerk
         isSelected =
@@ -109,7 +109,7 @@ perkBox selected ({ name, affinity, class, content } as perk) =
 
         costGradient : Element msg
         costGradient =
-            if List.length costs > 5 then
+            if List.length costs >= 4 then
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
@@ -153,6 +153,15 @@ perkBox selected ({ name, affinity, class, content } as perk) =
                 , moveDown 4
                 ]
                 (Theme.viewAffinity affinity)
+            , if isMeta then
+                el
+                    [ centerX
+                    , Theme.captureIt
+                    ]
+                    (Theme.gradientText 4 Gradients.yellowGradient "META")
+
+              else
+                Element.none
             , el [ alignBottom ] <|
                 Theme.image [ width <| px 40 ] <|
                     Theme.classToBadge class
@@ -197,7 +206,7 @@ viewContent selected { content, name } color =
                 choicesView : List (Element ( RankedPerk, Bool ))
                 choicesView =
                     if List.all (\( label, _ ) -> label == "-") choices then
-                        [ el [ Font.bold ] <| text "Result:"
+                        [ el [ Font.bold ] <| text "Cost:"
                         , choices
                             |> List.map viewChoice
                             |> Theme.wrappedRow []
