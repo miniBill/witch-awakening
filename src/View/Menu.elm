@@ -281,16 +281,6 @@ magicsValue model =
     maybeSum (magicValue affinities model.class) .magic model
 
 
-perksValue : Model -> Maybe Int
-perksValue model =
-    Just <| List.sum (List.map perkValue model.perks)
-
-
-perkValue : RankedPerk -> Int
-perkValue perk =
-    -perk.cost
-
-
 magicValue : List Affinity -> Maybe Class -> RankedMagic -> Maybe Int
 magicValue affinities class { name, rank } =
     combinedMagics
@@ -358,6 +348,55 @@ magicValue affinities class { name, rank } =
 combinedMagics : List Magic.Details
 combinedMagics =
     Magic.all ++ Magic.elementalism
+
+
+perksValue : Model -> Maybe Int
+perksValue model =
+    let
+        affinities : List Affinity
+        affinities =
+            case model.race of
+                Nothing ->
+                    [ All ]
+
+                Just race ->
+                    Race.all
+                        |> List.Extra.find (\{ name } -> name == race)
+                        |> Maybe.map .affinities
+                        |> Maybe.withDefault []
+                        |> (::) All
+    in
+    maybeSum (perkValue affinities model.class) .perks model
+
+
+perkValue : List Affinity -> Maybe Class -> RankedPerk -> Maybe Int
+perkValue affinities class { name, cost } =
+    Perk.all
+        |> List.Extra.find (\perk -> perk.name == name)
+        |> Maybe.map
+            (\perk ->
+                let
+                    isClass : Bool
+                    isClass =
+                        Just perk.class == class
+
+                    isAffinity : Bool
+                    isAffinity =
+                        List.member perk.affinity affinities
+                in
+                if isClass then
+                    if isAffinity then
+                        (-cost + 2) // 2
+
+                    else
+                        -cost + 2
+
+                else if isAffinity then
+                    -cost // 2
+
+                else
+                    -cost
+            )
 
 
 maybeSum : (item -> Maybe Int) -> (Model -> List item) -> Model -> Maybe Int
