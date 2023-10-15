@@ -1,8 +1,8 @@
-module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, Msg(..), RankedMagic, complicationKindToString, complicationNameToCategory, gainToSlot)
+module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, Msg(..), RankedMagic, RankedPerk, complicationKindToString, complicationNameToCategory, gainToSlot)
 
 import Browser exposing (UrlRequest)
 import Browser.Navigation
-import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), GameMode, Magic, Race, Slot(..))
+import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), GameMode, Magic, Perk, Race, Slot(..))
 
 
 type Msg
@@ -21,6 +21,7 @@ type Choice
     | ChoiceComplication Complication Bool
     | ChoiceTypePerk Race Bool
     | ChoiceMagic RankedMagic Bool
+    | ChoicePerk RankedPerk Bool
     | TowardsCap Int
 
 
@@ -34,6 +35,7 @@ type alias Model =
     , complications : List Complication
     , typePerks : List Race
     , magic : List RankedMagic
+    , perks : List RankedPerk
     }
 
 
@@ -43,15 +45,21 @@ type alias Complication =
     }
 
 
+type ComplicationKind
+    = Tiered Int
+    | Nontiered
+
+
 type alias RankedMagic =
     { name : Magic
     , rank : Int
     }
 
 
-type ComplicationKind
-    = Tiered Int
-    | Nontiered
+type alias RankedPerk =
+    { name : Perk
+    , cost : Int
+    }
 
 
 complicationKindToString : ComplicationKind -> String

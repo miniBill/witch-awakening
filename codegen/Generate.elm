@@ -95,6 +95,10 @@ enums =
         magics : List String
         magics =
             [ "Aethernautics", "Alchemy", "Consortation", "Curses", "Divination", "Earthmoving", "Familiarity", "Firecalling", "Hexes", "Metallurgy", "Metamorphosis", "Naturalism", "Necromancy", "Portals", "Psychotics", "Runes", "Waterworking", "Windkeeping", "Witchery" ]
+
+        perks : List String
+        perks =
+            [ "Oracle" ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
@@ -105,6 +109,7 @@ enums =
     , enumWith "GameMode" gameModes [] True
     , enumWith "Slot" [ "White", "Folk", "Noble", "Heroic", "Epic" ] [] True
     , enumWith "Magic" magics [] True
+    , enumWith "Perk" perks [] True
     ]
         |> List.concat
 

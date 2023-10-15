@@ -23,6 +23,7 @@ import View.GameMode as GameMode
 import View.Intro as Intro
 import View.Magic as Magic
 import View.Menu as Menu
+import View.Perk as Perk
 import View.Race as Race
 import View.TypePerk as TypePerk
 
@@ -130,6 +131,13 @@ updateOnChoice choice model =
             else
                 { model | magic = List.Extra.remove magic model.magic }
 
+        ChoicePerk perk selected ->
+            if selected then
+                { model | perks = perk :: model.perks }
+
+            else
+                { model | perks = List.Extra.remove perk model.perks }
+
         TowardsCap towardsCap ->
             { model | towardsCap = towardsCap }
 
@@ -167,6 +175,11 @@ toUrl model =
             Types.magicToString name ++ String.fromInt rank
         )
         model.magic
+    , list "perk"
+        (\{ name, cost } ->
+            Types.perkToString name ++ String.fromInt cost
+        )
+        model.perks
     ]
         |> List.concat
         |> Url.Builder.toQuery
@@ -244,6 +257,18 @@ parseUrl navKey url =
                                 , rank = rank
                                 }
                             )
+
+        parsePerk : String -> Maybe Types.RankedPerk
+        parsePerk =
+            pair Types.perkFromString <|
+                \magic maybeCost ->
+                    maybeCost
+                        |> Maybe.map
+                            (\cost ->
+                                { name = magic
+                                , cost = cost
+                                }
+                            )
     in
     { key = navKey
     , menuOpen = False
@@ -254,6 +279,7 @@ parseUrl navKey url =
     , complications = parseMany "complication" parseComplication
     , typePerks = parseMany "typePerk" Types.raceFromString
     , magic = parseMany "magic" parseMagic
+    , perks = parseMany "perk" parsePerk
     }
 
 
@@ -292,6 +318,7 @@ innerView model =
         , Element.Lazy.lazy Complications.viewComplications model.complications
         , Element.Lazy.lazy TypePerk.viewTypePerks model.typePerks
         , Element.Lazy.lazy Magic.viewMagics model.magic
+        , Element.Lazy.lazy Perk.viewPerks model.perks
         ]
         |> Element.map Choice
 
