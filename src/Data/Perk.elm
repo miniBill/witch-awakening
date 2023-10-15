@@ -25,7 +25,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand ]
 
 
 oracle : Details
@@ -289,5 +289,58 @@ apex =
     , affinity = Body
     , content = Single 12 """
         You are a supreme example of your species of witch, a paragon among your peers and a prime specimen. Every notable quality about your witch's race is exaggerated above normal, and numerical aspects are tripled. Your height and mass may or may not be increased by 50% at your discretion. If your race didn't already increase your physique, you are more physically attractive and have peak human prowess. This also applies to type perks of your race, and applies to all parts of a _Hybridize_. but cost +3p/each.
+        """
+    }
+
+
+chargeSwap : Details
+chargeSwap =
+    { name = ChargeSwap
+    , class = Warlock
+    , affinity = Soul
+    , content =
+        WithChoices """
+            Replace your Charge method with the method of another race, unless the chosen charge type would not be possible without an integral aspect of that race. ie; Can't take the Aurai charge type if you don't have the Aurai paradox voice, or a Gorgon's charge without their petrify. This changes your charge rate to match, as it's inherent to the method, not the type.
+            """
+            [ ( "This is the basic version and costs 4 power", 4 )
+            , ( "_For an extra 6 power_, you instead _gain_ the desired charge method as an _additional_ charge method. They can both be providing mana gain at the same time, at their individual rates", 10 )
+            ]
+            ""
+    }
+
+
+crystallize : Details
+crystallize =
+    { name = Crystallize
+    , class = Sorceress
+    , affinity = Earth
+    , content = Single 6 """
+        Internalize a spark of elemental Earth that allows you to change your form into living crystal like a diamond. Appearance is up to you, such as ruby or sapphire. You are invulnerable to physical harm while diamond, but this has heavy mana drain. With Low Mana stores you'd last 60 seconds before empty. With High, you might last 10 minutes. You can partially crystallize parts of your body like just a hand, for 1/10th the cost, or you can passively maintain a lesser surface crystallization that is as protective as half-inch thick steel plating, With a minor initial mana cost but Ino passive drain. You could also project crystal shards equivalent to a 9mm firearm
+        """
+    }
+
+
+memorize : Details
+memorize =
+    { name = Memorize
+    , class = Sorceress
+    , affinity = Body
+    , content = Single 6 """
+        We're witches. We aren't that physical, generally barring some races' physical advantages. Magic helps for sure, but other than some shenanigans with guns due to them bordering on alchemy, a martial witch will mostly be on their own in learning.
+
+        .,,Unless you were to employ some trickery. With this gift you can memetically synchronize with any martial maneuver or technique you see performed, and repeat it yourself. Forevermore, forming an archive over time with your exposure.
+
+        Think Taskmaster from those Marvel books a lot of humans love. Perfect execution every time, unless interrupted by something.
+        """
+    }
+
+
+maidHand : Details
+maidHand =
+    { name = MaidHand
+    , class = Academic
+    , affinity = Mind
+    , content = Single 4 """
+        Create psychological constructs, manifest as unseen telekinetic masses. Each construct acts as an _unseen servant_ capable of autonomously handling basic acts of service compared to a minimally competent maid or butler that's responsive to commands and orders that it will continue to act out until you stop it, tell it to do something else, or it meets a requirement such as a time or condition. You are always aware of where your constructs. are despite being invisible even to spirit sight, but you can provide them with clothes that they can fill out as though they had a human shape. Maximum number of 3 + ranks in Hexes and Psychotics.
         """
     }
