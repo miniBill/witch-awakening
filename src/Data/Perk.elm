@@ -25,7 +25,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk ]
 
 
 oracle : Details
@@ -76,4 +76,67 @@ transformationSequence =
             , ( "For 12 more power, each can have separate magic and perk choices.", 18 )
             ]
             ""
+    }
+
+
+poisoner : Details
+poisoner =
+    { name = Poisoner
+    , class = Warlock
+    , affinity = Nature
+    , content = Single 4 """
+        Control over poison. You can command any highly venomous animal, easily nurture and grow poisonous plants and mushrooms, and telekinetically control poisonous materials slowly without significant force.
+
+        More notably, is that this power grants complete immunity to diseases and toxins, including bioweapons like mustard gas. The control aspects are a bit tiring, but the immunity is passive. This doesn't allow you to cure or diminish the afflictions of others.
+        """
+    }
+
+
+witchflame : Details
+witchflame =
+    { name = Witchflame
+    , class = Sorceress
+    , affinity = Fire
+    , content = Single 2 """
+        Witchfire is variably colored flame that has slightly different behavior from witch to witch, and when you place a witchfire somewhere, it stays there until dispelled even without any fuel to maintain it. Stick a mote of flame in the air and it will stay put. Great for home lighting, and you can adjust the temperature to 20 below freezing, up to 500 degrees, though the size is never larger than a campfire, and doesn't spread like normal fire, though it can chill, heat, or burn material it contacts. Wood would blacken but not ignite, for example. Great for cooking, potions, and rituals. Mild combat applications, it's mainly utility.
+        """
+    }
+
+
+energized : Details
+energized =
+    { name = Energized
+    , class = Sorceress
+    , affinity = Wind
+    , content = Single 4 """
+        You passively emanate an electric aura that fills the air with a harmless sense of static and slight ozone smell. This passively charges any device within 10m of you, and you can focus to spike it to damage electronics within 30m or deliver a tazer-like zap to point you can see within 60m. Your touch slightly tingles, and with focus you can amplify this sensation. During a storm, you can focus your will on a target location to ‘cause a lightning strike with a rough accuracy of a 6ft sphere, it can be skewed by lightning rods.
+        """
+    }
+
+
+conjuration : Details
+conjuration =
+    { name = Conjuration
+    , class = Academic
+    , affinity = All
+    , content = Single 6 """
+        _Requires Consortation 1+._
+
+        You acquire the ability to summon the infernal shopkeeper, Mammon, whose genie-like visage appears as a proxy through which you can order any product that is available for purchase anywhere else on Earth or in Witchdom. He will set an asking price 7x what it would normally be worth (-1x per rank in Consortation). So long as you know that something is sold for human currency somewhere, you can buy it. He accepts cash or barter for objects of monetary value, or Kisses at K1 = $100.
+        """
+    }
+
+
+elephantTrunk : Details
+elephantTrunk =
+    { name = ElephantTrunk
+    , class = Warlock
+    , affinity = Body
+    , content = Single 4 """
+        "Whoa, a male witch? Maybe we should check, just to be sure."
+
+        You can get back to me on that one. This perk allows for a male witch. Male humans are just as likely to be a pre-awakened witch as any female, they just usually, well, don't stay that way.
+
+        If you don't want to be male but just want the twig 'n berries for some fun, _Hexes_ can help with that so can _Alchemy_, or _Collection_ with a hex spell rune trinket.
+        """
     }
