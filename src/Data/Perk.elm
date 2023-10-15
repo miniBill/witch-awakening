@@ -25,7 +25,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime ]
 
 
 oracle : Details
@@ -157,5 +157,38 @@ prestidigitation =
         Create small 2D illusions on a surface while you maintain focus.
 
         Clean or soil roughly 1 cubic foot of area in a wave of the hand.
+        """
+    }
+
+
+suggestion : Details
+suggestion =
+    { name = Suggestion
+    , class = Warlock
+    , affinity = Mind
+    , content = Single 6 """
+        There's something enchanting about your eyes. With 4 seconds of eye contact with another, you can issue a command with a shimmer in your eyes. People will resist commands that will do them any great harm unless they already wanted to do that thing, while commands that are merely risky will be a little difficult and maybe take repeated application as their confidence wavers. You can't command people to do unnatural things, like forget something, so if you make them do something too weird they can make the connection that you made them do it. It's a nagging suggestion and intrusive thought, but not mind control.
+        """
+    }
+
+
+fascinate : Details
+fascinate =
+    { name = Fascinate
+    , class = Warlock
+    , affinity = Mind
+    , content = Single 4 """
+        Similar to suggestion but with a different outlet, you can ensnare the attention of others who can see or hear a performance of yours that has your main focus. Singing, dancing, playing an instrument, or acrobatic feats, fooling around. Whatever it is, that could be described as a bardic art. Those who hear you seek out a line of sight within reason, otherwise remain fixated looking in your direction. They have no desire to look away and give mild resistance to attempts to divert their attention elsewhere. Boosts skill in performance arts. You're able to weave Curses into your performance seamlessly.
+        """
+    }
+
+
+pantomime : Details
+pantomime =
+    { name = Pantomime
+    , class = Sorceress
+    , affinity = Soul
+    , content = Single 4 """
+        A fun gift that inspired the folk performances of the mime. You have the ability to physically interact with spirit beings and constructs, while manifesting spirit constructs from your will Objects are mundane everyday items, if they weren't spirit objects. Nothing overly complex such as a watch or electronics, but you can manifest something like a chair, or ladder. The most complicated thing you can summon is a bicycle. If you need glasses, you can actually manifest spirit glasses. Spirit objects cannot interact with living things that don't have this ability. But a ghost chair would rest on the ground normally, without leaving a depression.
         """
     }

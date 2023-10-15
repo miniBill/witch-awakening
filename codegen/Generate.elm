@@ -98,7 +98,7 @@ enums =
 
         perks : List String
         perks =
-            [ "Oracle", "JackOfAll", "TransformationSequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "ElephantTrunk", "Prestidigitation" ]
+            [ "Oracle", "JackOfAll", "TransformationSequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "ElephantTrunk", "Prestidigitation", "Suggestion", "Fascinate", "Pantomime" ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
