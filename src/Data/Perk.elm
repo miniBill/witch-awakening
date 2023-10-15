@@ -25,7 +25,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid ]
 
 
 oracle : Details
@@ -390,5 +390,27 @@ gunwitch =
     , affinity = Metal
     , content = Single 4 """
         Originated by a male witch, _John Moses Browning_, you can ritually bond with a single firearm to summon it as you would your Rod. If you have _Hot Swap_, then gunwitch applies to any firearm called with it. You can use large rifles as though it were your broomstick and you have a sixth sense over your bonded or swapped firearms which allows you to have a full detailed perception of the orientation of its barrel and the trajectory of their bullets, as well as the trajectory of any projectile that has been fired, or a moving changing trajectory of projectiles that will fire within 2 seconds with increasing intensity as it becomes more certain. So long as you have 1 bullet, you can duplicate it with a tiny mana cost.
+        """
+    }
+
+
+levitation : Details
+levitation =
+    { name = Levitation
+    , class = Academic
+    , affinity = All
+    , content = Single 6 """
+        Your relationship with space is pretty relative. You can move yourself omnidirectionaly through space as though moving reality relative to you rather than moving your body itself. You'd appear to levitate as you wish and never need to touch the ground again You can disconnect any object you touch to be severed from the effects of gravity and it would remain as you last left it unless acted upon by another force, though acting as though it had notable friction to slow itself or resist wind. You "fly" at up to 25mph, as casual to you as a light jog. If you have Witchery, you add your potential speed if you were to use your broomstick, though you need not actually use it to gain speed.
+        """
+    }
+
+
+isekaid : Details
+isekaid =
+    { name = Isekaid
+    , class = Warlock
+    , affinity = Life
+    , content = Single 4 """
+        When you awaken you'll be reborn in my world. Your Earth will exist in its own universe with its own cosmology as you believe it to exist and you can return if you learn Portals 5, though the only magic you can use there is making a portal to return to us. I'm just a visitor here and this is conversation is a dream. _(Unless you don't take this perk)_ When you return, you keep your last appearance taken tweaked as close to mundane as possible. You can choose how you're isekai'd. You hijack a false life retroactively created for this purpose with it's own history, even relations with companions. You can choose to keep or lose memories of your old life or gain them at some point.
         """
     }
