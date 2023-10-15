@@ -25,7 +25,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex ]
 
 
 oracle : Details
@@ -242,5 +242,52 @@ hatTrick =
         Greatly enhances the mothergift of Witchery, allowing telekinetic control over the Garment, Hat, and Rod irrespective of difference or line of sight.
 
         You can create duplicates of your Hat you can jump into, to appear out of any other. Up to 6 dupes. If you have Portals and R5 Witchery, your garment or hat can connect to any portkey, gateway, or rift, and the hat can open up as a rift instantaneously.
+        """
+    }
+
+
+moodWeather : Details
+moodWeather =
+    { name = MoodWeather
+    , class = Sorceress
+    , affinity = Nature
+    , content = Single 4 """
+        This rare gift provides a level of subconscious control over the weather based on your mood, and based on your impressions. If you think rain is sad, it'd rain when you feel sad. If you think rain is pleasant, then it might rain when you're in a pleasant mood. Thunderstorms almost always occur with anger, either way. If you feel like going out, it’d either be sunny or overcast on preference. Humans aren't too happy with these kinds of witches and they have a close eye on weather events. A warden charm can suppress the effects.
+        """
+    }
+
+
+improvedFamiliar : Details
+improvedFamiliar =
+    { name = ImprovedFamiliar
+    , class = Warlock
+    , affinity = Beast
+    , content = Single 6 """
+        Whatever your familiar’s base form, your familiar gains the ability to shapechange into an enhanced form from the following:
+
+        - *Dire X*: A Dire Animal. Larger than normal with bone growths providing armor plate or scales, and horns, spikes, & razor claws.
+
+        - *Chimeric*: An animal that is a combination of multiple animals. Examples: Griffin, Hippogriff, Pegasus, Manticore, Chimera, ect. Whatever your expectations of a beast, it’s balanced to the other options named here. So no outright dragons or wishgranters."""
+    }
+
+
+hybridize : Details
+hybridize =
+    { name = Hybridize
+    , class = Sorceress
+    , affinity = Beast
+    , content = Single 6 """
+        Choose a second racial type for your true form, and reasonably combine the physical look of both races, Take the higher Mana capacity, and maintain both methods of charge (each of which charge as fast as they normally would) and any features mentioned in their description, such as the breath of the Draviri or the honey of the Sprite. You can take both type perks of either race. You do not gain affinity of the second type. See _Cosmic Pearl_. You can take this twice for up to 3 aspects. With 2 you're a _hybrid_, with 3 you're a _chimera_.
+        """
+    }
+
+
+apex : Details
+apex =
+    { name = Apex
+    , class = Sorceress
+    , affinity = Body
+    , content = Single 12 """
+        You are a supreme example of your species of witch, a paragon among your peers and a prime specimen. Every notable quality about your witch's race is exaggerated above normal, and numerical aspects are tripled. Your height and mass may or may not be increased by 50% at your discretion. If your race didn't already increase your physique, you are more physically attractive and have peak human prowess. This also applies to type perks of your race, and applies to all parts of a _Hybridize_. but cost +3p/each.
         """
     }
