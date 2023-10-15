@@ -25,7 +25,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch ]
 
 
 oracle : Details
@@ -342,5 +342,53 @@ maidHand =
     , affinity = Mind
     , content = Single 4 """
         Create psychological constructs, manifest as unseen telekinetic masses. Each construct acts as an _unseen servant_ capable of autonomously handling basic acts of service compared to a minimally competent maid or butler that's responsive to commands and orders that it will continue to act out until you stop it, tell it to do something else, or it meets a requirement such as a time or condition. You are always aware of where your constructs. are despite being invisible even to spirit sight, but you can provide them with clothes that they can fill out as though they had a human shape. Maximum number of 3 + ranks in Hexes and Psychotics.
+        """
+    }
+
+
+hotSwap : Details
+hotSwap =
+    { name = HotSwap
+    , class = Academic
+    , affinity = Metal
+    , content = Single 6 """
+        Your witchery is capable of adapting itself to any weapon (rod) and armor or helmet (garment and hat) that you have stored in your pocketspace. when you call your mothergifts, you can call any armor/clothing, or weapon you have within it. It is treated as being your gift, but you can't alter its appearance. In addition, whenever you unsummon your mothergift you can immediately resummon it in the same instance, dynamically replacing unsummoned parts with a new summon as you change from one outfit/armor to another. The equipment you possess can still be broken or damaged as normal and would require normal repairs unlike your actual mothergifts.
+        """
+    }
+
+
+menagerie : Details
+menagerie =
+    { name = Menagerie
+    , class = Warlock
+    , affinity = Beast
+    , content = Single 6 """
+        _Requires Witchery 5._
+
+        In your pocketspace you gain 75 golden camels, 53 purple peacocks, 95 persian monkeys, 429 homunculi (synthetic humans) slaves, servants, and flunkies. 60 elephants, 231 llamas galore, 9 bears and lions. 40 holy sages (Real human spirits bound to your pocketspace that dedictated their lives to witches past) as scholars and philosophers though their information is a few millenia out of date. 1,000 birds of exotic varieties. You house them all in an elaborate palace complex the size of a small city that appears in your pocketspace, in a design of your choosing. Objects and wealth are false matter, but the creatures are real and can survive on false matter creations.
+        """
+    }
+
+
+bloodWitch : Details
+bloodWitch =
+    { name = BloodWitch
+    , class = Warlock
+    , affinity = Blood
+    , content = Single 6 """
+        Control blood to the extent that droplets can function like bullets, or form lances with ballista-like force, or to puppet the blood inside living or dead creatures to control them like marionettes, unless protected by some means like a warding rune. Control within 160m, not counting projectile range.
+
+        You can also use blood to replace the mana cost of any magic at a rate of 1 drop for rank 1, 10 for rank 2, a vial for 3, a cup for 4, and 6 for 5, and use ritual sacrifice to replace any material requirements. The life of a noninnocent adult is can fuel up to rank 3 magic. Children down to the unborn and innocent adults can fuel rank 4 magic. Innocent virgin humans between 14 and 24 can fuel rank 5 magic.
+        """
+    }
+
+
+gunwitch : Details
+gunwitch =
+    { name = Gunwitch
+    , class = Sorceress
+    , affinity = Metal
+    , content = Single 4 """
+        Originated by a male witch, _John Moses Browning_, you can ritually bond with a single firearm to summon it as you would your Rod. If you have _Hot Swap_, then gunwitch applies to any firearm called with it. You can use large rifles as though it were your broomstick and you have a sixth sense over your bonded or swapped firearms which allows you to have a full detailed perception of the orientation of its barrel and the trajectory of their bullets, as well as the trajectory of any projectile that has been fired, or a moving changing trajectory of projectiles that will fire within 2 seconds with increasing intensity as it becomes more certain. So long as you have 1 bullet, you can duplicate it with a tiny mana cost.
         """
     }
