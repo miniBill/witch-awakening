@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, maybeButton, morpheus, padding, row, rythm, style, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -484,3 +484,12 @@ classToBadge class =
 
         Warlock ->
             Images.badgeWarlock
+
+
+topBackground : Images.Image -> List (Element.Attribute msg)
+topBackground { src } =
+    [ style "background-image" <| "url(\"" ++ src ++ "\")"
+    , style "background-repeat" "no-repeat"
+    , style "background-position" "top"
+    , style "background-size" "100%"
+    ]

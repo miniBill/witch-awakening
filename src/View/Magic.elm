@@ -46,12 +46,9 @@ viewMagics selected =
             |> Theme.column []
             |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)
         , Theme.row
-            [ Theme.padding
-            , Theme.style "background-image" <| "url(\"" ++ Images.magicElementalism.src ++ "\")"
-            , Theme.style "background-repeat" "no-repeat"
-            , Theme.style "background-position" "top"
-            , Theme.style "background-size" "100%, 100%"
-            ]
+            (Theme.padding
+                :: Theme.topBackground Images.magicElementalism
+            )
             [ let
                 color : Element.Color
                 color =
