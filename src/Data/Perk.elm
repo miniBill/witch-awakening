@@ -25,7 +25,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick ]
 
 
 oracle : Details
@@ -190,5 +190,57 @@ pantomime =
     , affinity = Soul
     , content = Single 4 """
         A fun gift that inspired the folk performances of the mime. You have the ability to physically interact with spirit beings and constructs, while manifesting spirit constructs from your will Objects are mundane everyday items, if they weren't spirit objects. Nothing overly complex such as a watch or electronics, but you can manifest something like a chair, or ladder. The most complicated thing you can summon is a bicycle. If you need glasses, you can actually manifest spirit glasses. Spirit objects cannot interact with living things that don't have this ability. But a ghost chair would rest on the ground normally, without leaving a depression.
+        """
+    }
+
+
+beautySleep : Details
+beautySleep =
+    { name = BeautySleep
+    , class = Sorceress
+    , affinity = Body
+    , content = Single 4 """
+        Witches with this perk no longer need to sleep. They fatigue normally from exertion but normal rest alleviates it
+
+        They can still choose to sleep if they wish, always resulting in lucid dreams unless they just want to skip through the night. It has the added benefit of letting them sleep on demand, waking up exactly when they wanted, with full consciousness.
+
+        By this same token, they're immune to chemical or magical attempts to make them sleep.
+        """
+    }
+
+
+thirdEye : Details
+thirdEye =
+    { name = ThirdEye
+    , class = Academic
+    , affinity = Soul
+    , content = Single 4 """
+        Witches normally have an unseen third eye, it's how we see spirits. Some achieve a second awakening of this eye, allowing them to see auras possessed by all lifeforms and spirits. Every witch has a unique aura, but an aura will retain some constants regardless of shape or mood that can be used as a more secure fingerprint for ID left by magic use in an area, or on their person. Seeing an aura can also accurately read the emotional state of the creature.
+
+        _Note: rare tricks can mask an aura._
+        """
+    }
+
+
+soulJellies : Details
+soulJellies =
+    { name = SoulJellies
+    , class = Warlock
+    , affinity = Necro
+    , content = Single 4 """
+        Some witches have this power to manifest these creatures made of jelly-like spirit matter. When they manifest seems random but associated with sudden emotion spikes. These curious helpful creatures are nonverbal but as intelligent as a familiar. They can exert 5lbs of force on the material world. A soul slime can be used as the spirit bound in Necromancy, and similarly a soul can be bound as a soul slime. You can maintain an average of 3, randomly replacing a loss within 3 days.
+        """
+    }
+
+
+hatTrick : Details
+hatTrick =
+    { name = HatTrick
+    , class = Academic
+    , affinity = All
+    , content = Single 4 """
+        Greatly enhances the mothergift of Witchery, allowing telekinetic control over the Garment, Hat, and Rod irrespective of difference or line of sight.
+
+        You can create duplicates of your Hat you can jump into, to appear out of any other. Up to 6 dupes. If you have Portals and R5 Witchery, your garment or hat can connect to any portkey, gateway, or rift, and the hat can open up as a rift instantaneously.
         """
     }
