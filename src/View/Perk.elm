@@ -1,7 +1,7 @@
 module View.Perk exposing (viewPerks)
 
 import Data.Perk as Perk exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, moveUp, padding, px, rgba, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, moveUp, padding, paragraph, px, rgba, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -10,6 +10,7 @@ import Generated.Types as Types exposing (Slot(..))
 import Gradients
 import Images
 import List.Extra
+import String.Extra
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), RankedPerk)
 
@@ -164,15 +165,16 @@ perkBox selected ({ name, affinity, class, content } as perk) =
 
                 _ ->
                     viewSlot White
-            , el
-                [ alignBottom
-                , Theme.celticHand
-                , Font.size 32
-                , centerX
-                ]
-                (gradientText 4 Gradients.blueGradient <|
-                    Types.perkToString name
-                )
+            , Types.perkToString name
+                |> String.Extra.softBreak 16
+                |> List.map (gradientText 4 Gradients.blueGradient)
+                |> paragraph
+                    [ alignBottom
+                    , Theme.celticHand
+                    , Font.size 36
+                    , centerX
+                    , Font.center
+                    ]
             ]
         , content = viewContent selected perk color
         , onPress = msg
