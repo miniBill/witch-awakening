@@ -25,7 +25,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation ]
 
 
 oracle : Details
@@ -138,5 +138,24 @@ elephantTrunk =
         You can get back to me on that one. This perk allows for a male witch. Male humans are just as likely to be a pre-awakened witch as any female, they just usually, well, don't stay that way.
 
         If you don't want to be male but just want the twig 'n berries for some fun, _Hexes_ can help with that so can _Alchemy_, or _Collection_ with a hex spell rune trinket.
+        """
+    }
+
+
+prestidigitation : Details
+prestidigitation =
+    { name = Prestidigitation
+    , class = Academic
+    , affinity = All
+    , content = Single 2 """
+        A universalist bag of magic tricks, the magician's toolkit.
+
+        You can heat or chill things generally recognized as food or drink to a reasonable temperature for that object, and flavor it or add a scent as you wish it.
+
+        You can fabricate small objects that fit within your hand and weigh less than 1lb, with very rough craftsmanship unless you have an object nearby to copy, and it turns to dust after 1 minute or when dismissed.
+
+        Create small 2D illusions on a surface while you maintain focus.
+
+        Clean or soil roughly 1 cubic foot of area in a wave of the hand.
         """
     }
