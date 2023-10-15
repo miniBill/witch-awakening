@@ -2,6 +2,7 @@ module View.Menu exposing (viewMenu)
 
 import Data.Complication as Complication exposing (Content(..))
 import Data.Magic as Magic exposing (Affinities(..))
+import Data.Perk as Perk
 import Data.Race as Race
 import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
@@ -15,7 +16,7 @@ import List.Extra
 import Maybe.Extra
 import String.Extra
 import Theme
-import Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedMagic)
+import Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedMagic, RankedPerk)
 
 
 viewMenu : Model -> Element Msg
@@ -162,6 +163,7 @@ viewCalculations model =
             , thumb = Input.defaultThumb
             }
         , row "Magic" magicsValue
+        , row "Perks" perksValue
         , el [ alignBottom, width fill ] <| row "Result" calculatePower
         ]
 
@@ -171,6 +173,7 @@ calculatePower model =
     [ initialPower
     , typePerksValue
     , magicsValue
+    , perksValue
     ]
         |> Maybe.Extra.traverse (\f -> f model)
         |> Maybe.map List.sum
@@ -276,6 +279,16 @@ magicsValue model =
                         |> (::) All
     in
     maybeSum (magicValue affinities model.class) .magic model
+
+
+perksValue : Model -> Maybe Int
+perksValue model =
+    Just <| List.sum (List.map perkValue model.perks)
+
+
+perkValue : RankedPerk -> Int
+perkValue perk =
+    -perk.cost
 
 
 magicValue : List Affinity -> Maybe Class -> RankedMagic -> Maybe Int

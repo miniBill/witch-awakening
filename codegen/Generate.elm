@@ -98,7 +98,7 @@ enums =
 
         perks : List String
         perks =
-            [ "Oracle" ]
+            [ "Oracle", "JackOfAll" ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
@@ -109,7 +109,7 @@ enums =
     , enumWith "GameMode" gameModes [] True
     , enumWith "Slot" [ "White", "Folk", "Noble", "Heroic", "Epic" ] [] True
     , enumWith "Magic" magics [] True
-    , enumWith "Perk" perks [] True
+    , enumWith "Perk" perks [ ( "JackOfAll", "Jack-of-All" ) ] True
     ]
         |> List.concat
 

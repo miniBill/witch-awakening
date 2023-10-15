@@ -98,17 +98,25 @@ perkBox selected ({ name, affinity, class, content } as perk) =
                 |> List.filter ((/=) 0)
                 |> List.Extra.unique
 
+        costToString : Int -> String
+        costToString cost =
+            if cost > 0 then
+                "-" ++ String.fromInt cost
+
+            else
+                "+" ++ String.fromInt -cost
+
         costGradient : Element msg
         costGradient =
             if List.length costs > 5 then
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
-                    |> List.map (\gain -> "-" ++ String.fromInt gain)
+                    |> List.map costToString
                     |> String.join "/.../"
                     |> gradientText 4 Gradients.yellowGradient
 
             else
                 costs
-                    |> List.map (\gain -> "-" ++ String.fromInt gain)
+                    |> List.map costToString
                     |> String.join "/"
                     |> gradientText 4 Gradients.yellowGradient
 
@@ -237,9 +245,11 @@ viewContent selected { content, name } color =
 
                             else
                                 Theme.blocks []
-                                    ("- "
-                                        ++ label
-                                        ++ "."
+                                    (if String.endsWith ";" label || String.endsWith "," label then
+                                        "- " ++ label
+
+                                     else
+                                        "- " ++ label ++ "."
                                     )
                         , onPress = Just ( complication, not isChoiceSelected )
                         }
