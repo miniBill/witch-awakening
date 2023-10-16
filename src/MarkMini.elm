@@ -88,7 +88,7 @@ mainParser =
     Parser.oneOf
         [ Parser.succeed Text
             |. Parser.symbol "\\"
-            |= Parser.getChompedString (Parser.chompIf (\c -> True))
+            |= Parser.getChompedString (Parser.chompIf (\_ -> True))
         , Parser.succeed Speech
             |. Parser.symbol "\""
             |= innerParser '"'
