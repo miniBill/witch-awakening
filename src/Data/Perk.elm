@@ -26,7 +26,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast, isekaiWorlds, isekaiHeritage, summerSchool, magicalHeart, miniaturization, soulWarrior, comfyPocket, improvedRod, witchHut, company ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast, isekaiWorlds, isekaiHeritage, summerSchool, magicalHeart, miniaturization, soulWarrior, comfyPocket, improvedRod, witchHut, company, petBreak, magicShop, keeper, soulGraft ]
 
 
 oracle : Details
@@ -663,6 +663,75 @@ company =
     }
 
 
+petBreak : Details
+petBreak =
+    { name = PetBreak
+    , class = Warlock
+    , affinity = Beast
+    , isMeta = True
+    , content =
+        WithChoices """
+            Witches with an especially strong familiarity potential can select a magical creature as their familiar (R0+ Familiarity), looks like you might have that potential!
+
+            Choose a pet from _Magical Pet Break by Fox_ to be your familiar. [https://imgur.com/a/R3dqGGN]
+
+            Choose any listed creature for 2 Power per soul point. (So you could choose a Restricted pet for 6p). You can likewise give it Boons for 4p, though some may be more or less redundant if you have Familiarity magic ranks. You can also give your familiar the magic of another pet for 2p +1p per extra, (2, 3, 4 for +3, total -9p Though a Restricted choices has a base of 6 instead of 2). If the magic involves a feature like scales, adapt as appropriate up to hybridizing if needed.
+            """
+            (pureCosts (List.range 2 22))
+            ""
+    }
+
+
+magicShop : Details
+magicShop =
+    { name = MagicShop
+    , class = Academic
+    , affinity = Life
+    , isMeta = True
+    , content =
+        WithChoices """
+        You are of will be the proud owner of a brand new magical shop. Design your shop using your choice of _Magic Item Shop_ by Bliss and Beri or _Starfall Cafe_ by Femdo. If you buy this twice, you could do both into a merged shop or separate locations. Or you could buy it to do the same cyoa again with doubled resources / currency, again for a larger shop or for separate shops
+
+        [https://imgur.com/a/4HgA72h] & [https://imgur.com/VUb1n7d].
+        
+        Instead of locations presented by those cyoas, you can if you wish, choose any location mentioned in this cyoa. Adapt any other flavor as appropriate. Skip Magic Item Shop’s Blessings unless you pay 4 Power for it, with an appropriate Affinity. ([Fire], [???], [Nature], [Body], [Mind], [Nature], [Water], [Life], [Body]). You can spend 1p for +50 Stardust.
+        """
+            (pureCosts (List.range 6 28))
+            ""
+    }
+
+
+keeper : Details
+keeper =
+    { name = Keeper
+    , class = Academic
+    , affinity = Life
+    , isMeta = True
+    , content =
+        WithChoices """
+            Sometime within the next few years tops, you’ll meet my greattimes-8 grandmother who has an. offer for you. She knows some unique ancient magics and can teach you a thing or two. Take the _Keeper of Magic by TroyXPage_ [https://imgur.com/a/2rYOpr6].
+
+            Ignore the 3 categories: Pick one category per 15 Power spent on this perk. Otherwise adapt any given lore appropriately. You can take "No Magic" as though buying a companion, at 20p.
+
+            Any potential interactions may reasonably be extrapolated to magic and perks from here. ie; Eromancy may buff witch Alchemy similarly to it buffing keeper Alchemy, ect. Wishmagic cannot break the masquerade or grant power or alter game mechanics.
+            """
+            (pureCosts (20 :: List.map ((*) 15) (List.range 1 10)))
+            ""
+    }
+
+
+soulGraft : Details
+soulGraft =
+    { name = SoulGraft
+    , class = Sorceress
+    , affinity = Soul
+    , isMeta = True
+    , content = Single 15 """
+        You’ll have the opportunity to enter the _Soul Graft Battle Royale by L_\\__Circe_. [https://imgur.com/a/h5zbB4E]. It’s intended for mortals and humanoids (Non-witch members of the races shown in witch type). So you won’t have access to any witch magic or perks. If your racial life extension is triggered it’s considered a fail state. Otherwise, you play Soul Graft as normal, obtaining a Graft and two items, and whatever you pick up in the royale itself. The Prizes and the items are Relics. Graft can grow by defeating equivalent enemies outside of the royale. Regain witchhood at end. Jinn wish magic can’t break the masquerade on Earth. Masquerade doesn’t apply on the island, not being on Earth, and full of magic beings & monsters.
+        """
+    }
+
+
 pureCosts : List Int -> List ( String, Int )
 pureCosts costs =
-    List.map (\i -> ( "-", i )) costs
+    List.map (\i -> ( "-", i )) (List.sort costs)

@@ -86,7 +86,10 @@ unorderedListParser =
 mainParser : Parser (List Piece)
 mainParser =
     Parser.oneOf
-        [ Parser.succeed Speech
+        [ Parser.succeed Text
+            |. Parser.symbol "\\"
+            |= Parser.getChompedString (Parser.chompIf (\c -> True))
+        , Parser.succeed Speech
             |. Parser.symbol "\""
             |= innerParser '"'
             |. Parser.symbol "\""
@@ -98,10 +101,6 @@ mainParser =
             |. Parser.symbol "_"
             |= innerParser '_'
             |. Parser.symbol "_"
-        , Parser.succeed (Text "\"")
-            |. Parser.symbol "\\\""
-        , Parser.succeed (Text "*")
-            |. Parser.symbol "\\*"
         , Parser.succeed Bold
             |. Parser.symbol "*"
             |= innerParser '*'
