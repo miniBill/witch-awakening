@@ -26,7 +26,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast, isekaiWorlds, isekaiHeritage ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast, isekaiWorlds, isekaiHeritage, summerSchool, magicalHeart, miniaturization, soulWarrior ]
 
 
 oracle : Details
@@ -498,7 +498,7 @@ broomBeast =
 
             For every additional Power spent, you gain an additional 50fps speed and improve the maneuverability by 50% until it's as agile as a hummingbird at 4 extra power spent.
             """
-            (List.map (\i -> ( "-", i )) [ 1, 3, 5, 7, 9 ])
+            (pureCosts [ 1, 3, 5, 7, 9 ])
             ""
     }
 
@@ -534,3 +534,71 @@ isekaiHeritage =
             ]
             ""
     }
+
+
+summerSchool : Details
+summerSchool =
+    { name = SummerSchool
+    , class = Academic
+    , affinity = Life
+    , isMeta = True
+    , content =
+        WithChoices """
+            Looks like there's space available in a special class at Arcadia or Hawthorne. _Neither needs to be our primary faction._ Take the _Summer School cyoa_ [https://imgur.com/a/lR5RVvV], and swap out any class subject with one Magic Specialization, choosing any teacher and adapt their summary to that magic school. You can replace a teacher with someone from the Companions page with R4+ in that magic. Over the summer, you do not gain Focus, Might, or Favor, but at the end each Magic specialization will be brought to Rank 3 (1 rank per month). You can replace Friends with Companions, who will learn the magic too. This perk costs 4p per magic class you take. You can take this repeatedly for up to 5 magic classes.
+            """
+            (pureCosts [ 4, 8, 12, 16, 20 ])
+            ""
+    }
+
+
+magicalHeart : Details
+magicalHeart =
+    { name = MagicalHeart
+    , class = Sorceress
+    , affinity = All
+    , isMeta = True
+    , content =
+        WithChoices """
+            So, “Magical Girls” are real, and it looks like you might be one. If you have Transformation Sequence, you can have an additional 3 point discount. Your witch form benefits from A New Magical Girl CYOA [https://imgur.com/a/EjTGJ]. Caution “Corrupted Heart” DLC & below it is unwholesome. You can ignore Age, and you individually buy your Core or Pit for 12p, and slots for 2p. You can buy up to 2 weapons/tools and outfits as an upgrade to your Mothergifts for 4p. Likewise you can improve your familiar for 4p, adding its traits to your own or replacing your familiar's base animal. You can fake the missions as Quests using your own Quest slots, using the _Threat, Conflict, Reward_ of an existing quest of that slot rank. Everything otherwise functions as described.
+            """
+            []
+            ""
+    }
+
+
+miniaturization : Details
+miniaturization =
+    { name = Miniaturization
+    , class = Sorceress
+    , affinity = Nature
+    , isMeta = True
+    , content =
+        WithChoices """
+            4 Power cost if you're a Sprite. You have the ability to shrink! You can toggle off or on a mini form. Use The Fairy's Curse, [https://imgur.com/a/Y1YEt]. “Fairy” costs 5 less, as its only real benefit is wings, as a Witch you can already perform magic better than most non-witch fairies.
+
+            Or you can can take Entrusted by a Goddess [https://imgur.com/9bn2t3z], to gain a mini-person as a Companion. If you also took Fairy Curse, then you can instead apply the Boons to yourself in your mini form ie as though you were the aforementioned daughter, with the canon player perks being applied to your non-mini form.
+
+            You can take this repeatedly, either for more currency in one or for the others, or to have both the mini companion and your own.
+            """
+            (pureCosts [ 4, 8, 12, 16 ])
+            ""
+    }
+
+
+soulWarrior : Details
+soulWarrior =
+    { name = SoulWarrior
+    , class = Warlock
+    , affinity = All
+    , isMeta = True
+    , content = Single 15 """
+        Improve your Rod and/or Garment and Hat, using _Soul Weapon_ [https://imgur.com/a/6qTz6uR]
+
+        Rod improvements stack with Improved Rod. If you have _Mythril Armor_, its protection stacks as though adding 2 additional stars to all 3 Defenses and reducing mass by 2 stars. Naturally the first 3 Scenarios are inapplicable. Non-Witches can receive Soul Weapons, so Soul Warriors without other witch options exist. Established Universe, High Fantasy Realm, and Interplanetary will result in a bridge to the chosen universe, enabling portaling between them. Unnatural abilities or clarktech from these universes don't function in this one, and Witch abilities likewise may or may not function there, up to the player.
+        """
+    }
+
+
+pureCosts : List Int -> List ( String, Int )
+pureCosts costs =
+    List.map (\i -> ( "-", i )) costs

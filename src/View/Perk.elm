@@ -157,6 +157,8 @@ perkBox selected ({ name, affinity, class, content, isMeta } as perk) =
                 el
                     [ centerX
                     , Theme.captureIt
+                    , Font.size 32
+                    , moveDown 4
                     ]
                     (Theme.gradientText 4 Gradients.yellowGradient "META")
 
