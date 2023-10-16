@@ -109,7 +109,7 @@ enums =
     , enumWith "GameMode" gameModes [] True
     , enumWith "Slot" [ "White", "Folk", "Noble", "Heroic", "Epic" ] [] True
     , enumWith "Magic" magics [] True
-    , enumWith "Perk" perks [ ( "JackOfAll", "Jack-of-All" ) ] True
+    , enumWith "Perk" perks [ ( "JackOfAll", "Jack-of-All" ), ( "WitchHut", "Witch... hut?" ) ] True
     ]
         |> List.concat
 

@@ -26,7 +26,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast, isekaiWorlds, isekaiHeritage, summerSchool, magicalHeart, miniaturization, soulWarrior ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast, isekaiWorlds, isekaiHeritage, summerSchool, magicalHeart, miniaturization, soulWarrior, comfyPocket, improvedRod, witchHut, company ]
 
 
 oracle : Details
@@ -55,13 +55,14 @@ jackOfAll =
     , isMeta = False
     , content =
         WithChoices """
-        "Oh. Looks like I was wrong about the rank 5 magic". You lose the ability to take any magic to rank 5. In return, you gain either
-        """
+            "Oh. Looks like I was wrong about the rank 5 magic". You lose the ability to take any magic to rank 5. In return, you gain either
+            """
             [ ( "12 Power,", -12 )
             , ( "or any 1 perk with a static cost for free", 2 )
             ]
-            """You're also now competent in every mundane skill sufficient to compete on a regional level, though can be outclassed on a national or global level, but this doesn't change your physique, so athletic skills may still be more difficult.
-        """
+            """
+            You’re also now competent in every mundane skill sufficient to compete on a regional level, though can be outclassed on a national or global level, but this doesn’t change your physique, so athletic skills may still be more difficult.
+            """
     }
 
 
@@ -73,10 +74,10 @@ transformationSequence =
     , isMeta = False
     , content =
         WithChoices """
-        You can keep your current human body or redesign it separately, and you have the ability to do a 1-10 second long transformation sequence that swaps between your human and witch body. As a human you can still see through the Veil like a witch but you can only use Perks with a base cost under 6, Relics, and Rank 1 magic until you transform into your witch form. Your human form _can_ be the opposite sex to your witch form. This can also equip Mothergifts.
-        """
+            You can keep your current human body or redesign it separately, and you have the ability to do a 1-10 second long transformation sequence that swaps between your human and witch body. As a human you can still see through the Veil like a witch but you can only use Perks with a base cost under 6, Relics, and Rank 1 magic until you transform into your witch form. Your human form _can_ be the opposite sex to your witch form. This can also equip Mothergifts.
+            """
             [ ( "This is the basic version, and costs 6 power", 6 )
-            , ( "For an additional 6 Power, you can instead completely change your Witch Type's race with your transformation, going between _two witch forms_.", 12 )
+            , ( "For an additional 6 Power, you can instead completely change your Witch Type’s race with your transformation, going between _two witch forms_.", 12 )
             , ( "For 12 more power, each can have separate magic and perk choices.", 18 )
             ]
             ""
@@ -92,7 +93,7 @@ poisoner =
     , content = Single 4 """
         Control over poison. You can command any highly venomous animal, easily nurture and grow poisonous plants and mushrooms, and telekinetically control poisonous materials slowly without significant force.
 
-        More notably, is that this power grants complete immunity to diseases and toxins, including bioweapons like mustard gas. The control aspects are a bit tiring, but the immunity is passive. This doesn't allow you to cure or diminish the afflictions of others.
+        More notably, is that this power grants complete immunity to diseases and toxins, including bioweapons like mustard gas. The control aspects are a bit tiring, but the immunity is passive. This doesn’t allow you to cure or diminish the afflictions of others.
         """
     }
 
@@ -104,7 +105,7 @@ witchflame =
     , affinity = Fire
     , isMeta = False
     , content = Single 2 """
-        Witchfire is variably colored flame that has slightly different behavior from witch to witch, and when you place a witchfire somewhere, it stays there until dispelled even without any fuel to maintain it. Stick a mote of flame in the air and it will stay put. Great for home lighting, and you can adjust the temperature to 20 below freezing, up to 500 degrees, though the size is never larger than a campfire, and doesn't spread like normal fire, though it can chill, heat, or burn material it contacts. Wood would blacken but not ignite, for example. Great for cooking, potions, and rituals. Mild combat applications, it's mainly utility.
+        Witchfire is variably colored flame that has slightly different behavior from witch to witch, and when you place a witchfire somewhere, it stays there until dispelled even without any fuel to maintain it. Stick a mote of flame in the air and it will stay put. Great for home lighting, and you can adjust the temperature to 20 below freezing, up to 500 degrees, though the size is never larger than a campfire, and doesn’t spread like normal fire, though it can chill, heat, or burn material it contacts. Wood would blacken but not ignite, for example. Great for cooking, potions, and rituals. Mild combat applications, it’s mainly utility.
         """
     }
 
@@ -144,9 +145,9 @@ elephantTrunk =
     , content = Single 4 """
         "Whoa, a male witch? Maybe we should check, just to be sure."
 
-        You can get back to me on that one. This perk allows for a male witch. Male humans are just as likely to be a pre-awakened witch as any female, they just usually, well, don't stay that way.
+        You can get back to me on that one. This perk allows for a male witch. Male humans are just as likely to be a pre-awakened witch as any female, they just usually, well, don’t stay that way.
 
-        If you don't want to be male but just want the twig 'n berries for some fun, _Hexes_ can help with that so can _Alchemy_, or _Collection_ with a hex spell rune trinket.
+        If you don’t want to be male but just want the twig ’n berries for some fun, _Hexes_ can help with that so can _Alchemy_, or _Collection_ with a hex spell rune trinket.
         """
     }
 
@@ -158,7 +159,7 @@ prestidigitation =
     , affinity = All
     , isMeta = False
     , content = Single 2 """
-        A universalist bag of magic tricks, the magician's toolkit.
+        A universalist bag of magic tricks, the magician’s toolkit.
 
         You can heat or chill things generally recognized as food or drink to a reasonable temperature for that object, and flavor it or add a scent as you wish it.
 
@@ -178,7 +179,7 @@ suggestion =
     , affinity = Mind
     , isMeta = False
     , content = Single 6 """
-        There's something enchanting about your eyes. With 4 seconds of eye contact with another, you can issue a command with a shimmer in your eyes. People will resist commands that will do them any great harm unless they already wanted to do that thing, while commands that are merely risky will be a little difficult and maybe take repeated application as their confidence wavers. You can't command people to do unnatural things, like forget something, so if you make them do something too weird they can make the connection that you made them do it. It's a nagging suggestion and intrusive thought, but not mind control.
+        There’s something enchanting about your eyes. With 4 seconds of eye contact with another, you can issue a command with a shimmer in your eyes. People will resist commands that will do them any great harm unless they already wanted to do that thing, while commands that are merely risky will be a little difficult and maybe take repeated application as their confidence wavers. You can’t command people to do unnatural things, like forget something, so if you make them do something too weird they can make the connection that you made them do it. It’s a nagging suggestion and intrusive thought, but not mind control.
         """
     }
 
@@ -190,7 +191,7 @@ fascinate =
     , affinity = Mind
     , isMeta = False
     , content = Single 4 """
-        Similar to suggestion but with a different outlet, you can ensnare the attention of others who can see or hear a performance of yours that has your main focus. Singing, dancing, playing an instrument, or acrobatic feats, fooling around. Whatever it is, that could be described as a bardic art. Those who hear you seek out a line of sight within reason, otherwise remain fixated looking in your direction. They have no desire to look away and give mild resistance to attempts to divert their attention elsewhere. Boosts skill in performance arts. You're able to weave Curses into your performance seamlessly.
+        Similar to suggestion but with a different outlet, you can ensnare the attention of others who can see or hear a performance of yours that has your main focus. Singing, dancing, playing an instrument, or acrobatic feats, fooling around. Whatever it is, that could be described as a bardic art. Those who hear you seek out a line of sight within reason, otherwise remain fixated looking in your direction. They have no desire to look away and give mild resistance to attempts to divert their attention elsewhere. Boosts skill in performance arts. You’re able to weave Curses into your performance seamlessly.
         """
     }
 
@@ -202,7 +203,7 @@ pantomime =
     , affinity = Soul
     , isMeta = False
     , content = Single 4 """
-        A fun gift that inspired the folk performances of the mime. You have the ability to physically interact with spirit beings and constructs, while manifesting spirit constructs from your will Objects are mundane everyday items, if they weren't spirit objects. Nothing overly complex such as a watch or electronics, but you can manifest something like a chair, or ladder. The most complicated thing you can summon is a bicycle. If you need glasses, you can actually manifest spirit glasses. Spirit objects cannot interact with living things that don't have this ability. But a ghost chair would rest on the ground normally, without leaving a depression.
+        A fun gift that inspired the folk performances of the mime. You have the ability to physically interact with spirit beings and constructs, while manifesting spirit constructs from your will Objects are mundane everyday items, if they weren’t spirit objects. Nothing overly complex such as a watch or electronics, but you can manifest something like a chair, or ladder. The most complicated thing you can summon is a bicycle. If you need glasses, you can actually manifest spirit glasses. Spirit objects cannot interact with living things that don’t have this ability. But a ghost chair would rest on the ground normally, without leaving a depression.
         """
     }
 
@@ -218,7 +219,7 @@ beautySleep =
 
         They can still choose to sleep if they wish, always resulting in lucid dreams unless they just want to skip through the night. It has the added benefit of letting them sleep on demand, waking up exactly when they wanted, with full consciousness.
 
-        By this same token, they're immune to chemical or magical attempts to make them sleep.
+        By this same token, they’re immune to chemical or magical attempts to make them sleep.
         """
     }
 
@@ -230,7 +231,7 @@ thirdEye =
     , affinity = Soul
     , isMeta = False
     , content = Single 4 """
-        Witches normally have an unseen third eye, it's how we see spirits. Some achieve a second awakening of this eye, allowing them to see auras possessed by all lifeforms and spirits. Every witch has a unique aura, but an aura will retain some constants regardless of shape or mood that can be used as a more secure fingerprint for ID left by magic use in an area, or on their person. Seeing an aura can also accurately read the emotional state of the creature.
+        Witches normally have an unseen third eye, it’s how we see spirits. Some achieve a second awakening of this eye, allowing them to see auras possessed by all lifeforms and spirits. Every witch has a unique aura, but an aura will retain some constants regardless of shape or mood that can be used as a more secure fingerprint for ID left by magic use in an area, or on their person. Seeing an aura can also accurately read the emotional state of the creature.
 
         _Note: rare tricks can mask an aura._
         """
@@ -270,7 +271,7 @@ moodWeather =
     , affinity = Nature
     , isMeta = False
     , content = Single 4 """
-        This rare gift provides a level of subconscious control over the weather based on your mood, and based on your impressions. If you think rain is sad, it'd rain when you feel sad. If you think rain is pleasant, then it might rain when you're in a pleasant mood. Thunderstorms almost always occur with anger, either way. If you feel like going out, it’d either be sunny or overcast on preference. Humans aren't too happy with these kinds of witches and they have a close eye on weather events. A warden charm can suppress the effects.
+        This rare gift provides a level of subconscious control over the weather based on your mood, and based on your impressions. If you think rain is sad, it’d rain when you feel sad. If you think rain is pleasant, then it might rain when you’re in a pleasant mood. Thunderstorms almost always occur with anger, either way. If you feel like going out, it’d either be sunny or overcast on preference. Humans aren’t too happy with these kinds of witches and they have a close eye on weather events. A warden charm can suppress the effects.
         """
     }
 
@@ -297,7 +298,7 @@ hybridize =
     , affinity = Beast
     , isMeta = False
     , content = Single 6 """
-        Choose a second racial type for your true form, and reasonably combine the physical look of both races, Take the higher Mana capacity, and maintain both methods of charge (each of which charge as fast as they normally would) and any features mentioned in their description, such as the breath of the Draviri or the honey of the Sprite. You can take both type perks of either race. You do not gain affinity of the second type. See _Cosmic Pearl_. You can take this twice for up to 3 aspects. With 2 you're a _hybrid_, with 3 you're a _chimera_.
+        Choose a second racial type for your true form, and reasonably combine the physical look of both races, Take the higher Mana capacity, and maintain both methods of charge (each of which charge as fast as they normally would) and any features mentioned in their description, such as the breath of the Draviri or the honey of the Sprite. You can take both type perks of either race. You do not gain affinity of the second type. See _Cosmic Pearl_. You can take this twice for up to 3 aspects. With 2 you’re a _hybrid_, with 3 you’re a _chimera_.
         """
     }
 
@@ -309,7 +310,7 @@ apex =
     , affinity = Body
     , isMeta = False
     , content = Single 12 """
-        You are a supreme example of your species of witch, a paragon among your peers and a prime specimen. Every notable quality about your witch's race is exaggerated above normal, and numerical aspects are tripled. Your height and mass may or may not be increased by 50% at your discretion. If your race didn't already increase your physique, you are more physically attractive and have peak human prowess. This also applies to type perks of your race, and applies to all parts of a _Hybridize_. but cost +3p/each.
+        You are a supreme example of your species of witch, a paragon among your peers and a prime specimen. Every notable quality about your witch’s race is exaggerated above normal, and numerical aspects are tripled. Your height and mass may or may not be increased by 50% at your discretion. If your race didn’t already increase your physique, you are more physically attractive and have peak human prowess. This also applies to type perks of your race, and applies to all parts of a _Hybridize_. but cost +3p/each.
         """
     }
 
@@ -322,7 +323,7 @@ chargeSwap =
     , isMeta = False
     , content =
         WithChoices """
-            Replace your Charge method with the method of another race, unless the chosen charge type would not be possible without an integral aspect of that race. ie; Can't take the Aurai charge type if you don't have the Aurai paradox voice, or a Gorgon's charge without their petrify. This changes your charge rate to match, as it's inherent to the method, not the type.
+            Replace your Charge method with the method of another race, unless the chosen charge type would not be possible without an integral aspect of that race. ie; Can’t take the Aurai charge type if you don’t have the Aurai paradox voice, or a Gorgon’s charge without their petrify. This changes your charge rate to match, as it’s inherent to the method, not the type.
             """
             [ ( "This is the basic version and costs 4 power", 4 )
             , ( "_For an extra 6 power_, you instead _gain_ the desired charge method as an _additional_ charge method. They can both be providing mana gain at the same time, at their individual rates", 10 )
@@ -338,7 +339,7 @@ crystallize =
     , affinity = Earth
     , isMeta = False
     , content = Single 6 """
-        Internalize a spark of elemental Earth that allows you to change your form into living crystal like a diamond. Appearance is up to you, such as ruby or sapphire. You are invulnerable to physical harm while diamond, but this has heavy mana drain. With Low Mana stores you'd last 60 seconds before empty. With High, you might last 10 minutes. You can partially crystallize parts of your body like just a hand, for 1/10th the cost, or you can passively maintain a lesser surface crystallization that is as protective as half-inch thick steel plating, With a minor initial mana cost but Ino passive drain. You could also project crystal shards equivalent to a 9mm firearm
+        Internalize a spark of elemental Earth that allows you to change your form into living crystal like a diamond. Appearance is up to you, such as ruby or sapphire. You are invulnerable to physical harm while diamond, but this has heavy mana drain. With Low Mana stores you’d last 60 seconds before empty. With High, you might last 10 minutes. You can partially crystallize parts of your body like just a hand, for 1/10th the cost, or you can passively maintain a lesser surface crystallization that is as protective as half-inch thick steel plating, With a minor initial mana cost but Ino passive drain. You could also project crystal shards equivalent to a 9mm firearm
         """
     }
 
@@ -350,7 +351,7 @@ memorize =
     , affinity = Body
     , isMeta = False
     , content = Single 6 """
-        We're witches. We aren't that physical, generally barring some races' physical advantages. Magic helps for sure, but other than some shenanigans with guns due to them bordering on alchemy, a martial witch will mostly be on their own in learning.
+        We’re witches. We aren’t that physical, generally barring some races’ physical advantages. Magic helps for sure, but other than some shenanigans with guns due to them bordering on alchemy, a martial witch will mostly be on their own in learning.
 
         .,,Unless you were to employ some trickery. With this gift you can memetically synchronize with any martial maneuver or technique you see performed, and repeat it yourself. Forevermore, forming an archive over time with your exposure.
 
@@ -366,7 +367,7 @@ maidHand =
     , affinity = Mind
     , isMeta = False
     , content = Single 4 """
-        Create psychological constructs, manifest as unseen telekinetic masses. Each construct acts as an _unseen servant_ capable of autonomously handling basic acts of service compared to a minimally competent maid or butler that's responsive to commands and orders that it will continue to act out until you stop it, tell it to do something else, or it meets a requirement such as a time or condition. You are always aware of where your constructs. are despite being invisible even to spirit sight, but you can provide them with clothes that they can fill out as though they had a human shape. Maximum number of 3 + ranks in Hexes and Psychotics.
+        Create psychological constructs, manifest as unseen telekinetic masses. Each construct acts as an _unseen servant_ capable of autonomously handling basic acts of service compared to a minimally competent maid or butler that’s responsive to commands and orders that it will continue to act out until you stop it, tell it to do something else, or it meets a requirement such as a time or condition. You are always aware of where your constructs. are despite being invisible even to spirit sight, but you can provide them with clothes that they can fill out as though they had a human shape. Maximum number of 3 + ranks in Hexes and Psychotics.
         """
     }
 
@@ -378,7 +379,7 @@ hotSwap =
     , affinity = Metal
     , isMeta = False
     , content = Single 6 """
-        Your witchery is capable of adapting itself to any weapon (rod) and armor or helmet (garment and hat) that you have stored in your pocketspace. when you call your mothergifts, you can call any armor/clothing, or weapon you have within it. It is treated as being your gift, but you can't alter its appearance. In addition, whenever you unsummon your mothergift you can immediately resummon it in the same instance, dynamically replacing unsummoned parts with a new summon as you change from one outfit/armor to another. The equipment you possess can still be broken or damaged as normal and would require normal repairs unlike your actual mothergifts.
+        Your witchery is capable of adapting itself to any weapon (rod) and armor or helmet (garment and hat) that you have stored in your pocketspace. when you call your mothergifts, you can call any armor/clothing, or weapon you have within it. It is treated as being your gift, but you can’t alter its appearance. In addition, whenever you unsummon your mothergift you can immediately resummon it in the same instance, dynamically replacing unsummoned parts with a new summon as you change from one outfit/armor to another. The equipment you possess can still be broken or damaged as normal and would require normal repairs unlike your actual mothergifts.
         """
     }
 
@@ -430,7 +431,7 @@ levitation =
     , affinity = All
     , isMeta = False
     , content = Single 6 """
-        Your relationship with space is pretty relative. You can move yourself omnidirectionaly through space as though moving reality relative to you rather than moving your body itself. You'd appear to levitate as you wish and never need to touch the ground again You can disconnect any object you touch to be severed from the effects of gravity and it would remain as you last left it unless acted upon by another force, though acting as though it had notable friction to slow itself or resist wind. You "fly" at up to 25mph, as casual to you as a light jog. If you have Witchery, you add your potential speed if you were to use your broomstick, though you need not actually use it to gain speed.
+        Your relationship with space is pretty relative. You can move yourself omnidirectionaly through space as though moving reality relative to you rather than moving your body itself. You’d appear to levitate as you wish and never need to touch the ground again You can disconnect any object you touch to be severed from the effects of gravity and it would remain as you last left it unless acted upon by another force, though acting as though it had notable friction to slow itself or resist wind. You "fly" at up to 25mph, as casual to you as a light jog. If you have Witchery, you add your potential speed if you were to use your broomstick, though you need not actually use it to gain speed.
         """
     }
 
@@ -442,7 +443,7 @@ isekaid =
     , affinity = Life
     , isMeta = False
     , content = Single 4 """
-        When you awaken you'll be reborn in my world. Your Earth will exist in its own universe with its own cosmology as you believe it to exist and you can return if you learn Portals 5, though the only magic you can use there is making a portal to return to us. I'm just a visitor here and this is conversation is a dream. _(Unless you don't take this perk)_ When you return, you keep your last appearance taken tweaked as close to mundane as possible. You can choose how you're isekai'd. You hijack a false life retroactively created for this purpose with it's own history, even relations with companions. You can choose to keep or lose memories of your old life or gain them at some point.
+        When you awaken you’ll be reborn in my world. Your Earth will exist in its own universe with its own cosmology as you believe it to exist and you can return if you learn Portals 5, though the only magic you can use there is making a portal to return to us. I’m just a visitor here and this is conversation is a dream. _(Unless you don’t take this perk)_ When you return, you keep your last appearance taken tweaked as close to mundane as possible. You can choose how you’re isekai’d. You hijack a false life retroactively created for this purpose with it’s own history, even relations with companions. You can choose to keep or lose memories of your old life or gain them at some point.
         """
     }
 
@@ -454,11 +455,10 @@ heritage =
     , affinity = All
     , isMeta = False
     , content = Single 4 """
-Choose a relative. They are a witch as well, either not yet awakened or awakened long ago and have been waiting to see your awakening. If you have Isekai'd, it can be a late relative who was isekai'd themselves, or isekai any relative now or later. Sharing your lineage, they have a strong magic tier. Choose up to 50 power for them to have and design a build for them. You can also invest your own Power on their behalf. You can take them as a Companion for 4p undiscounted unless you invested 4+ already. This is redundant if you cooperate with a relative (or friend) to make independent coexisting builds.
+        Choose a relative. They are a witch as well, either not yet awakened or awakened long ago and have been waiting to see your awakening. If you have Isekai’d, it can be a late relative who was isekai’d themselves, or isekai any relative now or later. Sharing your lineage, they have a strong magic tier. Choose up to 50 power for them to have and design a build for them. You can also invest your own Power on their behalf. You can take them as a Companion for 4p undiscounted unless you invested 4+ already. This is redundant if you cooperate with a relative (or friend) to make independent coexisting builds.
 
-Alternatively, or additionally, If you have Isekai'd, you and another player can choose to be made related and both gain 4 Power.
-
-"""
+        Alternatively, or additionally, If you have Isekai’d, you and another player can choose to be made related and both gain 4 Power.
+        """
     }
 
 
@@ -469,8 +469,8 @@ magicFriendship =
     , affinity = Life
     , isMeta = False
     , content = Single 6 """
-Choose one companion you have (or choose later). You'll form a special connection either super platonically with just a bit of undertones and fuzzies, or outright romantically. Either way, you'll both be able to feel the emotional state of the other and if they are in danger even if they don't know it themselves. You gain a new High charge rate by being intimate with one another, including just a warm hug. Stacks with other applicable charge methods. Both of you are incapable of thinking negative thoughts about the other. So fluffy it burns. Once per year you can work together to make a heart shape, and produce a beam of intense [Life] energy that will cure any ailment, or delete all non-deity enemies in a narrow line.
-"""
+        Choose one companion you have (or choose later). You’ll form a special connection either super platonically with just a bit of undertones and fuzzies, or outright romantically. Either way, you’ll both be able to feel the emotional state of the other and if they are in danger even if they don’t know it themselves. You gain a new High charge rate by being intimate with one another, including just a warm hug. Stacks with other applicable charge methods. Both of you are incapable of thinking negative thoughts about the other. So fluffy it burns. Once per year you can work together to make a heart shape, and produce a beam of intense [Life] energy that will cure any ailment, or delete all non-deity enemies in a narrow line.
+        """
     }
 
 
@@ -496,7 +496,7 @@ broomBeast =
         WithChoices """
             Your mastery over a broomstick is especially noteworthy. Your broom is like a proper extension of your will. For 1p, Whether or not you have ranks in Witchery, you can summon your Rod in the form of a Broomstick near instantaneously to your hand and you can telekinetically command its flight remotely. For another 2p, it has the speed of an arrow, up to 250 feet per second. This stacks with broom speed from other sources. You can maneuver it with similar agility to a sportsbike, so do watch out for sharp turns.
 
-            For every additional Power spent, you gain an additional 50fps speed and improve the maneuverability by 50% until it's as agile as a hummingbird at 4 extra power spent.
+            For every additional Power spent, you gain an additional 50fps speed and improve the maneuverability by 50% until it’s as agile as a hummingbird at 4 extra power spent.
             """
             (pureCosts [ 1, 3, 5, 7, 9 ])
             ""
@@ -511,8 +511,8 @@ isekaiWorlds =
     , isMeta = False
     , content =
         WithChoices """
-        Isekai yourself with all the benefits of this cyoa into any other setting of your choice. If that world has its own special abilities systems, you may learn from them if possible independently of this cyoa. You may require Isekai Heritage to benefit from or obtain special abilities only available to certain bloodlines, or simply random chance making it unlikely for most people to benefit from it. If it's uncommon, Nobility can let you benefit. If it's rare, then Royalty is required. Since you are being reborn, you don't count as having visited this earth for the purpose of Portals.
-        """
+            Isekai yourself with all the benefits of this cyoa into any other setting of your choice. If that world has its own special abilities systems, you may learn from them if possible independently of this cyoa. You may require Isekai Heritage to benefit from or obtain special abilities only available to certain bloodlines, or simply random chance making it unlikely for most people to benefit from it. If it’s uncommon, Nobility can let you benefit. If it’s rare, then Royalty is required. Since you are being reborn, you don’t count as having visited this earth for the purpose of Portals.
+            """
             [ ( "This is the basic version, and costs 12 power", 12 )
             , ( "for an extra 2p, you can experience lucid aetheric dreams of this setting of _“Earth (Witch Awakening)”_, sufficient to allow Portal travel back here if you wish.", 14 )
             ]
@@ -528,8 +528,8 @@ isekaiHeritage =
     , isMeta = False
     , content =
         WithChoices """
-            Be reborn as a the child of a particular lineage of your choice. You can also orchestrate events such that any number of relatives or friends from your life also get Isekai'd into comparable positions within your new life. They won't be witches without Heritage, but they can still be normal members of a nonhuman race if you wish. If you have the type perk, they can have the type perk as well without cost. Can be born off-Earth"""
-            [ ( "4p: *Nobility / Merchant*: You'll be born to a fairly successful family of either noble class, or merchants. Comparable to upper middle class or low high class", 4 )
+            Be reborn as a the child of a particular lineage of your choice. You can also orchestrate events such that any number of relatives or friends from your life also get Isekai’d into comparable positions within your new life. They won’t be witches without Heritage, but they can still be normal members of a nonhuman race if you wish. If you have the type perk, they can have the type perk as well without cost. Can be born off-Earth"""
+            [ ( "4p: *Nobility / Merchant*: You’ll be born to a fairly successful family of either noble class, or merchants. Comparable to upper middle class or low high class", 4 )
             , ( "8p: *Royalty / Merchant Lord*: Born to a highly successful royal bloodline or a rockefeller-like head of an international trade company.", 8 )
             ]
             ""
@@ -544,7 +544,7 @@ summerSchool =
     , isMeta = True
     , content =
         WithChoices """
-            Looks like there's space available in a special class at Arcadia or Hawthorne. _Neither needs to be our primary faction._ Take the _Summer School cyoa_ [https://imgur.com/a/lR5RVvV], and swap out any class subject with one Magic Specialization, choosing any teacher and adapt their summary to that magic school. You can replace a teacher with someone from the Companions page with R4+ in that magic. Over the summer, you do not gain Focus, Might, or Favor, but at the end each Magic specialization will be brought to Rank 3 (1 rank per month). You can replace Friends with Companions, who will learn the magic too. This perk costs 4p per magic class you take. You can take this repeatedly for up to 5 magic classes.
+            Looks like there’s space available in a special class at Arcadia or Hawthorne. _Neither needs to be our primary faction._ Take the _Summer School cyoa_ [https://imgur.com/a/lR5RVvV], and swap out any class subject with one Magic Specialization, choosing any teacher and adapt their summary to that magic school. You can replace a teacher with someone from the Companions page with R4+ in that magic. Over the summer, you do not gain Focus, Might, or Favor, but at the end each Magic specialization will be brought to Rank 3 (1 rank per month). You can replace Friends with Companions, who will learn the magic too. This perk costs 4p per magic class you take. You can take this repeatedly for up to 5 magic classes.
             """
             (pureCosts [ 4, 8, 12, 16, 20 ])
             ""
@@ -559,7 +559,7 @@ magicalHeart =
     , isMeta = True
     , content =
         WithChoices """
-            So, “Magical Girls” are real, and it looks like you might be one. If you have Transformation Sequence, you can have an additional 3 point discount. Your witch form benefits from A New Magical Girl CYOA [https://imgur.com/a/EjTGJ]. Caution “Corrupted Heart” DLC & below it is unwholesome. You can ignore Age, and you individually buy your Core or Pit for 12p, and slots for 2p. You can buy up to 2 weapons/tools and outfits as an upgrade to your Mothergifts for 4p. Likewise you can improve your familiar for 4p, adding its traits to your own or replacing your familiar's base animal. You can fake the missions as Quests using your own Quest slots, using the _Threat, Conflict, Reward_ of an existing quest of that slot rank. Everything otherwise functions as described.
+            So, “Magical Girls” are real, and it looks like you might be one. If you have Transformation Sequence, you can have an additional 3 point discount. Your witch form benefits from A New Magical Girl CYOA [https://imgur.com/a/EjTGJ]. Caution “Corrupted Heart” DLC & below it is unwholesome. You can ignore Age, and you individually buy your Core or Pit for 12p, and slots for 2p. You can buy up to 2 weapons/tools and outfits as an upgrade to your Mothergifts for 4p. Likewise you can improve your familiar for 4p, adding its traits to your own or replacing your familiar’s base animal. You can fake the missions as Quests using your own Quest slots, using the _Threat, Conflict, Reward_ of an existing quest of that slot rank. Everything otherwise functions as described.
             """
             []
             ""
@@ -574,7 +574,7 @@ miniaturization =
     , isMeta = True
     , content =
         WithChoices """
-            4 Power cost if you're a Sprite. You have the ability to shrink! You can toggle off or on a mini form. Use The Fairy's Curse, [https://imgur.com/a/Y1YEt]. “Fairy” costs 5 less, as its only real benefit is wings, as a Witch you can already perform magic better than most non-witch fairies.
+            4 Power cost if you’re a Sprite. You have the ability to shrink! You can toggle off or on a mini form. Use The Fairy’s Curse, [https://imgur.com/a/Y1YEt]. “Fairy” costs 5 less, as its only real benefit is wings, as a Witch you can already perform magic better than most non-witch fairies.
 
             Or you can can take Entrusted by a Goddess [https://imgur.com/9bn2t3z], to gain a mini-person as a Companion. If you also took Fairy Curse, then you can instead apply the Boons to yourself in your mini form ie as though you were the aforementioned daughter, with the canon player perks being applied to your non-mini form.
 
@@ -594,8 +594,72 @@ soulWarrior =
     , content = Single 15 """
         Improve your Rod and/or Garment and Hat, using _Soul Weapon_ [https://imgur.com/a/6qTz6uR]
 
-        Rod improvements stack with Improved Rod. If you have _Mythril Armor_, its protection stacks as though adding 2 additional stars to all 3 Defenses and reducing mass by 2 stars. Naturally the first 3 Scenarios are inapplicable. Non-Witches can receive Soul Weapons, so Soul Warriors without other witch options exist. Established Universe, High Fantasy Realm, and Interplanetary will result in a bridge to the chosen universe, enabling portaling between them. Unnatural abilities or clarktech from these universes don't function in this one, and Witch abilities likewise may or may not function there, up to the player.
+        Rod improvements stack with Improved Rod. If you have _Mythril Armor_, its protection stacks as though adding 2 additional stars to all 3 Defenses and reducing mass by 2 stars. Naturally the first 3 Scenarios are inapplicable. Non-Witches can receive Soul Weapons, so Soul Warriors without other witch options exist. Established Universe, High Fantasy Realm, and Interplanetary will result in a bridge to the chosen universe, enabling portaling between them. Unnatural abilities or clarktech from these universes don’t function in this one, and Witch abilities likewise may or may not function there, up to the player.
         """
+    }
+
+
+comfyPocket : Details
+comfyPocket =
+    { name = ComfyPocket
+    , class = Sorceress
+    , affinity = Soul
+    , isMeta = True
+    , content = Single 6 """
+        _Requires Witchery 5_.
+
+        Improves your pocketspace. Take _Time Stop Chill Zone_ by Rosanon or _Solitude_ by Acheld, or _The Village_ [https://imgur.com/a/KGtCkOI], and apply your choices to your pocketspace. Can add one of the others as well for +3p/each, melding relevant options together as appropriate. Time stopping likewise stops your power growth rate, though you could increase your skilled usage of what you already have. Ignore Solitude’s limit. Entrance Methods work independently of how you normally enter pocketspace. ZoneBook applies as normal to other witches with this perk. Some options may be redundant. Options remain limited to within the pocketspace. Can take Village repeatedly, creating new regions Make up your own job(s).
+        """
+    }
+
+
+improvedRod : Details
+improvedRod =
+    { name = ImprovedRod
+    , class = Academic
+    , affinity = Soul
+    , isMeta = True
+    , content =
+        WithChoices """
+            Improve your Rod (Witchery R0+) using _Arcane Focus_ by TroonTC [https://imgur.com/a/dZKhA9q] for 6p. The Seal can be incorporated into your existing familiar or be a separate entity (And can be independently augmented by Company or Pet Break if so).
+
+            Using your improved Rod, you are able to create Cantrips via Cantrip CYOA. [https://imgur.com/a/ptneo0t]. Ignore point options. Instead, gain 5 Cantrip points per Power point you invest in this perk. You require your Improved Rod (Arcane Focus) to be on your person in order to use Cantrips, but not necessarily using it directly. Training or teaching cantrips requires the individual have power to invest into it. Humans don’t have power by default. Most witches have between 10-50.
+            """
+            (pureCosts (List.range 6 26))
+            ""
+    }
+
+
+witchHut : Details
+witchHut =
+    { name = WitchHut
+    , class = Academic
+    , affinity = Life
+    , isMeta = True
+    , content = Single 15 """
+        You could have an old witch hut, or you can hire the Terry Bros to build you a Witch _Trailer_! Build a trailer from Celty’s Comfy Trailer [https://imgur.com/a/eWhrAYV]. (If you know a higher resolution one, do share. Or I might have to remake it myself with a witch hut theme...) If you have the Magic Shop perk, you can incorporate trailer rooms into your magic shop instead, or add Magic Shop rooms to your trailer as extensions.
+
+        For Roomates, you can also choose any Companions you have as a roommate, allowing for a closer relationship to that companion.
+
+        Options that grant or could grant power, such as Armory or Lab Sigma, cannot exceed the power level of a Rank 3 spell. One creation or effect can match R5.
+        """
+    }
+
+
+company : Details
+company =
+    { name = Company
+    , class = Warlock
+    , affinity = Soul
+    , isMeta = True
+    , content =
+        WithChoices """
+            _Requires Familiarity 5._
+
+            Your familiar evolves an extraordinarily rare and unique new form it can transform into. Design your familiar’s new form using _Familiars Company by McPuffins88_. [https://imgur.com/a/MhcGxMk]. Ignore the starting points, and instead gain 2 points per Power point you spend on this perk. Anything in Familiars Company overrides anything mentioned by Familiarity, but only applies when in this form. It still keeps its other forms. “Chassis Modifiers” and “Traits” can affect other forms it has at your choice Equipment choices disappear and reappear as it assumes or sheds its form. “New Found Land” is instead a portal to a private realm. “Depths Below” is an ORC operation, and other translations.
+            """
+            (pureCosts (List.range 1 24))
+            ""
     }
 
 
