@@ -98,10 +98,7 @@ enums =
 
         perks : List String
         perks =
-            [ "Oracle", "JackOfAll", "TransformationSequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "ElephantTrunk", "Prestidigitation", "Suggestion", "Fascinate", "Pantomime", "BeautySleep", "ThirdEye", "SoulJellies", "HatTrick", "MoodWeather", "ImprovedFamiliar", "Hybridize", "Apex", "ChargeSwap", "Crystallize", "Memorize", "MaidHand", "HotSwap", "Menagerie", "BloodWitch", "Gunwitch", "Levitation", "Isekaid", "Heritage", "MagicFriendship", "Windsong", "BroomBeast"
-
-            {- , "IsekaiWorlds", "IsekaiHeritage", "SummerSchool", "MagicalHeart", "Miniaturization", "SoulWarrior", "ComfyPocket", "ImprovedRod", "WitchHut", "Company", "PetBreak", "MagicShop", "Keeper", "SoulGraft" -}
-            ]
+            [ "Oracle", "JackOfAll", "TransformationSequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "ElephantTrunk", "Prestidigitation", "Suggestion", "Fascinate", "Pantomime", "BeautySleep", "ThirdEye", "SoulJellies", "HatTrick", "MoodWeather", "ImprovedFamiliar", "Hybridize", "Apex", "ChargeSwap", "Crystallize", "Memorize", "MaidHand", "HotSwap", "Menagerie", "BloodWitch", "Gunwitch", "Levitation", "Isekaid", "Heritage", "MagicFriendship", "Windsong", "BroomBeast", "IsekaiWorlds", "IsekaiHeritage", "SummerSchool", "MagicalHeart", "Miniaturization", "SoulWarrior", "ComfyPocket", "ImprovedRod", "WitchHut", "Company", "PetBreak", "MagicShop", "Keeper", "SoulGraft" ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True

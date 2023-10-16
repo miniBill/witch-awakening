@@ -26,7 +26,7 @@ intro =
 
 all : List Details
 all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast ]
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast, isekaiWorlds, isekaiHeritage ]
 
 
 oracle : Details
@@ -499,5 +499,38 @@ broomBeast =
             For every additional Power spent, you gain an additional 50fps speed and improve the maneuverability by 50% until it's as agile as a hummingbird at 4 extra power spent.
             """
             (List.map (\i -> ( "-", i )) [ 1, 3, 5, 7, 9 ])
+            ""
+    }
+
+
+isekaiWorlds : Details
+isekaiWorlds =
+    { name = IsekaiWorlds
+    , class = Sorceress
+    , affinity = Life
+    , isMeta = False
+    , content =
+        WithChoices """
+        Isekai yourself with all the benefits of this cyoa into any other setting of your choice. If that world has its own special abilities systems, you may learn from them if possible independently of this cyoa. You may require Isekai Heritage to benefit from or obtain special abilities only available to certain bloodlines, or simply random chance making it unlikely for most people to benefit from it. If it's uncommon, Nobility can let you benefit. If it's rare, then Royalty is required. Since you are being reborn, you don't count as having visited this earth for the purpose of Portals.
+        """
+            [ ( "This is the basic version, and costs 12 power", 12 )
+            , ( "for an extra 2p, you can experience lucid aetheric dreams of this setting of _“Earth (Witch Awakening)”_, sufficient to allow Portal travel back here if you wish.", 14 )
+            ]
+            ""
+    }
+
+
+isekaiHeritage : Details
+isekaiHeritage =
+    { name = IsekaiHeritage
+    , class = Sorceress
+    , affinity = Life
+    , isMeta = False
+    , content =
+        WithChoices """
+            Be reborn as a the child of a particular lineage of your choice. You can also orchestrate events such that any number of relatives or friends from your life also get Isekai'd into comparable positions within your new life. They won't be witches without Heritage, but they can still be normal members of a nonhuman race if you wish. If you have the type perk, they can have the type perk as well without cost. Can be born off-Earth"""
+            [ ( "4p: *Nobility / Merchant*: You'll be born to a fairly successful family of either noble class, or merchants. Comparable to upper middle class or low high class", 4 )
+            , ( "8p: *Royalty / Merchant Lord*: Born to a highly successful royal bloodline or a rockefeller-like head of an international trade company.", 8 )
+            ]
             ""
     }
