@@ -41,7 +41,7 @@ viewFaction faction =
             ]
         , Faction.all
             |> List.map (factionBox faction)
-            |> Theme.wrappedRow
+            |> Theme.column
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
