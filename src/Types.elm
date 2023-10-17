@@ -1,8 +1,8 @@
-module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, Msg(..), RankedMagic, RankedPerk, complicationKindToString, complicationNameToCategory, gainToSlot)
+module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, Msg(..), RankedMagic, RankedPerk, complicationKindToString, complicationNameToCategory, factionToMagic, gainToSlot)
 
 import Browser exposing (UrlRequest)
 import Browser.Navigation
-import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), Faction, GameMode, Magic, Perk, Race, Slot(..))
+import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), Faction(..), GameMode, Magic, Perk, Race, Slot(..))
 
 
 type Msg
@@ -112,3 +112,22 @@ gainToSlot gain =
 
     else
         Epic
+
+
+factionToMagic : Faction -> String
+factionToMagic faction =
+    case faction of
+        Arcadia ->
+            "Digicasting"
+
+        Hawthorne ->
+            "Wands"
+
+        Watchers ->
+            "Ministrations"
+
+        Hespatian ->
+            "Occultism"
+
+        Lunabella ->
+            "Dominion"
