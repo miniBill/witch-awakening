@@ -102,15 +102,39 @@ enums =
         perks =
             [ "Oracle", "JackOfAll", "TransformationSequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "ElephantTrunk", "Prestidigitation", "Suggestion", "Fascinate", "Pantomime", "BeautySleep", "ThirdEye", "SoulJellies", "HatTrick", "MoodWeather", "ImprovedFamiliar", "Hybridize", "Apex", "ChargeSwap", "Crystallize", "Memorize", "MaidHand", "HotSwap", "Menagerie", "BloodWitch", "Gunwitch", "Levitation", "Isekaid", "Heritage", "MagicFriendship", "Windsong", "BroomBeast", "IsekaiWorlds", "IsekaiHeritage", "SummerSchool", "MagicalHeart", "Miniaturization", "SoulWarrior", "ComfyPocket", "ImprovedRod", "WitchHut", "Company", "PetBreak", "MagicShop", "Keeper", "SoulGraft" ]
 
+        factionData : List ( String, String, String )
+        factionData =
+            [ ( "Arcadia", "The College of Arcadia", "Digicasting" )
+            , ( "Hawthorne", "Hawthorne Academia", "Wands" )
+            , ( "Watchers", "The Watchers", "Ministrations" )
+            ]
+
         factions : List String
         factions =
-            [ "Arcadia", "Hawthorne" ]
+            List.map
+                (\( name, _, _ ) -> name)
+                factionData
 
         factionNames : List ( String, String )
         factionNames =
-            [ ( "Arcadia", "The College of Arcadia" )
-            , ( "Hawthorne", "Hawthorne Academia" )
-            ]
+            List.map
+                (\( name, stringName, _ ) -> ( name, stringName ))
+                factionData
+
+        factionMagic : Elm.Declaration
+        factionMagic =
+            (\faction ->
+                factionData
+                    |> List.map
+                        (\( name, _, magic ) ->
+                            Elm.Case.branch0 name (Elm.string magic)
+                        )
+                    |> Elm.Case.custom faction
+                        (Elm.Annotation.named [] "Faction")
+            )
+                |> Elm.fn ( "faction", Nothing )
+                |> Elm.declaration "factionToMagic"
+                |> Elm.expose
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
@@ -123,6 +147,7 @@ enums =
     , enumWith "Magic" magics [] True
     , enumWith "Perk" perks [ ( "JackOfAll", "Jack-of-All" ), ( "WitchHut", "Witch... hut?" ) ] True
     , enumWith "Faction" factions factionNames False
+    , [ factionMagic ]
     ]
         |> List.concat
 

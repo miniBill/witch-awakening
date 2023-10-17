@@ -149,7 +149,7 @@ factionBox selected { name, motto, description, location, relations, perk, perkC
                 , content =
                     [ Theme.blocks
                         [ Theme.padding ]
-                        perkContent
+                        (perkContent ++ "\n\n_*" ++ Types.factionToMagic name ++ "*_ is half price for you, stacks with affinity.")
                     ]
                 , onPress = Just msg
                 }

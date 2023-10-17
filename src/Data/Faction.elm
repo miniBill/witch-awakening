@@ -18,7 +18,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ arcadia, hawthorne ]
+    [ arcadia, hawthorne, watchers ]
 
 
 arcadia : Details
@@ -41,7 +41,7 @@ arcadia =
     , perkContent =
         """Joining Arcadia grants a lot of access to a strong community of witches with a number of shared core values that connect them together in similar challenges as witches learning their magic and enjoying the refuge and adventure all close at hand here in Arcadia. Join in on any number of clubs and hobbyist groups.
 
-        Take 1 Arcadian companion and 1 from any faction that can reasonably befriend you, for free. _*Digicasting*_ is half price for you, stacks with affinity."""
+        Take 1 Arcadian companion and 1 from any faction that can reasonably befriend you, for free."""
     , images = Images.factionArcadia
     }
 
@@ -62,10 +62,30 @@ hawthorne =
         """Hawthorne sees The College as a troubled younger sibling, a bit naive and airheaded, and vulnerable to threats they don’t understand. They have strong affiliation with Lunabella and both The Watchers, and Hespatia. Hawthorne strives to provide the best of the best, and accommodates different personalities that can fit with either."""
     , perk = "Master Wand"
     , perkContent =
-        """Gain a House Uniform as a Garment and Hat, and you will be issued a specially crafted wand fine tuned to the results of your aptitude results. Yours is more powerful than most. Any numerical value from Magic Specializations are boosted by 50% when cast through your wand, and double your Wands spell slots. You are required to wear your uniform within. Hawthorne, baring Staff direction or privacy,
-
-        _*Wands*_ is half price for you, stacks with affinity."""
+        """Gain a House Uniform as a Garment and Hat, and you will be issued a specially crafted wand fine tuned to the results of your aptitude results. Yours is more powerful than most. Any numerical value from Magic Specializations are boosted by 50% when cast through your wand, and double your Wands spell slots. You are required to wear your uniform within. Hawthorne, baring Staff direction or privacy."""
     , images = Images.factionHawthorne
+    }
+
+
+watchers : Details
+watchers =
+    { name = Watchers
+    , motto = "Consorting with Angels"
+    , description =
+        """Watchers have branches based on every major Abrahamic religion from Judaism to Mormonism, including Islamic faiths. The Watchers get their name from their stance as a third party observing the events playing out at the hands of human faith -- And strange celestial beings as real as Witches already know Demons to be. Through these observations they've studied the influences and nature of the divine, and are generally convinced of an overarching theory connecting the Abrahamic traditions, and have come to the conclusion that there is a coming apocalypse. Watchers are embedded in religious institutions where they keep their finger on the pulse and catalogue and investigate reports of divine influence and visionary experiences, finding that all religions experience them to different degrees. While some religions revolve around ancient witches and extraplanar entities, Abrahamic faiths interact with a category of beings referred to as Celestials. Watchers learned methods to emulate these beings through magic. They classify them as Pre-Mortal Celestials and Post-Mortal Celestials. Premortals are like living chariots of rings, eyes, and wings, and are spiritual constructs while Post-Mortals fare humanoid shaped entities with physical forms that can interact with the material world if they chose but bare elements of their prior construct form, rings becoming halos in various designs for example, and may have more extreme body shapes and proportions.
+
+        As a watcher, your purpose is to keep tabs on religions and report on interesting events within your jurisdiction. Other Watcher agents may be approached to dedicate themselves to other roles, such as becoming a politician for an area of interest, or more often and historically available; Wife to a powerful figure, not just for the sake of gender roles, they have women in key places as well, but the logistics and avoiding spotlights, as well as playing nicer with the treaties against direct involvement. Another reason they typically advocate for democracies; They can hold positions of power while claiming the will of humans as opposed to their own intentions. So long as they convince the population to vote the way they'd prefer. Which they've gotten very skilled at doing, with no direct use of magic involved. Where Hespatia is cloak and dagger, Watchers hide in plain sight and are more likely to be involved with something like corporate espionage, though most Watchers do just that. Observe. Agents themselves may not know what their purpose is, just what they need to do without context of how it fits into a greater picture. The higher up the food chain you go the more of the puzzle you'll see, but even at the top they skate along on complex interfaith theories and mysticism, not fully comprehending the forces they're trying to dance along the periphery of, balancing ancient treaties, mortal interests, and not stepping on celestial toes. Because of their influence in the mortal world's institutions, mainly in Europe at the time, that the "Witch Trials" were greatly reduced compared to the colonies, acting through Catholicism to denounce it in colonial puritanism."""
+    , location =
+        """Watchers generally coexist within religious institutions, but in 300AD a witch established contact with a celestial entity and negotiated a deal that lead to the creation of a private celestial plane. Nobody knows what this deal was, but being taken to this plane she was able to create portals leading others to it, and establish gateways. They've named it Eden, it's a floating isle within a smoke ring around a binary star system with a brilliant golden star that illuminates the vistas of clouds in a golden glow in place of night, and a blue-white star providing a more even daylight experience.
+
+        The isles are overwhelmingly fertile and resource rich where animal life all evolved wings, while being fluffy furry variations on felines, canines, or avians. Instead of a fly, you'd see a tiny six-legged kitten you could hold handfuls of at once. Some islands are claimed where witches have retired to, otherwise the Watchers operate their HQ here on one large island where they have a large palatial castle of white marble and gold. New certified witches are brought to Eden where they go through initiation. Some initiated witches manifest False Light, gaining a halo and wings. Within Eden, there are great gardens, bath houses, monuments, office spaces, residences for temple workers and the retired, a grand hall, and the general rooms you might expect of an estate and castle"""
+    , relations =
+        """Many watchers graduate from Hawthorne (Primary faction would be Watchers and you'd be in contact through your education, if you attend). They tend to view Arcadia as being on a slippery slope to degeneracy. They have a strong dislike for Hespatia that sometimes results in skirmishes but maintain shared long term goals."""
+    , perk = "False light"
+    , perkContent =
+        """The gift of the Near-Light emulates the glory of the celestials. It grants feathered wings, flying at 160mph + the max speed of your broom, and above your head glows a halo of light. You can't be blinded as a result of light or sunburned, and looking at your halo is like looking at the sun, illuminating the area with bright light, including UV Radiation. This can be dimmed to a simple glow and either can be toggled on/off.
+        """
+    , images = Images.factionWatchers
     }
 
 
