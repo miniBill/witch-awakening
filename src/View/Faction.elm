@@ -1,7 +1,7 @@
 module View.Faction exposing (viewFaction)
 
 import Data.Faction as Faction
-import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, fillPortion, height, rgb, rgba, shrink, spacing, width)
+import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, rgb, rgba, shrink, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -95,10 +95,12 @@ factionBox selected { name, motto, description, location, relations, perk, perkC
             , Theme.column [ width <| fillPortion 4 ]
                 [ img images.image2
                 , img images.image3
-                , el [ centerX, Font.size 40, Theme.celticHand ] <|
-                    Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
-                , el [ centerX, Theme.morpheus ] <|
-                    Theme.gradientText 2 Gradients.yellowGradient motto
+                , column [ centerX ]
+                    [ el [ centerX, Font.size 40, Theme.celticHand ] <|
+                        Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
+                    , el [ centerX, Font.size 24, Theme.morpheus ] <|
+                        Theme.gradientText 2 Gradients.yellowGradient motto
+                    ]
                 ]
             , img images.image4
             ]
