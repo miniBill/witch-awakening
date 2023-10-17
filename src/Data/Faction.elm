@@ -18,8 +18,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ arcadia
-    ]
+    [ arcadia, hawthorne ]
 
 
 arcadia : Details
@@ -44,6 +43,29 @@ arcadia =
 
         Take 1 Arcadian companion and 1 from any faction that can reasonably befriend you, for free. _*Digicasting*_ is half price for you, stacks with affinity."""
     , images = Images.factionArcadia
+    }
+
+
+hawthorne : Details
+hawthorne =
+    { name = Hawthorne
+    , motto = "School of Witchcraft and... an Unexpected Amount of Latex"
+    , description =
+        """Hawthorne admissions are open to any witch, and is a polar opposite to the College. Witches are tested for aptitude and potential where they will be sorted into Houses of comparable individuals sorted both by personality, and the magic specializations they have access to. Classes are mandatory. Once you complete all classes you have access to, which includes non-magic specialization courses such as physical health, mental health, and spiritual health, alongside social health. Combined the Health courses ensure residents can coexist in Hawthome and manage discourse. These courses include describing your opinion of your peers, and why, and if you have any suspicions about them that are a danger to the health of other students, themselves, or the Academy. Rules are plentiful and judiciously enforced alongside their own Common Law, being their own nation state. Capital punishment exists, though only for severe violent actions or gross malevolence, and exile for irreconcilable differences is otherwise the Final extreme, otherwise Hawthomne employs a wide array of disciplinarian tactics above and beyond what mortals would consider ethical. Generally discipline is specific to different houses, as houses in part represent personality characteristics, different discipline methods are more or less effective in the different houses. If one house is failing to discipline appropriate, re-evaluations occur and you can be reassigned to a house with different discipline methods. Houses likewise have their own uniforms though they all are approved by the Oversight Board to share certain qualities and colors, generally a degree of formality. The goal? Hawthorne may seem totalitarian, but their purpose is genuineThe excellence of their students, by any means necessary. They drive you to find your limits, and push beyond them to grow above and beyond what you thought you could ever achieve yourself. Your days are scheduled and optimized for you by councilors that have everything about you and your record on file. You _*will*_ succeed at Hawthorne, no matter how many times you stumble along the way towards success. Every failure is a learning experience adding to your growth, with certain discipline measures to remember it."""
+    , location =
+        """Hawthorne is an incredibly impressive sight to behold, occupying a large cavern beneath the Greenland ice sheet, it has been spatially warped and bent to the will over the Overseers over time and has grown into a powerful entity in its own right, expanding out from the Academy to a sprawling urban city of towering gothic spires that rise up, as well as descend down from the cavern's ceiling, like stalagites and stalagmites of stone and glass. The cavern is big, but it's disproportionately warped as to currently be around the size of Germany, completely filled with a sprawling metropolis. That said, it has a low population density concentrated around the Academy as new buildings grow on their own automatically by the heavy enchantments that grow the extradimensional pocket, and that scale doesn't account for being doubled by the ceiling being occupied space itself, with a central dividing plane where there is no gravity wherein you can orient yourself to the opposing side.
+
+        This layer is also where clouds get generated, and the entire cavern is illuminated by a persistent illusion effect that produces a horizon relative to the observer, with a great looming moon that illuminates all. As it dips below one horizon in a shallow arc to the west, it can already be seen rising in the east, alternating between reddish light and blueish light, in a state of perpetual well illuminated night he city is inhabited by veteran students, alumni, and staff, who agree to terms of citizenship where they can be called upon to help in affairs ranging from defense or offensive factions, hazard management, the odd bit of labor that can't be managed by automation or undead, or a call in to help teach a class on a relevant subject to your expertise.
+
+        While dominated by urban blocks and streets, there are still also parks and courtyards that act as nature preserves and miniature biomes, alongside dedicated greenhouses. Some being themselves enchanted for expanded space within the already expanded cavern, as well as sprawl that has grown through portals to connect to other caverns throughout the world, as well as on the moon, connecting Hawthorne to Lunabella, further complicating measurements for census."""
+    , relations =
+        """Hawthorne sees The College as a troubled younger sibling, a bit naive and airheaded, and vulnerable to threats they don’t understand. They have strong affiliation with Lunabella and both The Watchers, and Hespatia. Hawthorne strives to provide the best of the best, and accommodates different personalities that can fit with either."""
+    , perk = "Master Wand"
+    , perkContent =
+        """Gain a House Uniform as a Garment and Hat, and you will be issued a specially crafted wand fine tuned to the results of your aptitude results. Yours is more powerful than most. Any numerical value from Magic Specializations are boosted by 50% when cast through your wand, and double your Wands spell slots. You are required to wear your uniform within. Hawthorne, baring Staff direction or privacy,
+
+        _*Wands*_ is half price for you, stacks with affinity."""
+    , images = Images.factionHawthorne
     }
 
 

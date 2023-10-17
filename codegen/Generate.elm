@@ -104,11 +104,13 @@ enums =
 
         factions : List String
         factions =
-            [ "Arcadia" ]
+            [ "Arcadia", "Hawthorne" ]
 
         factionNames : List ( String, String )
         factionNames =
-            [ ( "Arcadia", "The College of Arcadia" ) ]
+            [ ( "Arcadia", "The College of Arcadia" )
+            , ( "Hawthorne", "Hawthorne Academia" )
+            ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
