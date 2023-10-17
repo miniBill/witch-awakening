@@ -133,10 +133,7 @@ perkBox selected ({ name, affinity, class, content, isMeta } as perk) =
     in
     Theme.card
         { glow = glow
-        , imageAttrs =
-            [ Border.width 4
-            , Theme.borderColor color
-            ]
+        , imageAttrs = []
         , imageHeight = 400
         , image = Types.perkToImage name
         , inFront =
