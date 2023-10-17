@@ -107,6 +107,7 @@ enums =
             [ ( "Arcadia", "The College of Arcadia", "Digicasting" )
             , ( "Hawthorne", "Hawthorne Academia", "Wands" )
             , ( "Watchers", "The Watchers", "Ministrations" )
+            , ( "Hespatian", "The Hespatian Coven", "Occultism" )
             ]
 
         factions : List String

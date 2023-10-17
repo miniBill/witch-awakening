@@ -18,7 +18,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ arcadia, hawthorne, watchers ]
+    [ arcadia, hawthorne, watchers, hespatian ]
 
 
 arcadia : Details
@@ -86,6 +86,30 @@ watchers =
         """The gift of the Near-Light emulates the glory of the celestials. It grants feathered wings, flying at 160mph + the max speed of your broom, and above your head glows a halo of light. You can’t be blinded as a result of light or sunburned, and looking at your halo is like looking at the sun, illuminating the area with bright light, including UV Radiation. This can be either dimmed to a simple glow or just toggled on/off.
         """
     , images = Images.factionWatchers
+    }
+
+
+hespatian : Details
+hespatian =
+    { name = Hespatian
+    , motto = "The original secret cult"
+    , description =
+        """The Hespatians are the oldest known coven to still be operating. They're what many people expect when they hear the phrase “Witch Coven”. They revel in and are the principle origins of all the classic witch tropes as well as cult tropes. From dancing nude around a bonfire under the light of a lunar eclipse, to ritual sacrifices by hooded figures around an altar. The coven is compartmentalized into local families that operate in similar manners but with different focuses and individual practices. They share an overarching framework known by the heads of families where most members don't know the full scope, only knowing the family name for their local group. This means when one grows too large and destabilizes or gets infiltrated or exposed, only that family burns. Some families readily engage with ritual sacrifice and blood rites, while other families choose to abstain, it doesn't matter to Hespatia at large, and agents acting for the overall coven are called Specters and Wraiths, who take a family's specializations in consideration when delivering orders from the Crowns, the central coven acting as a council of seers that pull the strings. Families can include mundane humans, in fact, it's key to how they operate. It helps establish mortal connections, and establish networks for trafficking and finding willing or unwilling subjects of their rituals. For some things you'd get more out of, or outright need, an unwilling subject, for others a willing subject devoted to the purpose.
+
+        When Hespatians are being referred to, it generally refers to the interfamily network, not local families, the Specters, Wraiths, and Crowns. Specters are general agents, information runners, and problem solvers that manage spies and communications. Wraiths are assassins, thieves, and abductors that act on Specter information on contract requests or Crown edicts on something they need done. A Specter can expect to be meeting informants, inspecting families, vetting members, and default to living a life in a role among mortals where you can keep tabs on important figures or adjacent to family members in a position of power where you keep tabs. You might also engineer blackmail opportunities, both for families and influential figures. A Wraith can expect to recieve lack letters with names and places indicating assassination targets. Red letters describe an object and location. White letters indicate a capture target and delivery location Letters burn into existence, then crumble to ash when read. Or a Specter may relay jobs involving asset protection, or infiltrations above a specter’s pay grade that are expected to involve a fight. Specters or Wraiths can go up the food chain within their own ranks, and if they possess the right skills and magical potential, can become Crowns within the central coven eventually, the oldest Crowns are at best guess, antediluvian. Crowns aren't seen, operating remotely, otherwise their methods are a mystery."""
+    , location =
+        """Hespatians gather in a wide variety of locations, sitting in on different local families that can range from hidden caverns or underground constructions ranging from offshoots of sewers or catacombs, to the most opulent of penthouses overlooking mortal cities... But a core to their operations is their usage of hell itself. Most families with an established center of operations include a hellgate somewhere within, likely unknown or shrugged off as superstition to most the family members themselves.
+
+        These all connect to Hespatia's headquarters in a layer of hell bordering the abyss full of dense jungle littered with volcanos, and oversaturated with hyperpredators and every life form is out to cause death and suffering, from the syringe-like blades of grass to the palm leaves covered in poisonous microbarbs that shed and are a real treat to inhale, to variations of infernal dinosaurs. Turns out the dinosaurs went to hell, who would have thought. The headquarters is on a smaller island off the mainland, and surrounded by a crescent mountainrange blocking it from the ocean... a natural barrier against creatures of the deep, as the infinite abyss begins its exponential drop off that never ends. Sometimes a sunrise is the luminous bulb of a leviathan... The walls are made of organic near-living shapes. Some mortals who have seen it are left scarred in the psyche and paint things they've witnessed, along with other things they see later on as a part of their mind gets caught in the rifts to wander the layers of hell and the abyss, and are often compelled to draw, paint, or write what they've seen.
+
+        To witches who find themselves here, they feel an invigorating sense of connection and power here, where they can find any amenities and tools, and many dungeons. It is full of bound demon servants tending to visitors, one way or another. Red skinned gorilla-like demons can be recruited to aid in expeditions into the jungle for the search of an uncountable number of rare plant and animal species that can serve as ritual or potion ingredients. They take payment in the form of satisfying either their lust, or their gluttony, and they have a big appetite."""
+    , relations =
+        """Hespatia has no formal relation with Arcadia, but they've established a hidden family in its midst. They're active within Hawthorne where they run several sorority and fraternity styled families. The Watchers keep getting in their way with an old feud. Things like interrupting a sacrifice here or there."""
+    , perk = "Shroud"
+    , perkContent =
+        """Witches of Hespatia can find themselves visited by a living shadow ushers them into a dark reflection of their location wherein they'll be tested in unique ways, and the shadow becomes a part of the witch infusing their Garment and Hat with the form of the cloak and hood. While so hooded, the mind can't grasp their presence, their face leaving no memory unless a mask is worn, and the mask will be remembered instead, the face otherwise shadowed. While cloaked, they produce no sound.
+        """
+    , images = Images.factionHespatian
     }
 
 
