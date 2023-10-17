@@ -2,7 +2,7 @@ module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, Ms
 
 import Browser exposing (UrlRequest)
 import Browser.Navigation
-import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), GameMode, Magic, Perk, Race, Slot(..))
+import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), Faction, GameMode, Magic, Perk, Race, Slot(..))
 
 
 type Msg
@@ -22,6 +22,7 @@ type Choice
     | ChoiceTypePerk Race Bool
     | ChoiceMagic RankedMagic Bool
     | ChoicePerk RankedPerk Bool
+    | ChoiceFaction (Maybe Faction)
     | TowardsCap Int
 
 
@@ -36,6 +37,7 @@ type alias Model =
     , typePerks : List Race
     , magic : List RankedMagic
     , perks : List RankedPerk
+    , faction : Maybe Faction
     }
 
 

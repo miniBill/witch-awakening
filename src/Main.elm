@@ -19,6 +19,7 @@ import Url
 import Url.Builder exposing (QueryParameter)
 import View.Class as Class
 import View.Complication as Complications
+import View.Faction as Faction
 import View.GameMode as GameMode
 import View.Intro as Intro
 import View.Magic as Magic
@@ -138,6 +139,9 @@ updateOnChoice choice model =
             else
                 { model | perks = List.Extra.remove perk model.perks }
 
+        ChoiceFaction faction ->
+            { model | faction = faction }
+
         TowardsCap towardsCap ->
             { model | towardsCap = towardsCap }
 
@@ -180,6 +184,7 @@ toUrl model =
             Types.perkToString name ++ String.fromInt cost
         )
         model.perks
+    , pair "faction" Types.factionToString model.faction
     ]
         |> List.concat
         |> Url.Builder.toQuery
@@ -280,6 +285,7 @@ parseUrl navKey url =
     , typePerks = parseMany "typePerk" Types.raceFromString
     , magic = parseMany "magic" parseMagic
     , perks = parseMany "perk" parsePerk
+    , faction = parseOne "faction" Types.factionFromString
     }
 
 
@@ -319,6 +325,7 @@ innerView model =
         , Element.Lazy.lazy TypePerk.viewTypePerks model.typePerks
         , Element.Lazy.lazy Magic.viewMagics model.magic
         , Element.Lazy.lazy Perk.viewPerks model.perks
+        , Element.Lazy.lazy Faction.viewFaction model.faction
         ]
         |> Element.map Choice
 

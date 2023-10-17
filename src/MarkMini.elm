@@ -114,7 +114,7 @@ mainParser =
                                 if String.startsWith "http" str then
                                     Link str
 
-                                else if str == "OR" || str == "/" then
+                                else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
                                     Number str
 
                                 else

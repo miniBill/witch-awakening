@@ -60,7 +60,7 @@ raceBox selected { name, tank, affinities, charge, content } =
             else
                 Just name
     in
-    Theme.card
+    Theme.card []
         { glow = glow
         , imageAttrs = []
         , imageHeight = 600

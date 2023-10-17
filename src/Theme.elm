@@ -389,16 +389,18 @@ cardRoundness =
 
 
 card :
-    { onPress : Maybe msg
-    , glow : Maybe Int
-    , imageHeight : Int
-    , imageAttrs : List (Attribute msg)
-    , image : Image
-    , inFront : List (Element msg)
-    , content : List (Element msg)
-    }
+    List (Attribute msg)
+    ->
+        { onPress : Maybe msg
+        , glow : Maybe Int
+        , imageHeight : Int
+        , imageAttrs : List (Attribute msg)
+        , image : Image
+        , inFront : List (Element msg)
+        , content : List (Element msg)
+        }
     -> Element msg
-card config =
+card attrs config =
     let
         cardAttributes : List (Attribute msg)
         cardAttributes =
@@ -440,7 +442,7 @@ card config =
                     :: config.content
                 )
     in
-    maybeButton cardAttributes
+    maybeButton (cardAttributes ++ attrs)
         { label = content
         , onPress = config.onPress
         }

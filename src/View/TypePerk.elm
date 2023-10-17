@@ -64,7 +64,7 @@ typePerkBox selected { race, cost, content } =
         slot =
             Types.gainToSlot cost
     in
-    Theme.card
+    Theme.card []
         { glow = glow
         , imageAttrs = [ Theme.style "background-position" "top" ]
         , imageHeight = 360

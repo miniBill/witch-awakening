@@ -133,7 +133,7 @@ complicationBox selected ({ name, class, content } as complication) =
                 Theme.image [ width <| px 40 ] <|
                     Types.slotToImage slot
     in
-    Theme.card
+    Theme.card []
         { glow = glow
         , imageAttrs =
             [ Border.width 4

@@ -9,6 +9,8 @@ import Elm.Case
 import Gen.CodeGen.Generate as Generate
 import Gen.Maybe
 import Json.Decode exposing (Decoder, Value)
+import List.Extra
+import Parser exposing ((|.), (|=), Parser)
 import Result.Extra
 import String.Extra
 
@@ -99,6 +101,14 @@ enums =
         perks : List String
         perks =
             [ "Oracle", "JackOfAll", "TransformationSequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "ElephantTrunk", "Prestidigitation", "Suggestion", "Fascinate", "Pantomime", "BeautySleep", "ThirdEye", "SoulJellies", "HatTrick", "MoodWeather", "ImprovedFamiliar", "Hybridize", "Apex", "ChargeSwap", "Crystallize", "Memorize", "MaidHand", "HotSwap", "Menagerie", "BloodWitch", "Gunwitch", "Levitation", "Isekaid", "Heritage", "MagicFriendship", "Windsong", "BroomBeast", "IsekaiWorlds", "IsekaiHeritage", "SummerSchool", "MagicalHeart", "Miniaturization", "SoulWarrior", "ComfyPocket", "ImprovedRod", "WitchHut", "Company", "PetBreak", "MagicShop", "Keeper", "SoulGraft" ]
+
+        factions : List String
+        factions =
+            [ "Arcadia" ]
+
+        factionNames : List ( String, String )
+        factionNames =
+            [ ( "Arcadia", "The College of Arcadia" ) ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
@@ -110,6 +120,7 @@ enums =
     , enumWith "Slot" [ "White", "Folk", "Noble", "Heroic", "Epic" ] [] True
     , enumWith "Magic" magics [] True
     , enumWith "Perk" perks [ ( "JackOfAll", "Jack-of-All" ), ( "WitchHut", "Witch... hut?" ) ] True
+    , enumWith "Faction" factions factionNames False
     ]
         |> List.concat
 
@@ -284,7 +295,7 @@ gradient name content =
 images : String -> Result (List Generate.Error) Elm.File
 images sizes =
     let
-        fromLine : String -> String -> Result String Elm.Declaration
+        fromLine : String -> String -> Result String ( Elm.Declaration, Maybe ( String, Int, String ) )
         fromLine filePath size =
             let
                 fileName : Maybe String
@@ -313,7 +324,12 @@ images sizes =
                                 |> Elm.declaration name
                                 |> Elm.expose
                     in
-                    Ok declaration
+                    case Parser.run imageGroupParser name of
+                        Ok ( groupName, index ) ->
+                            Ok ( declaration, Just ( groupName, index, name ) )
+
+                        Err _ ->
+                            Ok ( declaration, Nothing )
 
                 _ ->
                     Err <| "Unexpected size: " ++ size
@@ -345,6 +361,38 @@ images sizes =
             )
         |> Result.map
             (\declarations ->
+                let
+                    groupDeclarations : List Elm.Declaration
+                    groupDeclarations =
+                        declarations
+                            |> List.filterMap Tuple.second
+                            |> List.Extra.gatherEqualsBy
+                                (\( groupName, _, _ ) -> groupName)
+                            |> List.map groupDeclaration
+
+                    groupDeclaration :
+                        ( ( String, Int, String )
+                        , List ( String, Int, String )
+                        )
+                        -> Elm.Declaration
+                    groupDeclaration ( ( groupName, _, _ ) as head, tail ) =
+                        (head :: tail)
+                            |> List.map
+                                (\( _, imageIndex, imageName ) ->
+                                    ( imageIndex, imageName )
+                                )
+                            |> List.map
+                                (\( index, name ) ->
+                                    ( "image" ++ String.fromInt index
+                                    , Elm.val name
+                                        |> Elm.withType
+                                            (Elm.Annotation.named [] "Image")
+                                    )
+                                )
+                            |> Elm.record
+                            |> Elm.declaration groupName
+                            |> Elm.expose
+                in
                 Elm.file [ "Images" ]
                     (Elm.expose
                         (Elm.alias "Image"
@@ -355,11 +403,20 @@ images sizes =
                                 ]
                             )
                         )
-                        :: List.map
-                            (\declaration -> declaration)
-                            declarations
+                        :: List.map Tuple.first declarations
+                        ++ groupDeclarations
                     )
             )
+
+
+imageGroupParser : Parser ( String, Int )
+imageGroupParser =
+    Parser.succeed Tuple.pair
+        |= Parser.getChompedString
+            (Parser.chompIf Char.isAlpha
+                |. Parser.chompWhile Char.isAlpha
+            )
+        |= Parser.int
 
 
 directoryDecoder : Decoder Generate.Directory

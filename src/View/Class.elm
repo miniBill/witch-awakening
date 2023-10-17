@@ -58,7 +58,7 @@ classBox selected { class, content } =
             else
                 Just class
     in
-    Theme.card
+    Theme.card []
         { glow = glow
         , imageAttrs =
             [ Border.width 8
