@@ -115,6 +115,8 @@ enums =
             , ( "Lunabella", "Lunabella" )
             , ( "Alfheimr", "Alfheimr Alliance" )
             , ( "Outsiders", "The Outsiders" )
+            , ( "Orc", "The O.R.C." )
+            , ( "Alphazon", "Alphazon Industries" )
             ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
@@ -329,7 +331,18 @@ images sizes =
                                 |> Elm.record
                                 |> Elm.withType (Elm.Annotation.named [] "Image")
                                 |> Elm.declaration name
-                                |> Elm.expose
+                                |> Elm.exposeWith
+                                    { exposeConstructor = True
+                                    , group = Just group
+                                    }
+
+                        group : String
+                        group =
+                            name
+                                |> String.Extra.humanize
+                                |> String.split " "
+                                |> List.take 1
+                                |> String.join " "
                     in
                     case Parser.run imageGroupParser name of
                         Ok ( groupName, index ) ->
@@ -398,7 +411,10 @@ images sizes =
                                 )
                             |> Elm.record
                             |> Elm.declaration groupName
-                            |> Elm.expose
+                            |> Elm.exposeWith
+                                { exposeConstructor = True
+                                , group = Just "Groups"
+                                }
                 in
                 Elm.file [ "Images" ]
                     (Elm.expose
