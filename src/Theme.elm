@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -407,18 +407,18 @@ card attrs config =
             [ height fill
             , width <| Element.minimum 320 <| Element.maximum 400 fill
             , Font.color <| rgb 0 0 0
-            , case config.glow of
-                Just color ->
-                    Background.color <| intToBackground color
-
-                Nothing ->
-                    Background.color <| rgb 1 1 1
             , Border.roundEach
                 { topLeft = cardRoundness
                 , topRight = cardRoundness
                 , bottomLeft = 8
                 , bottomRight = 8
                 }
+            , case config.glow of
+                Just color ->
+                    Background.color <| intToBackground color
+
+                Nothing ->
+                    Background.color <| rgb 1 1 1
             , case config.glow of
                 Just color ->
                     Border.glow (intToColor color) 8

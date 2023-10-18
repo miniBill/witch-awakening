@@ -12,7 +12,7 @@ import Theme exposing (gradientText)
 import Types exposing (Choice(..))
 
 
-viewFaction : Maybe Faction -> Element Choice
+viewFaction : Maybe ( Faction, Bool ) -> Element Choice
 viewFaction faction =
     Theme.column
         [ width fill
@@ -50,35 +50,54 @@ viewFaction faction =
 
 
 factionBox :
-    Maybe Faction
+    Maybe ( Faction, Bool )
     -> Faction.Details
-    -> Element (Maybe Faction)
+    -> Element (Maybe ( Faction, Bool ))
 factionBox selected { name, motto, description, location, relations, perk, perkContent, images } =
     let
-        isSelected : Bool
-        isSelected =
+        ( isFactionSelected, isPerkSelected ) =
             case selected of
                 Nothing ->
-                    False
+                    ( False, False )
 
-                Just selectedFaction ->
-                    selectedFaction == name
+                Just ( selectedFaction, perkSelected ) ->
+                    if selectedFaction == name then
+                        ( True, perkSelected )
 
-        glow : Maybe Int
-        glow =
-            if isSelected then
+                    else
+                        ( False, False )
+
+        factionGlow : Maybe Int
+        factionGlow =
+            if isFactionSelected then
                 Just 0x00F3EA6F
 
             else
                 Nothing
 
-        msg : Maybe Faction
-        msg =
-            if isSelected then
+        factionMsg : Maybe ( Faction, Bool )
+        factionMsg =
+            if isFactionSelected then
                 Nothing
 
             else
-                Just name
+                Just ( name, False )
+
+        perkGlow : Maybe Int
+        perkGlow =
+            if isPerkSelected then
+                Just 0x00F3EA6F
+
+            else
+                Nothing
+
+        perkMsg : Maybe ( Faction, Bool )
+        perkMsg =
+            if isPerkSelected then
+                Just ( name, False )
+
+            else
+                Just ( name, True )
 
         img : Image -> Element msg
         img { src } =
@@ -105,35 +124,50 @@ factionBox selected { name, motto, description, location, relations, perk, perkC
             , img images.image4
             ]
         , Theme.row [ width fill ]
-            [ Theme.column
+            [ Theme.maybeButton
                 [ width <| fillPortion 5
                 , height fill
-                , Theme.backgroundColor 0x00C1C1C1
                 , Font.color <| rgb 0 0 0
+                , case factionGlow of
+                    Just color ->
+                        Theme.backgroundColor color
+
+                    Nothing ->
+                        Theme.backgroundColor 0x00C1C1C1
+                , case factionGlow of
+                    Just color ->
+                        Border.glow (Theme.intToColor color) 8
+
+                    Nothing ->
+                        Border.width 0
                 ]
-                [ Theme.blocks
-                    [ height fill
-                    , Theme.padding
-                    ]
-                    ("[DESCRIPTION:] " ++ description)
-                , Theme.blocks
-                    [ height fill
-                    , Theme.padding
-                    ]
-                    ("[LOCATION:] " ++ location)
-                , Theme.blocks
-                    [ height fill
-                    , Theme.padding
-                    ]
-                    ("[RELATIONS:] " ++ relations)
-                ]
+                { label =
+                    Theme.column []
+                        [ Theme.blocks
+                            [ height fill
+                            , Theme.padding
+                            ]
+                            ("[DESCRIPTION:] " ++ description)
+                        , Theme.blocks
+                            [ height fill
+                            , Theme.padding
+                            ]
+                            ("[LOCATION:] " ++ location)
+                        , Theme.blocks
+                            [ height fill
+                            , Theme.padding
+                            ]
+                            ("[RELATIONS:] " ++ relations)
+                        ]
+                , onPress = Just factionMsg
+                }
             , Theme.card
                 [ Theme.backgroundColor 0x00C1C1C1
                 , width fill
                 , height shrink
                 , alignTop
                 ]
-                { glow = glow
+                { glow = perkGlow
                 , imageAttrs = []
                 , imageHeight = 240
                 , image = images.image5
@@ -151,7 +185,7 @@ factionBox selected { name, motto, description, location, relations, perk, perkC
                         [ Theme.padding ]
                         (perkContent ++ "\n\n_*" ++ Types.factionToMagic name ++ "*_ is half price for you, stacks with affinity.")
                     ]
-                , onPress = Just msg
+                , onPress = Just perkMsg
                 }
             ]
         ]

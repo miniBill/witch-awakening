@@ -23,7 +23,7 @@ type Choice
     | ChoiceTypePerk Race Bool
     | ChoiceMagic RankedMagic Bool
     | ChoicePerk RankedPerk Bool
-    | ChoiceFaction (Maybe Faction)
+    | ChoiceFaction (Maybe ( Faction, Bool ))
     | TowardsCap Int
 
 
@@ -38,7 +38,7 @@ type alias Model =
     , typePerks : List Race
     , magic : List RankedMagic
     , perks : List RankedPerk
-    , faction : Maybe Faction
+    , faction : Maybe ( Faction, Bool )
     }
 
 

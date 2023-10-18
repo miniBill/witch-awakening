@@ -189,7 +189,8 @@ toUrl model =
             Types.perkToString name ++ String.fromInt cost
         )
         model.perks
-    , pair "faction" Types.factionToString model.faction
+    , pair "faction" (\( name, _ ) -> Types.factionToString name) model.faction
+    , pair "factionPerk" (\( _, perk ) -> boolToString perk) model.faction
     ]
         |> List.concat
         |> Url.Builder.toQuery
@@ -200,6 +201,15 @@ toUrl model =
                 else
                     s
            )
+
+
+boolToString : Bool -> String
+boolToString bool =
+    if bool then
+        "True"
+
+    else
+        "False"
 
 
 parseUrl : Nav.Key -> Url.Url -> Model
@@ -279,10 +289,24 @@ parseUrl navKey url =
                                 , cost = cost
                                 }
                             )
+
+        parseBool : String -> Maybe Bool
+        parseBool bool =
+            case bool of
+                "True" ->
+                    Just True
+
+                "False" ->
+                    Just False
+
+                _ ->
+                    Nothing
     in
     { key = navKey
     , menuOpen = False
-    , towardsCap = Maybe.withDefault 0 <| parseOne "towardsCap" String.toInt
+    , towardsCap =
+        parseOne "towardsCap" String.toInt
+            |> Maybe.withDefault 0
     , class = parseOne "class" Types.classFromString
     , race = parseOne "race" Types.raceFromString
     , gameMode = parseOne "gameMode" Types.gameModeFromString
@@ -290,7 +314,15 @@ parseUrl navKey url =
     , typePerks = parseMany "typePerk" Types.raceFromString
     , magic = parseMany "magic" parseMagic
     , perks = parseMany "perk" parsePerk
-    , faction = parseOne "faction" Types.factionFromString
+    , faction =
+        parseOne "faction" Types.factionFromString
+            |> Maybe.map
+                (\faction ->
+                    ( faction
+                    , parseOne "factionPerk" parseBool
+                        |> Maybe.withDefault False
+                    )
+                )
     }
 
 
