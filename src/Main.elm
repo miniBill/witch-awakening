@@ -22,6 +22,7 @@ import Url.Builder exposing (QueryParameter)
 import View.Class as Class
 import View.Complication as Complications
 import View.Faction as Faction
+import View.FactionalMagic as FactionalMagic
 import View.GameMode as GameMode
 import View.Intro as Intro
 import View.Magic as Magic
@@ -363,6 +364,7 @@ innerView model =
         , Element.Lazy.lazy Magic.viewMagics model.magic
         , Element.Lazy.lazy Perk.viewPerks model.perks
         , Element.Lazy.lazy Faction.viewFaction model.faction
+        , Element.Lazy.lazy FactionalMagic.viewFactionalMagics model.magic
         ]
         |> Element.map Choice
 

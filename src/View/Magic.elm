@@ -1,4 +1,4 @@
-module View.Magic exposing (viewMagics)
+module View.Magic exposing (magicImage, magicTitle, viewAffinities, viewMagics)
 
 import Data.Magic as Magic exposing (Affinities(..))
 import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveRight, moveUp, padding, px, rgb, rgba, spacing, width)
@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (Slot(..))
+import Generated.Types as Types exposing (Magic, Slot(..))
 import Gradients
 import Html
 import Html.Attributes
@@ -215,7 +215,7 @@ magicBox selected index details =
             ]
 
 
-magicImage : Magic.Details -> Element msg
+magicImage : { a | name : Magic } -> Element msg
 magicImage { name } =
     el
         [ height fill
@@ -250,7 +250,7 @@ viewContent selected ({ name, description, ranks } as details) =
         }
 
 
-magicTitle : Magic.Details -> Element msg
+magicTitle : { a | name : Magic, star : Bool, class : Types.Class, affinities : Affinities } -> Element msg
 magicTitle { name, star, class, affinities } =
     Theme.wrappedRow
         [ Theme.morpheus

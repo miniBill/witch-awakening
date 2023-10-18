@@ -1,6 +1,7 @@
 module View.Menu exposing (viewMenu)
 
 import Data.Complication as Complication exposing (Content(..))
+import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic exposing (Affinities(..))
 import Data.Perk as Perk
 import Data.Race as Race
@@ -280,71 +281,99 @@ magicsValue model =
                         |> Maybe.withDefault []
                         |> (::) All
     in
-    maybeSum (magicValue affinities model.class) .magic model
+    maybeSum (magicValue affinities model) .magic model
 
 
-magicValue : List Affinity -> Maybe Class -> RankedMagic -> Maybe Int
-magicValue affinities class { name, rank } =
-    Magic.all
-        |> List.Extra.find (\magic -> magic.name == name)
-        |> Maybe.andThen
-            (\magic ->
-                let
-                    isClass : Bool
-                    isClass =
-                        Just magic.class == class
+magicValue : List Affinity -> Model -> RankedMagic -> Maybe Int
+magicValue affinities { faction, class } { name, rank } =
+    case
+        Magic.all
+            |> List.Extra.find (\magic -> magic.name == name)
+            |> Maybe.andThen (magicCost affinities class rank)
+    of
+        Just cost ->
+            Just cost
 
-                    isAffinity : Bool
-                    isAffinity =
-                        case magic.affinities of
-                            Regular regular ->
-                                List.any
-                                    (\affinity -> List.member affinity affinities)
-                                    regular
-
-                            Alternative alternatives ->
-                                alternatives
-                                    |> List.any
-                                        (\alternative ->
-                                            List.all
-                                                (\affinity -> List.member affinity affinities)
-                                                alternative
-                                        )
-
-                    cases : Int -> Int -> Int -> Int -> Int
-                    cases basicCost affinityCost classCost bothCost =
-                        if isClass then
-                            if isAffinity then
-                                bothCost
-
-                            else
-                                classCost
-
-                        else if isAffinity then
-                            affinityCost
+        Nothing ->
+            FactionalMagic.all
+                |> List.Extra.find (\magic -> magic.name == name)
+                |> Maybe.andThen
+                    (\magic ->
+                        let
+                            cost : Maybe Int
+                            cost =
+                                magicCost affinities class rank magic
+                        in
+                        if Just ( magic.faction, True ) == faction then
+                            Maybe.map (\c -> (c + 1) // 2) cost
 
                         else
-                            basicCost
-                in
-                case rank of
-                    1 ->
-                        Just <| cases -1 -1 1 1
+                            cost
+                    )
 
-                    2 ->
-                        Just <| cases -3 -2 -1 0
 
-                    3 ->
-                        Just <| cases -6 -4 -4 -2
+magicCost :
+    List Affinity
+    -> Maybe Class
+    -> Int
+    -> { d | class : Class, affinities : Affinities }
+    -> Maybe Int
+magicCost affinities class rank magic =
+    let
+        isClass : Bool
+        isClass =
+            Just magic.class == class
 
-                    4 ->
-                        Just <| cases -10 -6 -8 -4
+        isAffinity : Bool
+        isAffinity =
+            case magic.affinities of
+                Regular regular ->
+                    List.any
+                        (\affinity -> List.member affinity affinities)
+                        regular
 
-                    5 ->
-                        Just <| cases -15 -9 -13 -7
+                Alternative alternatives ->
+                    alternatives
+                        |> List.any
+                            (\alternative ->
+                                List.all
+                                    (\affinity -> List.member affinity affinities)
+                                    alternative
+                            )
 
-                    _ ->
-                        Nothing
-            )
+        cases : Int -> Int -> Int -> Int -> Int
+        cases basicCost affinityCost classCost bothCost =
+            if isClass then
+                if isAffinity then
+                    bothCost
+
+                else
+                    classCost
+
+            else if isAffinity then
+                affinityCost
+
+            else
+                basicCost
+    in
+    case rank of
+        1 ->
+            Just <| cases -1 -1 1 1
+
+        2 ->
+            Just <| cases -3 -2 -1 0
+
+        3 ->
+            Just <| cases -6 -4 -4 -2
+
+        4 ->
+            Just <| cases -10 -6 -8 -4
+
+        5 ->
+            Just <| cases -15 -9 -13 -7
+
+        _ ->
+            Nothing
 
 
 perksValue : Model -> Maybe Int
