@@ -51,18 +51,20 @@ blockParser =
                     , mono = List.member "mono" attrs
                     }
             )
-            |= Parser.sequence
-                { start = "{"
-                , end = "}"
-                , separator = ","
-                , trailing = Parser.Optional
-                , spaces = Parser.spaces
-                , item =
-                    [ "center", "mono" ]
-                        |> List.map Parser.symbol
-                        |> Parser.oneOf
-                        |> Parser.getChompedString
-                }
+            |= Parser.backtrackable
+                (Parser.sequence
+                    { start = "{"
+                    , end = "}"
+                    , separator = ","
+                    , trailing = Parser.Optional
+                    , spaces = Parser.spaces
+                    , item =
+                        [ "center", "mono" ]
+                            |> List.map Parser.symbol
+                            |> Parser.oneOf
+                            |> Parser.getChompedString
+                    }
+                )
             |= mainParser
         , Parser.succeed (\pieces -> Paragraph { pieces = pieces, center = False, mono = False })
             |= mainParser
