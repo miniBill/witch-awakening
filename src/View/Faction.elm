@@ -28,6 +28,7 @@ viewFaction faction =
                 [ Theme.morpheus
                 , Font.size 52
                 , centerX
+                , Theme.id "Faction"
                 ]
                 (Theme.gradientText 4 Gradients.yellowGradient "FACTIONS")
             , Theme.blocks

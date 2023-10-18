@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, id, image, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -312,9 +312,14 @@ viewSectionTitle label =
         [ celticHand
         , Font.size 36
         , width fill
-        , Element.htmlAttribute <| Html.Attributes.id (String.Extra.underscored label)
+        , id label
         ]
         [ hr, gradientText 4 Gradients.blueGradient label, hr ]
+
+
+id : String -> Attribute msg
+id label =
+    Element.htmlAttribute <| Html.Attributes.id (String.Extra.underscored label)
 
 
 hr : Element msg

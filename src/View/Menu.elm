@@ -169,6 +169,7 @@ viewCalculations model =
             }
         , row "Magic" magicsValue
         , row "Perks" perksValue
+        , row "Faction" factionValue
         , el [ alignBottom, width fill ] <| row "Result" calculatePower
         ]
 
@@ -402,6 +403,19 @@ perkValue affinities class { name, cost } =
                 else
                     -cost
             )
+
+
+factionValue : Model -> Maybe Int
+factionValue model =
+    case model.faction of
+        Nothing ->
+            Just 4
+
+        Just ( _, False ) ->
+            Just 2
+
+        Just ( _, True ) ->
+            Just 0
 
 
 maybeSum : (item -> Maybe Int) -> (Model -> List item) -> Model -> Maybe Int
