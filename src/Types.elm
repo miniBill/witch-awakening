@@ -9,7 +9,8 @@ type Msg
     = UrlClicked UrlRequest
     | UrlChanged --Url.Url
     | Choice Choice
-    | ToggleMenu
+    | OpenMenu
+    | CloseMenu
     | ScrollTo String
     | Nop
 

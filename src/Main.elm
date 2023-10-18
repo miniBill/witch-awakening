@@ -3,6 +3,7 @@ module Main exposing (Flags, main)
 import AppUrl exposing (AppUrl)
 import Browser exposing (UrlRequest(..))
 import Browser.Dom
+import Browser.Events
 import Browser.Navigation as Nav
 import Dict
 import Element exposing (Element, fill, rgb, width)
@@ -10,6 +11,7 @@ import Element.Background as Background
 import Element.Font as Font
 import Element.Lazy
 import Generated.Types as Types
+import Json.Decode as JD
 import List.Extra
 import Maybe.Extra
 import Task
@@ -80,8 +82,11 @@ update msg model =
             , Nav.replaceUrl model.key (toUrl newModel)
             )
 
-        ToggleMenu ->
-            ( { model | menuOpen = not model.menuOpen }, Cmd.none )
+        OpenMenu ->
+            ( { model | menuOpen = True }, Cmd.none )
+
+        CloseMenu ->
+            ( { model | menuOpen = False }, Cmd.none )
 
         ScrollTo id ->
             ( model
@@ -332,4 +337,18 @@ innerView model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Sub.none
+    Browser.Events.onKeyUp keyDecoder
+
+
+keyDecoder : JD.Decoder Msg
+keyDecoder =
+    JD.field "key" JD.string
+        |> JD.andThen
+            (\key ->
+                case key of
+                    "Escape" ->
+                        JD.succeed CloseMenu
+
+                    _ ->
+                        JD.fail "ignored"
+            )

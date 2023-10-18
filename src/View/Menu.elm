@@ -52,7 +52,12 @@ viewMenu model =
             , Theme.padding
             , alignRight
             ]
-            { onPress = Just ToggleMenu
+            { onPress =
+                if model.menuOpen then
+                    Just CloseMenu
+
+                else
+                    Just OpenMenu
             , label =
                 Theme.blocks
                     [ centerX
