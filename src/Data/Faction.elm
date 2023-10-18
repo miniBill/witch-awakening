@@ -18,7 +18,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ arcadia, hawthorne, watchers, hespatian, lunabella ]
+    [ arcadia, hawthorne, watchers, hespatian, lunabella, alfheimr ]
 
 
 arcadia : Details
@@ -134,6 +134,31 @@ lunabella =
         """A living horn of plenty, with this perk you can will into existence any nonmagical food item that you have eaten before. Some Lunabellans cultivate exotic new plants that can then be shared by Comucopias, including Steakmelon, and Blood Apples that satisfy vampire needs. Food produced in this manner is always pure and free of imperfection or disease that might make one hesitant to try a natural variety. Can produce meat, but not living creatures.
         """
     , images = Images.factionLunabella
+    }
+
+
+alfheimr : Details
+alfheimr =
+    { name = Alfheimr
+    , motto = "The Disunited States of the Faewilds"
+    , description =
+        """The Alfheimr Alliance is composed of a coalition of faerie nations within what witches on earth tend to know by the Faewilds. Denizens refer to it, generally, as Alfheimr. A world full of wild untamed magics that manifest as readily as rain or storm, and full of an overabundance of life. Hence the Alfheimr Alliance. The Twin Courts, Summer and Winter, are the primary political agents of the realm and most life is associated with one or the other, or interacts with both to play at neutrality at the expense of political weight. The Summer Court sometimes referred to as the Seelie Court, is a regal but rigid coalition of regions and powers that embody Law and Order. Their court is full of ritual, ceremony, rules, and propriety. If you know their labyrinthine rules and customs, you can be confident that you know what you can or can't do. In theory. Their rules can seem esoteric and strange, while the authority of one's Lord or Lady over whoever is lower in status is strictly adhered to- Within lawful boundaries. They're more bureaucratic than their counterpart, with many nobles and courtiers being akin to accountants and lawyers that dress fancy.
+
+        The Winter or Unseelie Court on the other hand, would represent chaos. Where Summer craves authority, Winter craves liberty. Winter politics are far more unpredictable. They retain a hierarchy of authority figures, but their influence is more _diplomatic_, a matter of mutual exchange and favors. They keep government influence minimal with reduced central authority and increased local authority, so no two cities or regions of the Winter court are too similar to another, as they largely each make up their own rules. This can lead to many abuses and some consider them to be the “bad guys” for their hands-off approach, but the unseelie are just as free to depose of any would-be tyrants or corrupt lords. They recognize the authority of such a ruler, but if deposed, then the authority of the usurpers are just as valid once the dust settles, and in general you tend to find more of the outcasts and shady types flocking to Winter territories simply by nature of such figures pushed out of the more orderly Summer territories, a question of cause or effect. Nonetheless, the Twin Courts are still two faces of the Alliance as a whole, and they cooperate and have some shared values and interests as neighbors, like bickering siblings they can seem to be at each other's throats but support each other in hardships.
+
+        If you were to join the Summer court you could expect a life of kings, queens, princes, and princesses. Castles, and knights sworn to various oaths and codes, a high culture fantasy where bands of adventurers or knights set off on quests for honor, duty, and justice. On the other hand, if you were to join the Winter court you could expect a life of lords, regents and merchant-princes embroiled in conspiracy and scheme with a mix of political machinations or cloak and dagger, where adventurers and sellswords for hire quest for wealth and glory. Knights or agents of the Winter Court may operate covertly throughout their realms keeping tabs on the lands to watch for particularly bad actors that go too far and act to destabilize or support and even lead opposition, whether it's a cruel tyrant that came to power, or some noble that grew too big for their pants and thinks to undermine the Court."""
+    , location =
+        """Alfheimr, the Faewild, is an entire world centered on an axis closer to the elemental planes of Nature, Life, and Mind. It has landscapes that defy conventional physics and more biodiversity in a simple plain than seen in Earth forests. Natural magical phenomenon occurs as readily as rain or snow, and creatures can evolve over the course of their own living life to adapt to new challenges or interests, causing rapid changes in ecosystems even over the course of a human life. The exception to this are creatures with a soul or frequent exposure to them like domesticated animals. This often results in various Super-Predators evolving in the more wild regions away from civilization where they don't get culled by the critical hunters who venture out to seek out advanced predators that could overwhelm different environments. Both courts share this same purpose, cooperating intelligence and resources to hunt great beasts throughout untamed wilds and extraordinary landscapes, like knights hunting dragons of old, often in teams or entire expeditionary forces, though solitary hunters are the most common, making notes as they survey the land as they go for evidence and taking reports of creatures, behavior, creatures that may evolve into a problem in the future, or beasts they can't handle alone. In the heartlands of civilization you can find rich cultures with a focus on blend of great walled cities to keep the beasts at bay, or elegant cities built through giant trees where the woods themselves can deter larger monsters or keep them up out of reach."""
+    , relations =
+        """The Alliance is primarily off Earth, but they still collaborate heavily with wider witchdom, and have many old groves, ruins, family lines, and old covenants
+
+        keeping them involved on Earth where they have a balanced relationship with all the factions, save for Outsiders, taking Hespatian families on a case by case basis."""
+    , perk = "Fae Step"
+    , perkContent =
+        """Your stronger association with the feywilds has gifted you with a spark of wild magic. Any time you cast a magic effect that drains mana, it has a 5% chance to fill 25% of your capacity while having double the intended effect by all metrics, and a 20% chance not to cost mana.
+
+        Additionally, whenever you are visually unobserved, you can instantly vanish to appear at any other unobserved location within 300m seamlessly with a thought, such as running behind the trees of a forest or obscuring fog."""
+    , images = Images.factionAlfheimr
     }
 
 

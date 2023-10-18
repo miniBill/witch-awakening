@@ -131,3 +131,6 @@ factionToMagic faction =
 
         Lunabella ->
             "Dominion"
+
+        Alfheimr ->
+            "Covenants"
