@@ -1,7 +1,7 @@
 module View.Faction exposing (viewFaction)
 
 import Data.Faction as Faction
-import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, rgb, rgba, shrink, spacing, width)
+import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, moveDown, px, rgb, rgba, shrink, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -47,6 +47,30 @@ viewFaction faction =
                 , spacing <| Theme.rythm * 3
                 ]
             |> Element.map ChoiceFaction
+        , Theme.column
+            [ Background.image Images.factionHumansIntro1.src
+            , width fill
+            , Theme.padding
+            ]
+            [ el [ height <| px 200 ] Element.none
+            , Theme.row [ width fill ]
+                [ Theme.blocks
+                    [ width fill
+                    , Background.color <| rgba 1 1 1 0.75
+                    , Font.color <| rgb 0 0 0
+                    , Font.center
+                    , Theme.padding
+                    , Border.rounded Theme.rythm
+                    ]
+                    Faction.humansIntro
+                , Theme.image
+                    [ width fill
+                    , moveDown <| 40 + Theme.rythm * 3.5
+                    ]
+                    Images.factionHumansIntro2
+                ]
+            , el [ height <| px 40 ] Element.none
+            ]
         ]
 
 

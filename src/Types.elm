@@ -138,3 +138,9 @@ factionToMagic faction =
 
         Outsiders ->
             "Monstrosity"
+
+        TheOrc ->
+            "Gadgetry"
+
+        Alphazon ->
+            "Integration"

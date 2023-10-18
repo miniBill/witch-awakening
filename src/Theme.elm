@@ -130,7 +130,7 @@ block input =
                 |> List.singleton
                 |> Element.paragraph []
 
-        Ok (Paragraph { pieces, center }) ->
+        Ok (Paragraph { pieces, center, mono }) ->
             pieces
                 |> List.map viewPiece
                 |> Html.span []
@@ -142,6 +142,11 @@ block input =
 
                       else
                         Font.alignLeft
+                    , if mono then
+                        Font.family [ Font.monospace ]
+
+                      else
+                        Font.family []
                     ]
 
 

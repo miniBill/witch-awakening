@@ -8,7 +8,7 @@ import Set exposing (Set)
 
 type Block
     = SectionTitle String
-    | Paragraph { pieces : List Piece, center : Bool }
+    | Paragraph { pieces : List Piece, center : Bool, mono : Bool }
     | UnorderedList (List (List Piece))
 
 
@@ -43,10 +43,28 @@ blockParser =
             |. Parser.symbol "-"
             |. Parser.spaces
             |= unorderedListParser
-        , Parser.succeed (\pieces -> Paragraph { pieces = pieces, center = True })
-            |. Parser.symbol "{center}"
+        , Parser.succeed
+            (\attrs pieces ->
+                Paragraph
+                    { pieces = pieces
+                    , center = List.member "center" attrs
+                    , mono = List.member "mono" attrs
+                    }
+            )
+            |= Parser.sequence
+                { start = "{"
+                , end = "}"
+                , separator = ","
+                , trailing = Parser.Optional
+                , spaces = Parser.spaces
+                , item =
+                    [ "center", "mono" ]
+                        |> List.map Parser.symbol
+                        |> Parser.oneOf
+                        |> Parser.getChompedString
+                }
             |= mainParser
-        , Parser.succeed (\pieces -> Paragraph { pieces = pieces, center = False })
+        , Parser.succeed (\pieces -> Paragraph { pieces = pieces, center = False, mono = False })
             |= mainParser
         ]
 

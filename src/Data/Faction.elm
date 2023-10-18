@@ -1,4 +1,4 @@
-module Data.Faction exposing (Details, all, intro, summaries)
+module Data.Faction exposing (Details, all, humansIntro, intro, summaries)
 
 import Generated.Types exposing (Faction(..))
 import Images exposing (Image)
@@ -208,4 +208,21 @@ summaries =
     - {choice __*The Hespatian Coven*__}. Also operates under many alternative names with the way it subdivides into families that have overarching connections that cooperate in shared interests while retaining independent oversight for the most part. Members of a ‘family’ may not know about the broader scope while just leadership roles are in the know and in communication with other families. They are the classic secret society, to outright secret cults, and they incorporate mortals into their structure as a way to gain leverages, blackmail, and other resources. {choice _Assassins and thieves of the highest caliber. Many conspiracies may relate to Hespatian families. Hell access._}
 
     - {choice __*Lunabella*__}. It may surprise you to know that this city on the moon was started in the 6th century by a lich with broomstick and a dream. It’s a glistening city that since grew to accommodate life and terraform into a garden region contained by crystal spires that maintain atmosphere- And hide casual observation from mortals. They’ve produced outposts on other planetary bodies. {choice _Killer view. Olympian luxury. Arcane transhumanism. Particular advances in transmutation magic._}
+    """
+
+
+humansIntro : String
+humansIntro =
+    """
+    {center, mono} "Hey there, champ, miss, whatever. This is a pre-recorded message. If you're seeing this, congratulations, you've just awakened as a Witch and we estimate now is about when the guidance ritual triggering this response has just finished going over some “Factions” of witches."
+
+    {center} Allow me to introduce ourselves; Humans. Or “Mortals” as some witches say. As you may have noticed, we, and I, have some tricks of our own. Contrary to what most Initiator or “Guidance” witches say, such as the witch that guided your awakening just now or you wouldn't be seeing this message, I'm sure you've heard some spiel about surveillance and “They nuked our library” or some such, fact is humans and witches have gotten along fine for over a century now.
+
+    {center} Sure the nuke thing was more recent, but it's what firmly shook some sense into the broader witch community. That library held some of the most insidious tomes of magic ever written that could- and did -make demons weep. Facts are, we're not some weak incapable sheep to be herded anymore. Not all of us. We're aware of the Treaties of the Masquerade, and we at the ORC... and those suits at Alphazon, act within the bounds of the masquerade to represent human interests. There are some others, but let's keep it simple for now, and we aren't just humans, we just don't isolate ourselves and pretend that we're not. I'm a witch the same as you, but we're still human too, our gifts don't have to change who we are.
+
+    {center} Help us, and we help you. We don't relish having to make enemies, but some witches let power get to their head, and they start viewing ungifted humans as pawns or resources to be used or spent.
+
+    {center} There are two major “factions” of us, so we'll present it like those you've seen so far.
+
+    {center, mono} "Rolling film, let's take a look."
     """

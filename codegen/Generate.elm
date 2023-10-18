@@ -115,7 +115,7 @@ enums =
             , ( "Lunabella", "Lunabella" )
             , ( "Alfheimr", "Alfheimr Alliance" )
             , ( "Outsiders", "The Outsiders" )
-            , ( "Orc", "The O.R.C." )
+            , ( "TheOrc", "The O.R.C." )
             , ( "Alphazon", "Alphazon Industries" )
             ]
     in
