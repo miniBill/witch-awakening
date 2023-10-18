@@ -7,7 +7,7 @@ import Generated.Types exposing (Affinity(..), Class(..), Faction, Magic(..))
 type alias Details =
     { name : Magic
     , star : Bool
-    , class : Class
+    , class : Maybe Class
     , faction : Faction
     , affinities : Affinities
     , description : String

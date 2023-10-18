@@ -1,4 +1,4 @@
-module View.Magic exposing (magicImage, magicTitle, viewAffinities, viewMagics)
+module View.Magic exposing (magicBox, magicImage, magicTitle, viewAffinities, viewMagics, viewRank)
 
 import Data.Magic as Magic exposing (Affinities(..))
 import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveRight, moveUp, padding, px, rgb, rgba, spacing, width)
@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (Magic, Slot(..))
+import Generated.Types as Types exposing (Class, Magic, Slot(..))
 import Gradients
 import Html
 import Html.Attributes
@@ -200,7 +200,7 @@ costTable =
             [ Html.Attributes.style "border-collapse" "collapse" ]
 
 
-magicBox : List RankedMagic -> Int -> Magic.Details -> Element ( RankedMagic, Bool )
+magicBox : List RankedMagic -> Int -> { a | star : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic } -> Element ( RankedMagic, Bool )
 magicBox selected index details =
     if modBy 2 index == 0 then
         Theme.row []
@@ -225,7 +225,7 @@ magicImage { name } =
         Element.none
 
 
-viewContent : List RankedMagic -> Magic.Details -> Element ( RankedMagic, Bool )
+viewContent : List RankedMagic -> { a | name : Magic, description : String, ranks : List String, star : Bool, class : Maybe Class, affinities : Affinities } -> Element ( RankedMagic, Bool )
 viewContent selected ({ name, description, ranks } as details) =
     let
         isSelected : Maybe RankedMagic
@@ -250,7 +250,7 @@ viewContent selected ({ name, description, ranks } as details) =
         }
 
 
-magicTitle : { a | name : Magic, star : Bool, class : Types.Class, affinities : Affinities } -> Element msg
+magicTitle : { a | name : Magic, star : Bool, class : Maybe Class, affinities : Affinities } -> Element msg
 magicTitle { name, star, class, affinities } =
     Theme.wrappedRow
         [ Theme.morpheus
@@ -258,9 +258,14 @@ magicTitle { name, star, class, affinities } =
         , centerX
         ]
         [ Theme.row [ centerX ]
-            [ Theme.image
-                [ width <| px 32, centerY ]
-                (Theme.classToBadge class)
+            [ case class of
+                Nothing ->
+                    Element.none
+
+                Just c ->
+                    Theme.image
+                        [ width <| px 32, centerY ]
+                        (Theme.classToBadge c)
             , if star then
                 el [ Font.size 48, moveUp 8, centerY ] <|
                     Theme.gradientText 1 Gradients.yellowGradient "★"
@@ -305,7 +310,12 @@ viewAffinities affinities =
                 |> List.concat
 
 
-viewRank : List RankedMagic -> Magic.Details -> Int -> String -> Element ( RankedMagic, Bool )
+viewRank :
+    List RankedMagic
+    -> { a | name : Magic, class : Maybe Class }
+    -> Int
+    -> String
+    -> Element ( RankedMagic, Bool )
 viewRank selected { name, class } rankIndex label =
     if String.isEmpty label then
         Element.none
@@ -331,7 +341,9 @@ viewRank selected { name, class } rankIndex label =
                 let
                     color : Int
                     color =
-                        Theme.classToColor class
+                        class
+                            |> Maybe.map Theme.classToColor
+                            |> Maybe.withDefault Theme.colors.white
                 in
                 Theme.backgroundColor color
 

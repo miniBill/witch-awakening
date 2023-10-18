@@ -308,7 +308,7 @@ magicValue affinities { faction, class } { name, rank } =
                             Maybe.map (\c -> (c + 1) // 2) cost
 
                         else
-                            cost
+                            Maybe.map ((*) 2) cost
                     )
 
 
@@ -316,13 +316,14 @@ magicCost :
     List Affinity
     -> Maybe Class
     -> Int
-    -> { d | class : Class, affinities : Affinities }
+    -> { d | class : Maybe Class, affinities : Affinities }
     -> Maybe Int
 magicCost affinities class rank magic =
     let
         isClass : Bool
         isClass =
-            Just magic.class == class
+            (magic.class == class)
+                && (class /= Nothing)
 
         isAffinity : Bool
         isAffinity =
