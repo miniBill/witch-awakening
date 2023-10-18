@@ -1,4 +1,4 @@
-module Data.Complication exposing (Content(..), Details, all, intro, worldShifts, worldShiftsDescription)
+module Data.Complication exposing (Content(..), Details, all, generic, intro, worldShifts, worldShiftsDescription)
 
 import Generated.Types exposing (Class(..), ComplicationName(..))
 
@@ -16,13 +16,18 @@ type Content
     | WithChoices String (List ( String, Int )) String
 
 
+all : List Details
+all =
+    worldShifts ++ generic
+
+
 worldShifts : List Details
 worldShifts =
     [ brutality, masquerade, trueNames, monsters, population, bonk ]
 
 
-all : List Details
-all =
+generic : List Details
+generic =
     [ dysfunction, vulnerability, rejection, crutch, restriction, hunted, dislikeable, monsterBait, blackSwan, spellSink, likeADuck, likeARock, eyeCatcher, sillyGoose, hardLessons, coldHeart, hideous, witchMark, nemesis, addiction, sensoryDisability, physicalDisability, sensoryShock, adoringFan, veryDere, requirement, unveiled, nightmares, kryptonite, fitWitch, branded, noPrivacy, bloodFeud, marked, defeated, fixation, allNatural, witchknight, inadequacy, dysphoria, betrayal, compulsion ]
 
 

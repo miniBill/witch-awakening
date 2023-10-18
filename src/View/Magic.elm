@@ -41,7 +41,7 @@ viewMagics selected =
             , Font.color <| rgb 1 1 1
             ]
             Magic.slotDescription
-        , Magic.all
+        , Magic.nonElemental
             |> List.indexedMap (magicBox selected)
             |> Theme.column []
             |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)

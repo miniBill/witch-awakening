@@ -180,6 +180,7 @@ calculatePower model =
     , typePerksValue
     , magicsValue
     , perksValue
+    , factionValue
     ]
         |> Maybe.Extra.traverse (\f -> f model)
         |> Maybe.map List.sum
@@ -233,7 +234,7 @@ complicationValue complication =
             List.Extra.getAt (tier - 1) list
                 |> Maybe.map Tuple.second
     in
-    combinedComplications
+    Complication.all
         |> List.Extra.find (\{ name } -> name == complication.name)
         |> Maybe.andThen
             (\details ->
@@ -250,11 +251,6 @@ complicationValue complication =
                     ( _, Nontiered ) ->
                         Nothing
             )
-
-
-combinedComplications : List Complication.Details
-combinedComplications =
-    Complication.worldShifts ++ Complication.all
 
 
 typePerksValue : Model -> Maybe Int
@@ -289,7 +285,7 @@ magicsValue model =
 
 magicValue : List Affinity -> Maybe Class -> RankedMagic -> Maybe Int
 magicValue affinities class { name, rank } =
-    combinedMagics
+    Magic.all
         |> List.Extra.find (\magic -> magic.name == name)
         |> Maybe.andThen
             (\magic ->
@@ -349,11 +345,6 @@ magicValue affinities class { name, rank } =
                     _ ->
                         Nothing
             )
-
-
-combinedMagics : List Magic.Details
-combinedMagics =
-    Magic.all ++ Magic.elementalism
 
 
 perksValue : Model -> Maybe Int

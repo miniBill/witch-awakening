@@ -40,7 +40,7 @@ viewFaction faction =
                 ]
                 (Faction.intro ++ String.repeat 4 "\n" ++ Faction.summaries)
             ]
-        , Faction.all
+        , Faction.witchFactions
             |> List.map (factionBox faction)
             |> Theme.column
                 [ width fill
@@ -71,6 +71,13 @@ viewFaction faction =
                 ]
             , el [ height <| px 40 ] Element.none
             ]
+        , Faction.humanFactions
+            |> List.map (factionBox faction)
+            |> Theme.column
+                [ width fill
+                , spacing <| Theme.rythm * 3
+                ]
+            |> Element.map ChoiceFaction
         ]
 
 

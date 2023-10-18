@@ -39,7 +39,7 @@ viewComplications complications =
                 ]
             |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
         , Theme.blocks [] "# Generic Complications"
-        , Complication.all
+        , Complication.generic
             |> List.map (complicationBox complications)
             |> Theme.wrappedRow
                 [ centerX

@@ -1,4 +1,4 @@
-module Data.Magic exposing (Affinities(..), Details, all, elementalism, elementalismIntro, intro, slotDescription)
+module Data.Magic exposing (Affinities(..), Details, all, elementalism, elementalismIntro, intro, nonElemental, slotDescription)
 
 import Generated.Types exposing (Affinity(..), Class(..), Magic(..))
 
@@ -20,6 +20,11 @@ type Affinities
 
 all : List Details
 all =
+    nonElemental ++ elementalism
+
+
+nonElemental : List Details
+nonElemental =
     [ alchemy, runes, curses, hexes, witchery, familiarity, necromancy, consortation, portals, divination, aethernautics ]
 
 
