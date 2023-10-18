@@ -134,3 +134,6 @@ factionToMagic faction =
 
         Alfheimr ->
             "Covenants"
+
+        Outsiders ->
+            "Monstrosity"

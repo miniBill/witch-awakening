@@ -114,6 +114,7 @@ enums =
             , ( "Hespatian", "The Hespatian Coven" )
             , ( "Lunabella", "Lunabella" )
             , ( "Alfheimr", "Alfheimr Alliance" )
+            , ( "Outsiders", "The Outsiders" )
             ]
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True

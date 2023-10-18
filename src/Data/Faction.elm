@@ -18,7 +18,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ arcadia, hawthorne, watchers, hespatian, lunabella, alfheimr ]
+    [ arcadia, hawthorne, watchers, hespatian, lunabella, alfheimr, outsiders ]
 
 
 arcadia : Details
@@ -159,6 +159,27 @@ alfheimr =
 
         Additionally, whenever you are visually unobserved, you can instantly vanish to appear at any other unobserved location within 300m seamlessly with a thought, such as running behind the trees of a forest or obscuring fog."""
     , images = Images.factionAlfheimr
+    }
+
+
+outsiders : Details
+outsiders =
+    { name = Outsiders
+    , motto = "Harbingers of What Lies Beyond"
+    , description =
+        """If you thought the Hespatians were villainous, Outsiders make them look like antiheroes. The things that some Hespatians merely dabble in, Outsiders actively revel in. Outsiders aren't simply amoral, but they are actively profane and explicitly evil, no gray area, no nuance, they simply are evil, because sometimes evil people exist, and if they don't end up in Hespatia, the Outsiders probably found them. They do things that I cannot in good conscience repeat or even suggest, the least of all are the simple expected evils that require high levels of corruption just to conceptualize, and hearing about them can cause high cognito damage to innocent minds -- so imagine the glee of an Outsider in _performing_ such actions on or with the innocent. The library that the ORC mentioned that “made demons weep”, was containing a forbidden archive of captured Outsider texts deep in its vaults after a narrow vote by the council of New Alexandria to elect not to destroy them, and the ORC took it upon themselves. I'm still pissed, but it's understandable. Infohazards are nothing to scoff at and can bypass warding runes, as it's not a magical effect, but a part of life, requiring psychosurgery to attempt to mend.
+
+        Outsiders live to bring maximum suffering and corruption to weaken the memetic consciousness that stabilizes the local Aether, allowing intrusions from the Far Gods, entities Irom beyond the aether, which is the scope of this self contained reality. Far Gods are as varied and different as local deities are, but are overwhelmingly alien entities that bend the mind to perceive. Average humans instantly go mad when any of the 5 senses attempt to perceive one, and slowly go mad with exposure to any related entity or phenomenon. Strong willed humans might go only mostly insane. Witches and Mediums can endure for longer, enough that repeated brief exposure can build up a tolerance while maintaining most of your sanity, but that sanity can be overwhelmed with too much exposure at once. They would have to overwhelmingly corrupt tens of millions of people at once to allow a Far God to actually breach our reality, but any horror can operate on a sliding scale to allow lesser abominations to slither through the cracks in the fabric, and further atrocities are committed to keep the abominations they summoned happy or well fed. They don't care about the masquerade, but are nonetheless forced to adhere to it or they'd be fish in a barrel for every other faction who would have open license to purge them with the full threat of divine retribution."""
+    , location =
+        """Outsiders are decentralized throughout the world in a similar manner to Hespatian families, which intermingle somewhat parasitically where Outsiders can join a Family and convert it to a full outsider cult eventually, or be forced to break off with their new acquisitions, though this doesn’t work with larger or more notable families that have closer ties to the Crowns or Wraiths forming the overarching Hespatian structure. They can likewise crop up in other places with other factions to varying extents. For example, Alphazon can be daring enough to experiment with profane Outsider texts and artifacts, which invariably results in containment breaches, but the information gleaned is deemed worthwhile, while the ORC learned long ago that it’s better to destroy on sight, often using nuclear tests as cover. Lunabella had a breach in one of their isolated domains land the entire sphere was condemned for _Deus Nihilo_, resulting in a new lunar crater on the dark side of the moon. Hawthorne has had multiple small breeches but their capable staff and surveillance has intervened before they got out of hand beyond a building or two. Arcadia as far as we know, has not had an Outsider incursion.
+
+        Otherwise, the disparate pantheon of Far Gods provides a large number of potentially accessible dimensions and parasitic Realms manifesting within this Aether, each harmonized with a specific Far God or two, from mutagenic fleshscapes, labyrinths of bone, inorganic technophage constructs, and mind numbing geometric paradoxes. Portals and unnatural rifts to such locations actively spread the relevant corruption throughout the surrounding area, twisting the terrain, the flora, and the fauna into the image of the Far God in question. An Outsider with Dominion could have their whole bubble act as a direct reflection of this nature, including their combat bubbles being an immediate nightmare of a twisted reflection of the reality it overlays, and the same goes for their Pocketspace from witchery and their Mothergifts, which might be a living parasite suit or armor, a technophage patron Far God might make their Mothergifts manifest as a techno-organic construct something between armor and a second skin, any of which allows natural protections from the respective environment. And, of course, open Portals to a relevant Far Realm, which can be almost as dangerous to them as to an enemy in pursuit."""
+    , relations =
+        """Outsiders are enemies to all life in the Aether, the universe and beyond, and even among themselves there can be power struggles and friction between different Far Gods, though in a rivalry more than enmity."""
+    , perk = "Aberration"
+    , perkContent =
+        """Your body is augmented into an eldritch state where none of your organs are critical, all damage is superficial. One cell is capable of regenerating you to full health cover 3 days, and you do not require biological stability with any form you could take with Hex transmutations, easily adapting to multiple limbs, organs, and can add to your mass by consuming biomatter. You can also directly apply Runes to your own body as engravings that can regenerate if damaged."""
+    , images = Images.factionOutsiders
     }
 
 
