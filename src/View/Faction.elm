@@ -162,7 +162,7 @@ factionBox selected { name, motto, description, location, relations, perk, perkC
                 , Font.color <| rgb 0 0 0
                 , case factionGlow of
                     Just color ->
-                        Theme.backgroundColor color
+                        Background.color <| Theme.intToBackground color
 
                     Nothing ->
                         Theme.backgroundColor 0x00C1C1C1
@@ -194,7 +194,12 @@ factionBox selected { name, motto, description, location, relations, perk, perkC
                 , onPress = Just factionMsg
                 }
             , Theme.card
-                [ Theme.backgroundColor 0x00C1C1C1
+                [ case perkGlow of
+                    Just color ->
+                        Background.color <| Theme.intToBackground color
+
+                    Nothing ->
+                        Theme.backgroundColor 0x00C1C1C1
                 , width fill
                 , height shrink
                 , alignTop
