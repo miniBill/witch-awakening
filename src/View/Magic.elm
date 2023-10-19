@@ -343,7 +343,7 @@ viewRank selected { name, class } rankIndex label =
                     color =
                         class
                             |> Maybe.map Theme.classToColor
-                            |> Maybe.withDefault Theme.colors.white
+                            |> Maybe.withDefault Theme.colors.epic
                 in
                 Theme.backgroundColor color
 
