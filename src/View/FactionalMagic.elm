@@ -23,7 +23,7 @@ viewFactionalMagics selected =
             (Theme.gradientText 2 Gradients.blueGradient "Factional Magic")
         , Theme.blocks [ centerX, width <| Element.maximum 800 fill ] FactionalMagic.intro
         , FactionalMagic.all
-            |> List.indexedMap (Magic.magicBox selected)
+            |> List.indexedMap (Magic.magicBox True selected)
             |> Theme.column []
             |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)
         ]

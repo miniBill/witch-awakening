@@ -42,7 +42,7 @@ viewMagics selected =
             ]
             Magic.slotDescription
         , Magic.nonElemental
-            |> List.indexedMap (magicBox selected)
+            |> List.indexedMap (magicBox False selected)
             |> Theme.column []
             |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)
         , Theme.row
@@ -77,7 +77,7 @@ viewMagics selected =
             , el [ width <| fillPortion 3 ] Element.none
             ]
         , Magic.elementalism
-            |> List.indexedMap (magicBox selected)
+            |> List.indexedMap (magicBox False selected)
             |> Theme.column []
             |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)
         ]
@@ -200,9 +200,9 @@ costTable =
             [ Html.Attributes.style "border-collapse" "collapse" ]
 
 
-magicBox : List RankedMagic -> Int -> { a | star : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic } -> Element ( RankedMagic, Bool )
-magicBox selected index details =
-    if modBy 2 index == 0 then
+magicBox : Bool -> List RankedMagic -> Int -> { a | star : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic } -> Element ( RankedMagic, Bool )
+magicBox factional selected index details =
+    if modBy 2 index == 0 || factional then
         Theme.row []
             [ magicImage details
             , viewContent selected details
