@@ -1,4 +1,4 @@
-module View.Magic exposing (magicBox, magicImage, magicTitle, viewAffinities, viewMagics, viewRank)
+module View.Magic exposing (magicBox, viewMagics)
 
 import Data.Magic as Magic exposing (Affinities(..))
 import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveRight, moveUp, padding, px, rgb, rgba, spacing, width)

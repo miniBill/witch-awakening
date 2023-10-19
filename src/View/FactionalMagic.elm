@@ -3,7 +3,6 @@ module View.FactionalMagic exposing (viewFactionalMagics)
 import Data.FactionalMagic as FactionalMagic
 import Element exposing (Element, centerX, el, fill, spacing, width)
 import Element.Font as Font
-import Generated.Types exposing (Slot(..))
 import Gradients
 import Theme
 import Types exposing (Choice(..), RankedMagic)
