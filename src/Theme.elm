@@ -255,7 +255,12 @@ viewPiece piece =
                     else
                         target
             in
-            Html.a [ Html.Attributes.href target ] [ Html.text cut ]
+            Html.a
+                [ Html.Attributes.class "link"
+                , Html.Attributes.href target
+                , Html.Attributes.target "_blank"
+                ]
+                [ Html.text cut ]
 
         Slot slot ->
             Html.img [ Html.Attributes.src (Types.slotToImage slot).src ] []

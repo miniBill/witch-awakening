@@ -23,6 +23,14 @@ ul {
   padding-inline-start: 20px;
 }
 
+a.link {
+  color: inherit;
+  font-variant-caps: small-caps;
+  font-size: 1.2em;
+  text-decoration: none;
+}
+
+/* This is terrible and bad and I've yet to find a better way. */
 .outlined {
   position: relative;
   color: transparent;
