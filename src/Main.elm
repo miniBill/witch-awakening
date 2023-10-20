@@ -91,13 +91,13 @@ update msg model =
 
         ScrollTo id ->
             ( model
-            , Task.andThen
-                (\{ element } ->
-                    Browser.Dom.setViewport
-                        0
-                        (element.y - Theme.rythm)
-                )
-                (Browser.Dom.getElement id)
+            , Browser.Dom.getElement id
+                |> Task.andThen
+                    (\{ element } ->
+                        Browser.Dom.setViewport
+                            0
+                            (element.y - Theme.rythm)
+                    )
                 |> Task.attempt (\_ -> Nop)
             )
 
