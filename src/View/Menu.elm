@@ -77,42 +77,27 @@ viewMenu model =
 viewCalculations : Model -> Element Msg
 viewCalculations model =
     let
-        row : String -> (Model -> Maybe Int) -> Element Msg
-        row label toValue =
-            let
-                target : String
-                target =
-                    case label of
-                        "Initial power" ->
-                            "Game Mode"
-
-                        "Power cap" ->
-                            "Game Mode"
-
-                        "Magic" ->
-                            "The Magic"
-
-                        _ ->
-                            label
-            in
+        row : String -> (Model -> Maybe Int) -> Maybe String -> Element Msg
+        row label toValue target =
             case toValue model of
                 Nothing ->
                     Theme.row [ width fill ]
-                        [ Input.button []
-                            { onPress = Just <| ScrollTo <| String.Extra.underscored target
-                            , label = el [ Font.bold ] <| text label
-                            }
+                        [ linkLabel label target
                         , rightNumber "?"
                         ]
 
                 Just value ->
                     Theme.row [ width fill ]
-                        [ Input.button []
-                            { onPress = Just <| ScrollTo <| String.Extra.underscored target
-                            , label = el [ Font.bold ] <| text label
-                            }
+                        [ linkLabel label target
                         , rightNumber <| String.fromInt value
                         ]
+
+        link : String -> Maybe String -> Element Msg
+        link label target =
+            Theme.row [ width fill ]
+                [ linkLabel label target
+                , rightNumber "-"
+                ]
 
         rightNumber : String -> Element msg
         rightNumber value =
@@ -122,6 +107,13 @@ viewCalculations model =
                 , Font.size 20
                 ]
                 (Theme.gradientText 4 Gradients.yellowGradient value)
+
+        linkLabel : String -> Maybe String -> Element Msg
+        linkLabel label target =
+            Input.button []
+                { onPress = Just <| ScrollTo <| String.Extra.underscored <| Maybe.withDefault label target
+                , label = el [ Font.bold ] <| text label
+                }
     in
     Theme.column
         [ Background.color <| rgb 1 1 1
@@ -137,10 +129,12 @@ viewCalculations model =
             , Font.size 24
             ]
             [ text "🐱culations" ]
-        , row "Initial power" initialPower
-        , row "Power cap" powerCap
-        , row "Complications" complicationsValue
-        , row "Type perks" typePerksValue
+        , link "Class" <| Just "True Form - Class"
+        , link "Race" <| Just "True Form - Race"
+        , row "Initial power" initialPower <| Just "Game Mode"
+        , row "Power cap" powerCap <| Just "Game Mode"
+        , row "Complications" complicationsValue Nothing
+        , row "Type perks" typePerksValue Nothing
         , Input.slider
             [ width fill
             , Element.behindContent <|
@@ -168,10 +162,10 @@ viewCalculations model =
             , step = Just 1
             , thumb = Input.defaultThumb
             }
-        , row "Magic" magicsValue
-        , row "Perks" perksValue
-        , row "Faction" factionValue
-        , el [ alignBottom, width fill ] <| row "Result" calculatePower
+        , row "Magic" magicsValue <| Just "The Magic"
+        , row "Perks" perksValue Nothing
+        , row "Faction" factionValue Nothing
+        , el [ alignBottom, width fill ] <| row "Result" calculatePower Nothing
         ]
 
 
