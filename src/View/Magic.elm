@@ -299,13 +299,13 @@ viewAffinities affinities =
                         afs
                             |> List.map Theme.viewAffinity
                             |> List.intersperse
-                                (el [ Font.size 24, moveUp 8 ] <|
-                                    Theme.gradientText 2 Gradients.yellowGradient " + "
+                                (Theme.gradientText 2 Gradients.yellowGradient " + "
+                                    |> el [ Font.size 24, moveUp 8 ]
                                 )
                     )
                 |> List.intersperse
-                    [ el [ Font.size 24 ] <|
-                        Theme.gradientText 2 Gradients.yellowGradient " OR "
+                    [ Theme.gradientText 2 Gradients.yellowGradient " OR "
+                        |> el [ Font.size 24 ]
                     ]
                 |> List.concat
 

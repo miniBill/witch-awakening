@@ -94,26 +94,22 @@ typePerkBox selected { race, cost, content } =
                 _ ->
                     Types.raceToImage race
         , inFront =
-            [ el
-                [ Theme.captureIt
-                , Font.size 56
-                , centerX
-                ]
-              <|
-                (gradientText 6 Gradients.yellowGradient <|
-                    Types.raceToString race
-                )
-            , el
-                [ alignRight
-                , Theme.captureIt
-                , moveLeft 28
-                , moveDown 16
-                , Font.size 30
-                ]
-              <|
-                (gradientText 6 Gradients.yellowGradient <|
-                    String.fromInt -cost
-                )
+            [ Types.raceToString race
+                |> gradientText 6 Gradients.yellowGradient
+                |> el
+                    [ Theme.captureIt
+                    , Font.size 56
+                    , centerX
+                    ]
+            , String.fromInt -cost
+                |> gradientText 6 Gradients.yellowGradient
+                |> el
+                    [ alignRight
+                    , Theme.captureIt
+                    , moveLeft 28
+                    , moveDown 16
+                    , Font.size 30
+                    ]
             , Types.slotToImage slot
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom ]

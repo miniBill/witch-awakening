@@ -72,9 +72,7 @@ raceBox selected { name, tank, affinities, charge, content } =
                 , Font.size 56
                 , centerX
                 ]
-                (gradientText 6 Gradients.yellowGradient <|
-                    Types.raceToString name
-                )
+                (gradientText 6 Gradients.yellowGradient <| Types.raceToString name)
             ]
         , content =
             [ Theme.row [ centerX ]
