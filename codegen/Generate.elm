@@ -86,8 +86,8 @@ enums =
         affinities =
             [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ]
 
-        complicationNames : List String
-        complicationNames =
+        complications : List String
+        complications =
             [ "Brutality", "Masquerade", "TrueNames", "Monsters", "Population", "Bonk", "Dysfunction", "Vulnerability", "Rejection", "Crutch", "Restriction", "Hunted", "Dislikeable", "MonsterBait", "BlackSwan", "SpellSink", "LikeADuck", "LikeARock", "EyeCatcher", "SillyGoose", "HardLessons", "ColdHeart", "Hideous", "WitchMark", "Nemesis", "Addiction", "SensoryDisability", "PhysicalDisability", "SensoryShock", "AdoringFan", "VeryDere", "Requirement", "Unveiled", "Nightmares", "Kryptonite", "FitWitch", "Branded", "NoPrivacy", "BloodFeud", "Marked", "Defeated", "Fixation", "AllNatural", "Witchknight", "Inadequacy", "Dysphoria", "Betrayal", "Compulsion" ]
 
         gameModes : List String
@@ -124,7 +124,7 @@ enums =
     , enum "Size" [ "Low", "Med", "High" ]
     , enumWith "Affinity" affinities [ ( "All", "???" ) ] True
     , enum "ComplicationCategory" [ "WorldShift" ]
-    , enumWith "ComplicationName" complicationNames [ ( "Bonk", "*Bonk*" ), ( "LikeADuck", "Like a duck" ), ( "LikeARock", "Like a rock" ) ] True
+    , enumWith "Complication" complications [ ( "Bonk", "*Bonk*" ), ( "LikeADuck", "Like a duck" ), ( "LikeARock", "Like a rock" ) ] True
     , enumWith "GameMode" gameModes [] True
     , enumWith "Slot" [ "White", "Folk", "Noble", "Heroic", "Epic" ] [] True
     , enumWith "Magic" magics [] True

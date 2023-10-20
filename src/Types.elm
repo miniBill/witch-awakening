@@ -1,8 +1,8 @@
-module Types exposing (Choice(..), Complication, ComplicationKind(..), Model, Msg(..), RankedMagic, RankedPerk, complicationKindToString, complicationNameToCategory, factionToMagic, gainToSlot)
+module Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot)
 
 import Browser exposing (UrlRequest)
 import Browser.Navigation
-import Generated.Types exposing (Class, ComplicationCategory(..), ComplicationName(..), Faction(..), GameMode, Magic, Perk, Race, Slot(..))
+import Generated.Types exposing (Class, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Slot(..))
 
 
 type Msg
@@ -19,7 +19,7 @@ type Choice
     = ChoiceClass (Maybe Class)
     | ChoiceRace (Maybe Race)
     | ChoiceGameMode (Maybe GameMode)
-    | ChoiceComplication Complication Bool
+    | ChoiceComplication RankedComplication Bool
     | ChoiceTypePerk Race Bool
     | ChoiceMagic RankedMagic Bool
     | ChoicePerk RankedPerk Bool
@@ -34,7 +34,7 @@ type alias Model =
     , class : Maybe Class
     , race : Maybe Race
     , gameMode : Maybe GameMode
-    , complications : List Complication
+    , complications : List RankedComplication
     , typePerks : List Race
     , magic : List RankedMagic
     , perks : List RankedPerk
@@ -42,8 +42,8 @@ type alias Model =
     }
 
 
-type alias Complication =
-    { name : ComplicationName
+type alias RankedComplication =
+    { name : Complication
     , kind : ComplicationKind
     }
 
@@ -75,8 +75,8 @@ complicationKindToString kind =
             ""
 
 
-complicationNameToCategory : ComplicationName -> Maybe ComplicationCategory
-complicationNameToCategory name =
+complicationToCategory : Complication -> Maybe ComplicationCategory
+complicationToCategory name =
     case name of
         Brutality ->
             Just WorldShift

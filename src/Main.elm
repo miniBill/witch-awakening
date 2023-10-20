@@ -177,7 +177,7 @@ toUrl model =
     , list "typePerk" Types.raceToString model.typePerks
     , list "complication"
         (\{ name, kind } ->
-            Types.complicationNameToString name ++ Types.complicationKindToString kind
+            Types.complicationToString name ++ Types.complicationKindToString kind
         )
         model.complications
     , list "magic"
@@ -254,9 +254,9 @@ parseUrl navKey url =
                 )
                 (parser <| String.fromList before)
 
-        parseComplication : String -> Maybe Types.Complication
+        parseComplication : String -> Maybe Types.RankedComplication
         parseComplication =
-            pair Types.complicationNameFromString <|
+            pair Types.complicationFromString <|
                 \name maybeTier ->
                     { name = name
                     , kind =

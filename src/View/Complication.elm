@@ -9,10 +9,10 @@ import Generated.Types as Types exposing (ComplicationCategory, Slot(..))
 import Gradients
 import List.Extra
 import Theme exposing (gradientText)
-import Types exposing (Choice(..), Complication, ComplicationKind(..))
+import Types exposing (Choice(..), ComplicationKind(..), RankedComplication)
 
 
-viewComplications : List Complication -> Element Choice
+viewComplications : List RankedComplication -> Element Choice
 viewComplications complications =
     Theme.column
         [ width fill
@@ -50,18 +50,18 @@ viewComplications complications =
 
 
 complicationBox :
-    List Complication
+    List RankedComplication
     -> Complication.Details
-    -> Element ( Complication, Bool )
+    -> Element ( RankedComplication, Bool )
 complicationBox selected ({ name, class, content } as complication) =
     let
-        isSelected : Maybe Complication
+        isSelected : Maybe RankedComplication
         isSelected =
             List.Extra.find (\sel -> sel.name == name) selected
 
         category : Maybe ComplicationCategory
         category =
-            Types.complicationNameToCategory name
+            Types.complicationToCategory name
 
         glow : Maybe Int
         glow =
@@ -71,7 +71,7 @@ complicationBox selected ({ name, class, content } as complication) =
             else
                 Just color
 
-        msg : Maybe ( Complication, Bool )
+        msg : Maybe ( RankedComplication, Bool )
         msg =
             case ( content, isSelected ) of
                 ( _, Just selectedComplication ) ->
@@ -140,7 +140,7 @@ complicationBox selected ({ name, class, content } as complication) =
             , Theme.borderColor color
             ]
         , imageHeight = 400
-        , image = Types.complicationNameToImage name
+        , image = Types.complicationToImage name
         , inFront =
             [ case class of
                 Nothing ->
@@ -189,7 +189,7 @@ complicationBox selected ({ name, class, content } as complication) =
                 , moveUp 4
                 ]
                 (gradientText 4 gradient <|
-                    Types.complicationNameToString name
+                    Types.complicationToString name
                 )
             ]
         , content = viewContent selected complication color
@@ -197,7 +197,7 @@ complicationBox selected ({ name, class, content } as complication) =
         }
 
 
-viewContent : List Complication -> Complication.Details -> Int -> List (Element ( Complication, Bool ))
+viewContent : List RankedComplication -> Complication.Details -> Int -> List (Element ( RankedComplication, Bool ))
 viewContent selected { content, name } color =
     case content of
         Single _ block ->
@@ -214,7 +214,7 @@ viewContent selected { content, name } color =
                     :: List.indexedMap
                         (\tier ( label, _ ) ->
                             let
-                                complication : Complication
+                                complication : RankedComplication
                                 complication =
                                     { name = name
                                     , kind = Tiered (tier + 1)
@@ -251,7 +251,7 @@ viewContent selected { content, name } color =
 
         WithChoices before choices after ->
             let
-                choicesView : List (Element ( Complication, Bool ))
+                choicesView : List (Element ( RankedComplication, Bool ))
                 choicesView =
                     if List.all (\( label, _ ) -> label == "-") choices then
                         [ el [ Font.bold ] <| text "Cost:"
@@ -263,10 +263,10 @@ viewContent selected { content, name } color =
                     else
                         List.indexedMap viewChoice choices
 
-                viewChoice : Int -> ( String, Int ) -> Element ( Complication, Bool )
+                viewChoice : Int -> ( String, Int ) -> Element ( RankedComplication, Bool )
                 viewChoice choice ( label, value ) =
                     let
-                        complication : Complication
+                        complication : RankedComplication
                         complication =
                             { name = name
                             , kind = Tiered (choice + 1)

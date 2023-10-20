@@ -1,10 +1,10 @@
 module Data.Complication exposing (Content(..), Details, all, generic, intro, worldShifts, worldShiftsDescription)
 
-import Generated.Types exposing (Class(..), ComplicationName(..))
+import Generated.Types exposing (Class(..), Complication(..))
 
 
 type alias Details =
-    { name : ComplicationName
+    { name : Complication
     , class : Maybe Class
     , content : Content
     }

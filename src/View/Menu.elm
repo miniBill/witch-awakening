@@ -227,7 +227,7 @@ complicationsValue =
     maybeSum complicationValue .complications
 
 
-complicationValue : Types.Complication -> Maybe Int
+complicationValue : Types.RankedComplication -> Maybe Int
 complicationValue complication =
     let
         get : Int -> List ( a, Int ) -> Maybe Int
