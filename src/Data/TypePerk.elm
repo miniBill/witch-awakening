@@ -12,7 +12,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg ]
 
 
 neutral : Details
@@ -403,5 +403,15 @@ xeno =
         Their body is also enhanced, their outer plating is just as sleek as it was, but is twice as hard and they resist energetic damage by 75% (Cold, Heat, Electricity, Radiation, ect). Xenos by default already can exist comfortably in vacuum as well as high pressures.
 
         Using Necromancy to manipulate their own flesh and bone consumes no mana, neither does using Hexes, to work with their own biomatter, including eggs, allowing them to easily create networks of biomatter like veins to connect eggs in order to keep them supplied with blood.
+        """
+    }
+
+
+cyborg : Details
+cyborg =
+    { race = Cyborg
+    , cost = 6
+    , content = """
+        While all cyborgs have some degree of passive regeneration capable of providing healing / maintenance to inorganic parts of their body, it isn't particularly notable or versatile beyond that. Cyborgs with this type perk however, have built in internal nanofabricators, little factories that produce femtomachines. This allows them to mend their body at a rapid rate, repairing damage comparable to a bullet wound every few seconds, and can fully repair their body, both synthetic and organic parts. Additionally, they can take Gadgetry and/or Integration at half price as though they had affinity for it, and when they do they are not linked to Alphazon, and their Gadgetry can be produce from their body on demand. Utilizing a silver swarm, if the witch has Metallurgy it's usage costs half the mana it would normally.
         """
     }

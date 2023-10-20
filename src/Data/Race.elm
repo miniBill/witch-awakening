@@ -14,10 +14,8 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno
-
-    {- , cyborg, spider, gnome, pixie, fairy, genie, gemini -}
-    ]
+    {- , spider, gnome, pixie, fairy, genie, gemini -}
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg ]
 
 
 neutral : Details
@@ -528,6 +526,22 @@ xeno =
         Xenos are a new species only discovered in the last 10 years by an Alphazon research team on Titan. A crashed ship from outside the solar system. Normal Xenos are monstrous predators, but after killing some witches on the team, they started hatching hybrids that are more humanoid and less feral. These hybrids have established a colony. They run at 120mph, can throw cars, and have hard carapaces equivalent to mithril armor with claws and bladed tails. Remarkably quiet in movement and can see infrared and UV.
 
         __Xenos draw Mana__ from Eggs, laid by the xeno if female. Male xenos benefit from the eggs laid by their parent or eggs laid by their own mate. Each egg individually provides about 1% total mana per minute af fa range of 500 meters, .5 for an additional 500, .1 in another 500. Stacks. Eggs can't be fertilized after being laid, remaining as mana batteries, but are fertilized during formation like the sexual reproduction most witches are familiar with. An egg lasts 1 month before running dry, unless supplied blood. 1 drop = 1% charge."""
+    }
+
+
+cyborg : Details
+cyborg =
+    { name = Cyborg
+    , tank = Med
+    , affinities = [ Body, Metal ]
+    , charge = High
+    , content = """
+        Cyborgs can be simulated a number of ways but this Cyborg type is a particular instance and a common type of witch back on Terra Prima, combining flesh and synthetic components. Cyborgs don't age past their appearance, and a dead cyborg will have a small backup chip that can be inserted into a new cyborg body. Cyborgs can have up to 5 mundane items integrated into their body for use in some manner.
+
+        __Cyborgs draw Mana__ from Electricity, using internal reactors, typically in the form of fuel pellets, little beads any alchemist can learn to make using stardust and a potion of stamina of any rank. R1: Restores 1% mana capacity per minute for up to 24 hrs. R2: 2%. R3:5%. R4: 10% per 30 seconds for 1 hour. R5: 25% per 10 seconds for half an hour. A cyborg with no fuel pellet will feel a hunger-like sensation
+
+        They can of course tap into any power source to drain electricity at the rate at which the system is rated for, such as 1,50 watts for an outlet, which can charge 5% per minute. Cyborgs are not immune to electrical damage from unregulated attacks.
+        """
     }
 
 
