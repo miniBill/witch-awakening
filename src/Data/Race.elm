@@ -14,7 +14,10 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno
+
+    {- , cyborg, spider, gnome, pixie, fairy, genie, gemini -}
+    ]
 
 
 neutral : Details
@@ -512,6 +515,19 @@ sword =
 
         __Swords draw Mana__ from Battle, gaining MP during conflict. Increases to Med after 2 minutes, & High after 10 minutes.
         """
+    }
+
+
+xeno : Details
+xeno =
+    { name = Xeno
+    , tank = Med
+    , affinities = [ Beast, Blood ]
+    , charge = High
+    , content = """
+        Xenos are a new species only discovered in the last 10 years by an Alphazon research team on Titan. A crashed ship from outside the solar system. Normal Xenos are monstrous predators, but after killing some witches on the team, they started hatching hybrids that are more humanoid and less feral. These hybrids have established a colony. They run at 120mph, can throw cars, and have hard carapaces equivalent to mithril armor with claws and bladed tails. Remarkably quiet in movement and can see infrared and UV.
+
+        __Xenos draw Mana__ from Eggs, laid by the xeno if female. Male xenos benefit from the eggs laid by their parent or eggs laid by their own mate. Each egg individually provides about 1% total mana per minute af fa range of 500 meters, .5 for an additional 500, .1 in another 500. Stacks. Eggs can't be fertilized after being laid, remaining as mana batteries, but are fertilized during formation like the sexual reproduction most witches are familiar with. An egg lasts 1 month before running dry, unless supplied blood. 1 drop = 1% charge."""
     }
 
 

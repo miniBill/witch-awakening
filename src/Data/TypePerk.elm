@@ -12,7 +12,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno ]
 
 
 neutral : Details
@@ -389,5 +389,19 @@ sword =
     , cost = 5
     , content = """
         Swords with this perk are able to form especially strong bonds to a Wielder, or sometimes called a Master, depending on the school of thought involved. It takes a week to synchronize to a new wielder but once synchronized once it only takes a few minutes to re-adapt to a prior wielder. The Sword and Wielder merge their Mana capacity and Charge rates, and each are capable of using all Magic Specializations and Perks that the other possesses, when within a 1km radius of each other, and at any distance they can send telepathic messages to one another. They can cooperate to perform Harmony magic with extreme ease, their harmony magics being 100% more potent.
+        """
+    }
+
+
+xeno : Details
+xeno =
+    { race = Xeno
+    , cost = 10
+    , content = """
+        Some Xenos seem to have a natural affinity for working biomatter. Gain Necromancy 3 and Hexes 3.
+
+        Their body is also enhanced, their outer plating is just as sleek as it was, but is twice as hard and they resist energetic damage by 75% (Cold, Heat, Electricity, Radiation, ect). Xenos by default already can exist comfortably in vacuum as well as high pressures.
+
+        Using Necromancy to manipulate their own flesh and bone consumes no mana, neither does using Hexes, to work with their own biomatter, including eggs, allowing them to easily create networks of biomatter like veins to connect eggs in order to keep them supplied with blood.
         """
     }
