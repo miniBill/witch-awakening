@@ -123,9 +123,9 @@ perkBox selected ({ name, affinity, class, content, isMeta } as perk) =
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
-            el [ alignBottom, moveUp 48 ] <|
-                Theme.image [ width <| px 40 ] <|
-                    Types.slotToImage slot
+            Types.slotToImage slot
+                |> Theme.image [ width <| px 40 ]
+                |> el [ alignBottom, moveUp 48 ]
 
         color : Int
         color =
@@ -161,9 +161,9 @@ perkBox selected ({ name, affinity, class, content, isMeta } as perk) =
 
               else
                 Element.none
-            , el [ alignBottom ] <|
-                Theme.image [ width <| px 40 ] <|
-                    Theme.classToBadge class
+            , Theme.classToBadge class
+                |> Theme.image [ width <| px 40 ]
+                |> el [ alignBottom ]
             , case costs of
                 [] ->
                     Element.none
@@ -249,9 +249,9 @@ viewContent selected { content, name } color =
                         )
                         { label =
                             if label == "-" then
-                                el [ centerX, centerY, Theme.captureIt ] <|
-                                    Theme.gradientText 4 Gradients.yellowGradient <|
-                                        String.fromInt cost
+                                String.fromInt cost
+                                    |> Theme.gradientText 4 Gradients.yellowGradient
+                                    |> el [ centerX, centerY, Theme.captureIt ]
 
                             else
                                 Theme.blocks []

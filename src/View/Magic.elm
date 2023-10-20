@@ -272,9 +272,9 @@ magicTitle { name, star, class, affinities } =
 
               else
                 Element.none
-            , el [] <|
-                Theme.gradientText 4 Gradients.yellowGradient <|
-                    Types.magicToString name
+            , Types.magicToString name
+                |> Theme.gradientText 4 Gradients.yellowGradient
+                |> el []
             ]
         , Theme.row
             [ moveRight 8

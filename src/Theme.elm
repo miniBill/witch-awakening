@@ -48,8 +48,7 @@ choice value =
 
 gradientText : Float -> List ( Int, Int, Int ) -> String -> Element msg
 gradientText outlineSize gradient value =
-    Element.html <|
-        gradientTextHtml outlineSize gradient value
+    Element.html <| gradientTextHtml outlineSize gradient value
 
 
 gradientTextHtml : Float -> List ( Int, Int, Int ) -> String -> Html msg
@@ -364,7 +363,9 @@ intToColor : Int -> Element.Color
 intToColor color =
     rgb255
         (color // 65536)
-        (modBy 256 (color // 256))
+        ((color // 256)
+            |> modBy 256
+        )
         (modBy 256 color)
 
 
@@ -375,7 +376,9 @@ intToBackground color =
         hsla =
             Color.rgb255
                 (color // 65536)
-                (modBy 256 (color // 256))
+                ((color // 256)
+                    |> modBy 256
+                )
                 (modBy 256 color)
                 |> Color.toHsla
 

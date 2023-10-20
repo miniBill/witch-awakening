@@ -38,7 +38,7 @@ blockParser =
         [ Parser.succeed (SectionTitle << String.trim)
             |. Parser.symbol "#"
             |. Parser.spaces
-            |= Parser.getChompedString (Parser.chompWhile (\c -> c /= '\n'))
+            |= Parser.getChompedString (Parser.chompWhile <| \c -> c /= '\n')
         , Parser.succeed UnorderedList
             |. Parser.symbol "-"
             |. Parser.spaces
@@ -108,7 +108,7 @@ mainParser =
     Parser.oneOf
         [ Parser.succeed Text
             |. Parser.symbol "\\"
-            |= Parser.getChompedString (Parser.chompIf (\_ -> True))
+            |= Parser.getChompedString (Parser.chompIf <| \_ -> True)
         , Parser.succeed Speech
             |. Parser.symbol "\""
             |= innerParser '"'
@@ -147,7 +147,7 @@ mainParser =
                         Number <| String.fromInt i
             )
             |. Parser.symbol "["
-            |= Parser.getChompedString (Parser.chompWhile (\c -> c /= ']'))
+            |= Parser.getChompedString (Parser.chompWhile <| \c -> c /= ']')
             |. Parser.symbol "]"
         , Parser.succeed identity
             |. Parser.symbol "("

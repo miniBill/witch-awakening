@@ -243,16 +243,16 @@ parseUrl navKey url =
                         |> String.toList
                         |> List.Extra.break Char.isDigit
             in
-            Maybe.andThen
-                (\parsed ->
-                    let
-                        number : Maybe Int
-                        number =
-                            String.toInt (String.fromList after)
-                    in
-                    builder parsed number
-                )
-                (parser <| String.fromList before)
+            (parser <| String.fromList before)
+                |> Maybe.andThen
+                    (\parsed ->
+                        let
+                            number : Maybe Int
+                            number =
+                                String.toInt (String.fromList after)
+                        in
+                        builder parsed number
+                    )
 
         parseComplication : String -> Maybe Types.RankedComplication
         parseComplication =

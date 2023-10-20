@@ -99,6 +99,7 @@ typePerkBox selected { race, cost, content } =
                 , Font.size 56
                 , centerX
                 ]
+              <|
                 (gradientText 6 Gradients.yellowGradient <|
                     Types.raceToString race
                 )
@@ -109,12 +110,13 @@ typePerkBox selected { race, cost, content } =
                 , moveDown 16
                 , Font.size 30
                 ]
+              <|
                 (gradientText 6 Gradients.yellowGradient <|
                     String.fromInt -cost
                 )
-            , el [ alignBottom ] <|
-                Theme.image [ width <| px 40 ] <|
-                    Types.slotToImage slot
+            , Types.slotToImage slot
+                |> Theme.image [ width <| px 40 ]
+                |> el [ alignBottom ]
             ]
         , content =
             [ Theme.blocks
