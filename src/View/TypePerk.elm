@@ -69,11 +69,30 @@ typePerkBox selected { race, cost, content } =
         , imageAttrs = [ Theme.style "background-position" "top" ]
         , imageHeight = 360
         , image =
-            if race == Jotun then
-                Images.typePerkJotun
+            case race of
+                Jotun ->
+                    Images.typePerkJotun
 
-            else
-                Types.raceToImage race
+                Xeno ->
+                    Images.typePerkXeno
+
+                Spider ->
+                    Images.typePerkSpider
+
+                Pixie ->
+                    Images.typePerkPixie
+
+                Fairy ->
+                    Images.typePerkFairy
+
+                Genie ->
+                    Images.typePerkGenie
+
+                Gemini ->
+                    Images.typePerkGemini
+
+                _ ->
+                    Types.raceToImage race
         , inFront =
             [ el
                 [ Theme.captureIt
