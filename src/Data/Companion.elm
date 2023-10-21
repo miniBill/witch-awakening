@@ -35,8 +35,13 @@ intro =
     """
 
 
-all : List Details
+all : List ( String, List Details )
 all =
+    [ ( "The Arcadians", arcadians ) ]
+
+
+arcadians : List Details
+arcadians =
     [ rachelPool ]
 
 
@@ -51,7 +56,7 @@ rachelPool =
     , sociability = 4
     , morality = 9
     , quote =
-        """"Has anyone seen Rachel around? We have a double date in 20 minutes and she totally vanished.” - an Arcadian student."""
+        """“Has anyone seen Rachel around? We have a double date in 20 minutes and she totally vanished.” - an Arcadian student."""
     , description =
         """Rachel is very introverted and socially awkward, she grew up largely alone without a lot of interaction, so other people may as well be aliens for her and she freaks out about saying the wrong thing, but once she makes real friends she cares for them a lot and can find her stride. She's very fond of animals and spends a lot of time with her cat, and going on walks alone as to not bother anybody."""
     , positives =

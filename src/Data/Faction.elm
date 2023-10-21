@@ -1,4 +1,4 @@
-module Data.Faction exposing (Details, all, humanFactions, humansIntro, intro, summaries, witchFactions)
+module Data.Faction exposing (Details, humanFactions, humansIntro, intro, summaries, witchFactions)
 
 import Generated.Types exposing (Faction(..))
 import Images exposing (Image)
@@ -14,11 +14,6 @@ type alias Details =
     , perkContent : String
     , images : { image1 : Image, image2 : Image, image3 : Image, image4 : Image, image5 : Image }
     }
-
-
-all : List Details
-all =
-    witchFactions ++ humanFactions
 
 
 witchFactions : List Details
