@@ -152,6 +152,11 @@ block input =
 colors :
     { academic : Int
     , choice : Int
+    , companionBlack : ( Int, Int )
+    , companionBlue : ( Int, Int )
+    , companionGold : ( Int, Int )
+    , companionOrange : ( Int, Int )
+    , companionRed : ( Int, Int )
     , epic : Int
     , folk : Int
     , gameMode : Int
@@ -166,6 +171,11 @@ colors :
 colors =
     { academic = 0x001A77FF
     , choice = 0x0004D4ED
+    , companionBlack = ( 0x004B4A4A, 0x008A8A8A )
+    , companionRed = ( 0x00CD4A48, 0x00D98A88 )
+    , companionOrange = ( 0x00FF7E4A, 0x00FFA189 )
+    , companionBlue = ( 0x0049AEFF, 0x0088C2FC )
+    , companionGold = ( 0x00A18729, 0x00F5E96F )
     , epic = 0x00C32DE6
     , folk = 0x004DE1FF
     , gameMode = 0x00AA08B9

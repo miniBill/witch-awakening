@@ -165,6 +165,7 @@ viewCalculations model =
         , row "Magic" magicsValue <| Just "The Magic"
         , row "Perks" perksValue Nothing
         , row "Faction" factionValue Nothing
+        , row "Companions" companionsValue Nothing
         , el [ alignBottom, width fill ] <| row "Result" calculatePower Nothing
         ]
 
@@ -176,6 +177,7 @@ calculatePower model =
     , magicsValue
     , perksValue
     , factionValue
+    , companionsValue
     ]
         |> Maybe.Extra.traverse (\f -> f model)
         |> Maybe.map List.sum
@@ -431,6 +433,19 @@ factionValue model =
 
         Just ( _, True ) ->
             Just 0
+
+
+companionsValue : Model -> Maybe Int
+companionsValue model =
+    if List.length model.companions < 3 then
+        Just 0
+
+    else
+        let
+            _ =
+                Debug.todo
+        in
+        Nothing
 
 
 maybeSum : (item -> Maybe Int) -> (Model -> List item) -> Model -> Maybe Int

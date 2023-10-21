@@ -20,6 +20,7 @@ import Types exposing (Choice(..), Model, Msg(..))
 import Url
 import Url.Builder exposing (QueryParameter)
 import View.Class as Class
+import View.Companion as Companion
 import View.Complication as Complications
 import View.Faction as Faction
 import View.FactionalMagic as FactionalMagic
@@ -148,6 +149,13 @@ updateOnChoice choice model =
         ChoiceFaction faction ->
             { model | faction = faction }
 
+        ChoiceCompanion companion selected ->
+            if selected then
+                { model | companions = companion :: model.companions }
+
+            else
+                { model | companions = List.Extra.remove companion model.companions }
+
         TowardsCap towardsCap ->
             { model | towardsCap = towardsCap }
 
@@ -192,6 +200,7 @@ toUrl model =
         model.perks
     , pair "faction" (\( name, _ ) -> Types.factionToString name) model.faction
     , pair "factionPerk" (\( _, perk ) -> boolToString perk) model.faction
+    , list "companion" Types.companionToString model.companions
     ]
         |> List.concat
         |> Url.Builder.toQuery
@@ -324,6 +333,7 @@ parseUrl navKey url =
                         |> Maybe.withDefault False
                     )
                 )
+    , companions = parseMany "companion" Types.companionFromString
     }
 
 
@@ -365,6 +375,7 @@ innerView model =
         , Element.Lazy.lazy Perk.viewPerks model.perks
         , Element.Lazy.lazy Faction.viewFaction model.faction
         , Element.Lazy.lazy FactionalMagic.viewFactionalMagics model.magic
+        , Element.Lazy.lazy Companion.viewCompanions model.companions
         ]
         |> Element.map Choice
 

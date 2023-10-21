@@ -118,6 +118,20 @@ enums =
             , ( "TheOrc", "The O.R.C." )
             , ( "Alphazon", "Alphazon Industries" )
             ]
+
+        companions : List String
+        companions =
+            List.map Tuple.first companionNames
+
+        companionNames : List ( String, String )
+        companionNames =
+            [ "Rachel Pool"
+            , "Anne Laurenchi"
+            , "Canday Wesbank"
+            , "Tessa-Marie Kudashov"
+            , "Evelynn P. Willowcrane"
+            ]
+                |> List.map (\name -> ( String.Extra.classify name, name ))
     in
     [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
     , enumWith "Race" races [] True
@@ -130,6 +144,7 @@ enums =
     , enumWith "Magic" magics [] True
     , enumWith "Perk" perks [ ( "JackOfAll", "Jack-of-All" ), ( "WitchHut", "Witch... hut?" ) ] True
     , enumWith "Faction" factions factionNames False
+    , enumWith "Companion" companions companionNames True
     ]
         |> List.concat
 
