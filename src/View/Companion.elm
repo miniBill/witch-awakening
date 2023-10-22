@@ -1,13 +1,14 @@
 module View.Companion exposing (viewCompanions)
 
 import Data.Companion as Companion
-import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, fillPortion, height, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, text, width)
+import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, column, el, fill, fillPortion, height, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (Companion)
 import Gradients
 import Images
+import List.Extra
 import Theme
 import Types exposing (Choice(..))
 
@@ -124,7 +125,7 @@ companionBox :
     List Companion
     -> Companion.Details
     -> Element ( Companion, Bool )
-companionBox selected ({ name, quote, cost, class, description } as companion) =
+companionBox selected ({ name, shortName, quote, cost, class, description, positives, negatives, magics, perks } as companion) =
     let
         isSelected : Bool
         isSelected =
@@ -186,11 +187,89 @@ companionBox selected ({ name, quote, cost, class, description } as companion) =
                 , statsTable companion
                 , Theme.blocks [ Font.size 14 ] <| "_*" ++ quote ++ "*_"
                 , Theme.blocks [] description
+                , let
+                    minLength : Int
+                    minLength =
+                        min
+                            (List.length positives)
+                            (List.length negatives)
+
+                    split : String -> String -> List String -> ( List (Element msg), List (Element msg) )
+                    split label prefix items =
+                        items
+                            |> List.map
+                                (\line ->
+                                    Theme.blocks [] <| prefix ++ " " ++ line
+                                )
+                            |> (::) (el [ Font.bold ] <| text <| label ++ ":")
+                            |> List.Extra.splitAt (minLength + 1)
+
+                    ( positivesBefore, positivesAfter ) =
+                        split "Positives" "+" positives
+
+                    ( negativesBefore, negativesAfter ) =
+                        split "Negatives" "\\-" negatives
+
+                    beforeBlock : Element msg
+                    beforeBlock =
+                        [ positivesBefore
+                        , negativesBefore
+                        ]
+                            |> List.map
+                                (column
+                                    [ width fill
+                                    , alignTop
+                                    , spacing <| Theme.rythm // 2
+                                    ]
+                                )
+                            |> Theme.row [ width fill ]
+                  in
+                  column
+                    [ width fill
+                    , spacing <| Theme.rythm // 2
+                    ]
+                    (beforeBlock
+                        :: positivesAfter
+                        ++ negativesAfter
+                    )
+                , let
+                    magicsStrings : List String
+                    magicsStrings =
+                        magics
+                            -- |> List.sortBy (\{ rank } -> -rank)
+                            |> List.map
+                                (\magic ->
+                                    Types.magicToString magic.name
+                                        ++ " "
+                                        ++ String.fromInt magic.rank
+                                )
+
+                    perksStrings : List String
+                    perksStrings =
+                        List.map Types.perkToString perks
+
+                    magicsAndPerks : List String
+                    magicsAndPerks =
+                        magicsStrings ++ perksStrings
+
+                    ( init, last ) =
+                        List.Extra.splitAt
+                            (List.length magicsAndPerks - 1)
+                            magicsAndPerks
+                  in
+                  Theme.blocks [] <|
+                    "*"
+                        ++ shortName
+                        ++ " has "
+                        ++ String.join ", " init
+                        ++ " and "
+                        ++ String.join ", " last
+                        ++ "*"
                 ]
     in
     Theme.maybeButton
         [ height fill
-        , width <| Element.minimum 480 <| Element.maximum 680 fill
+        , width <| Element.minimum 480 <| Element.maximum 760 fill
         , Font.color <| rgb 0 0 0
         , Border.rounded Theme.cardRoundness
         , case glow of

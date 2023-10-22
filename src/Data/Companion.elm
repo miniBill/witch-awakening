@@ -6,6 +6,7 @@ import Types exposing (RankedMagic)
 
 type alias Details =
     { name : Companion
+    , shortName : String
     , class : Class
     , race : Race
     , cost : Int
@@ -48,6 +49,7 @@ arcadians =
 rachelPool : Details
 rachelPool =
     { name = RachelPool
+    , shortName = "Rachel"
     , class = Academic
     , race = Neutral
     , cost = 4
@@ -63,7 +65,7 @@ rachelPool =
         [ "Unexpectedly athletic/nimble."
         , "Goes out of her way for friends."
         , "Talks to animals."
-        , "Will at least *try* things beyond her comfort zone."
+        , "Will at least _try_ things beyond her comfort zone."
         ]
     , negatives =
         [ "Slow to adapt."
