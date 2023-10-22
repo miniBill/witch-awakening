@@ -125,7 +125,7 @@ companionBox :
     List Companion
     -> Companion.Details
     -> Element ( Companion, Bool )
-companionBox selected ({ name, shortName, quote, cost, class, description, positives, negatives, magics, perks } as companion) =
+companionBox selected ({ name, shortName, quote, cost, class, description, positives, mixed, negatives, magics, perks } as companion) =
     let
         isSelected : Bool
         isSelected =
@@ -159,7 +159,7 @@ companionBox selected ({ name, shortName, quote, cost, class, description, posit
                                 [ alignRight
                                 , Font.size 32
                                 , Theme.captureIt
-                                , moveLeft 4
+                                , moveLeft 8
                                 , moveDown 4
                                 ]
                         , Types.gainToSlot cost
@@ -210,6 +210,14 @@ companionBox selected ({ name, shortName, quote, cost, class, description, posit
                     ( negativesBefore, negativesAfter ) =
                         split "Negatives" "\\-" negatives
 
+                    mixedStrings : List (Element msg)
+                    mixedStrings =
+                        List.map
+                            (\line ->
+                                Theme.blocks [] <| "+/- " ++ line
+                            )
+                            mixed
+
                     beforeBlock : Element msg
                     beforeBlock =
                         [ positivesBefore
@@ -231,6 +239,7 @@ companionBox selected ({ name, shortName, quote, cost, class, description, posit
                     (beforeBlock
                         :: positivesAfter
                         ++ negativesAfter
+                        ++ mixedStrings
                     )
                 , let
                     magicsStrings : List String

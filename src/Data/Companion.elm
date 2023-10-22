@@ -17,6 +17,7 @@ type alias Details =
     , quote : String
     , description : String
     , positives : List String
+    , mixed : List String
     , negatives : List String
     , magics : List RankedMagic
     , perks : List Perk
@@ -67,6 +68,7 @@ rachelPool =
         , "Talks to animals."
         , "Will at least _try_ things beyond her comfort zone."
         ]
+    , mixed = []
     , negatives =
         [ "Slow to adapt."
         , "Very nervous."
