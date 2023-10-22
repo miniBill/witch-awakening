@@ -143,6 +143,10 @@ enums =
             , "King Daemian Kain"
             , "Whisper"
             , "Red Mother"
+            , "Diana"
+            , "Cassandra"
+            , "King Culicarius"
+            , "Einodia - Kate"
             ]
                 |> List.map (\name -> ( String.Extra.classify name, name ))
     in

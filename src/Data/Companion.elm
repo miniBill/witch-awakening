@@ -42,6 +42,7 @@ all =
     , ( "Hawthorne", Hawthorne, hawthorne )
     , ( "The Watchers", Watchers, watchers )
     , ( "The Hespatians", Hespatian, hespatians )
+    , ( "The Lunabellans", Lunabella, lunabellans )
     ]
 
 
@@ -584,4 +585,38 @@ redMother =
         ]
     , mixed = [ "+/- Won't _kill_ children or parents, but might abduct" ]
     , has = "Occultism 4, Necromancy 5, Alchemy 5, Consortation 5, _Visceramancy 5, Blood Witch, Family Line, and Immortal Blood_"
+    }
+
+
+lunabellans : List Details
+lunabellans =
+    [ diana ]
+
+
+diana : Details
+diana =
+    { name = Diana
+    , shortName = "Diana"
+    , class = Sorceress
+    , race = Neutral
+    , hasPerk = False
+    , cost = 6
+    , power = 8
+    , teamwork = 9
+    , sociability = 7
+    , morality = 9
+    , quote = "_*“Around here when you hear the wolves howl to the moon, you can feel safer, knowing the huntresses are here.” - ORC agent on a certain grove.*_"
+    , description = "Diana isn't actually a changeling despite her youthful appearance, but settle into maintaining her looks a certain way a long time ago to be with her late changeling husband who she hasn't seen in over a thousand years. She doesn't know what happened to him, but has kept her vows ever since, living as an eternal maiden huntress with her wolf, and started a sorority of celebate huntresses to join her."
+    , positives =
+        [ "+ Perfect accuracy."
+        , "+ Expert survivalist."
+        , "+ High perception."
+        ]
+    , negatives =
+        [ "- A little impatient with men."
+        , "- Effectively asexual and aromantic."
+        , "- A hint of persistent sadness."
+        ]
+    , mixed = [ "+/- Rarely goes without at least 2 huntresses with her" ]
+    , has = "Ministation 2, Familiarity 4 (Owl), Witchery 5, _Improved Familiar (Dire Wolf), & Memorize_"
     }
