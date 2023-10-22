@@ -20,6 +20,7 @@ suite =
                                     [ MarkMini.Number "30" ]
                                 ]
                             , center = False
+                            , mono = False
                             }
                             |> Ok
                         )
