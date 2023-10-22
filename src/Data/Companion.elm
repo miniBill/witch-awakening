@@ -41,6 +41,7 @@ all =
     [ ( "The Arcadians", arcadians )
     , ( "Hawthorne", hawthorne )
     , ( "The Watchers", watchers )
+    , ( "The Hespatians", hespatians )
     ]
 
 
@@ -450,7 +451,7 @@ claireBelmontegra =
     , teamwork = 8
     , sociability = 10
     , morality = 4
-    , quote = "_*“I heard Claire competed against a whole team of Hespatian succubi for trade secrets in Russia.. and won.”- Watcher secretary gossip*_"
+    , quote = "_*“I heard Claire competed against a whole team of Hespatian succubi for trade secrets in Russia.. and won.” - Watcher secretary gossip*_"
     , description = "Claire isn't very religious but appreciates the power structures and views Watcher lore as a meta layer of hidden histories. She's a full fledged active Watcher agent with eyes and ears everywhere, and greatly enjoys her work in corporate espionage and uses certain Daeva advantages to her fullest. She often quickly finds herself in the offices of some of the most powerful people in the world."
     , positives =
         [ "+ Heartachingly beautiful."
@@ -462,4 +463,38 @@ claireBelmontegra =
         ]
     , mixed = [ "+/- Doesn't really consider anyone a friend until they've shared a bed while on mission together more than once" ]
     , has = "Curses 2, Ministration 3, Wind 4, Witchery 4, Hexes 5 & _False Light_"
+    }
+
+
+hespatians : List Details
+hespatians =
+    [ lucilleMBright ]
+
+
+lucilleMBright : Details
+lucilleMBright =
+    { name = LucilleMBright
+    , shortName = "Claire"
+    , class = Academic
+    , race = Lilin
+    , hasPerk = False
+    , cost = 6
+    , power = 5
+    , teamwork = 7
+    , sociability = 8
+    , morality = 3
+    , quote = "_*“Be careful dealing with her, Luke... she caused the American Civil War with her games, playing both sides because she could” - A Watcher.*_"
+    , description = "Lucille is an eternal rebel and unquenchable contrarian that strains against all forms of authority or boundary line. If you can take something, it's yours, they failed to keep it. She admires spark, in any form, and likes to kindle them into embers, into infernos. A strong tree has to start out from a sprout after all. She's an information and arms broker."
+    , positives =
+        [ "+ Wealthy"
+        , "+ Well connected"
+        , "+ Treats friends well"
+        ]
+    , negatives =
+        [ "- From illicit sources."
+        , "- By illicit means."
+        , "- So long as they treat her well."
+        ]
+    , mixed = [ "+/- Believes there is no truth but power, the strong survive, If something _can_ be destroyed, it _should_ be destroyed." ]
+    , has = "Necromancy 3, Hexes 4, Consortation 4, Divination 4, Familiarity 5, _Blood Witch, Necronomicon & Hellrider_"
     }
