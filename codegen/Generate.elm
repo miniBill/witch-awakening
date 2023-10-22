@@ -133,6 +133,8 @@ enums =
             , "John Doe"
             , "Hannah Grangely"
             , "Elizabell Sinclaire"
+            , "Ashley Lovenko"
+            , "Sylvanne Mae Kanzaki"
             ]
                 |> List.map (\name -> ( String.Extra.classify name, name ))
     in

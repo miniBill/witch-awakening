@@ -230,8 +230,7 @@ johnDoe =
 
 hawthorne : List Details
 hawthorne =
-    -- , ashleyLovenko, sylvanneMaeKanzaki
-    [ hannahGrangely, elizabellSinclaire ]
+    [ hannahGrangely, elizabellSinclaire, ashleyLovenko, sylvanneMaeKanzaki ]
 
 
 hannahGrangely : Details
@@ -291,4 +290,61 @@ elizabellSinclaire =
     , mixed =
         [ "+/- Isn't a domme by heart, but a talented switch." ]
     , has = "Wands 3, Occultism 3, Witchery 3, Consortation 4, Windkeeping 5, and _Energize_."
+    }
+
+
+ashleyLovenko : Details
+ashleyLovenko =
+    { name = AshleyLovenko
+    , shortName = "Ash"
+    , class = Sorceress
+    , race = Neutral
+    , hasPerk = False
+    , cost = 6
+    , power = 3
+    , teamwork = 7
+    , sociability = 9
+    , morality = 8
+    , quote = "_*“Where'd Ash go? Oh there she is, taunting the pond fish with fish-sticks again.”*_ _\\*Splash\\*_ _*“There she goes.” - A Hawthorne Student.*_"
+    , description = "Ashley has been moved between two house already. She isn't a delinquent, but... she's an eccentric airhead with a goldfish-like memory at least when it comes to rules or lessons. She's very social and likable but often rubs people the wrong way at first with her enthusiasm and talent for messing things up. Her magic seems to have a mind of its own."
+    , positives =
+        [ "+ Naturally powerful"
+        , "+ Boundless energy"
+        , "+ Enthusiastic"
+        ]
+    , negatives =
+        [ "- But with ditzy incompetence"
+        , "- Very naive"
+        , "- Often in discipline sessions"
+        ]
+    , mixed = [ "+/- Hard to dislike her the more you get to know her, despite often really bad first impressions" ]
+    , has = "Familiarity 2, Witchery 2, Firecalling 3, Windkeeping 4, Wands 5 & _Magic Friendship_."
+    }
+
+
+sylvanneMaeKanzaki : Details
+sylvanneMaeKanzaki =
+    { name = SylvanneMaeKanzaki
+    , shortName = "Mae"
+    , class = Sorceress
+    , race = Luxal
+    , hasPerk = True
+    , cost = 8
+    , power = 10
+    , teamwork = 6
+    , sociability = 7
+    , morality = 8
+    , quote = "_*“Mae is so cool.. When I broke my leg on a mission she held me while a gold light slowly fixed me.” - A Hawthorne Student.*_"
+    , description = "If Willpower is a shield, Determination is the sword, the active driving force to push forward. Mae is determined to become the best and never fail another again since she lost a student to a band of goblinoids who couldn't be recovered for 4 days and was never the same. She's strict and can come across as cold, but would rather die than fail a student again. Uses similar methods to Eliza but much less, ah, _intrusive_."
+    , positives =
+        [ "+ Razor sharp determination."
+        , "+ Head of House Dragonrose."
+        , "+ Expert with a sword."
+        ]
+    , negatives =
+        [ "- Watches you like a hawk."
+        , "- Hates secrets. needs to know everything."
+        ]
+    , mixed = [ "+/- Little too quick to put her own life on the line" ]
+    , has = "Wands 1, Familiarity 2 (Hawk), Ministration 3, Witchery 4, _Hat Trick_ and _Sun Shard_."
     }
