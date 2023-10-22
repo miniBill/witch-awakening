@@ -40,6 +40,7 @@ all : List ( String, List Details )
 all =
     [ ( "The Arcadians", arcadians )
     , ( "Hawthorne", hawthorne )
+    , ( "The Watchers", watchers )
     ]
 
 
@@ -347,4 +348,36 @@ sylvanneMaeKanzaki =
         ]
     , mixed = [ "+/- Little too quick to put her own life on the line" ]
     , has = "Wands 1, Familiarity 2 (Hawk), Ministration 3, Witchery 4, _Hat Trick_ and _Sun Shard_."
+    }
+
+
+watchers : List Details
+watchers =
+    [ francisIsaacGiovanni ]
+
+
+francisIsaacGiovanni : Details
+francisIsaacGiovanni =
+    { name = FrancisIsaacGiovanni
+    , shortName = "Isaac"
+    , class = Warlock
+    , race = Neutral
+    , hasPerk = False
+    , cost = 6
+    , power = 6
+    , teamwork = 4
+    , sociability = 2
+    , morality = 7
+    , quote = "_*“He gives me chills. He's been a Watcher since the Crusades. Which he fought in. I heard he stormed Jerusalem in 1099” - A Watcher.*_"
+    , description = "They aren't wrong, Isaac is a Crusader that participated in most at least seven different crusades. He's a Warlock with an angry soul that simmers in a fine boil for the rape and murder of his entire family while he was away on campaign, which is what caused his Witch Awakening wherin a Balor emerged out from his rage which was stopped by a Contemplar when it nearly killed him too. Catholic."
+    , positives =
+        [ "+ Intimidating presence"
+        , "+ Renown warrior."
+        ]
+    , negatives =
+        [ "- Avoids having to speak"
+        , "- Has been a loner for centuries."
+        ]
+    , mixed = [ "+/- Learned to stop thinking in blanket generalities and now views evil as more of an infection or virus" ]
+    , has = "Consortation 4, Ministration 4, Runes 5, _Sun Shard_, _Mythril Armor_, and _Memorize_."
     }

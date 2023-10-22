@@ -1,7 +1,7 @@
 module View.Companion exposing (viewCompanions)
 
 import Data.Companion as Companion
-import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, column, el, fill, fillPortion, height, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, column, el, fill, fillPortion, height, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -282,6 +282,7 @@ companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, des
 statsTable : Companion.Details -> Element msg
 statsTable details =
     let
+        cellWithLeftBorder : List (Attribute msg) -> String -> Int -> Element msg -> Element msg
         cellWithLeftBorder attrs label leftBorder content =
             el
                 ([ padding <| Theme.rythm // 2
