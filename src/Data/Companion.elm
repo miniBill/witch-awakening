@@ -1,6 +1,6 @@
 module Data.Companion exposing (Details, all, intro)
 
-import Generated.Types exposing (Class(..), Companion(..), Magic(..), Perk(..), Race(..))
+import Generated.Types exposing (Class(..), Companion(..), Race(..))
 
 
 type alias Details =
@@ -149,7 +149,7 @@ tessaMarieKudashov =
     , teamwork = 5
     , sociability = 6
     , morality = 4
-    , quote = "_\\*Unintelligible shrieking\\*_ “WHO TURNED MY BROOM INTO A F\\%\\#\\$\\^ TENTACLE MONSTER!” - An Arcadian student."
+    , quote = "_\\*Unintelligible shrieking\\*_ _*“WHO TURNED MY BROOM INTO A F%#$^ TENTACLE MONSTER!” - An Arcadian student.*_"
     , description = "Tess is a bit of a nonviolent delinquent. She first awakened as a witch out of anger when she inadvertently hexed her human school bully into a slug, being a Warlock rather than an Academic, things are more instinctual and primal for her rather than well understood, and is somewhat easily annoyed, can trigger reactionary hexes with stray impulses, giving her a bad rep, but is cunning and personable when she wants to be and gets along when she needs to."
     , positives =
         [ "+ Casually brews potent potions."
