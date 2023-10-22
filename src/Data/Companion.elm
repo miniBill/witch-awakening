@@ -405,6 +405,6 @@ ifraAlZahra =
         [ "- Lazy and stubborn"
         , "- Surprisingly needy."
         ]
-    , mixed = [ "+/- Reads a lot of, in her words, “degenerate filth!“ like premarital handholding in both “Weeb stuff“ & romcoms." ]
+    , mixed = [ "+/- Reads a lot of, in her words, “degenerate filth!” like premarital handholding in both “Weeb stuff” & romcoms." ]
     , has = "Ifra has Ministration 1, Familiarity 2, Curses 3, Hexes 4, Earthmoving 4 and has _False Light_."
     }
