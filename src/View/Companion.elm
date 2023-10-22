@@ -207,59 +207,41 @@ companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, des
                 , Theme.blocks [ Font.size 14 ] <| "_*" ++ quote ++ "*_"
                 , Theme.blocks [] description
                 , let
-                    minLength : Int
-                    minLength =
-                        min
-                            (List.length positives)
-                            (List.length negatives)
-
-                    split : String -> String -> List String -> ( List (Element msg), List (Element msg) )
-                    split label prefix items =
-                        items
-                            |> List.map
-                                (\line ->
-                                    Theme.blocks [] <| prefix ++ " " ++ line
-                                )
-                            |> (::) (el [ Font.bold ] <| text <| label ++ ":")
-                            |> List.Extra.splitAt (minLength + 1)
-
-                    ( positivesBefore, positivesAfter ) =
-                        split "Positives" "+" positives
-
-                    ( negativesBefore, negativesAfter ) =
-                        split "Negatives" "\\-" negatives
-
-                    mixedStrings : List (Element msg)
-                    mixedStrings =
+                    toBlocks : List String -> List (Element msg)
+                    toBlocks lines =
                         List.map
                             (\line ->
-                                Theme.blocks [] <| "+/- " ++ line
+                                if String.startsWith "-" line then
+                                    Theme.blocks [] <| "\\" ++ line
+
+                                else
+                                    Theme.blocks [] line
                             )
-                            mixed
+                            lines
+
+                    toColumn : String -> List String -> Element msg
+                    toColumn label items =
+                        items
+                            |> toBlocks
+                            |> (::) (el [ Font.bold ] <| text <| label ++ ":")
+                            |> column
+                                [ width fill
+                                , alignTop
+                                , spacing <| Theme.rythm // 2
+                                ]
 
                     beforeBlock : Element msg
                     beforeBlock =
-                        [ positivesBefore
-                        , negativesBefore
+                        [ toColumn "Positives" positives
+                        , toColumn "Negatives" negatives
                         ]
-                            |> List.map
-                                (column
-                                    [ width fill
-                                    , alignTop
-                                    , spacing <| Theme.rythm // 2
-                                    ]
-                                )
                             |> Theme.row [ width fill ]
                   in
                   column
                     [ width fill
                     , spacing <| Theme.rythm // 2
                     ]
-                    (beforeBlock
-                        :: positivesAfter
-                        ++ negativesAfter
-                        ++ mixedStrings
-                    )
+                    (beforeBlock :: toBlocks mixed)
                 , let
                     magicsStrings : List String
                     magicsStrings =
