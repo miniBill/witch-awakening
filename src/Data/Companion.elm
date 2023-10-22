@@ -1,6 +1,6 @@
 module Data.Companion exposing (Details, all, intro)
 
-import Generated.Types exposing (Class(..), Companion(..), Magic(..), Perk, Race(..))
+import Generated.Types exposing (Class(..), Companion(..), Magic(..), Perk(..), Race(..))
 import Types exposing (RankedMagic)
 
 
@@ -9,6 +9,7 @@ type alias Details =
     , shortName : String
     , class : Class
     , race : Race
+    , hasPerk : Bool
     , cost : Int
     , power : Int
     , teamwork : Int
@@ -44,7 +45,7 @@ all =
 
 arcadians : List Details
 arcadians =
-    [ rachelPool ]
+    [ rachelPool, anneLaurenchi ]
 
 
 rachelPool : Details
@@ -53,6 +54,7 @@ rachelPool =
     , shortName = "Rachel"
     , class = Academic
     , race = Neutral
+    , hasPerk = False
     , cost = 4
     , power = 5
     , teamwork = 8
@@ -82,4 +84,41 @@ rachelPool =
         , RankedMagic Naturalism 3
         ]
     , perks = []
+    }
+
+
+anneLaurenchi : Details
+anneLaurenchi =
+    { name = AnneLaurenchi
+    , shortName = "Anne"
+    , class = Academic
+    , race = Sylph
+    , hasPerk = True
+    , cost = 4
+    , power = 4
+    , teamwork = 4
+    , sociability = 6
+    , morality = 7
+    , quote = "“Is..Is that Anne? How on earth can she sleep like that. Is that safe? feel like I should help her out” - An Arcadian student"
+    , description = "Anne is a bit of an oddball. Rather than simply being introverted, she's pretty much outright antisocial seeing no need or reason to bother and actively prefers keeping a smaller friendgroup, but she tries to do right by those that do make that cut. She's known for sleeping most her days away and not just in her bed, but anywhere she goes, some think she has narcolepsy; but she just enjoys dreams a ton."
+    , positives =
+        [ "Endless imagination"
+        , "Powerful when she wants to be..."
+        , "Highly skilled digital artist."
+        , "Likes to show off dreamworlds with friends"
+        ]
+    , mixed = []
+    , negatives =
+        [ "Ungrounded in reality."
+        , "... Would rather nap."
+        , "Slow even when awake"
+        ]
+    , magics =
+        [ RankedMagic Familiarity 1
+        , RankedMagic Aethernautics 2
+        , RankedMagic Portals 3
+        , RankedMagic Psychotics 3
+        , RankedMagic Digicasting 4
+        ]
+    , perks = [ BeautySleep ]
     }

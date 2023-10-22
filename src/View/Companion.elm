@@ -5,7 +5,7 @@ import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, co
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (Companion)
+import Generated.Types as Types exposing (Companion, Race(..))
 import Gradients
 import Images
 import List.Extra
@@ -78,13 +78,16 @@ viewCompanions companions =
 
 companionSection : List Companion -> ( String, List Companion.Details ) -> List (Element ( Companion, Bool ))
 companionSection companions ( label, section ) =
-    let
-        title : Element msg
-        title =
-            Theme.gradientText 2 Gradients.yellowGradient (label ++ ":")
-    in
-    el [ Theme.celticHand, Font.size 40 ] title
-        :: List.map (companionBox companions) section
+    [ (label ++ ":")
+        |> Theme.gradientText 2 Gradients.yellowGradient
+        |> el [ Theme.celticHand, Font.size 48 ]
+    , section
+        |> List.map (companionBox companions)
+        |> Theme.wrappedRow
+            [ width fill
+            , spacing <| Theme.rythm * 3
+            ]
+    ]
 
 
 tableColumns : List { header : Element msg, width : Element.Length, view : ( ( Int, Int ), String ) -> Element msg }
@@ -125,7 +128,7 @@ companionBox :
     List Companion
     -> Companion.Details
     -> Element ( Companion, Bool )
-companionBox selected ({ name, shortName, quote, cost, class, description, positives, mixed, negatives, magics, perks } as companion) =
+companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, description, positives, mixed, negatives, magics, perks } as companion) =
     let
         isSelected : Bool
         isSelected =
@@ -161,6 +164,22 @@ companionBox selected ({ name, shortName, quote, cost, class, description, posit
                                 , Theme.captureIt
                                 , moveLeft 8
                                 , moveDown 4
+                                ]
+                        , (if race == Neutral && not hasPerk then
+                            ""
+
+                           else if hasPerk then
+                            Types.raceToString race ++ "+"
+
+                           else
+                            Types.raceToString race
+                          )
+                            |> Theme.gradientText 4 Gradients.yellowGradient
+                            |> el
+                                [ alignBottom
+                                , centerX
+                                , Font.size 32
+                                , Theme.captureIt
                                 ]
                         , Types.gainToSlot cost
                             |> Types.slotToImage
