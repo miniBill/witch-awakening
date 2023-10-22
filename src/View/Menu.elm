@@ -472,7 +472,7 @@ companionsValue model =
                             (\( _, { race, class } as c ) ->
                                 if
                                     (Just race == model.race)
-                                        || (Just class == model.class)
+                                        || (class /= Nothing && class == model.class)
                                 then
                                     Just c
 

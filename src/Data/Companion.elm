@@ -6,7 +6,7 @@ import Generated.Types exposing (Class(..), Companion(..), Faction(..), Race(..)
 type alias Details =
     { name : Companion
     , shortName : String
-    , class : Class
+    , class : Maybe Class
     , race : Race
     , hasPerk : Bool
     , cost : Int
@@ -55,7 +55,7 @@ rachelPool : Details
 rachelPool =
     { name = RachelPool
     , shortName = "Rachel"
-    , class = Academic
+    , class = Just Academic
     , race = Neutral
     , hasPerk = False
     , cost = 4
@@ -87,7 +87,7 @@ anneLaurenchi : Details
 anneLaurenchi =
     { name = AnneLaurenchi
     , shortName = "Anne"
-    , class = Academic
+    , class = Just Academic
     , race = Sylph
     , hasPerk = True
     , cost = 4
@@ -118,7 +118,7 @@ candayWesbank : Details
 candayWesbank =
     { name = CandayWesbank
     , shortName = "Wess"
-    , class = Sorceress
+    , class = Just Sorceress
     , race = Neutral
     , hasPerk = False
     , cost = 2
@@ -146,7 +146,7 @@ tessaMarieKudashov : Details
 tessaMarieKudashov =
     { name = TessaMarieKudashov
     , shortName = "Tess"
-    , class = Warlock
+    , class = Just Warlock
     , race = Neutral
     , hasPerk = False
     , cost = 2
@@ -175,7 +175,7 @@ evelynnPWillowcrane : Details
 evelynnPWillowcrane =
     { name = EvelynnPWillowcrane
     , shortName = "Evelynn"
-    , class = Academic
+    , class = Just Academic
     , race = Neutral
     , hasPerk = False
     , cost = 2
@@ -205,7 +205,7 @@ johnDoe : Details
 johnDoe =
     { name = JohnDoe
     , shortName = "John"
-    , class = Sorceress
+    , class = Just Sorceress
     , race = Changeling
     , hasPerk = False
     , cost = 4
@@ -240,7 +240,7 @@ hannahGrangely : Details
 hannahGrangely =
     { name = HannahGrangely
     , shortName = "Hannah"
-    , class = Academic
+    , class = Just Academic
     , race = Neutral
     , hasPerk = False
     , cost = 6
@@ -270,7 +270,7 @@ elizabellSinclaire : Details
 elizabellSinclaire =
     { name = ElizabellSinclaire
     , shortName = "Eliza"
-    , class = Warlock
+    , class = Just Warlock
     , race = Erinyes
     , hasPerk = False
     , cost = 10
@@ -300,7 +300,7 @@ ashleyLovenko : Details
 ashleyLovenko =
     { name = AshleyLovenko
     , shortName = "Ash"
-    , class = Sorceress
+    , class = Just Sorceress
     , race = Neutral
     , hasPerk = False
     , cost = 6
@@ -329,7 +329,7 @@ sylvanneMaeKanzaki : Details
 sylvanneMaeKanzaki =
     { name = SylvanneMaeKanzaki
     , shortName = "Mae"
-    , class = Sorceress
+    , class = Just Sorceress
     , race = Luxal
     , hasPerk = True
     , cost = 8
@@ -362,7 +362,7 @@ francisIsaacGiovanni : Details
 francisIsaacGiovanni =
     { name = FrancisIsaacGiovanni
     , shortName = "Isaac"
-    , class = Warlock
+    , class = Just Warlock
     , race = Neutral
     , hasPerk = False
     , cost = 6
@@ -389,7 +389,7 @@ ifraAlZahra : Details
 ifraAlZahra =
     { name = IfraAlZahra
     , shortName = "Ifra"
-    , class = Warlock
+    , class = Just Warlock
     , race = Changeling
     , hasPerk = False
     , cost = 4
@@ -416,7 +416,7 @@ sariahJSnow : Details
 sariahJSnow =
     { name = SariahJSnow
     , shortName = "Sariah"
-    , class = Academic
+    , class = Just Academic
     , race = Nymph
     , hasPerk = True
     , cost = 8
@@ -444,7 +444,7 @@ claireBelmontegra : Details
 claireBelmontegra =
     { name = ClaireBelMontegra
     , shortName = "Claire"
-    , class = Sorceress
+    , class = Just Sorceress
     , race = Nymph
     , hasPerk = True
     , cost = 6
@@ -476,7 +476,7 @@ lucilleMBright : Details
 lucilleMBright =
     { name = LucilleMBright
     , shortName = "Claire"
-    , class = Academic
+    , class = Just Academic
     , race = Lilin
     , hasPerk = False
     , cost = 6
@@ -505,7 +505,7 @@ kingDaemianKain : Details
 kingDaemianKain =
     { name = KingDaemianKain
     , shortName = "Kain"
-    , class = Sorceress
+    , class = Just Sorceress
     , race = Dravir
     , hasPerk = True
     , cost = 12
@@ -534,7 +534,7 @@ whisper : Details
 whisper =
     { name = Whisper
     , shortName = "Whisper"
-    , class = Warlock
+    , class = Just Warlock
     , race = Neutral
     , hasPerk = False
     , cost = 10
@@ -563,7 +563,7 @@ redMother : Details
 redMother =
     { name = RedMother
     , shortName = "Mom"
-    , class = Academic
+    , class = Just Academic
     , race = Neutral
     , hasPerk = False
     , cost = 8
@@ -597,7 +597,7 @@ diana : Details
 diana =
     { name = Diana
     , shortName = "Diana"
-    , class = Sorceress
+    , class = Just Sorceress
     , race = Neutral
     , hasPerk = False
     , cost = 6
@@ -626,7 +626,7 @@ cassandra : Details
 cassandra =
     { name = Cassandra
     , shortName = "Cass"
-    , class = Sorceress
+    , class = Just Sorceress
     , race = Dravir
     , hasPerk = False
     , cost = 6
@@ -655,7 +655,7 @@ kingCulicarius : Details
 kingCulicarius =
     { name = KingCulicarius
     , shortName = "He"
-    , class = Academic
+    , class = Just Academic
     , race = Daeva
     , hasPerk = True
     , cost = 15
@@ -682,7 +682,7 @@ einodiaKate : Details
 einodiaKate =
     { name = EinodiaKate
     , shortName = "Kate"
-    , class = Academic
+    , class = Just Academic
     , race = Daeva
     , hasPerk = False
     , cost = 15

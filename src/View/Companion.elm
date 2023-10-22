@@ -199,8 +199,14 @@ companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, des
                     [ Types.companionToString name
                         |> Theme.gradientText 4 Gradients.yellowGradient
                         |> el [ Font.size 36 ]
-                    , Theme.classToBadge class
-                        |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+                    , class
+                        |> Maybe.map
+                            (\c ->
+                                c
+                                    |> Theme.classToBadge
+                                    |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+                            )
+                        |> Maybe.withDefault Element.none
                     ]
                 , statsTable companion
                 , Theme.blocks [ Font.size 14 ] quote
