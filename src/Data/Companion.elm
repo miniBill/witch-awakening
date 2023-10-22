@@ -468,7 +468,7 @@ claireBelmontegra =
 
 hespatians : List Details
 hespatians =
-    [ lucilleMBright ]
+    [ lucilleMBright, kingDaemianKain ]
 
 
 lucilleMBright : Details
@@ -497,4 +497,33 @@ lucilleMBright =
         ]
     , mixed = [ "+/- Believes there is no truth but power, the strong survive, If something _can_ be destroyed, it _should_ be destroyed." ]
     , has = "Necromancy 3, Hexes 4, Consortation 4, Divination 4, Familiarity 5, _Blood Witch, Necronomicon & Hellrider_"
+    }
+
+
+kingDaemianKain : Details
+kingDaemianKain =
+    { name = KingDaemianKain
+    , shortName = "Kain"
+    , class = Sorceress
+    , race = Dravir
+    , hasPerk = True
+    , cost = 12
+    , power = 10
+    , teamwork = 5
+    , sociability = 6
+    , morality = 2
+    , quote = "_*“Son, it's not every day a young man turns 18, time to start helping out with the family business. For now enjoy some catgirl slaves” - Kain*_"
+    , description = "When most witches who know their history think of a male sorcerer, Kain likely crosses their mind as an antediluvian warlord that ruled over ancient Siberia as a witch-king with his striking crown-halo of flame and his drake mount familiar, his own skin hardened with scales in places, and his breath like a dragon's own. Now? a single dad with 3 kids and a blue collar job... while head of 4 Hespatian families"
+    , positives =
+        [ "+ Positive role model by day:"
+        , "+ Worlds best dad"
+        , "+ Makes time for the kids"
+        ]
+    , negatives =
+        [ "- Ancient risen tyrant by night"
+        , "- Works late a lot"
+        , "- Really strict though"
+        ]
+    , mixed = [ "+/- Great guy to know if you need to get rid of a body" ]
+    , has = "Familiarity 3, Firecalling 4, Curses 5, Consortation 5, Metamorphize 5 (Dragon) _Secret Magic & Family Line_"
     }
