@@ -353,7 +353,7 @@ sylvanneMaeKanzaki =
 
 watchers : List Details
 watchers =
-    [ francisIsaacGiovanni, ifraAlZahra ]
+    [ francisIsaacGiovanni, ifraAlZahra, sariahJSnow, claireBelmontegra ]
 
 
 francisIsaacGiovanni : Details
@@ -407,4 +407,59 @@ ifraAlZahra =
         ]
     , mixed = [ "+/- Reads a lot of, in her words, “degenerate filth!” like premarital handholding in both “Weeb stuff” & romcoms." ]
     , has = "Ifra has Ministration 1, Familiarity 2, Curses 3, Hexes 4, Earthmoving 4 and has _False Light_."
+    }
+
+
+sariahJSnow : Details
+sariahJSnow =
+    { name = SariahJSnow
+    , shortName = "Sariah"
+    , class = Academic
+    , race = Nymph
+    , hasPerk = True
+    , cost = 8
+    , power = 4
+    , teamwork = 9
+    , sociability = 7
+    , morality = 9
+    , quote = "_*“Sariah? She wanders a lot, but when she stops by I can't think of anyone more pleasant to be around.”- An ORC Agent.*_"
+    , description = "Sariah has been a witch for a long time already, and used to have a human husband early on who passed away before she could do something about it. She takes comfort in her Mormon belief in eternal marriages, and lives a life of dedication to doing good and stay worthy to be with him again someday, chats once in a while via necromancy."
+    , positives =
+        [ "+ Very calm and optimistic"
+        , "+ Very true to her faith"
+        , "+/- Friendly with the ORC"
+        ]
+    , negatives =
+        [ "- Doesn't go out on Sundays, unless it's important"
+        , "- Even avoids caffeine entirely"
+        ]
+    , mixed = [ "+/- Wants a new husband, but always holds her, late husband as her true partner to be reunited eventual" ]
+    , has = "Necromancy 2, Witchery 3, Divination 4, Waterworking 5, Ministation 5, _Oracle_, _Mythril Armor_ & _Artifact Keeper_"
+    }
+
+
+claireBelmontegra : Details
+claireBelmontegra =
+    { name = ClaireBelMontegra
+    , shortName = "Claire"
+    , class = Sorceress
+    , race = Nymph
+    , hasPerk = True
+    , cost = 6
+    , power = 5
+    , teamwork = 8
+    , sociability = 10
+    , morality = 4
+    , quote = "_*“I heard Claire competed against a whole team of Hespatian succubi for trade secrets in Russia.. and won.”- Watcher secretary gossip*_"
+    , description = "Claire isn't very religious but appreciates the power structures and views Watcher lore as a meta layer of hidden histories. She's a full fledged active Watcher agent with eyes and ears everywhere, and greatly enjoys her work in corporate espionage and uses certain Daeva advantages to her fullest. She often quickly finds herself in the offices of some of the most powerful people in the world."
+    , positives =
+        [ "+ Heartachingly beautiful."
+        , "+ Highly tech savvy."
+        ]
+    , negatives =
+        [ "- Deception ≠ Stealth."
+        , "- Workaholic"
+        ]
+    , mixed = [ "+/- Doesn't really consider anyone a friend until they've shared a bed while on mission together more than once" ]
+    , has = "Curses 2, Ministration 3, Wind 4, Witchery 4, Hexes 5 & _False Light_"
     }
