@@ -1,5 +1,6 @@
 module View.Menu exposing (viewMenu)
 
+import Data.Companion as Companion
 import Data.Complication as Complication exposing (Content(..))
 import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic exposing (Affinities(..))
@@ -11,7 +12,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types exposing (Affinity(..), Class, GameMode(..), Race)
+import Generated.Types as Types exposing (Affinity(..), Class, Faction, GameMode(..), Race)
 import Gradients
 import List.Extra
 import Maybe.Extra
@@ -437,15 +438,105 @@ factionValue model =
 
 companionsValue : Model -> Maybe Int
 companionsValue model =
-    if List.length model.companions < 3 then
-        Just 0
+    let
+        go : List ( Faction, Companion.Details ) -> Int
+        go companions =
+            let
+                byCost : List ( Faction, Companion.Details )
+                byCost =
+                    companions
+                        |> List.sortBy (\( _, { cost } ) -> -cost)
 
-    else
-        let
-            _ =
-                Debug.todo
-        in
-        Nothing
+                sameFaction : List Companion.Details
+                sameFaction =
+                    case model.faction of
+                        Nothing ->
+                            []
+
+                        Just ( f, _ ) ->
+                            byCost
+                                |> List.filterMap
+                                    (\( faction, c ) ->
+                                        if faction == f then
+                                            Just c
+
+                                        else
+                                            Nothing
+                                    )
+                                |> List.take 2
+
+                sameKind : List Companion.Details
+                sameKind =
+                    byCost
+                        |> List.filterMap
+                            (\( _, { race, class } as c ) ->
+                                if
+                                    (Just race == model.race)
+                                        || (Just class == model.class)
+                                then
+                                    Just c
+
+                                else
+                                    Nothing
+                            )
+                        |> List.take 2
+
+                forFree : Int
+                forFree =
+                    if List.isEmpty sameFaction then
+                        sameKind
+                            |> List.head
+                            |> Maybe.map (\{ cost } -> cost)
+                            |> Maybe.withDefault 0
+
+                    else if List.isEmpty sameKind then
+                        sameFaction
+                            |> List.head
+                            |> Maybe.map (\{ cost } -> cost)
+                            |> Maybe.withDefault 0
+
+                    else
+                        List.Extra.lift2
+                            (\sf sk ->
+                                if sf.name == sk.name then
+                                    sf.cost
+
+                                else
+                                    sf.cost + sk.cost
+                            )
+                            sameFaction
+                            sameKind
+                            |> List.maximum
+                            |> Maybe.withDefault 0
+
+                totalCost : Int
+                totalCost =
+                    companions
+                        |> List.map (\( _, { cost } ) -> cost)
+                        |> List.sum
+            in
+            -(totalCost - forFree)
+    in
+    model.companions
+        |> Maybe.Extra.traverse getCompanion
+        |> Maybe.map go
+
+
+getCompanion : Types.Companion -> Maybe ( Faction, Companion.Details )
+getCompanion companion =
+    List.Extra.findMap
+        (\( _, faction, group ) ->
+            List.Extra.findMap
+                (\({ name } as c) ->
+                    if name == companion then
+                        Just ( faction, c )
+
+                    else
+                        Nothing
+                )
+                group
+        )
+        Companion.all
 
 
 maybeSum : (item -> Maybe Int) -> (Model -> List item) -> Model -> Maybe Int

@@ -1,6 +1,6 @@
 module Data.Companion exposing (Details, all, intro)
 
-import Generated.Types exposing (Class(..), Companion(..), Race(..))
+import Generated.Types exposing (Class(..), Companion(..), Faction(..), Race(..))
 
 
 type alias Details =
@@ -26,7 +26,7 @@ type alias Details =
 intro : String
 intro =
     """
-    It’s dangerous to go alone, take this! A Companions section. {choice You have one free companion from your chosen faction, and one free that shares the same witch type} as you (Either Race or Class). Companions have 4 main statistics giving a _rough idea_ of their general impact in a group dynamic, except the {choice POWER stat, which primarily serves to give free floating Power points to spend to _customize_ your companion's abilities} on top of the default abilities they come with. Beyond that, interactions are inferred in how you interpret their personality and how different stats play out in relation to it and others. {choice You can buy additional companions using Reward Points}, listed to the left of their name. A {choice +} indicates they have their Type Perk.
+    It’s dangerous to go alone, take this! A Companions section. {choice You have one free companion from your chosen faction, and one free that shares the same witch type} as you (either Race or Class). Companions have 4 main statistics giving a _rough idea_ of their general impact in a group dynamic, except the {choice POWER stat, which primarily serves to give free floating Power points to spend to _customize_ your companion's abilities} on top of the default abilities they come with. Beyond that, interactions are inferred in how you interpret their personality and how different stats play out in relation to it and others. {choice You can buy additional companions using Reward Points}, listed to the left of their name. A {choice +} indicates they have their Type Perk.
 
     You can spend your own Power on behalf of a member if you so choose.
 
@@ -36,12 +36,12 @@ intro =
     """
 
 
-all : List ( String, List Details )
+all : List ( String, Faction, List Details )
 all =
-    [ ( "The Arcadians", arcadians )
-    , ( "Hawthorne", hawthorne )
-    , ( "The Watchers", watchers )
-    , ( "The Hespatians", hespatians )
+    [ ( "The Arcadians", Arcadia, arcadians )
+    , ( "Hawthorne", Hawthorne, hawthorne )
+    , ( "The Watchers", Watchers, watchers )
+    , ( "The Hespatians", Hespatian, hespatians )
     ]
 
 

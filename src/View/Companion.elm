@@ -5,7 +5,7 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, 
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (Companion, Race(..))
+import Generated.Types as Types exposing (Companion, Faction, Race(..))
 import Gradients
 import Images
 import Theme
@@ -75,8 +75,8 @@ viewCompanions companions =
         ]
 
 
-companionSection : List Companion -> ( String, List Companion.Details ) -> List (Element ( Companion, Bool ))
-companionSection companions ( label, section ) =
+companionSection : List Companion -> ( String, Faction, List Companion.Details ) -> List (Element ( Companion, Bool ))
+companionSection companions ( label, _, section ) =
     [ (label ++ ":")
         |> Theme.gradientText 2 Gradients.yellowGradient
         |> el [ Theme.celticHand, Font.size 48 ]
