@@ -43,6 +43,7 @@ all =
     , ( "The Watchers", Watchers, watchers )
     , ( "The Hespatians", Hespatian, hespatians )
     , ( "The Lunabellans", Lunabella, lunabellans )
+    , ( "The ORCs / Badges", TheOrc, theOrcs )
     ]
 
 
@@ -703,4 +704,117 @@ einodiaKate =
         ]
     , mixed = [ "+/- Driven by curiosity, secrets eat at her mind." ]
     , has = "Witchery 4, Potions 5, Runes 5, Windkeeping 5, Necromancy 5, Portals 5, Aethernautics 5, and Domain 6"
+    }
+
+
+theOrcs : List Details
+theOrcs =
+    [ victoriaWatts, richardMaxJohnson, bethadonnaRossbaum, mirandaQuincy ]
+
+
+victoriaWatts : Details
+victoriaWatts =
+    { name = VictoriaWatts
+    , shortName = "V"
+    , class = Nothing
+    , race = Neutral
+    , hasPerk = False
+    , cost = 8
+    , power = 0
+    , teamwork = 10
+    , sociability = 8
+    , morality = 7
+    , quote = "_*“TYPE RED TYPE RED, OH SHIT, oh-”* *static* *“Fall back to site\u{00A0}B6. V on route to intercept.” - ORC Radio chatter.*_"
+    , description = "V is not a witch, but is nonetheless a top ranking ORC Agent and a master of her job. She's 87 years old, 88 in a few months, but potions don't benefit only witches and she's been in peak prime for the last 6 and a half decades, committed to either dying on the job or for the universe to tell her when it's time to settle down, but no end in sight."
+    , positives =
+        [ "+ Highly professional"
+        , "+ Quickly adapts to teams."
+        ]
+    , negatives =
+        [ "- Nearly no personal time."
+        , "- Not a witch."
+        ]
+    , mixed = [ "+/- On speaking terms with some suits at Alphazon enough to acquire some of their tech without much pressure" ]
+    , has = "Integration 4 (_No Observer_), and Gadgetry 5 with the _ORC License_ and _Collection_"
+    }
+
+
+richardMaxJohnson : Details
+richardMaxJohnson =
+    { name = RichardMaxJohnson
+    , shortName = "Max"
+    , class = Nothing
+    , race = Neutral
+    , hasPerk = False
+    , cost = 5
+    , power = 0
+    , teamwork = 7
+    , sociability = 5
+    , morality = 6
+    , quote = "_*“He came back from a mission one time with a chainsaw tied to the stump of a missing hand, and a shotgun pegleg” - Doc Ginger.*_"
+    , description = "The quintessential male action hero made flesh, Max is the love child between Indiana Jones, Clint Eastwood, and MacGyver with a splash of Geralt of Rivia. He gets the job done one way or another and doesn't shy away from risk or pain, Doesn't drink because he hates anything that dulls his perception, and alcoholism cost him is first marriage, Avoids showing emotion in front of anyone, including anger (within reason, outside of combat), Has many safehouses memorized."
+    , positives =
+        [ "+ Rugged dependability."
+        , "+ “Rub some dirt on it”"
+        ]
+    , negatives =
+        [ "- Rough around the edges"
+        , "- Horny bastard (with self control)"
+        ]
+    , mixed = [ "+ Can produce gadgets from a box of scraps & bubblegum" ]
+    , has = "Gadgetry 5, _ORC License_, and a metric Freedom load of firearms and ammo"
+    }
+
+
+bethadonnaRossbaum : Details
+bethadonnaRossbaum =
+    { name = BethadonnaRossbaum
+    , shortName = "Beth"
+    , class = Just Warlock
+    , race = Lilin
+    , hasPerk = True
+    , cost = 12
+    , power = 1
+    , teamwork = 8
+    , sociability = 9
+    , morality = 5
+    , quote = "_*“I... I heard Bethadonna was a cultist for a long time before joining up... The things she must have seen...and done..” - An ORC Agent.*_"
+    , description = "Bethadonna is a domestic goddess that radiates warmth and a motherly presence in contrast to the devilish horns you might miss at a glance from the front, nevermind if your eyes didn't have somewhere else drawing their attention. She acts as a detective utilizing spirits and communion to work scenes, while being a heavy hitter for when SHTF. She cultivates a private pond of Golden Fish for her rituals."
+    , positives =
+        [ "+ Particularly unkillable"
+        , "+ Has many, many pets"
+        ]
+    , negatives =
+        [ "- A bit smothering & handsy."
+        , "- Scary combat transformation"
+        ]
+    , mixed = [ "+/- Sweet christmas, you do _not_ want to make mother mad." ]
+    , has = "Familiarity 5, Consortation 5, Necromancy Portals 5, Occultism 5, and _ORC License, Golden Fish, Third Eye, and Pantomime_. _Wished for Power_."
+    }
+
+
+mirandaQuincy : Details
+mirandaQuincy =
+    { name = MirandaQuincy
+    , shortName = "Doc"
+    , class = Just Academic
+    , race = Erinyes
+    , hasPerk = True
+    , cost = 8
+    , power = 8
+    , teamwork = 6
+    , sociability = 7
+    , morality = 6
+    , quote = "_*“Why have doctors when healing potions are a thing?”* \\*bonk\\* *“Nitwit, potions are expensive, for emergencies.” - An ORC Agent.*_"
+    , description = "Miranda, also called Gingerdoc or Doc Ginger, is a medical and general life-saving specialist responsible for keeping people fit for duty and enables risk taking in the face of overwhelming odds with her mastery of anatomy and what keeps a body ticking. That, and magic potions, of course She spends a lot of time micromanaging resources to keep everyone in shape and supplied so there's no excuse for a loss."
+    , positives =
+        [ "+ Legitimate doctor for real"
+        , "+ Values her word / promises"
+        ]
+    , negatives =
+        [ "- Somewhat cold and sharp."
+        , "- Brutally honest"
+        ]
+    , mixed = [ "+/- Doesn't believe in mercy, for enemies, or for allies; Will save your life no matter the pain, to eventually recover" ]
+    , has = "Gadgetry 2, Hexes 3, Witchery 4, Firecalling 4, Potions 5, and Familiar 5 (Fox), _ORC License_"
     }
