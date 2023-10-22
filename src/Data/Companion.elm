@@ -230,8 +230,8 @@ johnDoe =
 
 hawthorne : List Details
 hawthorne =
-    -- , elizabellSinclaire, ashleyLovenko, sylvanneMaeKanzaki
-    [ hannahGrangely ]
+    -- , ashleyLovenko, sylvanneMaeKanzaki
+    [ hannahGrangely, elizabellSinclaire ]
 
 
 hannahGrangely : Details
@@ -261,4 +261,34 @@ hannahGrangely =
     , mixed =
         [ "+/- Helps avoid rulebreaking, but obligated to report" ]
     , has = "1 in every core Specialization, and has Waterworking 3, Wands 4 & _Master Wand_."
+    }
+
+
+elizabellSinclaire : Details
+elizabellSinclaire =
+    { name = ElizabellSinclaire
+    , shortName = "Eliza"
+    , class = Warlock
+    , race = Erinyes
+    , hasPerk = False
+    , cost = 10
+    , power = 2
+    , teamwork = 7
+    , sociability = 6
+    , morality = 5
+    , quote = "_*“Miss Grangely! Report to Eliza's office at once. Leave your things here. Yes, Everything.”*_ _\\*Crack of a ruler\\*_ _*- A Hawthorne Teacher.*_"
+    , description = "Elizabell is a Hawthorne veteran at the top of her class and is her house's assistant disciplinarian, that is among some to employ more... novel, methods of discipline and reward structures, She's straight up a mistress dom and enjoys her job, fully dedicated to employing the methods of her house rules to get witches under her care to achieve their best She's firm but very warm and comforting when appropriate."
+    , positives =
+        [ "+ Incredible willpower."
+        , "+ Highly competent."
+        , "+ Skilled with weapons and tools."
+        ]
+    , negatives =
+        [ "- No rulebreaking!"
+        , "- Can be a bit of a nanny"
+        , "- A strict perfectionist."
+        ]
+    , mixed =
+        [ "+/- Isn't a domme by heart, but a talented switch." ]
+    , has = "Wands 3, Occultism 3, Witchery 3, Consortation 4, Windkeeping 5, and _Energize_."
     }
