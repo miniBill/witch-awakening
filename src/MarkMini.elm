@@ -28,6 +28,7 @@ type Piece
 
 type Color
     = ChoiceColor
+    | Smol
     | ClassColor Class
     | SlotColor Slot
 
@@ -194,6 +195,8 @@ mainParser =
                     |. Parser.symbol "epic"
                 , Parser.succeed (SlotColor White)
                     |. Parser.symbol "white"
+                , Parser.succeed Smol
+                    |. Parser.symbol "smol"
                 ]
             |. Parser.symbol " "
             |= innerParser '}'

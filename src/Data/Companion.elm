@@ -147,7 +147,7 @@ candayWesbank =
         [ "She keeps it in check, but she's very paranoid"
         , "Struggles to sleep"
         ]
-    , mixed = [ "Celebate until marriage. (Though not a virgin)" ]
+    , mixed = [ "Celebate until marriage. {smol (Though not a virgin)}" ]
     , magics = [ RankedMagic Runes 5 ]
     , perks = [ ImprovedFamiliar ]
     }

@@ -217,21 +217,26 @@ viewPiece piece =
 
         Colored color children ->
             let
-                colorInt : Int
-                colorInt =
-                    case color of
-                        ChoiceColor ->
-                            colors.choice
-
-                        ClassColor class ->
-                            classToColor class
-
-                        SlotColor slot ->
-                            slotToColor slot
+                colored : Int -> Html msg
+                colored colorInt =
+                    Html.span
+                        [ Html.Attributes.style "color" <| toCss colorInt ]
+                        (List.map viewPiece children)
             in
-            Html.span
-                [ Html.Attributes.style "color" <| toCss colorInt ]
-                (List.map viewPiece children)
+            case color of
+                ChoiceColor ->
+                    colored colors.choice
+
+                ClassColor class ->
+                    colored <| classToColor class
+
+                SlotColor slot ->
+                    colored <| slotToColor slot
+
+                Smol ->
+                    Html.span
+                        [ Html.Attributes.style "font-size" "0.8em" ]
+                        (List.map viewPiece children)
 
         Italic children ->
             Html.i []
