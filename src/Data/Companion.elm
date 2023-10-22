@@ -468,7 +468,7 @@ claireBelmontegra =
 
 hespatians : List Details
 hespatians =
-    [ lucilleMBright, kingDaemianKain ]
+    [ lucilleMBright, kingDaemianKain, whisper, redMother ]
 
 
 lucilleMBright : Details
@@ -526,4 +526,62 @@ kingDaemianKain =
         ]
     , mixed = [ "+/- Great guy to know if you need to get rid of a body" ]
     , has = "Familiarity 3, Firecalling 4, Curses 5, Consortation 5, Metamorphize 5 (Dragon) _Secret Magic & Family Line_"
+    }
+
+
+whisper : Details
+whisper =
+    { name = Whisper
+    , shortName = "Whisper"
+    , class = Warlock
+    , race = Neutral
+    , hasPerk = False
+    , cost = 10
+    , power = 9
+    , teamwork = 7
+    , sociability = 8
+    , morality = 1
+    , quote = "_\\*Shadows slither of their own volition as you lay atop a mountain of bodies slick with blood, a red glow illuminating a woman\\* *- A Vision.*_"
+    , description = "Whisper is a high ranking Wraith of Hespatia and a prolific serial killer and ritual coordinator leading-a particular network of hespatian families as a pleasure-death cult indulging in the most egregious sins more than can be spoken here that make the murder, rape, and necrophilia seem tame. Every passing month marks between 6 and 60+ new victims between her rituals and her assassinations"
+    , positives =
+        [ "+ Insane situational awareness."
+        , "+ Actually very charming."
+        , "+ She's like, _really_ hot tho."
+        ]
+    , negatives =
+        [ "- Highly manipulative"
+        , "- Habit of vanishing,"
+        , "- Might flay you if bored."
+        ]
+    , mixed = [ "+/- Wont trust you if you don't join in her “parties”." ]
+    , has = "Witchery 3, Familiarity 5, Occultism 5, Psychotics 5, _Visceramancy 5, Toximancy, Blood Witch, & Shroud_"
+    }
+
+
+redMother : Details
+redMother =
+    { name = RedMother
+    , shortName = "Mom"
+    , class = Academic
+    , race = Neutral
+    , hasPerk = False
+    , cost = 8
+    , power = 6
+    , teamwork = 7
+    , sociability = 7
+    , morality = 3
+    , quote = "_*“M..Mother...”* \\*Suggestive breathing\\* *“May I?.”* \\*Deep rhythmic drums and chanting\\* *-Audio pulled from captive ORC Agent.*_"
+    , description = "Was the student Mae lost. Goblin shamanism attempted to turn her into a broodmother and it left deep scars in her mind that have manifested themselves during recovery She runs a Hespatian family where she's “Mother” to a cult of pleasure and blood, though with less murder than Whisper's shtick and more emphasis on a creepy incestuous undertone and a religious charade involving sadism."
+    , positives =
+        [ "+ Cares for her family."
+        , "+ Anyone can become “family”"
+        , "+ Rewards good behavior."
+        ]
+    , negatives =
+        [ "- And _only_ her family"
+        , "- Vampiric weaknesses"
+        , "- Severe punishments."
+        ]
+    , mixed = [ "+/- Won't _kill_ children or parents, but might abduct" ]
+    , has = "Occultism 4, Necromancy 5, Alchemy 5, Consortation 5, _Visceramancy 5, Blood Witch, Family Line, and Immortal Blood_"
     }
