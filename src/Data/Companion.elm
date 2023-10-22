@@ -1,5 +1,6 @@
 module Data.Companion exposing (Details, all, intro)
 
+import Element.Region exposing (description)
 import Generated.Types exposing (Class(..), Companion(..), Magic(..), Perk(..), Race(..))
 import Types exposing (RankedMagic)
 
@@ -18,8 +19,8 @@ type alias Details =
     , quote : String
     , description : String
     , positives : List String
-    , mixed : List String
     , negatives : List String
+    , mixed : List String
     , magics : List RankedMagic
     , perks : List Perk
     }
@@ -45,7 +46,7 @@ all =
 
 arcadians : List Details
 arcadians =
-    [ rachelPool, anneLaurenchi ]
+    [ rachelPool, anneLaurenchi, candayWesbank ]
 
 
 rachelPool : Details
@@ -70,12 +71,12 @@ rachelPool =
         , "Talks to animals."
         , "Will at least _try_ things beyond her comfort zone."
         ]
-    , mixed = []
     , negatives =
         [ "Slow to adapt."
         , "Very nervous."
         , "... more than people."
         ]
+    , mixed = []
     , magics =
         [ RankedMagic Alchemy 2
         , RankedMagic Witchery 1
@@ -107,12 +108,12 @@ anneLaurenchi =
         , "Highly skilled digital artist."
         , "Likes to show off dreamworlds with friends"
         ]
-    , mixed = []
     , negatives =
         [ "Ungrounded in reality."
         , "... Would rather nap."
         , "Slow even when awake"
         ]
+    , mixed = []
     , magics =
         [ RankedMagic Familiarity 1
         , RankedMagic Aethernautics 2
@@ -121,4 +122,33 @@ anneLaurenchi =
         , RankedMagic Digicasting 4
         ]
     , perks = [ BeautySleep ]
+    }
+
+
+candayWesbank : Details
+candayWesbank =
+    { name = CandayWesbank
+    , shortName = "Wess"
+    , class = Sorceress
+    , race = Neutral
+    , hasPerk = False
+    , cost = 2
+    , power = 4
+    , teamwork = 8
+    , sociability = 7
+    , morality = 8
+    , quote = "“Wess has been out there all day long helping clean up the river after that necroshark attack.” - An Arcadian student."
+    , description = "Goes by “Wess”, to avoid people calling her “Candy” which rubs her the wrong way, but she doesn't make a big deal about it and goes with the flow. She has a calm reserved intelligence about the way she carries herself in a mature manner that suggests a lot of life experience that has seen some of the worst life has to offer, but also some of the best, and she appreciates what she can. She's a bit of a watchdog, always locking out for others, friend or rival."
+    , positives =
+        [ "Very competent and focused."
+        , "Very physically fit and lean."
+        , "MMA background."
+        ]
+    , negatives =
+        [ "She keeps it in check, but she's very paranoid"
+        , "Struggles to sleep"
+        ]
+    , mixed = [ "Celebate until marriage. (Though not a virgin)" ]
+    , magics = [ RankedMagic Runes 5 ]
+    , perks = [ ImprovedFamiliar ]
     }
