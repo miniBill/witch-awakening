@@ -353,7 +353,7 @@ sylvanneMaeKanzaki =
 
 watchers : List Details
 watchers =
-    [ francisIsaacGiovanni ]
+    [ francisIsaacGiovanni, ifraAlZahra ]
 
 
 francisIsaacGiovanni : Details
@@ -380,4 +380,31 @@ francisIsaacGiovanni =
         ]
     , mixed = [ "+/- Learned to stop thinking in blanket generalities and now views evil as more of an infection or virus" ]
     , has = "Consortation 4, Ministration 4, Runes 5, _Sun Shard_, _Mythril Armor_, and _Memorize_."
+    }
+
+
+ifraAlZahra : Details
+ifraAlZahra =
+    { name = IfraAlZahra
+    , shortName = "Ifra"
+    , class = Warlock
+    , race = Changeling
+    , hasPerk = False
+    , cost = 4
+    , power = 3
+    , teamwork = 4
+    , sociability = 9
+    , morality = 7
+    , quote = "_*“Hey Ifra, where'd these doujins come fro-”* \\*Poof\\* \\*Frog croaking\\* *“Oh hey Ifra, Where'd Kat go? Oh what's this-”* \\*Poof\\* *-Last Tue*_"
+    , description = "Ifra grew up Muslim and managed to live a full life until the old age of 83 when she finally had her awakening -- into a changeling finding herself young again. A little more than she'd have hoped but hey. She believes in Islam though she's lived long enough to see a lot of changes, that she just adapts to whatever the local custom is, otherwise she's somewhat casual, but makes sure to pray 5 times a day."
+    , positives =
+        [ "+ Cunning with a sharp wit"
+        , "+ Shapechanging."
+        ]
+    , negatives =
+        [ "- Lazy and stubborn"
+        , "- Surprisingly needy."
+        ]
+    , mixed = [ "+/- Reads a lot of, in her words, “degenerate filth!“ like premarital handholding in both “Weeb stuff“ & romcoms." ]
+    , has = "Ifra has Ministration 1, Familiarity 2, Curses 3, Hexes 4, Earthmoving 4 and has _False Light_."
     }
