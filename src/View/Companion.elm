@@ -8,7 +8,6 @@ import Element.Font as Font
 import Generated.Types as Types exposing (Companion, Race(..))
 import Gradients
 import Images
-import List.Extra
 import Theme
 import Types exposing (Choice(..))
 
@@ -128,7 +127,7 @@ companionBox :
     List Companion
     -> Companion.Details
     -> Element ( Companion, Bool )
-companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, description, positives, mixed, negatives, magics, perks } as companion) =
+companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, description, positives, mixed, negatives, has } as companion) =
     let
         isSelected : Bool
         isSelected =
@@ -204,7 +203,7 @@ companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, des
                         |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
                     ]
                 , statsTable companion
-                , Theme.blocks [ Font.size 14 ] <| "_*" ++ quote ++ "*_"
+                , Theme.blocks [ Font.size 14 ] quote
                 , Theme.blocks [] description
                 , let
                     toBlocks : List String -> List (Element msg)
@@ -242,39 +241,12 @@ companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, des
                     , spacing <| Theme.rythm // 2
                     ]
                     (beforeBlock :: toBlocks mixed)
-                , let
-                    magicsStrings : List String
-                    magicsStrings =
-                        magics
-                            -- |> List.sortBy (\{ rank } -> -rank)
-                            |> List.map
-                                (\magic ->
-                                    Types.magicToString magic.name
-                                        ++ " "
-                                        ++ String.fromInt magic.rank
-                                )
-
-                    perksStrings : List String
-                    perksStrings =
-                        List.map Types.perkToString perks
-
-                    magicsAndPerks : List String
-                    magicsAndPerks =
-                        magicsStrings ++ perksStrings
-
-                    ( init, last ) =
-                        List.Extra.splitAt
-                            (List.length magicsAndPerks - 1)
-                            magicsAndPerks
-                  in
-                  Theme.blocks [] <|
+                , Theme.blocks [] <|
                     "*"
                         ++ shortName
                         ++ " has "
-                        ++ String.join ", " init
-                        ++ " and "
-                        ++ String.join ", " last
-                        ++ "*"
+                        ++ has
+                        ++ ".*"
                 ]
     in
     Theme.maybeButton
