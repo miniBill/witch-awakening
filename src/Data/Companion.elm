@@ -1,6 +1,5 @@
 module Data.Companion exposing (Details, all, intro)
 
-import Element.Region exposing (description)
 import Generated.Types exposing (Class(..), Companion(..), Magic(..), Perk(..), Race(..))
 import Types exposing (RankedMagic)
 
