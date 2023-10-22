@@ -43,7 +43,7 @@ all =
 
 arcadians : List Details
 arcadians =
-    [ rachelPool, anneLaurenchi, candayWesbank, tessaMarieKudashov ]
+    [ rachelPool, anneLaurenchi, candayWesbank, tessaMarieKudashov, evelynnPWillowcrane, johnDoe ]
 
 
 rachelPool : Details
@@ -163,4 +163,64 @@ tessaMarieKudashov =
         ]
     , mixed = [ "+/- Bit of a freak. take that as you will." ]
     , has = "Potions 3, Hexes 4, has a _Hydron_"
+    }
+
+
+evelynnPWillowcrane : Details
+evelynnPWillowcrane =
+    { name = EvelynnPWillowcrane
+    , shortName = "Evelynn"
+    , class = Academic
+    , race = Neutral
+    , hasPerk = False
+    , cost = 2
+    , power = 4
+    , teamwork = 9
+    , sociability = 10
+    , morality = 7
+    , quote = "_*“You're heading out with Evelynn again? I want to come too! She always finds the best places”. - An Arcadian student.*_"
+    , description = "Evelynn is a high functioning socialite that always seems to know what someone needs to hear to get back on their feet or to keep a party going. She's an active go-getter always setting up new activities and getting people to attend without dragging their feet, and is as adventurous as she is social, finding people to tag along as she heads out to explore to find interesting places to host events."
+    , positives =
+        [ "+ Outgoing"
+        , "+ Empathetic"
+        , "+ Adaptable and cooperative"
+        , "+/- Also known for being dtf"
+        ]
+    , negatives =
+        [ "- Not the most powerful"
+        , "- Can be caught up in the moment"
+        , "- A _little_ pushy, tactfully"
+        ]
+    , mixed = []
+    , has = "Waterworking 1, Witchery 1, Divination 2, Digicasting 2, Runes 3 & _Fascinate_"
+    }
+
+
+johnDoe : Details
+johnDoe =
+    { name = JohnDoe
+    , shortName = "John"
+    , class = Sorceress
+    , race = Changeling
+    , hasPerk = False
+    , cost = 4
+    , power = 6
+    , teamwork = 7
+    , sociability = 5
+    , morality = 10
+    , quote = "_*“Little man is so f#&% cute holy shit”* \\*John turning red\\* *“Haha, he gets even cuter when embarrassed!” - An Arcadian student.*_"
+    , description = "John is a very uncommon male witch... And rarer still: A Changeling. He can't remember much of his past so doesn't know how old he really is, but he tries to look as old as he can, He must have been a soldier or knight pre-awakening, because he has a firmly rooted sense of chivalry, justice, and mercy, and great reflexes and is a natural with weapons He's eager to learn all he can and studies his lessons closely."
+    , positives =
+        [ "+ Very intent listener."
+        , "+ Unintentionally adorable."
+        , "+ Latent martial master."
+        ]
+    , negatives =
+        [ "- Quickly fatigues, socially."
+        , "- Feels like he has to prove himself in everything."
+        ]
+    , mixed =
+        [ "+/- Overly focused on gaining new experiences."
+        ]
+    , has = "Alchemy, Runes, and Witchery at 2, and unspent _Jack-of-All_, and _Memorize_"
     }
