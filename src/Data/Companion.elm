@@ -590,7 +590,7 @@ redMother =
 
 lunabellans : List Details
 lunabellans =
-    [ diana ]
+    [ diana, cassandra, kingCulicarius, einodiaKate ]
 
 
 diana : Details
@@ -619,4 +619,88 @@ diana =
         ]
     , mixed = [ "+/- Rarely goes without at least 2 huntresses with her" ]
     , has = "Ministation 2, Familiarity 4 (Owl), Witchery 5, _Improved Familiar (Dire Wolf), & Memorize_"
+    }
+
+
+cassandra : Details
+cassandra =
+    { name = Cassandra
+    , shortName = "Cass"
+    , class = Sorceress
+    , race = Dravir
+    , hasPerk = False
+    , cost = 6
+    , power = 3
+    , teamwork = 6
+    , sociability = 5
+    , morality = 7
+    , quote = "_*“I love visiting Cass but I don't get why she's so reclusive. She's obviously not antisocial, I just don't get it...” - Lunabellan.*_"
+    , description = "Used to be a renown oracle and her spat with Culicarius stuck in the rumormill long enough to become fable, back in his asshole phase in Greece, though she wasn't a saint either. They both got better. She manages her own domain bubble where she emphasizes large tall mountains and cliffs topped with estates where she practices ritual magics."
+    , positives =
+        [ "+ Generous and hospitable"
+        , "+ Dotes on friends and servants"
+        , "+ Loves serving others when able."
+        ]
+    , negatives =
+        [ "- Bit of a shut in"
+        , "- Actually narcoleptic"
+        , "- Hard to self-motivate."
+        ]
+    , mixed = [ "+/- Dreamer with her head in the clouds, she thinks about the future at the expense of the present a lot." ]
+    , has = "Familiarity 2, Potions 3, Occultism 3, Hexes 4, Divination 5, Domain 5, with _Oracle_"
+    }
+
+
+kingCulicarius : Details
+kingCulicarius =
+    { name = KingCulicarius
+    , shortName = "He"
+    , class = Academic
+    , race = Daeva
+    , hasPerk = True
+    , cost = 15
+    , power = 4
+    , teamwork = 9
+    , sociability = 8
+    , morality = 8
+    , quote = "_*“I want to see Culicarius.. I want to know if I have a future with Mariah but I wonder what else to ask him.” - Random Lunabellans*_"
+    , description = "The King of Lunabella and an ancient male Daeva that inspired the myth of Apollo, He can be in a number of places at once and has seen so much, not just in his life but in exploring futures. He's fair but firm. Harem of 1,013, wives & some husbands because he rarely turns them down."
+    , positives =
+        [ "+ Literally the body of a greek god."
+        , "+ There's a lot of him."
+        ]
+    , negatives =
+        [ "- If you abuse your relationship with him, you'll lose it"
+        , "- Very jaded, though whimsical"
+        ]
+    , mixed = [ "+/- You can't convince him to change Lunabella, for better or worse, without serious evidence that it isn't working: and, it is, and he’s seen a thousand alternatives to their ends." ]
+    , has = "Ministration 3, Potions 4, Curses 5, Consortation 5, Firecalling 5, Divination 5, Oracle, Synthetic Hive, Embody Time"
+    }
+
+
+einodiaKate : Details
+einodiaKate =
+    { name = EinodiaKate
+    , shortName = "Kate"
+    , class = Academic
+    , race = Daeva
+    , hasPerk = False
+    , cost = 15
+    , power = 1
+    , teamwork = 4
+    , sociability = 5
+    , morality = 6
+    , quote = "_*“She's too talented for her own good, straining against the limits of the masquerade...and higher powers.” - Culicarius to a friend.*_"
+    , description = "Also goes by Kate, Kate is the lich founder of Lunabella, but she has no interest in management, she just opened the way and chose her brother Culicarius to rule in her stead. She's a legendary witch that got entangled in the myth of _Hekate_, to the extent she began the process of mantling, becoming one, but was pulled out of it by her brother. She's a traveler at heart that's always yearning for more knowledge."
+    , positives =
+        [ "+ Very productive."
+        , "+ Top tier power."
+        , "+ High _skill_ in magic use."
+        ]
+    , negatives =
+        [ "- Grows restless with stagnation"
+        , "- May or may not have had an affair with her own brother once."
+        ]
+    , mixed = [ "+/- Driven by curiosity, secrets eat at her mind." ]
+    , has = "Witchery 4, Potions 5, Runes 5, Windkeeping 5, Necromancy 5, Portals 5, Aethernautics 5, and Domain 6"
     }
