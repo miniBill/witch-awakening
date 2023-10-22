@@ -251,7 +251,7 @@ companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, des
     in
     Theme.maybeButton
         [ height fill
-        , width <| Element.minimum 480 <| Element.maximum 760 fill
+        , width <| Element.minimum 660 <| Element.maximum 760 fill
         , Font.color <| rgb 0 0 0
         , Border.rounded Theme.cardRoundness
         , case glow of
