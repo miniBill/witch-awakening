@@ -287,29 +287,6 @@ companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, des
 
 statsTable : Companion.Details -> Element msg
 statsTable details =
-    let
-        cellWithLeftBorder : List (Attribute msg) -> String -> Int -> Element msg -> Element msg
-        cellWithLeftBorder attrs label leftBorder content =
-            el
-                ([ padding <| Theme.rythm // 2
-                 , width fill
-                 , height fill
-                 , Border.widthEach
-                    { top = 1
-                    , left = leftBorder
-                    , bottom =
-                        if label == "Ranking" then
-                            1
-
-                        else
-                            0
-                    , right = 1
-                    }
-                 ]
-                    ++ attrs
-                )
-                content
-    in
     Element.table [ width fill ]
         { columns =
             { header = Element.none
@@ -322,33 +299,7 @@ statsTable details =
                         (text <| label ++ ":")
             }
                 :: List.map
-                    (\v ->
-                        { header = Element.none
-                        , width = fill
-                        , view =
-                            \( label, w, ( mainColor, otherColor ) ) ->
-                                cellWithLeftBorder
-                                    [ Theme.backgroundColor <|
-                                        if w == v then
-                                            mainColor
-
-                                        else if w > v then
-                                            otherColor
-
-                                        else
-                                            0x00FFFFFF
-                                    , Font.center
-                                    ]
-                                    label
-                                    0
-                                    (if label == "Ranking" then
-                                        text <| String.fromInt v
-
-                                     else
-                                        text ""
-                                    )
-                        }
-                    )
+                    (statColumn details)
                     (List.reverse <| List.range 1 10)
         , data =
             [ ( "Power", details.power )
@@ -378,3 +329,83 @@ statsTable details =
                         )
                     )
         }
+
+
+cellWithLeftBorder : List (Attribute msg) -> String -> Int -> Element msg -> Element msg
+cellWithLeftBorder attrs label leftBorder content =
+    el
+        ([ padding <| Theme.rythm // 2
+         , width fill
+         , height fill
+         , Border.widthEach
+            { top = 1
+            , left = leftBorder
+            , bottom =
+                if label == "Ranking" then
+                    1
+
+                else
+                    0
+            , right = 1
+            }
+         ]
+            ++ attrs
+        )
+        content
+
+
+statColumn : Companion.Details -> Int -> Element.Column ( String, Int, ( Int, Int ) ) msg
+statColumn details ranking =
+    let
+        view : ( String, Int, ( Int, Int ) ) -> Element msg
+        view ( label, score, ( mainColor, otherColor ) ) =
+            let
+                nonWitch : Bool
+                nonWitch =
+                    label == "Power" && details.class == Nothing
+
+                ( backgroundColor, fontColor, content ) =
+                    if nonWitch then
+                        if ranking == 1 then
+                            ( mainColor
+                            , rgb 1 1 1
+                            , "N/A"
+                            )
+
+                        else
+                            ( otherColor
+                            , rgb 0 0 0
+                            , "X"
+                            )
+
+                    else
+                        ( if score == ranking then
+                            mainColor
+
+                          else if score > ranking then
+                            otherColor
+
+                          else
+                            0x00FFFFFF
+                        , rgb 0 0 0
+                        , if label == "Ranking" then
+                            String.fromInt ranking
+
+                          else
+                            ""
+                        )
+            in
+            cellWithLeftBorder
+                [ Border.color <| rgb 0 0 0
+                , Font.color fontColor
+                , Font.center
+                , Theme.backgroundColor backgroundColor
+                ]
+                label
+                0
+                (text content)
+    in
+    { header = Element.none
+    , width = fill
+    , view = view
+    }
