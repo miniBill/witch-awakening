@@ -38,7 +38,9 @@ intro =
 
 all : List ( String, List Details )
 all =
-    [ ( "The Arcadians", arcadians ) ]
+    [ ( "The Arcadians", arcadians )
+    , ( "Hawthorne", hawthorne )
+    ]
 
 
 arcadians : List Details
@@ -223,4 +225,40 @@ johnDoe =
         [ "+/- Overly focused on gaining new experiences."
         ]
     , has = "Alchemy, Runes, and Witchery at 2, and unspent _Jack-of-All_, and _Memorize_"
+    }
+
+
+hawthorne : List Details
+hawthorne =
+    -- , elizabellSinclaire, ashleyLovenko, sylvanneMaeKanzaki
+    [ hannahGrangely ]
+
+
+hannahGrangely : Details
+hannahGrangely =
+    { name = HannahGrangely
+    , shortName = "Hannah"
+    , class = Academic
+    , race = Neutral
+    , hasPerk = False
+    , cost = 6
+    , power = 5
+    , teamwork = 7
+    , sociability = 6
+    , morality = 7
+    , quote = "_*“I'm about ready to throw myself in a snake pit over this assignment, I need to ask Hannah to tutor me tonight.” - A Hawthorne Student.*_"
+    , description = "Hannah is top of her class, an excellent student that has the rules memorized and wholeheartedly embraces Hawthorne methods. She applied for the hardest courses and assigned House Lionfeather. She rarely makes the same mistake twice, and when she's not practicing magic, she's reading theory, or helping housemates with problems they're having trouble with."
+    , positives =
+        [ "+ Knowledgeable"
+        , "+ Good at teaching"
+        , "+ Always up to date on policy."
+        ]
+    , negatives =
+        [ "- Unintentionally arrogant"
+        , "- Not great at reading people,"
+        , "- Doesn't get out much"
+        ]
+    , mixed =
+        [ "+/- Helps avoid rulebreaking, but obligated to report" ]
+    , has = "1 in every core Specialization, and has Waterworking 3, Wands 4 & _Master Wand_."
     }
