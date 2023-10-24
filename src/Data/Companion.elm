@@ -1,16 +1,15 @@
-module Data.Companion exposing (Details, all, intro)
+module Data.Companion exposing (Details, Power(..), all, intro)
 
 import Generated.Types exposing (Class(..), Companion(..), Faction(..), Race(..))
 
 
 type alias Details =
     { name : Companion
-    , shortName : String
     , class : Maybe Class
     , race : Maybe Race
     , hasPerk : Bool
     , cost : Int
-    , power : Int
+    , power : Power
     , teamwork : Int
     , sociability : Int
     , morality : Int
@@ -21,6 +20,12 @@ type alias Details =
     , mixed : List String
     , has : String
     }
+
+
+type Power
+    = Witch Int
+    | SpecialEffect
+    | NotAWitch
 
 
 intro : String
@@ -45,6 +50,7 @@ all =
     , ( "The Lunabellans", Just Lunabella, lunabellans )
     , ( "The ORCs / Badges", Just TheOrc, theOrcs )
     , ( "The Alphazonians / Suits", Just Alphazon, alphazonians )
+    , ( "Independents / Other", Nothing, independents )
     ]
 
 
@@ -56,12 +62,11 @@ arcadians =
 rachelPool : Details
 rachelPool =
     { name = RachelPool
-    , shortName = "Rachel"
     , class = Just Academic
     , race = Just Neutral
     , hasPerk = False
     , cost = 4
-    , power = 5
+    , power = Witch 5
     , teamwork = 8
     , sociability = 4
     , morality = 9
@@ -81,19 +86,18 @@ rachelPool =
     , mixed =
         [ "+ Will at least _try_ things beyond her comfort zone."
         ]
-    , has = "Potions 2, Witchery 1, Hexes 2, Familiarity 3, and Naturalism 3"
+    , has = "Rachel has Potions 2, Witchery 1, Hexes 2, Familiarity 3, and Naturalism 3"
     }
 
 
 anneLaurenchi : Details
 anneLaurenchi =
     { name = AnneLaurenchi
-    , shortName = "Anne"
     , class = Just Academic
     , race = Just Sylph
     , hasPerk = True
     , cost = 4
-    , power = 4
+    , power = Witch 4
     , teamwork = 4
     , sociability = 6
     , morality = 7
@@ -112,19 +116,18 @@ anneLaurenchi =
     , mixed =
         [ "+ Likes to show off dreamworlds with friends."
         ]
-    , has = "Familiar 1, Aether 2, Portal 3, Psycho 3, Digicasting 4, as well as _Beauty Sleep_"
+    , has = "Anne has Familiar 1, Aether 2, Portal 3, Psycho 3, Digicasting 4, as well as _Beauty Sleep_"
     }
 
 
 candayWesbank : Details
 candayWesbank =
     { name = CandayWesbank
-    , shortName = "Wess"
     , class = Just Sorceress
     , race = Just Neutral
     , hasPerk = False
     , cost = 2
-    , power = 4
+    , power = Witch 4
     , teamwork = 8
     , sociability = 7
     , morality = 8
@@ -140,19 +143,18 @@ candayWesbank =
         , "- Struggles to sleep."
         ]
     , mixed = [ "+/- Celebate until marriage. {smol (Though not a virgin).}" ]
-    , has = "Runes 5 and an Improved Familiar"
+    , has = "Wess has Runes 5 and an Improved Familiar"
     }
 
 
 tessaMarieKudashov : Details
 tessaMarieKudashov =
     { name = TessaMarieKudashov
-    , shortName = "Tess"
     , class = Just Warlock
     , race = Just Neutral
     , hasPerk = False
     , cost = 2
-    , power = 8
+    , power = Witch 8
     , teamwork = 5
     , sociability = 6
     , morality = 4
@@ -169,19 +171,18 @@ tessaMarieKudashov =
         , "- Morally ambiguous."
         ]
     , mixed = [ "+/- Bit of a freak. take that as you will." ]
-    , has = "Potions 3, Hexes 4, has a _Hydron_"
+    , has = "Tess has Potions 3, Hexes 4, has a _Hydron_"
     }
 
 
 evelynnPWillowcrane : Details
 evelynnPWillowcrane =
     { name = EvelynnPWillowcrane
-    , shortName = "Evelynn"
     , class = Just Academic
     , race = Just Neutral
     , hasPerk = False
     , cost = 2
-    , power = 4
+    , power = Witch 4
     , teamwork = 9
     , sociability = 10
     , morality = 7
@@ -199,19 +200,18 @@ evelynnPWillowcrane =
         , "- A _little_ pushy, tactfully"
         ]
     , mixed = []
-    , has = "Waterworking 1, Witchery 1, Divination 2, Digicasting 2, Runes 3 & _Fascinate_"
+    , has = "Evelynn has Waterworking 1, Witchery 1, Divination 2, Digicasting 2, Runes 3 & _Fascinate_"
     }
 
 
 johnDoe : Details
 johnDoe =
     { name = JohnDoe
-    , shortName = "John"
     , class = Just Sorceress
     , race = Just Changeling
     , hasPerk = False
     , cost = 4
-    , power = 6
+    , power = Witch 6
     , teamwork = 7
     , sociability = 5
     , morality = 10
@@ -229,7 +229,7 @@ johnDoe =
     , mixed =
         [ "+/- Overly focused on gaining new experiences."
         ]
-    , has = "Alchemy, Runes, and Witchery at 2, and unspent _Jack-of-All_, and _Memorize_"
+    , has = "John has Alchemy, Runes, and Witchery at 2, and unspent _Jack-of-All_, and _Memorize_"
     }
 
 
@@ -241,12 +241,11 @@ hawthorne =
 hannahGrangely : Details
 hannahGrangely =
     { name = HannahGrangely
-    , shortName = "Hannah"
     , class = Just Academic
     , race = Just Neutral
     , hasPerk = False
     , cost = 6
-    , power = 5
+    , power = Witch 5
     , teamwork = 7
     , sociability = 6
     , morality = 7
@@ -264,19 +263,18 @@ hannahGrangely =
         ]
     , mixed =
         [ "+/- Helps avoid rulebreaking, but obligated to report" ]
-    , has = "1 in every core Specialization, and has Waterworking 3, Wands 4 & _Master Wand_."
+    , has = "Hannah has 1 in every core Specialization, and has Waterworking 3, Wands 4 & _Master Wand_."
     }
 
 
 elizabellSinclaire : Details
 elizabellSinclaire =
     { name = ElizabellSinclaire
-    , shortName = "Eliza"
     , class = Just Warlock
     , race = Just Erinyes
     , hasPerk = False
     , cost = 10
-    , power = 2
+    , power = Witch 2
     , teamwork = 7
     , sociability = 6
     , morality = 5
@@ -294,19 +292,18 @@ elizabellSinclaire =
         ]
     , mixed =
         [ "+/- Isn't a domme by heart, but a talented switch." ]
-    , has = "Wands 3, Occultism 3, Witchery 3, Consortation 4, Windkeeping 5, and _Energize_."
+    , has = "Eliza has Wands 3, Occultism 3, Witchery 3, Consortation 4, Windkeeping 5, and _Energize_."
     }
 
 
 ashleyLovenko : Details
 ashleyLovenko =
     { name = AshleyLovenko
-    , shortName = "Ash"
     , class = Just Sorceress
     , race = Just Neutral
     , hasPerk = False
     , cost = 6
-    , power = 3
+    , power = Witch 3
     , teamwork = 7
     , sociability = 9
     , morality = 8
@@ -323,19 +320,18 @@ ashleyLovenko =
         , "- Often in discipline sessions"
         ]
     , mixed = [ "+/- Hard to dislike her the more you get to know her, despite often really bad first impressions" ]
-    , has = "Familiarity 2, Witchery 2, Firecalling 3, Windkeeping 4, Wands 5 & _Magic Friendship_."
+    , has = "Ash has Familiarity 2, Witchery 2, Firecalling 3, Windkeeping 4, Wands 5 & _Magic Friendship_."
     }
 
 
 sylvanneMaeKanzaki : Details
 sylvanneMaeKanzaki =
     { name = SylvanneMaeKanzaki
-    , shortName = "Mae"
     , class = Just Sorceress
     , race = Just Luxal
     , hasPerk = True
     , cost = 8
-    , power = 10
+    , power = Witch 10
     , teamwork = 6
     , sociability = 7
     , morality = 8
@@ -351,7 +347,7 @@ sylvanneMaeKanzaki =
         , "- Hates secrets. needs to know everything."
         ]
     , mixed = [ "+/- Little too quick to put her own life on the line" ]
-    , has = "Wands 1, Familiarity 2 (Hawk), Ministration 3, Witchery 4, _Hat Trick_ and _Sun Shard_."
+    , has = "Mae has Wands 1, Familiarity 2 (Hawk), Ministration 3, Witchery 4, _Hat Trick_ and _Sun Shard_."
     }
 
 
@@ -363,12 +359,11 @@ watchers =
 francisIsaacGiovanni : Details
 francisIsaacGiovanni =
     { name = FrancisIsaacGiovanni
-    , shortName = "Isaac"
     , class = Just Warlock
     , race = Just Neutral
     , hasPerk = False
     , cost = 6
-    , power = 6
+    , power = Witch 6
     , teamwork = 4
     , sociability = 2
     , morality = 7
@@ -383,19 +378,18 @@ francisIsaacGiovanni =
         , "- Has been a loner for centuries."
         ]
     , mixed = [ "+/- Learned to stop thinking in blanket generalities and now views evil as more of an infection or virus" ]
-    , has = "Consortation 4, Ministration 4, Runes 5, _Sun Shard_, _Mythril Armor_, and _Memorize_."
+    , has = "Isaac has Consortation 4, Ministration 4, Runes 5, _Sun Shard_, _Mythril Armor_, and _Memorize_."
     }
 
 
 ifraAlZahra : Details
 ifraAlZahra =
     { name = IfraAlZahra
-    , shortName = "Ifra"
     , class = Just Warlock
     , race = Just Changeling
     , hasPerk = False
     , cost = 4
-    , power = 3
+    , power = Witch 3
     , teamwork = 4
     , sociability = 9
     , morality = 7
@@ -417,12 +411,11 @@ ifraAlZahra =
 sariahJSnow : Details
 sariahJSnow =
     { name = SariahJSnow
-    , shortName = "Sariah"
     , class = Just Academic
     , race = Just Nymph
     , hasPerk = True
     , cost = 8
-    , power = 4
+    , power = Witch 4
     , teamwork = 9
     , sociability = 7
     , morality = 9
@@ -438,19 +431,18 @@ sariahJSnow =
         , "- Even avoids caffeine entirely"
         ]
     , mixed = [ "+/- Wants a new husband, but always holds her, late husband as her true partner to be reunited eventual" ]
-    , has = "Necromancy 2, Witchery 3, Divination 4, Waterworking 5, Ministation 5, _Oracle_, _Mythril Armor_ & _Artifact Keeper_"
+    , has = "Sariah has Necromancy 2, Witchery 3, Divination 4, Waterworking 5, Ministation 5, _Oracle_, _Mythril Armor_ & _Artifact Keeper_"
     }
 
 
 claireBelmontegra : Details
 claireBelmontegra =
     { name = ClaireBelMontegra
-    , shortName = "Claire"
     , class = Just Sorceress
     , race = Just Nymph
     , hasPerk = True
     , cost = 6
-    , power = 5
+    , power = Witch 5
     , teamwork = 8
     , sociability = 10
     , morality = 4
@@ -465,7 +457,7 @@ claireBelmontegra =
         , "- Workaholic"
         ]
     , mixed = [ "+/- Doesn't really consider anyone a friend until they've shared a bed while on mission together more than once" ]
-    , has = "Curses 2, Ministration 3, Wind 4, Witchery 4, Hexes 5 & _False Light_"
+    , has = "Claire has Curses 2, Ministration 3, Wind 4, Witchery 4, Hexes 5 & _False Light_"
     }
 
 
@@ -477,12 +469,11 @@ hespatians =
 lucilleMBright : Details
 lucilleMBright =
     { name = LucilleMBright
-    , shortName = "Claire"
     , class = Just Academic
     , race = Just Lilin
     , hasPerk = False
     , cost = 6
-    , power = 5
+    , power = Witch 5
     , teamwork = 7
     , sociability = 8
     , morality = 3
@@ -499,19 +490,18 @@ lucilleMBright =
         , "- So long as they treat her well."
         ]
     , mixed = [ "+/- Believes there is no truth but power, the strong survive, If something _can_ be destroyed, it _should_ be destroyed." ]
-    , has = "Necromancy 3, Hexes 4, Consortation 4, Divination 4, Familiarity 5, _Blood Witch, Necronomicon & Hellrider_"
+    , has = "Lucille has Necromancy 3, Hexes 4, Consortation 4, Divination 4, Familiarity 5, _Blood Witch, Necronomicon & Hellrider_"
     }
 
 
 kingDaemianKain : Details
 kingDaemianKain =
     { name = KingDaemianKain
-    , shortName = "Kain"
     , class = Just Sorceress
     , race = Just Dravir
     , hasPerk = True
     , cost = 12
-    , power = 10
+    , power = Witch 10
     , teamwork = 5
     , sociability = 6
     , morality = 2
@@ -528,19 +518,18 @@ kingDaemianKain =
         , "- Really strict though"
         ]
     , mixed = [ "+/- Great guy to know if you need to get rid of a body" ]
-    , has = "Familiarity 3, Firecalling 4, Curses 5, Consortation 5, Metamorphize 5 (Dragon) _Secret Magic & Family Line_"
+    , has = "Kain has Familiarity 3, Firecalling 4, Curses 5, Consortation 5, Metamorphize 5 (Dragon) _Secret Magic & Family Line_"
     }
 
 
 whisper : Details
 whisper =
     { name = Whisper
-    , shortName = "Whisper"
     , class = Just Warlock
     , race = Just Neutral
     , hasPerk = False
     , cost = 10
-    , power = 9
+    , power = Witch 9
     , teamwork = 7
     , sociability = 8
     , morality = 1
@@ -557,19 +546,18 @@ whisper =
         , "- Might flay you if bored."
         ]
     , mixed = [ "+/- Wont trust you if you don't join in her “parties”." ]
-    , has = "Witchery 3, Familiarity 5, Occultism 5, Psychotics 5, _Visceramancy 5, Toximancy, Blood Witch, & Shroud_"
+    , has = "Whisper has Witchery 3, Familiarity 5, Occultism 5, Psychotics 5, _Visceramancy 5, Toximancy, Blood Witch, & Shroud_"
     }
 
 
 redMother : Details
 redMother =
     { name = RedMother
-    , shortName = "Mom"
     , class = Just Academic
     , race = Just Neutral
     , hasPerk = False
     , cost = 8
-    , power = 6
+    , power = Witch 6
     , teamwork = 7
     , sociability = 7
     , morality = 3
@@ -586,7 +574,7 @@ redMother =
         , "- Severe punishments."
         ]
     , mixed = [ "+/- Won't _kill_ children or parents, but might abduct" ]
-    , has = "Occultism 4, Necromancy 5, Alchemy 5, Consortation 5, _Visceramancy 5, Blood Witch, Family Line, and Immortal Blood_"
+    , has = "Mom has Occultism 4, Necromancy 5, Alchemy 5, Consortation 5, _Visceramancy 5, Blood Witch, Family Line, and Immortal Blood_"
     }
 
 
@@ -598,12 +586,11 @@ lunabellans =
 diana : Details
 diana =
     { name = Diana
-    , shortName = "Diana"
     , class = Just Sorceress
     , race = Just Neutral
     , hasPerk = False
     , cost = 6
-    , power = 8
+    , power = Witch 8
     , teamwork = 9
     , sociability = 7
     , morality = 9
@@ -620,19 +607,18 @@ diana =
         , "- A hint of persistent sadness."
         ]
     , mixed = [ "+/- Rarely goes without at least 2 huntresses with her" ]
-    , has = "Ministation 2, Familiarity 4 (Owl), Witchery 5, _Improved Familiar (Dire Wolf), & Memorize_"
+    , has = "Diana has Ministation 2, Familiarity 4 (Owl), Witchery 5, _Improved Familiar (Dire Wolf), & Memorize_"
     }
 
 
 cassandra : Details
 cassandra =
     { name = Cassandra
-    , shortName = "Cass"
     , class = Just Sorceress
     , race = Just Dravir
     , hasPerk = False
     , cost = 6
-    , power = 3
+    , power = Witch 3
     , teamwork = 6
     , sociability = 5
     , morality = 7
@@ -649,19 +635,18 @@ cassandra =
         , "- Hard to self-motivate."
         ]
     , mixed = [ "+/- Dreamer with her head in the clouds, she thinks about the future at the expense of the present a lot." ]
-    , has = "Familiarity 2, Potions 3, Occultism 3, Hexes 4, Divination 5, Domain 5, with _Oracle_"
+    , has = "Cass has Familiarity 2, Potions 3, Occultism 3, Hexes 4, Divination 5, Domain 5, with _Oracle_"
     }
 
 
 kingCulicarius : Details
 kingCulicarius =
     { name = KingCulicarius
-    , shortName = "He"
     , class = Just Academic
     , race = Just Daeva
     , hasPerk = True
     , cost = 15
-    , power = 4
+    , power = Witch 4
     , teamwork = 9
     , sociability = 8
     , morality = 8
@@ -676,19 +661,18 @@ kingCulicarius =
         , "- Very jaded, though whimsical"
         ]
     , mixed = [ "+/- You can't convince him to change Lunabella, for better or worse, without serious evidence that it isn't working: and, it is, and he’s seen a thousand alternatives to their ends." ]
-    , has = "Ministration 3, Potions 4, Curses 5, Consortation 5, Firecalling 5, Divination 5, Oracle, Synthetic Hive, Embody Time"
+    , has = "He has Ministration 3, Potions 4, Curses 5, Consortation 5, Firecalling 5, Divination 5, Oracle, Synthetic Hive, Embody Time"
     }
 
 
 einodiaKate : Details
 einodiaKate =
     { name = EinodiaKate
-    , shortName = "Kate"
     , class = Just Academic
     , race = Just Daeva
     , hasPerk = False
     , cost = 15
-    , power = 1
+    , power = Witch 1
     , teamwork = 4
     , sociability = 5
     , morality = 6
@@ -704,7 +688,7 @@ einodiaKate =
         , "- May or may not have had an affair with her own brother once."
         ]
     , mixed = [ "+/- Driven by curiosity, secrets eat at her mind." ]
-    , has = "Witchery 4, Potions 5, Runes 5, Windkeeping 5, Necromancy 5, Portals 5, Aethernautics 5, and Domain 6"
+    , has = "Kate has Witchery 4, Potions 5, Runes 5, Windkeeping 5, Necromancy 5, Portals 5, Aethernautics 5, and Domain 6"
     }
 
 
@@ -716,12 +700,11 @@ theOrcs =
 victoriaWatts : Details
 victoriaWatts =
     { name = VictoriaWatts
-    , shortName = "V"
     , class = Nothing
     , race = Just Neutral
     , hasPerk = False
     , cost = 8
-    , power = 0
+    , power = NotAWitch
     , teamwork = 10
     , sociability = 8
     , morality = 7
@@ -736,19 +719,18 @@ victoriaWatts =
         , "- Not a witch."
         ]
     , mixed = [ "+/- On speaking terms with some suits at Alphazon enough to acquire some of their tech without much pressure" ]
-    , has = "Integration 4 (_No Observer_), and Gadgetry 5 with the _ORC License_ and _Collection_"
+    , has = "V has Integration 4 (_No Observer_), and Gadgetry 5 with the _ORC License_ and _Collection_"
     }
 
 
 richardMaxJohnson : Details
 richardMaxJohnson =
     { name = RichardMaxJohnson
-    , shortName = "Max"
     , class = Nothing
     , race = Just Neutral
     , hasPerk = False
     , cost = 5
-    , power = 0
+    , power = NotAWitch
     , teamwork = 7
     , sociability = 5
     , morality = 6
@@ -763,19 +745,18 @@ richardMaxJohnson =
         , "- Horny bastard (with self control)"
         ]
     , mixed = [ "+ Can produce gadgets from a box of scraps & bubblegum" ]
-    , has = "Gadgetry 5, _ORC License_, and a metric Freedom load of firearms and ammo"
+    , has = "Max has Gadgetry 5, _ORC License_, and a metric Freedom load of firearms and ammo"
     }
 
 
 bethadonnaRossbaum : Details
 bethadonnaRossbaum =
     { name = BethadonnaRossbaum
-    , shortName = "Beth"
     , class = Just Warlock
     , race = Just Lilin
     , hasPerk = True
     , cost = 12
-    , power = 1
+    , power = Witch 1
     , teamwork = 8
     , sociability = 9
     , morality = 5
@@ -790,19 +771,18 @@ bethadonnaRossbaum =
         , "- Scary combat transformation"
         ]
     , mixed = [ "+/- Sweet christmas, you do _not_ want to make mother mad." ]
-    , has = "Familiarity 5, Consortation 5, Necromancy Portals 5, Occultism 5, and _ORC License, Golden Fish, Third Eye, and Pantomime_. _Wished for Power_."
+    , has = "Beth has Familiarity 5, Consortation 5, Necromancy Portals 5, Occultism 5, and _ORC License, Golden Fish, Third Eye, and Pantomime_. _Wished for Power_."
     }
 
 
 mirandaQuincy : Details
 mirandaQuincy =
     { name = MirandaQuincy
-    , shortName = "Doc"
     , class = Just Academic
     , race = Just Erinyes
     , hasPerk = True
     , cost = 8
-    , power = 8
+    , power = Witch 8
     , teamwork = 6
     , sociability = 7
     , morality = 6
@@ -817,7 +797,7 @@ mirandaQuincy =
         , "- Brutally honest"
         ]
     , mixed = [ "+/- Doesn't believe in mercy, for enemies, or for allies; Will save your life no matter the pain, to eventually recover" ]
-    , has = "Gadgetry 2, Hexes 3, Witchery 4, Firecalling 4, Potions 5, and Familiar 5 (Fox), _ORC License_"
+    , has = "Doc has Gadgetry 2, Hexes 3, Witchery 4, Firecalling 4, Potions 5, and Familiar 5 (Fox), _ORC License_"
     }
 
 
@@ -829,12 +809,11 @@ alphazonians =
 samanthaNatPonds : Details
 samanthaNatPonds =
     { name = SamanthaNatPonds
-    , shortName = "Sam"
     , class = Nothing
     , race = Just Neutral
     , hasPerk = False
     , cost = 8
-    , power = 0
+    , power = NotAWitch
     , teamwork = 6
     , sociability = 10
     , morality = 5
@@ -849,19 +828,18 @@ samanthaNatPonds =
         , "- No self-drive, craves purpose."
         ]
     , mixed = [ "+/- Not naive, but doesn't ask questions that aren't directly relevant to a given task" ]
-    , has = "Divination 3, Gadgetry 4, Integration 5"
+    , has = "Sam has Divination 3, Gadgetry 4, Integration 5"
     }
 
 
 jenniferKYoung : Details
 jenniferKYoung =
     { name = JenniferKYoung
-    , shortName = "Jen"
     , class = Nothing
     , race = Just Neutral
     , hasPerk = False
     , cost = 5
-    , power = 0
+    , power = NotAWitch
     , teamwork = 4
     , sociability = 8
     , morality = 4
@@ -876,19 +854,18 @@ jenniferKYoung =
         , "- _Very_ extroverted"
         ]
     , mixed = [ "+/- Smarter than she presents herself to be, as an easy ditzy airhead, and does contribute with info gathering." ]
-    , has = "Divination 3, Integration 4 & a _Gold Card_"
+    , has = "Jen has Divination 3, Integration 4 & a _Gold Card_"
     }
 
 
 agent7Y : Details
 agent7Y =
     { name = Agent7Y
-    , shortName = "Sev"
     , class = Nothing
     , race = Just Neutral
     , hasPerk = False
     , cost = 12
-    , power = 0
+    , power = NotAWitch
     , teamwork = 7
     , sociability = 7
     , morality = 1
@@ -902,19 +879,18 @@ agent7Y =
         [ "- No morals, only corporate policy."
         ]
     , mixed = [ "+/- Can read your ID through the reflection on the wall through the window. Knows what you did last night." ]
-    , has = "Integration 5 (many reserve bodies), DIvination 5, & _Gold Card_, (+2 Spysats, with observers)"
+    , has = "Sev has Integration 5 (many reserve bodies), DIvination 5, & _Gold Card_, (+2 Spysats, with observers)"
     }
 
 
 agent9s : Details
 agent9s =
     { name = Agent9s
-    , shortName = "Nines"
     , class = Just Warlock
     , race = Just Aurai
     , hasPerk = False
     , cost = 10
-    , power = 8
+    , power = Witch 8
     , teamwork = 4
     , sociability = 6
     , morality = 2
@@ -929,5 +905,115 @@ agent9s =
         , "- Used to working alone."
         ]
     , mixed = [ "+/- A semi-lethal rivalry with the ORC, Richard Max in particular, a little Mr. and Ms. Smith style" ]
-    , has = "Integration 2, Witchery 3, Potions 3, Occultism 4, Psychotics 4, Familiarity 5 & _Gold Card_"
+    , has = "Nines has Integration 2, Witchery 3, Potions 3, Occultism 4, Psychotics 4, Familiarity 5 & _Gold Card_"
+    }
+
+
+independents : List Details
+independents =
+    [ alexKHalls, isabellaMableOaks, evangelinaRosaCostaval, penelope ]
+
+
+alexKHalls : Details
+alexKHalls =
+    { name = AlexKHalls
+    , class = Just Sorceress
+    , race = Just Neutral
+    , hasPerk = False
+    , cost = 2
+    , power = Witch 10
+    , teamwork = 7
+    , sociability = 5
+    , morality = 8
+    , quote = "_*“I sensed this one awaken not long ago. Poor thing was lost and confused while her human family didn't notice a change.” - Penelope.*_"
+    , description = "Alex is a brand new witch that just awakened a few days ago... and is still a little slow to adjust to losing her... trunk, having been a man this time last Tuesday. She's an adorable fish out of water that doesn't know much of anything, she visits Penelope's shop when she has the free time to learn while trying to keep her previous life going as best she can, most humans adjust as though she always was a woman, but it's more complicated than that. Wanna help her out?"
+    , positives =
+        [ "+ Brand new blank canvas."
+        , "+ “Girl next door” cute."
+        , "+ Straight A student."
+        ]
+    , negatives =
+        [ "- No experience at all"
+        , "- Still in High School {smol (But legal)}"
+        , "- Needs new clothes."
+        ]
+    , mixed = [ "+/- Really easily flustered by her new body and attention." ]
+    , has = "Alex has Familiarity 1 (Cat), & _Jack-of-All_"
+    }
+
+
+isabellaMableOaks : Details
+isabellaMableOaks =
+    { name = IsabellaMableOaks
+    , class = Nothing
+    , race = Nothing
+    , hasPerk = False
+    , cost = 15
+    , power = SpecialEffect
+    , teamwork = 6
+    , sociability = 9
+    , morality = 8
+    , quote = "_*“I detected this one earlier before you showed up. She hasn't awakened yet, but should naturally within the week.” - Penelope.*_"
+    , description = "Isabella is for now a human going about her life attending her first year of college while working part-time at a convenience store, spending most her free time volunteering for events and charities, or service projects. When she's not at class, work, or volunteering, she's cooking or cleaning. if not for herself then for her wheelchair-bound mom, missing both legs from an accident."
+    , positives =
+        [ "+ Incredibly wholesome"
+        , "+ Widely loved by people"
+        ]
+    , negatives =
+        [ "- Very unathletic."
+        , "- Usually busy volunteering."
+        ]
+    , mixed = [ "+/- Has never even dreamed of causing harm to anybody will take a lot to be much help in a fight." ]
+    , has = "“I dunno what she will have yet.” (Build her up as a second build from scratch)"
+    }
+
+
+evangelinaRosaCostaval : Details
+evangelinaRosaCostaval =
+    { name = EvangelinaRosaCostaval
+    , class = Nothing
+    , race = Just Neutral
+    , hasPerk = False
+    , cost = 12
+    , power = SpecialEffect
+    , teamwork = 7
+    , sociability = 8
+    , morality = 5
+    , quote = "_*“Rosa is in town, she's very capable and perhaps you two could come to... a mutually beneficial partnership.” - Penelope.*_"
+    , description = "Rosa is an old vampire _(As per second-hand Immortal Blood)_ with an unnatural ability to copy magical abilities temporarily, and with her many years of life, she's learned to make good use of most powers out there. For a time she was a member of the Hespatian Coven, but has largely distanced herself from them in recent years, acting on her own. She doesn't know if her master is still alive or not, and the thought of his return fills her with dread."
+    , positives =
+        [ "+ Charming and pleasant"
+        , "+ Very knowledgeable."
+        ]
+    , negatives =
+        [ "- Can't disobey the vampire that turned her, her master,"
+        ]
+    , mixed = [ "+/- Is stronger when well fed, weakens with hunger" ]
+    , has = "Rosa is a vampire + copies the (magical) power & perks of the last person she fed on"
+    }
+
+
+penelope : Details
+penelope =
+    { name = Penelope
+    , class = Just Sorceress
+    , race = Just Daeva
+    , hasPerk = False
+    , cost = 10
+    , power = Witch 4
+    , teamwork = 6
+    , sociability = 8
+    , morality = 6
+    , quote = "_*\"Oh hey, would you look at that. Looks like I might be in your future myself, You can crash here if you want.\" - Penelope.*_"
+    , description = "I'm technically a Lunabellan at heart, but I've carefully positioned myself as a neutral party as a Guidance Witch that can induce early magical awakenings in witches, so I live hidden among human society with eyes open for new witches, or those not yet awake. None of the big factions bother me as a result, so long as I do my best not to play favorites."
+    , positives =
+        [ "+ Is this where I say an Office quote?"
+        , "+ I've got a great rack?"
+        ]
+    , negatives =
+        [ "- None, clearly"
+        , "- I must stay neutral"
+        ]
+    , mixed = [ "+/- \"Sometimes, I just care too much, I love to travel and take long walks on the beach. I'm not like other girls\" /s" ]
+    , has = "Pen has Potions 3, Hexes 3, Domain 3, Familiar 4 (Cow), Witchery 4, Necromancy 5, Divination 5, _Cornucopia, Prestidigitation, Third Eye & Yaga Root._"
     }

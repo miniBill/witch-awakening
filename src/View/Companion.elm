@@ -1,13 +1,16 @@
 module View.Companion exposing (viewCompanions)
 
 import Data.Companion as Companion
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, column, el, fill, fillPortion, height, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (Companion, Faction, Race(..))
 import Gradients
+import Html.Attributes
 import Images
+import Svg
+import Svg.Attributes
 import Theme
 import Types exposing (Choice(..))
 
@@ -127,7 +130,7 @@ companionBox :
     List Companion
     -> Companion.Details
     -> Element ( Companion, Bool )
-companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, description, positives, mixed, negatives, has } as companion) =
+companionBox selected ({ name, race, hasPerk, quote, cost, class, description, positives, mixed, negatives, has } as companion) =
     let
         isSelected : Bool
         isSelected =
@@ -252,12 +255,8 @@ companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, des
                     , spacing <| Theme.rythm // 2
                     ]
                     (beforeBlock :: toBlocks mixed)
-                , Theme.blocks [] <|
-                    "*"
-                        ++ shortName
-                        ++ " has "
-                        ++ has
-                        ++ ".*"
+                , Theme.blocks []
+                    ("*" ++ has ++ ".*")
                 ]
     in
     Theme.maybeButton
@@ -304,33 +303,41 @@ statsTable details =
                         (text <| label ++ ":")
             }
                 :: List.map
-                    (statColumn details)
+                    statColumn
                     (List.reverse <| List.range 1 10)
         , data =
             [ ( "Power", details.power )
-            , ( "Teamwork", details.teamwork )
-            , ( "Sociability", details.sociability )
-            , ( "Morality", details.morality )
-            , ( "Ranking", -1 )
+            , ( "Teamwork", Companion.Witch details.teamwork )
+            , ( "Sociability", Companion.Witch details.sociability )
+            , ( "Morality", Companion.Witch details.morality )
+            , ( "Ranking", Companion.Witch -1 )
             ]
                 |> List.map
                     (\( label, value ) ->
                         ( label
                         , value
-                        , if value == 10 then
-                            Theme.colors.companionGold
+                        , case value of
+                            Companion.NotAWitch ->
+                                Theme.colors.companionBlack
 
-                          else if value >= 8 then
-                            Theme.colors.companionBlue
+                            Companion.SpecialEffect ->
+                                Theme.colors.companionGold
 
-                          else if value >= 5 then
-                            Theme.colors.companionOrange
+                            Companion.Witch p ->
+                                if p == 10 then
+                                    Theme.colors.companionGold
 
-                          else if value > 1 then
-                            Theme.colors.companionRed
+                                else if p >= 8 then
+                                    Theme.colors.companionBlue
 
-                          else
-                            Theme.colors.companionBlack
+                                else if p >= 5 then
+                                    Theme.colors.companionOrange
+
+                                else if p > 1 then
+                                    Theme.colors.companionRed
+
+                                else
+                                    Theme.colors.companionBlack
                         )
                     )
         }
@@ -359,58 +366,108 @@ cellWithLeftBorder attrs label leftBorder content =
         content
 
 
-statColumn : Companion.Details -> Int -> Element.Column ( String, Int, ( Int, Int ) ) msg
-statColumn details ranking =
+statColumn : Int -> Element.Column ( String, Companion.Power, ( Int, Int ) ) msg
+statColumn ranking =
     let
-        view : ( String, Int, ( Int, Int ) ) -> Element msg
-        view ( label, score, ( mainColor, otherColor ) ) =
+        view : ( String, Companion.Power, ( Int, Int ) ) -> Element msg
+        view ( label, rawScore, ( mainColor, otherColor ) ) =
             let
-                nonWitch : Bool
-                nonWitch =
-                    label == "Power" && details.class == Nothing
+                ( ( backgroundColor, fontColor ), attrs, content ) =
+                    case rawScore of
+                        Companion.NotAWitch ->
+                            if ranking == 1 then
+                                ( ( mainColor
+                                  , rgb 1 1 1
+                                  )
+                                , []
+                                , text "N/A"
+                                )
 
-                ( backgroundColor, fontColor, content ) =
-                    if nonWitch then
-                        if ranking == 1 then
-                            ( mainColor
-                            , rgb 1 1 1
-                            , "N/A"
+                            else
+                                ( ( otherColor
+                                  , rgb 0 0 0
+                                  )
+                                , [ padding 0 ]
+                                , cross
+                                )
+
+                        Companion.SpecialEffect ->
+                            ( ( mainColor
+                              , rgb 0 0 0
+                              )
+                            , if ranking == 6 then
+                                [ padding 0
+                                , inFront <|
+                                    el [ width fill, height fill ] <|
+                                        el [ centerX, centerY ] <|
+                                            Theme.gradientText 2 Gradients.blueGradient "Special Effect"
+                                ]
+
+                              else
+                                [ padding 0 ]
+                            , cross
                             )
 
-                        else
-                            ( otherColor
-                            , rgb 0 0 0
-                            , "X"
+                        Companion.Witch score ->
+                            ( ( if score == ranking then
+                                    mainColor
+
+                                else if score > ranking then
+                                    otherColor
+
+                                else
+                                    0x00FFFFFF
+                              , rgb 0 0 0
+                              )
+                            , []
+                            , if label == "Ranking" then
+                                text <| String.fromInt ranking
+
+                              else
+                                Element.none
                             )
-
-                    else
-                        ( if score == ranking then
-                            mainColor
-
-                          else if score > ranking then
-                            otherColor
-
-                          else
-                            0x00FFFFFF
-                        , rgb 0 0 0
-                        , if label == "Ranking" then
-                            String.fromInt ranking
-
-                          else
-                            ""
-                        )
             in
             cellWithLeftBorder
-                [ Border.color <| rgb 0 0 0
-                , Font.color fontColor
-                , Font.center
-                , Theme.backgroundColor backgroundColor
-                ]
+                ([ Border.color <| rgb 0 0 0
+                 , Font.color fontColor
+                 , Font.center
+                 , Theme.backgroundColor backgroundColor
+                 ]
+                    ++ attrs
+                )
                 label
                 0
-                (text content)
+                content
     in
     { header = Element.none
     , width = fill
     , view = view
     }
+
+
+cross : Element msg
+cross =
+    Element.html <|
+        Svg.svg
+            [ Svg.Attributes.viewBox "0 0 25 25"
+            , Html.Attributes.style "width" "100%"
+            , Html.Attributes.style "height" "25px"
+            , Svg.Attributes.preserveAspectRatio "none meet"
+            ]
+            [ Svg.line
+                [ Svg.Attributes.x1 "0"
+                , Svg.Attributes.y1 "0"
+                , Svg.Attributes.x2 "25"
+                , Svg.Attributes.y2 "25"
+                , Svg.Attributes.stroke "black"
+                ]
+                []
+            , Svg.line
+                [ Svg.Attributes.x1 "0"
+                , Svg.Attributes.y1 "25"
+                , Svg.Attributes.x2 "25"
+                , Svg.Attributes.y2 "0"
+                , Svg.Attributes.stroke "black"
+                ]
+                []
+            ]

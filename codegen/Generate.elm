@@ -155,6 +155,18 @@ enums =
             , "Jennifer K. Young"
             , "Agent 7Y"
             , "Agent 9s"
+            , "Alex K. Halls"
+            , "Isabella Mable Oaks"
+            , "Evangelina Rosa Costaval"
+            , "Penelope"
+            , "The Caretaker"
+            , "Lost Queen"
+            , "Gift from Beyond"
+            , "Agent 9s (Original)"
+            , "Princess Dael'ezra of Charis"
+            , "Anaphalon Greenwield"
+            , "Briar Gracehollow"
+            , "Duchess Sael'astra of Odalle"
             ]
                 |> List.map (\name -> ( String.Extra.classify name, name ))
     in
@@ -480,6 +492,7 @@ imageGroupParser =
                 |. Parser.chompWhile Char.isAlpha
             )
         |= Parser.int
+        |. Parser.end
 
 
 directoryDecoder : Decoder Generate.Directory
