@@ -439,10 +439,10 @@ factionValue model =
 companionsValue : Model -> Maybe Int
 companionsValue model =
     let
-        go : List ( Faction, Companion.Details ) -> Int
+        go : List ( Maybe Faction, Companion.Details ) -> Int
         go companions =
             let
-                byCost : List ( Faction, Companion.Details )
+                byCost : List ( Maybe Faction, Companion.Details )
                 byCost =
                     companions
                         |> List.sortBy (\( _, { cost } ) -> -cost)
@@ -457,7 +457,7 @@ companionsValue model =
                             byCost
                                 |> List.filterMap
                                     (\( faction, c ) ->
-                                        if faction == f then
+                                        if faction == Just f then
                                             Just c
 
                                         else
@@ -522,7 +522,7 @@ companionsValue model =
         |> Maybe.map go
 
 
-getCompanion : Types.Companion -> Maybe ( Faction, Companion.Details )
+getCompanion : Types.Companion -> Maybe ( Maybe Faction, Companion.Details )
 getCompanion companion =
     List.Extra.findMap
         (\( _, faction, group ) ->

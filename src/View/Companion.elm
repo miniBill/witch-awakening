@@ -75,7 +75,7 @@ viewCompanions companions =
         ]
 
 
-companionSection : List Companion -> ( String, Faction, List Companion.Details ) -> List (Element ( Companion, Bool ))
+companionSection : List Companion -> ( String, Maybe Faction, List Companion.Details ) -> List (Element ( Companion, Bool ))
 companionSection companions ( label, _, section ) =
     [ (label ++ ":")
         |> Theme.gradientText 2 Gradients.yellowGradient
