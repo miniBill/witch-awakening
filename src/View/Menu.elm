@@ -471,7 +471,7 @@ companionsValue model =
                         |> List.filterMap
                             (\( _, { race, class } as c ) ->
                                 if
-                                    (Just race == model.race)
+                                    (race == model.race || race == Nothing)
                                         || (class /= Nothing && class == model.class)
                                 then
                                     Just c

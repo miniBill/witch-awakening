@@ -164,14 +164,19 @@ companionBox selected ({ name, race, hasPerk, shortName, quote, cost, class, des
                                 , moveLeft 8
                                 , moveDown 4
                                 ]
-                        , (if race == Neutral && not hasPerk then
-                            ""
+                        , (case race of
+                            Just r ->
+                                if r == Neutral && not hasPerk then
+                                    ""
 
-                           else if hasPerk then
-                            Types.raceToString race ++ "+"
+                                else if hasPerk then
+                                    Types.raceToString r ++ "+"
 
-                           else
-                            Types.raceToString race
+                                else
+                                    Types.raceToString r
+
+                            Nothing ->
+                                "Any"
                           )
                             |> Theme.gradientText 4 Gradients.yellowGradient
                             |> el
