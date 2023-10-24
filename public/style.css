@@ -18,6 +18,30 @@
   src: url("CaptureIt.ttf");
 }
 
+@font-face {
+  font-family: "Baskerville";
+  src: url("Baskerville.ttf");
+}
+
+@font-face {
+  font-family: "Baskerville";
+  src: url("BaskervilleBold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Baskerville";
+  src: url("BaskervilleItalic.ttf");
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Baskerville";
+  src: url("BaskervilleBoldItalic.otf");
+  font-weight: bold;
+  font-style: italic;
+}
+
 ul {
   margin: 0;
   padding-inline-start: 20px;
@@ -28,6 +52,18 @@ a.link {
   font-variant-caps: small-caps;
   font-size: 1.2em;
   text-decoration: none;
+}
+
+.markdown {
+  font-family: "Baskerville";
+}
+
+.markdown b {
+  font-size: 0.85em;
+}
+
+.markdown i {
+  font-size: calc(1em / 0.85);
 }
 
 /* This is terrible and bad and I've yet to find a better way. */

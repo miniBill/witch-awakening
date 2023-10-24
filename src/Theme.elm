@@ -124,7 +124,7 @@ block input =
                             |> List.map viewPiece
                             |> Html.li []
                     )
-                |> Html.ul []
+                |> Html.ul [ Html.Attributes.class "markdown" ]
                 |> Element.html
                 |> List.singleton
                 |> Element.paragraph []
@@ -132,7 +132,7 @@ block input =
         Ok (Paragraph { pieces, center, mono }) ->
             pieces
                 |> List.map viewPiece
-                |> Html.span []
+                |> Html.span [ Html.Attributes.class "markdown" ]
                 |> Element.html
                 |> List.singleton
                 |> Element.paragraph
