@@ -234,14 +234,18 @@ companionBox selected ({ name, race, hasPerk, quote, cost, class, description, p
 
                     toColumn : String -> List String -> Element msg
                     toColumn label items =
-                        items
-                            |> toBlocks
-                            |> (::) (el [ Font.bold ] <| text <| label ++ ":")
-                            |> column
-                                [ width fill
-                                , alignTop
-                                , spacing <| Theme.rythm // 2
-                                ]
+                        if List.isEmpty items then
+                            Element.none
+
+                        else
+                            items
+                                |> toBlocks
+                                |> (::) (el [ Font.bold ] <| text <| label ++ ":")
+                                |> column
+                                    [ width fill
+                                    , alignTop
+                                    , spacing <| Theme.rythm // 2
+                                    ]
 
                     beforeBlock : Element msg
                     beforeBlock =

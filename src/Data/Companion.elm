@@ -51,6 +51,7 @@ all =
     , ( "The ORCs / Badges", Just TheOrc, theOrcs )
     , ( "The Alphazonians / Suits", Just Alphazon, alphazonians )
     , ( "Independents / Other", Nothing, independents )
+    , ( "Outsiders", Just Outsiders, outsiders )
     ]
 
 
@@ -1016,4 +1017,102 @@ penelope =
         ]
     , mixed = [ "+/- \"Sometimes, I just care too much, I love to travel and take long walks on the beach. I'm not like other girls\" /s" ]
     , has = "Pen has Potions 3, Hexes 3, Domain 3, Familiar 4 (Cow), Witchery 4, Necromancy 5, Divination 5, _Cornucopia, Prestidigitation, Third Eye & Yaga Root._"
+    }
+
+
+outsiders : List Details
+outsiders =
+    [ theCaretaker, lostQueen, giftFromBeyond, agent9sOriginal ]
+
+
+theCaretaker : Details
+theCaretaker =
+    { name = TheCaretaker
+    , class = Just Warlock
+    , race = Just Lamia
+    , hasPerk = True
+    , cost = 8
+    , power = Witch 7
+    , teamwork = 4
+    , sociability = 3
+    , morality = 1
+    , quote = "_*“Death is preferable to being caught by the Caretaker, do not hesitate to kill yourself before captured. Do not forget.” - An ORC Stormtrooper.*_"
+    , description = "The Caretaker is an especially active Outsider cultist worshiping an abyssal entity. She's on the verge of completely abandoning humanity with a heavily twisted form to be closer to her Far God. She is known for going out of her way to take captives and use them to breed large swarms of aberrant monsters with parasite implants that corrupt the very soul and twist the mind beyond recovery."
+    , positives =
+        [ "+ Actually very close with allies, will netflix and chill."
+        ]
+    , negatives =
+        [ "- With such a twisted form, she can't walk in public."
+        ]
+    , mixed = [ "+/- Frequently mutters in a far-speech, receiving inspiration and visions of what to do, making her seem super lucky" ]
+    , has = "The Caretaker has Necromancy 3, Occultism 4, Aethernautics 4, Waterworking 5, Monstrosity 5, _Aberration & Crystallize_"
+    }
+
+
+lostQueen : Details
+lostQueen =
+    { name = LostQueen
+    , class = Just Sorceress
+    , race = Just Sprite
+    , hasPerk = True
+    , cost = 15
+    , power = Witch 6
+    , teamwork = 10
+    , sociability = 7
+    , morality = 1
+    , quote = "_*“Do you hear something?”* \\*Increasing shill metallic buzzing\\* *“ARGH,\u{00A0}OUT OUT O-”* \\*gurgle\\* * - An ORC audio log.*_"
+    , description = "A once renown Fairy Queen in Alfheimr that succumbed to a major Outsider incursion within a minor realmspace known as the Everglen, now the once great sprite is twisted by a technophage class Far God, her body a blend of flesh and metal, carried on razor wings. Effectively a new being, but old instincts continue to yearn for the familiar. She constructs gardens of living metal with her iron daughters."
+    , positives =
+        [ "+ Cunning and intuitive"
+        , "+ Loves to tinker and create."
+        ]
+    , negatives =
+        [ "- Increasingly unstable in natural environs."
+        ]
+    , mixed = [ "+/- Arabella is uniquely able to use Hexes to replicate the effects of Gadgetry and Integration combined." ]
+    , has = "Arabella has Alchemy 1, Necromancy 2, Monstrosity 3, Windcalling 4, Curses 4, Hexes 5, and Covenants 5"
+    }
+
+
+giftFromBeyond : Details
+giftFromBeyond =
+    { name = GiftFromBeyond
+    , class = Nothing
+    , race = Nothing
+    , hasPerk = False
+    , cost = 12
+    , power = Witch 10
+    , teamwork = 10
+    , sociability = 4
+    , morality = 1
+    , quote = "_*“Meagota fabf ya gof'n ng bugnab shuggogg pb nghut ya yaor mghftnab cabf hw'nafbnab abornab ab'fnab Hoigshogg ot yogfn'll”*_"
+    , description = "You receive the egg of an eldritch child of the Far God of your choice (Affecting the aesthetic). This egg needs to be incubated, either in a living womb (yours or another's), or in a sufficiently advanced or occult chamber. Once the egg has been fed the blood of 100 different souls one way or another, it hatches into a beast of your design up to the size of beasts shown in Metamorphosis, and is a witch of a chosen type. The monster will have a personality reflecting its Far God but will be loyal to you, more so if you bore it yourself to the point of going against its own nature with a telepathic bond. It can also benefit from any options to improve your familiar, and has its own Power and witchcrafts. It cannot bond to non-Outsiders unless they bore it themselves."
+    , positives = []
+    , negatives = []
+    , mixed = []
+    , has = "Egg has 3x Power to spend & Any 2 Affinities"
+    }
+
+
+agent9sOriginal : Details
+agent9sOriginal =
+    { name = Agent9sOriginal
+    , class = Just Warlock
+    , race = Just Aurai
+    , hasPerk = True
+    , cost = 12
+    , power = Witch 10
+    , teamwork = 3
+    , sociability = 5
+    , morality = 2
+    , quote = "_*“NINES! *\\*Explosion\\** Nines, what's gotten into you! Stop! NO!”* \\*Sound of chains clanking\\* *- An Alphazon Informant.*_"
+    , description = "The original body of 9s. During a mission, Nines infiltrated an unexpected Outsider nest where she was overwhelmed and taken. Alphazon resorted to a hard reset, her soul safe in a datacrypt for housing in a new body. But the original is still out there- Still remembering everything, still feeling just as herself, and twisted into believing in the White Serpent god who imbued her with a blank soul of her own."
+    , positives =
+        [ "+ Still chill, if more melancholic"
+        ]
+    , negatives =
+        [ "- No regard for the lives of others, very jaded."
+        ]
+    , mixed = [ "+/- Her only purpose in life is to satisfy the White Serpent, who promises her peace and...a simple family life, someday" ]
+    , has = "9s has Alchemy 3, Runes 4, Occult 4, Psychotics 5, Familiar 5 (Snake), Monstrosity 5, _Aberration_"
     }
