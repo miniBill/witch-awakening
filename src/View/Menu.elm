@@ -470,10 +470,21 @@ companionsValue model =
                     byCost
                         |> List.filterMap
                             (\( _, { race, class } as c ) ->
-                                if
-                                    (race == model.race || race == Nothing)
-                                        || (class /= Nothing && class == model.class)
-                                then
+                                let
+                                    include : Bool
+                                    include =
+                                        if race == model.race || race == Nothing then
+                                            True
+
+                                        else
+                                            case class of
+                                                Companion.ClassOne class_ ->
+                                                    Just class_ == model.class
+
+                                                _ ->
+                                                    False
+                                in
+                                if include then
                                     Just c
 
                                 else

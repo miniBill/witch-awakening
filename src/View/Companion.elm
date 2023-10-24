@@ -1,11 +1,11 @@
 module View.Companion exposing (viewCompanions)
 
-import Data.Companion as Companion
+import Data.Companion as Companion exposing (MaybeClass(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (Companion, Faction, Race(..))
+import Generated.Types as Types exposing (Class(..), Companion, Faction, Race(..))
 import Gradients
 import Html.Attributes
 import Images
@@ -207,14 +207,18 @@ companionBox selected ({ name, race, hasPerk, quote, cost, class, description, p
                     [ Types.companionToString name
                         |> Theme.gradientText 4 Gradients.yellowGradient
                         |> el [ Font.size 36 ]
-                    , class
-                        |> Maybe.map
-                            (\c ->
-                                c
-                                    |> Theme.classToBadge
-                                    |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
-                            )
-                        |> Maybe.withDefault Element.none
+                    , case class of
+                        ClassOne c ->
+                            c
+                                |> Theme.classToBadge
+                                |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+
+                        ClassAny ->
+                            Images.badgeMixed
+                                |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+
+                        ClassNone ->
+                            Element.none
                     ]
                 , statsTable companion
                 , Theme.blocks [ Font.size 14 ] quote

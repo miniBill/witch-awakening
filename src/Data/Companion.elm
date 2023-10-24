@@ -1,11 +1,11 @@
-module Data.Companion exposing (Details, Power(..), all, intro)
+module Data.Companion exposing (Details, MaybeClass(..), Power(..), all, intro)
 
 import Generated.Types exposing (Class(..), Companion(..), Faction(..), Race(..))
 
 
 type alias Details =
     { name : Companion
-    , class : Maybe Class
+    , class : MaybeClass
     , race : Maybe Race
     , hasPerk : Bool
     , cost : Int
@@ -20,6 +20,12 @@ type alias Details =
     , mixed : List String
     , has : String
     }
+
+
+type MaybeClass
+    = ClassAny
+    | ClassOne Class
+    | ClassNone
 
 
 type Power
@@ -63,7 +69,7 @@ arcadians =
 rachelPool : Details
 rachelPool =
     { name = RachelPool
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Neutral
     , hasPerk = False
     , cost = 4
@@ -94,7 +100,7 @@ rachelPool =
 anneLaurenchi : Details
 anneLaurenchi =
     { name = AnneLaurenchi
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Sylph
     , hasPerk = True
     , cost = 4
@@ -124,7 +130,7 @@ anneLaurenchi =
 candayWesbank : Details
 candayWesbank =
     { name = CandayWesbank
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Neutral
     , hasPerk = False
     , cost = 2
@@ -151,7 +157,7 @@ candayWesbank =
 tessaMarieKudashov : Details
 tessaMarieKudashov =
     { name = TessaMarieKudashov
-    , class = Just Warlock
+    , class = ClassOne Warlock
     , race = Just Neutral
     , hasPerk = False
     , cost = 2
@@ -179,7 +185,7 @@ tessaMarieKudashov =
 evelynnPWillowcrane : Details
 evelynnPWillowcrane =
     { name = EvelynnPWillowcrane
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Neutral
     , hasPerk = False
     , cost = 2
@@ -208,7 +214,7 @@ evelynnPWillowcrane =
 johnDoe : Details
 johnDoe =
     { name = JohnDoe
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Changeling
     , hasPerk = False
     , cost = 4
@@ -242,7 +248,7 @@ hawthorne =
 hannahGrangely : Details
 hannahGrangely =
     { name = HannahGrangely
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Neutral
     , hasPerk = False
     , cost = 6
@@ -271,7 +277,7 @@ hannahGrangely =
 elizabellSinclaire : Details
 elizabellSinclaire =
     { name = ElizabellSinclaire
-    , class = Just Warlock
+    , class = ClassOne Warlock
     , race = Just Erinyes
     , hasPerk = False
     , cost = 10
@@ -300,7 +306,7 @@ elizabellSinclaire =
 ashleyLovenko : Details
 ashleyLovenko =
     { name = AshleyLovenko
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Neutral
     , hasPerk = False
     , cost = 6
@@ -328,7 +334,7 @@ ashleyLovenko =
 sylvanneMaeKanzaki : Details
 sylvanneMaeKanzaki =
     { name = SylvanneMaeKanzaki
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Luxal
     , hasPerk = True
     , cost = 8
@@ -360,7 +366,7 @@ watchers =
 francisIsaacGiovanni : Details
 francisIsaacGiovanni =
     { name = FrancisIsaacGiovanni
-    , class = Just Warlock
+    , class = ClassOne Warlock
     , race = Just Neutral
     , hasPerk = False
     , cost = 6
@@ -386,7 +392,7 @@ francisIsaacGiovanni =
 ifraAlZahra : Details
 ifraAlZahra =
     { name = IfraAlZahra
-    , class = Just Warlock
+    , class = ClassOne Warlock
     , race = Just Changeling
     , hasPerk = False
     , cost = 4
@@ -412,7 +418,7 @@ ifraAlZahra =
 sariahJSnow : Details
 sariahJSnow =
     { name = SariahJSnow
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Nymph
     , hasPerk = True
     , cost = 8
@@ -439,7 +445,7 @@ sariahJSnow =
 claireBelmontegra : Details
 claireBelmontegra =
     { name = ClaireBelMontegra
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Nymph
     , hasPerk = True
     , cost = 6
@@ -470,7 +476,7 @@ hespatians =
 lucilleMBright : Details
 lucilleMBright =
     { name = LucilleMBright
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Lilin
     , hasPerk = False
     , cost = 6
@@ -498,7 +504,7 @@ lucilleMBright =
 kingDaemianKain : Details
 kingDaemianKain =
     { name = KingDaemianKain
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Dravir
     , hasPerk = True
     , cost = 12
@@ -526,7 +532,7 @@ kingDaemianKain =
 whisper : Details
 whisper =
     { name = Whisper
-    , class = Just Warlock
+    , class = ClassOne Warlock
     , race = Just Neutral
     , hasPerk = False
     , cost = 10
@@ -554,7 +560,7 @@ whisper =
 redMother : Details
 redMother =
     { name = RedMother
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Neutral
     , hasPerk = False
     , cost = 8
@@ -587,7 +593,7 @@ lunabellans =
 diana : Details
 diana =
     { name = Diana
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Neutral
     , hasPerk = False
     , cost = 6
@@ -615,7 +621,7 @@ diana =
 cassandra : Details
 cassandra =
     { name = Cassandra
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Dravir
     , hasPerk = False
     , cost = 6
@@ -643,7 +649,7 @@ cassandra =
 kingCulicarius : Details
 kingCulicarius =
     { name = KingCulicarius
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Daeva
     , hasPerk = True
     , cost = 15
@@ -669,7 +675,7 @@ kingCulicarius =
 einodiaKate : Details
 einodiaKate =
     { name = EinodiaKate
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Daeva
     , hasPerk = False
     , cost = 15
@@ -701,7 +707,7 @@ theOrcs =
 victoriaWatts : Details
 victoriaWatts =
     { name = VictoriaWatts
-    , class = Nothing
+    , class = ClassNone
     , race = Just Neutral
     , hasPerk = False
     , cost = 8
@@ -727,7 +733,7 @@ victoriaWatts =
 richardMaxJohnson : Details
 richardMaxJohnson =
     { name = RichardMaxJohnson
-    , class = Nothing
+    , class = ClassNone
     , race = Just Neutral
     , hasPerk = False
     , cost = 5
@@ -753,7 +759,7 @@ richardMaxJohnson =
 bethadonnaRossbaum : Details
 bethadonnaRossbaum =
     { name = BethadonnaRossbaum
-    , class = Just Warlock
+    , class = ClassOne Warlock
     , race = Just Lilin
     , hasPerk = True
     , cost = 12
@@ -779,7 +785,7 @@ bethadonnaRossbaum =
 mirandaQuincy : Details
 mirandaQuincy =
     { name = MirandaQuincy
-    , class = Just Academic
+    , class = ClassOne Academic
     , race = Just Erinyes
     , hasPerk = True
     , cost = 8
@@ -810,7 +816,7 @@ alphazonians =
 samanthaNatPonds : Details
 samanthaNatPonds =
     { name = SamanthaNatPonds
-    , class = Nothing
+    , class = ClassNone
     , race = Just Neutral
     , hasPerk = False
     , cost = 8
@@ -836,7 +842,7 @@ samanthaNatPonds =
 jenniferKYoung : Details
 jenniferKYoung =
     { name = JenniferKYoung
-    , class = Nothing
+    , class = ClassNone
     , race = Just Neutral
     , hasPerk = False
     , cost = 5
@@ -862,7 +868,7 @@ jenniferKYoung =
 agent7Y : Details
 agent7Y =
     { name = Agent7Y
-    , class = Nothing
+    , class = ClassNone
     , race = Just Neutral
     , hasPerk = False
     , cost = 12
@@ -887,7 +893,7 @@ agent7Y =
 agent9s : Details
 agent9s =
     { name = Agent9s
-    , class = Just Warlock
+    , class = ClassOne Warlock
     , race = Just Aurai
     , hasPerk = False
     , cost = 10
@@ -918,7 +924,7 @@ independents =
 alexKHalls : Details
 alexKHalls =
     { name = AlexKHalls
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Neutral
     , hasPerk = False
     , cost = 2
@@ -946,7 +952,7 @@ alexKHalls =
 isabellaMableOaks : Details
 isabellaMableOaks =
     { name = IsabellaMableOaks
-    , class = Nothing
+    , class = ClassNone
     , race = Nothing
     , hasPerk = False
     , cost = 15
@@ -972,7 +978,7 @@ isabellaMableOaks =
 evangelinaRosaCostaval : Details
 evangelinaRosaCostaval =
     { name = EvangelinaRosaCostaval
-    , class = Nothing
+    , class = ClassNone
     , race = Just Neutral
     , hasPerk = False
     , cost = 12
@@ -997,7 +1003,7 @@ evangelinaRosaCostaval =
 penelope : Details
 penelope =
     { name = Penelope
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Daeva
     , hasPerk = False
     , cost = 10
@@ -1028,7 +1034,7 @@ outsiders =
 theCaretaker : Details
 theCaretaker =
     { name = TheCaretaker
-    , class = Just Warlock
+    , class = ClassOne Warlock
     , race = Just Lamia
     , hasPerk = True
     , cost = 8
@@ -1052,7 +1058,7 @@ theCaretaker =
 lostQueen : Details
 lostQueen =
     { name = LostQueen
-    , class = Just Sorceress
+    , class = ClassOne Sorceress
     , race = Just Sprite
     , hasPerk = True
     , cost = 15
@@ -1077,7 +1083,7 @@ lostQueen =
 giftFromBeyond : Details
 giftFromBeyond =
     { name = GiftFromBeyond
-    , class = Nothing
+    , class = ClassAny
     , race = Nothing
     , hasPerk = False
     , cost = 12
@@ -1097,7 +1103,7 @@ giftFromBeyond =
 agent9sOriginal : Details
 agent9sOriginal =
     { name = Agent9sOriginal
-    , class = Just Warlock
+    , class = ClassOne Warlock
     , race = Just Aurai
     , hasPerk = True
     , cost = 12
