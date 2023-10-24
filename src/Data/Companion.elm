@@ -952,7 +952,7 @@ alexKHalls =
 isabellaMableOaks : Details
 isabellaMableOaks =
     { name = IsabellaMableOaks
-    , class = ClassNone
+    , class = ClassAny
     , race = Nothing
     , hasPerk = False
     , cost = 15
@@ -978,7 +978,7 @@ isabellaMableOaks =
 evangelinaRosaCostaval : Details
 evangelinaRosaCostaval =
     { name = EvangelinaRosaCostaval
-    , class = ClassNone
+    , class = ClassAny
     , race = Just Neutral
     , hasPerk = False
     , cost = 12

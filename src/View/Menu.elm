@@ -481,7 +481,10 @@ companionsValue model =
                                                 Companion.ClassOne class_ ->
                                                     Just class_ == model.class
 
-                                                _ ->
+                                                Companion.ClassAny ->
+                                                    True
+
+                                                Companion.ClassNone ->
                                                     False
                                 in
                                 if include then
