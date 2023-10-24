@@ -44,6 +44,7 @@ all =
     , ( "The Hespatians", Hespatian, hespatians )
     , ( "The Lunabellans", Lunabella, lunabellans )
     , ( "The ORCs / Badges", TheOrc, theOrcs )
+    , ( "The Alphazonians / Suits", Alphazon, alphazonians )
     ]
 
 
@@ -817,4 +818,116 @@ mirandaQuincy =
         ]
     , mixed = [ "+/- Doesn't believe in mercy, for enemies, or for allies; Will save your life no matter the pain, to eventually recover" ]
     , has = "Gadgetry 2, Hexes 3, Witchery 4, Firecalling 4, Potions 5, and Familiar 5 (Fox), _ORC License_"
+    }
+
+
+alphazonians : List Details
+alphazonians =
+    [ samanthaNatPonds, jenniferKYoung, agent7Y, agent9s ]
+
+
+samanthaNatPonds : Details
+samanthaNatPonds =
+    { name = SamanthaNatPonds
+    , shortName = "Sam"
+    , class = Nothing
+    , race = Neutral
+    , hasPerk = False
+    , cost = 8
+    , power = 0
+    , teamwork = 6
+    , sociability = 10
+    , morality = 5
+    , quote = "_*“Seventh quarterly is in, 12% average across the board. Asset 4z13-Samantha Ponds, continues to excel above expectations” - An Exec.*_"
+    , description = "Sam is a high level Alphazon agent known for cooperation with the ORC. She has a preferred appearance as shown, but makes full use of her skinsuit and full body replacements and remote operations to make more use of changing forms, and whole bodies, more than even most expert Hex witches She takes it a step further by having trained her personality to become highly adaptive and instinctively suit any given situation. She doesn't really know who she is anymore."
+    , positives =
+        [ "+ Very low maintenance."
+        , "+ Incredibly adaptive."
+        ]
+    , negatives =
+        [ "- Literal maintenance; Synth"
+        , "- No self-drive, craves purpose."
+        ]
+    , mixed = [ "+/- Not naive, but doesn't ask questions that aren't directly relevant to a given task" ]
+    , has = "Divination 3, Gadgetry 4, Integration 5"
+    }
+
+
+jenniferKYoung : Details
+jenniferKYoung =
+    { name = JenniferKYoung
+    , shortName = "Jen"
+    , class = Nothing
+    , race = Neutral
+    , hasPerk = False
+    , cost = 5
+    , power = 0
+    , teamwork = 4
+    , sociability = 8
+    , morality = 4
+    , quote = "_*“Lucky bastard in O5 was assigned to monitor Asset f9E21's observer, and cohost.”* \\*Sigh\\* *“Could have been me...” - an Operator.*_"
+    , description = "Jen... is not a typical agent or employee of Alphazon. She's a daughter of a high level executive that grew up never knowing the feeling of being unable to get something she wanted and was a designer baby derived from daeva genetics. This didn't make her a witch, but the results do speak for themselves. She's somewhat naive and spoiled, but in a minimally toxic way, understanding her position and being   grateful for it, though actively indulges in vices."
+    , positives =
+        [ "+ Peak party girl"
+        , "+ Generous in all respects."
+        ]
+    , negatives =
+        [ "- Can be a lot to handle"
+        , "- _Very_ extroverted"
+        ]
+    , mixed = [ "+/- Smarter than she presents herself to be, as an easy ditzy airhead, and does contribute with info gathering." ]
+    , has = "Divination 3, Integration 4 & a _Gold Card_"
+    }
+
+
+agent7Y : Details
+agent7Y =
+    { name = Agent7Y
+    , shortName = "Sev"
+    , class = Nothing
+    , race = Neutral
+    , hasPerk = False
+    , cost = 12
+    , power = 0
+    , teamwork = 7
+    , sociability = 7
+    , morality = 1
+    , quote = "_*“A-7Y is a mastermind with the utilization of the GS Arrays, upper management is considering assigning her 2 more,” - An Operator.*_"
+    , description = "“Sev” is a human working for Alphazon that operates the 4th and 7th Godsight Arrays; Stealth satellite-ships with colossal telescope arrays that look like large canons running their full length while hosting Alphazon server farms and datacrypts housing the phylactery-like pods that host the minds of those implanted with Observers, semi-autonomously operated via an Observer like a synth body."
+    , positives =
+        [ "+ Speaking terms with Lunabella"
+        , "+ Can tell you how your ex is doing."
+        ]
+    , negatives =
+        [ "- No morals, only corporate policy."
+        ]
+    , mixed = [ "+/- Can read your ID through the reflection on the wall through the window. Knows what you did last night." ]
+    , has = "Integration 5 (many reserve bodies), DIvination 5, & _Gold Card_, (+2 Spysats, with observers)"
+    }
+
+
+agent9s : Details
+agent9s =
+    { name = Agent9s
+    , shortName = "Nines"
+    , class = Just Warlock
+    , race = Aurai
+    , hasPerk = False
+    , cost = 10
+    , power = 8
+    , teamwork = 4
+    , sociability = 6
+    , morality = 2
+    , quote = "_*“I reviewed the Observer case logs of A-98. Twelve vampire ninjas. Twelve. With a hairpin and two missing limbs.” - An Operator.*_"
+    , description = "“Nines” was a common human employee before awakening and finding a niche with potions and ritualcasting for some time before coming into her greater potential; As a corporate hitman with her spider familiar. She has a legitimate business front as a dayjob with Alphazon that sees her traveling a lot “for business”, does love to relax though."
+    , positives =
+        [ "+ Remarkably chill and homey in private"
+        , "+ As tenacious as Max"
+        ]
+    , negatives =
+        [ "- May ‘disappear’ people that annoyed her"
+        , "- Used to working alone."
+        ]
+    , mixed = [ "+/- A semi-lethal rivalry with the ORC, Richard Max in particular, a little Mr. and Ms. Smith style" ]
+    , has = "Integration 2, Witchery 3, Potions 3, Occultism 4, Psychotics 4, Familiarity 5 & _Gold Card_"
     }
