@@ -4,7 +4,7 @@ all: generated/Images.elm
 GRADIENT_SRC = $(wildcard extract/*.png)
 GRADIENT_OUT = $(patsubst extract/%.png,build/elm-codegen-flags/%.ppm,$(GRADIENT_SRC))
 
-generated/Images.elm: codegen/Generate.elm codegen/Gen/Basics.elm build/elm-codegen-flags/sizes $(GRADIENT_OUT)
+generated/Images.elm: codegen/Generate.elm codegen/Data.elm codegen/Gen/Basics.elm build/elm-codegen-flags/sizes $(GRADIENT_OUT)
 	yarn elm-codegen run --flags-from build/elm-codegen-flags
 	elm-format --yes generated
 
