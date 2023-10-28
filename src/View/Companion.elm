@@ -5,7 +5,7 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, 
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (Companion, Faction, Race(..))
+import Generated.Types as Types exposing (Companion, Faction)
 import Gradients
 import Html.Attributes
 import Images
