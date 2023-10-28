@@ -66,7 +66,7 @@ viewCompanions companions =
                         tableData
                     }
                 ]
-            , el [ height <| px 200 ] Element.none
+            , el [ height <| px 40 ] Element.none
             ]
         , Companion.all
             |> List.concatMap (companionSection companions)
