@@ -130,7 +130,7 @@ companionBox :
     List Companion
     -> Companion.Details
     -> Element ( Companion, Bool )
-companionBox selected ({ name, race, hasPerk, quote, cost, class, description, positives, mixed, negatives, has } as companion) =
+companionBox selected ({ name, races, hasPerk, quote, cost, class, description, positives, mixed, negatives, has } as companion) =
     let
         isSelected : Bool
         isSelected =
@@ -167,19 +167,30 @@ companionBox selected ({ name, race, hasPerk, quote, cost, class, description, p
                                 , moveLeft 8
                                 , moveDown 4
                                 ]
-                        , (case race of
-                            Just r ->
-                                if r == Neutral && not hasPerk then
-                                    ""
+                        , let
+                            joined : String
+                            joined =
+                                races
+                                    |> List.map Types.raceToString
+                                    |> String.join " - "
 
-                                else if hasPerk then
-                                    Types.raceToString r ++ "+"
+                            normal : String
+                            normal =
+                                if hasPerk then
+                                    joined ++ "+"
 
                                 else
-                                    Types.raceToString r
+                                    joined
+                          in
+                          (case normal of
+                            "Neutral" ->
+                                ""
 
-                            Nothing ->
+                            "" ->
                                 "Any"
+
+                            _ ->
+                                normal
                           )
                             |> Theme.gradientText 4 Gradients.yellowGradient
                             |> el

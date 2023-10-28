@@ -469,26 +469,12 @@ companionsValue model =
                 sameKind =
                     byCost
                         |> List.filterMap
-                            (\( _, { race, class } as c ) ->
-                                let
-                                    include : Bool
-                                    include =
-                                        if race == model.race || race == Nothing then
-                                            True
-
-                                        else
-                                            case class of
-                                                Companion.ClassOne class_ ->
-                                                    Just class_ == model.class
-
-                                                Companion.ClassAny ->
-                                                    True
-
-                                                Companion.ClassNone ->
-                                                    False
-                                in
-                                if include then
-                                    Just c
+                            (\( _, companion ) ->
+                                if
+                                    sameRace companion model.race
+                                        || sameClass companion model.class
+                                then
+                                    Just companion
 
                                 else
                                     Nothing
@@ -534,6 +520,31 @@ companionsValue model =
     model.companions
         |> Maybe.Extra.traverse getCompanion
         |> Maybe.map go
+
+
+sameClass : Companion.Details -> Maybe Class -> Bool
+sameClass companion maybeClass =
+    case companion.class of
+        Companion.ClassOne class_ ->
+            Just class_ == maybeClass
+
+        Companion.ClassAny ->
+            True
+
+        Companion.ClassNone ->
+            False
+
+
+sameRace : Companion.Details -> Maybe Race -> Bool
+sameRace companion maybeRace =
+    List.isEmpty companion.races
+        || (case maybeRace of
+                Nothing ->
+                    False
+
+                Just race ->
+                    List.member race companion.races
+           )
 
 
 getCompanion : Types.Companion -> Maybe ( Maybe Faction, Companion.Details )
