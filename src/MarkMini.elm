@@ -132,7 +132,10 @@ mainParser =
                     Nothing ->
                         case Types.affinityFromString str of
                             Nothing ->
-                                if String.startsWith "http" str then
+                                if str == "K" then
+                                    Kisses ""
+
+                                else if String.startsWith "http" str then
                                     Link str
 
                                 else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then

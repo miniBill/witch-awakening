@@ -64,7 +64,7 @@ all =
 
 arcadians : List Details
 arcadians =
-    [ rachelPool, anneLaurenchi, candayWesbank, tessaMarieKudashov, evelynnPWillowcrane, johnDoe, sayaKurosawa, francescaAstrenichtys ]
+    [ rachelPool, anneLaurenchi, candayWesbank, tessaMarieKudashov, evelynnPWillowcrane, johnDoe, sayaKurosawa, francescaAstrenichtys, elaineAVictorica, maimonadaMajesteim, azurellieaAdMadelline, melissaVincimvitch ]
 
 
 rachelPool : Details
@@ -292,6 +292,115 @@ francescaAstrenichtys =
         [ "+/- Loves butterflies, visually influences her magic"
         ]
     , has = "Fran has Digicasting 1, Earthmoving 3, Firecalling 3, Aethernautics 3, Metallurgy 3, Runes 4, Alchemy 5, Wands 5 _& a Mana Core_"
+    }
+
+
+elaineAVictorica : Details
+elaineAVictorica =
+    { name = ElaineAVictorica
+    , class = ClassOne Academic
+    , races = [ Neutral ]
+    , hasPerk = True
+    , cost = 10
+    , power = Witch 10
+    , teamwork = 7
+    , sociability = 6
+    , morality = 5
+    , quote = "_*“You met her?! Where? Alfheimr? Earth 84x? Where is she this time? Did she say where she was going next?” - an excited Saya*_"
+    , description = "Elaina's first memories are as a child looking up to skilled witches and started training herself early before studying under Fran. Rough treatment from some witches early on helped temper her personality development, but she does have a high opinion of herself She loves traveling, Arcadia and other worlds alike, and is easily motivated by [K]"
+    , positives =
+        [ "+ Confident to say the least"
+        , "+ Very polite"
+        ]
+    , negatives =
+        [ "- While personable, it can be hard to actually get close"
+        ]
+    , mixed =
+        [ "+/- While “yuri” is normal among witches due to gender disparity, unfortunately for Saya, Elaina is very straight, she doesn't even think in that way to recognize such options."
+        ]
+    , has = "Elaina has Digicasting 1, Witchery 4, Potions 4, Wands 5, _Broom Beast_ (6p), _Mana Core, & a Witch Pistol_"
+    }
+
+
+maimonadaMajesteim : Details
+maimonadaMajesteim =
+    { name = MaimonadaMajesteim
+    , class = ClassOne Warlock
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 12
+    , power = Witch 9
+    , teamwork = 6
+    , sociability = 7
+    , morality = 5
+    , quote = "_*“Mai! Good grief when was the last time you've eaten? A WEEK! You know you're always welcome to come over for dinner!” - Liz*_"
+    , description = "Mai comes from a family of seers with a strong magical bloodline. She's known for combining her aethernautic studies of stellar motions, and her third eye and general intuition for interpreting her divinations to deliver some of the most predictions around, but she doesn't believe in using divination for financial gain."
+    , positives =
+        [ "+ Semi-unique ability"
+        , "+ Has a 6th sense for good bargains."
+        ]
+    , negatives =
+        [ "- Has a strong sense of etiquette & propriety, is insulted when others don't treat her in kind."
+        ]
+    , mixed =
+        [ "+/- She is very frugal and lives lightly, being content with the basics despite having expensive tastes and interests."
+        ]
+    , has = "Mai has Necromancy 2, Waterworking 3, Portals 4, Witchery 4, Aethernautics 5, Divination 5, _Oracle, Third Eye, Prestidigitation_"
+    }
+
+
+azurellieaAdMadelline : Details
+azurellieaAdMadelline =
+    { name = AzurellieaAdMadelline
+    , class = ClassOne Sorceress
+    , races = [ Dwarf, Lilin ]
+    , hasPerk = False
+    , cost = 15
+    , power = Witch 8
+    , teamwork = 8
+    , sociability = 6
+    , morality = 7
+    , quote = "_*“Look, if you really want to improve for that tournament in time, you could try to get Azure to tutor you? Think about it.” - A Student*_"
+    , description = "A Dwarf-Lilin girl who's strive for power took her across the aether and to hell and back as a _Dalililah_. She now takes comfort in teaching in Arcadia as a private tutor as some soul healing. Remote friends with Bethadonna Rossbaum and tutors Evelyn in Waterworking. She's lived comfortably for a while now but may easily be driven back to adventure, especially for someone they care about"
+    , positives =
+        [ "+ Very patient with people trying to learn"
+        , "+ Mostly Unspent wish(20p)"
+        ]
+    , negatives =
+        [ "- While good in a team and normal social skills, is a loner with trust issues."
+        ]
+    , mixed =
+        [ "+/- Not opposed to choking perverts out with cold water"
+        ]
+    , has = "Azure has Necromancy 1, Wands 2, Witchery 3, Waterworking 5 & Consortation 5. Wished for Power & Life (4 & 19)"
+    }
+
+
+melissaVincimvitch : Details
+melissaVincimvitch =
+    { name = MelissaVincimvitch
+    , class = ClassOne Academic
+    , races = [ Daeva ]
+    , hasPerk = False
+    , cost = 15
+    , power = Witch 2
+    , teamwork = 8
+    , sociability = 10
+    , morality = 9
+    , quote = "_*“I can't believe that damn big tiddy witch tazed me, how was I supposed to know that cheap ass book couldn't float” - A rude student*_"
+    , description = "Melissa, “Liz” or Lisa to some, is a librarian of the *Vincimvitch* family’s private library which was given a static reference plot in Arcadia, meaning out of the city but static throughout cycles. The library is a growing Death Ward of her grandmother's who likes to give her grandaughters jobs around the Ward for excuses to keep her darlings near, and this personality rubbed off on Liz, who acts quite motherly."
+    , positives =
+        [ "+ Prodigious memory."
+        , "+ Highly considerate."
+        ]
+    , negatives =
+        [ "- Big Ara Ara energy."
+        , "- But strict with expectations"
+        ]
+    , mixed =
+        [ "+/- Teaches Witch History & Alchemy, & tutors runes"
+        ]
+    , has = "Liz has Portals 1, Witchery 3, Divination 4, Alchemy 5, Runes 5, Windkeeping 5, _Energized, Third Eye, Windsong_. + Keeper x2 _Alchemy & Eromancy_* _{smol Don't get the wrong idea perv}_*"
     }
 
 
