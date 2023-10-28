@@ -28,7 +28,7 @@ humanFactions =
 
 arcadia : Details
 arcadia =
-    { name = Arcadia
+    { name = TheCollegeOfArcadia
     , motto = "Enjoy a slice of life"
     , description =
         """Registering for college at Arcadia is free to any witch and comes with room and board in one of the dorms. Schedules are self determined with classes you can drop in and out of, and attendance works in time slots throughout the day, not a specific hour. If you miss 10AM, rain check for 2PM, or 10PM. There are classes for any specialization you have access to where you’ll be taught foundational principles and functions for your rank. There are classes for other specializations that exist but weren’t in the cards for your awakening (I can’t write every potentiality after all, third party extensions are encouraged!), which you can sit in for without credit if you want. Non-magic classes also exist; Such as planar theory, cryptozoology, esoteric chemistry, antediluvian mathematics, and more. There’s a very casual atmosphere letting witches move at their own pace. You DO have attendance, but it’s in totality at a the end of a cycle (3 month period). If you miss the day a class is taught, it can be made up within the cycle and no grades are set in stone until the cycle changes. Classes aside, you can expect an overabundance of entertainment and leisure options. Naturally, the arcade is a favorite destination within the town, and the entire town is routed through to the material world with Hex VPN, but by default they rely on their own local network first.
@@ -53,7 +53,7 @@ arcadia =
 
 hawthorne : Details
 hawthorne =
-    { name = Hawthorne
+    { name = HawthorneAcademia
     , motto = "School of Witchcraft and... an Unexpected Amount of Latex"
     , description =
         """Hawthorne admissions are open to any witch, and is a polar opposite to the College. Witches are tested for aptitude and potential where they will be sorted into Houses of comparable individuals sorted both by personality, and the magic specializations they have access to. Classes are mandatory. Once you complete all classes you have access to, which includes non-magic specialization courses such as physical health, mental health, and spiritual health, alongside social health. Combined the Health courses ensure residents can coexist in Hawthome and manage discourse. These courses include describing your opinion of your peers, and why, and if you have any suspicions about them that are a danger to the health of other students, themselves, or the Academy. Rules are plentiful and judiciously enforced alongside their own Common Law, being their own nation state. Capital punishment exists, though only for severe violent actions or gross malevolence, and exile for irreconcilable differences is otherwise the Final extreme, otherwise Hawthomne employs a wide array of disciplinarian tactics above and beyond what mortals would consider ethical. Generally discipline is specific to different houses, as houses in part represent personality characteristics, different discipline methods are more or less effective in the different houses. If one house is failing to discipline appropriate, re-evaluations occur and you can be reassigned to a house with different discipline methods. Houses likewise have their own uniforms though they all are approved by the Oversight Board to share certain qualities and colors, generally a degree of formality. The goal? Hawthorne may seem totalitarian, but their purpose is genuineThe excellence of their students, by any means necessary. They drive you to find your limits, and push beyond them to grow above and beyond what you thought you could ever achieve yourself. Your days are scheduled and optimized for you by councilors that have everything about you and your record on file. You _*will*_ succeed at Hawthorne, no matter how many times you stumble along the way towards success. Every failure is a learning experience adding to your growth, with certain discipline measures to remember it."""
@@ -74,7 +74,7 @@ hawthorne =
 
 watchers : Details
 watchers =
-    { name = Watchers
+    { name = TheWatchers
     , motto = "Consorting with Angels"
     , description =
         """Watchers have branches based on every major Abrahamic religion from Judaism to Mormonism, including Islamic faiths. The Watchers get their name from their stance as a third party observing the events playing out at the hands of human faith -- And strange celestial beings as real as Witches already know Demons to be. Through these observations they’ve studied the influences and nature of the divine, and are generally convinced of an overarching theory connecting the Abrahamic traditions, and have come to the conclusion that there _*is*_ a coming apocalypse. Watchers are embedded in religious institutions where they keep their finger on the pulse and catalogue and investigate reports of divine influence and visionary experiences, finding that all religions experience them to different degrees. While some religions revolve around ancient witches and extraplanar entities, Abrahamic faiths interact with a category of beings referred to as Celestials. Watchers learned methods to emulate these beings through magic. They classify them as Pre-Mortal Celestials and Post-Mortal Celestials. Premortals are like living chariots of rings, eyes, and wings, and are spiritual constructs while Post-Mortals fare humanoid shaped entities with physical forms that can interact with the material world if they chose but bare elements of their prior construct form, rings becoming halos in various designs for example, and may have more extreme body shapes and proportions.
@@ -96,7 +96,7 @@ watchers =
 
 hespatian : Details
 hespatian =
-    { name = Hespatian
+    { name = TheHespatianCoven
     , motto = "The original secret cult"
     , description =
         """The Hespatians are the oldest known coven to still be operating. They’re what many people expect when they hear the phrase “Witch Coven”. They revel in and are the principle origins of all the classic witch tropes as well as cult tropes. From dancing nude around a bonfire under the light of a lunar eclipse, to ritual sacrifices by hooded figures around an altar. The coven is compartmentalized into local families that operate in similar manners but with different focuses and individual practices. They share an overarching framework known by the heads of families where most members don’t know the full scope, only knowing the family name for their local group. This means when one grows too large and destabilizes or gets infiltrated or exposed, only that family burns. Some families readily engage with ritual sacrifice and blood rites, while other families choose to abstain, it doesn’t matter to Hespatia at large, and agents acting for the overall coven are called Specters and Wraiths, who take a family’s specializations in consideration when delivering orders from the Crowns, the central coven acting as a council of seers that pull the strings. Families can include mundane humans, in fact, it’s key to how they operate. It helps establish mortal connections, and establish networks for trafficking and finding willing or unwilling subjects of their rituals. For some things you’d get more out of, or outright need, an unwilling subject, for others a willing subject devoted to the purpose.
@@ -144,7 +144,7 @@ lunabella =
 
 alfheimr : Details
 alfheimr =
-    { name = Alfheimr
+    { name = AlfheimrAlliance
     , motto = "The Disunited States of the Faewilds"
     , description =
         """The Alfheimr Alliance is composed of a coalition of faerie nations within what witches on earth tend to know by the Faewilds. Denizens refer to it, generally, as Alfheimr. A world full of wild untamed magics that manifest as readily as rain or storm, and full of an overabundance of life. Hence the Alfheimr Alliance. The Twin Courts, Summer and Winter, are the primary political agents of the realm and most life is associated with one or the other, or interacts with both to play at neutrality at the expense of political weight. The Summer Court sometimes referred to as the Seelie Court, is a regal but rigid coalition of regions and powers that embody Law and Order. Their court is full of ritual, ceremony, rules, and propriety. If you know their labyrinthine rules and customs, you can be confident that you know what you can or can’t do. In theory. Their rules can seem esoteric and strange, while the authority of one’s Lord or Lady over whoever is lower in status is strictly adhered to- Within lawful boundaries. They’re more bureaucratic than their counterpart, with many nobles and courtiers being akin to accountants and lawyers that dress fancy.
@@ -169,7 +169,7 @@ alfheimr =
 
 outsiders : Details
 outsiders =
-    { name = Outsiders
+    { name = TheOutsiders
     , motto = "Harbingers of What Lies Beyond"
     , description =
         """If you thought the Hespatians were villainous, Outsiders make them look like antiheroes. The things that some Hespatians merely dabble in, Outsiders actively revel in. Outsiders aren’t simply amoral, but they are actively profane and explicitly evil, no gray area, no nuance, they simply are evil, because sometimes evil people exist, and if they don’t end up in Hespatia, the Outsiders probably found them. They do things that I cannot in good conscience repeat or even suggest, the least of all are the simple expected evils that require high levels of corruption just to conceptualize, and hearing about them can cause high cognito damage to innocent minds -- so imagine the glee of an Outsider in _performing_ such actions on or with the innocent. The library that the ORC mentioned that “made demons weep”, was containing a forbidden archive of captured Outsider texts deep in its vaults after a narrow vote by the council of New Alexandria to elect not to destroy them, and the ORC took it upon themselves. I’m still pissed, but it’s understandable. Infohazards are nothing to scoff at and can bypass warding runes, as it’s not a magical effect, but a part of life, requiring psychosurgery to attempt to mend.
@@ -190,7 +190,7 @@ outsiders =
 
 theOrc : Details
 theOrc =
-    { name = TheOrc
+    { name = TheORC
     , motto = "Occult Research and Containment"
     , description =
         """The O.R.C. was established around 1767 from the remnants of old world anti-magic orders that didn’t survive in the new world as it was growing, they gained a bad reputation for events such as the Salem Witch Trials of the previous century. Originally called the Iron Brotherhood, it was redefined into the Occult Research and Containment around the 1900’s, and really took off around 1939-1960 as World War II threatened to break the Masquerade with occult research skyrocketing with efforts by the National Socialist Party of Germany. The ORC was a leading role in combating occult threats, and in the aftermath of the war absorbed the German scientists and facilities. The Tsar Bomba incident was a joint operation with the Soviets, who’ve since joined ORC International. There were almost as many German ORC as there were Americans at the time, so it had an impact on the internal culture. If they could accept the Germans and Communists, they could accept others; Witches. Skip to the present day and the ORC is a cooperation of humans and witches heavily investing in the exploration of occult matters, magic, with machinery. They can appear to have stagnated, but their old fashioned appearances hide complex connections and artifacts used to achieve things beyond what technology alone can achieve... And besides, the 1950’s look works for us. Initial designs for fabrication tools and development enchantments have locked in on the aesthetic and it’d be an unnecessary hassle to change it. We’re a government operation and have long standing institutional inroads with the military that have allowed us to prevent those Watchers or Hespatians from getting a foothold within it and when operating in the Real we work off the military for a strong global presence and mundane assets. Just don’t remind them that ORC International tends to have the same sort of military connections in the militaries of many other countries much like the smarmy suits at Alphazon are gaining international influence within business as the first unaccountable Megacorp.
@@ -211,7 +211,7 @@ theOrc =
 
 alphazon : Details
 alphazon =
-    { name = Alphazon
+    { name = AlphazonIndustries
     , motto = "~* Don’t Be Evil *~"
     , description =
         """Tums out gigantic unaccountable tech firms employing a panopticon of international global surveillance and data harvesting, are pretty damn good at finding hidden secrets and knowing things they have no business knowing. This secret megacorp is the king of tech as a monopoly over just about every piece of hardware or software you’ve seen in civilized markets, Western and Chinese. It wasn’t long before they started having questions, and finding the answers for themselves, and figuring out that politics weren’t just a game about money changing hands or the right bribes, but uncovered the influence of paranormal entities and witches. They began running their own private blacksites as part of their investigations, abducting people they algorithmically detected as probable witches, followed by direct surveillance to catch them in an act. While the Orcs have their head in the clouds chasing fairy tales and saving the world, Alphazon was rising to power within the public domain, among humans, with a board of directors beginning to view themselves as gods greater than any single country and with no allegiance or nationality save for themselves. They rapidly diverted resources into occult research with modern machinery and supercomputing, able to do in a few years what took decades for the ORC back in the day.

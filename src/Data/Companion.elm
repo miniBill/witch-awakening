@@ -49,15 +49,15 @@ intro =
 
 all : List ( String, Maybe Faction, List Details )
 all =
-    [ ( "The Arcadians", Just Arcadia, arcadians )
-    , ( "Hawthorne", Just Hawthorne, hawthorne )
-    , ( "The Watchers", Just Watchers, watchers )
-    , ( "The Hespatians", Just Hespatian, hespatians )
+    [ ( "The Arcadians", Just TheCollegeOfArcadia, arcadians )
+    , ( "Hawthorne", Just HawthorneAcademia, hawthorne )
+    , ( "The Watchers", Just TheWatchers, watchers )
+    , ( "The Hespatians", Just TheHespatianCoven, hespatians )
     , ( "The Lunabellans", Just Lunabella, lunabellans )
-    , ( "The ORCs / Badges", Just TheOrc, theOrcs )
-    , ( "The Alphazonians / Suits", Just Alphazon, alphazonians )
+    , ( "The ORCs / Badges", Just TheORC, theOrcs )
+    , ( "The Alphazonians / Suits", Just AlphazonIndustries, alphazonians )
     , ( "Independents / Other", Nothing, independents )
-    , ( "Outsiders", Just Outsiders, outsiders )
+    , ( "Outsiders", Just TheOutsiders, outsiders )
     ]
 
 

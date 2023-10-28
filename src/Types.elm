@@ -120,29 +120,29 @@ gainToSlot gain =
 factionToMagic : Faction -> String
 factionToMagic faction =
     case faction of
-        Arcadia ->
+        TheCollegeOfArcadia ->
             "Digicasting"
 
-        Hawthorne ->
+        HawthorneAcademia ->
             "Wands"
 
-        Watchers ->
+        TheWatchers ->
             "Ministrations"
 
-        Hespatian ->
+        TheHespatianCoven ->
             "Occultism"
 
         Lunabella ->
             "Dominion"
 
-        Alfheimr ->
+        AlfheimrAlliance ->
             "Covenants"
 
-        Outsiders ->
+        TheOutsiders ->
             "Monstrosity"
 
-        TheOrc ->
+        TheORC ->
             "Gadgetry"
 
-        Alphazon ->
+        AlphazonIndustries ->
             "Integration"
