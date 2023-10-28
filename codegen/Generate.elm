@@ -2,6 +2,7 @@ module Generate exposing (main)
 
 {-| -}
 
+import Data exposing (Enum)
 import Dict exposing (Dict)
 import Elm
 import Elm.Annotation
@@ -67,7 +68,7 @@ toFiles flags =
                             enumsFile : Elm.File
                             enumsFile =
                                 Elm.file [ "Generated", "Types" ]
-                                    enums
+                                    (List.concatMap enumToDeclarations Data.enums)
                         in
                         { info = []
                         , files = gradientsFile :: enumsFile :: List.concatMap Tuple.first list
@@ -75,124 +76,8 @@ toFiles flags =
                     )
 
 
-enums : List Elm.Declaration
-enums =
-    let
-        races : List String
-        races =
-            [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine", "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya", "Taura", "Wulong", "Dravir", "Doll", "Vanir", "Changeling", "Elf", "Orc", "Pharon", "Jotun", "Hollow", "Dwarf", "Wither", "Mimi", "Sword", "Xeno", "Cyborg", "Spider", "Gnome", "Pixie", "Fairy", "Genie", "Gemini" ]
-
-        affinities : List String
-        affinities =
-            [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ]
-
-        complications : List String
-        complications =
-            [ "Brutality", "Masquerade", "TrueNames", "Monsters", "Population", "Bonk", "Dysfunction", "Vulnerability", "Rejection", "Crutch", "Restriction", "Hunted", "Dislikeable", "MonsterBait", "BlackSwan", "SpellSink", "LikeADuck", "LikeARock", "EyeCatcher", "SillyGoose", "HardLessons", "ColdHeart", "Hideous", "WitchMark", "Nemesis", "Addiction", "SensoryDisability", "PhysicalDisability", "SensoryShock", "AdoringFan", "VeryDere", "Requirement", "Unveiled", "Nightmares", "Kryptonite", "FitWitch", "Branded", "NoPrivacy", "BloodFeud", "Marked", "Defeated", "Fixation", "AllNatural", "Witchknight", "Inadequacy", "Dysphoria", "Betrayal", "Compulsion" ]
-
-        gameModes : List String
-        gameModes =
-            [ "StoryArc", "EarlyBird", "SkillTree", "Constellation" ]
-
-        magics : List String
-        magics =
-            [ "Aethernautics", "Alchemy", "Consortation", "Curses", "Divination", "Earthmoving", "Familiarity", "Firecalling", "Hexes", "Metallurgy", "Metamorphosis", "Naturalism", "Necromancy", "Portals", "Psychotics", "Runes", "Waterworking", "Windkeeping", "Witchery", "Digicasting", "Wands", "Ministration", "Occultism", "Dominion", "Covenants", "Monstrosity", "Gadgetry", "Integration" ]
-
-        perks : List String
-        perks =
-            [ "Oracle", "JackOfAll", "TransformationSequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "ElephantTrunk", "Prestidigitation", "Suggestion", "Fascinate", "Pantomime", "BeautySleep", "ThirdEye", "SoulJellies", "HatTrick", "MoodWeather", "ImprovedFamiliar", "Hybridize", "Apex", "ChargeSwap", "Crystallize", "Memorize", "MaidHand", "HotSwap", "Menagerie", "BloodWitch", "Gunwitch", "Levitation", "Isekaid", "Heritage", "MagicFriendship", "Windsong", "BroomBeast", "IsekaiWorlds", "IsekaiHeritage", "SummerSchool", "MagicalHeart", "Miniaturization", "SoulWarrior", "ComfyPocket", "ImprovedRod", "WitchHut", "Company", "PetBreak", "MagicShop", "Keeper", "SoulGraft" ]
-
-        factions : List String
-        factions =
-            List.map Tuple.first factionNames
-
-        factionNames : List ( String, String )
-        factionNames =
-            [ ( "Arcadia", "The College of Arcadia" )
-            , ( "Hawthorne", "Hawthorne Academia" )
-            , ( "Watchers", "The Watchers" )
-            , ( "Hespatian", "The Hespatian Coven" )
-            , ( "Lunabella", "Lunabella" )
-            , ( "Alfheimr", "Alfheimr Alliance" )
-            , ( "Outsiders", "The Outsiders" )
-            , ( "TheOrc", "The O.R.C." )
-            , ( "Alphazon", "Alphazon Industries" )
-            ]
-
-        companions : List String
-        companions =
-            List.map Tuple.first companionNames
-
-        companionNames : List ( String, String )
-        companionNames =
-            [ "Rachel Pool"
-            , "Anne Laurenchi"
-            , "Canday Wesbank"
-            , "Tessa-Marie Kudashov"
-            , "Evelynn P. Willowcrane"
-            , "John Doe"
-            , "Hannah Grangely"
-            , "Elizabell Sinclaire"
-            , "Ashley Lovenko"
-            , "Sylvanne Mae Kanzaki"
-            , "Francis Isaac Giovanni"
-            , "Ifra al-Zahra"
-            , "Sariah J. Snow"
-            , "Claire Bel'montegra"
-            , "Lucille M. Bright"
-            , "King Daemian Kain"
-            , "Whisper"
-            , "Red Mother"
-            , "Diana"
-            , "Cassandra"
-            , "King Culicarius"
-            , "Einodia - Kate"
-            , "Victoria Watts"
-            , "Richard Max Johnson"
-            , "Bethadonna Rossbaum"
-            , "Miranda Quincy"
-            , "Samantha Nat Ponds"
-            , "Jennifer K. Young"
-            , "Agent 7Y"
-            , "Agent 9s"
-            , "Alex K. Halls"
-            , "Isabella Mable Oaks"
-            , "Evangelina Rosa Costaval"
-            , "Penelope"
-            , "The Caretaker"
-            , "Lost Queen"
-            , "Gift from Beyond"
-            , "Agent 9s (Original)"
-            , "Princess Dael'ezra of Charis"
-            , "Anaphalon Greenwield"
-            , "Briar Gracehollow"
-            , "Duchess Sael'astra of Odalle"
-            ]
-                |> List.map (\name -> ( String.Extra.classify name, name ))
-    in
-    [ enumWith "Class" [ "Academic", "Sorceress", "Warlock" ] [] True
-    , enumWith "Race" races [] True
-    , enum "Size" [ "Low", "Med", "High" ]
-    , enumWith "Affinity" affinities [ ( "All", "???" ) ] True
-    , enum "ComplicationCategory" [ "WorldShift" ]
-    , enumWith "Complication" complications [ ( "Bonk", "*Bonk*" ), ( "LikeADuck", "Like a duck" ), ( "LikeARock", "Like a rock" ) ] True
-    , enumWith "GameMode" gameModes [] True
-    , enumWith "Slot" [ "White", "Folk", "Noble", "Heroic", "Epic" ] [] True
-    , enumWith "Magic" magics [] True
-    , enumWith "Perk" perks [ ( "JackOfAll", "Jack-of-All" ), ( "WitchHut", "Witch... hut?" ) ] True
-    , enumWith "Faction" factions factionNames False
-    , enumWith "Companion" companions companionNames True
-    ]
-        |> List.concat
-
-
-enum : String -> List String -> List Elm.Declaration
-enum name cases =
-    enumWith name cases [] False
-
-
-enumWith : String -> List String -> List ( String, String ) -> Bool -> List Elm.Declaration
-enumWith name cases exceptions toImage =
+enumToDeclarations : Enum -> List Elm.Declaration
+enumToDeclarations { name, exceptions, variants, toImage } =
     let
         type_ : Elm.Annotation.Annotation
         type_ =
@@ -210,8 +95,8 @@ enumWith name cases exceptions toImage =
         typeDeclaration =
             Elm.customType name
                 (List.map
-                    (\case_ -> Elm.variant case_)
-                    cases
+                    (\variant -> Elm.variant <| String.Extra.classify variant)
+                    variants
                 )
 
         toStringDeclaration : Elm.Declaration
@@ -220,13 +105,13 @@ enumWith name cases exceptions toImage =
                 Elm.Case.custom value
                     type_
                     (List.map
-                        (\case_ ->
-                            Dict.get case_ exceptionsDict
-                                |> Maybe.withDefault (String.Extra.humanize case_)
+                        (\variant ->
+                            Dict.get variant exceptionsDict
+                                |> Maybe.withDefault variant
                                 |> Elm.string
-                                |> Elm.Case.branch0 case_
+                                |> Elm.Case.branch0 (String.Extra.classify variant)
                         )
-                        cases
+                        variants
                     )
             )
                 |> Elm.fn ( lowerName, Just type_ )
@@ -238,13 +123,13 @@ enumWith name cases exceptions toImage =
                 Elm.Case.string value
                     { cases =
                         List.map
-                            (\case_ ->
-                                ( Dict.get case_ exceptionsDict
-                                    |> Maybe.withDefault (String.Extra.humanize case_)
-                                , Gen.Maybe.make_.just <| Elm.val case_
+                            (\variant ->
+                                ( Dict.get variant exceptionsDict
+                                    |> Maybe.withDefault variant
+                                , Gen.Maybe.make_.just <| Elm.val <| String.Extra.classify variant
                                 )
                             )
-                            cases
+                            variants
                     , otherwise = Gen.Maybe.make_.nothing
                     }
                     |> Elm.withType (Elm.Annotation.maybe type_)
@@ -255,13 +140,18 @@ enumWith name cases exceptions toImage =
         toImageDeclaration : Elm.Declaration
         toImageDeclaration =
             (\value ->
-                cases
+                variants
                     |> List.map
-                        (\case_ ->
-                            Elm.Case.branch0 case_
+                        (\variant ->
+                            let
+                                constructor : String
+                                constructor =
+                                    String.Extra.classify variant
+                            in
+                            Elm.Case.branch0 constructor
                                 (Elm.value
                                     { importFrom = [ "Images" ]
-                                    , name = lowerName ++ case_
+                                    , name = lowerName ++ constructor
                                     , annotation =
                                         Just
                                             (Elm.Annotation.named [ "Images" ] "Image")
