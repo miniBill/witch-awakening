@@ -274,8 +274,12 @@ companionBox selected ({ name, races, hasPerk, quote, cost, class, description, 
                     , spacing <| Theme.rythm // 2
                     ]
                     (beforeBlock :: toBlocks mixed)
-                , Theme.blocks []
-                    ("*" ++ has ++ ".*")
+                , if String.isEmpty has then
+                    Element.none
+
+                  else
+                    Theme.blocks []
+                        ("*" ++ has ++ ".*")
                 ]
     in
     Theme.maybeButton
@@ -394,21 +398,7 @@ statColumn ranking =
                 ( ( backgroundColor, fontColor ), attrs, content ) =
                     case rawScore of
                         Companion.NotAWitch ->
-                            if ranking == 1 then
-                                ( ( mainColor
-                                  , rgb 1 1 1
-                                  )
-                                , []
-                                , text "N/A"
-                                )
-
-                            else
-                                ( ( otherColor
-                                  , rgb 0 0 0
-                                  )
-                                , [ padding 0 ]
-                                , cross
-                                )
+                            grayRow ranking
 
                         Companion.SpecialEffect ->
                             ( ( mainColor
@@ -428,23 +418,27 @@ statColumn ranking =
                             )
 
                         Companion.Witch score ->
-                            ( ( if score == ranking then
-                                    mainColor
+                            if score == 0 then
+                                grayRow ranking
 
-                                else if score > ranking then
-                                    otherColor
+                            else
+                                ( ( if score == ranking then
+                                        mainColor
 
-                                else
-                                    0x00FFFFFF
-                              , rgb 0 0 0
-                              )
-                            , []
-                            , if label == "Ranking" then
-                                text <| String.fromInt ranking
+                                    else if score > ranking then
+                                        otherColor
 
-                              else
-                                Element.none
-                            )
+                                    else
+                                        0x00FFFFFF
+                                  , rgb 0 0 0
+                                  )
+                                , []
+                                , if label == "Ranking" then
+                                    text <| String.fromInt ranking
+
+                                  else
+                                    Element.none
+                                )
             in
             cellWithLeftBorder
                 ([ Border.color <| rgb 0 0 0
@@ -462,6 +456,29 @@ statColumn ranking =
     , width = fill
     , view = view
     }
+
+
+grayRow : Int -> ( ( Int, Element.Color ), List (Attribute msg), Element msg )
+grayRow ranking =
+    let
+        ( mainColor, otherColor ) =
+            Theme.colors.companionBlack
+    in
+    if ranking == 1 then
+        ( ( mainColor
+          , rgb 1 1 1
+          )
+        , []
+        , text "N/A"
+        )
+
+    else
+        ( ( otherColor
+          , rgb 0 0 0
+          )
+        , [ padding 0 ]
+        , cross
+        )
 
 
 cross : Element msg

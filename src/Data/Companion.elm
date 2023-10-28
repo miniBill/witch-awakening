@@ -919,7 +919,7 @@ agent9s =
 
 independents : List Details
 independents =
-    [ alexKHalls, isabellaMableOaks, evangelinaRosaCostaval, penelope, mandyHunts, eskhanderMahabadi, experiment627 ]
+    [ alexKHalls, isabellaMableOaks, evangelinaRosaCostaval, penelope, mandyHunts, eskhanderMahabadi, experiment627, augustRoseOBare ]
 
 
 alexKHalls : Details
@@ -1089,7 +1089,7 @@ experiment627 =
     , teamwork = 10
     , sociability = 4
     , morality = 4
-    , quote = "_*When we found her she was stuck in a loop putting books back on a shelf as a poltergeist kept knocking them over.” - ORC Agent.*_"
+    , quote = "_*“When we found her she was stuck in a loop putting books back on a shelf as a poltergeist kept knocking them over.” - ORC Agent.*_"
     , description = "627 is an advanced Doll experiment trying to recreate Doll witches, but without pesky things like free will getting in the way, but more intelligent and lifelike than the mindless serving dolls. 627 is a real person and a Doll witch, her past life heavily suppressed and faded away. She struggles hard to think for herself as though physically painful. She can bond a Master by occupying their Familiar spot"
     , positives =
         [ "+ Benefits from anything that would benefit a familiar"
@@ -1101,6 +1101,26 @@ experiment627 =
         ]
     , mixed = [ "+/- Her body is a combination of flesh and ball-joint doll." ]
     , has = "627 has Necromancy 3, Windcalling 3, Hexes 4, Witchery 4, _Hot Swap, Maid Hand, and Levitation_"
+    }
+
+
+augustRoseOBare : Details
+augustRoseOBare =
+    { name = AugustRoseOBare
+    , class = ClassNone
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 10
+    , power = NotAWitch
+    , teamwork = 0
+    , sociability = 0
+    , morality = 0
+    , quote = "_*“I haven't seen this happen before, are you seeing the same thing? This vision is just static to me.” - Penelope.*_"
+    , description = "Rose is a quiet witch, speaking seems to fatigue her, but shelll reply or say things when important. The Veil hides her from everyone else, as a monster would be hidden from a mortal, she is hidden from even witches. Even physically moving things to try to convey a message is obscured or dismissed in some way: If you select her as a Companion you will be the only one who can sense her, and can be seen in the background of casual daily life as though she's just watching the life go by of everyone else, vanishing and appearing suddenly. She'll write in a small notebook, the pages look like static to you. Sometimes she'll help you with single written words or pointing. She's very passive and not very helpful, but your life seems to become more interesting. *You can take any 1 extra Quest.*"
+    , positives = []
+    , negatives = []
+    , mixed = []
+    , has = ""
     }
 
 
