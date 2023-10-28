@@ -64,7 +64,7 @@ all =
 
 arcadians : List Details
 arcadians =
-    [ rachelPool, anneLaurenchi, candayWesbank, tessaMarieKudashov, evelynnPWillowcrane, johnDoe ]
+    [ rachelPool, anneLaurenchi, candayWesbank, tessaMarieKudashov, evelynnPWillowcrane, johnDoe, sayaKurosawa, francescaAstrenichtys ]
 
 
 rachelPool : Details
@@ -238,6 +238,60 @@ johnDoe =
         [ "+/- Overly focused on gaining new experiences."
         ]
     , has = "John has Alchemy, Runes, and Witchery at 2, and unspent _Jack-of-All_, and _Memorize_"
+    }
+
+
+sayaKurosawa : Details
+sayaKurosawa =
+    { name = SayaKurosawa
+    , class = ClassOne Academic
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 8
+    , power = Witch 8
+    , teamwork = 5
+    , sociability = 8
+    , morality = 6
+    , quote = "_*“Don't worry, Saya may be new but she knows what she's doing, she's good. Just keep that photo of Elaine handy.” - Arcadian faculty*_"
+    , description = "Saya is an experienced but still new witch that was motivated with the help of Elaina to improve herself, and ever since has been driven with focus, mostly just to try to get the attention of Elaina. She has a huge one-sided crush that she isn’t shy about sharing, but they remain friends. She works with faculty as a problem solver, and runner."
+    , positives =
+        [ "+ Very energetic and lively"
+        , "+ Remarkably witty under the surface."
+        ]
+    , negatives =
+        [ "- Perhaps too lively worked up."
+        , "- A _bit_ manipulative and may resort to questionable actions"
+        ]
+    , mixed =
+        [ "+/- Perhaps you could redirect her feelings from Elaina with some time and effort, if you wanted?"
+        ]
+    , has = "Saya has Runes 1, Wands 3, Witchery 4, Digicasting 4, Broom Beast (4p), _Mana Core, & a Witch Pistol_"
+    }
+
+
+francescaAstrenichtys : Details
+francescaAstrenichtys =
+    { name = FrancescaAstrenichtys
+    , class = ClassOne Sorceress
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 12
+    , power = Witch 5
+    , teamwork = 7
+    , sociability = 8
+    , morality = 6
+    , quote = "_*“Have you seen Francesca duel Avurelliea over who had to chaperone the dance? It was insane. We have a lot to learn.” - Some students*_"
+    , description = "Fran is a retired Hawthorne professor who has taken to Arcadia, where she was a private tutor to Elaina as a favor to her mother, who was her own teacher when she was younger. Fran at first glance is a lighthearted whimsical character with a pleasant smile, but within is a very sharp and thoughtful tactician that can at times be rather cold hearted with razor precision in cutting to the heart of issues."
+    , positives =
+        [ "+ Very easy going but serious about the important things"
+        ]
+    , negatives =
+        [ "- The reason she's so efficient is because she's fairly lazy, to get things over with sooner."
+        ]
+    , mixed =
+        [ "+/- Loves butterflies, visually influences her magic"
+        ]
+    , has = "Fran has Digicasting 1, Earthmoving 3, Firecalling 3, Aethernautics 3, Metallurgy 3, Runes 4, Alchemy 5, Wands 5 _& a Mana Core_"
     }
 
 
