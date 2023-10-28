@@ -919,7 +919,7 @@ agent9s =
 
 independents : List Details
 independents =
-    [ alexKHalls, isabellaMableOaks, evangelinaRosaCostaval, penelope ]
+    [ alexKHalls, isabellaMableOaks, evangelinaRosaCostaval, penelope, mandyHunts, eskhanderMahabadi, experiment627 ]
 
 
 alexKHalls : Details
@@ -1023,7 +1023,84 @@ penelope =
         , "- I must stay neutral"
         ]
     , mixed = [ "+/- \"Sometimes, I just care too much, I love to travel and take long walks on the beach. I’m not like other girls\" /s" ]
-    , has = "Pen has Potions 3, Hexes 3, Domain 3, Familiar 4 (Cow), Witchery 4, Necromancy 5, Divination 5, _Cornucopia, Prestidigitation, Third Eye & Yaga Root._"
+    , has = "Pen has Potions 3, Hexes 3, Domain 3, Familiar 4 (Cow), Witchery 4, Necromancy 5, Divination 5, _Cornucopia, Prestidigitation, Third Eye & Yaga Root_"
+    }
+
+
+mandyHunts : Details
+mandyHunts =
+    { name = MandyHunts
+    , class = ClassNone
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 1
+    , power = NotAWitch
+    , teamwork = 8
+    , sociability = 5
+    , morality = 6
+    , quote = "_*“Followed up on a report of class 3 spirit beast stalking a human and both disappearing into the shadows, here's the file” - ORC Agent.*_"
+    , description = "Mandy is a human Medium, she can see through the veil to see spirits, monsters, and magic in general. Due to a botched Occultism ritual, Mandy is left with the ability to both enter the spirit world like a Sylph, but enter the Shadow world as with Occultism 4 She can unreliably provoke the transition herself, but it's usually involuntary. She's currently terrified for her life in the shadow world hiding from a spirit beast."
+    , positives =
+        [ "+ Very knowledgeable in occult."
+        , "+ Doesn't take life for granted, and enjoys the little things"
+        ]
+    , negatives =
+        [ "- But from a human level."
+        , "- Somewhat emotionally scarred from her life"
+        ]
+    , mixed = [ "+/- By witch standards, defenseless against the monsters that can now see her as easily as she sees them" ]
+    , has = "Mandy is a human, no faction relation"
+    }
+
+
+eskhanderMahabadi : Details
+eskhanderMahabadi =
+    { name = EskhanderMahabadi
+    , class = ClassOne Sorceress
+    , races = [ Oread ]
+    , hasPerk = False
+    , cost = 10
+    , power = Witch 7
+    , teamwork = 8
+    , sociability = 5
+    , morality = 4
+    , quote = "_*“Eskhander Mahabadi... That's the awakened Tiger right? Strange that, never heard of non-humanoids awakening.” - An ORC Scholar*_"
+    , description = "No, not the girl -- The tiger. Eskhander is a literal tiger that received a witch awakening when poisoned by a Witchblood Elixir. Like a human witch becoming a non-human, Khan awakened as an Oread, but has Transformation Sequence, retaining his natural male tiger body and a separate witch form. He has a familiar cat that spends most her time in human form and learned to do a lot of the talking."
+    , positives =
+        [ "+ Curious & inquisitive"
+        , "+ Deferential but confident"
+        ]
+    , negatives =
+        [ "- _Might_ eat your face if you provoke him."
+        ]
+    , mixed = [ "+/- Understands the wider world he woke up to is different than what he knew, and is patient in learning new norms." ]
+    , has = "Khan has Runes 2, Earthmoving 3, Witchery 5, Familiarity 5, Metamorphize 5 (Zooarch), _Transform Sequence, and Menagerie_"
+    }
+
+
+experiment627 : Details
+experiment627 =
+    { name = Experiment627
+    , class = ClassOne Sorceress
+    , races = [ Doll ]
+    , hasPerk = False
+    , cost = 8
+    , power = Witch 10
+    , teamwork = 10
+    , sociability = 4
+    , morality = 4
+    , quote = "_*When we found her she was stuck in a loop putting books back on a shelf as a poltergeist kept knocking them over.” - ORC Agent.*_"
+    , description = "627 is an advanced Doll experiment trying to recreate Doll witches, but without pesky things like free will getting in the way, but more intelligent and lifelike than the mindless serving dolls. 627 is a real person and a Doll witch, her past life heavily suppressed and faded away. She struggles hard to think for herself as though physically painful. She can bond a Master by occupying their Familiar spot"
+    , positives =
+        [ "+ Benefits from anything that would benefit a familiar"
+        , "+ Extremely proficient"
+        ]
+    , negatives =
+        [ "- Can only be independent within bounds of an order"
+        , "- Slow, at first, to adapt."
+        ]
+    , mixed = [ "+/- Her body is a combination of flesh and ball-joint doll." ]
+    , has = "627 has Necromancy 3, Windcalling 3, Hexes 4, Witchery 4, _Hot Swap, Maid Hand, and Levitation_"
     }
 
 
