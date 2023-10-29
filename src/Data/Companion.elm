@@ -406,7 +406,7 @@ melissaVincimvitch =
 
 hawthorne : List Details
 hawthorne =
-    [ hannahGrangely, elizabellSinclaire, ashleyLovenko, sylvanneMaeKanzaki ]
+    [ hannahGrangely, elizabellSinclaire, ashleyLovenko, sylvanneMaeKanzaki, lauraDDevonshire, caroline, suzyTheMiasma, norikoDuNichols ]
 
 
 hannahGrangely : Details
@@ -519,6 +519,108 @@ sylvanneMaeKanzaki =
         ]
     , mixed = [ "+/- Little too quick to put her own life on the line" ]
     , has = "Mae has Wands 1, Familiarity 2 (Hawk), Ministration 3, Witchery 4, _Hat Trick_ and _Sun Shard_."
+    }
+
+
+lauraDDevonshire : Details
+lauraDDevonshire =
+    { name = LauraDDevonshire
+    , class = ClassOne Academic
+    , races = [ Neutral ]
+    , hasPerk = True
+    , cost = 8
+    , power = Witch 10
+    , teamwork = 7
+    , sociability = 8
+    , morality = 7
+    , quote = "_*“You could cut the tension between Hannah and Laura with a knife and spread it on toast. I bet they would be friends if they'd just talk.”*_"
+    , description = "Laura is the only witch born to an Alfheimr noble lineage known for their talented witches. She's grown up with the pressure of her family name and a deep need to satisfy expectations. She has a natural desire to see others exceed as well, and may seem overly serious or sharp when dealing with others who aren't living up to their potential, but she just wants them to succeed. Prickly exterior, soft interior."
+    , positives =
+        [ "+ While confident, she doesn't boast or go out of her way to show off."
+        ]
+    , negatives =
+        [ "- Under a lot of stress kept beneath the surface"
+        , "- Won't disobey family"
+        ]
+    , mixed = [ "+/- Spends a lot of her time in study or practice." ]
+    , has = "Laura has every core magic at rank 2, Alchemy 3, Hexes 4, Naturalism 4, Wands 5, _Master Wand_"
+    }
+
+
+caroline : Details
+caroline =
+    { name = Caroline
+    , class = ClassOne Warlock
+    , races = [ Aurai, Mimi ]
+    , hasPerk = False
+    , cost = 5
+    , power = Witch 6
+    , teamwork = 5
+    , sociability = 7
+    , morality = 8
+    , quote = "_*“Carol? No, she just showed up one day, nobody has seen her parents. Staff has raised her for...20 or so years now.” - Noriko to Ashley*_"
+    , description = "Carol is a dangerous combination of Aurai and a chatterbox halfling mimi. To keep her from withering people with her voice, she's tasked with biting down on a various bits when not sure it's safe, only around various witches or creatures that don't age can she let loose and she'll talk endlessly about all the different things she wanted to say during the day, even if only talking to herself as she drifts to sleep."
+    , positives =
+        [ "+ Heart melting pro"
+        , "+ Does retain information, so she's still intelligent"
+        ]
+    , negatives =
+        [ "- She has not mentally aged for more than 2 decades."
+        , "- Poor impulse control."
+        ]
+    , mixed = [ "+/- Her draining voice withers 10 years instead of 1." ]
+    , has = "Carol has Hexes 2, Familiarity 2, Witchery 3, Windkeeping 3, _Third Eye, Longing Mirror, Silly Goose_"
+    }
+
+
+suzyTheMiasma : Details
+suzyTheMiasma =
+    { name = SuzyTheMiasma
+    , class = ClassOne Academic
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 10
+    , power = Witch 5
+    , teamwork = 7
+    , sociability = 3
+    , morality = 4
+    , quote = "_*“Suzy may not kill people these days but she sure doesn't seem to have any reservations with using others for her experiments.” - A teacher*_"
+    , description = "Suzy is a poison specialist alchemist that always has multiple projects ongoing. She's very numb to traumas such that she can appear sociopathic but it's not that she doesn't feel as much as she never learned to care and her emotions have been burned from a very rough first century of life. Now she just focuses on her craft in Hawthorne."
+    , positives =
+        [ "+ Benefits from anything that would benefit a familiar"
+        , "+ Extremely proficient"
+        ]
+    , negatives =
+        [ "- Requires moral guidance but is open to learning"
+        , "- Consent? What's that?"
+        ]
+    , mixed = [ "+/- Single-minded in poisoncraft. Her poisons are 3x as effective, but other potions are 80% less potent." ]
+    , has = "Suzy has Portals 2, Witchery 2, Wands 3, Hexes 3, Alchemy 5, _Poisoner, Witchflame, Alchemist Stash_"
+    }
+
+
+norikoDuNichols : Details
+norikoDuNichols =
+    { name = NorikoDuNichols
+    , class = ClassOne Academic
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 15
+    , power = Witch 3
+    , teamwork = 7
+    , sociability = 5
+    , morality = 6
+    , quote = "_*Noriko made lunch boxes for each of her house students on their field trip. All Eliza gave us was fishing rods, lame.” - Students*_"
+    , description = "Like most Hawthorne staff, Noriko was once a student herself, a star of her class with something of a wild streak: which many would say is an understatement. Not many people know why, but she withdrew from the public eye and into herself and her studies, adopting a new appearance to turn to teaching under a new name. She's a house lead of House Mooncrest where she councils with a gentle hand."
+    , positives =
+        [ "+ Patient and considerate of student's individual needs & interests"
+        ]
+    , negatives =
+        [ "- Emotionally distanced from everything, a bit of a shell"
+        , "- Deep sense of unfulfillment"
+        ]
+    , mixed = [ "+/- Some people might have blackmail on her past." ]
+    , has = "Nori has Consortation 2, Witchery 4, Divination 4, Wands 5, Hexes 5, _Improved Rod (8p in cantrips), Master Wand_"
     }
 
 
