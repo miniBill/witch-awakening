@@ -1055,7 +1055,7 @@ malice =
 
 lunabellans : List Details
 lunabellans =
-    [ diana, cassandra, kingCulicarius, einodiaKate ]
+    [ diana, cassandra, kingCulicarius, einodiaKate, persephone, betildaAraiBuckland, nichteYIr, aelfflaedNowDaphne ]
 
 
 diana : Details
@@ -1164,6 +1164,108 @@ einodiaKate =
         ]
     , mixed = [ "+/- Driven by curiosity, secrets eat at her mind." ]
     , has = "Kate has Witchery 4, Potions 5, Runes 5, Windkeeping 5, Necromancy 5, Portals 5, Aethernautics 5, and Domain 6"
+    }
+
+
+persephone : Details
+persephone =
+    { name = Persephone
+    , class = ClassOne Academic
+    , races = [ Daeva ]
+    , hasPerk = True
+    , cost = 12
+    , power = Witch 4
+    , teamwork = 6
+    , sociability = 9
+    , morality = 8
+    , quote = "_*“You should know there's a good chance she’s watching us right now, and she's the one who recommended I set up shop here...” - Penelope.*_"
+    , description = "Persephone is the younger sister of Penelope, though a few years are nothing compared to their long lives, they're more like twins. If you chose Lunabella it's likely Pen called in her as her contact to show you around and from there you decide what to do or to stick with her or not, she's supportive & even doting if you're fun."
+    , positives =
+        [ "+ Easy connection to make"
+        , "+ Incredible insight."
+        ]
+    , negatives =
+        [ "- Has already stalked you"
+        ]
+    , mixed =
+        [ "+/-Ara Ara"
+        , "+/- Maaay want your babies (F/F is no issue for witches), she's big into genetics & experiments in lineage for witch offspring."
+        ]
+    , has = "Seph has Hexes 3, Witchery 3, Potions 4, Aethernautics 4, Familiarity 4 (Cow), Domain 5, Portals 5, Divination 5, _Cornucopia, Life Record, Companion Brick (You)_"
+    }
+
+
+betildaAraiBuckland : Details
+betildaAraiBuckland =
+    { name = BetildaAraiBuckland
+    , class = ClassOne Academic
+    , races = [ Doll ]
+    , hasPerk = False
+    , cost = 10
+    , power = Witch 5
+    , teamwork = 2
+    , sociability = 5
+    , morality = 4
+    , quote = "_*“You're in charge of taking care of this library, and Miss Kate can be our mistress, we have your back, just ask any time,” - Culicarius*_"
+    , description = "Betty is a doll that at first glance might be mistaken for a dwarf or changeling, without visual cues to her true type save for easily missed slight lines on her shoulders and hips. Prior to this she was a human girl, taken off the street. Betty has issues where she's uncomfortable functioning independently, so she began to flourish under the hierarchy system of Lunabella. She spends a lot of time in libraries."
+    , positives =
+        [ "+ Encyclopedic knowledge. of witch history, alchemy runes, gods, and monsters"
+        ]
+    , negatives =
+        [ "- Has a habit of sticking “I suppose” into sentences."
+        , "- Jaded and slow to care"
+        ]
+    , mixed = [ "+/- If she says she'll do something, she'd rather die than fail." ]
+    , has = "Betty has Necromancy 2, Familiarity 4, Runes 5, Alchemy 5, Domain 5, _Levitation, Alchemist Stash & Stone_"
+    }
+
+
+nichteYIr : Details
+nichteYIr =
+    { name = NichteYIr
+    , class = ClassOne Warlock
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 10
+    , power = Witch 8
+    , teamwork = 4
+    , sociability = 3
+    , morality = 3
+    , quote = "_*“Nichte scares the children, well, everybody, but she works hard to go out of her way help anyone as best she can.” - an ORC Agent.*_"
+    , description = "Nichte was alifelong slave in an old Hespatian family that likes to play with fire. She was used as a sacrificial test for controlling Outsider corruption. It didn't go as planned but they still gained a potent slave, until a Lunabellan raid stormed the compound lead by a Culicarius, who subdued and offered her a choice, and control over herself."
+    , positives =
+        [ "+ Dependable and trustworthy"
+        , "+ Contrary to her appearance, she is warm and comforting."
+        ]
+    , negatives =
+        [ "- She's still corrupted, so any harm she causes still contributes to Far entropy"
+        ]
+    , mixed = [ "+/- Has a voluntary slave crest that acts as an anchor to avoid losing herself to Outsiders by binding to a master. " ]
+    , has = "Nichte has Psychotics 3, Firecalling 3, Aethernautics 3, Domain 4, Necromancy 5, Monstrosity 5, _Memorize, Sun Shard, Cornucopia_"
+    }
+
+
+aelfflaedNowDaphne : Details
+aelfflaedNowDaphne =
+    { name = AelfflaedNowDaphne
+    , class = ClassOne Warlock
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 15
+    , power = Witch 7
+    , teamwork = 6
+    , sociability = 7
+    , morality = 5
+    , quote = "_*“She's on the moon under Culicarius's care now, she was quite a threat for decades, being bound to some “seed bearer”” - An ORC Agent.*_"
+    , description = "Daphne was at one point a teacher at Hawthorne over a thousand years ago, and head of a particularly troublesome house, but she encountered the Pumpkin Moon and disappeared. She's now returned to a very different world Feeling out of place, she found her way to Lunabella where Culicarius, one of a handful of familiar faces, offered her residence to teach magic on the moon and learn new norms."
+    , positives =
+        [ "+ 1,000/y of stories of other worlds to share."
+        ]
+    , negatives =
+        [ "- Slow and impatient with technology & modernity "
+        ]
+    , mixed = [ "+/- Daph has 6 _Pumpkin Boons_: choose 6 _personal perks_ & tweak to something similar and roughly as effective" ]
+    , has = "Daph has Witchery 3, Necromancy 3, Domain 4, Familiarity 4, Wands 5, Fire 5+Nature 5 = _Jack'o Lantern magic_"
     }
 
 

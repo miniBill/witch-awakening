@@ -95,7 +95,7 @@ enumToDeclarations { name, exceptions, variants, toImage } =
         typeDeclaration =
             Elm.customType name
                 (List.map
-                    (\variant -> Elm.variant <| String.Extra.classify variant)
+                    (\variant -> Elm.variant <| yassify variant)
                     variants
                 )
 
@@ -109,7 +109,7 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                             Dict.get variant exceptionsDict
                                 |> Maybe.withDefault variant
                                 |> Elm.string
-                                |> Elm.Case.branch0 (String.Extra.classify variant)
+                                |> Elm.Case.branch0 (yassify variant)
                         )
                         variants
                     )
@@ -126,7 +126,7 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                             (\variant ->
                                 ( Dict.get variant exceptionsDict
                                     |> Maybe.withDefault variant
-                                , Gen.Maybe.make_.just <| Elm.val <| String.Extra.classify variant
+                                , Gen.Maybe.make_.just <| Elm.val <| yassify variant
                                 )
                             )
                             variants
@@ -146,7 +146,7 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                             let
                                 constructor : String
                                 constructor =
-                                    String.Extra.classify variant
+                                    yassify variant
                             in
                             Elm.Case.branch0 constructor
                                 (Elm.value
@@ -416,3 +416,11 @@ directoryDecoder =
                                )
                     )
         )
+
+
+yassify : String -> String
+yassify str =
+    str
+        |> String.replace "Æ" "Ae"
+        |> String.replace "æ" "ae"
+        |> String.Extra.classify
