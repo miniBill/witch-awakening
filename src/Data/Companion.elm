@@ -29,9 +29,8 @@ type MaybeClass
 
 
 type Power
-    = Witch Int
+    = NormalPower Int
     | SpecialEffect
-    | NotAWitch
 
 
 intro : String
@@ -74,7 +73,7 @@ rachelPool =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 4
-    , power = Witch 5
+    , power = NormalPower 5
     , teamwork = 8
     , sociability = 4
     , morality = 9
@@ -105,7 +104,7 @@ anneLaurenchi =
     , races = [ Sylph ]
     , hasPerk = True
     , cost = 4
-    , power = Witch 4
+    , power = NormalPower 4
     , teamwork = 4
     , sociability = 6
     , morality = 7
@@ -135,7 +134,7 @@ candayWesbank =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 2
-    , power = Witch 4
+    , power = NormalPower 4
     , teamwork = 8
     , sociability = 7
     , morality = 8
@@ -162,7 +161,7 @@ tessaMarieKudashov =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 2
-    , power = Witch 8
+    , power = NormalPower 8
     , teamwork = 5
     , sociability = 6
     , morality = 4
@@ -190,7 +189,7 @@ evelynnPWillowcrane =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 2
-    , power = Witch 4
+    , power = NormalPower 4
     , teamwork = 9
     , sociability = 10
     , morality = 7
@@ -219,7 +218,7 @@ johnDoe =
     , races = [ Changeling ]
     , hasPerk = False
     , cost = 4
-    , power = Witch 6
+    , power = NormalPower 6
     , teamwork = 7
     , sociability = 5
     , morality = 10
@@ -248,7 +247,7 @@ sayaKurosawa =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 8
-    , power = Witch 8
+    , power = NormalPower 8
     , teamwork = 5
     , sociability = 8
     , morality = 6
@@ -276,7 +275,7 @@ francescaAstrenichtys =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 12
-    , power = Witch 5
+    , power = NormalPower 5
     , teamwork = 7
     , sociability = 8
     , morality = 6
@@ -302,7 +301,7 @@ elaineAVictorica =
     , races = [ Neutral ]
     , hasPerk = True
     , cost = 10
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 7
     , sociability = 6
     , morality = 5
@@ -329,7 +328,7 @@ maimonadaMajesteim =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 12
-    , power = Witch 9
+    , power = NormalPower 9
     , teamwork = 6
     , sociability = 7
     , morality = 5
@@ -356,7 +355,7 @@ azurellieaAdMadelline =
     , races = [ Dwarf, Lilin ]
     , hasPerk = False
     , cost = 15
-    , power = Witch 8
+    , power = NormalPower 8
     , teamwork = 8
     , sociability = 6
     , morality = 7
@@ -383,7 +382,7 @@ melissaVincimvitch =
     , races = [ Daeva ]
     , hasPerk = False
     , cost = 15
-    , power = Witch 2
+    , power = NormalPower 2
     , teamwork = 8
     , sociability = 10
     , morality = 9
@@ -416,7 +415,7 @@ hannahGrangely =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 6
-    , power = Witch 5
+    , power = NormalPower 5
     , teamwork = 7
     , sociability = 6
     , morality = 7
@@ -445,7 +444,7 @@ elizabellSinclaire =
     , races = [ Erinyes ]
     , hasPerk = False
     , cost = 10
-    , power = Witch 2
+    , power = NormalPower 2
     , teamwork = 7
     , sociability = 6
     , morality = 5
@@ -474,7 +473,7 @@ ashleyLovenko =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 6
-    , power = Witch 3
+    , power = NormalPower 3
     , teamwork = 7
     , sociability = 9
     , morality = 8
@@ -502,7 +501,7 @@ sylvanneMaeKanzaki =
     , races = [ Luxal ]
     , hasPerk = True
     , cost = 8
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 6
     , sociability = 7
     , morality = 8
@@ -529,7 +528,7 @@ lauraDDevonshire =
     , races = [ Neutral ]
     , hasPerk = True
     , cost = 8
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 7
     , sociability = 8
     , morality = 7
@@ -554,7 +553,7 @@ caroline =
     , races = [ Aurai, Mimi ]
     , hasPerk = False
     , cost = 5
-    , power = Witch 6
+    , power = NormalPower 6
     , teamwork = 5
     , sociability = 7
     , morality = 8
@@ -580,7 +579,7 @@ suzyTheMiasma =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 10
-    , power = Witch 5
+    , power = NormalPower 5
     , teamwork = 7
     , sociability = 3
     , morality = 4
@@ -606,7 +605,7 @@ norikoDuNichols =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 15
-    , power = Witch 3
+    , power = NormalPower 3
     , teamwork = 7
     , sociability = 5
     , morality = 6
@@ -636,7 +635,7 @@ francisIsaacGiovanni =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 6
-    , power = Witch 6
+    , power = NormalPower 6
     , teamwork = 4
     , sociability = 2
     , morality = 7
@@ -662,7 +661,7 @@ ifraAlZahra =
     , races = [ Changeling ]
     , hasPerk = False
     , cost = 4
-    , power = Witch 3
+    , power = NormalPower 3
     , teamwork = 4
     , sociability = 9
     , morality = 7
@@ -688,7 +687,7 @@ sariahJSnow =
     , races = [ Nymph ]
     , hasPerk = True
     , cost = 8
-    , power = Witch 4
+    , power = NormalPower 4
     , teamwork = 9
     , sociability = 7
     , morality = 9
@@ -715,7 +714,7 @@ claireBelmontegra =
     , races = [ Nymph ]
     , hasPerk = True
     , cost = 6
-    , power = Witch 5
+    , power = NormalPower 5
     , teamwork = 8
     , sociability = 10
     , morality = 4
@@ -741,7 +740,7 @@ sylvarraAsDomonina =
     , races = [ Elf ]
     , hasPerk = False
     , cost = 15
-    , power = Witch 2
+    , power = NormalPower 2
     , teamwork = 7
     , sociability = 6
     , morality = 7
@@ -766,7 +765,7 @@ madellineLPeach =
     , races = [ Empusa ]
     , hasPerk = True
     , cost = 15
-    , power = Witch 5
+    , power = NormalPower 5
     , teamwork = 5
     , sociability = 4
     , morality = 7
@@ -791,7 +790,7 @@ reinaAkatsuki =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 12
-    , power = Witch 8
+    , power = NormalPower 8
     , teamwork = 5
     , sociability = 5
     , morality = 7
@@ -817,7 +816,7 @@ minnieAndrus =
     , races = [ Daeva ]
     , hasPerk = True
     , cost = 8
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 6
     , sociability = 8
     , morality = 10
@@ -846,7 +845,7 @@ lucilleMBright =
     , races = [ Lilin ]
     , hasPerk = False
     , cost = 6
-    , power = Witch 5
+    , power = NormalPower 5
     , teamwork = 7
     , sociability = 8
     , morality = 3
@@ -874,7 +873,7 @@ kingDaemianKain =
     , races = [ Dravir ]
     , hasPerk = True
     , cost = 12
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 5
     , sociability = 6
     , morality = 2
@@ -902,7 +901,7 @@ whisper =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 10
-    , power = Witch 9
+    , power = NormalPower 9
     , teamwork = 7
     , sociability = 8
     , morality = 1
@@ -930,7 +929,7 @@ redMother =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 8
-    , power = Witch 6
+    , power = NormalPower 6
     , teamwork = 7
     , sociability = 7
     , morality = 3
@@ -958,7 +957,7 @@ nova =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 15
-    , power = Witch 7
+    , power = NormalPower 7
     , teamwork = 5
     , sociability = 5
     , morality = 1
@@ -984,7 +983,7 @@ scarlet =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 12
-    , power = Witch 3
+    , power = NormalPower 3
     , teamwork = 8
     , sociability = 9
     , morality = 8
@@ -1009,7 +1008,7 @@ huntress =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 12
-    , power = Witch 6
+    , power = NormalPower 6
     , teamwork = 5
     , sociability = 7
     , morality = 8
@@ -1034,7 +1033,7 @@ malice =
     , races = [ Empusa ]
     , hasPerk = True
     , cost = 15
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 9
     , sociability = 5
     , morality = 4
@@ -1065,7 +1064,7 @@ diana =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 6
-    , power = Witch 8
+    , power = NormalPower 8
     , teamwork = 9
     , sociability = 7
     , morality = 9
@@ -1093,7 +1092,7 @@ cassandra =
     , races = [ Dravir ]
     , hasPerk = False
     , cost = 6
-    , power = Witch 3
+    , power = NormalPower 3
     , teamwork = 6
     , sociability = 5
     , morality = 7
@@ -1121,7 +1120,7 @@ kingCulicarius =
     , races = [ Daeva ]
     , hasPerk = True
     , cost = 15
-    , power = Witch 4
+    , power = NormalPower 4
     , teamwork = 9
     , sociability = 8
     , morality = 8
@@ -1147,7 +1146,7 @@ einodiaKate =
     , races = [ Daeva ]
     , hasPerk = False
     , cost = 15
-    , power = Witch 1
+    , power = NormalPower 1
     , teamwork = 4
     , sociability = 5
     , morality = 6
@@ -1174,7 +1173,7 @@ persephone =
     , races = [ Daeva ]
     , hasPerk = True
     , cost = 12
-    , power = Witch 4
+    , power = NormalPower 4
     , teamwork = 6
     , sociability = 9
     , morality = 8
@@ -1202,7 +1201,7 @@ betildaAraiBuckland =
     , races = [ Doll ]
     , hasPerk = False
     , cost = 10
-    , power = Witch 5
+    , power = NormalPower 5
     , teamwork = 2
     , sociability = 5
     , morality = 4
@@ -1227,7 +1226,7 @@ nichteYIr =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 10
-    , power = Witch 8
+    , power = NormalPower 8
     , teamwork = 4
     , sociability = 3
     , morality = 3
@@ -1252,7 +1251,7 @@ aelfflaedNowDaphne =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 15
-    , power = Witch 7
+    , power = NormalPower 7
     , teamwork = 6
     , sociability = 7
     , morality = 5
@@ -1271,7 +1270,7 @@ aelfflaedNowDaphne =
 
 theOrcs : List Details
 theOrcs =
-    [ victoriaWatts, richardMaxJohnson, bethadonnaRossbaum, mirandaQuincy ]
+    [ victoriaWatts, richardMaxJohnson, bethadonnaRossbaum, mirandaQuincy, meganMinosine, janeKitAdams, aliciaRedVelvetine, juliaMayCaldwin ]
 
 
 victoriaWatts : Details
@@ -1281,7 +1280,7 @@ victoriaWatts =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 8
-    , power = NotAWitch
+    , power = NormalPower 0
     , teamwork = 10
     , sociability = 8
     , morality = 7
@@ -1307,7 +1306,7 @@ richardMaxJohnson =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 5
-    , power = NotAWitch
+    , power = NormalPower 0
     , teamwork = 7
     , sociability = 5
     , morality = 6
@@ -1333,7 +1332,7 @@ bethadonnaRossbaum =
     , races = [ Lilin ]
     , hasPerk = True
     , cost = 12
-    , power = Witch 1
+    , power = NormalPower 1
     , teamwork = 8
     , sociability = 9
     , morality = 5
@@ -1359,7 +1358,7 @@ mirandaQuincy =
     , races = [ Erinyes ]
     , hasPerk = True
     , cost = 8
-    , power = Witch 8
+    , power = NormalPower 8
     , teamwork = 6
     , sociability = 7
     , morality = 6
@@ -1378,9 +1377,114 @@ mirandaQuincy =
     }
 
 
+meganMinosine : Details
+meganMinosine =
+    { name = MeganMinosine
+    , class = ClassOne Warlock
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 8
+    , power = NormalPower 6
+    , teamwork = 7
+    , sociability = 5
+    , morality = 6
+    , quote = "_*“This tiny thing leveled the Zonguie forest?.” “I said it was an accident! There were zombies! I was scared!” - ORC Agents & Meg.*_"
+    , description = "The good twin counterpart to Nova. Her growth was stunted by her sister. She has all the qualities her evil sister lacks, but not exaggerated in the same way the negative qualities were exaggerated. She's a little timid and a little reluctant to cause collateral damage, but from the link with her evil win she developed the same magic affinities."
+    , positives =
+        [ "+ Friendly and mindful"
+        , "+ Will bake cookies."
+        , "+ Patient with people"
+        ]
+    , negatives =
+        [ "- Conflict avoidance"
+        , "- Impatient with herself."
+        ]
+    , mixed =
+        [ "+/-Smol"
+        , "+/- She can use her magics almost exclusively for explosions, which are 3x more potent & large than usual."
+        ]
+    , has = "Meg has Firecalling 5, Windkeeping 5, Curses 5, _Charge Swap+ (Draviri), Mana Core, Magical Heart (20p worth)_"
+    }
+
+
+janeKitAdams : Details
+janeKitAdams =
+    { name = JaneKitAdams
+    , class = ClassOne Sorceress
+    , races = [ Mimi ]
+    , hasPerk = False
+    , cost = 8
+    , power = NormalPower 6
+    , teamwork = 5
+    , sociability = 7
+    , morality = 8
+    , quote = "_*“Look, I get she's cute and all, and recovered, but should we really give her back that super scary dagger? I mean.” - An ORC Agent.*_"
+    , description = "Kit is a halfling mimi under an immortality curse since she was young, She's around 30 years older than she looks, and trained since birth to be a killer by a Hespatian family that specialized in training covert assassin-bodyguards. The branch she was in was raided by the ORC and she was among 8 to survive, and 3 years of psychosurgery later, recovered or reconditioned enough to be sociable and live free."
+    , positives =
+        [ "+ Absolute loyalty to someone she dedicates herself to by choice"
+        ]
+    , negatives =
+        [ "- Instincts run deep, she still has violent reactions to threats."
+        , "- Can't bring herself to ask for help"
+        ]
+    , mixed = [ "+/- Trained more in martial and skill, than in magic use." ]
+    , has = "Kit has Witchery 2, Psychotics 2, Familiarity 3, Portals 4, _Master Key, Assassin's Edge, Memorize_"
+    }
+
+
+aliciaRedVelvetine : Details
+aliciaRedVelvetine =
+    { name = AliciaRedVelvetine
+    , class = ClassOne Sorceress
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 12
+    , power = NormalPower 7
+    , teamwork = 6
+    , sociability = 8
+    , morality = 8
+    , quote = "_*Red, I know you already undid your chain, let's get out already.”* \\*huff\\* *Don't ruin my fun, they were getting the whip” - Red & May*_"
+    , description = "Red grew up high on romance adventure thrillers, with dreams of being swept off her feet. When she Awoke as a witch, she took it in stride. Realizing her affinities, she molded herself a dashing heroine and learned to do the sweeping herself. She wants a man that can outpace her but has yet to find anyone that can while satisfying her ideals, but enjoys herself in the meantime by teasing damsels."
+    , positives =
+        [ "+ Goes out of her way for others and acts on her values of honor & service."
+        ]
+    , negatives =
+        [ "- Sometimes seems to get herself situations where she can play the damsel, for fun"
+        ]
+    , mixed = [ "+/- Very into the theatrics and roleplaying scenarios." ]
+    , has = "Red has Necromancy 2, Portals 3, Witchery 4, Metallurgy 5, _Memorize, Gunwitch, Hot Swap, Mana Core, Apex_"
+    }
+
+
+juliaMayCaldwin : Details
+juliaMayCaldwin =
+    { name = JuliaMayCaldwin
+    , class = ClassNone
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 12
+    , power = NormalPower 0
+    , teamwork = 10
+    , sociability = 8
+    , morality = 10
+    , quote = "_*“Damn tricky human and her damn toys. After training under Lalahon she's become an even greater threat” - A fleeing Hespatian.*_"
+    , description = "May is a Division Leader of the ORC that was one of the first children born within the ORC itself, growing up in the human pocket world of Deco City run by the international ORC. She loves her job as division lead for the USA branch expeditionary force. While not a witch she makes very good use of the artifacts and tricks she's picked up on the job."
+    , positives =
+        [ "+ Always pushes her limits"
+        , "+ Great at bringing out the full potential of her allies."
+        ]
+    , negatives =
+        [ "- Can never feel settled when someone is in danger"
+        , "- Which is all the time."
+        ]
+    , mixed = [ "+/- May pushes the limits on what it means to be human in a world of magic and gods, she's more human than human" ]
+    , has = "May has _Soul Warrior (Scepter), Soul Graft (Fountain, Stay Human), Magic Talisman (Portals), Collection (Runes)_"
+    }
+
+
 alphazonians : List Details
 alphazonians =
-    [ samanthaNatPonds, jenniferKYoung, agent7Y, agent9s ]
+    [ samanthaNatPonds, jenniferKYoung, agent7Y, agent9s, twinsSaraAndKara, vesuvianelleLalahon, amberOgdenVix, xINDollmaker ]
 
 
 samanthaNatPonds : Details
@@ -1390,7 +1494,7 @@ samanthaNatPonds =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 8
-    , power = NotAWitch
+    , power = NormalPower 0
     , teamwork = 6
     , sociability = 10
     , morality = 5
@@ -1416,7 +1520,7 @@ jenniferKYoung =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 5
-    , power = NotAWitch
+    , power = NormalPower 0
     , teamwork = 4
     , sociability = 8
     , morality = 4
@@ -1442,7 +1546,7 @@ agent7Y =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 12
-    , power = NotAWitch
+    , power = NormalPower 0
     , teamwork = 7
     , sociability = 7
     , morality = 1
@@ -1467,7 +1571,7 @@ agent9s =
     , races = [ Aurai ]
     , hasPerk = False
     , cost = 10
-    , power = Witch 8
+    , power = NormalPower 8
     , teamwork = 4
     , sociability = 6
     , morality = 2
@@ -1486,6 +1590,112 @@ agent9s =
     }
 
 
+twinsSaraAndKara : Details
+twinsSaraAndKara =
+    { name = TwinsSaraKara
+    , class = ClassOne Sorceress
+    , races = [ Dwarf ]
+    , hasPerk = True
+    , cost = 8
+    , power = NormalPower 10
+    , teamwork = 10
+    , sociability = 3
+    , morality = 4
+    , quote = "_*“Underestimate them and you're dead. They look young but they're dwarves, and have experience worth triple their age.” - An Agent.*_"
+    , description = "The Sara and Kara are dwarven twins who have been together through unbearable circumstance ever since they were little, growing closer from their life challenges and rely on one another as the only ones they currently trust. They play off each other's strengths and weaknesses with perfect synchronicity not as mirrors, but as a balanced harmony, extending to their personality traits and magic."
+    , positives =
+        [ "+ Kara is highly observant."
+        , "+ Sara is highly intuitive"
+        ]
+    , negatives =
+        [ "- Kara is always on edge."
+        , "- Sara can't let questions go."
+        ]
+    , mixed = [ "+/- Two for the price of one? They're an inseparable pair," ]
+    , has = "Twins both have _Magic Friendship (twin)_ & Witchery 4; Sara\u{00A0}has\u{00A0}Ministration\u{00A0}4, Domain 4, Covenants 4, Divination 5; Kara\u{00A0}has\u{00A0}Consortation\u{00A0}4, Portals 4, Occultism 4, Aethernautics\u{00A0}5"
+    }
+
+
+vesuvianelleLalahon : Details
+vesuvianelleLalahon =
+    { name = VesuvianelleLalahon
+    , class = ClassOne Sorceress
+    , races = [ Mimi ]
+    , hasPerk = True
+    , cost = 10
+    , power = NormalPower 8
+    , teamwork = 6
+    , sociability = 7
+    , morality = 6
+    , quote = "_*“Vesuviannelle was one of the goddesses to resist the masquerade and was struck down from her realm by the victors.” - An ORC scholar*_"
+    , description = "Suvi is an Amazonian mimi (Rabbit) well known in some parts for her extensive use of volcanic magics utilizing Earth-Fire elementalism. There's a myth that she created an island chain by hopping across the sea with volcanos erupting from her footsteps. Fact or fiction? She just laughs it off. She makes appearances when her islands are threatened by major events, otherwise being elusive."
+    , positives =
+        [ "+ Protective of innocents."
+        , "+ One of the strongest martial witches out there"
+        ]
+    , negatives =
+        [ "- Harsh towards offense"
+        , "- As a fallen goddess, she has powerful enemies"
+        ]
+    , mixed = [ "+/- Used to be worshipped, some sects remain" ]
+    , has = "Suvi has Potions 3, Runes 4, Familiarity 5, Earthmoving 5, Firecalling 5, _Soul Warrior (Gladius), Soul Graft (Jackalope)_"
+    }
+
+
+amberOgdenVix : Details
+amberOgdenVix =
+    { name = AmberOgdenVix
+    , class = ClassOne Warlock
+    , races = [ Empusa ]
+    , hasPerk = False
+    , cost = 12
+    , power = NormalPower 7
+    , teamwork = 4
+    , sociability = 6
+    , morality = 3
+    , quote = "_*“May be the best driver in known witchdom, you'll be in good hands. Nines will cover you on your way out, 3...2..1--” - An Alphazon Op.*_"
+    , description = "Vix was always a speed demon, a wild child that started racing tricycles at six and couldn't get enough, becoming a street racer by her late teens. On her 21st birthday she met with a strange crew that dripped with mystery and she had to dig deeper. The ringleader saw something in her and pushed her unreasonably hard, until it paid off, and she had a witch awakening, & stepped into a whole new world."
+    , positives =
+        [ "+ Extreme determination"
+        , "+ Laser focus on problems."
+        , "+ Potion energy drinks"
+        ]
+    , negatives =
+        [ "- Sees “No” as a challenge"
+        , "- Adrenaline junkie."
+        , "- Can't sit still"
+        ]
+    , mixed = [ "+/- Pro use of alchemy and runes to enhance rides" ]
+    , has = "Vix has Consortation 1, Necromancy 2, Wands 3, Runes 3, Metallurgy 5, Alchemy 5, Witchery 5, _Hellrider, Broom Beast 6, Witch Pistol_"
+    }
+
+
+xINDollmaker : Details
+xINDollmaker =
+    { name = XINDollmaker
+    , class = ClassOne Academic
+    , races = [ Taura ]
+    , hasPerk = False
+    , cost = 12
+    , power = NormalPower 6
+    , teamwork = 5
+    , sociability = 7
+    , morality = 3
+    , quote = "_*“X.I.N.? She gives me chills, Admin gives her way too much freedom, she gets away with anything... Did you hear something?” ~ Recording*_"
+    , description = "XIN, Dollmaker was the original lead researcher Alphazon employed to study the research and development of new forms of dolls, based on Xin's own past experience with as one of the first witches to dabble in the art of dollmaking. Allegedly she turned her own daughter into a doll, the only name on file was _Chen_, who, or it's, since been lost. Arachne (Spider Taura), though usually keeps shifted to human legs."
+    , positives =
+        [ "+ Can raise the dead as dolls"
+        , "+ Turns humans into witches"
+        , "+ Knows unspeakable secrets"
+        ]
+    , negatives =
+        [ "- Ruthless pursuit of goals she won't or can't speak of"
+        ]
+    , mixed = [ "+/- Her body is a combination of flesh and ball-joint doll" ]
+    , has = "Xin has Runes 3, Hexes 4, Necromancy 5, Windkeeping 5, Arachnescence 5, _Jester Mask, Ritual Inks, Dollmaker Kit, Servant Dolls_"
+    }
+
+
 independents : List Details
 independents =
     [ alexKHalls, isabellaMableOaks, evangelinaRosaCostaval, penelope, mandyHunts, eskhanderMahabadi, experiment627, augustRoseOBare ]
@@ -1498,7 +1708,7 @@ alexKHalls =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 2
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 7
     , sociability = 5
     , morality = 8
@@ -1577,7 +1787,7 @@ penelope =
     , races = [ Daeva ]
     , hasPerk = False
     , cost = 10
-    , power = Witch 4
+    , power = NormalPower 4
     , teamwork = 6
     , sociability = 8
     , morality = 6
@@ -1603,7 +1813,7 @@ mandyHunts =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 1
-    , power = NotAWitch
+    , power = NormalPower 0
     , teamwork = 8
     , sociability = 5
     , morality = 6
@@ -1629,7 +1839,7 @@ eskhanderMahabadi =
     , races = [ Oread ]
     , hasPerk = False
     , cost = 10
-    , power = Witch 7
+    , power = NormalPower 7
     , teamwork = 8
     , sociability = 5
     , morality = 4
@@ -1654,7 +1864,7 @@ experiment627 =
     , races = [ Doll ]
     , hasPerk = False
     , cost = 8
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 10
     , sociability = 4
     , morality = 4
@@ -1680,7 +1890,7 @@ augustRoseOBare =
     , races = [ Neutral ]
     , hasPerk = False
     , cost = 10
-    , power = NotAWitch
+    , power = NormalPower 0
     , teamwork = 0
     , sociability = 0
     , morality = 0
@@ -1705,7 +1915,7 @@ theCaretaker =
     , races = [ Lamia ]
     , hasPerk = True
     , cost = 8
-    , power = Witch 7
+    , power = NormalPower 7
     , teamwork = 4
     , sociability = 3
     , morality = 1
@@ -1729,7 +1939,7 @@ lostQueen =
     , races = [ Sprite ]
     , hasPerk = True
     , cost = 15
-    , power = Witch 6
+    , power = NormalPower 6
     , teamwork = 10
     , sociability = 7
     , morality = 1
@@ -1754,7 +1964,7 @@ giftFromBeyond =
     , races = []
     , hasPerk = False
     , cost = 12
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 10
     , sociability = 4
     , morality = 1
@@ -1774,7 +1984,7 @@ agent9sOriginal =
     , races = [ Aurai ]
     , hasPerk = True
     , cost = 12
-    , power = Witch 10
+    , power = NormalPower 10
     , teamwork = 3
     , sociability = 5
     , morality = 2
@@ -1803,7 +2013,7 @@ princessDaelEzraOfCharis =
     , races = [ Elf ]
     , hasPerk = True
     , cost = 8
-    , power = Witch 2
+    , power = NormalPower 2
     , teamwork = 6
     , sociability = 9
     , morality = 9
@@ -1829,7 +2039,7 @@ anaphalonGreenwield =
     , races = [ Siren ]
     , hasPerk = False
     , cost = 12
-    , power = Witch 4
+    , power = NormalPower 4
     , teamwork = 9
     , sociability = 10
     , morality = 8
@@ -1855,7 +2065,7 @@ briarGracehollow =
     , races = [ Elf ]
     , hasPerk = False
     , cost = 6
-    , power = Witch 7
+    , power = NormalPower 7
     , teamwork = 9
     , sociability = 2
     , morality = 4
@@ -1884,7 +2094,7 @@ duchessSaelAstraOfOdalle =
     , races = [ Vanir, Sylph ]
     , hasPerk = False
     , cost = 12
-    , power = Witch 5
+    , power = NormalPower 5
     , teamwork = 7
     , sociability = 5
     , morality = 8

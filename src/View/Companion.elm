@@ -330,23 +330,20 @@ statsTable details =
                     (List.reverse <| List.range 1 10)
         , data =
             [ ( "Power", details.power )
-            , ( "Teamwork", Companion.Witch details.teamwork )
-            , ( "Sociability", Companion.Witch details.sociability )
-            , ( "Morality", Companion.Witch details.morality )
-            , ( "Ranking", Companion.Witch -1 )
+            , ( "Teamwork", Companion.NormalPower details.teamwork )
+            , ( "Sociability", Companion.NormalPower details.sociability )
+            , ( "Morality", Companion.NormalPower details.morality )
+            , ( "Ranking", Companion.NormalPower -1 )
             ]
                 |> List.map
                     (\( label, value ) ->
                         ( label
                         , value
                         , case value of
-                            Companion.NotAWitch ->
-                                Theme.colors.companionBlack
-
                             Companion.SpecialEffect ->
                                 Theme.colors.companionGold
 
-                            Companion.Witch p ->
+                            Companion.NormalPower p ->
                                 if p == 10 then
                                     Theme.colors.companionGold
 
@@ -397,9 +394,6 @@ statColumn ranking =
             let
                 ( ( backgroundColor, fontColor ), attrs, content ) =
                     case rawScore of
-                        Companion.NotAWitch ->
-                            grayRow ranking
-
                         Companion.SpecialEffect ->
                             ( ( mainColor
                               , rgb 0 0 0
@@ -417,7 +411,7 @@ statColumn ranking =
                             , cross
                             )
 
-                        Companion.Witch score ->
+                        Companion.NormalPower score ->
                             if score == 0 then
                                 grayRow ranking
 
