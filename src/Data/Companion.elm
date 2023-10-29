@@ -836,7 +836,7 @@ minnieAndrus =
 
 hespatians : List Details
 hespatians =
-    [ lucilleMBright, kingDaemianKain, whisper, redMother ]
+    [ lucilleMBright, kingDaemianKain, whisper, redMother, nova, scarlet, huntress, malice ]
 
 
 lucilleMBright : Details
@@ -948,6 +948,108 @@ redMother =
         ]
     , mixed = [ "+/- Won’t _kill_ children or parents, but might abduct" ]
     , has = "Mom has Occultism 4, Necromancy 5, Alchemy 5, Consortation 5, _Visceramancy 5, Blood Witch, Family Line, and Immortal Blood_"
+    }
+
+
+nova : Details
+nova =
+    { name = Nova
+    , class = ClassOne Sorceress
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 15
+    , power = Witch 7
+    , teamwork = 5
+    , sociability = 5
+    , morality = 1
+    , quote = "_*“What the HELL happened here? Wasn't there a town here?” “...yes, The Hespatians sent Nova to erase evidence...” - An ORC Agent*_"
+    , description = "An evil twin that absorbed life force from her twin sister in the womb and throughout childhood. She feels a compulsive need to inflict destruction even harder than a succubus is compelled to do, well, other things. Like a constant itch, she yearns for causing mayhem combining her Wind and Fire magics to focus on Combustion magics. She's only restrained by a control collar placed by Lucille that mellows her out."
+    , positives =
+        [ "+ Extremely adept at wide-area type attacks."
+        , "+ Abnormally high mana (3x)"
+        ]
+    , negatives =
+        [ "- Can be seen squirming with a need to destroy."
+        , "- Addictive personality dis"
+        ]
+    , mixed = [ "+/- Do NOT take off her collar or let anyone touch it" ]
+    , has = "Nova has Firecalling 5, Windkeeping 5, Curses 5, _Charge\u{00A0}Swap+ (Draviri), Mana Core, Magical Heart (20p worth)_"
+    }
+
+
+scarlet : Details
+scarlet =
+    { name = Scarlet
+    , class = ClassOne Sorceress
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 12
+    , power = Witch 3
+    , teamwork = 8
+    , sociability = 9
+    , morality = 8
+    , quote = "_*“A valued cultist of the Dragon, but she saved my little sister's life from the razing of Port Charlotte. That she caused.” - Alliance Merchant*_"
+    , description = "Scarlet was once a simple village girl known for her red hood, until a werewolf stalked her and murdered her grandmother. In the terror of the situation, her awakening triggered naturally as a Dravir, ared dragon. She ate the wolf the way it ate her only relative but it left a human body Scarlet would go on a downward spiral and end up in Hespatia under King Damien Kain's favored family."
+    , positives =
+        [ "+ Cheerful and upbeat"
+        , "+ Secretly very analytical."
+        ]
+    , negatives =
+        [ "- Impressionable and easily convinced to do things."
+        ]
+    , mixed = [ "+/- A little duplicitous, she'll do what's required of her but undermines evil actions subtly within bounds of orders" ]
+    , has = "Scarlet has Witchery 3, Runes 4, Portals 4, Firecalling 5, Metamorphize (Red Dragon), _Windsong, Blood Witch_"
+    }
+
+
+huntress : Details
+huntress =
+    { name = Huntress
+    , class = ClassOne Warlock
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 12
+    , power = Witch 6
+    , teamwork = 5
+    , sociability = 7
+    , morality = 8
+    , quote = "_*“Lucille's pet heroine is crying when she thinks nobody is watching. Again. Is there a reason we haven't erased her mind yet?” - Whisper*_"
+    , description = "Huntress is another Hespatian specialist known as a dead shot marksman, delivering death before anyone even knows there is a threat, her Owl Familiarity granting her a keen eye and silent movement, all the more deadly with her powerful Archer's Bow punching through walls to strike targets she sees through walls with her Violent Lenses, all from over a mile away. She also serves to cull misbehaving Families."
+    , positives =
+        [ "+ Never _misses_ her mark"
+        , "+ Calculating with a very quick thinking sharp mind"
+        ]
+    , negatives =
+        [ "- Seems to be outright unable to refuse orders delivered from Crowns, or Lucille."
+        ]
+    , mixed = [ "+/- She has strong morals, strangely unsuited to her job." ]
+    , has = "Huntress has Runes 3, Witchery 4, Occultism 4, Familiarity 5, _Windsong, Archer's Bow, Violent Lenses, Shroud_"
+    }
+
+
+malice : Details
+malice =
+    { name = Malice
+    , class = ClassOne Sorceress
+    , races = [ Empusa ]
+    , hasPerk = True
+    , cost = 15
+    , power = Witch 10
+    , teamwork = 9
+    , sociability = 5
+    , morality = 4
+    , quote = "_*“Malice of Hespatia, graceful and elegant, but fights with a berserker fury if her “family” is under any threat. Any.” - an ORC Agent.*_"
+    , description = "“Malice” is a high ranking Hespatian wraith,though not a head of a family of her own, she bounces between families considering herself a part of a larger family in the traditional sense, being close with Whisper, Mother, and King for example. She has nothing but disdain for the overwhelming majority of non-Hespatian life forms"
+    , positives =
+        [ "+ Will do literally anything in her power for “Family”."
+        , "+ Extreme durability."
+        ]
+    , negatives =
+        [ "- Can be intrusively clingy with those she likes / family."
+        , "- No morals vs “Threats”."
+        ]
+    , mixed = [ "+/- Strictly black and white in her worldview: You're either family, or a threat. Anything against a threat is excused." ]
+    , has = "Malice has Psychotics 2, Monstrosity 3, Hexes 4, Necromancy 5, _Guardian's Wall & Maid Hand_"
     }
 
 
