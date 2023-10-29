@@ -39,7 +39,7 @@ intro =
     """
     It’s dangerous to go alone, take this! A Companions section. {choice You have one free companion from your chosen faction, and one free that shares the same witch type} as you (either Race or Class). Companions have 4 main statistics giving a _rough idea_ of their general impact in a group dynamic, except the {choice POWER stat, which primarily serves to give free floating Power points to spend to _customize_ your companion’s abilities} on top of the default abilities they come with. Beyond that, interactions are inferred in how you interpret their personality and how different stats play out in relation to it and others. {choice You can buy additional companions using Reward Points}, listed to the left of their name. A {choice +} indicates they have their Type Perk.
 
-    {choice You can spend your own Power on behalf of a member if you so choose, although they receive 1/2 the Reward value of Quests, so you don't _need to_.}
+    {choice You can spend your own Power on behalf of a member if you so choose, although they receive 1/2 the Reward value of Quests, so you don’t _need to_.}
 
     **Really, don’t stress the details too much and feel free to fill in the blanks. I do what I can to provide a reasonable summary of an array of characters, but it’s up to you to interpret it as you will.**
 
@@ -252,7 +252,7 @@ sayaKurosawa =
     , teamwork = 5
     , sociability = 8
     , morality = 6
-    , quote = "_*“Don't worry, Saya may be new but she knows what she's doing, she's good. Just keep that photo of Elaine handy.” - Arcadian faculty*_"
+    , quote = "_*“Don’t worry, Saya may be new but she knows what she’s doing, she’s good. Just keep that photo of Elaine handy.” - Arcadian faculty*_"
     , description = "Saya is an experienced but still new witch that was motivated with the help of Elaina to improve herself, and ever since has been driven with focus, mostly just to try to get the attention of Elaina. She has a huge one-sided crush that she isn’t shy about sharing, but they remain friends. She works with faculty as a problem solver, and runner."
     , positives =
         [ "+ Very energetic and lively"
@@ -286,7 +286,7 @@ francescaAstrenichtys =
         [ "+ Very easy going but serious about the important things"
         ]
     , negatives =
-        [ "- The reason she's so efficient is because she's fairly lazy, to get things over with sooner."
+        [ "- The reason she’s so efficient is because she’s fairly lazy, to get things over with sooner."
         ]
     , mixed =
         [ "+/- Loves butterflies, visually influences her magic"
@@ -307,7 +307,7 @@ elaineAVictorica =
     , sociability = 6
     , morality = 5
     , quote = "_*“You met her?! Where? Alfheimr? Earth 84x? Where is she this time? Did she say where she was going next?” - an excited Saya*_"
-    , description = "Elaina's first memories are as a child looking up to skilled witches and started training herself early before studying under Fran. Rough treatment from some witches early on helped temper her personality development, but she does have a high opinion of herself She loves traveling, Arcadia and other worlds alike, and is easily motivated by [K]"
+    , description = "Elaina’s first memories are as a child looking up to skilled witches and started training herself early before studying under Fran. Rough treatment from some witches early on helped temper her personality development, but she does have a high opinion of herself She loves traveling, Arcadia and other worlds alike, and is easily motivated by [K]"
     , positives =
         [ "+ Confident to say the least"
         , "+ Very polite"
@@ -316,7 +316,7 @@ elaineAVictorica =
         [ "- While personable, it can be hard to actually get close"
         ]
     , mixed =
-        [ "+/- While “yuri” is normal among witches due to gender disparity, unfortunately for Saya, Elaina is very straight, she doesn't even think in that way to recognize such options."
+        [ "+/- While “yuri” is normal among witches due to gender disparity, unfortunately for Saya, Elaina is very straight, she doesn’t even think in that way to recognize such options."
         ]
     , has = "Elaina has Digicasting 1, Witchery 4, Potions 4, Wands 5, _Broom Beast_ (6p), _Mana Core, & a Witch Pistol_"
     }
@@ -333,14 +333,14 @@ maimonadaMajesteim =
     , teamwork = 6
     , sociability = 7
     , morality = 5
-    , quote = "_*“Mai! Good grief when was the last time you've eaten? A WEEK! You know you're always welcome to come over for dinner!” - Liz*_"
-    , description = "Mai comes from a family of seers with a strong magical bloodline. She's known for combining her aethernautic studies of stellar motions, and her third eye and general intuition for interpreting her divinations to deliver some of the most predictions around, but she doesn't believe in using divination for financial gain."
+    , quote = "_*“Mai! Good grief when was the last time you’ve eaten? A WEEK! You know you’re always welcome to come over for dinner!” - Liz*_"
+    , description = "Mai comes from a family of seers with a strong magical bloodline. She’s known for combining her aethernautic studies of stellar motions, and her third eye and general intuition for interpreting her divinations to deliver some of the most predictions around, but she doesn’t believe in using divination for financial gain."
     , positives =
         [ "+ Semi-unique ability"
         , "+ Has a 6th sense for good bargains."
         ]
     , negatives =
-        [ "- Has a strong sense of etiquette & propriety, is insulted when others don't treat her in kind."
+        [ "- Has a strong sense of etiquette & propriety, is insulted when others don’t treat her in kind."
         ]
     , mixed =
         [ "+/- She is very frugal and lives lightly, being content with the basics despite having expensive tastes and interests."
@@ -361,7 +361,7 @@ azurellieaAdMadelline =
     , sociability = 6
     , morality = 7
     , quote = "_*“Look, if you really want to improve for that tournament in time, you could try to get Azure to tutor you? Think about it.” - A Student*_"
-    , description = "A Dwarf-Lilin girl who's strive for power took her across the aether and to hell and back as a _Dalililah_. She now takes comfort in teaching in Arcadia as a private tutor as some soul healing. Remote friends with Bethadonna Rossbaum and tutors Evelyn in Waterworking. She's lived comfortably for a while now but may easily be driven back to adventure, especially for someone they care about"
+    , description = "A Dwarf-Lilin girl who’s strive for power took her across the aether and to hell and back as a _Dalililah_. She now takes comfort in teaching in Arcadia as a private tutor as some soul healing. Remote friends with Bethadonna Rossbaum and tutors Evelyn in Waterworking. She’s lived comfortably for a while now but may easily be driven back to adventure, especially for someone they care about"
     , positives =
         [ "+ Very patient with people trying to learn"
         , "+ Mostly Unspent wish(20p)"
@@ -387,8 +387,8 @@ melissaVincimvitch =
     , teamwork = 8
     , sociability = 10
     , morality = 9
-    , quote = "_*“I can't believe that damn big tiddy witch tazed me, how was I supposed to know that cheap ass book couldn't float” - A rude student*_"
-    , description = "Melissa, “Liz” or Lisa to some, is a librarian of the *Vincimvitch* family’s private library which was given a static reference plot in Arcadia, meaning out of the city but static throughout cycles. The library is a growing Death Ward of her grandmother's who likes to give her grandaughters jobs around the Ward for excuses to keep her darlings near, and this personality rubbed off on Liz, who acts quite motherly."
+    , quote = "_*“I can’t believe that damn big tiddy witch tazed me, how was I supposed to know that cheap ass book couldn’t float” - A rude student*_"
+    , description = "Melissa, “Liz” or Lisa to some, is a librarian of the *Vincimvitch* family’s private library which was given a static reference plot in Arcadia, meaning out of the city but static throughout cycles. The library is a growing Death Ward of her grandmother’s who likes to give her grandaughters jobs around the Ward for excuses to keep her darlings near, and this personality rubbed off on Liz, who acts quite motherly."
     , positives =
         [ "+ Prodigious memory."
         , "+ Highly considerate."
@@ -400,7 +400,7 @@ melissaVincimvitch =
     , mixed =
         [ "+/- Teaches Witch History & Alchemy, & tutors runes"
         ]
-    , has = "Liz has Portals 1, Witchery 3, Divination 4, Alchemy 5, Runes 5, Windkeeping 5, _Energized, Third Eye, Windsong_. + Keeper x2 _Alchemy & Eromancy_* _{smol Don't get the wrong idea perv}_*"
+    , has = "Liz has Portals 1, Witchery 3, Divination 4, Alchemy 5, Runes 5, Windkeeping 5, _Energized, Third Eye, Windsong_. + Keeper x2 _Alchemy & Eromancy_* _{smol Don’t get the wrong idea perv}_*"
     }
 
 
@@ -533,14 +533,14 @@ lauraDDevonshire =
     , teamwork = 7
     , sociability = 8
     , morality = 7
-    , quote = "_*“You could cut the tension between Hannah and Laura with a knife and spread it on toast. I bet they would be friends if they'd just talk.”*_"
-    , description = "Laura is the only witch born to an Alfheimr noble lineage known for their talented witches. She's grown up with the pressure of her family name and a deep need to satisfy expectations. She has a natural desire to see others exceed as well, and may seem overly serious or sharp when dealing with others who aren't living up to their potential, but she just wants them to succeed. Prickly exterior, soft interior."
+    , quote = "_*“You could cut the tension between Hannah and Laura with a knife and spread it on toast. I bet they would be friends if they’d just talk.”*_"
+    , description = "Laura is the only witch born to an Alfheimr noble lineage known for their talented witches. She’s grown up with the pressure of her family name and a deep need to satisfy expectations. She has a natural desire to see others exceed as well, and may seem overly serious or sharp when dealing with others who aren’t living up to their potential, but she just wants them to succeed. Prickly exterior, soft interior."
     , positives =
-        [ "+ While confident, she doesn't boast or go out of her way to show off."
+        [ "+ While confident, she doesn’t boast or go out of her way to show off."
         ]
     , negatives =
         [ "- Under a lot of stress kept beneath the surface"
-        , "- Won't disobey family"
+        , "- Won’t disobey family"
         ]
     , mixed = [ "+/- Spends a lot of her time in study or practice." ]
     , has = "Laura has every core magic at rank 2, Alchemy 3, Hexes 4, Naturalism 4, Wands 5, _Master Wand_"
@@ -559,10 +559,10 @@ caroline =
     , sociability = 7
     , morality = 8
     , quote = "_*“Carol? No, she just showed up one day, nobody has seen her parents. Staff has raised her for...20 or so years now.” - Noriko to Ashley*_"
-    , description = "Carol is a dangerous combination of Aurai and a chatterbox halfling mimi. To keep her from withering people with her voice, she's tasked with biting down on a various bits when not sure it's safe, only around various witches or creatures that don't age can she let loose and she'll talk endlessly about all the different things she wanted to say during the day, even if only talking to herself as she drifts to sleep."
+    , description = "Carol is a dangerous combination of Aurai and a chatterbox halfling mimi. To keep her from withering people with her voice, she’s tasked with biting down on a various bits when not sure it’s safe, only around various witches or creatures that don’t age can she let loose and she’ll talk endlessly about all the different things she wanted to say during the day, even if only talking to herself as she drifts to sleep."
     , positives =
         [ "+ Heart melting pro"
-        , "+ Does retain information, so she's still intelligent"
+        , "+ Does retain information, so she’s still intelligent"
         ]
     , negatives =
         [ "- She has not mentally aged for more than 2 decades."
@@ -584,15 +584,15 @@ suzyTheMiasma =
     , teamwork = 7
     , sociability = 3
     , morality = 4
-    , quote = "_*“Suzy may not kill people these days but she sure doesn't seem to have any reservations with using others for her experiments.” - A teacher*_"
-    , description = "Suzy is a poison specialist alchemist that always has multiple projects ongoing. She's very numb to traumas such that she can appear sociopathic but it's not that she doesn't feel as much as she never learned to care and her emotions have been burned from a very rough first century of life. Now she just focuses on her craft in Hawthorne."
+    , quote = "_*“Suzy may not kill people these days but she sure doesn’t seem to have any reservations with using others for her experiments.” - A teacher*_"
+    , description = "Suzy is a poison specialist alchemist that always has multiple projects ongoing. She’s very numb to traumas such that she can appear sociopathic but it’s not that she doesn’t feel as much as she never learned to care and her emotions have been burned from a very rough first century of life. Now she just focuses on her craft in Hawthorne."
     , positives =
         [ "+ Benefits from anything that would benefit a familiar"
         , "+ Extremely proficient"
         ]
     , negatives =
         [ "- Requires moral guidance but is open to learning"
-        , "- Consent? What's that?"
+        , "- Consent? What’s that?"
         ]
     , mixed = [ "+/- Single-minded in poisoncraft. Her poisons are 3x as effective, but other potions are 80% less potent." ]
     , has = "Suzy has Portals 2, Witchery 2, Wands 3, Hexes 3, Alchemy 5, _Poisoner, Witchflame, Alchemist Stash_"
@@ -611,9 +611,9 @@ norikoDuNichols =
     , sociability = 5
     , morality = 6
     , quote = "_*Noriko made lunch boxes for each of her house students on their field trip. All Eliza gave us was fishing rods, lame.” - Students*_"
-    , description = "Like most Hawthorne staff, Noriko was once a student herself, a star of her class with something of a wild streak: which many would say is an understatement. Not many people know why, but she withdrew from the public eye and into herself and her studies, adopting a new appearance to turn to teaching under a new name. She's a house lead of House Mooncrest where she councils with a gentle hand."
+    , description = "Like most Hawthorne staff, Noriko was once a student herself, a star of her class with something of a wild streak: which many would say is an understatement. Not many people know why, but she withdrew from the public eye and into herself and her studies, adopting a new appearance to turn to teaching under a new name. She’s a house lead of House Mooncrest where she councils with a gentle hand."
     , positives =
-        [ "+ Patient and considerate of student's individual needs & interests"
+        [ "+ Patient and considerate of student’s individual needs & interests"
         ]
     , negatives =
         [ "- Emotionally distanced from everything, a bit of a shell"
@@ -626,7 +626,7 @@ norikoDuNichols =
 
 watchers : List Details
 watchers =
-    [ francisIsaacGiovanni, ifraAlZahra, sariahJSnow, claireBelmontegra ]
+    [ francisIsaacGiovanni, ifraAlZahra, sariahJSnow, claireBelmontegra, sylvarraAsDomonina, madellineLPeach, reinaAkatsuki, minnieAndrus ]
 
 
 francisIsaacGiovanni : Details
@@ -731,6 +731,106 @@ claireBelmontegra =
         ]
     , mixed = [ "+/- Doesn’t really consider anyone a friend until they’ve shared a bed while on mission together more than once" ]
     , has = "Claire has Curses 2, Ministration 3, Wind 4, Witchery 4, Hexes 5 & _False Light_"
+    }
+
+
+sylvarraAsDomonina : Details
+sylvarraAsDomonina =
+    { name = SylvarraAsDomonina
+    , class = ClassOne Sorceress
+    , races = [ Elf ]
+    , hasPerk = False
+    , cost = 15
+    , power = Witch 2
+    , teamwork = 7
+    , sociability = 6
+    , morality = 7
+    , quote = "_*“Torture? Maybe, maybe not. You get a special treat, Sylvarra is coming here. Just. for. you. Enjoy <3” - Peach, to a hespatian rogue.*_"
+    , description = "Syl is a high ranking Inquisitor that takes a less confrontational approach than dear Peach, but is in many ways the scarier of the two. Syl is an investigation specialist that hunts information and stalks suspects until she has a full picture and delivers a final, rarely changed, judgement or invades your mind for more details or confirmation."
+    , positives =
+        [ "+ Strong sense of justice with fair judgement."
+        ]
+    , negatives =
+        [ "- Holds law as her highest value"
+        , "+/- Definitely a dominatrix"
+        ]
+    , mixed = [ "+/- Doesn't need to kill - Can make you forget about witches entirely, while no longer being one yourself." ]
+    , has = "Syl has Ministation 3, Witchery 3, Hexes 4, Occultism 4, Covenants 4, Divination 4, Windkeeping 5, Psychotics 5, _Secret Elixir, Mana Core, Violet Lenses, Life Record, Master Key_"
+    }
+
+
+madellineLPeach : Details
+madellineLPeach =
+    { name = MadellineLPeach
+    , class = ClassOne Warlock
+    , races = [ Empusa ]
+    , hasPerk = True
+    , cost = 15
+    , power = Witch 5
+    , teamwork = 5
+    , sociability = 4
+    , morality = 7
+    , quote = "_*“Peach can be a little eccentric but she's harmless if not attacked first or given orders otherwise. She should be in Math now.” - Sariah*_"
+    , description = "One of the foremost Watcher Inquisitors, field agents that relentlessly root out evil. They overlook simple demonology, but wherever there is a demon or outsider running amok, or simply an enemy to the Watchers, they send in the Inquisition, and Madelline is one of their heavy hitters. She's able to use Celestials with her _Necronomicon_."
+    , positives =
+        [ "+ Cute and wholesome when not on the job, unrecognizable."
+        ]
+    , negatives =
+        [ "- Yandere a/f"
+        , "- Still in HS. despite being 80"
+        ]
+    , mixed = [ "+/- Though lesbians are normal for witches, even among Watchers, Peach is pissed she can't find a witch husband." ]
+    , has = "Peach has Alchemy 2, Runes 2, Ministation 4, Familiarity 4, Necromancy 5, Metallurgy 5, Curses 5, _Blood Witch, Mana Core, Apex, Necronomicon, Pewter Crown, Ritual Inks_"
+    }
+
+
+reinaAkatsuki : Details
+reinaAkatsuki =
+    { name = ReinaAkatsuki
+    , class = ClassOne Warlock
+    , races = [ Neutral ]
+    , hasPerk = False
+    , cost = 12
+    , power = Witch 8
+    , teamwork = 5
+    , sociability = 5
+    , morality = 7
+    , quote = "_*“Lay a hand on her again & you'll lose it. Reina has atoned for her past & now serves. Reflect on your actions.” - Sariah shielding Reina*_"
+    , description = "A former member of a hespatian blood cult, it was her Family that would eventually become those that turned the Red Mother, which Reina was present for but would leave not long after. Reina was eventually converted and joined the Watchers by the efforts of _Sariah_ over many encounters over the course of a decade, and now lives a life of making up for her long and heinous past. She does her best."
+    , positives =
+        [ "+ While not a saint, she tries her best to be moral."
+        , "+ Her resolve is as iron."
+        ]
+    , negatives =
+        [ "- Doesn't resist those who take issue with her past."
+        , "- _Too_ self-sacrificing."
+        ]
+    , mixed = [ "+/- Would not hesitate to sacrifice herself for another" ]
+    , has = "Reina has Ministation 2, Curses 3, Necromancy 4, Occultism 4, _Blood Witch, Soul Graft (Vampire), False Light_"
+    }
+
+
+minnieAndrus : Details
+minnieAndrus =
+    { name = MinnieAndrus
+    , class = ClassOne Warlock
+    , races = [ Daeva ]
+    , hasPerk = True
+    , cost = 8
+    , power = Witch 10
+    , teamwork = 6
+    , sociability = 8
+    , morality = 10
+    , quote = "_*“Chronography suggests she really is only 8, not under a hex, but spectroscopy suggests an old soul, but not possession? Hm.” - Researcher*_"
+    , description = "Minnie is a brand new soul to this aether, she's reincarnated from another world, a world without magic from an entirely different multiverse as part of a divine exchange. She has the favor of the Eloquincia, goddess of beauty and rebirth who checks in on her every now and then, and personally crafted this new body of hers. She died at age 32 in her last life when she shielded a student from a terrorist bombing."
+    , positives =
+        [ "+ Despite her apparent age, she is wise & maintained most her past life's knowledge & skills"
+        ]
+    , negatives =
+        [ "- Her new body does cause her problems & influences her personality somewhat"
+        ]
+    , mixed = [ "+/- A lot of aspects of reality differ from her old one." ]
+    , has = "Minnie has Familiarity 1, Witchery 3, and Runes 4, _+ Pet Break (Phoenix + Luck Magic & Intelligence)_"
     }
 
 
@@ -1303,11 +1403,11 @@ mandyHunts =
     , teamwork = 8
     , sociability = 5
     , morality = 6
-    , quote = "_*“Followed up on a report of class 3 spirit beast stalking a human and both disappearing into the shadows, here's the file” - ORC Agent.*_"
-    , description = "Mandy is a human Medium, she can see through the veil to see spirits, monsters, and magic in general. Due to a botched Occultism ritual, Mandy is left with the ability to both enter the spirit world like a Sylph, but enter the Shadow world as with Occultism 4 She can unreliably provoke the transition herself, but it's usually involuntary. She's currently terrified for her life in the shadow world hiding from a spirit beast."
+    , quote = "_*“Followed up on a report of class 3 spirit beast stalking a human and both disappearing into the shadows, here’s the file” - ORC Agent.*_"
+    , description = "Mandy is a human Medium, she can see through the veil to see spirits, monsters, and magic in general. Due to a botched Occultism ritual, Mandy is left with the ability to both enter the spirit world like a Sylph, but enter the Shadow world as with Occultism 4 She can unreliably provoke the transition herself, but it’s usually involuntary. She’s currently terrified for her life in the shadow world hiding from a spirit beast."
     , positives =
         [ "+ Very knowledgeable in occult."
-        , "+ Doesn't take life for granted, and enjoys the little things"
+        , "+ Doesn’t take life for granted, and enjoys the little things"
         ]
     , negatives =
         [ "- But from a human level."
@@ -1329,7 +1429,7 @@ eskhanderMahabadi =
     , teamwork = 8
     , sociability = 5
     , morality = 4
-    , quote = "_*“Eskhander Mahabadi... That's the awakened Tiger right? Strange that, never heard of non-humanoids awakening.” - An ORC Scholar*_"
+    , quote = "_*“Eskhander Mahabadi... That’s the awakened Tiger right? Strange that, never heard of non-humanoids awakening.” - An ORC Scholar*_"
     , description = "No, not the girl -- The tiger. Eskhander is a literal tiger that received a witch awakening when poisoned by a Witchblood Elixir. Like a human witch becoming a non-human, Khan awakened as an Oread, but has Transformation Sequence, retaining his natural male tiger body and a separate witch form. He has a familiar cat that spends most her time in human form and learned to do a lot of the talking."
     , positives =
         [ "+ Curious & inquisitive"
@@ -1380,8 +1480,8 @@ augustRoseOBare =
     , teamwork = 0
     , sociability = 0
     , morality = 0
-    , quote = "_*“I haven't seen this happen before, are you seeing the same thing? This vision is just static to me.” - Penelope.*_"
-    , description = "Rose is a quiet witch, speaking seems to fatigue her, but shelll reply or say things when important. The Veil hides her from everyone else, as a monster would be hidden from a mortal, she is hidden from even witches. Even physically moving things to try to convey a message is obscured or dismissed in some way: If you select her as a Companion you will be the only one who can sense her, and can be seen in the background of casual daily life as though she's just watching the life go by of everyone else, vanishing and appearing suddenly. She'll write in a small notebook, the pages look like static to you. Sometimes she'll help you with single written words or pointing. She's very passive and not very helpful, but your life seems to become more interesting. *You can take any 1 extra Quest.*"
+    , quote = "_*“I haven’t seen this happen before, are you seeing the same thing? This vision is just static to me.” - Penelope.*_"
+    , description = "Rose is a quiet witch, speaking seems to fatigue her, but shelll reply or say things when important. The Veil hides her from everyone else, as a monster would be hidden from a mortal, she is hidden from even witches. Even physically moving things to try to convey a message is obscured or dismissed in some way: If you select her as a Companion you will be the only one who can sense her, and can be seen in the background of casual daily life as though she’s just watching the life go by of everyone else, vanishing and appearing suddenly. She’ll write in a small notebook, the pages look like static to you. Sometimes she’ll help you with single written words or pointing. She’s very passive and not very helpful, but your life seems to become more interesting. *You can take any 1 extra Quest.*"
     , positives = []
     , negatives = []
     , mixed = []
@@ -1529,7 +1629,7 @@ anaphalonGreenwield =
     , teamwork = 9
     , sociability = 10
     , morality = 8
-    , quote = "_*You'd be hard pressed to find a more loyal and dedicated knight, but he's a little single-minded in his quest, within reason.” - A Courtier.*_"
+    , quote = "_*You’d be hard pressed to find a more loyal and dedicated knight, but he’s a little single-minded in his quest, within reason.” - A Courtier.*_"
     , description = "Born into a wealthy noble clan governing a small fiefdom in the Albion region in Alfheimr, “Talon” lived a happy life until an Outsider plot put him and his town through 12 nights of hell. In the aftermath, his eldest brother inherited their father’s title, while he became a Questor -- A wandering knight seeking justice on behalf of his family and civilians He pursues Outsider events, while serving the Courts."
     , positives =
         [ "+ Social savant with quick wit"
@@ -1555,8 +1655,8 @@ briarGracehollow =
     , teamwork = 9
     , sociability = 2
     , morality = 4
-    , quote = "_*“Her? Don't mind her, it's only been a few years since she was living in the wilds, she hasn't gotten the hang of clothing yet.” - A Pixie*_"
-    , description = "As a child, little elven girl was offered to appease the terms of a covenant made by the mother many years prior, given to wild spirits of the Faewild. These white elk beings raised her in harmony with the spirit of the Wolf, On her 100th birthday: comparable to a human's 18th, she completed her terms of service and was released to the Alliance."
+    , quote = "_*“Her? Don’t mind her, it’s only been a few years since she was living in the wilds, she hasn’t gotten the hang of clothing yet.” - A Pixie*_"
+    , description = "As a child, little elven girl was offered to appease the terms of a covenant made by the mother many years prior, given to wild spirits of the Faewild. These white elk beings raised her in harmony with the spirit of the Wolf, On her 100th birthday: comparable to a human’s 18th, she completed her terms of service and was released to the Alliance."
     , positives =
         [ "+ Highly loyal to her “pack”"
         , "+ Effective survivalist"
@@ -1584,8 +1684,8 @@ duchessSaelAstraOfOdalle =
     , teamwork = 7
     , sociability = 5
     , morality = 8
-    , quote = "_*“Sael'astra must be having a bad week, it's been constant overcast” - new guy “I wouldn't worry about it, happens every month.” - a local*_"
-    , description = "A well liked public figure of the Winter Court. She isn't high in the ranks, but she's a minor duchess of a city-state in the far north of the Albion region, but she isn't around a lot, regulating a lot of the politics and management to her sister, who lacks political weight but is good at logistics and keeping people happy, while Sael'astra can deal with the Courts, and protect the city with her magical talent."
+    , quote = "_*“Sael’astra must be having a bad week, it’s been constant overcast” - new guy “I wouldn’t worry about it, happens every month.” - a local*_"
+    , description = "A well liked public figure of the Winter Court. She isn’t high in the ranks, but she’s a minor duchess of a city-state in the far north of the Albion region, but she isn’t around a lot, regulating a lot of the politics and management to her sister, who lacks political weight but is good at logistics and keeping people happy, while Sael’astra can deal with the Courts, and protect the city with her magical talent."
     , positives =
         [ "+ A natural at using storm magic"
         , "+ Heavy emphasis on ice magic."
