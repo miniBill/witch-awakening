@@ -330,37 +330,42 @@ statsTable details =
                     (List.reverse <| List.range 1 10)
         , data =
             [ ( "Power", details.power )
-            , ( "Teamwork", Companion.NormalPower details.teamwork )
-            , ( "Sociability", Companion.NormalPower details.sociability )
-            , ( "Morality", Companion.NormalPower details.morality )
-            , ( "Ranking", Companion.NormalPower -1 )
+            , ( "Teamwork", details.teamwork )
+            , ( "Sociability", details.sociability )
+            , ( "Morality", details.morality )
+            , ( "Ranking", Companion.NormalScore -1 )
             ]
                 |> List.map
                     (\( label, value ) ->
                         ( label
                         , value
                         , case value of
-                            Companion.SpecialEffect ->
-                                Theme.colors.companionGold
+                            Companion.SpecialEffect { better, worse } ->
+                                scoreToColor (Maybe.withDefault better worse)
 
-                            Companion.NormalPower p ->
-                                if p == 10 then
-                                    Theme.colors.companionGold
-
-                                else if p >= 8 then
-                                    Theme.colors.companionBlue
-
-                                else if p >= 5 then
-                                    Theme.colors.companionOrange
-
-                                else if p > 1 then
-                                    Theme.colors.companionRed
-
-                                else
-                                    Theme.colors.companionBlack
+                            Companion.NormalScore p ->
+                                scoreToColor p
                         )
                     )
         }
+
+
+scoreToColor : Int -> ( Int, Int )
+scoreToColor p =
+    if p == 10 then
+        Theme.colors.companionGold
+
+    else if p >= 8 then
+        Theme.colors.companionBlue
+
+    else if p >= 5 then
+        Theme.colors.companionOrange
+
+    else if p > 1 then
+        Theme.colors.companionRed
+
+    else
+        Theme.colors.companionBlack
 
 
 cellWithLeftBorder : List (Attribute msg) -> String -> Int -> Element msg -> Element msg
@@ -386,46 +391,79 @@ cellWithLeftBorder attrs label leftBorder content =
         content
 
 
-statColumn : Int -> Element.Column ( String, Companion.Power, ( Int, Int ) ) msg
+statColumn : Int -> Element.Column ( String, Companion.Score, ( Int, Int ) ) msg
 statColumn ranking =
     let
-        view : ( String, Companion.Power, ( Int, Int ) ) -> Element msg
+        view : ( String, Companion.Score, ( Int, Int ) ) -> Element msg
         view ( label, rawScore, ( mainColor, otherColor ) ) =
             let
-                ( ( backgroundColor, fontColor ), attrs, content ) =
+                ( backgroundColor, attrs, content ) =
                     case rawScore of
-                        Companion.SpecialEffect ->
-                            ( ( mainColor
-                              , rgb 0 0 0
-                              )
-                            , if ranking == 6 then
+                        Companion.SpecialEffect { better, worse } ->
+                            ( case worse of
+                                Nothing ->
+                                    if ranking <= better then
+                                        mainColor
+
+                                    else
+                                        0x00FFFFFF
+
+                                Just w ->
+                                    if ranking > better then
+                                        0x00FFFFFF
+
+                                    else if ranking == better then
+                                        Tuple.first Theme.colors.companionBlack
+
+                                    else if ranking > w then
+                                        Tuple.second Theme.colors.companionBlack
+
+                                    else if ranking == w then
+                                        mainColor
+
+                                    else
+                                        otherColor
+                            , let
+                                halfRanking : Int
+                                halfRanking =
+                                    (better + Maybe.withDefault 1 worse) // 2
+                              in
+                              if ranking == halfRanking then
                                 [ padding 0
                                 , inFront <|
                                     el [ width fill, height fill ] <|
-                                        el [ centerX, centerY ] <|
+                                        el
+                                            [ centerX
+                                            , centerY
+                                            , Element.moveLeft 24
+                                            , Theme.style "z-index" "1"
+                                            ]
+                                        <|
                                             Theme.gradientText 2 Gradients.blueGradient "Special Effect"
                                 ]
 
                               else
                                 [ padding 0 ]
-                            , cross
+                            , if better == 10 then
+                                cross
+
+                              else
+                                Element.none
                             )
 
-                        Companion.NormalPower score ->
+                        Companion.NormalScore score ->
                             if score == 0 then
                                 grayRow ranking
 
                             else
-                                ( ( if score == ranking then
-                                        mainColor
+                                ( if score == ranking then
+                                    mainColor
 
-                                    else if score > ranking then
-                                        otherColor
+                                  else if score > ranking then
+                                    otherColor
 
-                                    else
-                                        0x00FFFFFF
-                                  , rgb 0 0 0
-                                  )
+                                  else
+                                    0x00FFFFFF
                                 , []
                                 , if label == "Ranking" then
                                     text <| String.fromInt ranking
@@ -436,7 +474,6 @@ statColumn ranking =
             in
             cellWithLeftBorder
                 ([ Border.color <| rgb 0 0 0
-                 , Font.color fontColor
                  , Font.center
                  , Theme.backgroundColor backgroundColor
                  ]
@@ -452,24 +489,20 @@ statColumn ranking =
     }
 
 
-grayRow : Int -> ( ( Int, Element.Color ), List (Attribute msg), Element msg )
+grayRow : Int -> ( Int, List (Attribute msg), Element msg )
 grayRow ranking =
     let
         ( mainColor, otherColor ) =
             Theme.colors.companionBlack
     in
     if ranking == 1 then
-        ( ( mainColor
-          , rgb 1 1 1
-          )
+        ( mainColor
         , []
-        , text "N/A"
+        , el [ Font.color <| rgb 1 1 1 ] <| text "N/A"
         )
 
     else
-        ( ( otherColor
-          , rgb 0 0 0
-          )
+        ( otherColor
         , [ padding 0 ]
         , cross
         )
