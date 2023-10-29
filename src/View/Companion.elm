@@ -158,7 +158,9 @@ companionBox selected ({ name, races, hasPerk, quote, cost, class, description, 
                     :: Background.image
                         (Types.companionToImage name).src
                     :: List.map Element.inFront
-                        [ String.fromInt cost
+                        [ cost
+                            |> Maybe.map String.fromInt
+                            |> Maybe.withDefault "X"
                             |> Theme.gradientText 4 Gradients.yellowGradient
                             |> el
                                 [ alignRight
@@ -199,7 +201,9 @@ companionBox selected ({ name, races, hasPerk, quote, cost, class, description, 
                                 , Font.size 32
                                 , Theme.captureIt
                                 ]
-                        , Types.gainToSlot cost
+                        , cost
+                            |> Maybe.map Types.gainToSlot
+                            |> Maybe.withDefault Types.White
                             |> Types.slotToImage
                             |> Theme.image [ width <| px 40 ]
                             |> el [ moveRight 4 ]
@@ -435,6 +439,7 @@ statColumn ranking =
                                         el
                                             [ centerX
                                             , centerY
+                                            , Font.italic
                                             , Element.moveLeft 24
                                             , Theme.style "z-index" "1"
                                             ]

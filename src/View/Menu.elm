@@ -439,13 +439,19 @@ factionValue model =
 companionsValue : Model -> Maybe Int
 companionsValue model =
     let
-        go : List ( Maybe Faction, Companion.Details ) -> Int
-        go companions =
+        totalCost : List ( Maybe Faction, Companion.Details ) -> Maybe Int
+        totalCost companions =
+            companions
+                |> Maybe.Extra.traverse (\( _, { cost } ) -> cost)
+                |> Maybe.map List.sum
+
+        forFree : List ( Maybe Faction, Companion.Details ) -> Int
+        forFree companions =
             let
                 byCost : List ( Maybe Faction, Companion.Details )
                 byCost =
                     companions
-                        |> List.sortBy (\( _, { cost } ) -> -cost)
+                        |> List.sortBy (\( _, { cost } ) -> -(Maybe.withDefault -1 cost))
 
                 sameFaction : List Companion.Details
                 sameFaction =
@@ -480,46 +486,42 @@ companionsValue model =
                                     Nothing
                             )
                         |> List.take 2
-
-                forFree : Int
-                forFree =
-                    if List.isEmpty sameFaction then
-                        sameKind
-                            |> List.head
-                            |> Maybe.map (\{ cost } -> cost)
-                            |> Maybe.withDefault 0
-
-                    else if List.isEmpty sameKind then
-                        sameFaction
-                            |> List.head
-                            |> Maybe.map (\{ cost } -> cost)
-                            |> Maybe.withDefault 0
-
-                    else
-                        List.Extra.lift2
-                            (\sf sk ->
-                                if sf.name == sk.name then
-                                    sf.cost
-
-                                else
-                                    sf.cost + sk.cost
-                            )
-                            sameFaction
-                            sameKind
-                            |> List.maximum
-                            |> Maybe.withDefault 0
-
-                totalCost : Int
-                totalCost =
-                    companions
-                        |> List.map (\( _, { cost } ) -> cost)
-                        |> List.sum
             in
-            -(totalCost - forFree)
+            if List.isEmpty sameFaction then
+                sameKind
+                    |> List.head
+                    |> Maybe.andThen (\{ cost } -> cost)
+                    |> Maybe.withDefault 0
+
+            else if List.isEmpty sameKind then
+                sameFaction
+                    |> List.head
+                    |> Maybe.andThen (\{ cost } -> cost)
+                    |> Maybe.withDefault 0
+
+            else
+                List.Extra.lift2
+                    (\sf sk ->
+                        if sf.name == sk.name then
+                            sf.cost
+
+                        else
+                            Maybe.map2 (+) sf.cost sk.cost
+                    )
+                    sameFaction
+                    sameKind
+                    |> List.filterMap identity
+                    |> List.maximum
+                    |> Maybe.withDefault 0
     in
     model.companions
         |> Maybe.Extra.traverse getCompanion
-        |> Maybe.map go
+        |> Maybe.andThen
+            (\companions ->
+                Maybe.map
+                    (\calculatedCost -> forFree companions - calculatedCost)
+                    (totalCost companions)
+            )
 
 
 sameClass : Companion.Details -> Maybe Class -> Bool
