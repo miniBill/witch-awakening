@@ -103,7 +103,7 @@ relicBox selected ({ name, class, content } as relic) =
         viewSlot slot =
             Types.slotToImage slot
                 |> Theme.image [ width <| px 40 ]
-                |> el [ alignBottom, moveUp 48 ]
+                |> el [ moveDown 4 ]
 
         color : Int
         color =
