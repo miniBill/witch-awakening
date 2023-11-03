@@ -78,8 +78,8 @@ perkBox selected ({ name, affinity, class, content, isMeta } as perk) =
         msg : Maybe ( RankedPerk, Bool )
         msg =
             case ( content, isSelected ) of
-                ( _, Just selectedComplication ) ->
-                    Just ( selectedComplication, False )
+                ( _, Just selectedPerk ) ->
+                    Just ( selectedPerk, False )
 
                 ( Single cost _, Nothing ) ->
                     Just ( { name = name, cost = cost }, True )
@@ -217,15 +217,15 @@ viewContent selected { content, name } color =
                 viewChoice : ( String, Int ) -> Element ( RankedPerk, Bool )
                 viewChoice ( label, cost ) =
                     let
-                        complication : RankedPerk
-                        complication =
+                        perk : RankedPerk
+                        perk =
                             { name = name
                             , cost = cost
                             }
 
                         isChoiceSelected : Bool
                         isChoiceSelected =
-                            List.member complication selected
+                            List.member perk selected
 
                         attrs : List (Attribute msg) -> List (Attribute msg)
                         attrs =
@@ -261,7 +261,7 @@ viewContent selected { content, name } color =
                                      else
                                         "- " ++ label ++ "."
                                     )
-                        , onPress = Just ( complication, not isChoiceSelected )
+                        , onPress = Just ( perk, not isChoiceSelected )
                         }
             in
             [ Theme.column [ height fill, Theme.padding ] <|
