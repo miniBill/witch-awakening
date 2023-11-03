@@ -30,6 +30,7 @@ import View.Magic as Magic
 import View.Menu as Menu
 import View.Perk as Perk
 import View.Race as Race
+import View.Relic as Relic
 import View.TypePerk as TypePerk
 
 
@@ -156,6 +157,13 @@ updateOnChoice choice model =
             else
                 { model | companions = List.Extra.remove companion model.companions }
 
+        ChoiceRelic relic selected ->
+            if selected then
+                { model | relics = relic :: model.relics }
+
+            else
+                { model | relics = List.Extra.remove relic model.relics }
+
         TowardsCap towardsCap ->
             { model | towardsCap = towardsCap }
 
@@ -201,6 +209,11 @@ toUrl model =
     , pair "faction" (\( name, _ ) -> Types.factionToString name) model.faction
     , pair "factionPerk" (\( _, perk ) -> boolToString perk) model.faction
     , list "companion" Types.companionToString model.companions
+    , list "relic"
+        (\{ name, cost } ->
+            Types.relicToString name ++ String.fromInt cost
+        )
+        model.relics
     ]
         |> List.concat
         |> Url.Builder.toQuery
@@ -290,12 +303,20 @@ parseUrl navKey url =
 
         parsePerk : String -> Maybe Types.RankedPerk
         parsePerk =
-            pair Types.perkFromString <|
-                \magic maybeCost ->
+            withCost Types.perkFromString
+
+        parseRelic : String -> Maybe Types.RankedRelic
+        parseRelic =
+            withCost Types.relicFromString
+
+        withCost : (String -> Maybe a) -> String -> Maybe { name : a, cost : Int }
+        withCost fromString =
+            pair fromString <|
+                \name maybeCost ->
                     maybeCost
                         |> Maybe.map
                             (\cost ->
-                                { name = magic
+                                { name = name
                                 , cost = cost
                                 }
                             )
@@ -334,6 +355,7 @@ parseUrl navKey url =
                     )
                 )
     , companions = parseMany "companion" Types.companionFromString
+    , relics = parseMany "relic" parseRelic
     }
 
 
@@ -376,6 +398,7 @@ innerView model =
         , Element.Lazy.lazy Faction.viewFaction model.faction
         , Element.Lazy.lazy FactionalMagic.viewFactionalMagics model.magic
         , Element.Lazy.lazy Companion.viewCompanions model.companions
+        , Element.Lazy.lazy Relic.viewRelics model.relics
         ]
         |> Element.map Choice
 

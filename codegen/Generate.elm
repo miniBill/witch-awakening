@@ -152,9 +152,7 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                             Elm.Case.branch0 constructor
                                 (Elm.value
                                     { importFrom = [ "Images" ]
-                                    , name =
-                                        (lowerName ++ constructor)
-                                            |> String.replace "XiaoLiena" "XiaoLiena肖列娜"
+                                    , name = lowerName ++ constructor
                                     , annotation =
                                         Just
                                             (Elm.Annotation.named [ "Images" ] "Image")

@@ -1,8 +1,8 @@
-module Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot)
+module Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot)
 
 import Browser exposing (UrlRequest)
 import Browser.Navigation
-import Generated.Types exposing (Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Slot(..))
+import Generated.Types exposing (Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Relic, Slot(..))
 
 
 type Msg
@@ -24,6 +24,7 @@ type Choice
     | ChoiceMagic RankedMagic Bool
     | ChoicePerk RankedPerk Bool
     | ChoiceFaction (Maybe ( Faction, Bool ))
+    | ChoiceRelic RankedRelic Bool
     | TowardsCap Int
     | ChoiceCompanion Companion Bool
 
@@ -41,6 +42,7 @@ type alias Model =
     , perks : List RankedPerk
     , faction : Maybe ( Faction, Bool )
     , companions : List Companion
+    , relics : List RankedRelic
     }
 
 
@@ -63,6 +65,12 @@ type alias RankedMagic =
 
 type alias RankedPerk =
     { name : Perk
+    , cost : Int
+    }
+
+
+type alias RankedRelic =
+    { name : Relic
     , cost : Int
     }
 

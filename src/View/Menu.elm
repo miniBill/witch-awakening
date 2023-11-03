@@ -6,6 +6,7 @@ import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic exposing (Affinities(..))
 import Data.Perk as Perk
 import Data.Race as Race
+import Data.Relic as Relic
 import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
 import Element.Background as Background
@@ -18,7 +19,7 @@ import List.Extra
 import Maybe.Extra
 import String.Extra
 import Theme
-import Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedMagic, RankedPerk)
+import Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedMagic, RankedPerk, RankedRelic)
 
 
 viewMenu : Model -> Element Msg
@@ -167,6 +168,7 @@ viewCalculations model =
         , row "Perks" perksValue Nothing
         , row "Faction" factionValue Nothing
         , row "Companions" companionsValue Nothing
+        , row "Relics" relicsValue Nothing
         , el [ alignBottom, width fill ] <| row "Result" calculatePower Nothing
         ]
 
@@ -179,6 +181,7 @@ calculatePower model =
     , perksValue
     , factionValue
     , companionsValue
+    , relicsValue
     ]
         |> Maybe.Extra.traverse (\f -> f model)
         |> Maybe.map List.sum
@@ -564,6 +567,30 @@ getCompanion companion =
                 group
         )
         Companion.all
+
+
+relicsValue : Model -> Maybe Int
+relicsValue model =
+    maybeSum (relicValue model.class) .relics model
+
+
+relicValue : Maybe Class -> RankedRelic -> Maybe Int
+relicValue class { name, cost } =
+    Relic.all
+        |> List.Extra.find (\relic -> relic.name == name)
+        |> Maybe.map
+            (\relic ->
+                let
+                    isClass : Bool
+                    isClass =
+                        Just relic.class == class
+                in
+                if isClass then
+                    -cost + 2
+
+                else
+                    -cost
+            )
 
 
 maybeSum : (item -> Maybe Int) -> (Model -> List item) -> Model -> Maybe Int
