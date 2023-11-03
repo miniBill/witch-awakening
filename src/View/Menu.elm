@@ -539,6 +539,9 @@ sameClass companion maybeClass =
         Companion.ClassNone ->
             False
 
+        Companion.ClassSpecial ->
+            False
+
 
 sameRace : Companion.Details -> Maybe Race -> Bool
 sameRace companion maybeRace =

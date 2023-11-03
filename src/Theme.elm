@@ -251,7 +251,7 @@ viewPiece piece =
                 (List.map viewPiece children)
 
         Text value ->
-            Html.text value
+            Html.text (String.replace "..." "…" value)
 
         Link target ->
             let

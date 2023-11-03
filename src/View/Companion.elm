@@ -234,6 +234,10 @@ companionBox selected ({ name, races, hasPerk, quote, cost, class, description, 
 
                         ClassNone ->
                             Element.none
+
+                        ClassSpecial ->
+                            Images.badgeSpecial
+                                |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
                     ]
                 , statsTable companion
                 , Theme.blocks [ Font.size 14 ] quote
