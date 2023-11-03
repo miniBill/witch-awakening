@@ -126,6 +126,7 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                             (\variant ->
                                 ( Dict.get variant exceptionsDict
                                     |> Maybe.withDefault variant
+                                    |> String.replace "\"" "\\\""
                                 , Gen.Maybe.make_.just <| Elm.val <| yassify variant
                                 )
                             )
@@ -151,7 +152,9 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                             Elm.Case.branch0 constructor
                                 (Elm.value
                                     { importFrom = [ "Images" ]
-                                    , name = lowerName ++ constructor
+                                    , name =
+                                        (lowerName ++ constructor)
+                                            |> String.replace "XiaoLiena" "XiaoLiena肖列娜"
                                     , annotation =
                                         Just
                                             (Elm.Annotation.named [ "Images" ] "Image")
@@ -423,4 +426,5 @@ yassify str =
     str
         |> String.replace "Æ" "Ae"
         |> String.replace "æ" "ae"
+        |> String.replace "\"" ""
         |> String.Extra.classify
