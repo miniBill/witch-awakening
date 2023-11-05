@@ -223,12 +223,12 @@ powerCap model =
 
 
 complicationsValue : Model -> Maybe Int
-complicationsValue =
-    maybeSum complicationValue .complications
+complicationsValue model =
+    maybeSum (complicationValue model) .complications model
 
 
-complicationValue : Types.RankedComplication -> Maybe Int
-complicationValue complication =
+complicationValue : Model -> Types.RankedComplication -> Maybe Int
+complicationValue model complication =
     let
         get : Int -> List ( a, Int ) -> Maybe Int
         get tier list =
@@ -239,21 +239,39 @@ complicationValue complication =
         |> List.Extra.find (\{ name } -> name == complication.name)
         |> Maybe.andThen
             (\details ->
-                case ( details.content, complication.kind ) of
-                    ( Single value _, _ ) ->
-                        Just value
+                let
+                    raw : Maybe Int
+                    raw =
+                        case ( details.content, complication.kind ) of
+                            ( Single value _, _ ) ->
+                                Just value
 
-                    ( WithTiers _ tiers _, Tiered tier ) ->
-                        get tier tiers
+                            ( WithTiers _ tiers _, Tiered tier ) ->
+                                get tier tiers
 
-                    ( WithChoices _ choices _, Tiered tier ) ->
-                        get tier choices
+                            ( WithChoices _ choices _, Tiered tier ) ->
+                                get tier choices
 
-                    ( WithCosts _ costs, Tiered tier ) ->
-                        List.Extra.getAt (tier - 1) costs
+                            ( WithCosts _ costs, Tiered tier ) ->
+                                List.Extra.getAt (tier - 1) costs
 
-                    ( _, Nontiered ) ->
-                        Nothing
+                            ( _, Nontiered ) ->
+                                Nothing
+                in
+                Maybe.map
+                    (\r ->
+                        let
+                            bonus : Int
+                            bonus =
+                                if details.class == model.class && details.class /= Nothing then
+                                    2
+
+                                else
+                                    0
+                        in
+                        r + bonus
+                    )
+                    raw
             )
 
 
