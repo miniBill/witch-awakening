@@ -13,7 +13,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (Affinity(..), Class, Faction, GameMode(..), Race)
+import Generated.Types as Types exposing (Affinity(..), Class(..), Faction, GameMode(..), Race)
 import Gradients
 import List.Extra
 import Maybe.Extra
@@ -131,7 +131,7 @@ viewCalculations model =
             , Font.size 24
             ]
             [ text "🐱culations" ]
-        , link "Class" <| Just "True Form - Class"
+        , row "Class" classPower <| Just "True Form - Class"
         , link "Race" <| Just "True Form - Race"
         , row "Initial power" initialPower <| Just "Game Mode"
         , row "Power cap" powerCap <| Just "Game Mode"
@@ -175,7 +175,8 @@ viewCalculations model =
 
 calculatePower : Model -> Maybe Int
 calculatePower model =
-    [ initialPower
+    [ classPower
+    , initialPower
     , typePerksValue
     , magicsValue
     , perksValue
@@ -185,6 +186,23 @@ calculatePower model =
     ]
         |> Maybe.Extra.traverse (\f -> f model)
         |> Maybe.map List.sum
+
+
+classPower : Model -> Maybe Int
+classPower model =
+    Maybe.map
+        (\class ->
+            case class of
+                Warlock ->
+                    20
+
+                Academic ->
+                    0
+
+                Sorceress ->
+                    0
+        )
+        model.class
 
 
 initialPower : Model -> Maybe Int
