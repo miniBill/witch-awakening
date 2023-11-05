@@ -15,6 +15,7 @@ type alias Details =
 type Content
     = Single Int String
     | WithChoices String (List ( String, Int )) String
+    | WithCosts String (List Int)
 
 
 intro : String
@@ -493,13 +494,12 @@ broomBeast =
     , affinity = All
     , isMeta = False
     , content =
-        WithChoices """
+        WithCosts """
             Your mastery over a broomstick is especially noteworthy. Your broom is like a proper extension of your will. For 1p, Whether or not you have ranks in Witchery, you can summon your Rod in the form of a Broomstick near instantaneously to your hand and you can telekinetically command its flight remotely. For another 2p, it has the speed of an arrow, up to 250 feet per second. This stacks with broom speed from other sources. You can maneuver it with similar agility to a sportsbike, so do watch out for sharp turns.
 
             For every additional Power spent, you gain an additional 50fps speed and improve the maneuverability by 50% until it’s as agile as a hummingbird at 4 extra power spent.
             """
-            (pureCosts [ 1, 3, 5, 7, 9 ])
-            ""
+            [ 1, 3, 5, 7, 9 ]
     }
 
 
@@ -543,11 +543,10 @@ summerSchool =
     , affinity = Life
     , isMeta = True
     , content =
-        WithChoices """
+        WithCosts """
             Looks like there’s space available in a special class at Arcadia or Hawthorne. _Neither needs to be our primary faction._ Take the _Summer School cyoa_ [https://imgur.com/a/lR5RVvV], and swap out any class subject with one Magic Specialization, choosing any teacher and adapt their summary to that magic school. You can replace a teacher with someone from the Companions page with R4+ in that magic. Over the summer, you do not gain Focus, Might, or Favor, but at the end each Magic specialization will be brought to Rank 3 (1 rank per month). You can replace Friends with Companions, who will learn the magic too. This perk costs 4p per magic class you take. You can take this repeatedly for up to 5 magic classes.
             """
-            (pureCosts [ 4, 8, 12, 16, 20 ])
-            ""
+            [ 4, 8, 12, 16, 20 ]
     }
 
 
@@ -573,15 +572,14 @@ miniaturization =
     , affinity = Nature
     , isMeta = True
     , content =
-        WithChoices """
+        WithCosts """
             4 Power cost if you’re a Sprite. You have the ability to shrink! You can toggle off or on a mini form. Use The Fairy’s Curse, [https://imgur.com/a/Y1YEt]. “Fairy” costs 5 less, as its only real benefit is wings, as a Witch you can already perform magic better than most non-witch fairies.
 
             Or you can can take Entrusted by a Goddess [https://imgur.com/9bn2t3z], to gain a mini-person as a Companion. If you also took Fairy Curse, then you can instead apply the Boons to yourself in your mini form ie as though you were the aforementioned daughter, with the canon player perks being applied to your non-mini form.
 
             You can take this repeatedly, either for more currency in one or for the others, or to have both the mini companion and your own.
             """
-            (pureCosts [ 4, 8, 12, 16 ])
-            ""
+            [ 4, 8, 12, 16 ]
     }
 
 
@@ -620,13 +618,12 @@ improvedRod =
     , affinity = Soul
     , isMeta = True
     , content =
-        WithChoices """
+        WithCosts """
             Improve your Rod (Witchery R0+) using _Arcane Focus_ by TroonTC [https://imgur.com/a/dZKhA9q] for 6p. The Seal can be incorporated into your existing familiar or be a separate entity (And can be independently augmented by Company or Pet Break if so).
 
             Using your improved Rod, you are able to create Cantrips via Cantrip CYOA. [https://imgur.com/a/ptneo0t]. Ignore point options. Instead, gain 5 Cantrip points per Power point you invest in this perk. You require your Improved Rod (Arcane Focus) to be on your person in order to use Cantrips, but not necessarily using it directly. Training or teaching cantrips requires the individual have power to invest into it. Humans don’t have power by default. Most witches have between 10-50.
             """
-            (pureCosts (List.range 6 26))
-            ""
+            (List.range 6 26)
     }
 
 
@@ -653,13 +650,12 @@ company =
     , affinity = Soul
     , isMeta = True
     , content =
-        WithChoices """
+        WithCosts """
             _Requires Familiarity 5._
 
             Your familiar evolves an extraordinarily rare and unique new form it can transform into. Design your familiar’s new form using _Familiars Company by McPuffins88_. [https://imgur.com/a/MhcGxMk]. Ignore the starting points, and instead gain 2 points per Power point you spend on this perk. Anything in Familiars Company overrides anything mentioned by Familiarity, but only applies when in this form. It still keeps its other forms. “Chassis Modifiers” and “Traits” can affect other forms it has at your choice Equipment choices disappear and reappear as it assumes or sheds its form. “New Found Land” is instead a portal to a private realm. “Depths Below” is an ORC operation, and other translations.
             """
-            (pureCosts (List.range 1 24))
-            ""
+            (List.range 1 24)
     }
 
 
@@ -670,15 +666,14 @@ petBreak =
     , affinity = Beast
     , isMeta = True
     , content =
-        WithChoices """
+        WithCosts """
             Witches with an especially strong familiarity potential can select a magical creature as their familiar (R0+ Familiarity), looks like you might have that potential!
 
             Choose a pet from _Magical Pet Break by Fox_ to be your familiar. [https://imgur.com/a/R3dqGGN]
 
             Choose any listed creature for 2 Power per soul point. (So you could choose a Restricted pet for 6p). You can likewise give it Boons for 4p, though some may be more or less redundant if you have Familiarity magic ranks. You can also give your familiar the magic of another pet for 2p +1p per extra, (2, 3, 4 for +3, total -9p Though a Restricted choices has a base of 6 instead of 2). If the magic involves a feature like scales, adapt as appropriate up to hybridizing if needed.
             """
-            (pureCosts (List.range 2 22))
-            ""
+            (List.range 2 22)
     }
 
 
@@ -689,15 +684,14 @@ magicShop =
     , affinity = Life
     , isMeta = True
     , content =
-        WithChoices """
-        You are of will be the proud owner of a brand new magical shop. Design your shop using your choice of _Magic Item Shop_ by Bliss and Beri or _Starfall Cafe_ by Femdo. If you buy this twice, you could do both into a merged shop or separate locations. Or you could buy it to do the same cyoa again with doubled resources / currency, again for a larger shop or for separate shops
+        WithCosts """
+            You are of will be the proud owner of a brand new magical shop. Design your shop using your choice of _Magic Item Shop_ by Bliss and Beri or _Starfall Cafe_ by Femdo. If you buy this twice, you could do both into a merged shop or separate locations. Or you could buy it to do the same cyoa again with doubled resources / currency, again for a larger shop or for separate shops
 
-        [https://imgur.com/a/4HgA72h] & [https://imgur.com/VUb1n7d].
-        
-        Instead of locations presented by those cyoas, you can if you wish, choose any location mentioned in this cyoa. Adapt any other flavor as appropriate. Skip Magic Item Shop’s Blessings unless you pay 4 Power for it, with an appropriate Affinity. ([Fire], [???], [Nature], [Body], [Mind], [Nature], [Water], [Life], [Body]). You can spend 1p for +50 Stardust.
-        """
-            (pureCosts (List.range 6 28))
-            ""
+            [https://imgur.com/a/4HgA72h] & [https://imgur.com/VUb1n7d].
+            
+            Instead of locations presented by those cyoas, you can if you wish, choose any location mentioned in this cyoa. Adapt any other flavor as appropriate. Skip Magic Item Shop’s Blessings unless you pay 4 Power for it, with an appropriate Affinity. ([Fire], [???], [Nature], [Body], [Mind], [Nature], [Water], [Life], [Body]). You can spend 1p for +50 Stardust.
+            """
+            (List.range 6 28)
     }
 
 
@@ -708,15 +702,14 @@ keeper =
     , affinity = Life
     , isMeta = True
     , content =
-        WithChoices """
+        WithCosts """
             Sometime within the next few years tops, you’ll meet my greattimes-8 grandmother who has an. offer for you. She knows some unique ancient magics and can teach you a thing or two. Take the _Keeper of Magic by TroyXPage_ [https://imgur.com/a/2rYOpr6].
 
             Ignore the 3 categories: Pick one category per 15 Power spent on this perk. Otherwise adapt any given lore appropriately. You can take "No Magic" as though buying a companion, at 20p.
 
             Any potential interactions may reasonably be extrapolated to magic and perks from here. ie; Eromancy may buff witch Alchemy similarly to it buffing keeper Alchemy, ect. Wishmagic cannot break the masquerade or grant power or alter game mechanics.
             """
-            (pureCosts (20 :: List.map ((*) 15) (List.range 1 10)))
-            ""
+            (20 :: List.map ((*) 15) (List.range 1 10))
     }
 
 
@@ -730,8 +723,3 @@ soulGraft =
         You’ll have the opportunity to enter the _Soul Graft Battle Royale by L_\\__Circe_. [https://imgur.com/a/h5zbB4E]. It’s intended for mortals and humanoids (Non-witch members of the races shown in witch type). So you won’t have access to any witch magic or perks. If your racial life extension is triggered it’s considered a fail state. Otherwise, you play Soul Graft as normal, obtaining a Graft and two items, and whatever you pick up in the royale itself. The Prizes and the items are Relics. Graft can grow by defeating equivalent enemies outside of the royale. Regain witchhood at end. Jinn wish magic can’t break the masquerade on Earth. Masquerade doesn’t apply on the island, not being on Earth, and full of magic beings & monsters.
         """
     }
-
-
-pureCosts : List Int -> List ( String, Int )
-pureCosts costs =
-    List.map (\i -> ( "-", i )) (List.sort costs)

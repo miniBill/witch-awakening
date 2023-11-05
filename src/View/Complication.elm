@@ -86,6 +86,9 @@ complicationBox selected ({ name, class, content } as complication) =
                 ( WithChoices _ _ _, Nothing ) ->
                     Nothing
 
+                ( WithCosts _ _, Nothing ) ->
+                    Nothing
+
         gradient : List ( Int, Int, Int )
         gradient =
             category
@@ -106,6 +109,9 @@ complicationBox selected ({ name, class, content } as complication) =
 
                 WithChoices _ choices _ ->
                     List.map Tuple.second choices
+
+                WithCosts _ costs ->
+                    costs
 
                 Single gain _ ->
                     [ gain ]
@@ -253,18 +259,10 @@ viewContent selected { content, name } color =
             let
                 choicesView : List (Element ( RankedComplication, Bool ))
                 choicesView =
-                    if List.all (\( label, _ ) -> label == "-") choices then
-                        [ el [ Font.bold ] <| text "Cost:"
-                        , choices
-                            |> List.indexedMap viewChoice
-                            |> Theme.wrappedRow []
-                        ]
-
-                    else
-                        List.indexedMap viewChoice choices
+                    List.indexedMap viewChoice choices
 
                 viewChoice : Int -> ( String, Int ) -> Element ( RankedComplication, Bool )
-                viewChoice choice ( label, value ) =
+                viewChoice choice ( label, _ ) =
                     let
                         complication : RankedComplication
                         complication =
@@ -289,25 +287,15 @@ viewContent selected { content, name } color =
                             [ Border.rounded 4
                             , padding 4
                             , Border.width 1
-                            , if label == "-" then
-                                width <| px 24
-
-                              else
-                                width fill
+                            , width fill
                             ]
                         )
                         { label =
-                            if label == "-" then
-                                el [ centerX, centerY, Theme.captureIt ] <|
-                                    Theme.gradientText 4 Gradients.yellowGradient <|
-                                        String.fromInt value
-
-                            else
-                                Theme.blocks []
-                                    ("- "
-                                        ++ label
-                                        ++ "."
-                                    )
+                            Theme.blocks []
+                                ("- "
+                                    ++ label
+                                    ++ "."
+                                )
                         , onPress = Just ( complication, not isChoiceSelected )
                         }
             in
@@ -315,4 +303,55 @@ viewContent selected { content, name } color =
                 Theme.blocks [] before
                     :: choicesView
                     ++ [ Theme.blocks [] after ]
+            ]
+
+        WithCosts before costs ->
+            let
+                choicesView : List (Element ( RankedComplication, Bool ))
+                choicesView =
+                    [ el [ Font.bold ] <| text "Cost:"
+                    , costs
+                        |> List.indexedMap viewChoice
+                        |> Theme.wrappedRow []
+                    ]
+
+                viewChoice : Int -> Int -> Element ( RankedComplication, Bool )
+                viewChoice choice value =
+                    let
+                        complication : RankedComplication
+                        complication =
+                            { name = name
+                            , kind = Tiered (choice + 1)
+                            }
+
+                        isChoiceSelected : Bool
+                        isChoiceSelected =
+                            List.member complication selected
+
+                        attrs : List (Attribute msg) -> List (Attribute msg)
+                        attrs =
+                            if isChoiceSelected then
+                                (::) (Theme.backgroundColor color)
+
+                            else
+                                identity
+                    in
+                    Input.button
+                        (attrs
+                            [ Border.rounded 4
+                            , padding 4
+                            , Border.width 1
+                            , width <| px 24
+                            ]
+                        )
+                        { label =
+                            el [ centerX, centerY, Theme.captureIt ] <|
+                                Theme.gradientText 4 Gradients.yellowGradient <|
+                                    String.fromInt value
+                        , onPress = Just ( complication, not isChoiceSelected )
+                        }
+            in
+            [ Theme.column [ height fill, Theme.padding ] <|
+                Theme.blocks [] before
+                    :: choicesView
             ]

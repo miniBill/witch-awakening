@@ -249,6 +249,9 @@ complicationValue complication =
                     ( WithChoices _ choices _, Tiered tier ) ->
                         get tier choices
 
+                    ( WithCosts _ costs, Tiered tier ) ->
+                        List.Extra.getAt (tier - 1) costs
+
                     ( _, Nontiered ) ->
                         Nothing
             )

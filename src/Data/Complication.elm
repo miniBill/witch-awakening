@@ -14,6 +14,7 @@ type Content
     = WithTiers String (List ( String, Int )) String
     | Single Int String
     | WithChoices String (List ( String, Int )) String
+    | WithCosts String (List Int)
 
 
 all : List Details
@@ -176,11 +177,12 @@ restriction =
     { name = Restriction
     , class = Just Sorceress
     , content =
-        Single 2 """
+        WithCosts """
             You are incapable of learning any magic from one chosen archetype. Potions, Hexes, ect. You can take this up to 3 times. This includes a magic’s rank 0 effect normally available to all witches. This cannot restrict you from Faction magic of factions you don’t belong to.
 
             For example, you could restrict _Wands_ only if you chose Hawthome as your faction.
             """
+            (List.map ((*) 2) <| List.range 1 3)
     }
 
 
@@ -450,7 +452,7 @@ kryptonite =
     { name = Kryptonite
     , class = Just Warlock
     , content =
-        WithChoices """
+        WithCosts """
             Some witches express magic on a wavelength that can be disrupted by some substance. You have a kryptonite. It can be rare but it’s not rare enough that your enemies can’t make use of it. Its rarity affects the power gain:
 
             - Very common: +10.
@@ -478,8 +480,7 @@ kryptonite =
             - These suggestions persist after exposure ends: +2
             - Death while exposed prevents passive methods of death circumvention: +6.
             """
-            (List.map (\i -> ( "-", i )) (List.range 7 31))
-            ""
+            (List.range 7 31)
     }
 
 
