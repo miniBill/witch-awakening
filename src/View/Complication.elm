@@ -9,64 +9,53 @@ import Generated.Types as Types exposing (ComplicationCategory, Slot(..))
 import Gradients
 import List.Extra
 import Theme exposing (gradientText)
-import Types exposing (Choice(..), ComplicationKind(..), Display(..), RankedComplication)
+import Types exposing (Choice(..), ComplicationKind(..), Display, RankedComplication)
+import View
 
 
 viewComplications : Display -> List RankedComplication -> Element Choice
 viewComplications display complications =
     let
-        wrappedRow : List (Element ( RankedComplication, Bool )) -> Element Choice
+        wrappedRow : List (Element msg) -> Element msg
         wrappedRow items =
             items
                 |> Theme.wrappedRow
                     [ centerX
                     , spacing <| Theme.rythm * 3
                     ]
-                |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
     in
-    Theme.column
-        [ width fill
-        , spacing <| Theme.rythm * 2
+    View.collapsible display
+        DisplayComplications
+        (\( complication, selected ) -> ChoiceComplication complication selected)
+        Complication.title
+        [ Theme.blocks [] Complication.intro
+        , Theme.blocks [] "# World Shifts"
+        , (List.map
+            (complicationBox display complications)
+            Complication.worldShifts
+            ++ [ Theme.blocks
+                    [ width <| Element.maximum 400 fill
+                    , alignTop
+                    , Border.width 1
+                    , Theme.padding
+                    , Theme.borderColor Theme.colors.worldShift
+                    ]
+                    Complication.worldShiftsDescription
+               ]
+          )
+            |> wrappedRow
+        , Theme.blocks [] "# Generic Complications"
+        , Complication.generic
+            |> List.map (complicationBox display complications)
+            |> wrappedRow
         ]
-    <|
-        case display of
-            DisplayFull ->
-                [ Theme.collapsibleBlocks DisplayComplications display [] Complication.intro
-                , Theme.blocks [] "# World Shifts"
-                , (List.map
-                    (complicationBox display complications)
-                    Complication.worldShifts
-                    ++ [ Theme.blocks
-                            [ width <| Element.maximum 400 fill
-                            , alignTop
-                            , Border.width 1
-                            , Theme.padding
-                            , Theme.borderColor Theme.colors.worldShift
-                            ]
-                            Complication.worldShiftsDescription
-                       ]
-                  )
-                    |> wrappedRow
-                , Theme.blocks [] "# Generic Complications"
-                , Complication.generic
-                    |> List.map (complicationBox display complications)
-                    |> wrappedRow
+        [ (Complication.worldShifts ++ Complication.generic)
+            |> List.map (complicationBox display complications)
+            |> Theme.column
+                [ centerX
+                , spacing <| Theme.rythm * 3
                 ]
-
-            DisplayCompact ->
-                [ Theme.collapsibleBlocks DisplayComplications display [] Complication.title
-                , (Complication.worldShifts ++ Complication.generic)
-                    |> List.map (complicationBox display complications)
-                    |> Theme.column
-                        [ centerX
-                        , spacing <| Theme.rythm * 3
-                        ]
-                    |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
-                ]
-
-            DisplayCollapsed ->
-                [ Theme.collapsibleBlocks DisplayComplications display [] Complication.title
-                ]
+        ]
 
 
 complicationBox :
