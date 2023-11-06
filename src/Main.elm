@@ -432,7 +432,7 @@ innerView model =
         , Element.Lazy.lazy2 Race.viewRace model.raceDisplay model.race
         , Element.Lazy.lazy2 GameMode.viewGameMode model.gameModeDisplay model.gameMode
         , Element.Lazy.lazy2 Complications.viewComplications model.complicationsDisplay model.complications
-        , Element.Lazy.lazy TypePerk.viewTypePerks model.typePerks
+        , Element.Lazy.lazy2 TypePerk.viewTypePerks model.typePerksDisplay model.typePerks
         , Element.Lazy.lazy Magic.viewMagics model.magic
         , Element.Lazy.lazy Perk.viewPerks model.perks
         , Element.Lazy.lazy Faction.viewFaction model.faction

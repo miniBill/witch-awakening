@@ -1,4 +1,4 @@
-module Data.TypePerk exposing (Details, all)
+module Data.TypePerk exposing (Details, all, title)
 
 import Generated.Types exposing (Race(..))
 
@@ -493,3 +493,8 @@ gemini =
         Nothing can sever this connection, short of death.
         """
     }
+
+
+title : String
+title =
+    "# Type Perks"
