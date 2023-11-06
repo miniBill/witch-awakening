@@ -109,7 +109,7 @@ relicBox selected ({ name, class, content } as relic) =
         color =
             0x00F3EA6F
     in
-    Theme.card []
+    Theme.card_ []
         { glow = glow
         , imageAttrs = []
         , imageHeight = 400

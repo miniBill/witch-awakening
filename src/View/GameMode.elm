@@ -77,7 +77,7 @@ gameModeBox selected { name, content } =
             ""
                 |> gradientText 4 Gradients.yellowGradient
     in
-    Theme.card []
+    Theme.card_ []
         { glow = glow
         , imageAttrs =
             [ Border.width 4

@@ -21,7 +21,7 @@ viewClass display class =
             DisplayFull ->
                 [ Element.map DisplayClass <| Theme.collapsibleBlocks display [] Class.intro
                 , Class.all
-                    |> List.map (classBox class)
+                    |> List.map (classBox display class)
                     |> Theme.wrappedRow
                         [ centerX
                         , spacing <| Theme.rythm * 3
@@ -32,10 +32,9 @@ viewClass display class =
             DisplayCompact ->
                 [ Element.map DisplayClass <| Theme.collapsibleBlocks display [] Class.title
                 , Class.all
-                    |> List.filter (\{ name } -> Just name == class)
-                    |> List.map (classBox class)
-                    |> Theme.wrappedRow
-                        [ centerX
+                    |> List.map (classBox display class)
+                    |> Theme.column
+                        [ width fill
                         , spacing <| Theme.rythm * 3
                         ]
                     |> Element.map ChoiceClass
@@ -47,10 +46,11 @@ viewClass display class =
 
 
 classBox :
-    Maybe Class
+    Display
+    -> Maybe Class
     -> Class.Details
     -> Element (Maybe Class)
-classBox selected { name, content } =
+classBox display selected { name, content } =
     let
         isSelected : Bool
         isSelected =
@@ -61,14 +61,6 @@ classBox selected { name, content } =
                 Just selectedClass ->
                     selectedClass == name
 
-        glow : Maybe Int
-        glow =
-            if isSelected then
-                Just <| Theme.classToColor name
-
-            else
-                Nothing
-
         msg : Maybe Class
         msg =
             if isSelected then
@@ -78,7 +70,9 @@ classBox selected { name, content } =
                 Just name
     in
     Theme.card []
-        { glow = glow
+        { display = display
+        , glow = Theme.classToColor name
+        , isSelected = isSelected
         , imageAttrs =
             [ Border.width 8
             , Theme.borderColor <| Theme.classToColor name

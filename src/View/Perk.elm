@@ -137,7 +137,7 @@ perkBox selected ({ name, affinity, class, content, isMeta } as perk) =
         color =
             0x00F3EA6F
     in
-    Theme.card []
+    Theme.card_ []
         { glow = glow
         , imageAttrs = []
         , imageHeight = 400

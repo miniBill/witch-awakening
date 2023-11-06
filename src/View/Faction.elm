@@ -193,7 +193,7 @@ factionBox selected { name, motto, description, location, relations, perk, perkC
                         ]
                 , onPress = Just factionMsg
                 }
-            , Theme.card
+            , Theme.card_
                 [ case perkGlow of
                     Just color ->
                         Background.color <| Theme.intToBackground color

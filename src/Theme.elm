@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, cardRoundness, card_, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -343,6 +343,11 @@ wrappedRow attrs children =
 
 viewSectionTitle : Maybe (Display -> msg) -> Display -> String -> Element msg
 viewSectionTitle toMsg display label =
+    let
+        gradient : String -> Element msg
+        gradient =
+            gradientText 4 Gradients.blueGradient
+    in
     row
         [ celticHand
         , Font.size 36
@@ -359,22 +364,23 @@ viewSectionTitle toMsg display label =
                             [ Border.rounded 4
                             , Element.padding 4
                             , Border.width 1
+                            , borderColor colors.choice
                             ]
                             { onPress = Just <| tag <| Types.nextDisplay display
                             , label =
                                 case display of
                                     DisplayFull ->
-                                        text "▲"
+                                        gradient "▲"
 
                                     DisplayCompact ->
-                                        text "▲"
+                                        gradient "▲"
 
                                     DisplayCollapsed ->
-                                        text "▼"
+                                        gradient "▼"
                             }
                 in
                 [ hr
-                , gradientText 4 Gradients.blueGradient label
+                , gradient label
                 , text " "
                 , button
                 , hr
@@ -382,7 +388,7 @@ viewSectionTitle toMsg display label =
 
             Nothing ->
                 [ hr
-                , gradientText 4 Gradients.blueGradient label
+                , gradient label
                 , hr
                 ]
 
@@ -470,8 +476,10 @@ cardRoundness =
 card :
     List (Attribute msg)
     ->
-        { onPress : Maybe msg
-        , glow : Maybe Int
+        { display : Display
+        , onPress : Maybe msg
+        , glow : Int
+        , isSelected : Bool
         , imageHeight : Int
         , imageAttrs : List (Attribute msg)
         , image : Image
@@ -480,51 +488,70 @@ card :
         }
     -> Element msg
 card attrs config =
-    let
-        cardAttributes : List (Attribute msg)
-        cardAttributes =
-            [ height fill
-            , width <| Element.minimum 320 <| Element.maximum 400 fill
-            , Font.color <| rgb 0 0 0
-            , Border.roundEach
-                { topLeft = cardRoundness
-                , topRight = cardRoundness
-                , bottomLeft = 8
-                , bottomRight = 8
-                }
-            , case config.glow of
-                Just color ->
-                    Background.color <| intToBackground color
+    if config.display == DisplayCollapsed || config.display == DisplayCompact && not config.isSelected then
+        Element.none
 
-                Nothing ->
+    else
+        let
+            cardAttributes : List (Attribute msg)
+            cardAttributes =
+                [ height fill
+                , Font.color <| rgb 0 0 0
+                , Border.roundEach
+                    { topLeft = cardRoundness
+                    , topRight = cardRoundness
+                    , bottomLeft = 8
+                    , bottomRight = 8
+                    }
+                , if config.isSelected then
+                    Background.color <| intToBackground config.glow
+
+                  else
                     Background.color <| rgb 1 1 1
-            , case config.glow of
-                Just color ->
-                    Border.glow (intToColor color) 8
+                , if config.isSelected then
+                    Border.glow (intToColor config.glow) 8
 
-                Nothing ->
+                  else
                     Border.width 0
-            ]
+                , if config.display == DisplayFull then
+                    width <| Element.minimum 320 <| Element.maximum 400 fill
 
-        content : Element msg
-        content =
-            Element.column [ height fill, width fill ]
-                (el
-                    (width fill
-                        :: Border.rounded cardRoundness
-                        :: height (px config.imageHeight)
+                  else
+                    width fill
+                ]
+
+            content : List (Element msg)
+            content =
+                el
+                    (Border.rounded cardRoundness
+                        :: (if config.display == DisplayFull then
+                                height <| px config.imageHeight
+
+                            else
+                                width <| px config.imageHeight
+                           )
+                        :: (if config.display == DisplayFull then
+                                width fill
+
+                            else
+                                height <| Element.minimum (config.imageHeight * 2 // 3) fill
+                           )
                         :: Background.image config.image.src
                         :: List.map Element.inFront config.inFront
                         ++ config.imageAttrs
                     )
                     Element.none
                     :: config.content
-                )
-    in
-    maybeButton (cardAttributes ++ attrs)
-        { label = content
-        , onPress = config.onPress
-        }
+        in
+        maybeButton (cardAttributes ++ attrs)
+            { label =
+                if config.display == DisplayFull then
+                    Element.column [ height fill, width fill ] content
+
+                else
+                    Element.row [ height fill, width fill ] content
+            , onPress = config.onPress
+            }
 
 
 maybeButton :
@@ -574,3 +601,17 @@ topBackground { src } =
     , style "background-position" "top"
     , style "background-size" "100%"
     ]
+
+
+card_ attrs config =
+    card attrs
+        { display = DisplayFull
+        , glow = Maybe.withDefault 0 config.glow
+        , isSelected = config.glow /= Nothing
+        , onPress = config.onPress
+        , imageHeight = config.imageHeight
+        , imageAttrs = config.imageAttrs
+        , image = config.image
+        , inFront = config.inFront
+        , content = config.content
+        }

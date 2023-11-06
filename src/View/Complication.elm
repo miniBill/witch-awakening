@@ -9,51 +9,73 @@ import Generated.Types as Types exposing (ComplicationCategory, Slot(..))
 import Gradients
 import List.Extra
 import Theme exposing (gradientText)
-import Types exposing (Choice(..), ComplicationKind(..), RankedComplication)
+import Types exposing (Choice(..), ComplicationKind(..), Display(..), RankedComplication)
 
 
-viewComplications : List RankedComplication -> Element Choice
-viewComplications complications =
+viewComplications : Display -> List RankedComplication -> Element Choice
+viewComplications display complications =
+    let
+        wrappedRow : List (Element ( RankedComplication, Bool )) -> Element Choice
+        wrappedRow items =
+            items
+                |> Theme.wrappedRow
+                    [ centerX
+                    , spacing <| Theme.rythm * 3
+                    ]
+                |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
+    in
     Theme.column
         [ width fill
         , spacing <| Theme.rythm * 2
         ]
-        [ Theme.blocks [] Complication.intro
-        , Theme.blocks [] "# World Shifts"
-        , (List.map
-            (complicationBox complications)
-            Complication.worldShifts
-            ++ [ Theme.blocks
-                    [ width <| Element.maximum 400 fill
-                    , alignTop
-                    , Border.width 1
-                    , Theme.padding
-                    , Theme.borderColor Theme.colors.worldShift
-                    ]
-                    Complication.worldShiftsDescription
-               ]
-          )
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rythm * 3
+    <|
+        case display of
+            DisplayFull ->
+                [ Element.map DisplayComplications <|
+                    Theme.collapsibleBlocks display [] Complication.intro
+                , Theme.blocks [] "# World Shifts"
+                , (List.map
+                    (complicationBox display complications)
+                    Complication.worldShifts
+                    ++ [ Theme.blocks
+                            [ width <| Element.maximum 400 fill
+                            , alignTop
+                            , Border.width 1
+                            , Theme.padding
+                            , Theme.borderColor Theme.colors.worldShift
+                            ]
+                            Complication.worldShiftsDescription
+                       ]
+                  )
+                    |> wrappedRow
+                , Theme.blocks [] "# Generic Complications"
+                , Complication.generic
+                    |> List.map (complicationBox display complications)
+                    |> wrappedRow
                 ]
-            |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
-        , Theme.blocks [] "# Generic Complications"
-        , Complication.generic
-            |> List.map (complicationBox complications)
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rythm * 3
+
+            DisplayCompact ->
+                [ Element.map DisplayComplications <| Theme.collapsibleBlocks display [] Complication.title
+                , (Complication.worldShifts ++ Complication.generic)
+                    |> List.map (complicationBox display complications)
+                    |> Theme.column
+                        [ centerX
+                        , spacing <| Theme.rythm * 3
+                        ]
+                    |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
                 ]
-            |> Element.map (\( complication, selected ) -> ChoiceComplication complication selected)
-        ]
+
+            DisplayCollapsed ->
+                [ Element.map DisplayComplications <| Theme.collapsibleBlocks display [] Complication.title
+                ]
 
 
 complicationBox :
-    List RankedComplication
+    Display
+    -> List RankedComplication
     -> Complication.Details
     -> Element ( RankedComplication, Bool )
-complicationBox selected ({ name, class, content } as complication) =
+complicationBox display selected ({ name, class, content } as complication) =
     let
         isSelected : Maybe RankedComplication
         isSelected =
@@ -62,14 +84,6 @@ complicationBox selected ({ name, class, content } as complication) =
         category : Maybe ComplicationCategory
         category =
             Types.complicationToCategory name
-
-        glow : Maybe Int
-        glow =
-            if isSelected == Nothing then
-                Nothing
-
-            else
-                Just color
 
         msg : Maybe ( RankedComplication, Bool )
         msg =
@@ -138,16 +152,9 @@ complicationBox selected ({ name, class, content } as complication) =
             el [ alignRight ] <|
                 Theme.image [ width <| px 40 ] <|
                     Types.slotToImage slot
-    in
-    Theme.card []
-        { glow = glow
-        , imageAttrs =
-            [ Border.width 4
-            , Theme.borderColor color
-            ]
-        , imageHeight = 400
-        , image = Types.complicationToImage name
-        , inFront =
+
+        inFront : List (Element msg)
+        inFront =
             [ case class of
                 Nothing ->
                     Element.none
@@ -198,6 +205,18 @@ complicationBox selected ({ name, class, content } as complication) =
                     Types.complicationToString name
                 )
             ]
+    in
+    Theme.card []
+        { display = display
+        , glow = color
+        , isSelected = isSelected /= Nothing
+        , imageAttrs =
+            [ Border.width 4
+            , Theme.borderColor color
+            ]
+        , imageHeight = 400
+        , image = Types.complicationToImage name
+        , inFront = inFront
         , content = viewContent selected complication color
         , onPress = msg
         }
@@ -215,43 +234,49 @@ viewContent selected { content, name } color =
             ]
 
         WithTiers before tiers after ->
-            [ Theme.column [ height fill, Theme.padding ] <|
+            let
+                viewTier : Int -> ( String, Int ) -> Element ( RankedComplication, Bool )
+                viewTier tier ( label, _ ) =
+                    let
+                        complication : RankedComplication
+                        complication =
+                            { name = name
+                            , kind = Tiered (tier + 1)
+                            }
+
+                        isTierSelected : Bool
+                        isTierSelected =
+                            List.member complication selected
+                    in
+                    Input.button
+                        [ if isTierSelected then
+                            Theme.backgroundColor color
+
+                          else
+                            Border.width 1
+                        , Border.width 1
+                        , Border.rounded 4
+                        , padding 4
+                        , width fill
+                        ]
+                        { label =
+                            Theme.blocks []
+                                ("- *Tier "
+                                    ++ String.fromInt (tier + 1)
+                                    ++ "*: "
+                                    ++ label
+                                    ++ "."
+                                )
+                        , onPress = Just ( complication, not isTierSelected )
+                        }
+
+                tiersView : List (Element ( RankedComplication, Bool ))
+                tiersView =
+                    List.indexedMap viewTier tiers
+            in
+            [ Theme.column [ height fill, width fill, Theme.padding ] <|
                 Theme.blocks [] before
-                    :: List.indexedMap
-                        (\tier ( label, _ ) ->
-                            let
-                                complication : RankedComplication
-                                complication =
-                                    { name = name
-                                    , kind = Tiered (tier + 1)
-                                    }
-
-                                isTierSelected : Bool
-                                isTierSelected =
-                                    List.member complication selected
-                            in
-                            Input.button
-                                [ if isTierSelected then
-                                    Theme.backgroundColor color
-
-                                  else
-                                    Border.width 1
-                                , Border.width 1
-                                , Border.rounded 4
-                                , padding 4
-                                ]
-                                { label =
-                                    Theme.blocks []
-                                        ("- *Tier "
-                                            ++ String.fromInt (tier + 1)
-                                            ++ "*: "
-                                            ++ label
-                                            ++ "."
-                                        )
-                                , onPress = Just ( complication, not isTierSelected )
-                                }
-                        )
-                        tiers
+                    :: tiersView
                     ++ [ Theme.blocks [] after ]
             ]
 
@@ -299,7 +324,7 @@ viewContent selected { content, name } color =
                         , onPress = Just ( complication, not isChoiceSelected )
                         }
             in
-            [ Theme.column [ height fill, Theme.padding ] <|
+            [ Theme.column [ height fill, width fill, Theme.padding ] <|
                 Theme.blocks [] before
                     :: choicesView
                     ++ [ Theme.blocks [] after ]
@@ -351,7 +376,7 @@ viewContent selected { content, name } color =
                         , onPress = Just ( complication, not isChoiceSelected )
                         }
             in
-            [ Theme.column [ height fill, Theme.padding ] <|
+            [ Theme.column [ height fill, width fill, Theme.padding ] <|
                 Theme.blocks [] before
                     :: choicesView
             ]
