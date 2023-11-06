@@ -103,6 +103,40 @@ update msg model =
                 |> Task.attempt (\_ -> Nop)
             )
 
+        CompactAll ->
+            ( { model
+                | classDisplay = DisplayCompact
+                , raceDisplay = DisplayCompact
+                , gameModeDisplay = DisplayCompact
+                , complicationsDisplay = DisplayCompact
+                , typePerksDisplay = DisplayCompact
+                , magicDisplay = DisplayCompact
+                , perksDisplay = DisplayCompact
+                , factionDisplay = DisplayCompact
+                , factionalMagicDisplay = DisplayCompact
+                , companionsDisplay = DisplayCompact
+                , relicsDisplay = DisplayCompact
+              }
+            , Cmd.none
+            )
+
+        ExpandAll ->
+            ( { model
+                | classDisplay = DisplayFull
+                , raceDisplay = DisplayFull
+                , gameModeDisplay = DisplayFull
+                , complicationsDisplay = DisplayFull
+                , typePerksDisplay = DisplayFull
+                , magicDisplay = DisplayFull
+                , perksDisplay = DisplayFull
+                , factionDisplay = DisplayFull
+                , factionalMagicDisplay = DisplayFull
+                , companionsDisplay = DisplayFull
+                , relicsDisplay = DisplayFull
+              }
+            , Cmd.none
+            )
+
         Nop ->
             ( model, Cmd.none )
 

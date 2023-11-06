@@ -312,7 +312,11 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
         in
         Theme.maybeButton
             [ height fill
-            , width <| Element.minimum 660 <| Element.maximum 760 fill
+            , if display == DisplayFull then
+                width <| Element.minimum 660 <| Element.maximum 760 fill
+
+              else
+                width <| Element.minimum 660 fill
             , Font.color <| rgb 0 0 0
             , Border.rounded Theme.cardRoundness
             , case glow of

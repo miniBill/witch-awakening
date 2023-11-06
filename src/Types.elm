@@ -12,6 +12,8 @@ type Msg
     | OpenMenu
     | CloseMenu
     | ScrollTo String
+    | CompactAll
+    | ExpandAll
     | Nop
 
 

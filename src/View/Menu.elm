@@ -110,12 +110,15 @@ viewCalculations model =
                 ]
                 (Theme.gradientText 4 Gradients.yellowGradient value)
 
-        linkLabel : String -> Maybe String -> Element Msg
-        linkLabel label target =
-            Input.button []
-                { onPress = Just <| ScrollTo <| String.Extra.underscored <| Maybe.withDefault label target
-                , label = el [ Font.bold ] <| text label
-                }
+        button : { onPress : Maybe msg, label : Element msg } -> Element msg
+        button =
+            Input.button
+                [ Border.width 1
+                , padding 4
+                , Border.rounded Theme.rythm
+                , width fill
+                , Font.center
+                ]
     in
     Theme.column
         [ Background.color <| rgb 1 1 1
@@ -170,7 +173,23 @@ viewCalculations model =
         , row "Companions" companionsValue Nothing
         , row "Relics" relicsValue Nothing
         , el [ alignBottom, width fill ] <| row "Result" calculatePower Nothing
+        , button
+            { onPress = Just CompactAll
+            , label = text "Compact all"
+            }
+        , button
+            { onPress = Just ExpandAll
+            , label = text "Expand all"
+            }
         ]
+
+
+linkLabel : String -> Maybe String -> Element Msg
+linkLabel label target =
+    Input.button []
+        { onPress = Just <| ScrollTo <| String.Extra.underscored <| Maybe.withDefault label target
+        , label = el [ Font.bold ] <| text label
+        }
 
 
 calculatePower : Model -> Maybe Int
