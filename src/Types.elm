@@ -32,6 +32,7 @@ type Choice
     | DisplayPerks Display
     | ChoiceFaction (Maybe ( Faction, Bool ))
     | DisplayFaction Display
+    | DisplayFactionalMagic Display
     | ChoiceRelic RankedRelic Bool
     | DisplayRelics Display
     | ChoiceCompanion Companion Bool
@@ -59,6 +60,7 @@ type alias Model =
     , perksDisplay : Display
     , faction : Maybe ( Faction, Bool )
     , factionDisplay : Display
+    , factionalMagicDisplay : Display
     , companions : List Companion
     , companionsDisplay : Display
     , relics : List RankedRelic

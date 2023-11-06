@@ -174,6 +174,9 @@ updateOnChoice choice model =
         DisplayFaction factionDisplay ->
             { model | factionDisplay = factionDisplay }
 
+        DisplayFactionalMagic factionalMagicDisplay ->
+            { model | factionalMagicDisplay = factionalMagicDisplay }
+
         ChoiceCompanion companion selected ->
             if selected then
                 { model | companions = companion :: model.companions }
@@ -392,6 +395,7 @@ parseUrl navKey url =
                     )
                 )
     , factionDisplay = DisplayFull
+    , factionalMagicDisplay = DisplayFull
     , companions = parseMany "companion" Types.companionFromString
     , companionsDisplay = DisplayFull
     , relics = parseMany "relic" parseRelic
@@ -436,7 +440,7 @@ innerView model =
         , Element.Lazy.lazy2 Magic.viewMagics model.magicDisplay model.magic
         , Element.Lazy.lazy2 Perk.viewPerks model.perksDisplay model.perks
         , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
-        , Element.Lazy.lazy FactionalMagic.viewFactionalMagics model.magic
+        , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
         , Element.Lazy.lazy Companion.viewCompanions model.companions
         , Element.Lazy.lazy Relic.viewRelics model.relics
         ]
