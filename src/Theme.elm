@@ -497,12 +497,21 @@ card attrs config =
             cardAttributes =
                 [ height fill
                 , Font.color <| rgb 0 0 0
-                , Border.roundEach
-                    { topLeft = cardRoundness
-                    , topRight = cardRoundness
-                    , bottomLeft = 8
-                    , bottomRight = 8
-                    }
+                , if config.display == DisplayCompact then
+                    Border.roundEach
+                        { topLeft = cardRoundness
+                        , topRight = 8
+                        , bottomLeft = cardRoundness
+                        , bottomRight = 8
+                        }
+
+                  else
+                    Border.roundEach
+                        { topLeft = cardRoundness
+                        , topRight = cardRoundness
+                        , bottomLeft = 8
+                        , bottomRight = 8
+                        }
                 , if config.isSelected then
                     Background.color <| intToBackground config.glow
 
