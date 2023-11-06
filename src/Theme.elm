@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -518,7 +518,7 @@ card attrs config =
                   else
                     Background.color <| rgb 1 1 1
                 , if config.isSelected then
-                    Border.glow (intToColor config.glow) 8
+                    borderGlow config.glow
 
                   else
                     Border.width 0
@@ -610,3 +610,8 @@ topBackground { src } =
     , style "background-position" "top"
     , style "background-size" "100%"
     ]
+
+
+borderGlow : Int -> Attribute msg
+borderGlow color =
+    Border.glow (intToColor color) 8

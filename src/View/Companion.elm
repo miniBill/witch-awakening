@@ -327,7 +327,7 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                     Background.color <| rgb 1 1 1
             , case glow of
                 Just color ->
-                    Border.glow (Theme.intToColor color) 8
+                    Theme.borderGlow color
 
                 Nothing ->
                     Border.width 0

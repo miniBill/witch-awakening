@@ -165,7 +165,7 @@ factionBox display selected { name, motto, description, location, relations, per
                             Theme.backgroundColor 0x00C1C1C1
                     , case factionGlow of
                         Just color ->
-                            Border.glow (Theme.intToColor color) 8
+                            Theme.borderGlow color
 
                         Nothing ->
                             Border.width 0
