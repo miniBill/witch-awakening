@@ -441,7 +441,7 @@ innerView model =
         , Element.Lazy.lazy2 Perk.viewPerks model.perksDisplay model.perks
         , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
         , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
-        , Element.Lazy.lazy Companion.viewCompanions model.companions
+        , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions
         , Element.Lazy.lazy Relic.viewRelics model.relics
         ]
         |> Element.map Choice

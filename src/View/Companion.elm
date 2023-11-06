@@ -12,84 +12,98 @@ import Images
 import Svg
 import Svg.Attributes
 import Theme
-import Types exposing (Choice(..))
+import Types exposing (Choice(..), Display(..))
+import View
 
 
-viewCompanions : List Companion -> Element Choice
-viewCompanions companions =
-    Theme.column
-        [ width fill
-        , spacing <| Theme.rythm * 2
-        ]
-        [ Theme.column
-            ([ width fill
-             , spacing <| Theme.rythm * 2
-             ]
-                ++ Theme.topBackground Images.companionIntro
-            )
-            [ Theme.blocks [] "# Companions"
-            , let
-                color : Element.Color
-                color =
-                    rgba 0 0 0 0.75
-              in
-              Theme.wrappedRow
-                [ width <| Element.maximum 800 fill
-                , centerX
-                , spacing <| 2 * Theme.rythm
-                ]
-                [ Theme.blocks
-                    [ width fill
-                    , Background.color color
-                    , Border.shadow
-                        { offset = ( 0, 0 )
-                        , size = 5
-                        , blur = 5
-                        , color = color
-                        }
-                    ]
-                    Companion.intro
-                , Element.table
-                    [ width shrink
-                    , Background.color color
-                    , Border.shadow
-                        { offset = ( 0, 0 )
-                        , size = 5
-                        , blur = 5
-                        , color = color
-                        }
-                    , alignBottom
-                    ]
-                    { columns =
-                        tableColumns
-                    , data =
-                        tableData
-                    }
-                ]
-            , el [ height <| px 40 ] Element.none
-            ]
+viewCompanions : Display -> List Companion -> Element Choice
+viewCompanions display companions =
+    View.collapsible (Theme.topBackground Images.companionIntro)
+        display
+        DisplayCompanions
+        (\( companion, selected ) -> ChoiceCompanion companion selected)
+        "# Companions"
+        [ introBlock
         , Companion.all
-            |> List.concatMap (companionSection companions)
+            |> List.concatMap (companionSection display companions)
             |> Theme.column
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
-            |> Element.map (\( companion, selected ) -> ChoiceCompanion companion selected)
+        ]
+        [ Companion.all
+            |> List.concatMap (companionSection display companions)
+            |> Theme.wrappedRow
+                [ width fill
+                , spacing <| Theme.rythm * 3
+                ]
         ]
 
 
-companionSection : List Companion -> ( String, Maybe Faction, List Companion.Details ) -> List (Element ( Companion, Bool ))
-companionSection companions ( label, _, section ) =
-    [ (label ++ ":")
-        |> Theme.gradientText 2 Gradients.yellowGradient
-        |> el [ Theme.celticHand, Font.size 48 ]
-    , section
-        |> List.map (companionBox companions)
-        |> Theme.wrappedRow
-            [ width fill
-            , spacing <| Theme.rythm * 3
+introBlock : Element msg
+introBlock =
+    Theme.column
+        [ width fill
+        , spacing <| Theme.rythm * 2
+        ]
+        [ let
+            color : Element.Color
+            color =
+                rgba 0 0 0 0.75
+          in
+          Theme.wrappedRow
+            [ width <| Element.maximum 800 fill
+            , centerX
+            , spacing <| 2 * Theme.rythm
             ]
-    ]
+            [ Theme.blocks
+                [ width fill
+                , Background.color color
+                , Border.shadow
+                    { offset = ( 0, 0 )
+                    , size = 5
+                    , blur = 5
+                    , color = color
+                    }
+                ]
+                Companion.intro
+            , Element.table
+                [ width shrink
+                , Background.color color
+                , Border.shadow
+                    { offset = ( 0, 0 )
+                    , size = 5
+                    , blur = 5
+                    , color = color
+                    }
+                , alignBottom
+                ]
+                { columns =
+                    tableColumns
+                , data =
+                    tableData
+                }
+            ]
+        , el [ height <| px 40 ] Element.none
+        ]
+
+
+companionSection : Display -> List Companion -> ( String, Maybe Faction, List Companion.Details ) -> List (Element ( Companion, Bool ))
+companionSection display companions ( label, _, section ) =
+    if display == DisplayFull then
+        [ (label ++ ":")
+            |> Theme.gradientText 2 Gradients.yellowGradient
+            |> el [ Theme.celticHand, Font.size 48 ]
+        , section
+            |> List.map (companionBox display companions)
+            |> Theme.wrappedRow
+                [ width fill
+                , spacing <| Theme.rythm * 3
+                ]
+        ]
+
+    else
+        List.map (companionBox display companions) section
 
 
 tableColumns : List { header : Element msg, width : Element.Length, view : ( ( Int, Int ), String ) -> Element msg }
@@ -127,197 +141,203 @@ tableData =
 
 
 companionBox :
-    List Companion
+    Display
+    -> List Companion
     -> Companion.Details
     -> Element ( Companion, Bool )
-companionBox selected ({ name, races, hasPerk, quote, cost, class, description, positives, mixed, negatives, has } as companion) =
+companionBox display selected ({ name, races, hasPerk, quote, cost, class, description, positives, mixed, negatives, has } as companion) =
     let
         isSelected : Bool
         isSelected =
             List.member name selected
+    in
+    if display /= DisplayFull && not isSelected then
+        Element.none
 
-        glow : Maybe Int
-        glow =
-            if isSelected then
-                Just 0x00F3EA6F
+    else
+        let
+            glow : Maybe Int
+            glow =
+                if isSelected then
+                    Just 0x00F3EA6F
 
-            else
-                Nothing
+                else
+                    Nothing
 
-        image : Element msg
-        image =
-            el
-                (width fill
-                    :: height fill
-                    :: Border.roundEach
-                        { topLeft = Theme.cardRoundness
-                        , bottomLeft = Theme.cardRoundness
-                        , topRight = 0
-                        , bottomRight = 0
-                        }
-                    :: Background.image
-                        (Types.companionToImage name).src
-                    :: List.map Element.inFront
-                        [ cost
-                            |> Maybe.map String.fromInt
-                            |> Maybe.withDefault "X"
-                            |> Theme.gradientText 4 Gradients.yellowGradient
-                            |> el
-                                [ alignRight
-                                , Font.size 32
-                                , Theme.captureIt
-                                , moveLeft 8
-                                , moveDown 4
-                                ]
-                        , let
-                            joined : String
-                            joined =
-                                races
-                                    |> List.map Types.raceToString
-                                    |> String.join " - "
-
-                            normal : String
-                            normal =
-                                if hasPerk then
-                                    joined ++ "+"
-
-                                else
-                                    joined
-                          in
-                          (case normal of
-                            "Neutral" ->
-                                ""
-
-                            "" ->
-                                "Any"
-
-                            _ ->
-                                normal
-                          )
-                            |> Theme.gradientText 4 Gradients.yellowGradient
-                            |> el
-                                [ alignBottom
-                                , centerX
-                                , Font.size 32
-                                , Theme.captureIt
-                                ]
-                        , cost
-                            |> Maybe.map Types.gainToSlot
-                            |> Maybe.withDefault Types.White
-                            |> Types.slotToImage
-                            |> Theme.image [ width <| px 40 ]
-                            |> el [ moveRight 4 ]
-                        ]
-                )
-                Element.none
-
-        content : Element msg
-        content =
-            Theme.column
-                [ Theme.padding
-                , height fill
-                , width <| fillPortion 2
-                ]
-                [ Theme.row [ width fill ]
-                    [ Types.companionToString name
-                        |> Theme.gradientText 4 Gradients.yellowGradient
-                        |> el [ Font.size 36 ]
-                    , case class of
-                        ClassOne c ->
-                            c
-                                |> Theme.classToBadge
-                                |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
-
-                        ClassAny ->
-                            Images.badgeMixed
-                                |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
-
-                        ClassNone ->
-                            Element.none
-
-                        ClassSpecial ->
-                            Images.badgeSpecial
-                                |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
-                    ]
-                , statsTable companion
-                , Theme.blocks [ Font.size 14 ] quote
-                , Theme.blocks [] description
-                , let
-                    toBlocks : List String -> List (Element msg)
-                    toBlocks lines =
-                        List.map
-                            (\line ->
-                                if String.startsWith "-" line then
-                                    Theme.blocks [] <| "\\" ++ line
-
-                                else
-                                    Theme.blocks [] line
-                            )
-                            lines
-
-                    toColumn : String -> List String -> Element msg
-                    toColumn label items =
-                        if List.isEmpty items then
-                            Element.none
-
-                        else
-                            items
-                                |> toBlocks
-                                |> (::) (el [ Font.bold ] <| text <| label ++ ":")
-                                |> column
-                                    [ width fill
-                                    , alignTop
-                                    , spacing <| Theme.rythm // 2
+            image : Element msg
+            image =
+                el
+                    (width fill
+                        :: height fill
+                        :: Border.roundEach
+                            { topLeft = Theme.cardRoundness
+                            , bottomLeft = Theme.cardRoundness
+                            , topRight = 0
+                            , bottomRight = 0
+                            }
+                        :: Background.image
+                            (Types.companionToImage name).src
+                        :: List.map Element.inFront
+                            [ cost
+                                |> Maybe.map String.fromInt
+                                |> Maybe.withDefault "X"
+                                |> Theme.gradientText 4 Gradients.yellowGradient
+                                |> el
+                                    [ alignRight
+                                    , Font.size 32
+                                    , Theme.captureIt
+                                    , moveLeft 8
+                                    , moveDown 4
                                     ]
+                            , let
+                                joined : String
+                                joined =
+                                    races
+                                        |> List.map Types.raceToString
+                                        |> String.join " - "
 
-                    beforeBlock : Element msg
-                    beforeBlock =
-                        [ toColumn "Positives" positives
-                        , toColumn "Negatives" negatives
-                        ]
-                            |> Theme.row [ width fill ]
-                  in
-                  column
-                    [ width fill
-                    , spacing <| Theme.rythm // 2
-                    ]
-                    (beforeBlock :: toBlocks mixed)
-                , if String.isEmpty has then
+                                normal : String
+                                normal =
+                                    if hasPerk then
+                                        joined ++ "+"
+
+                                    else
+                                        joined
+                              in
+                              (case normal of
+                                "Neutral" ->
+                                    ""
+
+                                "" ->
+                                    "Any"
+
+                                _ ->
+                                    normal
+                              )
+                                |> Theme.gradientText 4 Gradients.yellowGradient
+                                |> el
+                                    [ alignBottom
+                                    , centerX
+                                    , Font.size 32
+                                    , Theme.captureIt
+                                    ]
+                            , cost
+                                |> Maybe.map Types.gainToSlot
+                                |> Maybe.withDefault Types.White
+                                |> Types.slotToImage
+                                |> Theme.image [ width <| px 40 ]
+                                |> el [ moveRight 4 ]
+                            ]
+                    )
                     Element.none
 
-                  else
-                    Theme.blocks []
-                        ("*" ++ has ++ ".*")
-                ]
-    in
-    Theme.maybeButton
-        [ height fill
-        , width <| Element.minimum 660 <| Element.maximum 760 fill
-        , Font.color <| rgb 0 0 0
-        , Border.rounded Theme.cardRoundness
-        , case glow of
-            Just color ->
-                Background.color <| Theme.intToBackground color
+            content : Element msg
+            content =
+                Theme.column
+                    [ Theme.padding
+                    , height fill
+                    , width <| fillPortion 2
+                    ]
+                    [ Theme.row [ width fill ]
+                        [ Types.companionToString name
+                            |> Theme.gradientText 4 Gradients.yellowGradient
+                            |> el [ Font.size 36 ]
+                        , case class of
+                            ClassOne c ->
+                                c
+                                    |> Theme.classToBadge
+                                    |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
 
-            Nothing ->
-                Background.color <| rgb 1 1 1
-        , case glow of
-            Just color ->
-                Border.glow (Theme.intToColor color) 8
+                            ClassAny ->
+                                Images.badgeMixed
+                                    |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
 
-            Nothing ->
-                Border.width 0
-        ]
-        { label =
-            Element.row
-                [ height fill
-                , width fill
-                ]
-                [ image
-                , content
-                ]
-        , onPress = Just ( name, not isSelected )
-        }
+                            ClassNone ->
+                                Element.none
+
+                            ClassSpecial ->
+                                Images.badgeSpecial
+                                    |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+                        ]
+                    , statsTable companion
+                    , Theme.blocks [ Font.size 14 ] quote
+                    , Theme.blocks [] description
+                    , let
+                        toBlocks : List String -> List (Element msg)
+                        toBlocks lines =
+                            List.map
+                                (\line ->
+                                    if String.startsWith "-" line then
+                                        Theme.blocks [] <| "\\" ++ line
+
+                                    else
+                                        Theme.blocks [] line
+                                )
+                                lines
+
+                        toColumn : String -> List String -> Element msg
+                        toColumn label items =
+                            if List.isEmpty items then
+                                Element.none
+
+                            else
+                                items
+                                    |> toBlocks
+                                    |> (::) (el [ Font.bold ] <| text <| label ++ ":")
+                                    |> column
+                                        [ width fill
+                                        , alignTop
+                                        , spacing <| Theme.rythm // 2
+                                        ]
+
+                        beforeBlock : Element msg
+                        beforeBlock =
+                            [ toColumn "Positives" positives
+                            , toColumn "Negatives" negatives
+                            ]
+                                |> Theme.row [ width fill ]
+                      in
+                      column
+                        [ width fill
+                        , spacing <| Theme.rythm // 2
+                        ]
+                        (beforeBlock :: toBlocks mixed)
+                    , if String.isEmpty has then
+                        Element.none
+
+                      else
+                        Theme.blocks []
+                            ("*" ++ has ++ ".*")
+                    ]
+        in
+        Theme.maybeButton
+            [ height fill
+            , width <| Element.minimum 660 <| Element.maximum 760 fill
+            , Font.color <| rgb 0 0 0
+            , Border.rounded Theme.cardRoundness
+            , case glow of
+                Just color ->
+                    Background.color <| Theme.intToBackground color
+
+                Nothing ->
+                    Background.color <| rgb 1 1 1
+            , case glow of
+                Just color ->
+                    Border.glow (Theme.intToColor color) 8
+
+                Nothing ->
+                    Border.width 0
+            ]
+            { label =
+                Element.row
+                    [ height fill
+                    , width fill
+                    ]
+                    [ image
+                    , content
+                    ]
+            , onPress = Just ( name, not isSelected )
+            }
 
 
 statsTable : Companion.Details -> Element msg
