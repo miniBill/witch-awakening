@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (affinityToColor, backgroundColor, bebasNeue, blocks, borderColor, borderGlow, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (Affinity, Class(..), ComplicationCategory(..), Slot(..))
+import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Slot(..))
 import Gradients
 import Hex
 import Html exposing (Html)
@@ -615,3 +615,49 @@ topBackground { src } =
 borderGlow : Int -> Attribute msg
 borderGlow color =
     Border.glow (intToColor color) 8
+
+
+affinityToColor : Affinity -> Int
+affinityToColor affinity =
+    case affinity of
+        All ->
+            0x00FFFFFF
+
+        Beast ->
+            0x008C6D33
+
+        Blood ->
+            0x00C21D1D
+
+        Body ->
+            0x00F5C49E
+
+        Earth ->
+            0x00A35A49
+
+        Fire ->
+            0x00FF5500
+
+        Life ->
+            0x00FF78DD
+
+        Metal ->
+            0x00A3A3A3
+
+        Mind ->
+            0x00B322B3
+
+        Nature ->
+            0x003CA62F
+
+        Necro ->
+            0x00C0C0C0
+
+        Soul ->
+            0x00FFFFFF
+
+        Water ->
+            0x001E93D6
+
+        Wind ->
+            0x00CABEDD

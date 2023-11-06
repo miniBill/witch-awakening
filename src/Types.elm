@@ -1,8 +1,10 @@
-module Types exposing (Choice(..), ComplicationKind(..), Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot, nextDisplay)
+module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, affinities, allAffinities, baseAffinities, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot, nextDisplay)
 
 import Browser exposing (UrlRequest)
 import Browser.Navigation
-import Generated.Types exposing (Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Relic, Slot(..))
+import Data.Race as Race
+import Generated.Types exposing (Affinity(..), Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Relic, Slot(..))
+import List.Extra
 
 
 type Msg
@@ -35,11 +37,18 @@ type Choice
     | ChoiceFaction (Maybe ( Faction, Bool ))
     | DisplayFaction Display
     | DisplayFactionalMagic Display
-    | ChoiceRelic RankedRelic Bool
-    | DisplayRelics Display
     | ChoiceCompanion Companion Bool
     | DisplayCompanions Display
+    | ChoiceRelic RankedRelic Bool
+    | DisplayRelics Display
+    | ChoiceCosmicPearl CosmicPearlData
     | TowardsCap Int
+
+
+type alias CosmicPearlData =
+    { change : List ( Affinity, Affinity )
+    , add : List Affinity
+    }
 
 
 type alias Model =
@@ -67,6 +76,7 @@ type alias Model =
     , companionsDisplay : Display
     , relics : List RankedRelic
     , relicsDisplay : Display
+    , cosmicPearl : CosmicPearlData
     }
 
 
@@ -197,3 +207,35 @@ nextDisplay display =
 
         DisplayCollapsed ->
             DisplayFull
+
+
+affinities : Model -> List Affinity
+affinities { race, cosmicPearl } =
+    let
+        base : List Affinity
+        base =
+            baseAffinities race
+
+        afterChange : List Affinity
+        afterChange =
+            List.foldl
+                (\( from, to ) acc -> to :: List.Extra.remove from acc)
+                base
+                cosmicPearl.change
+    in
+    (afterChange ++ cosmicPearl.add)
+        |> (::) All
+        |> List.Extra.unique
+
+
+baseAffinities : Maybe Race -> List Affinity
+baseAffinities race =
+    Race.all
+        |> List.Extra.find (\{ name } -> Just name == race)
+        |> Maybe.map .affinities
+        |> Maybe.withDefault []
+
+
+allAffinities : List Affinity
+allAffinities =
+    [ Beast, Blood, Body, Earth, Fire, Life, Metal, Mind, Nature, Necro, Soul, Water, Wind ]

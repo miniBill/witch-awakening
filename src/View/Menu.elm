@@ -5,7 +5,6 @@ import Data.Complication as Complication exposing (Content(..))
 import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic exposing (Affinities(..))
 import Data.Perk as Perk
-import Data.Race as Race
 import Data.Relic as Relic
 import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
@@ -13,13 +12,13 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (Affinity(..), Class(..), Faction, GameMode(..), Race)
+import Generated.Types as Types exposing (Affinity, Class(..), Faction, GameMode(..), Race, Relic(..))
 import Gradients
 import List.Extra
 import Maybe.Extra
 import String.Extra
 import Theme
-import Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedMagic, RankedPerk, RankedRelic)
+import Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Model, Msg(..), RankedMagic, RankedPerk, RankedRelic)
 
 
 viewMenu : Model -> Element Msg
@@ -45,7 +44,12 @@ viewMenu model =
     Theme.column
         [ alignTop
         , alignRight
-        , height fill
+        , height <|
+            if model.menuOpen then
+                fill
+
+            else
+                shrink
         , padding 16
         ]
         [ Input.button
@@ -328,16 +332,7 @@ magicsValue model =
     let
         affinities : List Affinity
         affinities =
-            case model.race of
-                Nothing ->
-                    [ All ]
-
-                Just race ->
-                    Race.all
-                        |> List.Extra.find (\{ name } -> name == race)
-                        |> Maybe.map .affinities
-                        |> Maybe.withDefault []
-                        |> (::) All
+            Types.affinities model
     in
     maybeSum (magicValue affinities model) .magic model
 
@@ -440,16 +435,7 @@ perksValue model =
     let
         affinities : List Affinity
         affinities =
-            case model.race of
-                Nothing ->
-                    [ All ]
-
-                Just race ->
-                    Race.all
-                        |> List.Extra.find (\{ name } -> name == race)
-                        |> Maybe.map .affinities
-                        |> Maybe.withDefault []
-                        |> (::) All
+            Types.affinities model
     in
     maybeSum (perkValue affinities model.class) .perks model
 
@@ -632,11 +618,11 @@ getCompanion companion =
 
 relicsValue : Model -> Maybe Int
 relicsValue model =
-    maybeSum (relicValue model.class) .relics model
+    maybeSum (relicValue model.class model.cosmicPearl) .relics model
 
 
-relicValue : Maybe Class -> RankedRelic -> Maybe Int
-relicValue class { name, cost } =
+relicValue : Maybe Class -> CosmicPearlData -> RankedRelic -> Maybe Int
+relicValue class pearl { name, cost } =
     Relic.all
         |> List.Extra.find (\relic -> relic.name == name)
         |> Maybe.map
@@ -645,12 +631,24 @@ relicValue class { name, cost } =
                     isClass : Bool
                     isClass =
                         Just relic.class == class
-                in
-                if isClass then
-                    -cost + 2
 
-                else
-                    -cost
+                    baseCost : Int
+                    baseCost =
+                        if isClass then
+                            -cost + 2
+
+                        else
+                            -cost
+
+                    multiplier : Int
+                    multiplier =
+                        if name == CosmicPearl then
+                            max 1 <| List.length pearl.add + List.length pearl.change
+
+                        else
+                            1
+                in
+                baseCost * multiplier
             )
 
 

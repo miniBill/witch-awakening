@@ -5,32 +5,32 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, c
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (Slot(..))
+import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
 import List.Extra
 import String.Extra
 import Theme exposing (gradientText)
-import Types exposing (Choice(..), Display, RankedRelic)
+import Types exposing (Choice(..), CosmicPearlData, Display, RankedRelic)
 import View
 
 
-viewRelics : Display -> List RankedRelic -> Element Choice
-viewRelics display relics =
+viewRelics : Display -> CosmicPearlData -> Maybe Race -> List RankedRelic -> Element Choice
+viewRelics display pearl race relics =
     View.collapsible []
         display
         DisplayRelics
-        (\( relic, selected ) -> ChoiceRelic relic selected)
+        identity
         "# Relics"
         [ Theme.blocks [ centerX ] Relic.intro
         , Relic.all
-            |> List.map (relicBox display relics)
+            |> List.map (relicBox display relics pearl race)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
         [ Relic.all
-            |> List.map (relicBox display relics)
+            |> List.map (relicBox display relics pearl race)
             |> Theme.column
                 [ centerX
                 , spacing <| Theme.rythm * 3
@@ -41,22 +41,30 @@ viewRelics display relics =
 relicBox :
     Display
     -> List RankedRelic
+    -> CosmicPearlData
+    -> Maybe Race
     -> Relic.Details
-    -> Element ( RankedRelic, Bool )
-relicBox display selected ({ name, class, content } as relic) =
+    -> Element Choice
+relicBox display selected pearl race ({ name, class, content } as relic) =
     let
         isSelected : Maybe RankedRelic
         isSelected =
             List.Extra.find (\sel -> sel.name == name) selected
 
-        msg : Maybe ( RankedRelic, Bool )
+        msg : Maybe Choice
         msg =
             case ( content, isSelected ) of
+                ( CosmicPearlContent _ _, Just _ ) ->
+                    Nothing
+
+                ( CosmicPearlContent cost _, Nothing ) ->
+                    Just <| ChoiceRelic { name = name, cost = cost } True
+
                 ( _, Just selectedRelic ) ->
-                    Just ( selectedRelic, False )
+                    Just <| ChoiceRelic selectedRelic False
 
                 ( Single cost _, Nothing ) ->
-                    Just ( { name = name, cost = cost }, True )
+                    Just <| ChoiceRelic { name = name, cost = cost } True
 
                 ( WithChoices _ _, Nothing ) ->
                     Nothing
@@ -69,6 +77,9 @@ relicBox display selected ({ name, class, content } as relic) =
 
                 Single cost _ ->
                     [ cost ]
+
+                CosmicPearlContent cost _ ->
+                    List.map ((*) cost) (List.range 1 4)
             )
                 |> List.filter ((/=) 0)
                 |> List.Extra.unique
@@ -144,13 +155,13 @@ relicBox display selected ({ name, class, content } as relic) =
                     , Font.center
                     ]
             ]
-        , content = viewContent selected relic color
+        , content = viewContent (isSelected /= Nothing) selected pearl race relic color
         , onPress = msg
         }
 
 
-viewContent : List RankedRelic -> Relic.Details -> Int -> List (Element ( RankedRelic, Bool ))
-viewContent selected { content, name } color =
+viewContent : Bool -> List RankedRelic -> CosmicPearlData -> Maybe Race -> Relic.Details -> Int -> List (Element Choice)
+viewContent isSelected selected pearl race { content, name } color =
     case content of
         Single _ block ->
             [ Theme.blocks
@@ -160,9 +171,12 @@ viewContent selected { content, name } color =
                 block
             ]
 
+        CosmicPearlContent cost block ->
+            viewCosmicPearl isSelected pearl race name cost block
+
         WithChoices before choices ->
             let
-                choicesView : List (Element ( RankedRelic, Bool ))
+                choicesView : List (Element Choice)
                 choicesView =
                     [ el [ Font.bold ] <| text "Cost:"
                     , choices
@@ -170,7 +184,7 @@ viewContent selected { content, name } color =
                         |> Theme.wrappedRow []
                     ]
 
-                viewChoice : Int -> Element ( RankedRelic, Bool )
+                viewChoice : Int -> Element Choice
                 viewChoice cost =
                     let
                         relic : RankedRelic
@@ -203,10 +217,165 @@ viewContent selected { content, name } color =
                             String.fromInt cost
                                 |> Theme.gradientText 4 Gradients.yellowGradient
                                 |> el [ centerX, centerY, Theme.captureIt ]
-                        , onPress = Just ( relic, not isChoiceSelected )
+                        , onPress = Just <| ChoiceRelic relic <| not isChoiceSelected
                         }
             in
             [ Theme.column [ height fill, Theme.padding ] <|
                 Theme.blocks [] before
                     :: choicesView
             ]
+
+
+viewCosmicPearl :
+    Bool
+    -> CosmicPearlData
+    -> Maybe Race
+    -> Types.Relic
+    -> Int
+    -> String
+    -> List (Element Choice)
+viewCosmicPearl isSelected pearl race name cost block =
+    let
+        affinities : List Affinity
+        affinities =
+            Types.baseAffinities race
+
+        swapAffinityRow : Affinity -> Element Choice
+        swapAffinityRow from =
+            let
+                existing : Maybe Affinity
+                existing =
+                    List.Extra.find
+                        (\( cFrom, _ ) -> cFrom == from)
+                        pearl.change
+                        |> Maybe.map Tuple.second
+
+                viewSwap : Affinity -> Element Choice
+                viewSwap to =
+                    if from == to then
+                        Element.none
+
+                    else
+                        let
+                            isSwapSelected : Bool
+                            isSwapSelected =
+                                Just to == existing
+
+                            removed : List ( Affinity, Affinity )
+                            removed =
+                                List.filter (\( f, _ ) -> f /= from) pearl.change
+                        in
+                        Theme.maybeButton
+                            [ if isSwapSelected then
+                                Border.glow (Theme.intToColor <| Theme.affinityToColor to) 4
+
+                              else
+                                Border.width 0
+                            , Border.rounded 999
+                            ]
+                            { onPress =
+                                (if isSwapSelected then
+                                    { pearl | change = removed }
+
+                                 else
+                                    { pearl | change = ( from, to ) :: removed }
+                                )
+                                    |> ChoiceCosmicPearl
+                                    |> Just
+                            , label = Theme.viewAffinity to
+                            }
+            in
+            Theme.column [ width fill ] <|
+                [ Theme.row []
+                    [ Theme.blocks [] "Swap"
+                    , Theme.viewAffinity from
+                    , Theme.blocks [] "with"
+                    ]
+                , Theme.wrappedRow [] <| List.map viewSwap Types.allAffinities
+                ]
+
+        addAffinityRow : Int -> Affinity -> Element Choice
+        addAffinityRow index existing =
+            let
+                viewAdd : Affinity -> Element Choice
+                viewAdd to =
+                    let
+                        isAddSelected : Bool
+                        isAddSelected =
+                            to == existing
+
+                        removed : List Affinity
+                        removed =
+                            List.filter (\t -> t /= existing) pearl.add
+                    in
+                    Theme.maybeButton
+                        [ if isAddSelected then
+                            Border.glow (Theme.intToColor <| Theme.affinityToColor to) 4
+
+                          else
+                            Border.width 0
+                        , Border.rounded 999
+                        ]
+                        { onPress =
+                            (if isAddSelected then
+                                { pearl | add = removed }
+
+                             else
+                                { pearl
+                                    | add =
+                                        if index == 0 then
+                                            List.Extra.unique <| to :: removed
+
+                                        else
+                                            List.Extra.unique <| removed ++ [ to ]
+                                }
+                            )
+                                |> ChoiceCosmicPearl
+                                |> Just
+                        , label = Theme.viewAffinity to
+                        }
+            in
+            Theme.column [ width fill ]
+                [ Theme.blocks [ width fill ] "Add an affinity: "
+                , Theme.wrappedRow [] <| List.map viewAdd Types.allAffinities
+                ]
+    in
+    [ Theme.column [ width fill, Theme.padding ]
+        [ Theme.blocks
+            [ height fill
+            ]
+            block
+        , if isSelected then
+            Input.button
+                [ width fill
+                , Border.width 1
+                , Theme.padding
+                , Border.rounded Theme.rythm
+                , Font.center
+                ]
+                { onPress =
+                    Just (ChoiceRelic { name = name, cost = cost } False)
+                , label = text "Remove"
+                }
+
+          else
+            Element.none
+        , Theme.column
+            [ width fill
+            , Theme.backgroundColor 0
+            , Font.color <| Element.rgb 1 1 1
+            , Border.rounded Theme.rythm
+            , Theme.padding
+            ]
+          <|
+            (List.map swapAffinityRow affinities
+                ++ List.indexedMap addAffinityRow
+                    (if List.length pearl.add == 2 then
+                        pearl.add
+
+                     else
+                        pearl.add ++ [ All ]
+                    )
+            )
+        ]
+    ]

@@ -231,6 +231,9 @@ updateOnChoice choice model =
         DisplayRelics relicsDisplay ->
             { model | relicsDisplay = relicsDisplay }
 
+        ChoiceCosmicPearl cosmicPearl ->
+            { model | cosmicPearl = cosmicPearl }
+
         TowardsCap towardsCap ->
             { model | towardsCap = towardsCap }
 
@@ -434,6 +437,21 @@ parseUrl navKey url =
     , companionsDisplay = DisplayFull
     , relics = parseMany "relic" parseRelic
     , relicsDisplay = DisplayFull
+    , cosmicPearl =
+        { add = parseMany "addAffinity" Types.affinityFromString
+        , change =
+            parseMany "changeAffinity"
+                (\s ->
+                    case String.split "-" s of
+                        [ from, to ] ->
+                            Maybe.map2 Tuple.pair
+                                (Types.affinityFromString from)
+                                (Types.affinityFromString to)
+
+                        _ ->
+                            Nothing
+                )
+        }
     }
 
 
@@ -485,7 +503,7 @@ innerView model =
         , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
         , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
         , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions
-        , Element.Lazy.lazy2 Relic.viewRelics model.relicsDisplay model.relics
+        , Element.Lazy.lazy4 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.race model.relics
         ]
         |> Element.map Choice
 
