@@ -1,7 +1,7 @@
 module View.Magic exposing (magicBox, viewMagics)
 
 import Data.Magic as Magic exposing (Affinities(..))
-import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveRight, moveUp, padding, px, rgb, rgba, spacing, width)
+import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveRight, moveUp, padding, px, rgb, rgba, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -13,15 +13,17 @@ import Html.Attributes
 import Images
 import List.Extra
 import Theme
-import Types exposing (Choice(..), RankedMagic)
+import Types exposing (Choice(..), Display(..), RankedMagic)
+import View
 
 
-viewMagics : List RankedMagic -> Element Choice
-viewMagics selected =
-    Theme.column
-        [ width fill
-        , spacing <| Theme.rythm * 2
-        ]
+viewMagics : Display -> List RankedMagic -> Element Choice
+viewMagics display selected =
+    View.collapsible []
+        display
+        DisplayMagic
+        (\( ranked, select ) -> ChoiceMagic ranked select)
+        Magic.title
         [ Theme.blocks [] Magic.intro
         , Theme.wrappedRow [ width fill ]
             [ costTable
@@ -42,44 +44,51 @@ viewMagics selected =
             ]
             Magic.slotDescription
         , Magic.nonElemental
-            |> List.indexedMap (magicBox False selected)
+            |> List.indexedMap (magicBox display False selected)
             |> Theme.column []
-            |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)
-        , Theme.row
-            (Theme.padding
-                :: Theme.topBackground Images.magicElementalism
-            )
-            [ let
-                color : Element.Color
-                color =
-                    rgba 0 0 0 0.5
-              in
-              Theme.column
-                [ Theme.padding
-                , width <| Element.minimum 480 <| fillPortion 1
-                , Background.color color
-                , Border.shadow
-                    { offset = ( 0, 0 )
-                    , size = 5
-                    , blur = 5
-                    , color = color
-                    }
-                ]
-                [ el
-                    [ Font.size 58
-                    , Theme.morpheus
-                    , Theme.style "letter-spacing" ".15em"
-                    ]
-                  <|
-                    Theme.gradientText 4 Gradients.blueGradient "Elementalism"
-                , Theme.blocks [] Magic.elementalismIntro
-                ]
-            , el [ width <| fillPortion 3 ] Element.none
-            ]
+        , elementalIntro
         , Magic.elementalism
-            |> List.indexedMap (magicBox False selected)
+            |> List.indexedMap (magicBox display False selected)
             |> Theme.column []
-            |> Element.map (\( ranked, select ) -> ChoiceMagic ranked select)
+        ]
+        [ (Magic.nonElemental ++ Magic.elementalism)
+            |> List.indexedMap (magicBox display False selected)
+            |> Theme.column []
+        ]
+
+
+elementalIntro : Element msg
+elementalIntro =
+    Theme.row
+        (Theme.padding
+            :: Theme.topBackground Images.magicElementalism
+        )
+        [ let
+            color : Element.Color
+            color =
+                rgba 0 0 0 0.5
+          in
+          Theme.column
+            [ Theme.padding
+            , width <| Element.minimum 480 <| fillPortion 1
+            , Background.color color
+            , Border.shadow
+                { offset = ( 0, 0 )
+                , size = 5
+                , blur = 5
+                , color = color
+                }
+            ]
+            [ el
+                [ Font.size 58
+                , Theme.morpheus
+                , Theme.style "letter-spacing" ".15em"
+                ]
+              <|
+                Theme.gradientText 4 Gradients.blueGradient "Elementalism"
+            , Theme.blocks [] Magic.elementalismIntro
+            ]
+        , el [ width <| fillPortion 3 ] Element.none
         ]
 
 
@@ -200,17 +209,26 @@ costTable =
             [ Html.Attributes.style "border-collapse" "collapse" ]
 
 
-magicBox : Bool -> List RankedMagic -> Int -> { a | star : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic } -> Element ( RankedMagic, Bool )
-magicBox factional selected index details =
-    if modBy 2 index == 0 || factional then
+magicBox :
+    Display
+    -> Bool
+    -> List RankedMagic
+    -> Int
+    -> { a | star : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic }
+    -> Element ( RankedMagic, Bool )
+magicBox display factional selected index details =
+    if display == DisplayCompact && List.all (\sel -> sel.name /= details.name) selected then
+        Element.none
+
+    else if modBy 2 index == 0 || factional then
         Theme.row []
             [ magicImage details
-            , viewContent selected details
+            , viewContent display selected details
             ]
 
     else
         Theme.row []
-            [ viewContent selected details
+            [ viewContent display selected details
             , magicImage details
             ]
 
@@ -225,8 +243,8 @@ magicImage { name } =
         Element.none
 
 
-viewContent : List RankedMagic -> { a | name : Magic, description : String, ranks : List String, star : Bool, class : Maybe Class, affinities : Affinities } -> Element ( RankedMagic, Bool )
-viewContent selected ({ name, description, ranks } as details) =
+viewContent : Display -> List RankedMagic -> { a | name : Magic, description : String, ranks : List String, star : Bool, class : Maybe Class, affinities : Affinities } -> Element ( RankedMagic, Bool )
+viewContent display selected ({ name, description, ranks } as details) =
     let
         isSelected : Maybe RankedMagic
         isSelected =
@@ -244,7 +262,12 @@ viewContent selected ({ name, description, ranks } as details) =
                     Theme.blocks [] description
                         :: List.indexedMap
                             (viewRank selected details)
-                            ranks
+                            (if display == DisplayFull then
+                                ranks
+
+                             else
+                                List.take (Maybe.withDefault 0 <| Maybe.map .rank isSelected) ranks
+                            )
                 ]
         , onPress = msg
         }

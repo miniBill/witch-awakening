@@ -1,4 +1,4 @@
-module Data.Magic exposing (Affinities(..), Details, all, elementalism, elementalismIntro, intro, nonElemental, slotDescription)
+module Data.Magic exposing (Affinities(..), Details, all, elementalism, elementalismIntro, intro, nonElemental, slotDescription, title)
 
 import Generated.Types exposing (Affinity(..), Class(..), Magic(..))
 
@@ -673,11 +673,14 @@ arachnescence =
     }
 
 
+title : String
+title =
+    "# The Magic"
+
+
 intro : String
 intro =
     """
-    # The Magic
-
     "Time for the fun part. We’ve isolated your true form and primed it for emergence, but that’s only a small part of what you can actually do. The magic varies from witch to witch, we’ll run through the possibilities so I can get a sense of what’s resonating with you. It’s a pretty reliable method of detecting what you’ll be capable of in the future as you explore your abilities and grow your talents."
 
     Note that these are the possibilities isolated for you, not all witches would have the same opportunities you do. You are exceptional and have more options, and to a higher ceiling than most. Rank 3 in one or two specializations would be considered a capable witch. There are whispers of witches with rank 6 magic, while 7+ are the domain of gods, who are very real.

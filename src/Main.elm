@@ -433,7 +433,7 @@ innerView model =
         , Element.Lazy.lazy2 GameMode.viewGameMode model.gameModeDisplay model.gameMode
         , Element.Lazy.lazy2 Complications.viewComplications model.complicationsDisplay model.complications
         , Element.Lazy.lazy2 TypePerk.viewTypePerks model.typePerksDisplay model.typePerks
-        , Element.Lazy.lazy Magic.viewMagics model.magic
+        , Element.Lazy.lazy2 Magic.viewMagics model.magicDisplay model.magic
         , Element.Lazy.lazy Perk.viewPerks model.perks
         , Element.Lazy.lazy Faction.viewFaction model.faction
         , Element.Lazy.lazy FactionalMagic.viewFactionalMagics model.magic
