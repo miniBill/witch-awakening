@@ -58,11 +58,7 @@ viewTypePerks display typePerks =
                 ]
 
         DisplayCollapsed ->
-            Theme.column
-                [ width fill
-                , spacing <| Theme.rythm * 2
-                ]
-                [ Theme.collapsibleBlocks DisplayTypePerks display [] TypePerk.title ]
+            Theme.collapsibleBlocks DisplayTypePerks display [] TypePerk.title
 
 
 typePerkBox :

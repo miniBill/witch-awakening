@@ -112,7 +112,6 @@ title =
 
 intro : String
 intro =
-    title ++ """
-
+    """
     {choice You can only choose one game mode, or none to play the default way. Each supports a different type of player, and what you might want out of it.}
     """

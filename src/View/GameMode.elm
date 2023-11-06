@@ -7,54 +7,46 @@ import Element.Font as Font
 import Generated.Types as Types exposing (GameMode)
 import Gradients
 import Theme exposing (gradientText)
-import Types exposing (Choice(..), Display(..))
+import Types exposing (Choice(..), Display)
+import View.Collapsible as View
 
 
 viewGameMode : Display -> Maybe GameMode -> Element Choice
 viewGameMode display gameMode =
-    Theme.column
-        [ width fill
-        , spacing <| Theme.rythm * 2
+    let
+        slotsBox : Element msg
+        slotsBox =
+            Theme.blocks
+                [ width <| Element.maximum 400 fill
+                , alignTop
+                , Border.width 1
+                , Theme.padding
+                , Theme.borderColor Theme.colors.gameMode
+                ]
+                GameMode.slotDescription
+
+        boxes : List (Element (Maybe GameMode))
+        boxes =
+            GameMode.all
+                |> List.map (gameModeBox display gameMode)
+    in
+    View.collapsible display
+        DisplayGameMode
+        ChoiceGameMode
+        GameMode.title
+        [ Theme.blocks [] GameMode.intro
+        , (boxes ++ [ slotsBox ])
+            |> Theme.wrappedRow
+                [ centerX
+                , spacing <| Theme.rythm * 3
+                ]
         ]
-    <|
-        case display of
-            DisplayFull ->
-                [ Theme.collapsibleBlocks DisplayGameMode display [] GameMode.intro
-                , (List.map
-                    (gameModeBox display gameMode)
-                    GameMode.all
-                    ++ [ Theme.blocks
-                            [ width <| Element.maximum 400 fill
-                            , alignTop
-                            , Border.width 1
-                            , Theme.padding
-                            , Theme.borderColor Theme.colors.gameMode
-                            ]
-                            GameMode.slotDescription
-                       ]
-                  )
-                    |> Theme.wrappedRow
-                        [ centerX
-                        , spacing <| Theme.rythm * 3
-                        ]
-                    |> Element.map ChoiceGameMode
-                ]
-
-            DisplayCompact ->
-                [ Theme.collapsibleBlocks DisplayGameMode display [] GameMode.title
-                , List.map
-                    (gameModeBox display gameMode)
-                    GameMode.all
-                    |> Theme.column
-                        [ width fill
-                        , spacing <| Theme.rythm * 3
-                        ]
-                    |> Element.map ChoiceGameMode
-                ]
-
-            DisplayCollapsed ->
-                [ Theme.collapsibleBlocks DisplayGameMode display [] GameMode.title
-                ]
+        [ Theme.column
+            [ width fill
+            , spacing <| Theme.rythm * 3
+            ]
+            boxes
+        ]
 
 
 gameModeBox :
