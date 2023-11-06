@@ -442,7 +442,7 @@ innerView model =
         , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
         , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
         , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions
-        , Element.Lazy.lazy Relic.viewRelics model.relics
+        , Element.Lazy.lazy2 Relic.viewRelics model.relicsDisplay model.relics
         ]
         |> Element.map Choice
 

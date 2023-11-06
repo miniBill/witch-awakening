@@ -10,48 +10,44 @@ import Gradients
 import List.Extra
 import String.Extra
 import Theme exposing (gradientText)
-import Types exposing (Choice(..), RankedRelic)
+import Types exposing (Choice(..), Display, RankedRelic)
+import View
 
 
-viewRelics : List RankedRelic -> Element Choice
-viewRelics relics =
-    Theme.column
-        [ width fill
-        , spacing <| Theme.rythm * 2
-        ]
-        [ Theme.column
-            [ width fill
-            , spacing <| Theme.rythm * 2
-            ]
-            [ Theme.blocks [ centerX ] Relic.intro
-            ]
+viewRelics : Display -> List RankedRelic -> Element Choice
+viewRelics display relics =
+    View.collapsible []
+        display
+        DisplayRelics
+        (\( relic, selected ) -> ChoiceRelic relic selected)
+        "# Relics"
+        [ Theme.blocks [ centerX ] Relic.intro
         , Relic.all
-            |> List.map (relicBox relics)
+            |> List.map (relicBox display relics)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
-            |> Element.map (\( relic, selected ) -> ChoiceRelic relic selected)
+        ]
+        [ Relic.all
+            |> List.map (relicBox display relics)
+            |> Theme.column
+                [ centerX
+                , spacing <| Theme.rythm * 3
+                ]
         ]
 
 
 relicBox :
-    List RankedRelic
+    Display
+    -> List RankedRelic
     -> Relic.Details
     -> Element ( RankedRelic, Bool )
-relicBox selected ({ name, class, content } as relic) =
+relicBox display selected ({ name, class, content } as relic) =
     let
         isSelected : Maybe RankedRelic
         isSelected =
             List.Extra.find (\sel -> sel.name == name) selected
-
-        glow : Maybe Int
-        glow =
-            if isSelected == Nothing then
-                Nothing
-
-            else
-                Just color
 
         msg : Maybe ( RankedRelic, Bool )
         msg =
@@ -109,8 +105,10 @@ relicBox selected ({ name, class, content } as relic) =
         color =
             0x00F3EA6F
     in
-    Theme.card_ []
-        { glow = glow
+    Theme.card []
+        { display = display
+        , glow = color
+        , isSelected = isSelected /= Nothing
         , imageAttrs = []
         , imageHeight = 400
         , image = Types.relicToImage name
