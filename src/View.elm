@@ -1,25 +1,28 @@
 module View exposing (collapsible)
 
-import Element exposing (Element, fill, spacing, width)
+import Element exposing (Attribute, Element, fill, spacing, width)
 import Theme
 import Types exposing (Display(..))
 
 
 collapsible :
-    Display
+    List (Attribute msg)
+    -> Display
     -> (Display -> msg)
     -> (innerMsg -> msg)
     -> String
     -> List (Element innerMsg)
     -> List (Element innerMsg)
     -> Element msg
-collapsible display displayMsg choiceMsg title full compact =
+collapsible attrs display displayMsg choiceMsg title full compact =
     case display of
         DisplayFull ->
             Theme.column
-                [ width fill
-                , spacing <| Theme.rythm * 2
-                ]
+                ([ width fill
+                 , spacing <| Theme.rythm * 2
+                 ]
+                    ++ attrs
+                )
             <|
                 Theme.collapsibleBlocks displayMsg display [] title
                     :: List.map (Element.map choiceMsg) full

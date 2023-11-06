@@ -23,7 +23,8 @@ viewClass display class =
                     , spacing <| Theme.rythm * 3
                     ]
     in
-    View.collapsible display
+    View.collapsible []
+        display
         DisplayClass
         ChoiceClass
         Class.title

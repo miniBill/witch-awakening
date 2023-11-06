@@ -24,7 +24,8 @@ viewComplications display complications =
                     , spacing <| Theme.rythm * 3
                     ]
     in
-    View.collapsible display
+    View.collapsible []
+        display
         DisplayComplications
         (\( complication, selected ) -> ChoiceComplication complication selected)
         Complication.title

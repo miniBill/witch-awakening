@@ -30,7 +30,8 @@ viewGameMode display gameMode =
             GameMode.all
                 |> List.map (gameModeBox display gameMode)
     in
-    View.collapsible display
+    View.collapsible []
+        display
         DisplayGameMode
         ChoiceGameMode
         GameMode.title

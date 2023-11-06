@@ -8,57 +8,45 @@ import Generated.Types as Types exposing (Race(..), Slot)
 import Gradients
 import Images
 import Theme exposing (gradientText)
-import Types exposing (Choice(..), Display(..))
+import Types exposing (Choice(..), Display)
+import View
 
 
 viewTypePerks : Display -> List Race -> Element Choice
 viewTypePerks display typePerks =
-    case display of
-        DisplayFull ->
-            Theme.column
+    View.collapsible
+        [ Theme.style "background-image" <| "url(\"" ++ Images.typePerksBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
+        , Theme.style "background-repeat" "no-repeat, no-repeat"
+        , Theme.style "background-position" "top, bottom"
+        , Theme.style "background-size" "100%, 100%"
+        ]
+        display
+        DisplayTypePerks
+        (\( race, selected ) -> ChoiceTypePerk race selected)
+        TypePerk.title
+        [ Theme.blocks
+            [ Font.color <| rgb 0 0 0
+            , Theme.backgroundColor Theme.colors.white
+            , Theme.padding
+            , centerX
+            , width <| Element.maximum 600 fill
+            , Border.rounded Theme.rythm
+            ]
+            "These are particular perks that can be optionally taken by a witch of a given racial type. If hybridized (via later perk), you can purchase type perks of both types."
+        , TypePerk.all
+            |> List.map (typePerkBox display typePerks)
+            |> Theme.wrappedRow
                 [ width fill
-                , spacing <| Theme.rythm * 2
-                , Theme.style "background-image" <| "url(\"" ++ Images.typePerksBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
-                , Theme.style "background-repeat" "no-repeat, no-repeat"
-                , Theme.style "background-position" "top, bottom"
-                , Theme.style "background-size" "100%, 100%"
+                , spacing <| Theme.rythm * 3
                 ]
-                [ Theme.collapsibleBlocks DisplayTypePerks display [] TypePerk.title
-                , Theme.blocks
-                    [ Font.color <| rgb 0 0 0
-                    , Theme.backgroundColor Theme.colors.white
-                    , Theme.padding
-                    , centerX
-                    , width <| Element.maximum 600 fill
-                    , Border.rounded Theme.rythm
-                    ]
-                    "These are particular perks that can be optionally taken by a witch of a given racial type. If hybridized (via later perk), you can purchase type perks of both types."
-                , TypePerk.all
-                    |> List.map (typePerkBox display typePerks)
-                    |> Theme.wrappedRow
-                        [ width fill
-                        , spacing <| Theme.rythm * 3
-                        ]
-                    |> Element.map (\( race, selected ) -> ChoiceTypePerk race selected)
-                ]
-
-        DisplayCompact ->
-            Theme.column
+        ]
+        [ TypePerk.all
+            |> List.map (typePerkBox display typePerks)
+            |> Theme.column
                 [ width fill
-                , spacing <| Theme.rythm * 2
+                , spacing <| Theme.rythm * 3
                 ]
-                [ Theme.collapsibleBlocks DisplayTypePerks display [] TypePerk.title
-                , TypePerk.all
-                    |> List.map (typePerkBox display typePerks)
-                    |> Theme.column
-                        [ width fill
-                        , spacing <| Theme.rythm * 3
-                        ]
-                    |> Element.map (\( race, selected ) -> ChoiceTypePerk race selected)
-                ]
-
-        DisplayCollapsed ->
-            Theme.collapsibleBlocks DisplayTypePerks display [] TypePerk.title
+        ]
 
 
 typePerkBox :

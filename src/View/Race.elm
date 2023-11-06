@@ -25,7 +25,8 @@ viewRace display race =
                     , spacing <| Theme.rythm * 3
                     ]
     in
-    View.collapsible display
+    View.collapsible []
+        display
         DisplayRace
         ChoiceRace
         Race.title
