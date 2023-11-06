@@ -435,7 +435,7 @@ innerView model =
         , Element.Lazy.lazy2 TypePerk.viewTypePerks model.typePerksDisplay model.typePerks
         , Element.Lazy.lazy2 Magic.viewMagics model.magicDisplay model.magic
         , Element.Lazy.lazy2 Perk.viewPerks model.perksDisplay model.perks
-        , Element.Lazy.lazy Faction.viewFaction model.faction
+        , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
         , Element.Lazy.lazy FactionalMagic.viewFactionalMagics model.magic
         , Element.Lazy.lazy Companion.viewCompanions model.companions
         , Element.Lazy.lazy Relic.viewRelics model.relics
