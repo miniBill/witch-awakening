@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, cardRoundness, card_, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -601,17 +601,3 @@ topBackground { src } =
     , style "background-position" "top"
     , style "background-size" "100%"
     ]
-
-
-card_ attrs config =
-    card attrs
-        { display = DisplayFull
-        , glow = Maybe.withDefault 0 config.glow
-        , isSelected = config.glow /= Nothing
-        , onPress = config.onPress
-        , imageHeight = config.imageHeight
-        , imageAttrs = config.imageAttrs
-        , image = config.image
-        , inFront = config.inFront
-        , content = config.content
-        }

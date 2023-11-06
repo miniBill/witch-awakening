@@ -119,14 +119,6 @@ factionBox display selected { name, motto, description, location, relations, per
                 else
                     Just ( name, False )
 
-            perkGlow : Maybe Int
-            perkGlow =
-                if isPerkSelected then
-                    Just 0x00F3EA6F
-
-                else
-                    Nothing
-
             perkMsg : Maybe ( Faction, Bool )
             perkMsg =
                 if isPerkSelected then
@@ -144,6 +136,7 @@ factionBox display selected { name, motto, description, location, relations, per
                     ]
                     Element.none
 
+            introRow : Element msg
             introRow =
                 if display == DisplayFull then
                     Theme.row [ width fill ]
@@ -164,6 +157,10 @@ factionBox display selected { name, motto, description, location, relations, per
                 else
                     el [ centerX, Font.size 40, Theme.celticHand ] <|
                         Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
+
+            glowColor : Int
+            glowColor =
+                0x00F3EA6F
         in
         Theme.column [ width fill ]
             [ introRow
@@ -205,36 +202,41 @@ factionBox display selected { name, motto, description, location, relations, per
                             ]
                     , onPress = Just factionMsg
                     }
-                , Theme.card_
-                    [ case perkGlow of
-                        Just color ->
-                            Background.color <| Theme.intToBackground color
+                , if display /= DisplayFull && not isPerkSelected then
+                    Element.none
 
-                        Nothing ->
+                  else
+                    Theme.card
+                        [ if isPerkSelected then
+                            Background.color <| Theme.intToBackground glowColor
+
+                          else
                             Theme.backgroundColor 0x00C1C1C1
-                    , width fill
-                    , height shrink
-                    , alignTop
-                    ]
-                    { glow = perkGlow
-                    , imageAttrs = []
-                    , imageHeight = 240
-                    , image = images.image5
-                    , inFront =
-                        [ el
-                            [ alignBottom
-                            , Theme.celticHand
-                            , Font.size 24
-                            , centerX
+                        , width fill
+                        , height shrink
+                        , alignTop
+                        ]
+                        { display = DisplayFull
+                        , glow = glowColor
+                        , isSelected = isPerkSelected
+                        , imageAttrs = []
+                        , imageHeight = 240
+                        , image = images.image5
+                        , inFront =
+                            [ el
+                                [ alignBottom
+                                , Theme.celticHand
+                                , Font.size 24
+                                , centerX
+                                ]
+                                (gradientText 3 Gradients.blueGradient perk)
                             ]
-                            (gradientText 3 Gradients.blueGradient perk)
-                        ]
-                    , content =
-                        [ Theme.blocks
-                            [ Theme.padding ]
-                            (perkContent ++ "\n\n_*" ++ Types.factionToMagic name ++ "*_ is half price for you, stacks with affinity.")
-                        ]
-                    , onPress = Just perkMsg
-                    }
+                        , content =
+                            [ Theme.blocks
+                                [ Theme.padding ]
+                                (perkContent ++ "\n\n_*" ++ Types.factionToMagic name ++ "*_ is half price for you, stacks with affinity.")
+                            ]
+                        , onPress = Just perkMsg
+                        }
                 ]
             ]
