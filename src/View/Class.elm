@@ -8,7 +8,7 @@ import Generated.Types as Types exposing (Class)
 import Gradients
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display)
-import View.Collapsible as View
+import View
 
 
 viewClass : Display -> Maybe Class -> Element Choice

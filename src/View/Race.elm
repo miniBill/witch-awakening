@@ -9,42 +9,31 @@ import Generated.Types as Types exposing (Affinity, Race, Size)
 import Gradients
 import Images exposing (Image)
 import Theme exposing (gradientText, viewAffinity)
-import Types exposing (Choice(..), Display(..))
+import Types exposing (Choice(..), Display)
+import View
 
 
 viewRace : Display -> Maybe Race -> Element Choice
 viewRace display race =
-    Theme.column
-        [ width fill
-        , spacing <| Theme.rythm * 2
+    let
+        raceBoxes : Element (Maybe Race)
+        raceBoxes =
+            Race.all
+                |> List.map (raceBox display race)
+                |> Theme.wrappedRow
+                    [ width fill
+                    , spacing <| Theme.rythm * 3
+                    ]
+    in
+    View.collapsible display
+        DisplayRace
+        ChoiceRace
+        Race.title
+        [ Theme.blocks [] Race.intro
+        , raceBoxes
         ]
-    <|
-        case display of
-            DisplayFull ->
-                [ Theme.collapsibleBlocks DisplayRace display [] Race.intro
-                , Race.all
-                    |> List.map (raceBox display race)
-                    |> Theme.wrappedRow
-                        [ width fill
-                        , spacing <| Theme.rythm * 3
-                        ]
-                    |> Element.map ChoiceRace
-                ]
-
-            DisplayCompact ->
-                [ Theme.collapsibleBlocks DisplayRace display [] Race.title
-                , Race.all
-                    |> List.map (raceBox display race)
-                    |> Theme.wrappedRow
-                        [ width fill
-                        , spacing <| Theme.rythm * 3
-                        ]
-                    |> Element.map ChoiceRace
-                ]
-
-            DisplayCollapsed ->
-                [ Theme.collapsibleBlocks DisplayRace display [] Race.title
-                ]
+        [ raceBoxes
+        ]
 
 
 raceBox :

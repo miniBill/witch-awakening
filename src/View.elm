@@ -1,4 +1,4 @@
-module View.Collapsible exposing (collapsible)
+module View exposing (collapsible)
 
 import Element exposing (Element, fill, spacing, width)
 import Theme
