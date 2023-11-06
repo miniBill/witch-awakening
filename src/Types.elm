@@ -1,4 +1,4 @@
-module Types exposing (Choice(..), ComplicationKind(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot)
+module Types exposing (Choice(..), ComplicationKind(..), Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot, nextDisplay)
 
 import Browser exposing (UrlRequest)
 import Browser.Navigation
@@ -17,16 +17,26 @@ type Msg
 
 type Choice
     = ChoiceClass (Maybe Class)
+    | DisplayClass Display
     | ChoiceRace (Maybe Race)
+    | DisplayRace Display
     | ChoiceGameMode (Maybe GameMode)
+    | DisplayGameMode Display
     | ChoiceComplication RankedComplication Bool
+    | DisplayComplications Display
     | ChoiceTypePerk Race Bool
+    | DisplayTypePerks Display
     | ChoiceMagic RankedMagic Bool
+    | DisplayMagic Display
     | ChoicePerk RankedPerk Bool
+    | DisplayPerks Display
     | ChoiceFaction (Maybe ( Faction, Bool ))
+    | DisplayFaction Display
     | ChoiceRelic RankedRelic Bool
-    | TowardsCap Int
+    | DisplayRelics Display
     | ChoiceCompanion Companion Bool
+    | DisplayCompanions Display
+    | TowardsCap Int
 
 
 type alias Model =
@@ -34,16 +44,32 @@ type alias Model =
     , towardsCap : Int
     , menuOpen : Bool
     , class : Maybe Class
+    , classDisplay : Display
     , race : Maybe Race
+    , raceDisplay : Display
     , gameMode : Maybe GameMode
+    , gameModeDisplay : Display
     , complications : List RankedComplication
+    , complicationsDisplay : Display
     , typePerks : List Race
+    , typePerksDisplay : Display
     , magic : List RankedMagic
+    , magicDisplay : Display
     , perks : List RankedPerk
+    , perksDisplay : Display
     , faction : Maybe ( Faction, Bool )
+    , factionDisplay : Display
     , companions : List Companion
+    , companionsDisplay : Display
     , relics : List RankedRelic
+    , relicsDisplay : Display
     }
+
+
+type Display
+    = DisplayFull
+    | DisplayCompact
+    | DisplayCollapsed
 
 
 type alias RankedComplication =
@@ -154,3 +180,16 @@ factionToMagic faction =
 
         AlphazonIndustries ->
             "Integration"
+
+
+nextDisplay : Display -> Display
+nextDisplay display =
+    case display of
+        DisplayFull ->
+            DisplayCompact
+
+        DisplayCompact ->
+            DisplayCollapsed
+
+        DisplayCollapsed ->
+            DisplayFull

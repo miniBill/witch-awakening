@@ -16,7 +16,7 @@ import List.Extra
 import Maybe.Extra
 import Task
 import Theme
-import Types exposing (Choice(..), Model, Msg(..))
+import Types exposing (Choice(..), Display(..), Model, Msg(..))
 import Url
 import Url.Builder exposing (QueryParameter)
 import View.Class as Class
@@ -113,11 +113,20 @@ updateOnChoice choice model =
         ChoiceClass class ->
             { model | class = class }
 
+        DisplayClass classDisplay ->
+            { model | classDisplay = classDisplay }
+
         ChoiceRace race ->
             { model | race = race }
 
+        DisplayRace raceDisplay ->
+            { model | raceDisplay = raceDisplay }
+
         ChoiceGameMode gameMode ->
             { model | gameMode = gameMode }
+
+        DisplayGameMode gameModeDisplay ->
+            { model | gameModeDisplay = gameModeDisplay }
 
         ChoiceComplication complication selected ->
             if selected then
@@ -126,12 +135,18 @@ updateOnChoice choice model =
             else
                 { model | complications = List.Extra.remove complication model.complications }
 
+        DisplayComplications complicationsDisplay ->
+            { model | complicationsDisplay = complicationsDisplay }
+
         ChoiceTypePerk race selected ->
             if selected then
                 { model | typePerks = race :: model.typePerks }
 
             else
                 { model | typePerks = List.Extra.remove race model.typePerks }
+
+        DisplayTypePerks typePerksDisplay ->
+            { model | typePerksDisplay = typePerksDisplay }
 
         ChoiceMagic magic selected ->
             if selected then
@@ -140,6 +155,9 @@ updateOnChoice choice model =
             else
                 { model | magic = List.Extra.remove magic model.magic }
 
+        DisplayMagic magicDisplay ->
+            { model | magicDisplay = magicDisplay }
+
         ChoicePerk perk selected ->
             if selected then
                 { model | perks = perk :: model.perks }
@@ -147,8 +165,14 @@ updateOnChoice choice model =
             else
                 { model | perks = List.Extra.remove perk model.perks }
 
+        DisplayPerks perksDisplay ->
+            { model | perksDisplay = perksDisplay }
+
         ChoiceFaction faction ->
             { model | faction = faction }
+
+        DisplayFaction factionDisplay ->
+            { model | factionDisplay = factionDisplay }
 
         ChoiceCompanion companion selected ->
             if selected then
@@ -157,12 +181,18 @@ updateOnChoice choice model =
             else
                 { model | companions = List.Extra.remove companion model.companions }
 
+        DisplayCompanions companionsDisplay ->
+            { model | companionsDisplay = companionsDisplay }
+
         ChoiceRelic relic selected ->
             if selected then
                 { model | relics = relic :: model.relics }
 
             else
                 { model | relics = List.Extra.remove relic model.relics }
+
+        DisplayRelics relicsDisplay ->
+            { model | relicsDisplay = relicsDisplay }
 
         TowardsCap towardsCap ->
             { model | towardsCap = towardsCap }
@@ -339,12 +369,19 @@ parseUrl navKey url =
         parseOne "towardsCap" String.toInt
             |> Maybe.withDefault 0
     , class = parseOne "class" Types.classFromString
+    , classDisplay = DisplayFull
     , race = parseOne "race" Types.raceFromString
+    , raceDisplay = DisplayFull
     , gameMode = parseOne "gameMode" Types.gameModeFromString
+    , gameModeDisplay = DisplayFull
     , complications = parseMany "complication" parseComplication
+    , complicationsDisplay = DisplayFull
     , typePerks = parseMany "typePerk" Types.raceFromString
+    , typePerksDisplay = DisplayFull
     , magic = parseMany "magic" parseMagic
+    , magicDisplay = DisplayFull
     , perks = parseMany "perk" parsePerk
+    , perksDisplay = DisplayFull
     , faction =
         parseOne "faction" Types.factionFromString
             |> Maybe.map
@@ -354,8 +391,11 @@ parseUrl navKey url =
                         |> Maybe.withDefault False
                     )
                 )
+    , factionDisplay = DisplayFull
     , companions = parseMany "companion" Types.companionFromString
+    , companionsDisplay = DisplayFull
     , relics = parseMany "relic" parseRelic
+    , relicsDisplay = DisplayFull
     }
 
 
@@ -388,7 +428,7 @@ innerView model =
         ]
         [ Intro.viewTitle
         , Intro.viewIntro
-        , Element.Lazy.lazy Class.viewClass model.class
+        , Element.Lazy.lazy2 Class.viewClass model.classDisplay model.class
         , Element.Lazy.lazy Race.viewRace model.race
         , Element.Lazy.lazy GameMode.viewGameMode model.gameMode
         , Element.Lazy.lazy Complications.viewComplications model.complications

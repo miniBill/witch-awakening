@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -16,6 +16,7 @@ import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
 import String.Extra
 import String.Multiline
+import Types exposing (Display(..))
 
 
 rythm : number
@@ -97,16 +98,26 @@ captureIt =
 
 
 blocks : List (Attribute msg) -> String -> Element msg
-blocks attrs input =
+blocks =
+    genericBlocks Nothing DisplayFull
+
+
+collapsibleBlocks : Display -> List (Attribute Display) -> String -> Element Display
+collapsibleBlocks =
+    genericBlocks (Just identity)
+
+
+genericBlocks : Maybe (Display -> msg) -> Display -> List (Attribute msg) -> String -> Element msg
+genericBlocks toMsg display attrs input =
     input
         |> String.Multiline.here
         |> String.split "\n\n"
-        |> List.map block
+        |> List.map (block toMsg display)
         |> column (spacing :: width fill :: attrs)
 
 
-block : String -> Element msg
-block input =
+block : Maybe (Display -> msg) -> Display -> String -> Element msg
+block toMsg display input =
     case Parser.run (MarkMini.blockParser |. Parser.end) (String.trim input) of
         Err _ ->
             Element.paragraph
@@ -114,7 +125,7 @@ block input =
                 [ text input ]
 
         Ok (SectionTitle value) ->
-            viewSectionTitle value
+            viewSectionTitle toMsg display value
 
         Ok (UnorderedList lines) ->
             lines
@@ -330,15 +341,50 @@ wrappedRow attrs children =
     Element.wrappedRow (spacing :: attrs) children
 
 
-viewSectionTitle : String -> Element msg
-viewSectionTitle label =
+viewSectionTitle : Maybe (Display -> msg) -> Display -> String -> Element msg
+viewSectionTitle toMsg display label =
     row
         [ celticHand
         , Font.size 36
         , width fill
         , id label
         ]
-        [ hr, gradientText 4 Gradients.blueGradient label, hr ]
+    <|
+        case toMsg of
+            Just tag ->
+                let
+                    button : Element msg
+                    button =
+                        Input.button
+                            [ Border.rounded 4
+                            , Element.padding 4
+                            , Border.width 1
+                            ]
+                            { onPress = Just <| tag <| Types.nextDisplay display
+                            , label =
+                                case display of
+                                    DisplayFull ->
+                                        text "▲"
+
+                                    DisplayCompact ->
+                                        text "▲"
+
+                                    DisplayCollapsed ->
+                                        text "▼"
+                            }
+                in
+                [ hr
+                , gradientText 4 Gradients.blueGradient label
+                , text " "
+                , button
+                , hr
+                ]
+
+            Nothing ->
+                [ hr
+                , gradientText 4 Gradients.blueGradient label
+                , hr
+                ]
 
 
 id : String -> Attribute msg
