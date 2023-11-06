@@ -12,68 +12,71 @@ import Images
 import List.Extra
 import String.Extra
 import Theme exposing (gradientText)
-import Types exposing (Choice(..), RankedPerk)
+import Types exposing (Choice(..), Display, RankedPerk)
+import View
 
 
-viewPerks : List RankedPerk -> Element Choice
-viewPerks perks =
-    Theme.column
-        [ width fill
-        , spacing <| Theme.rythm * 2
-        ]
-        [ Theme.column
-            ([ width fill
-             , spacing <| Theme.rythm * 2
-             ]
-                ++ Theme.topBackground Images.perkIntro
-            )
-            [ Theme.blocks [] "# Perks"
-            , let
-                color : Element.Color
-                color =
-                    rgba 0 0 0 0.75
-              in
-              Theme.blocks
-                [ width <| Element.maximum 800 fill
-                , centerX
-                , Background.color color
-                , Border.shadow
-                    { offset = ( 0, 0 )
-                    , size = 5
-                    , blur = 5
-                    , color = color
-                    }
-                ]
-                Perk.intro
-            , el [ height <| px 200 ] Element.none
-            ]
+viewPerks : Display -> List RankedPerk -> Element Choice
+viewPerks display perks =
+    View.collapsible (Theme.topBackground Images.perkIntro)
+        display
+        DisplayPerks
+        (\( perk, selected ) -> ChoicePerk perk selected)
+        "# Perks"
+        [ introBlock
         , Perk.all
-            |> List.map (perkBox perks)
+            |> List.map (perkBox display perks)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
-            |> Element.map (\( perk, selected ) -> ChoicePerk perk selected)
+        ]
+        [ Perk.all
+            |> List.map (perkBox display perks)
+            |> Theme.column
+                [ centerX
+                , spacing <| Theme.rythm * 3
+                ]
+        ]
+
+
+introBlock : Element msg
+introBlock =
+    Theme.column
+        [ width fill
+        , spacing <| Theme.rythm * 2
+        ]
+        [ let
+            color : Element.Color
+            color =
+                rgba 0 0 0 0.75
+          in
+          Theme.blocks
+            [ width <| Element.maximum 800 fill
+            , centerX
+            , Background.color color
+            , Border.shadow
+                { offset = ( 0, 0 )
+                , size = 5
+                , blur = 5
+                , color = color
+                }
+            ]
+            Perk.intro
+        , el [ height <| px 200 ] Element.none
         ]
 
 
 perkBox :
-    List RankedPerk
+    Display
+    -> List RankedPerk
     -> Perk.Details
     -> Element ( RankedPerk, Bool )
-perkBox selected ({ name, affinity, class, content, isMeta } as perk) =
+perkBox display selected ({ name, affinity, class, content, isMeta } as perk) =
     let
         isSelected : Maybe RankedPerk
         isSelected =
             List.Extra.find (\sel -> sel.name == name) selected
-
-        glow : Maybe Int
-        glow =
-            if isSelected == Nothing then
-                Nothing
-
-            else
-                Just color
 
         msg : Maybe ( RankedPerk, Bool )
         msg =
@@ -137,8 +140,10 @@ perkBox selected ({ name, affinity, class, content, isMeta } as perk) =
         color =
             0x00F3EA6F
     in
-    Theme.card_ []
-        { glow = glow
+    Theme.card []
+        { display = display
+        , glow = color
+        , isSelected = isSelected /= Nothing
         , imageAttrs = []
         , imageHeight = 400
         , image = Types.perkToImage name
@@ -201,6 +206,7 @@ viewContent selected { content, name } color =
         Single _ block ->
             [ Theme.blocks
                 [ height fill
+                , width fill
                 , Theme.padding
                 ]
                 block
@@ -252,7 +258,7 @@ viewContent selected { content, name } color =
                         , onPress = Just ( perk, not isChoiceSelected )
                         }
             in
-            [ Theme.column [ height fill, Theme.padding ] <|
+            [ Theme.column [ height fill, width fill, Theme.padding ] <|
                 Theme.blocks [] before
                     :: choicesView
                     ++ [ Theme.blocks [] after ]
@@ -304,7 +310,7 @@ viewContent selected { content, name } color =
                         , onPress = Just ( perk, not isChoiceSelected )
                         }
             in
-            [ Theme.column [ height fill, Theme.padding ] <|
+            [ Theme.column [ height fill, width fill, Theme.padding ] <|
                 Theme.blocks [] before
                     :: choicesView
             ]
