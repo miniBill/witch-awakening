@@ -19,7 +19,7 @@ viewClass display class =
     <|
         case display of
             DisplayFull ->
-                [ Element.map DisplayClass <| Theme.collapsibleBlocks display [] Class.intro
+                [ Theme.collapsibleBlocks DisplayClass display [] Class.intro
                 , Class.all
                     |> List.map (classBox display class)
                     |> Theme.wrappedRow
@@ -30,7 +30,7 @@ viewClass display class =
                 ]
 
             DisplayCompact ->
-                [ Element.map DisplayClass <| Theme.collapsibleBlocks display [] Class.title
+                [ Theme.collapsibleBlocks DisplayClass display [] Class.title
                 , Class.all
                     |> List.map (classBox display class)
                     |> Theme.column
@@ -41,7 +41,7 @@ viewClass display class =
                 ]
 
             DisplayCollapsed ->
-                [ Element.map DisplayClass <| Theme.collapsibleBlocks display [] Class.title
+                [ Theme.collapsibleBlocks DisplayClass display [] Class.title
                 ]
 
 

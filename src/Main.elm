@@ -429,7 +429,7 @@ innerView model =
         [ Intro.viewTitle
         , Intro.viewIntro
         , Element.Lazy.lazy2 Class.viewClass model.classDisplay model.class
-        , Element.Lazy.lazy Race.viewRace model.race
+        , Element.Lazy.lazy2 Race.viewRace model.raceDisplay model.race
         , Element.Lazy.lazy GameMode.viewGameMode model.gameMode
         , Element.Lazy.lazy2 Complications.viewComplications model.complicationsDisplay model.complications
         , Element.Lazy.lazy TypePerk.viewTypePerks model.typePerks

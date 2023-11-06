@@ -102,9 +102,9 @@ blocks =
     genericBlocks Nothing DisplayFull
 
 
-collapsibleBlocks : Display -> List (Attribute Display) -> String -> Element Display
-collapsibleBlocks =
-    genericBlocks (Just identity)
+collapsibleBlocks : (Display -> msg) -> Display -> List (Attribute msg) -> String -> Element msg
+collapsibleBlocks toMsg =
+    genericBlocks (Just toMsg)
 
 
 genericBlocks : Maybe (Display -> msg) -> Display -> List (Attribute msg) -> String -> Element msg

@@ -31,8 +31,7 @@ viewComplications display complications =
     <|
         case display of
             DisplayFull ->
-                [ Element.map DisplayComplications <|
-                    Theme.collapsibleBlocks display [] Complication.intro
+                [ Theme.collapsibleBlocks DisplayComplications display [] Complication.intro
                 , Theme.blocks [] "# World Shifts"
                 , (List.map
                     (complicationBox display complications)
@@ -55,7 +54,7 @@ viewComplications display complications =
                 ]
 
             DisplayCompact ->
-                [ Element.map DisplayComplications <| Theme.collapsibleBlocks display [] Complication.title
+                [ Theme.collapsibleBlocks DisplayComplications display [] Complication.title
                 , (Complication.worldShifts ++ Complication.generic)
                     |> List.map (complicationBox display complications)
                     |> Theme.column
@@ -66,7 +65,7 @@ viewComplications display complications =
                 ]
 
             DisplayCollapsed ->
-                [ Element.map DisplayComplications <| Theme.collapsibleBlocks display [] Complication.title
+                [ Theme.collapsibleBlocks DisplayComplications display [] Complication.title
                 ]
 
 
