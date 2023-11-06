@@ -119,14 +119,6 @@ factionBox display selected { name, motto, description, location, relations, per
                 else
                     Just ( name, False )
 
-            perkMsg : Maybe ( Faction, Bool )
-            perkMsg =
-                if isPerkSelected then
-                    Just ( name, False )
-
-                else
-                    Just ( name, True )
-
             img : Image -> Element msg
             img { src } =
                 el
@@ -157,10 +149,6 @@ factionBox display selected { name, motto, description, location, relations, per
                 else
                     el [ centerX, Font.size 40, Theme.celticHand ] <|
                         Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
-
-            glowColor : Int
-            glowColor =
-                0x00F3EA6F
         in
         Theme.column [ width fill ]
             [ introRow
@@ -206,6 +194,19 @@ factionBox display selected { name, motto, description, location, relations, per
                     Element.none
 
                   else
+                    let
+                        perkMsg : Maybe ( Faction, Bool )
+                        perkMsg =
+                            if isPerkSelected then
+                                Just ( name, False )
+
+                            else
+                                Just ( name, True )
+
+                        glowColor : Int
+                        glowColor =
+                            0x00F3EA6F
+                    in
                     Theme.card
                         [ if isPerkSelected then
                             Background.color <| Theme.intToBackground glowColor

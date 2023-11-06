@@ -7,54 +7,65 @@ import Images
 import Theme exposing (gradientText)
 
 
-viewTitle : Element msg
-viewTitle =
-    Element.column [ width fill ]
-        [ paragraph
+viewTitle : Bool -> Element msg
+viewTitle allCompact =
+    if allCompact then
+        paragraph
             [ Theme.bebasNeue
             , Font.size 180
             , Font.center
-            , moveDown 16
+            , moveDown 24
             ]
             [ gradientText 8 Gradients.titleGradient "Witch Awakening"
             ]
-        , Element.column
-            [ centerX
-            , Element.paddingEach { left = 0, top = 0, right = 0, bottom = 10 }
-            ]
+
+    else
+        Element.column [ width fill ]
             [ paragraph
-                [ Theme.morpheus
-                , Font.size 52
+                [ Theme.bebasNeue
+                , Font.size 180
+                , Font.center
+                , moveDown 16
                 ]
-                [ gradientText 4 Gradients.grayGradient "Heavy Metal"
-                , text " "
-                , gradientText 4 Gradients.yellowGradient "&"
-                , text " "
-                , gradientText 4 Gradients.orangeGradient "Witch Party"
-                , text " "
-                , gradientText 4 Gradients.yellowGradient "Update"
+                [ gradientText 8 Gradients.titleGradient "Witch Awakening"
                 ]
-            , paragraph
-                [ Font.alignRight
-                , width fill
-                , Font.size 14
-                , Font.underline
+            , Element.column
+                [ centerX
+                , Element.paddingEach { left = 0, top = 0, right = 0, bottom = 10 }
                 ]
-                [ newTabLink []
-                    { label = Theme.choice "By OutrageousBears"
-                    , url = "https://old.reddit.com/user/OutrageousBears"
-                    }
-                ]
-            , paragraph
-                [ alignRight
-                , Font.alignLeft
-                , Font.size 14
-                , Element.paddingEach { left = 20, top = 10, right = 0, bottom = 0 }
-                ]
-                [ Theme.choice "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
+                [ paragraph
+                    [ Theme.morpheus
+                    , Font.size 52
+                    ]
+                    [ gradientText 4 Gradients.grayGradient "Heavy Metal"
+                    , text " "
+                    , gradientText 4 Gradients.yellowGradient "&"
+                    , text " "
+                    , gradientText 4 Gradients.orangeGradient "Witch Party"
+                    , text " "
+                    , gradientText 4 Gradients.yellowGradient "Update"
+                    ]
+                , paragraph
+                    [ Font.alignRight
+                    , width fill
+                    , Font.size 14
+                    , Font.underline
+                    ]
+                    [ newTabLink []
+                        { label = Theme.choice "By OutrageousBears"
+                        , url = "https://old.reddit.com/user/OutrageousBears"
+                        }
+                    ]
+                , paragraph
+                    [ alignRight
+                    , Font.alignLeft
+                    , Font.size 14
+                    , Element.paddingEach { left = 20, top = 10, right = 0, bottom = 0 }
+                    ]
+                    [ Theme.choice "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
+                    ]
                 ]
             ]
-        ]
 
 
 viewIntro : Element msg

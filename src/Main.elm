@@ -458,14 +458,23 @@ view model =
 
 innerView : Model -> Element Msg
 innerView model =
+    let
+        allCompact : Bool
+        allCompact =
+            model.classDisplay /= DisplayFull && model.raceDisplay /= DisplayFull && model.gameModeDisplay /= DisplayFull && model.complicationsDisplay /= DisplayFull && model.typePerksDisplay /= DisplayFull && model.magicDisplay /= DisplayFull && model.perksDisplay /= DisplayFull && model.factionDisplay /= DisplayFull && model.factionalMagicDisplay /= DisplayFull && model.companionsDisplay /= DisplayFull && model.relicsDisplay /= DisplayFull
+    in
     Theme.column
         [ width fill
         , Font.color <| rgb 1 1 1
         , Background.color <| rgb 0 0 0
         , Element.padding 16
         ]
-        [ Intro.viewTitle
-        , Intro.viewIntro
+        [ Intro.viewTitle allCompact
+        , if allCompact then
+            Element.none
+
+          else
+            Intro.viewIntro
         , Element.Lazy.lazy2 Class.viewClass model.classDisplay model.class
         , Element.Lazy.lazy2 Race.viewRace model.raceDisplay model.race
         , Element.Lazy.lazy2 GameMode.viewGameMode model.gameModeDisplay model.gameMode
