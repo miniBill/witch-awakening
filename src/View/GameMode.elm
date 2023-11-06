@@ -7,54 +7,66 @@ import Element.Font as Font
 import Generated.Types as Types exposing (GameMode)
 import Gradients
 import Theme exposing (gradientText)
-import Types exposing (Choice(..))
+import Types exposing (Choice(..), Display(..))
 
 
-viewGameMode : Maybe GameMode -> Element Choice
-viewGameMode gameMode =
+viewGameMode : Display -> Maybe GameMode -> Element Choice
+viewGameMode display gameMode =
     Theme.column
         [ width fill
         , spacing <| Theme.rythm * 2
         ]
-        [ Theme.blocks [] GameMode.intro
-        , (List.map
-            (gameModeBox gameMode)
-            GameMode.all
-            ++ [ Theme.blocks
-                    [ width <| Element.maximum 400 fill
-                    , alignTop
-                    , Border.width 1
-                    , Theme.padding
-                    , Theme.borderColor Theme.colors.gameMode
-                    ]
-                    GameMode.slotDescription
-               ]
-          )
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rythm * 3
+    <|
+        case display of
+            DisplayFull ->
+                [ Theme.collapsibleBlocks DisplayGameMode display [] GameMode.intro
+                , (List.map
+                    (gameModeBox display gameMode)
+                    GameMode.all
+                    ++ [ Theme.blocks
+                            [ width <| Element.maximum 400 fill
+                            , alignTop
+                            , Border.width 1
+                            , Theme.padding
+                            , Theme.borderColor Theme.colors.gameMode
+                            ]
+                            GameMode.slotDescription
+                       ]
+                  )
+                    |> Theme.wrappedRow
+                        [ centerX
+                        , spacing <| Theme.rythm * 3
+                        ]
+                    |> Element.map ChoiceGameMode
                 ]
-            |> Element.map ChoiceGameMode
-        ]
+
+            DisplayCompact ->
+                [ Theme.collapsibleBlocks DisplayGameMode display [] GameMode.title
+                , List.map
+                    (gameModeBox display gameMode)
+                    GameMode.all
+                    |> Theme.column
+                        [ width fill
+                        , spacing <| Theme.rythm * 3
+                        ]
+                    |> Element.map ChoiceGameMode
+                ]
+
+            DisplayCollapsed ->
+                [ Theme.collapsibleBlocks DisplayGameMode display [] GameMode.title
+                ]
 
 
 gameModeBox :
-    Maybe GameMode
+    Display
+    -> Maybe GameMode
     -> GameMode.Details
     -> Element (Maybe GameMode)
-gameModeBox selected { name, content } =
+gameModeBox display selected { name, content } =
     let
         isSelected : Bool
         isSelected =
             selected == Just name
-
-        glow : Maybe Int
-        glow =
-            if isSelected then
-                Just color
-
-            else
-                Nothing
 
         msg : Maybe GameMode
         msg =
@@ -77,8 +89,10 @@ gameModeBox selected { name, content } =
             ""
                 |> gradientText 4 Gradients.yellowGradient
     in
-    Theme.card_ []
-        { glow = glow
+    Theme.card []
+        { display = display
+        , glow = color
+        , isSelected = isSelected
         , imageAttrs =
             [ Border.width 4
             , Theme.borderColor color

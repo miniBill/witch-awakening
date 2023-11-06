@@ -1,4 +1,4 @@
-module Data.GameMode exposing (Details, all, intro, slotDescription)
+module Data.GameMode exposing (Details, all, intro, slotDescription, title)
 
 import Generated.Types exposing (GameMode(..))
 
@@ -105,10 +105,14 @@ slotDescription =
     """
 
 
+title : String
+title =
+    "# Game Mode"
+
+
 intro : String
 intro =
-    """
-    # Game Mode
+    title ++ """
 
     {choice You can only choose one game mode, or none to play the default way. Each supports a different type of player, and what you might want out of it.}
     """

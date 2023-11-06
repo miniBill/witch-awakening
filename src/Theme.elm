@@ -370,7 +370,7 @@ viewSectionTitle toMsg display label =
                             , label =
                                 case display of
                                     DisplayFull ->
-                                        gradient "▲"
+                                        gradient "▶"
 
                                     DisplayCompact ->
                                         gradient "▲"
