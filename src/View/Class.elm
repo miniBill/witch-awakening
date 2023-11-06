@@ -7,42 +7,30 @@ import Element.Font as Font
 import Generated.Types as Types exposing (Class)
 import Gradients
 import Theme exposing (gradientText)
-import Types exposing (Choice(..), Display(..))
+import Types exposing (Choice(..), Display)
+import View.Collapsible as View
 
 
 viewClass : Display -> Maybe Class -> Element Choice
 viewClass display class =
-    Theme.column
-        [ width fill
-        , spacing <| Theme.rythm * 2
+    let
+        classBoxes : Element (Maybe Class)
+        classBoxes =
+            Class.all
+                |> List.map (classBox display class)
+                |> Theme.wrappedRow
+                    [ width fill
+                    , spacing <| Theme.rythm * 3
+                    ]
+    in
+    View.collapsible display
+        DisplayClass
+        ChoiceClass
+        Class.title
+        [ Theme.blocks [] Class.intro
+        , classBoxes
         ]
-    <|
-        case display of
-            DisplayFull ->
-                [ Theme.collapsibleBlocks DisplayClass display [] Class.intro
-                , Class.all
-                    |> List.map (classBox display class)
-                    |> Theme.wrappedRow
-                        [ centerX
-                        , spacing <| Theme.rythm * 3
-                        ]
-                    |> Element.map ChoiceClass
-                ]
-
-            DisplayCompact ->
-                [ Theme.collapsibleBlocks DisplayClass display [] Class.title
-                , Class.all
-                    |> List.map (classBox display class)
-                    |> Theme.column
-                        [ width fill
-                        , spacing <| Theme.rythm * 3
-                        ]
-                    |> Element.map ChoiceClass
-                ]
-
-            DisplayCollapsed ->
-                [ Theme.collapsibleBlocks DisplayClass display [] Class.title
-                ]
+        [ classBoxes ]
 
 
 classBox :

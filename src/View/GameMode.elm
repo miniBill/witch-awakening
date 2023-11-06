@@ -41,11 +41,11 @@ viewGameMode display gameMode =
                 , spacing <| Theme.rythm * 3
                 ]
         ]
-        [ Theme.column
-            [ width fill
-            , spacing <| Theme.rythm * 3
-            ]
-            boxes
+        [ boxes
+            |> Theme.wrappedRow
+                [ width fill
+                , spacing <| Theme.rythm * 3
+                ]
         ]
 
 
