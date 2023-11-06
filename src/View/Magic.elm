@@ -257,7 +257,7 @@ viewContent display selected ({ name, description, ranks } as details) =
     Theme.maybeButton [ width fill ]
         { label =
             Theme.column [ width fill ]
-                [ magicTitle details
+                [ magicTitle display details
                 , Theme.column [ height fill, Theme.padding ] <|
                     Theme.blocks [] description
                         :: List.indexedMap
@@ -273,8 +273,8 @@ viewContent display selected ({ name, description, ranks } as details) =
         }
 
 
-magicTitle : { a | name : Magic, star : Bool, class : Maybe Class, affinities : Affinities } -> Element msg
-magicTitle { name, star, class, affinities } =
+magicTitle : Display -> { a | name : Magic, star : Bool, class : Maybe Class, affinities : Affinities } -> Element msg
+magicTitle display { name, star, class, affinities } =
     Theme.wrappedRow
         [ Theme.morpheus
         , Font.size 40
@@ -299,13 +299,17 @@ magicTitle { name, star, class, affinities } =
                 |> Theme.gradientText 4 Gradients.yellowGradient
                 |> el []
             ]
-        , Theme.row
-            [ moveRight 8
-            , moveDown 4
-            , centerY
-            , centerX
-            ]
-            (viewAffinities affinities)
+        , if display == DisplayFull then
+            Theme.row
+                [ moveRight 8
+                , moveDown 4
+                , centerY
+                , centerX
+                ]
+                (viewAffinities affinities)
+
+          else
+            Element.none
         ]
 
 

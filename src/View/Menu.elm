@@ -144,36 +144,40 @@ viewCalculations model =
         , row "Power cap" powerCap <| Just "Game Mode"
         , row "Complications" complicationsValue Nothing
         , row "Type perks" typePerksValue Nothing
-        , Input.slider
-            [ width fill
-            , Element.behindContent <|
-                el
-                    [ width fill
-                    , height (px 2)
-                    , centerY
-                    , Background.color <| rgb 0.7 0.7 0.7
-                    , Border.rounded 2
-                    ]
-                    Element.none
-            ]
-            { onChange = Choice << TowardsCap << round
-            , label =
-                Input.labelAbove [] <|
-                    Theme.row []
-                        [ paragraph [ Font.bold ]
-                            [ text "Assign power to cap instead of initial"
-                            , rightNumber <| String.fromInt model.towardsCap
-                            ]
+        , if model.gameMode == Just StoryArc then
+            Element.none
+
+          else
+            Input.slider
+                [ width fill
+                , Element.behindContent <|
+                    el
+                        [ width fill
+                        , height (px 2)
+                        , centerY
+                        , Background.color <| rgb 0.7 0.7 0.7
+                        , Border.rounded 2
                         ]
-            , min = 0
-            , max = toFloat <| Maybe.withDefault 0 <| complicationsValue model
-            , value = toFloat model.towardsCap
-            , step = Just 1
-            , thumb = Input.defaultThumb
-            }
+                        Element.none
+                ]
+                { onChange = Choice << TowardsCap << round
+                , label =
+                    Input.labelAbove [] <|
+                        Theme.row []
+                            [ paragraph [ Font.bold ]
+                                [ text "Assign power to cap instead of initial"
+                                , rightNumber <| String.fromInt model.towardsCap
+                                ]
+                            ]
+                , min = 0
+                , max = toFloat <| Maybe.withDefault 0 <| complicationsValue model
+                , value = toFloat model.towardsCap
+                , step = Just 1
+                , thumb = Input.defaultThumb
+                }
         , row "Magic" magicsValue <| Just "The Magic"
         , row "Perks" perksValue Nothing
-        , row "Faction" factionValue Nothing
+        , row "Faction" factionValue <| Just "Factions"
         , row "Companions" companionsValue Nothing
         , row "Relics" relicsValue Nothing
         , el [ alignBottom, width fill ] <| row "Result" calculatePower Nothing
@@ -234,8 +238,8 @@ initialPower model =
         ( Nothing, Just complications ) ->
             Just <| 30 + complications - model.towardsCap
 
-        ( Just StoryArc, Just complications ) ->
-            Just <| 10 + complications - model.towardsCap
+        ( Just StoryArc, _ ) ->
+            Just 10
 
         ( Just EarlyBird, Just complications ) ->
             Just <| 75 + complications - model.towardsCap
@@ -251,7 +255,7 @@ powerCap model =
             Just <| 100 + model.towardsCap
 
         Just StoryArc ->
-            Just <| 150 + model.towardsCap
+            Maybe.map ((+) 150) <| complicationsValue model
 
         Just EarlyBird ->
             Just <| 75 + model.towardsCap
@@ -457,13 +461,13 @@ perkValue affinities class { name, cost } =
                 in
                 if isClass then
                     if isAffinity then
-                        (-cost + 2) // 2
+                        (-cost + 2 - 1) // 2
 
                     else
                         -cost + 2
 
                 else if isAffinity then
-                    -cost // 2
+                    -(cost + 1) // 2
 
                 else
                     -cost
