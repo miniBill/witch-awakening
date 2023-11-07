@@ -77,7 +77,7 @@ viewMenu model =
 
 
 menuLabel : Model -> Results Points -> List String -> String
-menuLabel model totalPoints warnings =
+menuLabel model totalPointsResult warnings =
     let
         availablePoints : Results Points
         availablePoints =
@@ -88,14 +88,12 @@ menuLabel model totalPoints warnings =
                 Costs.startingValue model
     in
     case
-        Results.map2 Tuple.pair
-            (Results.map2 Tuple.pair
-                totalPoints
-                availablePoints
-            )
+        Results.map3 (\t a r -> ( t, a, r ))
+            totalPointsResult
+            availablePoints
             (Costs.totalRewards model)
     of
-        Oks ( ( result, available ), rewards ) ->
+        Oks ( totalPoints, available, rewards ) ->
             let
                 warningsIcon : String
                 warningsIcon =
@@ -105,23 +103,45 @@ menuLabel model totalPoints warnings =
                     else
                         "[W] "
 
+                pointDisplay : String -> Int -> Int -> String -> String
+                pointDisplay before used total after =
+                    [ wrapInt before used after
+                    , before ++ "/" ++ after
+                    , wrapInt before total after
+                    ]
+                        |> String.join " "
+
                 powerString : String
                 powerString =
-                    warningsIcon ++ "[" ++ String.fromInt (available.power + result.power) ++ "] [/] [" ++ String.fromInt available.power ++ "]"
+                    warningsIcon
+                        ++ pointDisplay
+                            "["
+                            (available.power + totalPoints.power)
+                            available.power
+                            "]"
             in
-            if result.rewardPoints == 0 && rewards.rewardPoints == 0 then
+            if totalPoints.rewardPoints == 0 && rewards.rewardPoints == 0 then
                 powerString
 
             else
                 let
                     rewardString : String
                     rewardString =
-                        "{" ++ String.fromInt (rewards.rewardPoints + result.rewardPoints) ++ "} {/} {" ++ String.fromInt rewards.rewardPoints ++ "}"
+                        pointDisplay
+                            "{"
+                            (rewards.rewardPoints + totalPoints.rewardPoints)
+                            rewards.rewardPoints
+                            "}"
                 in
                 "{center} " ++ powerString ++ "\n\n{center} " ++ rewardString
 
         Errs _ ->
             "[E]"
+
+
+wrapInt : String -> Int -> String -> String
+wrapInt before value after =
+    before ++ String.fromInt value ++ after
 
 
 viewCalculations : Model -> Results Points -> List String -> Element Msg
@@ -332,7 +352,7 @@ rightPoints value =
 
 emptyRowContent : String
 emptyRowContent =
-    "[-]{-}"
+    "[-] {-}"
 
 
 rightText : String -> Element msg
