@@ -242,8 +242,8 @@ updateOnChoice choice model =
 toUrl : Model -> String
 toUrl model =
     let
-        pair : String -> (a -> String) -> Maybe a -> List QueryParameter
-        pair key f value =
+        one : String -> (a -> String) -> Maybe a -> List QueryParameter
+        one key f value =
             case value of
                 Just v ->
                     [ Url.Builder.string key (f v) ]
@@ -267,14 +267,15 @@ toUrl model =
 
         int : String -> Int -> List QueryParameter
         int key value =
-            pair key String.fromInt (withDefault 0 value)
+            one key String.fromInt (withDefault 0 value)
     in
-    [ pair "capBuild" boolToString (withDefault False model.capBuild)
+    [ one "capBuild" boolToString (withDefault False model.capBuild)
     , int "towardsCap" model.towardsCap
     , int "powerToRewards" model.powerToRewards
-    , pair "class" Types.classToString model.class
+    , one "class" Types.classToString model.class
     , list "race" Types.raceToString model.races
-    , pair "gameMode" Types.gameModeToString model.gameMode
+    , one "mainRace" Types.raceToString model.mainRace
+    , one "gameMode" Types.gameModeToString model.gameMode
     , list "typePerk" Types.raceToString model.typePerks
     , list "complication"
         (\{ name, kind } ->
@@ -291,8 +292,8 @@ toUrl model =
             Types.perkToString name ++ String.fromInt cost
         )
         model.perks
-    , pair "faction" (\( name, _ ) -> Types.factionToString name) model.faction
-    , pair "factionPerk" (\( _, perk ) -> boolToString perk) model.faction
+    , one "faction" (\( name, _ ) -> Types.factionToString name) model.faction
+    , one "factionPerk" (\( _, perk ) -> boolToString perk) model.faction
     , list "companion" Types.companionToString model.companions
     , list "relic"
         (\{ name, cost } ->
@@ -424,6 +425,7 @@ parseUrl navKey url =
     , class = parseOne "class" Types.classFromString
     , classDisplay = DisplayFull
     , races = parseMany "race" Types.raceFromString
+    , mainRace = parseOne "mainRace" Types.raceFromString
     , raceDisplay = DisplayFull
     , gameMode = parseOne "gameMode" Types.gameModeFromString
     , gameModeDisplay = DisplayFull

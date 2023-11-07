@@ -62,6 +62,7 @@ type alias Model =
     , class : Maybe Class
     , classDisplay : Display
     , races : List Race
+    , mainRace : Maybe Race
     , raceDisplay : Display
     , gameMode : Maybe GameMode
     , gameModeDisplay : Display
@@ -214,11 +215,19 @@ nextDisplay display =
 
 
 affinities : Model -> List Affinity
-affinities { races, cosmicPearl } =
+affinities { races, mainRace, cosmicPearl } =
     let
         base : List Affinity
         base =
-            List.concatMap baseAffinities races
+            case ( mainRace, races ) of
+                ( Just race, _ ) ->
+                    baseAffinities race
+
+                ( Nothing, [ race ] ) ->
+                    baseAffinities race
+
+                _ ->
+                    []
 
         afterChange : List Affinity
         afterChange =

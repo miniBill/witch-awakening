@@ -14,7 +14,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie All, gemini All ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir Fire, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie All, gemini All ]
 
 
 neutral : Details
@@ -327,11 +327,11 @@ wulong =
     }
 
 
-dravir : Details
-dravir =
+dravir : Affinity -> Details
+dravir affinity =
     { name = Dravir
     , tank = Low
-    , affinities = [ Beast, All ]
+    , affinities = [ Beast, affinity ]
     , charge = Med
     , content = """
         Draviri are what happens when those princesses end up sacrificed to the dragon with no hero(ine) to save the day. Leaving the details aside, Draviri have the horns, tail, and scales of a dragon, typically having full claws on their hands and feet. Draviri pick their secondary elemental affinity, which is manifest in a breath weapon that affects a 15ft cone or 30ft line of flame [Fire], lightning [Wind], cold and ice [Water], stone/metal shrapnel (Earth) [Metal], or poison gas / thorns [Nature] For every 10 years of life, this area increases by 5ft. Their dense draconic muscle gives them strength and stamina like a Daeva Draviri age like Elves, and if slain an egg can be found within their body that will hatch the reborn dravir within a year in the right conditions, until hatched or destroyed.
@@ -606,7 +606,7 @@ genie affinity =
     , affinities = [ All, affinity ]
     , charge = Low
     , content = """
-        Genies are avatars of raw magic. They have the ??? type meaning ??? types are double discounted and rounded down. All Genies then can pick any one affinity as their secondary type which heavily influences their appearance in spirit formTheir spirit form looking like a humanoid elemental of their chosen type from 1 inch to 30f tall. All genies then have a physical form based on any other witch race, as though using Hybridize to acquire it, but they can't gain the type perks or their form of cheating death. Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free, used personally, not via Mammon, & costs nothing if used to satisfy a Master's wish Genies do not age. A slain genie returns to her Vessel, see type perk.
+        Genies are avatars of raw magic. They have the [???] type, meaning [???] types are double discounted and rounded down. All Genies then can pick any one affinity as their secondary type which heavily influences their appearance in spirit form. Their spirit form looking like a humanoid elemental of their chosen type from 1 inch to 30f tall. All genies then have a physical form based on any other witch race, as though using Hybridize to acquire it, but they can't gain the type perks or their form of cheating death. Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free, used personally, not via Mammon, & costs nothing if used to satisfy a Master's wish Genies do not age. A slain genie returns to her Vessel, see type perk.
 
         __Genies draw Mana__ from Wishes, whenever any person says "I wish", and the genie is capable of satisfying that wish with her available abilities, the genie gains a low mana charge for the next hour. If her master is the one to wish, she gains her full mana capacity for meeting the wish.
         """
