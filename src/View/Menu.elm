@@ -6,6 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Element.Keyed
 import Generated.Types as Types
 import List.Extra
 import Results exposing (Results(..))
@@ -147,9 +148,9 @@ wrapInt before value after =
 viewCalculations : Model -> Results Points -> List String -> Element Msg
 viewCalculations model power warnings =
     let
-        resultRow : Element Msg
+        resultRow : ( String, Element Msg )
         resultRow =
-            row
+            keyedRow
                 "Result"
                 (power
                     |> Results.map Costs.negate
@@ -157,89 +158,111 @@ viewCalculations model power warnings =
                 )
                 Nothing
 
-        link : String -> Maybe String -> Element Msg
+        link : String -> Maybe String -> ( String, Element Msg )
         link label target =
-            Theme.row [ width fill ]
+            ( label
+            , Theme.row [ width fill ]
                 [ linkLabel label target
                 , rightText emptyRowContent
                 ]
+            )
 
-        button : { onPress : Maybe msg, label : Element msg } -> Element msg
-        button =
-            Input.button
+        button : { onPress : msg, label : String } -> ( String, Element msg )
+        button config =
+            ( config.label
+            , Input.button
                 [ Border.width 1
                 , padding 4
                 , Theme.rounded
                 , width fill
                 , Font.center
                 ]
+                { onPress = Just config.onPress
+                , label = text config.label
+                }
+            )
+
+        section attrs content =
+            ( content, el (Font.bold :: attrs) <| text content )
     in
-    Theme.column
-        [ Background.color <| rgb 1 1 1
+    Element.Keyed.column
+        [ Theme.spacing
+        , Background.color <| rgb 1 1 1
         , Theme.padding
         , scrollbarY
         , height fill
         , Theme.rounded
         , width <| Element.maximum 200 shrink
         ]
-        [ paragraph
-            [ Font.bold
-            , Font.center
-            , Font.size 24
-            ]
-            [ text "🐱culations" ]
-        , el [ Font.bold ] <| text "Build kind"
-        , capBuildSwitch model
-        , row "Class" (Costs.classValue model) <| Just "True Form - Class"
+        [ ( "Header"
+          , paragraph
+                [ Font.bold
+                , Font.center
+                , Font.size 24
+                ]
+                [ text "🐱culations" ]
+          )
+        , section [] "Build kind"
+        , ( "Switch", capBuildSwitch model )
+        , keyedRow "Class" (Costs.classValue model) <| Just "True Form - Class"
         , link "Race" <| Just "True Form - Race"
-        , row "Starting power" (Costs.startingValue model) <| Just "Game Mode"
-        , row "Complications" (Costs.complicationsValue model) Nothing
-        , row "Type perks" (Costs.typePerksValue model) Nothing
-        , row "Magic" (Costs.magicsValue model) <| Just "The Magic"
-        , row "Perks" (Costs.perksValue model) Nothing
-        , row "Faction" (Costs.factionValue model) <| Just "Factions"
-        , row "Companions" (Costs.companionsValue model) Nothing
-        , relicSlider model
-        , row "Relics" (Costs.relicsValue model) Nothing
-        , el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none
+        , keyedRow "Starting power" (Costs.startingValue model) <| Just "Game Mode"
+        , keyedRow "Complications" (Costs.complicationsValue model) Nothing
+        , keyedRow "Type perks" (Costs.typePerksValue model) Nothing
+        , keyedRow "Magic" (Costs.magicsValue model) <| Just "The Magic"
+        , keyedRow "Perks" (Costs.perksValue model) Nothing
+        , keyedRow "Faction" (Costs.factionValue model) <| Just "Factions"
+        , keyedRow "Companions" (Costs.companionsValue model) Nothing
+        , ( "RelicSlider", relicSlider model )
+        , keyedRow "Relics" (Costs.relicsValue model) Nothing
+        , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
         , resultRow
         , if List.isEmpty warnings then
-            Element.none
+            ( "Warnings", Element.none )
 
           else
-            el [ alignBottom, Font.bold ] <| text "Warnings"
-        , if List.isEmpty warnings then
-            Element.none
+            section [ alignBottom ] "Warnings"
+        , ( "WarningsColumn"
+          , if List.isEmpty warnings then
+                Element.none
 
-          else
-            Theme.column []
-                (List.map
-                    (\warning ->
-                        paragraph
-                            [ Background.color <| rgb 0.9 0.9 0.5
-                            , Theme.padding
-                            , Theme.rounded
-                            ]
-                            [ text warning ]
+            else
+                Theme.column []
+                    (List.map
+                        (\warning ->
+                            paragraph
+                                [ Background.color <| rgb 0.9 0.9 0.5
+                                , Theme.padding
+                                , Theme.rounded
+                                ]
+                                [ text warning ]
+                        )
+                        warnings
                     )
-                    warnings
-                )
-        , el [ alignBottom, Font.bold ] <| text "Affinities"
-        , Theme.wrappedRow [] <|
-            List.map Theme.viewAffinity <|
-                List.Extra.remove Types.All <|
-                    Types.affinities model
-        , capSlider model
-        , row "Power cap" (Costs.powerCap model) <| Just "Game Mode"
+          )
+        , section [ alignBottom ] "Affinities"
+        , ( "AffinitiesColumn"
+          , Theme.wrappedRow [] <|
+                List.map Theme.viewAffinity <|
+                    List.Extra.remove Types.All <|
+                        Types.affinities model
+          )
+        , ( "Cap Slider", capSlider model )
+        , keyedRow "Power cap" (Costs.powerCap model) <| Just "Game Mode"
         , button
-            { onPress = Just CompactAll
-            , label = text "Compact all"
+            { onPress = CompactAll
+            , label = "Compact all"
             }
         , button
-            { onPress = Just ExpandAll
-            , label = text "Expand all"
+            { onPress = ExpandAll
+            , label = "Expand all"
             }
         ]
+
+
+keyedRow : String -> Results Points -> Maybe String -> ( String, Element Msg )
+keyedRow label result target =
+    ( label, row label result target )
 
 
 row : String -> Results Points -> Maybe String -> Element Msg
