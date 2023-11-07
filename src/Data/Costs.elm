@@ -1,4 +1,4 @@
-module Data.Costs exposing (Cost(..), Points, classPower, combine, companionsValue, complicationsRawValue, complicationsValue, factionValue, initialPower, magicsValue, map, map2, mapErrors, perksValue, powerCap, relicsValue, sum, typePerksValue, withDefault, zero)
+module Data.Costs exposing (CostsResult(..), Points, classPower, combine, companionsValue, complicationsRawValue, complicationsValue, factionValue, initialPower, magicsValue, map, map2, mapErrors, perksValue, powerCap, relicsValue, sum, typePerksValue, withDefault, zero)
 
 import Data.Companion as Companion
 import Data.Complication as Complication
@@ -15,9 +15,9 @@ import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic
 
 {-| Like result, but accumulates errors.
 -}
-type Cost a
-    = CostOk a
-    | CostErr (List String)
+type CostsResult a
+    = CostsOk a
+    | CostsErr (List String)
 
 
 type alias Points =
@@ -35,9 +35,9 @@ zero =
     }
 
 
-slotUnsupported : Cost value
+slotUnsupported : CostsResult value
 slotUnsupported =
-    CostErr [ "Slot modes not supported yet" ]
+    CostsErr [ "Slot modes not supported yet" ]
 
 
 capWithWarning : Int -> String -> Int -> Points
@@ -76,36 +76,36 @@ normalInitialWarning =
 -- Class --
 
 
-classPower : Model -> Cost Points
+classPower : Model -> CostsResult Points
 classPower model =
     case model.class of
         Just class ->
             case class of
                 Warlock ->
-                    CostOk { zero | rewardPoints = 20 }
+                    CostsOk { zero | rewardPoints = 20 }
 
                 Academic ->
-                    CostOk zero
+                    CostsOk zero
 
                 Sorceress ->
-                    CostOk zero
+                    CostsOk zero
 
         Nothing ->
-            CostErr [ "You need to select a class" ]
+            CostsErr [ "You need to select a class" ]
 
 
 
 -- Power cap --
 
 
-powerCap : Model -> Cost Points
+powerCap : Model -> CostsResult Points
 powerCap model =
     case model.gameMode of
         Nothing ->
             model.towardsCap
                 |> capWithWarning 30 normalCapWarning
                 |> sum { zero | power = 100 }
-                |> CostOk
+                |> CostsOk
 
         Just StoryArc ->
             complicationsRawValue model
@@ -128,14 +128,14 @@ powerCap model =
 -- Initial power  --
 
 
-initialPower : Model -> Cost Points
+initialPower : Model -> CostsResult Points
 initialPower model =
     case model.gameMode of
         Just StoryArc ->
-            CostOk { zero | power = 10 }
+            CostsOk { zero | power = 10 }
 
         Just EarlyBird ->
-            CostOk { zero | power = 75 }
+            CostsOk { zero | power = 75 }
 
         Just SkillTree ->
             slotUnsupported
@@ -144,26 +144,26 @@ initialPower model =
             slotUnsupported
 
         Nothing ->
-            CostOk { zero | power = 30 }
+            CostsOk { zero | power = 30 }
 
 
 
 -- Complications --
 
 
-complicationsValue : Model -> Cost Points
+complicationsValue : Model -> CostsResult Points
 complicationsValue model =
     complicationsRawValue model
         |> andThen
             (\value ->
                 case model.gameMode of
                     Just StoryArc ->
-                        CostOk zero
+                        CostsOk zero
 
                     Just EarlyBird ->
                         value
                             |> capWithWarning 30 earlyBirdWarning
-                            |> CostOk
+                            |> CostsOk
 
                     Just SkillTree ->
                         slotUnsupported
@@ -174,38 +174,38 @@ complicationsValue model =
                     Nothing ->
                         (value - model.towardsCap)
                             |> capWithWarning 30 normalInitialWarning
-                            |> CostOk
+                            |> CostsOk
             )
 
 
-complicationsRawValue : Model -> Cost Int
+complicationsRawValue : Model -> CostsResult Int
 complicationsRawValue model =
     resultSum (complicationValue model) model.complications
 
 
-complicationValue : Model -> Types.RankedComplication -> Cost Int
+complicationValue : Model -> Types.RankedComplication -> CostsResult Int
 complicationValue model complication =
     let
-        get : Int -> List a -> Cost a
+        get : Int -> List a -> CostsResult a
         get tier list =
             case List.Extra.getAt (tier - 1) list of
                 Just v ->
-                    CostOk v
+                    CostsOk v
 
                 Nothing ->
-                    CostErr [ "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name ]
+                    CostsErr [ "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name ]
     in
     case List.Extra.find (\{ name } -> name == complication.name) Complication.all of
         Nothing ->
-            CostErr [ "Could not find complication " ++ Types.complicationToString complication.name ]
+            CostsErr [ "Could not find complication " ++ Types.complicationToString complication.name ]
 
         Just details ->
             let
-                raw : Cost Int
+                raw : CostsResult Int
                 raw =
                     case ( details.content, complication.kind ) of
                         ( Complication.Single value _, _ ) ->
-                            CostOk value
+                            CostsOk value
 
                         ( Complication.WithTiers _ tiers _, Tiered tier ) ->
                             map Tuple.second <| get tier tiers
@@ -217,7 +217,7 @@ complicationValue model complication =
                             get tier costs
 
                         ( _, Nontiered ) ->
-                            CostErr [ "Need a tier for complication " ++ Types.complicationToString complication.name ]
+                            CostsErr [ "Need a tier for complication " ++ Types.complicationToString complication.name ]
             in
             map
                 (\r ->
@@ -608,80 +608,80 @@ maybeSum toValue list =
         |> Maybe.map List.sum
 
 
-resultSum : (item -> Cost Int) -> List item -> Cost Int
+resultSum : (item -> CostsResult Int) -> List item -> CostsResult Int
 resultSum toValue list =
     list
         |> combineMap toValue
         |> map List.sum
 
 
-map : (a -> b) -> Cost a -> Cost b
+map : (a -> b) -> CostsResult a -> CostsResult b
 map f cost =
     case cost of
-        CostOk x ->
-            CostOk (f x)
+        CostsOk x ->
+            CostsOk (f x)
 
-        CostErr e ->
-            CostErr e
+        CostsErr e ->
+            CostsErr e
 
 
-map2 : (a -> b -> c) -> Cost a -> Cost b -> Cost c
+map2 : (a -> b -> c) -> CostsResult a -> CostsResult b -> CostsResult c
 map2 f l r =
     case ( l, r ) of
-        ( CostErr le, CostErr re ) ->
-            CostErr (le ++ re)
+        ( CostsErr le, CostsErr re ) ->
+            CostsErr (le ++ re)
 
-        ( CostOk _, CostErr re ) ->
-            CostErr re
+        ( CostsOk _, CostsErr re ) ->
+            CostsErr re
 
-        ( CostErr le, _ ) ->
-            CostErr le
+        ( CostsErr le, _ ) ->
+            CostsErr le
 
-        ( CostOk lo, CostOk ro ) ->
-            CostOk (f lo ro)
+        ( CostsOk lo, CostsOk ro ) ->
+            CostsOk (f lo ro)
 
 
-andThen : (a -> Cost b) -> Cost a -> Cost b
+andThen : (a -> CostsResult b) -> CostsResult a -> CostsResult b
 andThen f cost =
     case cost of
-        CostOk x ->
+        CostsOk x ->
             f x
 
-        CostErr e ->
-            CostErr e
+        CostsErr e ->
+            CostsErr e
 
 
-combine : List (Cost a) -> Cost (List a)
+combine : List (CostsResult a) -> CostsResult (List a)
 combine list =
     combineMap identity list
 
 
-combineMap : (a -> Cost b) -> List a -> Cost (List b)
+combineMap : (a -> CostsResult b) -> List a -> CostsResult (List b)
 combineMap f list =
     List.foldl
         (\value acc ->
             map2 (::) (f value) acc
         )
-        (CostOk [])
+        (CostsOk [])
         list
         |> map List.reverse
 
 
-withDefault : a -> Cost a -> a
+withDefault : a -> CostsResult a -> a
 withDefault default cost =
     case cost of
-        CostOk v ->
+        CostsOk v ->
             v
 
-        CostErr _ ->
+        CostsErr _ ->
             default
 
 
-mapErrors : (List String -> List String) -> Cost a -> Cost a
+mapErrors : (List String -> List String) -> CostsResult a -> CostsResult a
 mapErrors f cost =
     case cost of
-        CostOk _ ->
+        CostsOk _ ->
             cost
 
-        CostErr e ->
-            CostErr (f e)
+        CostsErr e ->
+            CostsErr (f e)

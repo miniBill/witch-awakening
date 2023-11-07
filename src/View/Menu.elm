@@ -1,6 +1,6 @@
 module View.Menu exposing (viewMenu)
 
-import Data.Costs as Costs exposing (Cost(..), Points)
+import Data.Costs as Costs exposing (CostsResult(..), Points)
 import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
 import Element.Background as Background
 import Element.Border as Border
@@ -17,7 +17,7 @@ import Types exposing (Choice(..), Model, Msg(..))
 viewMenu : Model -> Element Msg
 viewMenu model =
     let
-        power : Cost Points
+        power : CostsResult Points
         power =
             calculatePower model
 
@@ -28,7 +28,7 @@ viewMenu model =
                 , Costs.initialPower model
                 )
             of
-                ( CostOk p, CostOk c ) ->
+                ( CostsOk p, CostsOk c ) ->
                     let
                         warningsIcon : String
                         warningsIcon =
@@ -45,10 +45,10 @@ viewMenu model =
 
         ( warnings, errors ) =
             case Costs.map2 Costs.sum power (Costs.powerCap model) of
-                CostOk points ->
+                CostsOk points ->
                     ( List.Extra.unique points.warnings, [] )
 
-                CostErr es ->
+                CostsErr es ->
                     ( [], es )
     in
     Theme.column
@@ -101,10 +101,10 @@ viewMenu model =
 viewCalculations : List String -> Model -> Element Msg
 viewCalculations warnings model =
     let
-        row : String -> (Model -> Cost Points) -> Maybe String -> Element Msg
+        row : String -> (Model -> CostsResult Points) -> Maybe String -> Element Msg
         row label toValue target =
             case toValue model of
-                CostErr es ->
+                CostsErr es ->
                     let
                         errorViews : List (Element msg)
                         errorViews =
@@ -123,7 +123,7 @@ viewCalculations warnings model =
                         linkLabel label target
                             :: errorViews
 
-                CostOk value ->
+                CostsOk value ->
                     Theme.row [ width fill ]
                         [ linkLabel label target
                         , rightNumber <| String.fromInt value.power
@@ -272,7 +272,7 @@ linkLabel label target =
         }
 
 
-calculatePower : Model -> Cost Points
+calculatePower : Model -> CostsResult Points
 calculatePower model =
     [ Costs.classPower model
     , Costs.initialPower model
@@ -291,14 +291,14 @@ calculatePower model =
         |> Costs.map (List.foldl Costs.sum Costs.zero)
 
 
-upcast : (Model -> Maybe Int) -> Model -> Cost Points
+upcast : (Model -> Maybe Int) -> Model -> CostsResult Points
 upcast f model =
     case f model of
         Just p ->
-            CostOk { power = p, rewardPoints = 0, warnings = [] }
+            CostsOk { power = p, rewardPoints = 0, warnings = [] }
 
         Nothing ->
-            CostErr
+            CostsErr
                 [ let
                     _ =
                         Debug.todo
