@@ -1,4 +1,4 @@
-module Data.Costs exposing (Points, classPower, companionsValue, complicationsRawValue, complicationsValue, factionValue, initialPower, magicsValue, perksValue, powerCap, powerToPoints, relicsValue, sum, typePerksValue, zero)
+module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, conversion, factionValue, initialPower, magicsValue, perksValue, powerCap, powerToPoints, relicsValue, sum, typePerksValue, zero)
 
 import Data.Companion as Companion
 import Data.Complication as Complication
@@ -69,8 +69,8 @@ normalInitialWarning =
 -- Class --
 
 
-classPower : Model -> Results Points
-classPower model =
+classValue : Model -> Results Points
+classValue model =
     case model.class of
         Just class ->
             case class of
@@ -615,6 +615,15 @@ relicValue class pearl { name, cost } =
                 in
                 baseCost * multiplier
             )
+
+
+conversion : Model -> Results Points
+conversion model =
+    Oks
+        { zero
+            | power = -model.powerToRewards
+            , rewardPoints = model.powerToRewards
+        }
 
 
 

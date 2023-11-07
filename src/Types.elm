@@ -43,6 +43,7 @@ type Choice
     | DisplayRelics Display
     | ChoiceCosmicPearl CosmicPearlData
     | TowardsCap Int
+    | PowerToRewards Int
 
 
 type alias CosmicPearlData =
@@ -54,6 +55,7 @@ type alias CosmicPearlData =
 type alias Model =
     { key : Browser.Navigation.Key
     , towardsCap : Int
+    , powerToRewards : Int
     , menuOpen : Bool
     , class : Maybe Class
     , classDisplay : Display

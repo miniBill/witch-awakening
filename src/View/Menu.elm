@@ -176,7 +176,7 @@ viewCalculations warnings model =
             , Font.size 24
             ]
             [ text "🐱culations" ]
-        , row "Class" Costs.classPower <| Just "True Form - Class"
+        , row "Class" Costs.classValue <| Just "True Form - Class"
         , link "Race" <| Just "True Form - Race"
         , row "Initial power" Costs.initialPower <| Just "Game Mode"
         , row "Complications" Costs.complicationsValue Nothing
@@ -186,6 +186,7 @@ viewCalculations warnings model =
         , row "Perks" Costs.perksValue Nothing
         , row "Faction" Costs.factionValue <| Just "Factions"
         , row "Companions" Costs.companionsValue Nothing
+        , relicSlider model
         , row "Relics" Costs.relicsValue Nothing
         , el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none
         , resultRow
@@ -272,10 +273,6 @@ rightText value =
         (Theme.blocks [] value)
 
 
-
---(Theme.gradientText 4 Gradients.yellowGradient value)
-
-
 capSlider : Model -> Element Msg
 capSlider model =
     if model.gameMode /= Nothing then
@@ -311,6 +308,42 @@ capSlider model =
             }
 
 
+relicSlider : Model -> Element Msg
+relicSlider model =
+    Input.slider
+        [ width fill
+        , Element.behindContent <|
+            el
+                [ width fill
+                , height (px 2)
+                , centerY
+                , Background.color <| rgb 0.7 0.7 0.7
+                , Border.rounded 2
+                ]
+                Element.none
+        ]
+        { onChange = \newValue -> Choice <| PowerToRewards <| round newValue
+        , label =
+            Input.labelAbove [] <|
+                Theme.row []
+                    [ paragraph [ Font.bold ]
+                        [ text "Convert power into reward points or vice versa"
+                        , let
+                            zero : Points
+                            zero =
+                                Costs.zero
+                          in
+                          rightPoints { zero | rewardPoints = model.powerToRewards }
+                        ]
+                    ]
+        , min = negate <| toFloat <| Results.withDefault 0 <| Results.map .rewardPoints <| Costs.classValue model
+        , max = negate <| toFloat <| Results.withDefault 0 <| Results.map .rewardPoints <| Costs.relicsValue model
+        , value = toFloat model.powerToRewards
+        , step = Just 1
+        , thumb = Input.defaultThumb
+        }
+
+
 linkLabel : String -> Maybe String -> Element Msg
 linkLabel label target =
     Input.button []
@@ -321,7 +354,7 @@ linkLabel label target =
 
 calculatePower : Model -> Results Points
 calculatePower model =
-    [ Costs.classPower model
+    [ Costs.classValue model
     , Costs.initialPower model
     , Costs.complicationsValue model
     , Costs.typePerksValue model
@@ -330,6 +363,7 @@ calculatePower model =
     , Costs.factionValue model
     , Costs.companionsValue model
     , Costs.relicsValue model
+    , Costs.conversion model
     , -- This is used to collect warnings and errors from the power cap
       Costs.powerCap model
         |> Results.map (\points -> { points | power = 0, rewardPoints = 0 })

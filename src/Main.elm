@@ -232,6 +232,9 @@ updateOnChoice choice model =
         TowardsCap towardsCap ->
             { model | towardsCap = towardsCap }
 
+        PowerToRewards powerToRewards ->
+            { model | powerToRewards = powerToRewards }
+
 
 toUrl : Model -> String
 toUrl model =
@@ -250,8 +253,20 @@ toUrl model =
             List.map
                 (\value -> Url.Builder.string key (f value))
                 values
+
+        int : String -> Int -> List QueryParameter
+        int key value =
+            pair key
+                String.fromInt
+                (if value == 0 then
+                    Nothing
+
+                 else
+                    Just value
+                )
     in
-    [ pair "towardsCap" String.fromInt (Just model.towardsCap)
+    [ int "towardsCap" model.towardsCap
+    , int "powerToRewards" model.powerToRewards
     , pair "class" Types.classToString model.class
     , list "race" Types.raceToString model.races
     , pair "gameMode" Types.gameModeToString model.gameMode
@@ -397,12 +412,16 @@ parseUrl navKey url =
 
                 _ ->
                     Nothing
+
+        parseInt : String -> Int
+        parseInt key =
+            parseOne key String.toInt
+                |> Maybe.withDefault 0
     in
     { key = navKey
     , menuOpen = False
-    , towardsCap =
-        parseOne "towardsCap" String.toInt
-            |> Maybe.withDefault 0
+    , towardsCap = parseInt "towardsCap"
+    , powerToRewards = parseInt "powerToRewards"
     , class = parseOne "class" Types.classFromString
     , classDisplay = DisplayFull
     , races = parseMany "race" Types.raceFromString
