@@ -5,12 +5,13 @@ import Browser exposing (UrlRequest(..))
 import Browser.Dom
 import Browser.Events
 import Browser.Navigation as Nav
+import Data.Perk
 import Dict
 import Element exposing (Element, fill, rgb, width)
 import Element.Background as Background
 import Element.Font as Font
 import Element.Lazy
-import Generated.Types as Types exposing (Relic(..))
+import Generated.Types as Types exposing (Perk(..), Relic(..))
 import Json.Decode as JD
 import List.Extra
 import Maybe.Extra
@@ -80,6 +81,7 @@ update msg model =
                 newModel : Model
                 newModel =
                     updateOnChoice choice model
+                        |> fixupModel
             in
             ( newModel
             , Nav.replaceUrl model.key (toUrl newModel)
@@ -139,6 +141,53 @@ update msg model =
 
         Nop ->
             ( model, Cmd.none )
+
+
+fixupModel : Model -> Model
+fixupModel model =
+    { model
+        | mainRace =
+            case model.races of
+                [] ->
+                    Nothing
+
+                [ _ ] ->
+                    Nothing
+
+                _ ->
+                    case model.mainRace of
+                        Nothing ->
+                            model.mainRace
+
+                        Just m ->
+                            if List.member m model.races then
+                                model.mainRace
+
+                            else
+                                Nothing
+        , cosmicPearl =
+            if List.any (\{ name } -> name == CosmicPearl) model.relics then
+                model.cosmicPearl
+
+            else
+                { add = []
+                , change = []
+                }
+        , perks =
+            let
+                removed : List { cost : Int, name : Perk }
+                removed =
+                    List.filter (\{ name } -> name /= Hybridize) model.perks
+            in
+            if List.length model.races > 1 then
+                { name = Hybridize
+                , cost = Data.Perk.hybridizeCost * (List.length model.races - 1)
+                }
+                    :: removed
+
+            else
+                removed
+    }
 
 
 toggle : Bool -> b -> List b -> List b
@@ -211,17 +260,7 @@ updateOnChoice choice model =
             { model | companionsDisplay = companionsDisplay }
 
         ChoiceRelic ( relic, selected ) ->
-            if relic.name == CosmicPearl && not selected then
-                { model
-                    | relics = List.Extra.remove relic model.relics
-                    , cosmicPearl =
-                        { add = []
-                        , change = []
-                        }
-                }
-
-            else
-                { model | relics = toggle selected relic model.relics }
+            { model | relics = toggle selected relic model.relics }
 
         DisplayRelics relicsDisplay ->
             { model | relicsDisplay = relicsDisplay }
