@@ -14,8 +14,8 @@ import Types exposing (Choice(..), CosmicPearlData, Display, RankedRelic)
 import View
 
 
-viewRelics : Display -> CosmicPearlData -> List Race -> List RankedRelic -> Element Choice
-viewRelics display pearl races relics =
+viewRelics : Display -> CosmicPearlData -> Maybe Race -> List Race -> List RankedRelic -> Element Choice
+viewRelics display pearl mainRace races relics =
     View.collapsible []
         display
         DisplayRelics
@@ -23,14 +23,14 @@ viewRelics display pearl races relics =
         "# Relics"
         [ Theme.blocks [ centerX ] Relic.intro
         , Relic.all
-            |> List.map (relicBox display relics pearl races)
+            |> List.map (relicBox mainRace display relics pearl races)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
         [ Relic.all
-            |> List.map (relicBox display relics pearl races)
+            |> List.map (relicBox mainRace display relics pearl races)
             |> Theme.column
                 [ centerX
                 , spacing <| Theme.rythm * 3
@@ -39,13 +39,14 @@ viewRelics display pearl races relics =
 
 
 relicBox :
-    Display
+    Maybe Race
+    -> Display
     -> List RankedRelic
     -> CosmicPearlData
     -> List Race
     -> Relic.Details
     -> Element Choice
-relicBox display selected pearl races ({ name, class, content } as relic) =
+relicBox mainRace display selected pearl races ({ name, class, content } as relic) =
     let
         isSelected : Maybe RankedRelic
         isSelected =
@@ -156,13 +157,13 @@ relicBox display selected pearl races ({ name, class, content } as relic) =
                     , Font.center
                     ]
             ]
-        , content = viewContent (isSelected /= Nothing) selected pearl races relic color
+        , content = viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
         , onPress = msg
         }
 
 
-viewContent : Bool -> List RankedRelic -> CosmicPearlData -> List Race -> Relic.Details -> Int -> List (Element Choice)
-viewContent isSelected selected pearl races { content, name } color =
+viewContent : Maybe Race -> Bool -> List RankedRelic -> CosmicPearlData -> List Race -> Relic.Details -> Int -> List (Element Choice)
+viewContent mainRace isSelected selected pearl races { content, name } color =
     case content of
         Single _ block ->
             [ Theme.blocks
@@ -173,7 +174,7 @@ viewContent isSelected selected pearl races { content, name } color =
             ]
 
         CosmicPearlContent cost block ->
-            viewCosmicPearl isSelected pearl races name cost block
+            viewCosmicPearl mainRace isSelected pearl races name cost block
 
         WithChoices before choices ->
             let
@@ -228,14 +229,15 @@ viewContent isSelected selected pearl races { content, name } color =
 
 
 viewCosmicPearl :
-    Bool
+    Maybe Race
+    -> Bool
     -> CosmicPearlData
     -> List Race
     -> Types.Relic
     -> Int
     -> String
     -> List (Element Choice)
-viewCosmicPearl isSelected pearl races name cost block =
+viewCosmicPearl mainRace isSelected pearl races name cost block =
     let
         swapAffinityRow : Affinity -> Element Choice
         swapAffinityRow from =
@@ -379,14 +381,14 @@ viewCosmicPearl isSelected pearl races name cost block =
             , Theme.padding
             ]
           <|
-            case races of
-                [] ->
-                    addBlock
+            case ( mainRace, races ) of
+                ( Just main, _ ) ->
+                    swapBlock main ++ addBlock
 
-                [ race ] ->
-                    swapBlock race ++ addBlock
+                ( _, [ main ] ) ->
+                    swapBlock main ++ addBlock
 
                 _ ->
-                    List.concatMap swapBlock races
+                    Theme.blocks [] "You need to select a main race to change its affinities" :: addBlock
         ]
     ]

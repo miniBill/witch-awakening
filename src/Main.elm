@@ -530,7 +530,7 @@ innerView model =
         , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
         , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
         , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions
-        , Element.Lazy.lazy4 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.races model.relics
+        , Element.Lazy.lazy5 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.mainRace model.races model.relics
         ]
         |> Element.map Choice
 
