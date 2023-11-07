@@ -44,17 +44,25 @@ config =
     , NoUnused.Exports.rule
         |> Rule.ignoreErrorsForDirectories [ "generated" ]
     , NoUnused.Parameters.rule
+        |> Rule.ignoreErrorsForDirectories [ "generated" ]
     , NoUnused.Patterns.rule
+        |> Rule.ignoreErrorsForDirectories [ "generated" ]
     , NoUnused.Variables.rule
     , Simplify.rule Simplify.defaults
-    , ReviewPipelineStyles.rule <|
-        List.concat
-            [ ReviewPipelineStyles.Premade.noSingleLineRightPizza
-
-            -- , ReviewPipelineStyles.Premade.noMultilineLeftPizza
-            -- , ReviewPipelineStyles.Premade.noPipelinesWithSimpleInputs
-            , ReviewPipelineStyles.Premade.noRepeatedParentheticalApplication
-            , ReviewPipelineStyles.Premade.noPipelinesWithConfusingNonCommutativeFunctions
-            , ReviewPipelineStyles.Premade.noSemanticallyInfixFunctionsInLeftPipelines
-            ]
+        |> Rule.ignoreErrorsForDirectories [ "generated" ]
+    , ReviewPipelineStyles.rule pipelineConfig
+        |> Rule.ignoreErrorsForDirectories [ "generated" ]
     ]
+
+
+pipelineConfig : List (ReviewPipelineStyles.PipelineRule ())
+pipelineConfig =
+    List.concat
+        [ ReviewPipelineStyles.Premade.noSingleLineRightPizza
+
+        -- , ReviewPipelineStyles.Premade.noMultilineLeftPizza
+        -- , ReviewPipelineStyles.Premade.noPipelinesWithSimpleInputs
+        , ReviewPipelineStyles.Premade.noRepeatedParentheticalApplication
+        , ReviewPipelineStyles.Premade.noPipelinesWithConfusingNonCommutativeFunctions
+        , ReviewPipelineStyles.Premade.noSemanticallyInfixFunctionsInLeftPipelines
+        ]
