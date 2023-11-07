@@ -254,18 +254,20 @@ toUrl model =
                 (\value -> Url.Builder.string key (f value))
                 values
 
+        withDefault : a -> a -> Maybe a
+        withDefault default value =
+            if value == default then
+                Nothing
+
+            else
+                Just value
+
         int : String -> Int -> List QueryParameter
         int key value =
-            pair key
-                String.fromInt
-                (if value == 0 then
-                    Nothing
-
-                 else
-                    Just value
-                )
+            pair key String.fromInt (withDefault 0 value)
     in
-    [ int "towardsCap" model.towardsCap
+    [ pair "capBuild" boolToString (withDefault False model.capBuild)
+    , int "towardsCap" model.towardsCap
     , int "powerToRewards" model.powerToRewards
     , pair "class" Types.classToString model.class
     , list "race" Types.raceToString model.races
@@ -401,17 +403,10 @@ parseUrl navKey url =
                                 }
                             )
 
-        parseBool : String -> Maybe Bool
-        parseBool bool =
-            case bool of
-                "True" ->
-                    Just True
-
-                "False" ->
-                    Just False
-
-                _ ->
-                    Nothing
+        parseBool : String -> Bool
+        parseBool key =
+            parseOne key stringToBool
+                |> Maybe.withDefault False
 
         parseInt : String -> Int
         parseInt key =
@@ -421,6 +416,7 @@ parseUrl navKey url =
     { key = navKey
     , menuOpen = False
     , towardsCap = parseInt "towardsCap"
+    , capBuild = parseBool "capBuild"
     , powerToRewards = parseInt "powerToRewards"
     , class = parseOne "class" Types.classFromString
     , classDisplay = DisplayFull
@@ -441,8 +437,7 @@ parseUrl navKey url =
             |> Maybe.map
                 (\faction ->
                     ( faction
-                    , parseOne "factionPerk" parseBool
-                        |> Maybe.withDefault False
+                    , parseBool "factionPerk"
                     )
                 )
     , factionDisplay = DisplayFull
@@ -467,6 +462,19 @@ parseUrl navKey url =
                 )
         }
     }
+
+
+stringToBool : String -> Maybe Bool
+stringToBool bool =
+    case bool of
+        "True" ->
+            Just True
+
+        "False" ->
+            Just False
+
+        _ ->
+            Nothing
 
 
 view : Model -> Browser.Document Msg
