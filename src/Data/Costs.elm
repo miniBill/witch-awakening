@@ -1,4 +1,4 @@
-module Data.Costs exposing (CostsResult(..), Points, classPower, combine, companionsValue, complicationsRawValue, complicationsValue, factionValue, initialPower, magicsValue, map, map2, mapErrors, perksValue, powerCap, relicsValue, sum, typePerksValue, withDefault, zero)
+module Data.Costs exposing (Points, classPower, companionsValue, complicationsRawValue, complicationsValue, factionValue, initialPower, magicsValue, perksValue, powerCap, relicsValue, sum, typePerksValue, zero)
 
 import Data.Companion as Companion
 import Data.Complication as Complication
@@ -10,14 +10,8 @@ import Data.TypePerk as TypePerk
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Race, Relic(..))
 import List.Extra
 import Maybe.Extra
+import Results exposing (Results(..))
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
-
-
-{-| Like result, but accumulates errors.
--}
-type CostsResult a
-    = CostsOk a
-    | CostsErr (List String)
 
 
 type alias Points =
@@ -35,9 +29,9 @@ zero =
     }
 
 
-slotUnsupported : CostsResult value
+slotUnsupported : Results value
 slotUnsupported =
-    CostsErr [ "Slot modes not supported yet" ]
+    Errs [ "Slot modes not supported yet" ]
 
 
 capWithWarning : Int -> String -> Int -> Points
@@ -76,46 +70,46 @@ normalInitialWarning =
 -- Class --
 
 
-classPower : Model -> CostsResult Points
+classPower : Model -> Results Points
 classPower model =
     case model.class of
         Just class ->
             case class of
                 Warlock ->
-                    CostsOk { zero | rewardPoints = 20 }
+                    Oks { zero | rewardPoints = 20 }
 
                 Academic ->
-                    CostsOk zero
+                    Oks zero
 
                 Sorceress ->
-                    CostsOk zero
+                    Oks zero
 
         Nothing ->
-            CostsErr [ "You need to select a class" ]
+            Errs [ "You need to select a class" ]
 
 
 
 -- Power cap --
 
 
-powerCap : Model -> CostsResult Points
+powerCap : Model -> Results Points
 powerCap model =
     case model.gameMode of
         Nothing ->
             model.towardsCap
                 |> capWithWarning 30 normalCapWarning
                 |> sum { zero | power = 100 }
-                |> CostsOk
+                |> Oks
 
         Just StoryArc ->
             complicationsRawValue model
-                |> map (capWithWarning 60 storyArcWarning)
-                |> map (sum { zero | power = 150 })
+                |> Results.map (capWithWarning 60 storyArcWarning)
+                |> Results.map (sum { zero | power = 150 })
 
         Just EarlyBird ->
             complicationsRawValue model
-                |> map (capWithWarning 30 earlyBirdWarning)
-                |> map (sum { zero | power = 75 })
+                |> Results.map (capWithWarning 30 earlyBirdWarning)
+                |> Results.map (sum { zero | power = 75 })
 
         Just SkillTree ->
             slotUnsupported
@@ -128,14 +122,14 @@ powerCap model =
 -- Initial power  --
 
 
-initialPower : Model -> CostsResult Points
+initialPower : Model -> Results Points
 initialPower model =
     case model.gameMode of
         Just StoryArc ->
-            CostsOk { zero | power = 10 }
+            Oks { zero | power = 10 }
 
         Just EarlyBird ->
-            CostsOk { zero | power = 75 }
+            Oks { zero | power = 75 }
 
         Just SkillTree ->
             slotUnsupported
@@ -144,26 +138,26 @@ initialPower model =
             slotUnsupported
 
         Nothing ->
-            CostsOk { zero | power = 30 }
+            Oks { zero | power = 30 }
 
 
 
 -- Complications --
 
 
-complicationsValue : Model -> CostsResult Points
+complicationsValue : Model -> Results Points
 complicationsValue model =
     complicationsRawValue model
-        |> andThen
+        |> Results.andThen
             (\value ->
                 case model.gameMode of
                     Just StoryArc ->
-                        CostsOk zero
+                        Oks zero
 
                     Just EarlyBird ->
                         value
                             |> capWithWarning 30 earlyBirdWarning
-                            |> CostsOk
+                            |> Oks
 
                     Just SkillTree ->
                         slotUnsupported
@@ -174,52 +168,52 @@ complicationsValue model =
                     Nothing ->
                         (value - model.towardsCap)
                             |> capWithWarning 30 normalInitialWarning
-                            |> CostsOk
+                            |> Oks
             )
 
 
-complicationsRawValue : Model -> CostsResult Int
+complicationsRawValue : Model -> Results Int
 complicationsRawValue model =
     resultSum (complicationValue model) model.complications
 
 
-complicationValue : Model -> Types.RankedComplication -> CostsResult Int
+complicationValue : Model -> Types.RankedComplication -> Results Int
 complicationValue model complication =
     let
-        get : Int -> List a -> CostsResult a
+        get : Int -> List a -> Results a
         get tier list =
             case List.Extra.getAt (tier - 1) list of
                 Just v ->
-                    CostsOk v
+                    Oks v
 
                 Nothing ->
-                    CostsErr [ "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name ]
+                    Errs [ "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name ]
     in
     case List.Extra.find (\{ name } -> name == complication.name) Complication.all of
         Nothing ->
-            CostsErr [ "Could not find complication " ++ Types.complicationToString complication.name ]
+            Errs [ "Could not find complication " ++ Types.complicationToString complication.name ]
 
         Just details ->
             let
-                raw : CostsResult Int
+                raw : Results Int
                 raw =
                     case ( details.content, complication.kind ) of
                         ( Complication.Single value _, _ ) ->
-                            CostsOk value
+                            Oks value
 
                         ( Complication.WithTiers _ tiers _, Tiered tier ) ->
-                            map Tuple.second <| get tier tiers
+                            Results.map Tuple.second <| get tier tiers
 
                         ( Complication.WithChoices _ choices _, Tiered tier ) ->
-                            map Tuple.second <| get tier choices
+                            Results.map Tuple.second <| get tier choices
 
                         ( Complication.WithCosts _ costs, Tiered tier ) ->
                             get tier costs
 
                         ( _, Nontiered ) ->
-                            CostsErr [ "Need a tier for complication " ++ Types.complicationToString complication.name ]
+                            Errs [ "Need a tier for complication " ++ Types.complicationToString complication.name ]
             in
-            map
+            Results.map
                 (\r ->
                     let
                         bonus : Int
@@ -239,32 +233,44 @@ complicationValue model complication =
 -- Type perks --
 
 
-typePerksValue : Model -> Maybe Int
+typePerksValue : Model -> Results Points
 typePerksValue model =
-    maybeSum typePerkValue model.typePerks
+    resultSum typePerkValue model.typePerks
+        |> Results.map powerToPoints
 
 
-typePerkValue : Race -> Maybe Int
+typePerkValue : Race -> Results Int
 typePerkValue race =
-    List.Extra.find (\perk -> perk.race == race) TypePerk.all
-        |> Maybe.map (\{ cost } -> -cost)
+    find "Type perk" .race race TypePerk.all Types.raceToString
+        |> Results.map (\{ cost } -> -cost)
+
+
+find : String -> (item -> key) -> key -> List item -> (key -> String) -> Results item
+find label toKey value list toString =
+    case List.Extra.find (\candidate -> toKey candidate == value) list of
+        Nothing ->
+            Errs [ label ++ " " ++ toString value ++ " not found" ]
+
+        Just v ->
+            Oks v
 
 
 
 -- Magics --
 
 
-magicsValue : Model -> Maybe Int
+magicsValue : Model -> Results Points
 magicsValue model =
     let
         affinities : List Affinity
         affinities =
             Types.affinities model
     in
-    maybeSum (magicValue affinities model) model.magic
+    resultSum (magicValue affinities model) model.magic
+        |> Results.map powerToPoints
 
 
-magicValue : List Affinity -> Model -> RankedMagic -> Maybe Int
+magicValue : List Affinity -> Model -> RankedMagic -> Results Int
 magicValue affinities { faction, class } { name, rank } =
     case
         Magic.all
@@ -272,24 +278,31 @@ magicValue affinities { faction, class } { name, rank } =
             |> Maybe.andThen (magicCost affinities class rank)
     of
         Just cost ->
-            Just cost
+            Oks cost
 
         Nothing ->
-            FactionalMagic.all
-                |> List.Extra.find (\magic -> magic.name == name)
-                |> Maybe.andThen
-                    (\magic ->
-                        let
-                            cost : Maybe Int
-                            cost =
-                                magicCost affinities class rank magic
-                        in
-                        if Just ( magic.faction, True ) == faction then
-                            Maybe.map (\c -> (c + 1) // 2) cost
+            case
+                FactionalMagic.all
+                    |> List.Extra.find (\magic -> magic.name == name)
+                    |> Maybe.andThen
+                        (\magic ->
+                            let
+                                cost : Maybe Int
+                                cost =
+                                    magicCost affinities class rank magic
+                            in
+                            if Just ( magic.faction, True ) == faction then
+                                Maybe.map (\c -> (c + 1) // 2) cost
 
-                        else
-                            Maybe.map ((*) 2) cost
-                    )
+                            else
+                                Maybe.map ((*) 2) cost
+                        )
+            of
+                Just cost ->
+                    Oks cost
+
+                Nothing ->
+                    Errs [ "Magic " ++ Types.magicToString name ++ " not found" ]
 
 
 magicCost :
@@ -361,21 +374,21 @@ magicCost affinities class rank magic =
 -- Perks --
 
 
-perksValue : Model -> Maybe Int
+perksValue : Model -> Results Points
 perksValue model =
     let
         affinities : List Affinity
         affinities =
             Types.affinities model
     in
-    maybeSum (perkValue affinities model.class) model.perks
+    resultSum (perkValue affinities model.class) model.perks
+        |> Results.map powerToPoints
 
 
-perkValue : List Affinity -> Maybe Class -> RankedPerk -> Maybe Int
+perkValue : List Affinity -> Maybe Class -> RankedPerk -> Results Int
 perkValue affinities class { name, cost } =
-    Perk.all
-        |> List.Extra.find (\perk -> perk.name == name)
-        |> Maybe.map
+    find "Perk" .name name Perk.all Types.perkToString
+        |> Results.map
             (\perk ->
                 let
                     isClass : Bool
@@ -405,31 +418,39 @@ perkValue affinities class { name, cost } =
 -- Faction --
 
 
-factionValue : Model -> Maybe Int
+factionValue : Model -> Results Points
 factionValue model =
     case model.faction of
         Nothing ->
-            Just 4
+            Oks { zero | power = 4 }
 
         Just ( _, False ) ->
-            Just 2
+            Oks { zero | power = 2 }
 
         Just ( _, True ) ->
-            Just 0
+            Oks zero
 
 
 
 -- Companions --
 
 
-companionsValue : Model -> Maybe Int
+companionsValue : Model -> Results Points
 companionsValue model =
     let
-        totalCost : List ( Maybe Faction, Companion.Details ) -> Maybe Int
+        totalCost : List ( Maybe Faction, Companion.Details ) -> Results Int
         totalCost companions =
             companions
-                |> Maybe.Extra.traverse (\( _, { cost } ) -> cost)
-                |> Maybe.map List.sum
+                |> Results.combineMap
+                    (\( _, { name, cost } ) ->
+                        case cost of
+                            Just v ->
+                                Oks v
+
+                            Nothing ->
+                                Errs [ "Companion " ++ Types.companionToString name ++ " does not have a fixed cost" ]
+                    )
+                |> Results.map List.sum
 
         forFree : List ( Maybe Faction, Companion.Details ) -> Int
         forFree companions =
@@ -501,13 +522,14 @@ companionsValue model =
                     |> Maybe.withDefault 0
     in
     model.companions
-        |> Maybe.Extra.traverse getCompanion
-        |> Maybe.andThen
+        |> Results.combineMap getCompanion
+        |> Results.andThen
             (\companions ->
-                Maybe.map
+                Results.map
                     (\calculatedCost -> forFree companions - calculatedCost)
                     (totalCost companions)
             )
+        |> Results.map powerToPoints
 
 
 sameClass : Companion.Details -> Maybe Class -> Bool
@@ -532,37 +554,44 @@ sameRace companion races =
         || List.any (\companionRace -> List.member companionRace races) companion.races
 
 
-getCompanion : Companion -> Maybe ( Maybe Faction, Companion.Details )
+getCompanion : Companion -> Results ( Maybe Faction, Companion.Details )
 getCompanion companion =
-    List.Extra.findMap
-        (\( _, faction, group ) ->
-            List.Extra.findMap
-                (\({ name } as c) ->
-                    if name == companion then
-                        Just ( faction, c )
+    case
+        List.Extra.findMap
+            (\( _, faction, group ) ->
+                List.Extra.findMap
+                    (\({ name } as c) ->
+                        if name == companion then
+                            Just ( faction, c )
 
-                    else
-                        Nothing
-                )
-                group
-        )
-        Companion.all
+                        else
+                            Nothing
+                    )
+                    group
+            )
+            Companion.all
+    of
+        Just p ->
+            Oks p
+
+        Nothing ->
+            Errs [ "Companion " ++ Types.companionToString companion ++ " not found" ]
 
 
 
 -- Relics --
 
 
-relicsValue : Model -> Maybe Int
+relicsValue : Model -> Results Points
 relicsValue model =
-    maybeSum (relicValue model.class model.cosmicPearl) model.relics
+    resultSum (relicValue model.class model.cosmicPearl) model.relics
+        |> Results.map (\value -> { zero | rewardPoints = value })
 
 
-relicValue : Maybe Class -> CosmicPearlData -> RankedRelic -> Maybe Int
+relicValue : Maybe Class -> CosmicPearlData -> RankedRelic -> Results Int
 relicValue class pearl { name, cost } =
-    Relic.all
-        |> List.Extra.find (\relic -> relic.name == name)
-        |> Maybe.map
+    find "Relic" .name name Relic.all Types.relicToString
+        |> Results.map
             (\relic ->
                 let
                     isClass : Bool
@@ -608,80 +637,13 @@ maybeSum toValue list =
         |> Maybe.map List.sum
 
 
-resultSum : (item -> CostsResult Int) -> List item -> CostsResult Int
+resultSum : (item -> Results Int) -> List item -> Results Int
 resultSum toValue list =
     list
-        |> combineMap toValue
-        |> map List.sum
+        |> Results.combineMap toValue
+        |> Results.map List.sum
 
 
-map : (a -> b) -> CostsResult a -> CostsResult b
-map f cost =
-    case cost of
-        CostsOk x ->
-            CostsOk (f x)
-
-        CostsErr e ->
-            CostsErr e
-
-
-map2 : (a -> b -> c) -> CostsResult a -> CostsResult b -> CostsResult c
-map2 f l r =
-    case ( l, r ) of
-        ( CostsErr le, CostsErr re ) ->
-            CostsErr (le ++ re)
-
-        ( CostsOk _, CostsErr re ) ->
-            CostsErr re
-
-        ( CostsErr le, _ ) ->
-            CostsErr le
-
-        ( CostsOk lo, CostsOk ro ) ->
-            CostsOk (f lo ro)
-
-
-andThen : (a -> CostsResult b) -> CostsResult a -> CostsResult b
-andThen f cost =
-    case cost of
-        CostsOk x ->
-            f x
-
-        CostsErr e ->
-            CostsErr e
-
-
-combine : List (CostsResult a) -> CostsResult (List a)
-combine list =
-    combineMap identity list
-
-
-combineMap : (a -> CostsResult b) -> List a -> CostsResult (List b)
-combineMap f list =
-    List.foldl
-        (\value acc ->
-            map2 (::) (f value) acc
-        )
-        (CostsOk [])
-        list
-        |> map List.reverse
-
-
-withDefault : a -> CostsResult a -> a
-withDefault default cost =
-    case cost of
-        CostsOk v ->
-            v
-
-        CostsErr _ ->
-            default
-
-
-mapErrors : (List String -> List String) -> CostsResult a -> CostsResult a
-mapErrors f cost =
-    case cost of
-        CostsOk _ ->
-            cost
-
-        CostsErr e ->
-            CostsErr (f e)
+powerToPoints : Int -> Points
+powerToPoints value =
+    { zero | power = value }

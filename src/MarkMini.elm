@@ -25,6 +25,7 @@ type Piece
     | Number String
     | Kisses String
     | Warning
+    | Error
 
 
 type Color
@@ -204,20 +205,25 @@ parseSquareBrackets str =
                     Affinity affinity
 
                 Nothing ->
-                    if str == "K" then
-                        Kisses ""
+                    case str of
+                        "K" ->
+                            Kisses ""
 
-                    else if str == "W" then
-                        Warning
+                        "W" ->
+                            Warning
 
-                    else if String.startsWith "http" str then
-                        Link str
+                        "E" ->
+                            Error
 
-                    else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
-                        Number str
+                        _ ->
+                            if String.startsWith "http" str then
+                                Link str
 
-                    else
-                        Text ("[" ++ str ++ "]")
+                            else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
+                                Number str
+
+                            else
+                                Text ("[" ++ str ++ "]")
 
 
 innerParser : Char -> Parser (List Piece)

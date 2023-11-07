@@ -1,6 +1,6 @@
 module View.Menu exposing (viewMenu)
 
-import Data.Costs as Costs exposing (CostsResult(..), Points)
+import Data.Costs as Costs exposing (Points)
 import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
 import Element.Background as Background
 import Element.Border as Border
@@ -9,6 +9,7 @@ import Element.Input as Input
 import Generated.Types as Types
 import Gradients
 import List.Extra
+import Results exposing (Results(..))
 import String.Extra
 import Theme
 import Types exposing (Choice(..), Model, Msg(..))
@@ -17,18 +18,18 @@ import Types exposing (Choice(..), Model, Msg(..))
 viewMenu : Model -> Element Msg
 viewMenu model =
     let
-        power : CostsResult Points
+        power : Results Points
         power =
             calculatePower model
 
         menuLabel : String
         menuLabel =
             case
-                ( power
-                , Costs.initialPower model
-                )
+                Results.map2 Tuple.pair
+                    power
+                    (Costs.initialPower model)
             of
-                ( CostsOk p, CostsOk c ) ->
+                Oks ( p, c ) ->
                     let
                         warningsIcon : String
                         warningsIcon =
@@ -40,16 +41,16 @@ viewMenu model =
                     in
                     warningsIcon ++ "[" ++ String.fromInt p.power ++ "] [/] [" ++ String.fromInt c.power ++ "]"
 
-                _ ->
-                    "(epic)"
+                Errs _ ->
+                    "[E]"
 
         ( warnings, errors ) =
-            case Costs.map2 Costs.sum power (Costs.powerCap model) of
-                CostsOk points ->
+            case power of
+                Oks points ->
                     ( List.Extra.unique points.warnings, [] )
 
-                CostsErr es ->
-                    ( [], es )
+                Errs es ->
+                    ( [], List.Extra.unique es )
     in
     Theme.column
         [ alignTop
@@ -101,10 +102,10 @@ viewMenu model =
 viewCalculations : List String -> Model -> Element Msg
 viewCalculations warnings model =
     let
-        row : String -> (Model -> CostsResult Points) -> Maybe String -> Element Msg
+        row : String -> (Model -> Results Points) -> Maybe String -> Element Msg
         row label toValue target =
             case toValue model of
-                CostsErr es ->
+                Errs es ->
                     let
                         errorViews : List (Element msg)
                         errorViews =
@@ -123,7 +124,7 @@ viewCalculations warnings model =
                         linkLabel label target
                             :: errorViews
 
-                CostsOk value ->
+                Oks value ->
                     Theme.row [ width fill ]
                         [ linkLabel label target
                         , rightNumber <| String.fromInt value.power
@@ -133,7 +134,7 @@ viewCalculations warnings model =
         resultRow =
             row "Result"
                 (calculatePower
-                    >> Costs.mapErrors (\_ -> [ "There are errors in the computation" ])
+                    >> Results.mapErrors (\_ -> [ "There are errors in the computation" ])
                 )
                 Nothing
 
@@ -172,13 +173,13 @@ viewCalculations warnings model =
         , link "Race" <| Just "True Form - Race"
         , row "Initial power" Costs.initialPower <| Just "Game Mode"
         , row "Complications" Costs.complicationsValue Nothing
-        , row "Type perks" (upcast Costs.typePerksValue) Nothing
         , capSlider model
-        , row "Magic" (upcast Costs.magicsValue) <| Just "The Magic"
-        , row "Perks" (upcast Costs.perksValue) Nothing
-        , row "Faction" (upcast Costs.factionValue) <| Just "Factions"
-        , row "Companions" (upcast Costs.companionsValue) Nothing
-        , row "Relics" (upcast Costs.relicsValue) Nothing
+        , row "Type perks" Costs.typePerksValue Nothing
+        , row "Magic" Costs.magicsValue <| Just "The Magic"
+        , row "Perks" Costs.perksValue Nothing
+        , row "Faction" Costs.factionValue <| Just "Factions"
+        , row "Companions" Costs.companionsValue Nothing
+        , row "Relics" Costs.relicsValue Nothing
         , el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none
         , resultRow
         , if List.isEmpty warnings then
@@ -257,7 +258,7 @@ capSlider model =
                             ]
                         ]
             , min = 0
-            , max = toFloat <| Costs.withDefault 0 <| Costs.complicationsRawValue model
+            , max = toFloat <| Results.withDefault 0 <| Costs.complicationsRawValue model
             , value = toFloat model.towardsCap
             , step = Just 1
             , thumb = Input.defaultThumb
@@ -272,36 +273,20 @@ linkLabel label target =
         }
 
 
-calculatePower : Model -> CostsResult Points
+calculatePower : Model -> Results Points
 calculatePower model =
     [ Costs.classPower model
     , Costs.initialPower model
     , Costs.complicationsValue model
-    , Costs.powerCap model
-        -- This is used to collect warnings
-        |> Costs.map (\points -> { points | power = 0, rewardPoints = 0 })
-    , upcast Costs.typePerksValue model
-    , upcast Costs.magicsValue model
-    , upcast Costs.perksValue model
-    , upcast Costs.factionValue model
-    , upcast Costs.companionsValue model
-    , upcast Costs.relicsValue model
+    , Costs.typePerksValue model
+    , Costs.magicsValue model
+    , Costs.perksValue model
+    , Costs.factionValue model
+    , Costs.companionsValue model
+    , Costs.relicsValue model
+    , -- This is used to collect warnings and errors from the power cap
+      Costs.powerCap model
+        |> Results.map (\points -> { points | power = 0, rewardPoints = 0 })
     ]
-        |> Costs.combine
-        |> Costs.map (List.foldl Costs.sum Costs.zero)
-
-
-upcast : (Model -> Maybe Int) -> Model -> CostsResult Points
-upcast f model =
-    case f model of
-        Just p ->
-            CostsOk { power = p, rewardPoints = 0, warnings = [] }
-
-        Nothing ->
-            CostsErr
-                [ let
-                    _ =
-                        Debug.todo
-                  in
-                  "TODO"
-                ]
+        |> Results.combine
+        |> Results.map (List.foldl Costs.sum Costs.zero)

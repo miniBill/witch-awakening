@@ -301,6 +301,12 @@ viewPiece piece =
                 ]
                 [ Html.text "⚠️" ]
 
+        Error ->
+            Html.span
+                [ Html.Attributes.style "font-size" "1.2em"
+                ]
+                [ Html.text "⛔" ]
+
         Affinity affinity ->
             Html.img [ Html.Attributes.src (Types.affinityToImage affinity).src ] []
 
