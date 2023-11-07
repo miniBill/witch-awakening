@@ -46,7 +46,7 @@ viewMenu model =
                         powerString
 
                     else
-                        "p: " ++ powerString ++ "\n\nrp: {" ++ String.fromInt p.rewardPoints ++ "} {/} {" ++ String.fromInt c.rewardPoints ++ "}"
+                        "{center} " ++ powerString ++ "\n\n{center} {" ++ String.fromInt p.rewardPoints ++ "} {/} {" ++ String.fromInt c.rewardPoints ++ "}"
 
                 Errs _ ->
                     "[E]"
@@ -149,7 +149,7 @@ viewCalculations warnings model =
         link label target =
             Theme.row [ width fill ]
                 [ linkLabel label target
-                , rightText "-"
+                , rightText emptyRowContent
                 ]
 
         button : { onPress : Maybe msg, label : Element msg } -> Element msg
@@ -240,20 +240,26 @@ rightPoints value =
 
         joined : String
         joined =
-            String.join " "
-                [ wrap "[" value.power "]"
-                , wrap "{" value.rewardPoints "}"
-                ]
+            String.join " " <|
+                List.filter (not << String.isEmpty) <|
+                    [ wrap "[" value.power "]"
+                    , wrap "{" value.rewardPoints "}"
+                    ]
 
         fullString : String
         fullString =
             if String.isEmpty joined then
-                "{-}"
+                emptyRowContent
 
             else
                 joined
     in
     rightText fullString
+
+
+emptyRowContent : String
+emptyRowContent =
+    "[-]{-}"
 
 
 rightText : String -> Element msg

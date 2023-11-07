@@ -230,6 +230,9 @@ parseSquareBrackets str =
                         "E" ->
                             Error
 
+                        "-" ->
+                            Power str
+
                         _ ->
                             if String.startsWith "http" str then
                                 Link str
