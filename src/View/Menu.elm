@@ -180,6 +180,11 @@ viewCalculations model =
         , row "Faction" factionValue <| Just "Factions"
         , row "Companions" companionsValue Nothing
         , row "Relics" relicsValue Nothing
+        , el [ Font.bold ] <| text "Affinities"
+        , Theme.wrappedRow [] <|
+            List.map Theme.viewAffinity <|
+                List.Extra.remove Types.All <|
+                    Types.affinities model
         , el [ alignBottom, width fill ] <| row "Result" calculatePower Nothing
         , button
             { onPress = Just CompactAll
