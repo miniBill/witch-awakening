@@ -7,7 +7,6 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Generated.Types as Types
-import Gradients
 import List.Extra
 import Results exposing (Results(..))
 import String.Extra
@@ -38,8 +37,16 @@ viewMenu model =
 
                             else
                                 "[W] "
+
+                        powerString : String
+                        powerString =
+                            warningsIcon ++ "[" ++ String.fromInt p.power ++ "] [/] [" ++ String.fromInt c.power ++ "]"
                     in
-                    warningsIcon ++ "[" ++ String.fromInt p.power ++ "] [/] [" ++ String.fromInt c.power ++ "]"
+                    if p.rewardPoints == 0 && c.rewardPoints == 0 then
+                        powerString
+
+                    else
+                        "p: " ++ powerString ++ "\n\nrp: {" ++ String.fromInt p.rewardPoints ++ "} {/} {" ++ String.fromInt c.rewardPoints ++ "}"
 
                 Errs _ ->
                     "[E]"
@@ -127,7 +134,7 @@ viewCalculations warnings model =
                 Oks value ->
                     Theme.row [ width fill ]
                         [ linkLabel label target
-                        , rightNumber <| String.fromInt value.power
+                        , rightPoints value
                         ]
 
         resultRow : Element Msg
@@ -142,7 +149,7 @@ viewCalculations warnings model =
         link label target =
             Theme.row [ width fill ]
                 [ linkLabel label target
-                , rightNumber "-"
+                , rightText "-"
                 ]
 
         button : { onPress : Maybe msg, label : Element msg } -> Element msg
@@ -220,14 +227,47 @@ viewCalculations warnings model =
         ]
 
 
-rightNumber : String -> Element msg
-rightNumber value =
+rightPoints : Points -> Element msg
+rightPoints value =
+    let
+        wrap : String -> Int -> String -> String
+        wrap before v after =
+            if v == 0 then
+                ""
+
+            else
+                before ++ String.fromInt v ++ after
+
+        joined : String
+        joined =
+            String.join " "
+                [ wrap "[" value.power "]"
+                , wrap "{" value.rewardPoints "}"
+                ]
+
+        fullString : String
+        fullString =
+            if String.isEmpty joined then
+                "{-}"
+
+            else
+                joined
+    in
+    rightText fullString
+
+
+rightText : String -> Element msg
+rightText value =
     el
         [ alignRight
         , Theme.captureIt
         , Font.size 20
         ]
-        (Theme.gradientText 4 Gradients.yellowGradient value)
+        (Theme.blocks [] value)
+
+
+
+--(Theme.gradientText 4 Gradients.yellowGradient value)
 
 
 capSlider : Model -> Element Msg
@@ -254,7 +294,7 @@ capSlider model =
                     Theme.row []
                         [ paragraph [ Font.bold ]
                             [ text "Assign power to cap instead of initial"
-                            , rightNumber <| String.fromInt model.towardsCap
+                            , rightPoints <| Costs.powerToPoints model.towardsCap
                             ]
                         ]
             , min = 0

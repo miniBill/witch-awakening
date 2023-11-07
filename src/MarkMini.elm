@@ -15,6 +15,7 @@ type Block
 type Piece
     = Speech (List Piece)
     | Colored Color (List Piece)
+    | Smol (List Piece)
     | Italic (List Piece)
     | Underlined (List Piece)
     | Bold (List Piece)
@@ -22,15 +23,15 @@ type Piece
     | Affinity Affinity
     | Text String
     | Link String
-    | Number String
+    | Power String
     | Kisses String
     | Warning
     | Error
+    | RewardPoints String
 
 
 type Color
     = ChoiceColor
-    | Smol
     | ClassColor Class
     | SlotColor Slot
 
@@ -136,13 +137,7 @@ mainParser =
             |. Parser.symbol "("
             |= Parser.oneOf
                 [ Parser.succeed Slot
-                    |= Parser.oneOf
-                        [ Parser.succeed Folk |. Parser.symbol "folk"
-                        , Parser.succeed Noble |. Parser.symbol "noble"
-                        , Parser.succeed Heroic |. Parser.symbol "heroic"
-                        , Parser.succeed Epic |. Parser.symbol "epic"
-                        , Parser.succeed White |. Parser.symbol "white"
-                        ]
+                    |= slotParser
                     |. Parser.symbol ")"
                 , Parser.succeed (Text "(")
                 ]
@@ -156,32 +151,41 @@ mainParser =
                         )
                 , Parser.succeed (Text "K")
                 ]
-        , Parser.succeed Colored
+        , Parser.succeed identity
             |. Parser.symbol "{"
             |= Parser.oneOf
-                [ Parser.succeed ChoiceColor
-                    |. Parser.symbol "choice"
-                , Parser.succeed (ClassColor Academic)
-                    |. Parser.symbol "academic"
-                , Parser.succeed (ClassColor Sorceress)
-                    |. Parser.symbol "sorceress"
-                , Parser.succeed (ClassColor Warlock)
-                    |. Parser.symbol "warlock"
-                , Parser.succeed (SlotColor Folk)
-                    |. Parser.symbol "folk"
-                , Parser.succeed (SlotColor Noble)
-                    |. Parser.symbol "noble"
-                , Parser.succeed (SlotColor Heroic)
-                    |. Parser.symbol "heroic"
-                , Parser.succeed (SlotColor Epic)
-                    |. Parser.symbol "epic"
-                , Parser.succeed (SlotColor White)
-                    |. Parser.symbol "white"
+                [ Parser.succeed Colored
+                    |= Parser.oneOf
+                        [ Parser.succeed ChoiceColor
+                            |. Parser.symbol "choice"
+                        , Parser.succeed (ClassColor Academic)
+                            |. Parser.symbol "academic"
+                        , Parser.succeed (ClassColor Sorceress)
+                            |. Parser.symbol "sorceress"
+                        , Parser.succeed (ClassColor Warlock)
+                            |. Parser.symbol "warlock"
+                        , Parser.succeed (SlotColor Folk)
+                            |. Parser.symbol "folk"
+                        , Parser.succeed (SlotColor Noble)
+                            |. Parser.symbol "noble"
+                        , Parser.succeed (SlotColor Heroic)
+                            |. Parser.symbol "heroic"
+                        , Parser.succeed (SlotColor Epic)
+                            |. Parser.symbol "epic"
+                        , Parser.succeed (SlotColor White)
+                            |. Parser.symbol "white"
+                        ]
+                    |. Parser.symbol " "
+                    |= innerParser '}'
                 , Parser.succeed Smol
-                    |. Parser.symbol "smol"
+                    |. Parser.symbol "smol "
+                    |= innerParser '}'
+                , Parser.succeed RewardPoints
+                    |= Parser.getChompedString
+                        (Parser.chompIf (\c -> Char.isDigit c || c == '-' || c == '/')
+                            |. Parser.chompWhile (\c -> Char.isDigit c || c == '-' || c == '/')
+                        )
                 ]
-            |. Parser.symbol " "
-            |= innerParser '}'
             |. Parser.symbol "}"
         , Parser.succeed Text
             |= Parser.getChompedString
@@ -193,11 +197,22 @@ mainParser =
         |> many
 
 
+slotParser : Parser Slot
+slotParser =
+    Parser.oneOf
+        [ Parser.succeed Folk |. Parser.symbol "folk"
+        , Parser.succeed Noble |. Parser.symbol "noble"
+        , Parser.succeed Heroic |. Parser.symbol "heroic"
+        , Parser.succeed Epic |. Parser.symbol "epic"
+        , Parser.succeed White |. Parser.symbol "white"
+        ]
+
+
 parseSquareBrackets : String -> Piece
 parseSquareBrackets str =
     case String.toInt str of
         Just i ->
-            Number <| String.fromInt i
+            Power <| String.fromInt i
 
         Nothing ->
             case Types.affinityFromString str of
@@ -220,7 +235,7 @@ parseSquareBrackets str =
                                 Link str
 
                             else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
-                                Number str
+                                Power str
 
                             else
                                 Text ("[" ++ str ++ "]")

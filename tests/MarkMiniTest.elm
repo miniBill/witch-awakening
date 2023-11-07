@@ -17,7 +17,7 @@ suite =
                         (MarkMini.Paragraph
                             { pieces =
                                 [ MarkMini.Italic
-                                    [ MarkMini.Number "30" ]
+                                    [ MarkMini.Power "30" ]
                                 ]
                             , center = False
                             , mono = False

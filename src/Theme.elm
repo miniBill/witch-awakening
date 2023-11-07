@@ -249,10 +249,10 @@ viewPiece piece =
                 SlotColor slot ->
                     colored <| slotToColor slot
 
-                Smol ->
-                    Html.span
-                        [ Html.Attributes.style "font-size" "0.8em" ]
-                        (List.map viewPiece children)
+        Smol children ->
+            Html.span
+                [ Html.Attributes.style "font-size" "0.8em" ]
+                (List.map viewPiece children)
 
         Italic children ->
             Html.i []
@@ -310,12 +310,19 @@ viewPiece piece =
         Affinity affinity ->
             Html.img [ Html.Attributes.src (Types.affinityToImage affinity).src ] []
 
-        Number value ->
+        Power value ->
             Html.span
                 [ Html.Attributes.style "font-family" "\"Capture It\""
                 , Html.Attributes.style "font-size" "20px"
                 ]
                 [ gradientTextHtml 4 Gradients.yellowGradient value ]
+
+        RewardPoints value ->
+            Html.span
+                [ Html.Attributes.style "font-family" "\"Morpheus\""
+                , Html.Attributes.style "font-size" "20px"
+                ]
+                [ gradientTextHtml 4 Gradients.greenGradient value ]
 
         Kisses value ->
             Html.span []

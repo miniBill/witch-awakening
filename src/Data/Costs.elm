@@ -1,4 +1,4 @@
-module Data.Costs exposing (Points, classPower, companionsValue, complicationsRawValue, complicationsValue, factionValue, initialPower, magicsValue, perksValue, powerCap, relicsValue, sum, typePerksValue, zero)
+module Data.Costs exposing (Points, classPower, companionsValue, complicationsRawValue, complicationsValue, factionValue, initialPower, magicsValue, perksValue, powerCap, powerToPoints, relicsValue, sum, typePerksValue, zero)
 
 import Data.Companion as Companion
 import Data.Complication as Complication
@@ -9,7 +9,6 @@ import Data.Relic as Relic
 import Data.TypePerk as TypePerk
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Race, Relic(..))
 import List.Extra
-import Maybe.Extra
 import Results exposing (Results(..))
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
 
@@ -628,13 +627,6 @@ sum l r =
     , rewardPoints = l.rewardPoints + r.rewardPoints
     , warnings = l.warnings ++ r.warnings
     }
-
-
-maybeSum : (item -> Maybe Int) -> List item -> Maybe Int
-maybeSum toValue list =
-    list
-        |> Maybe.Extra.traverse toValue
-        |> Maybe.map List.sum
 
 
 resultSum : (item -> Results Int) -> List item -> Results Int
