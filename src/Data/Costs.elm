@@ -239,9 +239,15 @@ complicationsValue model =
                         slotUnsupported
 
                     Nothing ->
-                        (value - model.towardsCap)
-                            |> capWithWarning 30 normalInitialWarning
-                            |> Oks
+                        if model.capBuild then
+                            model.towardsCap
+                                |> capWithWarning 30 normalInitialWarning
+                                |> Oks
+
+                        else
+                            (value - model.towardsCap)
+                                |> capWithWarning 30 normalInitialWarning
+                                |> Oks
             )
 
 

@@ -105,7 +105,7 @@ menuLabel model totalPointsResult warnings =
 
                 pointDisplay : String -> Int -> Int -> String -> String
                 pointDisplay before used total after =
-                    [ wrapInt before used after
+                    [ wrapInt before (used + total) after
                     , before ++ "/" ++ after
                     , wrapInt before total after
                     ]
@@ -116,7 +116,7 @@ menuLabel model totalPointsResult warnings =
                     warningsIcon
                         ++ pointDisplay
                             "["
-                            (available.power + totalPoints.power)
+                            totalPoints.power
                             available.power
                             "]"
             in
@@ -129,7 +129,7 @@ menuLabel model totalPointsResult warnings =
                     rewardString =
                         pointDisplay
                             "{"
-                            (rewards.rewardPoints + totalPoints.rewardPoints)
+                            totalPoints.rewardPoints
                             rewards.rewardPoints
                             "}"
                 in
