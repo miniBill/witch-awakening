@@ -10,7 +10,7 @@ import Element exposing (Element, fill, rgb, width)
 import Element.Background as Background
 import Element.Font as Font
 import Element.Lazy
-import Generated.Types as Types
+import Generated.Types as Types exposing (Relic(..))
 import Json.Decode as JD
 import List.Extra
 import Maybe.Extra
@@ -224,6 +224,15 @@ updateOnChoice choice model =
         ChoiceRelic relic selected ->
             if selected then
                 { model | relics = relic :: model.relics }
+
+            else if relic.name == CosmicPearl then
+                { model
+                    | relics = List.Extra.remove relic model.relics
+                    , cosmicPearl =
+                        { add = []
+                        , change = []
+                        }
+                }
 
             else
                 { model | relics = List.Extra.remove relic model.relics }
