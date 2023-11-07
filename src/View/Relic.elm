@@ -118,6 +118,7 @@ relicBox display selected pearl races ({ name, class, content } as relic) =
     in
     Theme.card []
         { display = display
+        , forceShow = False
         , glow = color
         , isSelected = isSelected /= Nothing
         , imageAttrs = []

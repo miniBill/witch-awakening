@@ -197,6 +197,7 @@ complicationBox display selected ({ name, class, content } as complication) =
     in
     Theme.card []
         { display = display
+        , forceShow = False
         , glow = color
         , isSelected = isSelected /= Nothing
         , imageAttrs =

@@ -11,8 +11,8 @@ import Types exposing (Choice(..), Display)
 import View
 
 
-viewTypePerks : Display -> List Race -> Element Choice
-viewTypePerks display typePerks =
+viewTypePerks : List Race -> Display -> List Race -> Element Choice
+viewTypePerks witchRaces display typePerks =
     View.collapsible
         [ Theme.style "background-image" <| "url(\"" ++ Images.typePerksBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
         , Theme.style "background-repeat" "no-repeat, no-repeat"
@@ -33,14 +33,14 @@ viewTypePerks display typePerks =
             ]
             "These are particular perks that can be optionally taken by a witch of a given racial type. If hybridized (via later perk), you can purchase type perks of both types."
         , TypePerk.all
-            |> List.map (typePerkBox display typePerks)
+            |> List.map (typePerkBox witchRaces display typePerks)
             |> Theme.wrappedRow
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
         ]
         [ TypePerk.all
-            |> List.map (typePerkBox display typePerks)
+            |> List.map (typePerkBox witchRaces display typePerks)
             |> Theme.column
                 [ width fill
                 , spacing <| Theme.rythm * 3
@@ -49,11 +49,12 @@ viewTypePerks display typePerks =
 
 
 typePerkBox :
-    Display
+    List Race
+    -> Display
     -> List Race
     -> TypePerk.Details
     -> Element ( Race, Bool )
-typePerkBox display selected { race, cost, content } =
+typePerkBox witchRaces display selected { race, cost, content } =
     let
         isSelected : Bool
         isSelected =
@@ -65,6 +66,7 @@ typePerkBox display selected { race, cost, content } =
     in
     Theme.card []
         { display = display
+        , forceShow = List.member race witchRaces
         , glow = 0x00F3EA6F
         , isSelected = isSelected
         , imageAttrs = [ Theme.style "background-position" "top" ]

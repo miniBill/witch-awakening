@@ -501,6 +501,7 @@ card :
     List (Attribute msg)
     ->
         { display : Display
+        , forceShow : Bool
         , onPress : Maybe msg
         , glow : Int
         , isSelected : Bool
@@ -512,7 +513,20 @@ card :
         }
     -> Element msg
 card attrs config =
-    if config.display == DisplayCollapsed || config.display == DisplayCompact && not config.isSelected then
+    let
+        show : Bool
+        show =
+            case config.display of
+                DisplayFull ->
+                    True
+
+                DisplayCompact ->
+                    config.forceShow || config.isSelected
+
+                DisplayCollapsed ->
+                    False
+    in
+    if not show then
         Element.none
 
     else

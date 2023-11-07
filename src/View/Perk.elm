@@ -142,6 +142,7 @@ perkBox display selected ({ name, affinity, class, content, isMeta } as perk) =
     in
     Theme.card []
         { display = display
+        , forceShow = False
         , glow = color
         , isSelected = isSelected /= Nothing
         , imageAttrs = []

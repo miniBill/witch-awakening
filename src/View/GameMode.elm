@@ -84,6 +84,7 @@ gameModeBox display selected { name, content } =
     in
     Theme.card []
         { display = display
+        , forceShow = False
         , glow = color
         , isSelected = isSelected
         , imageAttrs =

@@ -218,6 +218,7 @@ factionBox display selected { name, motto, description, location, relations, per
                         , alignTop
                         ]
                         { display = DisplayFull
+                        , forceShow = False
                         , glow = glowColor
                         , isSelected = isPerkSelected
                         , imageAttrs = []

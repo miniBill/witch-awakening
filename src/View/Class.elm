@@ -14,14 +14,10 @@ import View
 viewClass : Display -> Maybe Class -> Element Choice
 viewClass display class =
     let
-        classBoxes : Element (Maybe Class)
+        classBoxes : List (Element (Maybe Class))
         classBoxes =
             Class.all
                 |> List.map (classBox display class)
-                |> Theme.wrappedRow
-                    [ width fill
-                    , spacing <| Theme.rythm * 3
-                    ]
     in
     View.collapsible []
         display
@@ -30,8 +26,17 @@ viewClass display class =
         Class.title
         [ Theme.blocks [] Class.intro
         , classBoxes
+            |> Theme.wrappedRow
+                [ width fill
+                , spacing <| Theme.rythm * 3
+                ]
         ]
-        [ classBoxes ]
+        [ classBoxes
+            |> Theme.column
+                [ width fill
+                , spacing <| Theme.rythm * 3
+                ]
+        ]
 
 
 classBox :
@@ -60,6 +65,7 @@ classBox display selected { name, content } =
     in
     Theme.card []
         { display = display
+        , forceShow = selected == Nothing
         , glow = Theme.classToColor name
         , isSelected = isSelected
         , imageAttrs =

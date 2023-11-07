@@ -1,7 +1,7 @@
 module View.Menu exposing (viewMenu)
 
 import Data.Costs as Costs exposing (Points)
-import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -182,6 +182,7 @@ viewCalculations model power warnings =
                 }
             )
 
+        section : List (Attribute msg) -> String -> ( String, Element msg )
         section attrs content =
             ( content, el (Font.bold :: attrs) <| text content )
     in

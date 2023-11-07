@@ -50,6 +50,7 @@ raceBox display selected { name, tank, affinities, charge, content } =
     in
     Theme.card []
         { display = display
+        , forceShow = List.isEmpty selected
         , glow = 0x00F3EA6F
         , isSelected = isSelected
         , imageAttrs = []
