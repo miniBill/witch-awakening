@@ -13,13 +13,13 @@ import Types exposing (Choice(..), Display)
 import View
 
 
-viewRace : Display -> Maybe Race -> Element Choice
-viewRace display race =
+viewRace : Display -> List Race -> Element Choice
+viewRace display races =
     let
-        raceBoxes : Element (Maybe Race)
+        raceBoxes : Element ( Race, Bool )
         raceBoxes =
             Race.all
-                |> List.map (raceBox display race)
+                |> List.map (raceBox display races)
                 |> Theme.wrappedRow
                     [ width fill
                     , spacing <| Theme.rythm * 3
@@ -39,27 +39,14 @@ viewRace display race =
 
 raceBox :
     Display
-    -> Maybe Race
+    -> List Race
     -> Race.Details
-    -> Element (Maybe Race)
+    -> Element ( Race, Bool )
 raceBox display selected { name, tank, affinities, charge, content } =
     let
         isSelected : Bool
         isSelected =
-            case selected of
-                Nothing ->
-                    False
-
-                Just selectedRace ->
-                    selectedRace == name
-
-        msg : Maybe Race
-        msg =
-            if isSelected then
-                Nothing
-
-            else
-                Just name
+            List.member name selected
     in
     Theme.card []
         { display = display
@@ -91,11 +78,11 @@ raceBox display selected { name, tank, affinities, charge, content } =
                     content
                 ]
             ]
-        , onPress = Just msg
+        , onPress = Just ( name, not isSelected )
         }
 
 
-viewAffinities : List Affinity -> Element (Maybe Race)
+viewAffinities : List Affinity -> Element ( Race, Bool )
 viewAffinities affinities =
     Theme.row
         [ moveDown 2

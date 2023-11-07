@@ -13,7 +13,7 @@ viewFactionalMagics display selected =
     View.collapsible []
         display
         DisplayFactionalMagic
-        (\( ranked, select ) -> ChoiceMagic ranked select)
+        ChoiceMagic
         "# Factional Magic"
         [ Theme.blocks [ centerX, width <| Element.maximum 800 fill ] FactionalMagic.intro
         , FactionalMagic.all

@@ -21,7 +21,7 @@ viewCompanions display companions =
     View.collapsible (Theme.topBackground Images.companionIntro)
         display
         DisplayCompanions
-        (\( companion, selected ) -> ChoiceCompanion companion selected)
+        ChoiceCompanion
         "# Companions"
         [ introBlock
         , Companion.all

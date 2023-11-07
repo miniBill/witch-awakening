@@ -21,7 +21,7 @@ viewPerks display perks =
     View.collapsible (Theme.topBackground Images.perkIntro)
         display
         DisplayPerks
-        (\( perk, selected ) -> ChoicePerk perk selected)
+        ChoicePerk
         "# Perks"
         [ introBlock
         , Perk.all

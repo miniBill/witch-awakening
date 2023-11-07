@@ -22,7 +22,7 @@ viewTypePerks display typePerks =
         ]
         display
         DisplayTypePerks
-        (\( race, selected ) -> ChoiceTypePerk race selected)
+        ChoiceTypePerk
         TypePerk.title
         [ Theme.blocks
             [ Font.color <| rgb 0 0 0

@@ -27,7 +27,7 @@ viewComplications display complications =
     View.collapsible []
         display
         DisplayComplications
-        (\( complication, selected ) -> ChoiceComplication complication selected)
+        ChoiceComplication
         Complication.title
         [ Theme.blocks [] Complication.intro
         , Theme.blocks [] "# World Shifts"

@@ -533,7 +533,7 @@ companionsValue model =
                         |> List.filterMap
                             (\( _, companion ) ->
                                 if
-                                    sameRace companion model.race
+                                    sameRace companion model.races
                                         || sameClass companion model.class
                                 then
                                     Just companion
@@ -596,16 +596,10 @@ sameClass companion maybeClass =
             False
 
 
-sameRace : Companion.Details -> Maybe Race -> Bool
-sameRace companion maybeRace =
+sameRace : Companion.Details -> List Race -> Bool
+sameRace companion races =
     List.isEmpty companion.races
-        || (case maybeRace of
-                Nothing ->
-                    False
-
-                Just race ->
-                    List.member race companion.races
-           )
+        || List.any (\companionRace -> List.member companionRace races) companion.races
 
 
 getCompanion : Types.Companion -> Maybe ( Maybe Faction, Companion.Details )

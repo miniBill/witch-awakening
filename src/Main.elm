@@ -141,6 +141,15 @@ update msg model =
             ( model, Cmd.none )
 
 
+toggle : Bool -> b -> List b -> List b
+toggle selected item list =
+    if selected then
+        item :: list
+
+    else
+        List.Extra.remove item list
+
+
 updateOnChoice : Choice -> Model -> Model
 updateOnChoice choice model =
     case choice of
@@ -150,8 +159,8 @@ updateOnChoice choice model =
         DisplayClass classDisplay ->
             { model | classDisplay = classDisplay }
 
-        ChoiceRace race ->
-            { model | race = race }
+        ChoiceRace ( race, selected ) ->
+            { model | races = toggle selected race model.races }
 
         DisplayRace raceDisplay ->
             { model | raceDisplay = raceDisplay }
@@ -162,42 +171,26 @@ updateOnChoice choice model =
         DisplayGameMode gameModeDisplay ->
             { model | gameModeDisplay = gameModeDisplay }
 
-        ChoiceComplication complication selected ->
-            if selected then
-                { model | complications = complication :: model.complications }
-
-            else
-                { model | complications = List.Extra.remove complication model.complications }
+        ChoiceComplication ( complication, selected ) ->
+            { model | complications = toggle selected complication model.complications }
 
         DisplayComplications complicationsDisplay ->
             { model | complicationsDisplay = complicationsDisplay }
 
-        ChoiceTypePerk race selected ->
-            if selected then
-                { model | typePerks = race :: model.typePerks }
-
-            else
-                { model | typePerks = List.Extra.remove race model.typePerks }
+        ChoiceTypePerk ( race, selected ) ->
+            { model | typePerks = toggle selected race model.typePerks }
 
         DisplayTypePerks typePerksDisplay ->
             { model | typePerksDisplay = typePerksDisplay }
 
-        ChoiceMagic magic selected ->
-            if selected then
-                { model | magic = magic :: model.magic }
-
-            else
-                { model | magic = List.Extra.remove magic model.magic }
+        ChoiceMagic ( magic, selected ) ->
+            { model | magic = toggle selected magic model.magic }
 
         DisplayMagic magicDisplay ->
             { model | magicDisplay = magicDisplay }
 
-        ChoicePerk perk selected ->
-            if selected then
-                { model | perks = perk :: model.perks }
-
-            else
-                { model | perks = List.Extra.remove perk model.perks }
+        ChoicePerk ( perk, selected ) ->
+            { model | perks = toggle selected perk model.perks }
 
         DisplayPerks perksDisplay ->
             { model | perksDisplay = perksDisplay }
@@ -211,21 +204,14 @@ updateOnChoice choice model =
         DisplayFactionalMagic factionalMagicDisplay ->
             { model | factionalMagicDisplay = factionalMagicDisplay }
 
-        ChoiceCompanion companion selected ->
-            if selected then
-                { model | companions = companion :: model.companions }
-
-            else
-                { model | companions = List.Extra.remove companion model.companions }
+        ChoiceCompanion ( companion, selected ) ->
+            { model | companions = toggle selected companion model.companions }
 
         DisplayCompanions companionsDisplay ->
             { model | companionsDisplay = companionsDisplay }
 
-        ChoiceRelic relic selected ->
-            if selected then
-                { model | relics = relic :: model.relics }
-
-            else if relic.name == CosmicPearl then
+        ChoiceRelic ( relic, selected ) ->
+            if relic.name == CosmicPearl && not selected then
                 { model
                     | relics = List.Extra.remove relic model.relics
                     , cosmicPearl =
@@ -235,7 +221,7 @@ updateOnChoice choice model =
                 }
 
             else
-                { model | relics = List.Extra.remove relic model.relics }
+                { model | relics = toggle selected relic model.relics }
 
         DisplayRelics relicsDisplay ->
             { model | relicsDisplay = relicsDisplay }
@@ -267,7 +253,7 @@ toUrl model =
     in
     [ pair "towardsCap" String.fromInt (Just model.towardsCap)
     , pair "class" Types.classToString model.class
-    , pair "race" Types.raceToString model.race
+    , list "race" Types.raceToString model.races
     , pair "gameMode" Types.gameModeToString model.gameMode
     , list "typePerk" Types.raceToString model.typePerks
     , list "complication"
@@ -419,7 +405,7 @@ parseUrl navKey url =
             |> Maybe.withDefault 0
     , class = parseOne "class" Types.classFromString
     , classDisplay = DisplayFull
-    , race = parseOne "race" Types.raceFromString
+    , races = parseMany "race" Types.raceFromString
     , raceDisplay = DisplayFull
     , gameMode = parseOne "gameMode" Types.gameModeFromString
     , gameModeDisplay = DisplayFull
@@ -503,7 +489,7 @@ innerView model =
           else
             Intro.viewIntro
         , Element.Lazy.lazy2 Class.viewClass model.classDisplay model.class
-        , Element.Lazy.lazy2 Race.viewRace model.raceDisplay model.race
+        , Element.Lazy.lazy2 Race.viewRace model.raceDisplay model.races
         , Element.Lazy.lazy2 GameMode.viewGameMode model.gameModeDisplay model.gameMode
         , Element.Lazy.lazy2 Complications.viewComplications model.complicationsDisplay model.complications
         , Element.Lazy.lazy2 TypePerk.viewTypePerks model.typePerksDisplay model.typePerks
@@ -512,7 +498,7 @@ innerView model =
         , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
         , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
         , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions
-        , Element.Lazy.lazy4 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.race model.relics
+        , Element.Lazy.lazy4 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.races model.relics
         ]
         |> Element.map Choice
 

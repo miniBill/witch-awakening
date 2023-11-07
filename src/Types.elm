@@ -22,24 +22,24 @@ type Msg
 type Choice
     = ChoiceClass (Maybe Class)
     | DisplayClass Display
-    | ChoiceRace (Maybe Race)
+    | ChoiceRace ( Race, Bool )
     | DisplayRace Display
     | ChoiceGameMode (Maybe GameMode)
     | DisplayGameMode Display
-    | ChoiceComplication RankedComplication Bool
+    | ChoiceComplication ( RankedComplication, Bool )
     | DisplayComplications Display
-    | ChoiceTypePerk Race Bool
+    | ChoiceTypePerk ( Race, Bool )
     | DisplayTypePerks Display
-    | ChoiceMagic RankedMagic Bool
+    | ChoiceMagic ( RankedMagic, Bool )
     | DisplayMagic Display
-    | ChoicePerk RankedPerk Bool
+    | ChoicePerk ( RankedPerk, Bool )
     | DisplayPerks Display
     | ChoiceFaction (Maybe ( Faction, Bool ))
     | DisplayFaction Display
     | DisplayFactionalMagic Display
-    | ChoiceCompanion Companion Bool
+    | ChoiceCompanion ( Companion, Bool )
     | DisplayCompanions Display
-    | ChoiceRelic RankedRelic Bool
+    | ChoiceRelic ( RankedRelic, Bool )
     | DisplayRelics Display
     | ChoiceCosmicPearl CosmicPearlData
     | TowardsCap Int
@@ -57,7 +57,7 @@ type alias Model =
     , menuOpen : Bool
     , class : Maybe Class
     , classDisplay : Display
-    , race : Maybe Race
+    , races : List Race
     , raceDisplay : Display
     , gameMode : Maybe GameMode
     , gameModeDisplay : Display
@@ -210,11 +210,11 @@ nextDisplay display =
 
 
 affinities : Model -> List Affinity
-affinities { race, cosmicPearl } =
+affinities { races, cosmicPearl } =
     let
         base : List Affinity
         base =
-            baseAffinities race
+            List.concatMap baseAffinities races
 
         afterChange : List Affinity
         afterChange =
@@ -228,10 +228,10 @@ affinities { race, cosmicPearl } =
         |> List.Extra.unique
 
 
-baseAffinities : Maybe Race -> List Affinity
+baseAffinities : Race -> List Affinity
 baseAffinities race =
     Race.all
-        |> List.Extra.find (\{ name } -> Just name == race)
+        |> List.Extra.find (\{ name } -> name == race)
         |> Maybe.map .affinities
         |> Maybe.withDefault []
 

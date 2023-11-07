@@ -22,7 +22,7 @@ viewMagics display selected =
     View.collapsible []
         display
         DisplayMagic
-        (\( ranked, select ) -> ChoiceMagic ranked select)
+        ChoiceMagic
         Magic.title
         [ Theme.blocks [] Magic.intro
         , Theme.wrappedRow [ width fill ]

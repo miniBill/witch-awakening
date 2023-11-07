@@ -14,8 +14,8 @@ import Types exposing (Choice(..), CosmicPearlData, Display, RankedRelic)
 import View
 
 
-viewRelics : Display -> CosmicPearlData -> Maybe Race -> List RankedRelic -> Element Choice
-viewRelics display pearl race relics =
+viewRelics : Display -> CosmicPearlData -> List Race -> List RankedRelic -> Element Choice
+viewRelics display pearl races relics =
     View.collapsible []
         display
         DisplayRelics
@@ -23,14 +23,14 @@ viewRelics display pearl race relics =
         "# Relics"
         [ Theme.blocks [ centerX ] Relic.intro
         , Relic.all
-            |> List.map (relicBox display relics pearl race)
+            |> List.map (relicBox display relics pearl races)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
         [ Relic.all
-            |> List.map (relicBox display relics pearl race)
+            |> List.map (relicBox display relics pearl races)
             |> Theme.column
                 [ centerX
                 , spacing <| Theme.rythm * 3
@@ -42,10 +42,10 @@ relicBox :
     Display
     -> List RankedRelic
     -> CosmicPearlData
-    -> Maybe Race
+    -> List Race
     -> Relic.Details
     -> Element Choice
-relicBox display selected pearl race ({ name, class, content } as relic) =
+relicBox display selected pearl races ({ name, class, content } as relic) =
     let
         isSelected : Maybe RankedRelic
         isSelected =
@@ -58,13 +58,13 @@ relicBox display selected pearl race ({ name, class, content } as relic) =
                     Nothing
 
                 ( CosmicPearlContent cost _, Nothing ) ->
-                    Just <| ChoiceRelic { name = name, cost = cost } True
+                    Just <| ChoiceRelic ( { name = name, cost = cost }, True )
 
                 ( _, Just selectedRelic ) ->
-                    Just <| ChoiceRelic selectedRelic False
+                    Just <| ChoiceRelic ( selectedRelic, False )
 
                 ( Single cost _, Nothing ) ->
-                    Just <| ChoiceRelic { name = name, cost = cost } True
+                    Just <| ChoiceRelic ( { name = name, cost = cost }, True )
 
                 ( WithChoices _ _, Nothing ) ->
                     Nothing
@@ -155,13 +155,13 @@ relicBox display selected pearl race ({ name, class, content } as relic) =
                     , Font.center
                     ]
             ]
-        , content = viewContent (isSelected /= Nothing) selected pearl race relic color
+        , content = viewContent (isSelected /= Nothing) selected pearl races relic color
         , onPress = msg
         }
 
 
-viewContent : Bool -> List RankedRelic -> CosmicPearlData -> Maybe Race -> Relic.Details -> Int -> List (Element Choice)
-viewContent isSelected selected pearl race { content, name } color =
+viewContent : Bool -> List RankedRelic -> CosmicPearlData -> List Race -> Relic.Details -> Int -> List (Element Choice)
+viewContent isSelected selected pearl races { content, name } color =
     case content of
         Single _ block ->
             [ Theme.blocks
@@ -172,7 +172,7 @@ viewContent isSelected selected pearl race { content, name } color =
             ]
 
         CosmicPearlContent cost block ->
-            viewCosmicPearl isSelected pearl race name cost block
+            viewCosmicPearl isSelected pearl races name cost block
 
         WithChoices before choices ->
             let
@@ -217,7 +217,7 @@ viewContent isSelected selected pearl race { content, name } color =
                             String.fromInt cost
                                 |> Theme.gradientText 4 Gradients.yellowGradient
                                 |> el [ centerX, centerY, Theme.captureIt ]
-                        , onPress = Just <| ChoiceRelic relic <| not isChoiceSelected
+                        , onPress = Just <| ChoiceRelic ( relic, not isChoiceSelected )
                         }
             in
             [ Theme.column [ height fill, Theme.padding ] <|
@@ -229,17 +229,13 @@ viewContent isSelected selected pearl race { content, name } color =
 viewCosmicPearl :
     Bool
     -> CosmicPearlData
-    -> Maybe Race
+    -> List Race
     -> Types.Relic
     -> Int
     -> String
     -> List (Element Choice)
-viewCosmicPearl isSelected pearl race name cost block =
+viewCosmicPearl isSelected pearl races name cost block =
     let
-        affinities : List Affinity
-        affinities =
-            Types.baseAffinities race
-
         swapAffinityRow : Affinity -> Element Choice
         swapAffinityRow from =
             let
@@ -339,6 +335,20 @@ viewCosmicPearl isSelected pearl race name cost block =
                 [ Theme.blocks [ width fill ] "Add an affinity: "
                 , Theme.wrappedRow [] <| List.map viewAdd Types.allAffinities
                 ]
+
+        swapBlock : Race -> List (Element Choice)
+        swapBlock race =
+            List.map swapAffinityRow (Types.baseAffinities race)
+
+        addBlock : List (Element Choice)
+        addBlock =
+            List.indexedMap addAffinityRow
+                (if List.length pearl.add == 2 then
+                    pearl.add
+
+                 else
+                    pearl.add ++ [ All ]
+                )
     in
     [ Theme.column [ width fill, Theme.padding ]
         [ Theme.blocks
@@ -354,7 +364,7 @@ viewCosmicPearl isSelected pearl race name cost block =
                 , Font.center
                 ]
                 { onPress =
-                    Just (ChoiceRelic { name = name, cost = cost } False)
+                    Just (ChoiceRelic ( { name = name, cost = cost }, False ))
                 , label = text "Remove"
                 }
 
@@ -368,14 +378,14 @@ viewCosmicPearl isSelected pearl race name cost block =
             , Theme.padding
             ]
           <|
-            (List.map swapAffinityRow affinities
-                ++ List.indexedMap addAffinityRow
-                    (if List.length pearl.add == 2 then
-                        pearl.add
+            case races of
+                [] ->
+                    addBlock
 
-                     else
-                        pearl.add ++ [ All ]
-                    )
-            )
+                [ race ] ->
+                    swapBlock race ++ addBlock
+
+                _ ->
+                    List.concatMap swapBlock races
         ]
     ]
