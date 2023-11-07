@@ -229,6 +229,9 @@ updateOnChoice choice model =
         ChoiceCosmicPearl cosmicPearl ->
             { model | cosmicPearl = cosmicPearl }
 
+        ChoiceCapBuild capBuild ->
+            { model | capBuild = capBuild }
+
         TowardsCap towardsCap ->
             { model | towardsCap = towardsCap }
 

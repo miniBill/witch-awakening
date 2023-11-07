@@ -1,4 +1,4 @@
-module Results exposing (Results(..), andThen, combine, combineMap, map, map2, mapErrors, withDefault)
+module Results exposing (Results(..), andThen, combine, combineMap, map, map2, map3, mapErrors, withDefault)
 
 {-| Like result, but accumulates errors.
 -}
@@ -33,6 +33,11 @@ map2 f l r =
 
         ( Oks lo, Oks ro ) ->
             Oks (f lo ro)
+
+
+map3 : (a -> b -> c -> d) -> Results a -> Results b -> Results c -> Results d
+map3 f l m r =
+    map2 identity (map2 f l m) r
 
 
 andThen : (a -> Results b) -> Results a -> Results b

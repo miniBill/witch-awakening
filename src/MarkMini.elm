@@ -182,8 +182,8 @@ mainParser =
                     |= innerParser '}'
                 , Parser.succeed RewardPoints
                     |= Parser.getChompedString
-                        (Parser.chompIf (\c -> Char.isDigit c || c == '-' || c == '/')
-                            |. Parser.chompWhile (\c -> Char.isDigit c || c == '-' || c == '/')
+                        (Parser.chompIf (\c -> Char.isDigit c || c == '-' || c == '+' || c == '/')
+                            |. Parser.chompWhile (\c -> Char.isDigit c || c == '-' || c == '+' || c == '/')
                         )
                 ]
             |. Parser.symbol "}"
@@ -211,8 +211,8 @@ slotParser =
 parseSquareBrackets : String -> Piece
 parseSquareBrackets str =
     case String.toInt str of
-        Just i ->
-            Power <| String.fromInt i
+        Just _ ->
+            Power str
 
         Nothing ->
             case Types.affinityFromString str of

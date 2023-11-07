@@ -44,6 +44,7 @@ type Choice
     | ChoiceCosmicPearl CosmicPearlData
     | TowardsCap Int
     | PowerToRewards Int
+    | ChoiceCapBuild Bool
 
 
 type alias CosmicPearlData =

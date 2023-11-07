@@ -1,4 +1,4 @@
-module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, conversion, factionValue, initialPower, magicsValue, perksValue, powerCap, powerToPoints, relicsValue, sum, typePerksValue, zero)
+module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, negate, perksValue, powerCap, powerToPoints, relicsValue, startingValue, totalPoints, totalRewards, typePerksValue, zero)
 
 import Data.Companion as Companion
 import Data.Complication as Complication
@@ -45,24 +45,79 @@ capWithWarning cap warning value =
         { zero | power = value }
 
 
+{-| "In Early Bird mode, complications can only increase the starting power/power cap by up to 30 points"
+-}
 earlyBirdWarning : String
 earlyBirdWarning =
-    "In Early Bird mode, complications can only increase the initial power by up to 30 points"
+    "In Early Bird mode, complications can only increase the starting power/power cap by up to 30 points"
 
 
+{-| "In Story Arc mode, complications can only increase the power cap by up to 60 points"
+-}
 storyArcWarning : String
 storyArcWarning =
     "In Story Arc mode, complications can only increase the power cap by up to 60 points"
 
 
+{-| "Complications can only increase the power cap by up to 30 points"
+-}
 normalCapWarning : String
 normalCapWarning =
     "Complications can only increase the power cap by up to 30 points"
 
 
+{-| "Complications can only increase the starting power by up to 30 points"
+-}
 normalInitialWarning : String
 normalInitialWarning =
-    "Complications can only increase the initial power by up to 30 points"
+    "Complications can only increase the starting power by up to 30 points"
+
+
+
+-- Total --
+
+
+totalPoints : Model -> Results Points
+totalPoints model =
+    [ Results.map negate <| classValue model
+    , Results.map negate <| startingValue model
+    , Results.map negate <| complicationsValue model
+    , Results.map negate <| typePerksValue model
+    , Results.map negate <| magicsValue model
+    , Results.map negate <| perksValue model
+    , Results.map negate <| factionValue model
+    , Results.map negate <| companionsValue model
+    , Results.map negate <| relicsValue model
+    , Results.map negate <| conversion model
+    , Results.map zeroOut <| powerCap model
+    ]
+        |> resultsSum
+        |> Results.map
+            (\result ->
+                let
+                    addIf : Int -> String -> List String -> List String
+                    addIf b warning acc =
+                        if b > 0 then
+                            warning :: acc
+
+                        else
+                            acc
+                in
+                { result
+                    | warnings =
+                        result.warnings
+                            |> addIf result.rewardPoints "Not enough reward points! Try converting some power."
+                            |> addIf result.power "Not enough power! Try adding complications."
+                }
+            )
+
+
+totalRewards : Model -> Results Points
+totalRewards model =
+    [ classValue model
+    , conversion model
+    ]
+        |> resultsSum
 
 
 
@@ -118,26 +173,39 @@ powerCap model =
 
 
 
--- Initial power  --
+-- Starting power  --
 
 
-initialPower : Model -> Results Points
-initialPower model =
-    case model.gameMode of
-        Just StoryArc ->
-            Oks { zero | power = 10 }
+startingValue : Model -> Results Points
+startingValue model =
+    let
+        power : Results Int
+        power =
+            case model.gameMode of
+                Just StoryArc ->
+                    if model.capBuild then
+                        Oks 150
 
-        Just EarlyBird ->
-            Oks { zero | power = 75 }
+                    else
+                        Oks 10
 
-        Just SkillTree ->
-            slotUnsupported
+                Just EarlyBird ->
+                    Oks 75
 
-        Just Constellation ->
-            slotUnsupported
+                Just SkillTree ->
+                    slotUnsupported
 
-        Nothing ->
-            Oks { zero | power = 30 }
+                Just Constellation ->
+                    slotUnsupported
+
+                Nothing ->
+                    if model.capBuild then
+                        Oks 100
+
+                    else
+                        Oks 30
+    in
+    Results.map powerToPoints power
 
 
 
@@ -151,7 +219,13 @@ complicationsValue model =
             (\value ->
                 case model.gameMode of
                     Just StoryArc ->
-                        Oks zero
+                        if model.capBuild then
+                            value
+                                |> capWithWarning 60 storyArcWarning
+                                |> Oks
+
+                        else
+                            Oks zero
 
                     Just EarlyBird ->
                         value
@@ -335,16 +409,16 @@ magicCost affinities class rank magic =
                             )
 
         cases : Int -> Int -> Int -> Int -> Int
-        cases basicCost affinityCost classCost bothCost =
+        cases basicCost inAffinityCost inClassCost inBothCost =
             if isClass then
                 if isAffinity then
-                    bothCost
+                    inBothCost
 
                 else
-                    classCost
+                    inClassCost
 
             else if isAffinity then
-                affinityCost
+                inAffinityCost
 
             else
                 basicCost
@@ -630,6 +704,11 @@ conversion model =
 -- Utils --
 
 
+negate : Points -> Points
+negate p =
+    { p | power = -p.power, rewardPoints = -p.rewardPoints }
+
+
 sum : Points -> Points -> Points
 sum l r =
     { power = l.power + r.power
@@ -645,6 +724,18 @@ resultSum toValue list =
         |> Results.map List.sum
 
 
+resultsSum : List (Results Points) -> Results Points
+resultsSum list =
+    list
+        |> Results.combine
+        |> Results.map (List.foldl sum zero)
+
+
 powerToPoints : Int -> Points
 powerToPoints value =
     { zero | power = value }
+
+
+zeroOut : Points -> Points
+zeroOut points =
+    { points | power = 0, rewardPoints = 0 }
