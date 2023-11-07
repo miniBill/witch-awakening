@@ -1,4 +1,4 @@
-module Theme exposing (affinityToColor, backgroundColor, bebasNeue, blocks, borderColor, borderGlow, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, row, rythm, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (affinityToColor, backgroundColor, bebasNeue, blocks, borderColor, borderGlow, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -32,6 +32,11 @@ padding =
 spacing : Attribute msg
 spacing =
     Element.spacing rythm
+
+
+rounded : Attribute msg
+rounded =
+    Border.rounded rythm
 
 
 image : List (Attribute msg) -> Image -> Element msg
@@ -289,6 +294,12 @@ viewPiece piece =
 
         Slot slot ->
             Html.img [ Html.Attributes.src (Types.slotToImage slot).src ] []
+
+        Warning ->
+            Html.span
+                [ Html.Attributes.style "font-size" "1.2em"
+                ]
+                [ Html.text "⚠️" ]
 
         Affinity affinity ->
             Html.img [ Html.Attributes.src (Types.affinityToImage affinity).src ] []

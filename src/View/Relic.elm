@@ -360,7 +360,7 @@ viewCosmicPearl isSelected pearl races name cost block =
                 [ width fill
                 , Border.width 1
                 , Theme.padding
-                , Border.rounded Theme.rythm
+                , Theme.rounded
                 , Font.center
                 ]
                 { onPress =
@@ -374,7 +374,7 @@ viewCosmicPearl isSelected pearl races name cost block =
             [ width fill
             , Theme.backgroundColor 0
             , Font.color <| Element.rgb 1 1 1
-            , Border.rounded Theme.rythm
+            , Theme.rounded
             , Theme.padding
             ]
           <|

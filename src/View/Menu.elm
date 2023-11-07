@@ -1,15 +1,14 @@
 module View.Menu exposing (viewMenu)
 
-import Data.Costs as Costs
+import Data.Costs as Costs exposing (Cost(..), Points)
 import Element exposing (Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Types as Types exposing (GameMode(..))
+import Generated.Types as Types
 import Gradients
 import List.Extra
-import Maybe.Extra
 import String.Extra
 import Theme
 import Types exposing (Choice(..), Model, Msg(..))
@@ -18,22 +17,39 @@ import Types exposing (Choice(..), Model, Msg(..))
 viewMenu : Model -> Element Msg
 viewMenu model =
     let
-        power : Maybe Int
+        power : Cost Points
         power =
             calculatePower model
 
         menuLabel : String
         menuLabel =
             case
-                ( Maybe.map String.fromInt power
-                , Maybe.map String.fromInt (Costs.powerCap model)
+                ( power
+                , Costs.initialPower model
                 )
             of
-                ( Just p, Just c ) ->
-                    "[" ++ p ++ "] [/] [" ++ c ++ "]"
+                ( CostOk p, CostOk c ) ->
+                    let
+                        warningsIcon : String
+                        warningsIcon =
+                            if List.isEmpty warnings then
+                                ""
+
+                            else
+                                "[W] "
+                    in
+                    warningsIcon ++ "[" ++ String.fromInt p.power ++ "] [/] [" ++ String.fromInt c.power ++ "]"
 
                 _ ->
                     "(epic)"
+
+        ( warnings, errors ) =
+            case Costs.map2 Costs.sum power (Costs.powerCap model) of
+                CostOk points ->
+                    ( List.Extra.unique points.warnings, [] )
+
+                CostErr es ->
+                    ( [], es )
     in
     Theme.column
         [ alignTop
@@ -48,7 +64,15 @@ viewMenu model =
         ]
         [ Input.button
             [ Border.width 1
-            , Background.color <| rgb 0.7 0.7 1
+            , if List.isEmpty errors then
+                if List.isEmpty warnings then
+                    Background.color <| rgb 0.7 0.7 1
+
+                else
+                    Background.color <| rgb 1 0.9 0.8
+
+              else
+                Background.color <| rgb 1 0.8 0.8
             , Border.rounded 999
             , Theme.padding
             , alignRight
@@ -67,30 +91,51 @@ viewMenu model =
                     menuLabel
             }
         , if model.menuOpen then
-            viewCalculations model
+            viewCalculations warnings model
 
           else
             Element.none
         ]
 
 
-viewCalculations : Model -> Element Msg
-viewCalculations model =
+viewCalculations : List String -> Model -> Element Msg
+viewCalculations warnings model =
     let
-        row : String -> (Model -> Maybe Int) -> Maybe String -> Element Msg
+        row : String -> (Model -> Cost Points) -> Maybe String -> Element Msg
         row label toValue target =
             case toValue model of
-                Nothing ->
+                CostErr es ->
+                    let
+                        errorViews : List (Element msg)
+                        errorViews =
+                            List.map
+                                (\e ->
+                                    paragraph
+                                        [ Background.color <| rgb 1 0.8 0.8
+                                        , Theme.padding
+                                        , Theme.rounded
+                                        ]
+                                        [ text e ]
+                                )
+                                es
+                    in
+                    Theme.column [ width fill ] <|
+                        linkLabel label target
+                            :: errorViews
+
+                CostOk value ->
                     Theme.row [ width fill ]
                         [ linkLabel label target
-                        , rightNumber "?"
+                        , rightNumber <| String.fromInt value.power
                         ]
 
-                Just value ->
-                    Theme.row [ width fill ]
-                        [ linkLabel label target
-                        , rightNumber <| String.fromInt value
-                        ]
+        resultRow : Element Msg
+        resultRow =
+            row "Result"
+                (calculatePower
+                    >> Costs.mapErrors (\_ -> [ "There are errors in the computation" ])
+                )
+                Nothing
 
         link : String -> Maybe String -> Element Msg
         link label target =
@@ -99,21 +144,12 @@ viewCalculations model =
                 , rightNumber "-"
                 ]
 
-        rightNumber : String -> Element msg
-        rightNumber value =
-            el
-                [ alignRight
-                , Theme.captureIt
-                , Font.size 20
-                ]
-                (Theme.gradientText 4 Gradients.yellowGradient value)
-
         button : { onPress : Maybe msg, label : Element msg } -> Element msg
         button =
             Input.button
                 [ Border.width 1
                 , padding 4
-                , Border.rounded Theme.rythm
+                , Theme.rounded
                 , width fill
                 , Font.center
                 ]
@@ -123,7 +159,7 @@ viewCalculations model =
         , Theme.padding
         , scrollbarY
         , height fill
-        , Border.rounded Theme.rythm
+        , Theme.rounded
         , width <| Element.maximum 200 shrink
         ]
         [ paragraph
@@ -135,51 +171,43 @@ viewCalculations model =
         , row "Class" Costs.classPower <| Just "True Form - Class"
         , link "Race" <| Just "True Form - Race"
         , row "Initial power" Costs.initialPower <| Just "Game Mode"
-        , row "Power cap" Costs.powerCap <| Just "Game Mode"
         , row "Complications" Costs.complicationsValue Nothing
-        , row "Type perks" Costs.typePerksValue Nothing
-        , if model.gameMode == Just StoryArc then
+        , row "Type perks" (upcast Costs.typePerksValue) Nothing
+        , capSlider model
+        , row "Magic" (upcast Costs.magicsValue) <| Just "The Magic"
+        , row "Perks" (upcast Costs.perksValue) Nothing
+        , row "Faction" (upcast Costs.factionValue) <| Just "Factions"
+        , row "Companions" (upcast Costs.companionsValue) Nothing
+        , row "Relics" (upcast Costs.relicsValue) Nothing
+        , el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none
+        , resultRow
+        , if List.isEmpty warnings then
             Element.none
 
           else
-            Input.slider
-                [ width fill
-                , Element.behindContent <|
-                    el
-                        [ width fill
-                        , height (px 2)
-                        , centerY
-                        , Background.color <| rgb 0.7 0.7 0.7
-                        , Border.rounded 2
-                        ]
-                        Element.none
-                ]
-                { onChange = Choice << TowardsCap << round
-                , label =
-                    Input.labelAbove [] <|
-                        Theme.row []
-                            [ paragraph [ Font.bold ]
-                                [ text "Assign power to cap instead of initial"
-                                , rightNumber <| String.fromInt model.towardsCap
-                                ]
+            el [ alignBottom, Font.bold ] <| text "Warnings"
+        , if List.isEmpty warnings then
+            Element.none
+
+          else
+            Theme.column []
+                (List.map
+                    (\warning ->
+                        paragraph
+                            [ Background.color <| rgb 0.9 0.9 0.5
+                            , Theme.padding
+                            , Theme.rounded
                             ]
-                , min = 0
-                , max = toFloat <| Maybe.withDefault 0 <| Costs.complicationsValue model
-                , value = toFloat model.towardsCap
-                , step = Just 1
-                , thumb = Input.defaultThumb
-                }
-        , row "Magic" Costs.magicsValue <| Just "The Magic"
-        , row "Perks" Costs.perksValue Nothing
-        , row "Faction" Costs.factionValue <| Just "Factions"
-        , row "Companions" Costs.companionsValue Nothing
-        , row "Relics" Costs.relicsValue Nothing
-        , el [ Font.bold ] <| text "Affinities"
+                            [ text warning ]
+                    )
+                    warnings
+                )
+        , el [ alignBottom, Font.bold ] <| text "Affinities"
         , Theme.wrappedRow [] <|
             List.map Theme.viewAffinity <|
                 List.Extra.remove Types.All <|
                     Types.affinities model
-        , el [ alignBottom, width fill ] <| row "Result" calculatePower Nothing
+        , row "Power cap" Costs.powerCap <| Just "Game Mode"
         , button
             { onPress = Just CompactAll
             , label = text "Compact all"
@@ -191,6 +219,51 @@ viewCalculations model =
         ]
 
 
+rightNumber : String -> Element msg
+rightNumber value =
+    el
+        [ alignRight
+        , Theme.captureIt
+        , Font.size 20
+        ]
+        (Theme.gradientText 4 Gradients.yellowGradient value)
+
+
+capSlider : Model -> Element Msg
+capSlider model =
+    if model.gameMode /= Nothing then
+        Element.none
+
+    else
+        Input.slider
+            [ width fill
+            , Element.behindContent <|
+                el
+                    [ width fill
+                    , height (px 2)
+                    , centerY
+                    , Background.color <| rgb 0.7 0.7 0.7
+                    , Border.rounded 2
+                    ]
+                    Element.none
+            ]
+            { onChange = \newValue -> Choice <| TowardsCap <| round newValue
+            , label =
+                Input.labelAbove [] <|
+                    Theme.row []
+                        [ paragraph [ Font.bold ]
+                            [ text "Assign power to cap instead of initial"
+                            , rightNumber <| String.fromInt model.towardsCap
+                            ]
+                        ]
+            , min = 0
+            , max = toFloat <| Costs.withDefault 0 <| Costs.complicationsRawValue model
+            , value = toFloat model.towardsCap
+            , step = Just 1
+            , thumb = Input.defaultThumb
+            }
+
+
 linkLabel : String -> Maybe String -> Element Msg
 linkLabel label target =
     Input.button []
@@ -199,16 +272,36 @@ linkLabel label target =
         }
 
 
-calculatePower : Model -> Maybe Int
+calculatePower : Model -> Cost Points
 calculatePower model =
-    [ Costs.classPower
-    , Costs.initialPower
-    , Costs.typePerksValue
-    , Costs.magicsValue
-    , Costs.perksValue
-    , Costs.factionValue
-    , Costs.companionsValue
-    , Costs.relicsValue
+    [ Costs.classPower model
+    , Costs.initialPower model
+    , Costs.complicationsValue model
+    , Costs.powerCap model
+        -- This is used to collect warnings
+        |> Costs.map (\points -> { points | power = 0, rewardPoints = 0 })
+    , upcast Costs.typePerksValue model
+    , upcast Costs.magicsValue model
+    , upcast Costs.perksValue model
+    , upcast Costs.factionValue model
+    , upcast Costs.companionsValue model
+    , upcast Costs.relicsValue model
     ]
-        |> Maybe.Extra.traverse (\f -> f model)
-        |> Maybe.map List.sum
+        |> Costs.combine
+        |> Costs.map (List.foldl Costs.sum Costs.zero)
+
+
+upcast : (Model -> Maybe Int) -> Model -> Cost Points
+upcast f model =
+    case f model of
+        Just p ->
+            CostOk { power = p, rewardPoints = 0, warnings = [] }
+
+        Nothing ->
+            CostErr
+                [ let
+                    _ =
+                        Debug.todo
+                  in
+                  "TODO"
+                ]

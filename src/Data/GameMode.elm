@@ -52,7 +52,7 @@ skillTree =
         """
         You abandon your Power all together. You instead rely on SLOTS: _*Mode-Arc*_.
 
-        You begin with one _folk_ magic slot & 1 *folk* slot for a perk. You also gain 3 folk slots based on class. *Academics* use these for Magic. *Sorceresses* use these for Perks. *Warlocks* use these for Relics After you’ve completed 4 quests, your starting magic & perk slot increase to *Noble*. After 4 more, they become *Heroic*. After 3 more, they become *Epic*. Your 3 class slots lag behind by 4 tier becoming Heroic when you gain Epic for your starters. You gain an extra slot every time you complete a quest equal to that quest’s tier. Skill Tree mode users can spend 3 slots of a lower tier for 1 of a higher tier, or break 1 higher tier slot into 2 lower tier slots.
+        You begin with one _folk_ magic slot & 1 *folk* slot for a perk. You also gain 3 folk slots based on class. *Academics* use these for Magic. *Sorceresses* use these for Perks. *Warlocks* use these for Relics. After you’ve completed 4 quests, your starting magic & perk slot increase to *Noble*. After 4 more, they become *Heroic*. After 3 more, they become *Epic*. Your 3 class slots lag behind by 4 tier becoming Heroic when you gain Epic for your starters. You gain an extra slot every time you complete a quest equal to that quest’s tier. Skill Tree mode users can spend 3 slots of a lower tier for 1 of a higher tier, or break 1 higher tier slot into 2 lower tier slots.
         """
     }
 
@@ -73,7 +73,7 @@ constellation =
 
         You also have 3 _Heroic_ slots based on your Type.
 
-        *Academics* use these for Magi. *Sorceresses* use these for Perks. *Warlocks* use these for Relics. It’s up to you whether you have all this power now, or grow into it with in-context training or unlock them as you go at your own pace.
+        *Academics* use these for Magic. *Sorceresses* use these for Perks. *Warlocks* use these for Relics. It’s up to you whether you have all this power now, or grow into it with in-context training or unlock them as you go at your own pace.
         """
     }
 

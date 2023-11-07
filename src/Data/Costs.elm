@@ -1,4 +1,4 @@
-module Data.Costs exposing (classPower, companionsValue, complicationsValue, factionValue, initialPower, magicsValue, perksValue, powerCap, relicsValue, typePerksValue)
+module Data.Costs exposing (Cost(..), Points, classPower, combine, companionsValue, complicationsRawValue, complicationsValue, factionValue, initialPower, magicsValue, map, map2, mapErrors, perksValue, powerCap, relicsValue, sum, typePerksValue, withDefault, zero)
 
 import Data.Companion as Companion
 import Data.Complication as Complication
@@ -7,127 +7,232 @@ import Data.Magic as Magic
 import Data.Perk as Perk
 import Data.Relic as Relic
 import Data.TypePerk as TypePerk
-import Generated.Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Race, Relic(..))
+import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Race, Relic(..))
 import List.Extra
 import Maybe.Extra
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
+
+
+{-| Like result, but accumulates errors.
+-}
+type Cost a
+    = CostOk a
+    | CostErr (List String)
+
+
+type alias Points =
+    { power : Int
+    , rewardPoints : Int
+    , warnings : List String
+    }
+
+
+zero : Points
+zero =
+    { power = 0
+    , rewardPoints = 0
+    , warnings = []
+    }
+
+
+slotUnsupported : Cost value
+slotUnsupported =
+    CostErr [ "Slot modes not supported yet" ]
+
+
+capWithWarning : Int -> String -> Int -> Points
+capWithWarning cap warning value =
+    if value > cap then
+        { zero
+            | power = cap
+            , warnings = [ warning ]
+        }
+
+    else
+        { zero | power = value }
+
+
+earlyBirdWarning : String
+earlyBirdWarning =
+    "In Early Bird mode, complications can only increase the initial power by up to 30 points"
+
+
+storyArcWarning : String
+storyArcWarning =
+    "In Story Arc mode, complications can only increase the power cap by up to 60 points"
+
+
+normalCapWarning : String
+normalCapWarning =
+    "Complications can only increase the power cap by up to 30 points"
+
+
+normalInitialWarning : String
+normalInitialWarning =
+    "Complications can only increase the initial power by up to 30 points"
 
 
 
 -- Class --
 
 
-classPower : Model -> Maybe Int
+classPower : Model -> Cost Points
 classPower model =
-    Maybe.map
-        (\class ->
+    case model.class of
+        Just class ->
             case class of
                 Warlock ->
-                    20
+                    CostOk { zero | rewardPoints = 20 }
 
                 Academic ->
-                    0
+                    CostOk zero
 
                 Sorceress ->
-                    0
-        )
-        model.class
+                    CostOk zero
+
+        Nothing ->
+            CostErr [ "You need to select a class" ]
 
 
 
 -- Power cap --
 
 
-powerCap : Model -> Maybe Int
+powerCap : Model -> Cost Points
 powerCap model =
     case model.gameMode of
         Nothing ->
-            Just <| 100 + model.towardsCap
+            model.towardsCap
+                |> capWithWarning 30 normalCapWarning
+                |> sum { zero | power = 100 }
+                |> CostOk
 
         Just StoryArc ->
-            Maybe.map ((+) 150) <| complicationsValue model
+            complicationsRawValue model
+                |> map (capWithWarning 60 storyArcWarning)
+                |> map (sum { zero | power = 150 })
 
         Just EarlyBird ->
-            Just <| 75 + model.towardsCap
+            complicationsRawValue model
+                |> map (capWithWarning 30 earlyBirdWarning)
+                |> map (sum { zero | power = 75 })
 
         Just SkillTree ->
-            Nothing
+            slotUnsupported
 
         Just Constellation ->
-            Nothing
+            slotUnsupported
 
 
 
--- Initial power / complications --
+-- Initial power  --
 
 
-initialPower : Model -> Maybe Int
+initialPower : Model -> Cost Points
 initialPower model =
-    case ( model.gameMode, complicationsValue model ) of
-        ( Nothing, Just complications ) ->
-            Just <| 30 + complications - model.towardsCap
+    case model.gameMode of
+        Just StoryArc ->
+            CostOk { zero | power = 10 }
 
-        ( Just StoryArc, _ ) ->
-            Just 10
+        Just EarlyBird ->
+            CostOk { zero | power = 75 }
 
-        ( Just EarlyBird, Just complications ) ->
-            Just <| 75 + complications - model.towardsCap
+        Just SkillTree ->
+            slotUnsupported
 
-        _ ->
-            Nothing
+        Just Constellation ->
+            slotUnsupported
+
+        Nothing ->
+            CostOk { zero | power = 30 }
 
 
-complicationsValue : Model -> Maybe Int
+
+-- Complications --
+
+
+complicationsValue : Model -> Cost Points
 complicationsValue model =
-    maybeSum (complicationValue model) model.complications
+    complicationsRawValue model
+        |> andThen
+            (\value ->
+                case model.gameMode of
+                    Just StoryArc ->
+                        CostOk zero
+
+                    Just EarlyBird ->
+                        value
+                            |> capWithWarning 30 earlyBirdWarning
+                            |> CostOk
+
+                    Just SkillTree ->
+                        slotUnsupported
+
+                    Just Constellation ->
+                        slotUnsupported
+
+                    Nothing ->
+                        (value - model.towardsCap)
+                            |> capWithWarning 30 normalInitialWarning
+                            |> CostOk
+            )
 
 
-complicationValue : Model -> Types.RankedComplication -> Maybe Int
+complicationsRawValue : Model -> Cost Int
+complicationsRawValue model =
+    resultSum (complicationValue model) model.complications
+
+
+complicationValue : Model -> Types.RankedComplication -> Cost Int
 complicationValue model complication =
     let
-        get : Int -> List ( a, Int ) -> Maybe Int
+        get : Int -> List a -> Cost a
         get tier list =
-            List.Extra.getAt (tier - 1) list
-                |> Maybe.map Tuple.second
+            case List.Extra.getAt (tier - 1) list of
+                Just v ->
+                    CostOk v
+
+                Nothing ->
+                    CostErr [ "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name ]
     in
-    Complication.all
-        |> List.Extra.find (\{ name } -> name == complication.name)
-        |> Maybe.andThen
-            (\details ->
-                let
-                    raw : Maybe Int
-                    raw =
-                        case ( details.content, complication.kind ) of
-                            ( Complication.Single value _, _ ) ->
-                                Just value
+    case List.Extra.find (\{ name } -> name == complication.name) Complication.all of
+        Nothing ->
+            CostErr [ "Could not find complication " ++ Types.complicationToString complication.name ]
 
-                            ( Complication.WithTiers _ tiers _, Tiered tier ) ->
-                                get tier tiers
+        Just details ->
+            let
+                raw : Cost Int
+                raw =
+                    case ( details.content, complication.kind ) of
+                        ( Complication.Single value _, _ ) ->
+                            CostOk value
 
-                            ( Complication.WithChoices _ choices _, Tiered tier ) ->
-                                get tier choices
+                        ( Complication.WithTiers _ tiers _, Tiered tier ) ->
+                            map Tuple.second <| get tier tiers
 
-                            ( Complication.WithCosts _ costs, Tiered tier ) ->
-                                List.Extra.getAt (tier - 1) costs
+                        ( Complication.WithChoices _ choices _, Tiered tier ) ->
+                            map Tuple.second <| get tier choices
 
-                            ( _, Nontiered ) ->
-                                Nothing
-                in
-                Maybe.map
-                    (\r ->
-                        let
-                            bonus : Int
-                            bonus =
-                                if details.class == model.class && details.class /= Nothing then
-                                    2
+                        ( Complication.WithCosts _ costs, Tiered tier ) ->
+                            get tier costs
 
-                                else
-                                    0
-                        in
-                        r + bonus
-                    )
-                    raw
-            )
+                        ( _, Nontiered ) ->
+                            CostErr [ "Need a tier for complication " ++ Types.complicationToString complication.name ]
+            in
+            map
+                (\r ->
+                    let
+                        bonus : Int
+                        bonus =
+                            if details.class == model.class && details.class /= Nothing then
+                                2
+
+                            else
+                                0
+                    in
+                    r + bonus
+                )
+                raw
 
 
 
@@ -488,8 +593,95 @@ relicValue class pearl { name, cost } =
 -- Utils --
 
 
+sum : Points -> Points -> Points
+sum l r =
+    { power = l.power + r.power
+    , rewardPoints = l.rewardPoints + r.rewardPoints
+    , warnings = l.warnings ++ r.warnings
+    }
+
+
 maybeSum : (item -> Maybe Int) -> List item -> Maybe Int
 maybeSum toValue list =
     list
         |> Maybe.Extra.traverse toValue
         |> Maybe.map List.sum
+
+
+resultSum : (item -> Cost Int) -> List item -> Cost Int
+resultSum toValue list =
+    list
+        |> combineMap toValue
+        |> map List.sum
+
+
+map : (a -> b) -> Cost a -> Cost b
+map f cost =
+    case cost of
+        CostOk x ->
+            CostOk (f x)
+
+        CostErr e ->
+            CostErr e
+
+
+map2 : (a -> b -> c) -> Cost a -> Cost b -> Cost c
+map2 f l r =
+    case ( l, r ) of
+        ( CostErr le, CostErr re ) ->
+            CostErr (le ++ re)
+
+        ( CostOk _, CostErr re ) ->
+            CostErr re
+
+        ( CostErr le, _ ) ->
+            CostErr le
+
+        ( CostOk lo, CostOk ro ) ->
+            CostOk (f lo ro)
+
+
+andThen : (a -> Cost b) -> Cost a -> Cost b
+andThen f cost =
+    case cost of
+        CostOk x ->
+            f x
+
+        CostErr e ->
+            CostErr e
+
+
+combine : List (Cost a) -> Cost (List a)
+combine list =
+    combineMap identity list
+
+
+combineMap : (a -> Cost b) -> List a -> Cost (List b)
+combineMap f list =
+    List.foldl
+        (\value acc ->
+            map2 (::) (f value) acc
+        )
+        (CostOk [])
+        list
+        |> map List.reverse
+
+
+withDefault : a -> Cost a -> a
+withDefault default cost =
+    case cost of
+        CostOk v ->
+            v
+
+        CostErr _ ->
+            default
+
+
+mapErrors : (List String -> List String) -> Cost a -> Cost a
+mapErrors f cost =
+    case cost of
+        CostOk _ ->
+            cost
+
+        CostErr e ->
+            CostErr (f e)

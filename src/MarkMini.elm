@@ -24,6 +24,7 @@ type Piece
     | Link String
     | Number String
     | Kisses String
+    | Warning
 
 
 type Color
@@ -126,30 +127,7 @@ mainParser =
             |. Parser.symbol "*"
             |= innerParser '*'
             |. Parser.symbol "*"
-        , Parser.succeed
-            (\str ->
-                case String.toInt str of
-                    Nothing ->
-                        case Types.affinityFromString str of
-                            Nothing ->
-                                if str == "K" then
-                                    Kisses ""
-
-                                else if String.startsWith "http" str then
-                                    Link str
-
-                                else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
-                                    Number str
-
-                                else
-                                    Text ("[" ++ str ++ "]")
-
-                            Just affinity ->
-                                Affinity affinity
-
-                    Just i ->
-                        Number <| String.fromInt i
-            )
+        , Parser.succeed parseSquareBrackets
             |. Parser.symbol "["
             |= Parser.getChompedString (Parser.chompWhile <| \c -> c /= ']')
             |. Parser.symbol "]"
@@ -212,6 +190,34 @@ mainParser =
                 )
         ]
         |> many
+
+
+parseSquareBrackets : String -> Piece
+parseSquareBrackets str =
+    case String.toInt str of
+        Just i ->
+            Number <| String.fromInt i
+
+        Nothing ->
+            case Types.affinityFromString str of
+                Just affinity ->
+                    Affinity affinity
+
+                Nothing ->
+                    if str == "K" then
+                        Kisses ""
+
+                    else if str == "W" then
+                        Warning
+
+                    else if String.startsWith "http" str then
+                        Link str
+
+                    else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
+                        Number str
+
+                    else
+                        Text ("[" ++ str ++ "]")
 
 
 innerParser : Char -> Parser (List Piece)

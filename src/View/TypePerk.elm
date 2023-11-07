@@ -2,7 +2,6 @@ module View.TypePerk exposing (viewTypePerks)
 
 import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, px, rgb, spacing, width)
-import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (Race(..), Slot)
 import Gradients
@@ -30,7 +29,7 @@ viewTypePerks display typePerks =
             , Theme.padding
             , centerX
             , width <| Element.maximum 600 fill
-            , Border.rounded Theme.rythm
+            , Theme.rounded
             ]
             "These are particular perks that can be optionally taken by a witch of a given racial type. If hybridized (via later perk), you can purchase type perks of both types."
         , TypePerk.all

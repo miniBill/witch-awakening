@@ -27,7 +27,7 @@ viewFaction display faction =
             ]
             [ Theme.blocks
                 [ Background.color <| rgba 0 0 0 0.75
-                , Border.rounded Theme.rythm
+                , Theme.rounded
                 , Theme.padding
                 , width <| Element.maximum 800 fill
                 , centerX
@@ -53,7 +53,7 @@ viewFaction display faction =
                     , Font.color <| rgb 0 0 0
                     , Font.center
                     , Theme.padding
-                    , Border.rounded Theme.rythm
+                    , Theme.rounded
                     ]
                     Faction.humansIntro
                 , Theme.image
