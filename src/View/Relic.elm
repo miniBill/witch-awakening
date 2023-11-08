@@ -198,16 +198,16 @@ viewContent mainRace isSelected selected pearl races { content, name } color =
                         isChoiceSelected =
                             List.member relic selected
 
-                        attrs : List (Attribute msg) -> List (Attribute msg)
+                        attrs : List (Attribute msg)
                         attrs =
                             if isChoiceSelected then
-                                (::) (Theme.backgroundColor color)
+                                [ Theme.backgroundColor color ]
 
                             else
-                                identity
+                                []
                     in
                     Theme.button
-                        (attrs [ width <| px 24 ])
+                        ((width <| px 24) :: attrs)
                         { label =
                             String.fromInt cost
                                 |> Theme.gradientText 4 Gradients.yellowGradient
@@ -347,10 +347,7 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                 )
     in
     [ Theme.column [ width fill, Theme.padding ]
-        [ Theme.blocks
-            [ height fill
-            ]
-            block
+        [ Theme.blocks [ height fill ] block
         , if isSelected then
             Theme.button
                 [ width fill

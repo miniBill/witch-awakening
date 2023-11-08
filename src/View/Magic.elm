@@ -361,22 +361,24 @@ viewRank selected { name, class } rankIndex label =
             isTierSelected : Bool
             isTierSelected =
                 List.member rankedMagic selected
+
+            attrs : List (Element.Attribute msg)
+            attrs =
+                if isTierSelected then
+                    let
+                        color : Int
+                        color =
+                            class
+                                |> Maybe.map Theme.classToColor
+                                |> Maybe.withDefault Theme.colors.epic
+                    in
+                    [ Theme.backgroundColor color ]
+
+                else
+                    []
         in
         Theme.button
-            [ if isTierSelected then
-                let
-                    color : Int
-                    color =
-                        class
-                            |> Maybe.map Theme.classToColor
-                            |> Maybe.withDefault Theme.colors.epic
-                in
-                Theme.backgroundColor color
-
-              else
-                Border.width 1
-            , width fill
-            ]
+            (width fill :: attrs)
             { label =
                 column []
                     [ el

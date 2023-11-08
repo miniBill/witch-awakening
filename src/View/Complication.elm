@@ -236,15 +236,17 @@ viewContent selected { content, name } color =
                         isTierSelected : Bool
                         isTierSelected =
                             List.member complication selected
+
+                        attrs : List (Attribute msg)
+                        attrs =
+                            if isTierSelected then
+                                [ Theme.backgroundColor color ]
+
+                            else
+                                []
                     in
                     Theme.button
-                        [ if isTierSelected then
-                            Theme.backgroundColor color
-
-                          else
-                            Border.width 1
-                        , width fill
-                        ]
+                        (width fill :: attrs)
                         { label =
                             Theme.blocks []
                                 ("- *Tier "
@@ -285,16 +287,16 @@ viewContent selected { content, name } color =
                         isChoiceSelected =
                             List.member complication selected
 
-                        attrs : List (Attribute msg) -> List (Attribute msg)
+                        attrs : List (Attribute msg)
                         attrs =
                             if isChoiceSelected then
-                                (::) (Theme.backgroundColor color)
+                                [ Theme.backgroundColor color ]
 
                             else
-                                identity
+                                []
                     in
                     Theme.button
-                        (attrs [ width fill ])
+                        (width fill :: attrs)
                         { label =
                             Theme.blocks []
                                 ("- "

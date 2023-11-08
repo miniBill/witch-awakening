@@ -79,16 +79,16 @@ costButton color selected item label =
         isChoiceSelected =
             List.member item selected
 
-        attrs : List (Attribute msg) -> List (Attribute msg)
+        attrs : List (Attribute msg)
         attrs =
             if isChoiceSelected then
-                (::) (Theme.backgroundColor color)
+                [ Theme.backgroundColor color ]
 
             else
-                identity
+                []
     in
     Theme.button
-        (attrs [ width <| px 24 ])
+        ((width <| px 24) :: attrs)
         { label =
             String.fromInt label
                 |> Theme.gradientText 4 Gradients.yellowGradient

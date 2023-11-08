@@ -259,16 +259,16 @@ viewChoice color selected name ( label, cost ) =
         isChoiceSelected =
             List.member perk selected
 
-        attrs : List (Attribute msg) -> List (Attribute msg)
+        attrs : List (Attribute msg)
         attrs =
             if isChoiceSelected then
-                (::) (Theme.backgroundColor color)
+                [ Theme.backgroundColor color ]
 
             else
-                identity
+                []
     in
     Theme.button
-        (attrs [ width fill ])
+        (width fill :: attrs)
         { label =
             Theme.blocks []
                 (if String.endsWith ";" label || String.endsWith "," label then
