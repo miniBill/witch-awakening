@@ -207,14 +207,8 @@ viewContent mainRace isSelected selected pearl races { content, name } color =
                             else
                                 identity
                     in
-                    Input.button
-                        (attrs
-                            [ Border.rounded 4
-                            , padding 4
-                            , Border.width 1
-                            , width <| px 24
-                            ]
-                        )
+                    Theme.button
+                        (attrs [ width <| px 24 ])
                         { label =
                             String.fromInt cost
                                 |> Theme.gradientText 4 Gradients.yellowGradient
@@ -359,11 +353,8 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
             ]
             block
         , if isSelected then
-            Input.button
+            Theme.button
                 [ width fill
-                , Border.width 1
-                , Theme.padding
-                , Theme.rounded
                 , Font.center
                 ]
                 { onPress =

@@ -41,9 +41,8 @@ viewMenu model =
                 shrink
         , padding 16
         ]
-        [ Input.button
-            [ Border.width 1
-            , if List.isEmpty errors then
+        [ Theme.button
+            [ if List.isEmpty errors then
                 if List.isEmpty warnings then
                     Background.color <| rgb 0.7 0.7 1
 
@@ -170,11 +169,8 @@ viewCalculations model power warnings =
         button : { onPress : msg, label : String } -> ( String, Element msg )
         button config =
             ( config.label
-            , Input.button
-                [ Border.width 1
-                , padding 4
-                , Theme.rounded
-                , width fill
+            , Theme.button
+                [ width fill
                 , Font.center
                 ]
                 { onPress = Just config.onPress

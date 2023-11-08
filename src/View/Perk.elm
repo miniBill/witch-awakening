@@ -47,19 +47,19 @@ introBlock =
         , spacing <| Theme.rythm * 2
         ]
         [ let
-            color : Element.Color
-            color =
+            blackish : Element.Color
+            blackish =
                 rgba 0 0 0 0.75
           in
           Theme.blocks
             [ width <| Element.maximum 800 fill
             , centerX
-            , Background.color color
+            , Background.color blackish
             , Border.shadow
                 { offset = ( 0, 0 )
                 , size = 5
                 , blur = 5
-                , color = color
+                , color = blackish
                 }
             ]
             Perk.intro
@@ -90,6 +90,9 @@ perkBox display selected ({ name, affinity, class, content, isMeta } as perk) =
                 ( WithChoices _ _ _, Nothing ) ->
                     Nothing
 
+                ( WithChoicesHybridize _ _, Nothing ) ->
+                    Nothing
+
                 ( WithCosts _ _, Nothing ) ->
                     Nothing
 
@@ -97,6 +100,9 @@ perkBox display selected ({ name, affinity, class, content, isMeta } as perk) =
         costs =
             (case content of
                 WithChoices _ choices _ ->
+                    List.map Tuple.second choices
+
+                WithChoicesHybridize _ choices ->
                     List.map Tuple.second choices
 
                 WithCosts _ k ->
@@ -135,10 +141,6 @@ perkBox display selected ({ name, affinity, class, content, isMeta } as perk) =
             Types.slotToImage slot
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom, moveUp 48 ]
-
-        color : Int
-        color =
-            0x00F3EA6F
     in
     Theme.card []
         { display = display
@@ -196,13 +198,13 @@ perkBox display selected ({ name, affinity, class, content, isMeta } as perk) =
                     , Font.center
                     ]
             ]
-        , content = viewContent selected perk color
+        , content = viewContent selected perk
         , onPress = msg
         }
 
 
-viewContent : List RankedPerk -> Perk.Details -> Int -> List (Element ( RankedPerk, Bool ))
-viewContent selected { content, name } color =
+viewContent : List RankedPerk -> Perk.Details -> List (Element ( RankedPerk, Bool ))
+viewContent selected { content, name } =
     case content of
         Single _ block ->
             [ Theme.blocks
@@ -217,47 +219,7 @@ viewContent selected { content, name } color =
             let
                 choicesView : List (Element ( RankedPerk, Bool ))
                 choicesView =
-                    List.map viewChoice choices
-
-                viewChoice : ( String, Int ) -> Element ( RankedPerk, Bool )
-                viewChoice ( label, cost ) =
-                    let
-                        perk : RankedPerk
-                        perk =
-                            { name = name
-                            , cost = cost
-                            }
-
-                        isChoiceSelected : Bool
-                        isChoiceSelected =
-                            List.member perk selected
-
-                        attrs : List (Attribute msg) -> List (Attribute msg)
-                        attrs =
-                            if isChoiceSelected then
-                                (::) (Theme.backgroundColor color)
-
-                            else
-                                identity
-                    in
-                    Input.button
-                        (attrs
-                            [ Border.rounded 4
-                            , padding 4
-                            , Border.width 1
-                            , width fill
-                            ]
-                        )
-                        { label =
-                            Theme.blocks []
-                                (if String.endsWith ";" label || String.endsWith "," label then
-                                    "- " ++ label
-
-                                 else
-                                    "- " ++ label ++ "."
-                                )
-                        , onPress = Just ( perk, not isChoiceSelected )
-                        }
+                    List.map (viewChoice selected name) choices
             in
             [ Theme.column [ height fill, width fill, Theme.padding ] <|
                 Theme.blocks [] before
@@ -265,53 +227,99 @@ viewContent selected { content, name } color =
                     ++ [ Theme.blocks [] after ]
             ]
 
-        WithCosts before costs ->
+        WithChoicesHybridize before choices ->
             let
                 choicesView : List (Element ( RankedPerk, Bool ))
                 choicesView =
-                    [ el [ Font.bold ] <| text "Cost:"
-                    , costs
-                        |> List.map viewChoice
-                        |> Theme.wrappedRow []
-                    ]
-
-                viewChoice : Int -> Element ( RankedPerk, Bool )
-                viewChoice cost =
-                    let
-                        perk : RankedPerk
-                        perk =
-                            { name = name
-                            , cost = cost
-                            }
-
-                        isChoiceSelected : Bool
-                        isChoiceSelected =
-                            List.member perk selected
-
-                        attrs : List (Attribute msg) -> List (Attribute msg)
-                        attrs =
-                            if isChoiceSelected then
-                                (::) (Theme.backgroundColor color)
-
-                            else
-                                identity
-                    in
-                    Input.button
-                        (attrs
-                            [ Border.rounded 4
-                            , padding 4
-                            , Border.width 1
-                            , width <| px 24
-                            ]
-                        )
-                        { label =
-                            String.fromInt cost
-                                |> Theme.gradientText 4 Gradients.yellowGradient
-                                |> el [ centerX, centerY, Theme.captureIt ]
-                        , onPress = Just ( perk, not isChoiceSelected )
-                        }
+                    List.map (viewChoice selected name) choices
             in
             [ Theme.column [ height fill, width fill, Theme.padding ] <|
                 Theme.blocks [] before
                     :: choicesView
             ]
+
+        WithCosts before costs ->
+            let
+                costsView : List (Element ( RankedPerk, Bool ))
+                costsView =
+                    [ el [ Font.bold ] <| text "Cost:"
+                    , costs
+                        |> List.map (viewCost selected name)
+                        |> Theme.wrappedRow []
+                    ]
+            in
+            [ Theme.column [ height fill, width fill, Theme.padding ] <|
+                Theme.blocks [] before
+                    :: costsView
+            ]
+
+
+viewChoice : List RankedPerk -> Types.Perk -> ( String, Int ) -> Element ( RankedPerk, Bool )
+viewChoice selected name ( label, cost ) =
+    let
+        perk : RankedPerk
+        perk =
+            { name = name
+            , cost = cost
+            }
+
+        isChoiceSelected : Bool
+        isChoiceSelected =
+            List.member perk selected
+
+        attrs : List (Attribute msg) -> List (Attribute msg)
+        attrs =
+            if isChoiceSelected then
+                (::) (Theme.backgroundColor color)
+
+            else
+                identity
+    in
+    Theme.button
+        (attrs [ width fill ])
+        { label =
+            Theme.blocks []
+                (if String.endsWith ";" label || String.endsWith "," label then
+                    "- " ++ label
+
+                 else
+                    "- " ++ label ++ "."
+                )
+        , onPress = Just ( perk, not isChoiceSelected )
+        }
+
+
+viewCost : List RankedPerk -> Types.Perk -> Int -> Element ( RankedPerk, Bool )
+viewCost selected name cost =
+    let
+        perk : RankedPerk
+        perk =
+            { name = name
+            , cost = cost
+            }
+
+        isChoiceSelected : Bool
+        isChoiceSelected =
+            List.member perk selected
+
+        attrs : List (Attribute msg) -> List (Attribute msg)
+        attrs =
+            if isChoiceSelected then
+                (::) (Theme.backgroundColor color)
+
+            else
+                identity
+    in
+    Theme.button
+        (attrs [ width <| px 24 ])
+        { label =
+            String.fromInt cost
+                |> Theme.gradientText 4 Gradients.yellowGradient
+                |> el [ centerX, centerY, Theme.captureIt ]
+        , onPress = Just ( perk, not isChoiceSelected )
+        }
+
+
+color : Int
+color =
+    0x00F3EA6F

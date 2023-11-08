@@ -238,15 +238,12 @@ viewContent selected { content, name } color =
                         isTierSelected =
                             List.member complication selected
                     in
-                    Input.button
+                    Theme.button
                         [ if isTierSelected then
                             Theme.backgroundColor color
 
                           else
                             Border.width 1
-                        , Border.width 1
-                        , Border.rounded 4
-                        , padding 4
                         , width fill
                         ]
                         { label =
@@ -297,14 +294,8 @@ viewContent selected { content, name } color =
                             else
                                 identity
                     in
-                    Input.button
-                        (attrs
-                            [ Border.rounded 4
-                            , padding 4
-                            , Border.width 1
-                            , width fill
-                            ]
-                        )
+                    Theme.button
+                        (attrs [ width fill ])
                         { label =
                             Theme.blocks []
                                 ("- "
@@ -351,14 +342,8 @@ viewContent selected { content, name } color =
                             else
                                 identity
                     in
-                    Input.button
-                        (attrs
-                            [ Border.rounded 4
-                            , padding 4
-                            , Border.width 1
-                            , width <| px 24
-                            ]
-                        )
+                    Theme.button
+                        (attrs [ width <| px 24 ])
                         { label =
                             el [ centerX, centerY, Theme.captureIt ] <|
                                 Theme.gradientText 4 Gradients.yellowGradient <|

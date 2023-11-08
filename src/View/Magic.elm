@@ -363,7 +363,7 @@ viewRank selected { name, class } rankIndex label =
             isTierSelected =
                 List.member rankedMagic selected
         in
-        Input.button
+        Theme.button
             [ if isTierSelected then
                 let
                     color : Int
@@ -376,9 +376,6 @@ viewRank selected { name, class } rankIndex label =
 
               else
                 Border.width 1
-            , Border.width 1
-            , Border.rounded 4
-            , padding 4
             , width fill
             ]
             { label =

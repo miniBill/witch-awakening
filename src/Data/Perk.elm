@@ -16,6 +16,7 @@ type Content
     = Single Int String
     | WithChoices String (List ( String, Int )) String
     | WithCosts String (List Int)
+    | WithChoicesHybridize String (List ( String, Int ))
 
 
 intro : String
@@ -299,7 +300,7 @@ hybridize =
     , affinity = Beast
     , isMeta = False
     , content =
-        WithChoices """
+        WithChoicesHybridize """
         Choose a second racial type for your true form, and reasonably combine the physical look of both races, Take the higher Mana capacity, and maintain both methods of charge (each of which charge as fast as they normally would) and any features mentioned in their description, such as the breath of the Draviri or the honey of the Sprite. You can take both type perks of either race. You do not gain affinity of the second type. See _Cosmic Pearl_. You can take this twice for up to 3 aspects.
 
         *This is added/removed automatically when you select your race[s]*
@@ -307,7 +308,6 @@ hybridize =
             [ ( "Taken once - 2 races (_hybrid_)", hybridizeCost )
             , ( "Taken twice - 3 races (_chimera_)", hybridizeCost * 2 )
             ]
-            ""
     }
 
 

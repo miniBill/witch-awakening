@@ -1,4 +1,4 @@
-module Theme exposing (affinityToColor, backgroundColor, bebasNeue, blocks, borderColor, borderGlow, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (affinityToColor, backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -382,12 +382,11 @@ viewSectionTitle toMsg display label =
         case toMsg of
             Just tag ->
                 let
-                    button : Element msg
-                    button =
-                        Input.button
-                            [ Border.rounded 4
+                    expandButton : Element msg
+                    expandButton =
+                        button
+                            [ rounded
                             , Element.padding 4
-                            , Border.width 1
                             , borderColor colors.choice
                             ]
                             { onPress = Just <| tag <| Types.nextDisplay display
@@ -406,7 +405,7 @@ viewSectionTitle toMsg display label =
                 [ hr
                 , gradient label
                 , text " "
-                , button
+                , expandButton
                 , hr
                 ]
 
@@ -612,6 +611,22 @@ maybeButton attrs config =
 
         Nothing ->
             el attrs config.label
+
+
+button :
+    List (Attribute msg)
+    ->
+        { onPress : Maybe msg
+        , label : Element msg
+        }
+    -> Element msg
+button attrs =
+    Input.button
+        (Border.width 1
+            :: Element.padding 4
+            :: rounded
+            :: attrs
+        )
 
 
 complicationCategoryToColor : ComplicationCategory -> Int
