@@ -1,7 +1,7 @@
 module View.Complication exposing (viewComplications)
 
 import Data.Complication as Complication exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, moveDown, moveRight, moveUp, px, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, px, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (ComplicationCategory, Slot(..))
@@ -311,46 +311,5 @@ viewContent selected { content, name } color =
             ]
 
         WithCosts before costs ->
-            let
-                choicesView : List (Element ( RankedComplication, Bool ))
-                choicesView =
-                    [ el [ Font.bold ] <| text "Cost:"
-                    , costs
-                        |> List.indexedMap viewChoice
-                        |> Theme.wrappedRow []
-                    ]
-
-                viewChoice : Int -> Int -> Element ( RankedComplication, Bool )
-                viewChoice choice value =
-                    let
-                        complication : RankedComplication
-                        complication =
-                            { name = name
-                            , kind = Tiered (choice + 1)
-                            }
-
-                        isChoiceSelected : Bool
-                        isChoiceSelected =
-                            List.member complication selected
-
-                        attrs : List (Attribute msg) -> List (Attribute msg)
-                        attrs =
-                            if isChoiceSelected then
-                                (::) (Theme.backgroundColor color)
-
-                            else
-                                identity
-                    in
-                    Theme.button
-                        (attrs [ width <| px 24 ])
-                        { label =
-                            el [ centerX, centerY, Theme.captureIt ] <|
-                                Theme.gradientText 4 Gradients.yellowGradient <|
-                                    String.fromInt value
-                        , onPress = Just ( complication, not isChoiceSelected )
-                        }
-            in
-            [ Theme.column [ height fill, width fill, Theme.padding ] <|
-                Theme.blocks [] before
-                    :: choicesView
-            ]
+            View.costButtons color selected before costs <|
+                \tier _ -> { name = name, kind = Tiered (tier + 1) }

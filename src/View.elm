@@ -1,6 +1,8 @@
-module View exposing (collapsible)
+module View exposing (collapsible, costButtons)
 
-import Element exposing (Attribute, Element, fill, spacing, width)
+import Element exposing (Attribute, Element, centerX, centerY, el, fill, height, px, spacing, text, width)
+import Element.Font as Font
+import Gradients
 import Theme
 import Types exposing (Display(..))
 
@@ -38,3 +40,58 @@ collapsible attrs display displayMsg choiceMsg title full compact =
 
         DisplayCollapsed ->
             Theme.collapsibleBlocks displayMsg display [] title
+
+
+costButtons :
+    Int
+    -> List a
+    -> String
+    -> List Int
+    -> (Int -> Int -> a)
+    -> List (Element ( a, Bool ))
+costButtons color selected before costs builder =
+    let
+        children : List (Element ( a, Bool ))
+        children =
+            [ el [ Font.bold ] <| text "Cost:"
+            , costs
+                |> List.indexedMap
+                    (\index cost ->
+                        costButton
+                            color
+                            selected
+                            (builder index cost)
+                            cost
+                    )
+                |> Theme.wrappedRow []
+            ]
+    in
+    [ Theme.column [ height fill, width fill, Theme.padding ] <|
+        Theme.blocks [] before
+            :: children
+    ]
+
+
+costButton : Int -> List c -> c -> Int -> Element ( c, Bool )
+costButton color selected item label =
+    let
+        isChoiceSelected : Bool
+        isChoiceSelected =
+            List.member item selected
+
+        attrs : List (Attribute msg) -> List (Attribute msg)
+        attrs =
+            if isChoiceSelected then
+                (::) (Theme.backgroundColor color)
+
+            else
+                identity
+    in
+    Theme.button
+        (attrs [ width <| px 24 ])
+        { label =
+            String.fromInt label
+                |> Theme.gradientText 4 Gradients.yellowGradient
+                |> el [ centerX, centerY, Theme.captureIt ]
+        , onPress = Just ( item, not isChoiceSelected )
+        }
