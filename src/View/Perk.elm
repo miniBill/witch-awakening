@@ -1,11 +1,10 @@
 module View.Perk exposing (viewPerks)
 
 import Data.Perk as Perk exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, moveUp, padding, paragraph, px, rgba, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, moveUp, paragraph, px, rgba, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Element.Input as Input
 import Generated.Types as Types exposing (Slot(..))
 import Gradients
 import Images
@@ -289,10 +288,14 @@ viewChoice selected name ( label, cost ) =
         }
 
 
-viewCost : List RankedPerk -> Types.Perk -> Int -> Element ( RankedPerk, Bool )
+viewCost :
+    List { name : a, cost : Int }
+    -> a
+    -> Int
+    -> Element ( { name : a, cost : Int }, Bool )
 viewCost selected name cost =
     let
-        perk : RankedPerk
+        perk : { name : a, cost : Int }
         perk =
             { name = name
             , cost = cost

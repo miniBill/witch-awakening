@@ -1,10 +1,9 @@
 module View.Complication exposing (viewComplications)
 
 import Data.Complication as Complication exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, moveDown, moveRight, moveUp, padding, px, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, moveDown, moveRight, moveUp, px, spacing, text, width)
 import Element.Border as Border
 import Element.Font as Font
-import Element.Input as Input
 import Generated.Types as Types exposing (ComplicationCategory, Slot(..))
 import Gradients
 import List.Extra

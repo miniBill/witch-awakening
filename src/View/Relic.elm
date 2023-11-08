@@ -1,10 +1,9 @@
 module View.Relic exposing (viewRelics)
 
 import Data.Relic as Relic exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, padding, paragraph, px, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, paragraph, px, spacing, text, width)
 import Element.Border as Border
 import Element.Font as Font
-import Element.Input as Input
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
 import List.Extra
