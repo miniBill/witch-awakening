@@ -7,7 +7,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed
-import Generated.Types as Types
+import Generated.Types as Types exposing (Affinity)
 import List.Extra
 import Results exposing (Results(..))
 import String.Extra
@@ -22,13 +22,26 @@ viewMenu model =
         totalPoints =
             Costs.totalPoints model
 
-        ( warnings, errors ) =
+        ( rawWarnings, errors ) =
             case totalPoints of
                 Oks points ->
                     ( List.Extra.unique points.warnings, [] )
 
                 Errs es ->
                     ( [], List.Extra.unique es )
+
+        affinities : List Affinity
+        affinities =
+            Types.affinities model
+                |> List.Extra.remove Types.All
+
+        warnings : List String
+        warnings =
+            if List.isEmpty affinities then
+                "No main race selected" :: rawWarnings
+
+            else
+                rawWarnings
     in
     Theme.column
         [ alignTop
@@ -69,7 +82,7 @@ viewMenu model =
                     (menuLabel model totalPoints warnings)
             }
         , if model.menuOpen then
-            viewCalculations model totalPoints warnings
+            viewCalculations model totalPoints warnings affinities
 
           else
             Element.none
@@ -144,8 +157,8 @@ wrapInt before value after =
     before ++ String.fromInt value ++ after
 
 
-viewCalculations : Model -> Results Points -> List String -> Element Msg
-viewCalculations model power warnings =
+viewCalculations : Model -> Results Points -> List String -> List Affinity -> Element Msg
+viewCalculations model power warnings affinities =
     let
         resultRow : ( String, Element Msg )
         resultRow =
@@ -237,12 +250,18 @@ viewCalculations model power warnings =
                         warnings
                     )
           )
-        , section [ alignBottom ] "Affinities"
+        , if List.isEmpty affinities then
+            ( "Affinities", Element.none )
+
+          else
+            section [ alignBottom ] "Affinities"
         , ( "AffinitiesColumn"
-          , Theme.wrappedRow [] <|
-                List.map Theme.viewAffinity <|
-                    List.Extra.remove Types.All <|
-                        Types.affinities model
+          , if List.isEmpty affinities then
+                Element.none
+
+            else
+                Theme.wrappedRow [] <|
+                    List.map Theme.viewAffinity affinities
           )
         , ( "Cap Slider", capSlider model )
         , keyedRow "Power cap" (Costs.powerCap model) <| Just "Game Mode"
