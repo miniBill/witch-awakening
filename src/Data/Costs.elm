@@ -107,7 +107,13 @@ totalPoints model =
                     | warnings =
                         result.warnings
                             |> addIf result.rewardPoints "Not enough reward points! Try converting some power."
-                            |> addIf result.power "Not enough power! Try adding complications."
+                            |> addIf result.power
+                                (if model.gameMode == Just StoryArc && not model.capBuild then
+                                    "Not enough power!"
+
+                                 else
+                                    "Not enough power! Try adding complications."
+                                )
                 }
             )
 
