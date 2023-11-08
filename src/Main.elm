@@ -211,6 +211,9 @@ updateOnChoice choice model =
         ChoiceRace ( race, selected ) ->
             { model | races = toggle selected race model.races }
 
+        ChoiceMainRace mainRace ->
+            { model | mainRace = mainRace }
+
         DisplayRace raceDisplay ->
             { model | raceDisplay = raceDisplay }
 
@@ -565,7 +568,7 @@ innerView model =
         , Element.Lazy.lazy2 Complications.viewComplications model.complicationsDisplay model.complications
         , Element.Lazy.lazy3 TypePerk.viewTypePerks model.races model.typePerksDisplay model.typePerks
         , Element.Lazy.lazy2 Magic.viewMagics model.magicDisplay model.magic
-        , Element.Lazy.lazy2 Perk.viewPerks model.perksDisplay model.perks
+        , Element.Lazy.lazy4 Perk.viewPerks model.perksDisplay model.mainRace model.races model.perks
         , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
         , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
         , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions

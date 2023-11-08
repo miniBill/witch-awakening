@@ -23,6 +23,7 @@ type Choice
     = ChoiceClass (Maybe Class)
     | DisplayClass Display
     | ChoiceRace ( Race, Bool )
+    | ChoiceMainRace (Maybe Race)
     | DisplayRace Display
     | ChoiceGameMode (Maybe GameMode)
     | DisplayGameMode Display

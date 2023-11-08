@@ -1,11 +1,11 @@
 module View.Perk exposing (viewPerks)
 
 import Data.Perk as Perk exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paragraph, px, rgba, spacing, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paragraph, px, rgba, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (Slot(..))
+import Generated.Types as Types exposing (Race, Slot(..))
 import Gradients
 import Images
 import List.Extra
@@ -15,23 +15,23 @@ import Types exposing (Choice(..), Display, RankedPerk)
 import View
 
 
-viewPerks : Display -> List RankedPerk -> Element Choice
-viewPerks display perks =
+viewPerks : Display -> Maybe Race -> List Race -> List RankedPerk -> Element Choice
+viewPerks display mainRace races perks =
     View.collapsible (Theme.topBackground Images.perkIntro)
         display
         DisplayPerks
-        ChoicePerk
+        identity
         "# Perks"
         [ introBlock
         , Perk.all
-            |> List.map (perkBox display perks)
+            |> List.map (perkBox display perks mainRace races)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
         [ Perk.all
-            |> List.map (perkBox display perks)
+            |> List.map (perkBox display perks mainRace races)
             |> Theme.column
                 [ centerX
                 , spacing <| Theme.rythm * 3
@@ -69,22 +69,24 @@ introBlock =
 perkBox :
     Display
     -> List RankedPerk
+    -> Maybe Race
+    -> List Race
     -> Perk.Details
-    -> Element ( RankedPerk, Bool )
-perkBox display selected ({ name, affinity, class, content, isMeta } as perk) =
+    -> Element Choice
+perkBox display selected mainRace races ({ name, affinity, class, content, isMeta } as perk) =
     let
         isSelected : Maybe RankedPerk
         isSelected =
             List.Extra.find (\sel -> sel.name == name) selected
 
-        msg : Maybe ( RankedPerk, Bool )
+        msg : Maybe Choice
         msg =
             case ( content, isSelected ) of
                 ( _, Just selectedPerk ) ->
-                    Just ( selectedPerk, False )
+                    Just <| ChoicePerk ( selectedPerk, False )
 
                 ( Single cost _, Nothing ) ->
-                    Just ( { name = name, cost = cost }, True )
+                    Just <| ChoicePerk ( { name = name, cost = cost }, True )
 
                 ( WithChoices _ _ _, Nothing ) ->
                     Nothing
@@ -201,13 +203,13 @@ perkBox display selected ({ name, affinity, class, content, isMeta } as perk) =
                     , Font.center
                     ]
             ]
-        , content = viewContent color selected perk
+        , content = viewContent mainRace races color selected perk
         , onPress = msg
         }
 
 
-viewContent : Int -> List RankedPerk -> Perk.Details -> List (Element ( RankedPerk, Bool ))
-viewContent color selected { content, name } =
+viewContent : Maybe Race -> List Race -> Int -> List RankedPerk -> Perk.Details -> List (Element Choice)
+viewContent mainRace races color selected { content, name } =
     case content of
         Single _ block ->
             [ Theme.blocks
@@ -220,7 +222,7 @@ viewContent color selected { content, name } =
 
         WithChoices before choices after ->
             let
-                choicesView : List (Element ( RankedPerk, Bool ))
+                choicesView : List (Element Choice)
                 choicesView =
                     List.map (viewChoice color selected name) choices
             in
@@ -232,21 +234,52 @@ viewContent color selected { content, name } =
 
         WithChoicesHybridize before choices ->
             let
-                choicesView : List (Element ( RankedPerk, Bool ))
+                choicesView : List (Element Choice)
                 choicesView =
                     List.map (viewChoice color selected name) choices
             in
             [ Theme.column [ height fill, width fill, Theme.padding ] <|
                 Theme.blocks [] before
                     :: choicesView
+                    ++ racePicker color mainRace races
             ]
 
         WithCosts before costs ->
-            View.costButtons color selected before costs <|
-                \_ cost -> { name = name, cost = cost }
+            List.map (Element.map ChoicePerk) <|
+                View.costButtons color selected before costs <|
+                    \_ cost -> { name = name, cost = cost }
 
 
-viewChoice : Int -> List RankedPerk -> Types.Perk -> ( String, Int ) -> Element ( RankedPerk, Bool )
+racePicker : Int -> Maybe Race -> List Race -> List (Element Choice)
+racePicker color mainRace races =
+    let
+        viewRace : Race -> Element Choice
+        viewRace race =
+            let
+                ( attrs, newValue ) =
+                    if Just race == mainRace then
+                        ( [ Theme.backgroundColor color ], Nothing )
+
+                    else
+                        ( [], Just race )
+            in
+            Theme.button (width fill :: Font.center :: attrs)
+                { label = text <| Types.raceToString race
+                , onPress = Just <| ChoiceMainRace newValue
+                }
+    in
+    if List.length races > 1 then
+        [ el [ Font.bold ] <| text "Pick your main race:"
+        , races
+            |> List.map viewRace
+            |> Theme.wrappedRow [ width fill ]
+        ]
+
+    else
+        []
+
+
+viewChoice : Int -> List RankedPerk -> Types.Perk -> ( String, Int ) -> Element Choice
 viewChoice color selected name ( label, cost ) =
     let
         perk : RankedPerk
@@ -277,5 +310,5 @@ viewChoice color selected name ( label, cost ) =
                  else
                     "- " ++ label ++ "."
                 )
-        , onPress = Just ( perk, not isChoiceSelected )
+        , onPress = Just <| ChoicePerk ( perk, not isChoiceSelected )
         }
