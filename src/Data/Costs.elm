@@ -675,12 +675,12 @@ getCompanion companion =
 
 relicsValue : Model -> Results Points
 relicsValue model =
-    resultSum (relicValue model.class model.cosmicPearl) model.relics
-        |> Results.map (\value -> { zero | rewardPoints = value })
+    resultSum (relicCost model.class model.cosmicPearl) model.relics
+        |> Results.map (\cost -> { zero | rewardPoints = -cost })
 
 
-relicValue : Maybe Class -> CosmicPearlData -> RankedRelic -> Results Int
-relicValue class pearl { name, cost } =
+relicCost : Maybe Class -> CosmicPearlData -> RankedRelic -> Results Int
+relicCost class pearl { name, cost } =
     find "Relic" .name name Relic.all Types.relicToString
         |> Results.map
             (\relic ->
@@ -692,10 +692,10 @@ relicValue class pearl { name, cost } =
                     baseCost : Int
                     baseCost =
                         if isClass then
-                            -cost + 2
+                            cost - 2
 
                         else
-                            -cost
+                            cost
 
                     multiplier : Int
                     multiplier =
