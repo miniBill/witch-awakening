@@ -84,7 +84,7 @@ totalPoints model =
     , Results.map negate <| complicationsValue model
     , Results.map negate <| typePerksValue model
     , Results.map negate <| magicsValue model
-    , Results.map negate <| perksValue model
+    , perksCost model
     , Results.map negate <| factionValue model
     , Results.map negate <| companionsValue model
     , Results.map negate <| relicsValue model
@@ -461,17 +461,23 @@ magicCost affinities class rank magic =
 
 perksValue : Model -> Results Points
 perksValue model =
+    perksCost model
+        |> Results.map negate
+
+
+perksCost : Model -> Results Points
+perksCost model =
     let
         affinities : List Affinity
         affinities =
             Types.affinities model
     in
-    resultSum (perkValue affinities model.class) model.perks
+    resultSum (perkCost affinities model.class) model.perks
         |> Results.map powerToPoints
 
 
-perkValue : List Affinity -> Maybe Class -> RankedPerk -> Results Int
-perkValue affinities class { name, cost } =
+perkCost : List Affinity -> Maybe Class -> RankedPerk -> Results Int
+perkCost affinities class { name, cost } =
     find "Perk" .name name Perk.all Types.perkToString
         |> Results.map
             (\perk ->
@@ -486,16 +492,16 @@ perkValue affinities class { name, cost } =
                 in
                 if isClass then
                     if isAffinity then
-                        (-cost + 2 - 1) // 2
+                        (cost - 2 + 1) // 2
 
                     else
-                        -cost + 2
+                        cost - 2
 
                 else if isAffinity then
-                    -(cost + 1) // 2
+                    (cost + 1) // 2
 
                 else
-                    -cost
+                    cost
             )
 
 
