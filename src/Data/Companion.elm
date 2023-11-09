@@ -754,7 +754,7 @@ sylvarraAsDomonina =
         [ "- Holds law as her highest value"
         , "+/- Definitely a dominatrix"
         ]
-    , mixed = [ "+/- Doesn't need to kill - Can make you forget about witches entirely, while no longer being one yourself." ]
+    , mixed = [ "+/- Doesn’t need to kill - Can make you forget about witches entirely, while no longer being one yourself." ]
     , has = "Syl has Ministration 3, Witchery 3, Hexes 4, Occultism 4, Covenants 4, Divination 4, Windkeeping 5, Psychotics 5, _Secret Elixir, Mana Core, Violet Lenses, Life Record, Master Key_"
     }
 
@@ -770,8 +770,8 @@ madellineLPeach =
     , teamwork = NormalScore 5
     , sociability = NormalScore 4
     , morality = NormalScore 7
-    , quote = "_*“Peach can be a little eccentric but she's harmless if not attacked first or given orders otherwise. She should be in Math now.” - Sariah*_"
-    , description = "One of the foremost Watcher Inquisitors, field agents that relentlessly root out evil. They overlook simple demonology, but wherever there is a demon or outsider running amok, or simply an enemy to the Watchers, they send in the Inquisition, and Madelline is one of their heavy hitters. She's able to use Celestials with her _Necronomicon_."
+    , quote = "_*“Peach can be a little eccentric but she’s harmless if not attacked first or given orders otherwise. She should be in Math now.” - Sariah*_"
+    , description = "One of the foremost Watcher Inquisitors, field agents that relentlessly root out evil. They overlook simple demonology, but wherever there is a demon or outsider running amok, or simply an enemy to the Watchers, they send in the Inquisition, and Madelline is one of their heavy hitters. She’s able to use Celestials with her _Necronomicon_."
     , positives =
         [ "+ Cute and wholesome when not on the job, unrecognizable."
         ]
@@ -779,7 +779,7 @@ madellineLPeach =
         [ "- Yandere a/f"
         , "- Still in HS. despite being 80"
         ]
-    , mixed = [ "+/- Though lesbians are normal for witches, even among Watchers, Peach is pissed she can't find a witch husband." ]
+    , mixed = [ "+/- Though lesbians are normal for witches, even among Watchers, Peach is pissed she can’t find a witch husband." ]
     , has = "Peach has Alchemy 2, Runes 2, Ministration 4, Familiarity 4, Necromancy 5, Metallurgy 5, Curses 5, _Blood Witch, Mana Core, Apex, Necronomicon, Pewter Crown, Ritual Inks_"
     }
 
@@ -795,14 +795,14 @@ reinaAkatsuki =
     , teamwork = NormalScore 5
     , sociability = NormalScore 5
     , morality = NormalScore 7
-    , quote = "_*“Lay a hand on her again & you'll lose it. Reina has atoned for her past & now serves. Reflect on your actions.” - Sariah shielding Reina*_"
+    , quote = "_*“Lay a hand on her again & you’ll lose it. Reina has atoned for her past & now serves. Reflect on your actions.” - Sariah shielding Reina*_"
     , description = "A former member of a hespatian blood cult, it was her Family that would eventually become those that turned the Red Mother, which Reina was present for but would leave not long after. Reina was eventually converted and joined the Watchers by the efforts of _Sariah_ over many encounters over the course of a decade, and now lives a life of making up for her long and heinous past. She does her best."
     , positives =
         [ "+ While not a saint, she tries her best to be moral."
         , "+ Her resolve is as iron."
         ]
     , negatives =
-        [ "- Doesn't resist those who take issue with her past."
+        [ "- Doesn’t resist those who take issue with her past."
         , "- _Too_ self-sacrificing."
         ]
     , mixed = [ "+/- Would not hesitate to sacrifice herself for another" ]
@@ -822,9 +822,9 @@ minnieAndrus =
     , sociability = NormalScore 8
     , morality = NormalScore 10
     , quote = "_*“Chronography suggests she really is only 8, not under a hex, but spectroscopy suggests an old soul, but not possession? Hm.” - Researcher*_"
-    , description = "Minnie is a brand new soul to this aether, she's reincarnated from another world, a world without magic from an entirely different multiverse as part of a divine exchange. She has the favor of the Eloquincia, goddess of beauty and rebirth who checks in on her every now and then, and personally crafted this new body of hers. She died at age 32 in her last life when she shielded a student from a terrorist bombing."
+    , description = "Minnie is a brand new soul to this aether, she’s reincarnated from another world, a world without magic from an entirely different multiverse as part of a divine exchange. She has the favor of the Eloquincia, goddess of beauty and rebirth who checks in on her every now and then, and personally crafted this new body of hers. She died at age 32 in her last life when she shielded a student from a terrorist bombing."
     , positives =
-        [ "+ Despite her apparent age, she is wise & maintained most her past life's knowledge & skills"
+        [ "+ Despite her apparent age, she is wise & maintained most her past life’s knowledge & skills"
         ]
     , negatives =
         [ "- Her new body does cause her problems & influences her personality somewhat"
@@ -964,8 +964,8 @@ nova =
     , teamwork = NormalScore 5
     , sociability = NormalScore 5
     , morality = NormalScore 1
-    , quote = "_*“What the HELL happened here? Wasn't there a town here?” “...yes, The Hespatians sent Nova to erase evidence...” - An ORC Agent*_"
-    , description = "An evil twin that absorbed life force from her twin sister in the womb and throughout childhood. She feels a compulsive need to inflict destruction even harder than a succubus is compelled to do, well, other things. Like a constant itch, she yearns for causing mayhem combining her Wind and Fire magics to focus on Combustion magics. She's only restrained by a control collar placed by Lucille that mellows her out."
+    , quote = "_*“What the HELL happened here? Wasn’t there a town here?” “...yes, The Hespatians sent Nova to erase evidence...” - An ORC Agent*_"
+    , description = "An evil twin that absorbed life force from her twin sister in the womb and throughout childhood. She feels a compulsive need to inflict destruction even harder than a succubus is compelled to do, well, other things. Like a constant itch, she yearns for causing mayhem combining her Wind and Fire magics to focus on Combustion magics. She’s only restrained by a control collar placed by Lucille that mellows her out."
     , positives =
         [ "+ Extremely adept at wide-area type attacks."
         , "+ Abnormally high mana (3x)"
@@ -990,8 +990,8 @@ scarlet =
     , teamwork = NormalScore 8
     , sociability = NormalScore 9
     , morality = NormalScore 8
-    , quote = "_*“A valued cultist of the Dragon, but she saved my little sister's life from the razing of Port Charlotte. That she caused.” - Alliance Merchant*_"
-    , description = "Scarlet was once a simple village girl known for her red hood, until a werewolf stalked her and murdered her grandmother. In the terror of the situation, her awakening triggered naturally as a Dravir, ared dragon. She ate the wolf the way it ate her only relative but it left a human body Scarlet would go on a downward spiral and end up in Hespatia under King Damien Kain's favored family."
+    , quote = "_*“A valued cultist of the Dragon, but she saved my little sister’s life from the razing of Port Charlotte. That she caused.” - Alliance Merchant*_"
+    , description = "Scarlet was once a simple village girl known for her red hood, until a werewolf stalked her and murdered her grandmother. In the terror of the situation, her awakening triggered naturally as a Dravir, ared dragon. She ate the wolf the way it ate her only relative but it left a human body Scarlet would go on a downward spiral and end up in Hespatia under King Damien Kain’s favored family."
     , positives =
         [ "+ Cheerful and upbeat"
         , "+ Secretly very analytical."
@@ -999,7 +999,7 @@ scarlet =
     , negatives =
         [ "- Impressionable and easily convinced to do things."
         ]
-    , mixed = [ "+/- A little duplicitous, she'll do what's required of her but undermines evil actions subtly within bounds of orders" ]
+    , mixed = [ "+/- A little duplicitous, she’ll do what’s required of her but undermines evil actions subtly within bounds of orders" ]
     , has = "Scarlet has Witchery 3, Runes 4, Portals 4, Firecalling 5, Metamorphize (Red Dragon), _Windsong, Blood Witch_"
     }
 
@@ -1015,8 +1015,8 @@ huntress =
     , teamwork = NormalScore 5
     , sociability = NormalScore 7
     , morality = NormalScore 8
-    , quote = "_*“Lucille's pet heroine is crying when she thinks nobody is watching. Again. Is there a reason we haven't erased her mind yet?” - Whisper*_"
-    , description = "Huntress is another Hespatian specialist known as a dead shot marksman, delivering death before anyone even knows there is a threat, her Owl Familiarity granting her a keen eye and silent movement, all the more deadly with her powerful Archer's Bow punching through walls to strike targets she sees through walls with her Violent Lenses, all from over a mile away. She also serves to cull misbehaving Families."
+    , quote = "_*“Lucille’s pet heroine is crying when she thinks nobody is watching. Again. Is there a reason we haven’t erased her mind yet?” - Whisper*_"
+    , description = "Huntress is another Hespatian specialist known as a dead shot marksman, delivering death before anyone even knows there is a threat, her Owl Familiarity granting her a keen eye and silent movement, all the more deadly with her powerful Archer’s Bow punching through walls to strike targets she sees through walls with her Violent Lenses, all from over a mile away. She also serves to cull misbehaving Families."
     , positives =
         [ "+ Never _misses_ her mark"
         , "+ Calculating with a very quick thinking sharp mind"
@@ -1025,7 +1025,7 @@ huntress =
         [ "- Seems to be outright unable to refuse orders delivered from Crowns, or Lucille."
         ]
     , mixed = [ "+/- She has strong morals, strangely unsuited to her job." ]
-    , has = "Huntress has Runes 3, Witchery 4, Occultism 4, Familiarity 5, _Windsong, Archer's Bow, Violent Lenses, Shroud_"
+    , has = "Huntress has Runes 3, Witchery 4, Occultism 4, Familiarity 5, _Windsong, Archer’s Bow, Violent Lenses, Shroud_"
     }
 
 
@@ -1050,8 +1050,8 @@ malice =
         [ "- Can be intrusively clingy with those she likes / family."
         , "- No morals vs “Threats”."
         ]
-    , mixed = [ "+/- Strictly black and white in her worldview: You're either family, or a threat. Anything against a threat is excused." ]
-    , has = "Malice has Psychotics 2, Monstrosity 3, Hexes 4, Necromancy 5, _Guardian's Wall & Maid Hand_"
+    , mixed = [ "+/- Strictly black and white in her worldview: You’re either family, or a threat. Anything against a threat is excused." ]
+    , has = "Malice has Psychotics 2, Monstrosity 3, Hexes 4, Necromancy 5, _Guardian’s Wall & Maid Hand_"
     }
 
 
@@ -1182,8 +1182,8 @@ persephone =
     , teamwork = NormalScore 6
     , sociability = NormalScore 9
     , morality = NormalScore 8
-    , quote = "_*“You should know there's a good chance she’s watching us right now, and she's the one who recommended I set up shop here...” - Penelope.*_"
-    , description = "Persephone is the younger sister of Penelope, though a few years are nothing compared to their long lives, they're more like twins. If you chose Lunabella it's likely Pen called in her as her contact to show you around and from there you decide what to do or to stick with her or not, she's supportive & even doting if you're fun."
+    , quote = "_*“You should know there’s a good chance she’s watching us right now, and she’s the one who recommended I set up shop here...” - Penelope.*_"
+    , description = "Persephone is the younger sister of Penelope, though a few years are nothing compared to their long lives, they’re more like twins. If you chose Lunabella it’s likely Pen called in her as her contact to show you around and from there you decide what to do or to stick with her or not, she’s supportive & even doting if you’re fun."
     , positives =
         [ "+ Easy connection to make"
         , "+ Incredible insight."
@@ -1193,7 +1193,7 @@ persephone =
         ]
     , mixed =
         [ "+/-Ara Ara"
-        , "+/- Maaay want your babies (F/F is no issue for witches), she's big into genetics & experiments in lineage for witch offspring."
+        , "+/- Maaay want your babies (F/F is no issue for witches), she’s big into genetics & experiments in lineage for witch offspring."
         ]
     , has = "Seph has Hexes 3, Witchery 3, Potions 4, Aethernautics 4, Familiarity 4 (Cow), Domain 5, Portals 5, Divination 5, _Cornucopia, Life Record, Companion Brick (You)_"
     }
@@ -1210,8 +1210,8 @@ betildaAraiBuckland =
     , teamwork = NormalScore 2
     , sociability = NormalScore 5
     , morality = NormalScore 4
-    , quote = "_*“You're in charge of taking care of this library, and Miss Kate can be our mistress, we have your back, just ask any time,” - Culicarius*_"
-    , description = "Betty is a doll that at first glance might be mistaken for a dwarf or changeling, without visual cues to her true type save for easily missed slight lines on her shoulders and hips. Prior to this she was a human girl, taken off the street. Betty has issues where she's uncomfortable functioning independently, so she began to flourish under the hierarchy system of Lunabella. She spends a lot of time in libraries."
+    , quote = "_*“You’re in charge of taking care of this library, and Miss Kate can be our mistress, we have your back, just ask any time,” - Culicarius*_"
+    , description = "Betty is a doll that at first glance might be mistaken for a dwarf or changeling, without visual cues to her true type save for easily missed slight lines on her shoulders and hips. Prior to this she was a human girl, taken off the street. Betty has issues where she’s uncomfortable functioning independently, so she began to flourish under the hierarchy system of Lunabella. She spends a lot of time in libraries."
     , positives =
         [ "+ Encyclopedic knowledge. of witch history, alchemy runes, gods, and monsters"
         ]
@@ -1219,7 +1219,7 @@ betildaAraiBuckland =
         [ "- Has a habit of sticking “I suppose” into sentences."
         , "- Jaded and slow to care"
         ]
-    , mixed = [ "+/- If she says she'll do something, she'd rather die than fail." ]
+    , mixed = [ "+/- If she says she’ll do something, she’d rather die than fail." ]
     , has = "Betty has Necromancy 2, Familiarity 4, Runes 5, Alchemy 5, Domain 5, _Levitation, Alchemist Stash & Stone_"
     }
 
@@ -1236,13 +1236,13 @@ nichteYIr =
     , sociability = NormalScore 3
     , morality = NormalScore 3
     , quote = "_*“Nichte scares the children, well, everybody, but she works hard to go out of her way help anyone as best she can.” - an ORC Agent.*_"
-    , description = "Nichte was alifelong slave in an old Hespatian family that likes to play with fire. She was used as a sacrificial test for controlling Outsider corruption. It didn't go as planned but they still gained a potent slave, until a Lunabellan raid stormed the compound lead by a Culicarius, who subdued and offered her a choice, and control over herself."
+    , description = "Nichte was alifelong slave in an old Hespatian family that likes to play with fire. She was used as a sacrificial test for controlling Outsider corruption. It didn’t go as planned but they still gained a potent slave, until a Lunabellan raid stormed the compound lead by a Culicarius, who subdued and offered her a choice, and control over herself."
     , positives =
         [ "+ Dependable and trustworthy"
         , "+ Contrary to her appearance, she is warm and comforting."
         ]
     , negatives =
-        [ "- She's still corrupted, so any harm she causes still contributes to Far entropy"
+        [ "- She’s still corrupted, so any harm she causes still contributes to Far entropy"
         ]
     , mixed = [ "+/- Has a voluntary slave crest that acts as an anchor to avoid losing herself to Outsiders by binding to a master. " ]
     , has = "Nichte has Psychotics 3, Firecalling 3, Aethernautics 3, Domain 4, Necromancy 5, Monstrosity 5, _Memorize, Sun Shard, Cornucopia_"
@@ -1260,8 +1260,8 @@ aelfflaedNowDaphne =
     , teamwork = NormalScore 6
     , sociability = NormalScore 7
     , morality = NormalScore 5
-    , quote = "_*“She's on the moon under Culicarius's care now, she was quite a threat for decades, being bound to some “seed bearer”” - An ORC Agent.*_"
-    , description = "Daphne was at one point a teacher at Hawthorne over a thousand years ago, and head of a particularly troublesome house, but she encountered the Pumpkin Moon and disappeared. She's now returned to a very different world Feeling out of place, she found her way to Lunabella where Culicarius, one of a handful of familiar faces, offered her residence to teach magic on the moon and learn new norms."
+    , quote = "_*“She’s on the moon under Culicarius’s care now, she was quite a threat for decades, being bound to some “seed bearer”” - An ORC Agent.*_"
+    , description = "Daphne was at one point a teacher at Hawthorne over a thousand years ago, and head of a particularly troublesome house, but she encountered the Pumpkin Moon and disappeared. She’s now returned to a very different world Feeling out of place, she found her way to Lunabella where Culicarius, one of a handful of familiar faces, offered her residence to teach magic on the moon and learn new norms."
     , positives =
         [ "+ 1,000/y of stories of other worlds to share."
         ]
@@ -1269,7 +1269,7 @@ aelfflaedNowDaphne =
         [ "- Slow and impatient with technology & modernity "
         ]
     , mixed = [ "+/- Daph has 6 _Pumpkin Boons_: choose 6 _personal perks_ & tweak to something similar and roughly as effective" ]
-    , has = "Daph has Witchery 3, Necromancy 3, Domain 4, Familiarity 4, Wands 5, Fire 5+Nature 5 = _Jack'o Lantern magic_"
+    , has = "Daph has Witchery 3, Necromancy 3, Domain 4, Familiarity 4, Wands 5, Fire 5+Nature 5 = _Jack’o Lantern magic_"
     }
 
 
@@ -1394,7 +1394,7 @@ meganMinosine =
     , sociability = NormalScore 5
     , morality = NormalScore 6
     , quote = "_*“This tiny thing leveled the Zonguie forest?.” “I said it was an accident! There were zombies! I was scared!” - ORC Agents & Meg.*_"
-    , description = "The good twin counterpart to Nova. Her growth was stunted by her sister. She has all the qualities her evil sister lacks, but not exaggerated in the same way the negative qualities were exaggerated. She's a little timid and a little reluctant to cause collateral damage, but from the link with her evil win she developed the same magic affinities."
+    , description = "The good twin counterpart to Nova. Her growth was stunted by her sister. She has all the qualities her evil sister lacks, but not exaggerated in the same way the negative qualities were exaggerated. She’s a little timid and a little reluctant to cause collateral damage, but from the link with her evil win she developed the same magic affinities."
     , positives =
         [ "+ Friendly and mindful"
         , "+ Will bake cookies."
@@ -1423,17 +1423,17 @@ janeKitAdams =
     , teamwork = NormalScore 5
     , sociability = NormalScore 7
     , morality = NormalScore 8
-    , quote = "_*“Look, I get she's cute and all, and recovered, but should we really give her back that super scary dagger? I mean.” - An ORC Agent.*_"
-    , description = "Kit is a halfling mimi under an immortality curse since she was young, She's around 30 years older than she looks, and trained since birth to be a killer by a Hespatian family that specialized in training covert assassin-bodyguards. The branch she was in was raided by the ORC and she was among 8 to survive, and 3 years of psychosurgery later, recovered or reconditioned enough to be sociable and live free."
+    , quote = "_*“Look, I get she’s cute and all, and recovered, but should we really give her back that super scary dagger? I mean.” - An ORC Agent.*_"
+    , description = "Kit is a halfling mimi under an immortality curse since she was young, She’s around 30 years older than she looks, and trained since birth to be a killer by a Hespatian family that specialized in training covert assassin-bodyguards. The branch she was in was raided by the ORC and she was among 8 to survive, and 3 years of psychosurgery later, recovered or reconditioned enough to be sociable and live free."
     , positives =
         [ "+ Absolute loyalty to someone she dedicates herself to by choice"
         ]
     , negatives =
         [ "- Instincts run deep, she still has violent reactions to threats."
-        , "- Can't bring herself to ask for help"
+        , "- Can’t bring herself to ask for help"
         ]
     , mixed = [ "+/- Trained more in martial and skill, than in magic use." ]
-    , has = "Kit has Witchery 2, Psychotics 2, Familiarity 3, Portals 4, _Master Key, Assassin's Edge, Memorize_"
+    , has = "Kit has Witchery 2, Psychotics 2, Familiarity 3, Portals 4, _Master Key, Assassin’s Edge, Memorize_"
     }
 
 
@@ -1448,7 +1448,7 @@ aliciaRedVelvetine =
     , teamwork = NormalScore 6
     , sociability = NormalScore 8
     , morality = NormalScore 8
-    , quote = "_*Red, I know you already undid your chain, let's get out already.”* \\*huff\\* *Don't ruin my fun, they were getting the whip” - Red & May*_"
+    , quote = "_*Red, I know you already undid your chain, let’s get out already.”* \\*huff\\* *Don’t ruin my fun, they were getting the whip” - Red & May*_"
     , description = "Red grew up high on romance adventure thrillers, with dreams of being swept off her feet. When she Awoke as a witch, she took it in stride. Realizing her affinities, she molded herself a dashing heroine and learned to do the sweeping herself. She wants a man that can outpace her but has yet to find anyone that can while satisfying her ideals, but enjoys herself in the meantime by teasing damsels."
     , positives =
         [ "+ Goes out of her way for others and acts on her values of honor & service."
@@ -1472,8 +1472,8 @@ juliaMayCaldwin =
     , teamwork = NormalScore 10
     , sociability = NormalScore 8
     , morality = NormalScore 10
-    , quote = "_*“Damn tricky human and her damn toys. After training under Lalahon she's become an even greater threat” - A fleeing Hespatian.*_"
-    , description = "May is a Division Leader of the ORC that was one of the first children born within the ORC itself, growing up in the human pocket world of Deco City run by the international ORC. She loves her job as division lead for the USA branch expeditionary force. While not a witch she makes very good use of the artifacts and tricks she's picked up on the job."
+    , quote = "_*“Damn tricky human and her damn toys. After training under Lalahon she’s become an even greater threat” - A fleeing Hespatian.*_"
+    , description = "May is a Division Leader of the ORC that was one of the first children born within the ORC itself, growing up in the human pocket world of Deco City run by the international ORC. She loves her job as division lead for the USA branch expeditionary force. While not a witch she makes very good use of the artifacts and tricks she’s picked up on the job."
     , positives =
         [ "+ Always pushes her limits"
         , "+ Great at bringing out the full potential of her allies."
@@ -1482,7 +1482,7 @@ juliaMayCaldwin =
         [ "- Can never feel settled when someone is in danger"
         , "- Which is all the time."
         ]
-    , mixed = [ "+/- May pushes the limits on what it means to be human in a world of magic and gods, she's more human than human" ]
+    , mixed = [ "+/- May pushes the limits on what it means to be human in a world of magic and gods, she’s more human than human" ]
     , has = "May has _Soul Warrior (Scepter), Soul Graft (Fountain, Stay Human), Magic Talisman (Portals), Collection (Runes)_"
     }
 
@@ -1606,17 +1606,17 @@ twinsSaraAndKara =
     , teamwork = NormalScore 10
     , sociability = NormalScore 3
     , morality = NormalScore 4
-    , quote = "_*“Underestimate them and you're dead. They look young but they're dwarves, and have experience worth triple their age.” - An Agent.*_"
-    , description = "The Sara and Kara are dwarven twins who have been together through unbearable circumstance ever since they were little, growing closer from their life challenges and rely on one another as the only ones they currently trust. They play off each other's strengths and weaknesses with perfect synchronicity not as mirrors, but as a balanced harmony, extending to their personality traits and magic."
+    , quote = "_*“Underestimate them and you’re dead. They look young but they’re dwarves, and have experience worth triple their age.” - An Agent.*_"
+    , description = "The Sara and Kara are dwarven twins who have been together through unbearable circumstance ever since they were little, growing closer from their life challenges and rely on one another as the only ones they currently trust. They play off each other’s strengths and weaknesses with perfect synchronicity not as mirrors, but as a balanced harmony, extending to their personality traits and magic."
     , positives =
         [ "+ Kara is highly observant."
         , "+ Sara is highly intuitive"
         ]
     , negatives =
         [ "- Kara is always on edge."
-        , "- Sara can't let questions go."
+        , "- Sara can’t let questions go."
         ]
-    , mixed = [ "+/- Two for the price of one? They're an inseparable pair," ]
+    , mixed = [ "+/- Two for the price of one? They’re an inseparable pair," ]
     , has = "Twins both have _Magic Friendship (twin)_ & Witchery 4; Sara\u{00A0}has\u{00A0}Ministration\u{00A0}4, Domain 4, Covenants 4, Divination 5; Kara\u{00A0}has\u{00A0}Consortation\u{00A0}4, Portals 4, Occultism 4, Aethernautics\u{00A0}5"
     }
 
@@ -1633,7 +1633,7 @@ vesuvianelleLalahon =
     , sociability = NormalScore 7
     , morality = NormalScore 6
     , quote = "_*“Vesuviannelle was one of the goddesses to resist the masquerade and was struck down from her realm by the victors.” - An ORC scholar*_"
-    , description = "Suvi is an Amazonian mimi (Rabbit) well known in some parts for her extensive use of volcanic magics utilizing Earth-Fire elementalism. There's a myth that she created an island chain by hopping across the sea with volcanos erupting from her footsteps. Fact or fiction? She just laughs it off. She makes appearances when her islands are threatened by major events, otherwise being elusive."
+    , description = "Suvi is an Amazonian mimi (Rabbit) well known in some parts for her extensive use of volcanic magics utilizing Earth-Fire elementalism. There’s a myth that she created an island chain by hopping across the sea with volcanos erupting from her footsteps. Fact or fiction? She just laughs it off. She makes appearances when her islands are threatened by major events, otherwise being elusive."
     , positives =
         [ "+ Protective of innocents."
         , "+ One of the strongest martial witches out there"
@@ -1658,8 +1658,8 @@ amberOgdenVix =
     , teamwork = NormalScore 4
     , sociability = NormalScore 6
     , morality = NormalScore 3
-    , quote = "_*“May be the best driver in known witchdom, you'll be in good hands. Nines will cover you on your way out, 3...2..1--” - An Alphazon Op.*_"
-    , description = "Vix was always a speed demon, a wild child that started racing tricycles at six and couldn't get enough, becoming a street racer by her late teens. On her 21st birthday she met with a strange crew that dripped with mystery and she had to dig deeper. The ringleader saw something in her and pushed her unreasonably hard, until it paid off, and she had a witch awakening, & stepped into a whole new world."
+    , quote = "_*“May be the best driver in known witchdom, you’ll be in good hands. Nines will cover you on your way out, 3...2..1--” - An Alphazon Op.*_"
+    , description = "Vix was always a speed demon, a wild child that started racing tricycles at six and couldn’t get enough, becoming a street racer by her late teens. On her 21st birthday she met with a strange crew that dripped with mystery and she had to dig deeper. The ringleader saw something in her and pushed her unreasonably hard, until it paid off, and she had a witch awakening, & stepped into a whole new world."
     , positives =
         [ "+ Extreme determination"
         , "+ Laser focus on problems."
@@ -1668,7 +1668,7 @@ amberOgdenVix =
     , negatives =
         [ "- Sees “No” as a challenge"
         , "- Adrenaline junkie."
-        , "- Can't sit still"
+        , "- Can’t sit still"
         ]
     , mixed = [ "+/- Pro use of alchemy and runes to enhance rides" ]
     , has = "Vix has Consortation 1, Necromancy 2, Wands 3, Runes 3, Metallurgy 5, Alchemy 5, Witchery 5, _Hellrider, Broom Beast 6, Witch Pistol_"
@@ -1687,14 +1687,14 @@ xINDollmaker =
     , sociability = NormalScore 7
     , morality = NormalScore 3
     , quote = "_*“X.I.N.? She gives me chills, Admin gives her way too much freedom, she gets away with anything... Did you hear something?” ~ Recording*_"
-    , description = "XIN, Dollmaker was the original lead researcher Alphazon employed to study the research and development of new forms of dolls, based on Xin's own past experience with as one of the first witches to dabble in the art of dollmaking. Allegedly she turned her own daughter into a doll, the only name on file was _Chen_, who, or it's, since been lost. Arachne (Spider Taura), though usually keeps shifted to human legs."
+    , description = "XIN, Dollmaker was the original lead researcher Alphazon employed to study the research and development of new forms of dolls, based on Xin’s own past experience with as one of the first witches to dabble in the art of dollmaking. Allegedly she turned her own daughter into a doll, the only name on file was _Chen_, who, or it’s, since been lost. Arachne (Spider Taura), though usually keeps shifted to human legs."
     , positives =
         [ "+ Can raise the dead as dolls"
         , "+ Turns humans into witches"
         , "+ Knows unspeakable secrets"
         ]
     , negatives =
-        [ "- Ruthless pursuit of goals she won't or can't speak of"
+        [ "- Ruthless pursuit of goals she won’t or can’t speak of"
         ]
     , mixed = [ "+/- Her body is a combination of flesh and ball-joint doll" ]
     , has = "Xin has Runes 3, Hexes 4, Necromancy 5, Windkeeping 5, Arachnescence 5, _Jester Mask, Ritual Inks, Dollmaker Kit, Servant Dolls_"
@@ -1919,8 +1919,8 @@ opheliaReisha =
     , teamwork = NormalScore 9
     , sociability = SpecialEffect { better = 8, worse = Just 4 }
     , morality = NormalScore 8
-    , quote = "_*“Eli? She's the best, she’s so smart and works hard, I can't work that hard if I tried, not with all those words and stuff.” - Esther.*_"
-    , description = "Twin sister to Esther, Ophelia is older by 5 minutes. She's the more intellectual of the two and very focused on acquiring knowledge and learning more, expanding her education. She's currently kept up some nights by trying to research the disappearance of their mother, Gwendoline, who vanished, the only clue being an abundance of pumpkins."
+    , quote = "_*“Eli? She’s the best, she’s so smart and works hard, I can’t work that hard if I tried, not with all those words and stuff.” - Esther.*_"
+    , description = "Twin sister to Esther, Ophelia is older by 5 minutes. She’s the more intellectual of the two and very focused on acquiring knowledge and learning more, expanding her education. She’s currently kept up some nights by trying to research the disappearance of their mother, Gwendoline, who vanished, the only clue being an abundance of pumpkins."
     , positives =
         [ "+ Sharp and intelligent"
         , "+ Mind for puzzles"
@@ -1930,7 +1930,7 @@ opheliaReisha =
         [ "- A bit of a wallflower if not encouraged by her sis, Ess"
         , "- Afraid of isolation"
         ]
-    , mixed = [ "+/- Without Ess, Eli is a single minded workaholic to her detriment. With Ess, she'll lighten up and be playful." ]
+    , mixed = [ "+/- Without Ess, Eli is a single minded workaholic to her detriment. With Ess, she’ll lighten up and be playful." ]
     , has = "Eli has Portals 2, Consortation 3, Hexes 3, Witchery 4, Wands 4, Alchemy 4, Domain 5, Firecalling 5 _& Prestidigitation_"
     }
 
@@ -1946,8 +1946,8 @@ estherReisha =
     , teamwork = NormalScore 9
     , sociability = NormalScore 8
     , morality = SpecialEffect { better = 9, worse = Just 5 }
-    , quote = "_*“Ess? What can I say, I love my sister, she's always there to help me remember to actually live and when to take a break.” - Ophelia.*_"
-    , description = "Twin sister to Ophelia, Esther is younger by 5 minutes. She's the more physically active athlete type of the two that always seems to have the energy to keep going, but really it's just a front to try to support Eli, who was major depressive in their childhood, she doesn't want her sister to end up like that again and while she’s at it she may as well help others."
+    , quote = "_*“Ess? What can I say, I love my sister, she’s always there to help me remember to actually live and when to take a break.” - Ophelia.*_"
+    , description = "Twin sister to Ophelia, Esther is younger by 5 minutes. She’s the more physically active athlete type of the two that always seems to have the energy to keep going, but really it’s just a front to try to support Eli, who was major depressive in their childhood, she doesn’t want her sister to end up like that again and while she’s at it she may as well help others."
     , positives =
         [ "+ Uplifting to be around."
         , "+ Athletic & energetic"
@@ -1973,9 +1973,9 @@ custom =
     , teamwork = SpecialEffect { better = 1, worse = Just 0 }
     , sociability = SpecialEffect { better = 1, worse = Just 0 }
     , morality = SpecialEffect { better = 1, worse = Just 0 }
-    , quote = "_*“What's a quote from a third party that references the character” - Source*_"
+    , quote = "_*“What’s a quote from a third party that references the character” - Source*_"
     , description = """
-        You can take only 1 Custom companion. Custom companions can't have notable special features that aren't represented by Magic, Perks, or Relics at the end. Increase Custom's p/Rp cost by +1 per 5 added ranks in Stats above, or +1 per 2 in the Power stat
+        You can take only 1 Custom companion. Custom companions can’t have notable special features that aren’t represented by Magic, Perks, or Relics at the end. Increase Custom’s p/Rp cost by +1 per 5 added ranks in Stats above, or +1 per 2 in the Power stat
 
         Custom companions cannot have more than 8 magics/features, and cannot be Sword type."""
     , positives =
@@ -1986,7 +1986,7 @@ custom =
         [ "- Negative quality"
         , "- Negative quality"
         ]
-    , mixed = [ "+/- A quality that could go either way based on player opinion, or has it's ups and downs," ]
+    , mixed = [ "+/- A quality that could go either way based on player opinion, or has it’s ups and downs," ]
     , has = "What stuff do they have? For every 1p companion cost, use 4 Power for their build costs."
     }
 
@@ -2003,7 +2003,7 @@ erisJulianariStonefallen =
     , sociability = NormalScore 9
     , morality = NormalScore 7
     , quote = "_*“All I can say is that any agent from ANY faction that gets too close is never seen again, leave it be for now.” - An ORC Agent.*_"
-    , description = "Eris grew up isolated yet in the spotlight, attending only the best schools her entire life never even looking upon culture that was less than upper middle class. This isn't for lack of intent on her part, but her mysterious father she hasn't even met sets her life up for her from a distance. Anywhere she goes, unseeable guardians shield her every movement equivalent to 6 undetectable Solarchs that operate subtly."
+    , description = "Eris grew up isolated yet in the spotlight, attending only the best schools her entire life never even looking upon culture that was less than upper middle class. This isn’t for lack of intent on her part, but her mysterious father she hasn’t even met sets her life up for her from a distance. Anywhere she goes, unseeable guardians shield her every movement equivalent to 6 undetectable Solarchs that operate subtly."
     , positives =
         [ "+ Very insightful, (knows something is weird but also not to ask questions)"
         ]
@@ -2028,7 +2028,7 @@ xiaoLiena =
     , sociability = NormalScore 8
     , morality = NormalScore 9
     , quote = "_*Where have I seen her before... Ah! Of course, I recognize her from the Chinese ORC division, I heard she retired.” - Miranda to May.*_"
-    , description = "The girl you helped gives her name as Xiao Liena, and in giving her one of the Flowers of Life, her body will be healed and she'll gain the ability to use Lifeweaving. She used to be a member of the Chinese ORC, but retired from the job to pursue her grandmother's stories of the Flower."
+    , description = "The girl you helped gives her name as Xiao Liena, and in giving her one of the Flowers of Life, her body will be healed and she’ll gain the ability to use Lifeweaving. She used to be a member of the Chinese ORC, but retired from the job to pursue her grandmother’s stories of the Flower."
     , positives =
         [ "+ Li is a gentle but adventurous soul that travels and helps all along the way"
         ]
@@ -2054,9 +2054,9 @@ jin =
     , sociability = NormalScore 6
     , morality = NormalScore 10
     , quote = "_*“Who?” - An ORC Records analyst.*_"
-    , description = "“Jin” is a genie who had been trapped in her vessel for who knows how long until you found it and got that key. She'll look like the image when you first see her but can change to whatever you'd like. She wont give her name even if commanded, requesting you give her one. Should you see inside her vessel you'll see her room and a whole modern world out the window, with a computer displaying an image editor, and a reddit tab open on one monitor."
+    , description = "“Jin” is a genie who had been trapped in her vessel for who knows how long until you found it and got that key. She’ll look like the image when you first see her but can change to whatever you’d like. She wont give her name even if commanded, requesting you give her one. Should you see inside her vessel you’ll see her room and a whole modern world out the window, with a computer displaying an image editor, and a reddit tab open on one monitor."
     , positives =
-        [ "+ Doesn't try to trick or twist wishes around. Does her best."
+        [ "+ Doesn’t try to trick or twist wishes around. Does her best."
         ]
     , negatives =
         [ "- May often only do what is asked, then do her own thing."
@@ -2077,8 +2077,8 @@ saraStar =
     , teamwork = NormalScore 6
     , sociability = NormalScore 7
     , morality = NormalScore 10
-    , quote = "_*“She's stubborn, she seems to only want to speak with you. Be careful, anything could happen.” - A cautious First Contact responder.*_"
-    , description = "Goes by Sara Star, a witch from what she calls _Tera Prima_ located in NGC 6960. She says she's the only survivor she knows of from an alien invasion by a race of Outsider beings that crawled out from the void during an arcanotech experiment in interplanar travel, resulting in a _Zero Point Break_ in the local aether. erasing her entire home system."
+    , quote = "_*“She’s stubborn, she seems to only want to speak with you. Be careful, anything could happen.” - A cautious First Contact responder.*_"
+    , description = "Goes by Sara Star, a witch from what she calls _Tera Prima_ located in NGC 6960. She says she’s the only survivor she knows of from an alien invasion by a race of Outsider beings that crawled out from the void during an arcanotech experiment in interplanar travel, resulting in a _Zero Point Break_ in the local aether. erasing her entire home system."
     , positives =
         [ "+ Honest and hardworking."
         , "+ Her form of Integration has no Alphazon connection."
@@ -2087,7 +2087,7 @@ saraStar =
         [ "- Relies on a translator for now"
         , "- While intelligent, she can be comically oblivious to norms."
         ]
-    , mixed = [ "+/- Being a homeless witch from a lost world, she's in the market for a new home and new connections, maybe love." ]
+    , mixed = [ "+/- Being a homeless witch from a lost world, she’s in the market for a new home and new connections, maybe love." ]
     , has = "Sara has Runes 2, Alchemy 2, Aethernautics 2, Windcalling 3, Hexes 3, Dominion 4, Divination 4, Integration 5 _Her ship: Red Betty_"
     }
 

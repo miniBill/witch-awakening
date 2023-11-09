@@ -412,7 +412,7 @@ cyborg =
     { race = Cyborg
     , cost = 6
     , content = """
-        While all cyborgs have some degree of passive regeneration capable of providing healing / maintenance to inorganic parts of their body, it isn't particularly notable or versatile beyond that. Cyborgs with this type perk however, have built in internal nanofabricators, little factories that produce femtomachines. This allows them to mend their body at a rapid rate, repairing damage comparable to a bullet wound every few seconds, and can fully repair their body, both synthetic and organic parts. Additionally, they can take Gadgetry and/or Integration at half price as though they had affinity for it, and when they do they are not linked to Alphazon, and their Gadgetry can be produce from their body on demand. Utilizing a silver swarm, if the witch has Metallurgy it's usage costs half the mana it would normally.
+        While all cyborgs have some degree of passive regeneration capable of providing healing / maintenance to inorganic parts of their body, it isn’t particularly notable or versatile beyond that. Cyborgs with this type perk however, have built in internal nanofabricators, little factories that produce femtomachines. This allows them to mend their body at a rapid rate, repairing damage comparable to a bullet wound every few seconds, and can fully repair their body, both synthetic and organic parts. Additionally, they can take Gadgetry and/or Integration at half price as though they had affinity for it, and when they do they are not linked to Alphazon, and their Gadgetry can be produce from their body on demand. Utilizing a silver swarm, if the witch has Metallurgy it’s usage costs half the mana it would normally.
         """
     }
 
@@ -422,7 +422,7 @@ spider =
     { race = Spider
     , cost = 8
     , content = """
-        There are those among the spiders that can adopt the shape of a much smaller spider for convenience, between the size of a dime or a halfdollar, or they can freely assume the form of a much larger spider that in its normal stance would be eye level with an adult human male's chest. In this form their exoskeleton is plated like thick steel armor, and their speed matches that of a sports car.
+        There are those among the spiders that can adopt the shape of a much smaller spider for convenience, between the size of a dime or a halfdollar, or they can freely assume the form of a much larger spider that in its normal stance would be eye level with an adult human male’s chest. In this form their exoskeleton is plated like thick steel armor, and their speed matches that of a sports car.
 
         In this form they can produce webbing as thick and sturdy as a metal cable on demand capable of reaching roughly 100 meters when launched, easily latching on to nearly any surface, or they can create 10ft increments of nanowebbing very difficult to see that when properly anchored will slice through bone with just the force of a victim walking into it.
 
@@ -438,7 +438,7 @@ gnome =
     { race = Gnome
     , cost = 15
     , content = """
-        The mastery of a Gnome genius, an inventor's spirit comparable to fictional mad scientists.
+        The mastery of a Gnome genius, an inventor’s spirit comparable to fictional mad scientists.
 
         You use engineering to replicate in a limited capacity, the effects of any magic effect of any Magic Specialization. Rank 1 takes 1 hour of work, 8 for R2, 24 for R3, 1 week for R4, and 1 month for R5, involving components of comparable rarity to a Potion of its rank. Instantaneous / non durational effects have a 25% failure chance, and each failure has a 50% chance to destroy the device. You can repair a destroyed device in 1/10th the time. Duration / continuous based magics have this fail chance at every 24 hours of total activity. Gadgetry can be replicated without fail chance. Can have a tiny cockpit to operate Power Armor.
 
@@ -466,7 +466,7 @@ fairy =
     { race = Fairy
     , cost = 10
     , content = """
-        Especially potent fairies that tend to manage local groups of fairies, or rise to become fairy princesses or fairy queens. These fairies are able to grow Fairy Rings, rings of mushrooms or flowers, that establish a domain-like space that those outside cannot see into, which may also be a gate through time to a unique timespace similar to time what a pocket dimension is to space. In this timespace, the fairy can dictate how much time passes relative to outside but only to slow it, so 1 day inside was as much as a year outside of it, or speed it so 1 hour inside was half an hour outside. The fairy can reverse time within the timespace, but it's only physical, and time is still flowing forward normally, minds are unchanged. The timespace is only the size of the fairy ring created, leaving the fairy ring leaves the timespace. If the fairy has Portals, their fairy rings can act as gateways to any other fairy ring known to the one who enters.
+        Especially potent fairies that tend to manage local groups of fairies, or rise to become fairy princesses or fairy queens. These fairies are able to grow Fairy Rings, rings of mushrooms or flowers, that establish a domain-like space that those outside cannot see into, which may also be a gate through time to a unique timespace similar to time what a pocket dimension is to space. In this timespace, the fairy can dictate how much time passes relative to outside but only to slow it, so 1 day inside was as much as a year outside of it, or speed it so 1 hour inside was half an hour outside. The fairy can reverse time within the timespace, but it’s only physical, and time is still flowing forward normally, minds are unchanged. The timespace is only the size of the fairy ring created, leaving the fairy ring leaves the timespace. If the fairy has Portals, their fairy rings can act as gateways to any other fairy ring known to the one who enters.
         """
     }
 
@@ -478,7 +478,7 @@ genie =
     , content = """
         All genies require this type perk. Genies have a Vessel, an invulnerable artifact between the size of a baseball, up to the size of an urn, it can change its appearance. It must appear opulent and valuable. If the Genie has Witchery, the pocketspace exists within this Vessel and with or without Witchery, the pocketspace is where she appears when banished to or simply returning to her lamp with a visible effect. As the vessel IS the pocket space, it cannot be stored within itself or in any other form of extradimensional space.
 
-        A Genie cannot be more than 300m away from their vessel The last non-witch to touch the vessel becomes the Genie’s Master, who cannot be disobeyed (But can be argued with for a few seconds), the genie cannot cause the master harm. The master can choose the genie's appearance and race type, when outside her vessel.
+        A Genie cannot be more than 300m away from their vessel The last non-witch to touch the vessel becomes the Genie’s Master, who cannot be disobeyed (But can be argued with for a few seconds), the genie cannot cause the master harm. The master can choose the genie’s appearance and race type, when outside her vessel.
         """
     }
 
@@ -488,7 +488,7 @@ gemini =
     { race = Gemini All
     , cost = 4
     , content = """
-        Geminai with this type perk have even stronger bonds, capable of trading their consciousness and their half of their soul to trade places between their Egos (however minimal or great they may be divergent), or they can swap entirely as though teleporting. Gemini share a mental bond to feel the other's emotional state, senses, & intention such that they can act as a whole, or they can fully communicate telepathically, each hearing the mental dialogue of the other if they “raise their voice”, or both parties can tighten the connection to hear their passive internal dialogue entirely as though speaking out loud to oneself near the other.
+        Geminai with this type perk have even stronger bonds, capable of trading their consciousness and their half of their soul to trade places between their Egos (however minimal or great they may be divergent), or they can swap entirely as though teleporting. Gemini share a mental bond to feel the other’s emotional state, senses, & intention such that they can act as a whole, or they can fully communicate telepathically, each hearing the mental dialogue of the other if they “raise their voice”, or both parties can tighten the connection to hear their passive internal dialogue entirely as though speaking out loud to oneself near the other.
 
         Nothing can sever this connection, short of death.
         """
