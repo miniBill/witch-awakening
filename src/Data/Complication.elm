@@ -180,7 +180,7 @@ restriction =
         WithCosts """
             You are incapable of learning any magic from one chosen archetype. Potions, Hexes, ect. You can take this up to 3 times. This includes a magic’s rank 0 effect normally available to all witches. This cannot restrict you from Faction magic of factions you don’t belong to.
 
-            For example, you could restrict _Wands_ only if you chose Hawthome as your faction.
+            For example, you could restrict _Wands_ only if you chose Hawthorne as your faction.
             """
             (List.map ((*) 2) <| List.range 1 3)
     }
