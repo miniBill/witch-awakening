@@ -1,9 +1,11 @@
 module Data exposing (Enum, enums)
 
+import Dict exposing (Dict)
+
 
 type alias Enum =
     { name : String
-    , variants : List String
+    , variants : List ( String, List String )
     , exceptions : List ( String, String )
     , toImage : Bool
     }
@@ -11,46 +13,68 @@ type alias Enum =
 
 enums : List Enum
 enums =
-    [ enumWithImages "Class" classes
-    , enumWithImages "Race" races
-    , enumWithoutImages "Size" sizes
-    , enumWithExceptions "Affinity" affinities [ ( "All", "???" ) ] True
-    , enumWithoutImages "ComplicationCategory" [ "WorldShift" ]
-    , enumWithImages "Complication" complications
-    , enumWithImages "GameMode" gameModes
-    , enumWithImages "Slot" slots
-    , enumWithImages "Magic" magics
-    , enumWithImages "Perk" perks
-    , enumWithoutImages "Faction" factions
-    , enumWithExceptions "Companion" companions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ] True
-    , enumWithImages "Relic" relics
+    [ build "Class" classes |> withImages
+    , build "Race" races
+        |> withImages
+        |> withArguments
+            [ ( "Dravir", [ "Affinity" ] )
+            , ( "Genie", [ "Affinity" ] )
+            , ( "Gemini", [ "Affinity" ] )
+            ]
+    , build "Size" sizes
+    , build "Affinity" affinities
+        |> withImages
+        |> withExceptions [ ( "All", "???" ) ]
+    , build "ComplicationCategory" [ "WorldShift" ]
+    , build "Complication" complications |> withImages
+    , build "GameMode" gameModes |> withImages
+    , build "Slot" slots |> withImages
+    , build "Magic" magics |> withImages
+    , build "Perk" perks |> withImages
+    , build "Faction" factions
+    , build "Companion" companions
+        |> withImages
+        |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
+    , build "Relic" relics |> withImages
     ]
 
 
-enumWithExceptions : String -> List String -> List ( String, String ) -> Bool -> Enum
-enumWithExceptions name variants exceptions toImage =
+build : String -> List String -> Enum
+build name variants =
     { name = name
-    , variants = variants
-    , exceptions = exceptions
-    , toImage = toImage
-    }
-
-
-enumWithoutImages : String -> List String -> Enum
-enumWithoutImages name variants =
-    { name = name
-    , variants = variants
+    , variants = List.map (\variant -> ( variant, [] )) variants
     , exceptions = []
     , toImage = False
     }
 
 
-enumWithImages : String -> List String -> Enum
-enumWithImages name variants =
-    { name = name
-    , variants = variants
-    , exceptions = []
-    , toImage = True
+withImages : Enum -> Enum
+withImages enum =
+    { enum | toImage = True }
+
+
+withExceptions : List ( String, String ) -> Enum -> Enum
+withExceptions exceptions enum =
+    { enum | exceptions = exceptions }
+
+
+withArguments : List ( String, List String ) -> Enum -> Enum
+withArguments arguments enum =
+    let
+        argumentsDict : Dict String (List String)
+        argumentsDict =
+            Dict.fromList arguments
+    in
+    { enum
+        | variants =
+            List.map
+                (\( variant, orig ) ->
+                    ( variant
+                    , Dict.get variant argumentsDict
+                        |> Maybe.withDefault orig
+                    )
+                )
+                enum.variants
     }
 
 

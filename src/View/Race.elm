@@ -1,16 +1,19 @@
 module View.Race exposing (viewRace)
 
+import Data.Affinity as Affinity
 import Data.Race as Race
-import Element exposing (Attribute, Element, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, rgb, spacing, width)
+import Element exposing (Attribute, Element, alignTop, centerX, el, fill, moveDown, moveRight, moveUp, rgb, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (Affinity, Race, Size)
+import Generated.Types as Types exposing (Affinity(..), Race(..), Size)
 import Gradients
 import Images exposing (Image)
+import List.Extra
 import Theme exposing (gradientText, viewAffinity)
 import Types exposing (Choice(..), Display)
 import View
+import View.Affinity as Affinity
 
 
 viewRace : Display -> List Race -> Element Choice
@@ -18,7 +21,7 @@ viewRace display races =
     let
         raceBoxes : Element ( Race, Bool )
         raceBoxes =
-            Race.all
+            Race.all races
                 |> List.map (raceBox display races)
                 |> Theme.wrappedRow
                     [ width fill
@@ -47,6 +50,13 @@ raceBox display selected { name, tank, affinities, charge, content } =
         isSelected : Bool
         isSelected =
             List.member name selected
+
+        shortName : String
+        shortName =
+            Types.raceToString name
+                |> String.split "-"
+                |> List.take 1
+                |> String.concat
     in
     Theme.card []
         { display = display
@@ -63,24 +73,67 @@ raceBox display selected { name, tank, affinities, charge, content } =
                 , Font.size 56
                 , centerX
                 ]
-                (gradientText 6 Gradients.yellowGradient <| Types.raceToString name)
+                (gradientText 6 Gradients.yellowGradient shortName)
             ]
         , content =
-            [ Theme.column [ width fill, height fill ]
-                [ Theme.row [ centerX ]
-                    [ viewTank tank
-                    , viewAffinities affinities
-                    , viewCharge charge
-                    ]
-                , Theme.blocks
-                    [ height fill
-                    , Theme.padding
-                    ]
-                    content
+            Theme.row [ centerX ]
+                [ viewTank tank
+                , viewAffinities affinities
+                , viewCharge charge
                 ]
-            ]
-        , onPress = Just ( name, not isSelected )
+                :: Theme.blocks [] content
+                :: affinityPicker name
+        , onPress =
+            case ( name, isSelected ) of
+                ( Dravir _, False ) ->
+                    Nothing
+
+                ( Genie _, False ) ->
+                    Nothing
+
+                ( Gemini _, False ) ->
+                    Nothing
+
+                _ ->
+                    Just ( name, not isSelected )
         }
+
+
+affinityPicker : Race -> List (Element ( Race, Bool ))
+affinityPicker race =
+    let
+        picker : (Affinity -> Race) -> Affinity -> List Affinity -> List (Element ( Race, Bool ))
+        picker ctor currentAffinity list =
+            [ el [ Font.bold ] <| text "Pick an affinity:"
+            , list
+                |> List.map
+                    (\affinity ->
+                        let
+                            isSelected : Bool
+                            isSelected =
+                                affinity == currentAffinity
+
+                            msg : ( Race, Bool )
+                            msg =
+                                ( ctor affinity, not isSelected )
+                        in
+                        Affinity.button isSelected msg affinity
+                    )
+                |> Theme.wrappedRow []
+            ]
+    in
+    case race of
+        Dravir currentAffinity ->
+            picker Dravir currentAffinity [ Fire, Wind, Water, Metal, Nature ]
+
+        Genie currentAffinity ->
+            picker Genie currentAffinity Affinity.all
+
+        Gemini currentAffinity ->
+            picker Gemini currentAffinity (List.Extra.remove Earth Affinity.all)
+
+        _ ->
+            []
 
 
 viewAffinities : List Affinity -> Element ( Race, Bool )

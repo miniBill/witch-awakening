@@ -1,8 +1,8 @@
 module View.Relic exposing (viewRelics)
 
+import Data.Affinity as Affinity
 import Data.Relic as Relic exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, paragraph, px, spacing, text, width)
-import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
@@ -11,6 +11,7 @@ import String.Extra
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), CosmicPearlData, Display, RankedRelic)
 import View
+import View.Affinity as Affinity
 
 
 viewRelics : Display -> CosmicPearlData -> Maybe Race -> List Race -> List RankedRelic -> Element Choice
@@ -165,12 +166,7 @@ viewContent : Maybe Race -> Bool -> List RankedRelic -> CosmicPearlData -> List 
 viewContent mainRace isSelected selected pearl races { content, name } color =
     case content of
         Single _ block ->
-            [ Theme.blocks
-                [ height fill
-                , Theme.padding
-                ]
-                block
-            ]
+            [ Theme.blocks [] block ]
 
         CosmicPearlContent cost block ->
             viewCosmicPearl mainRace isSelected pearl races name cost block
@@ -215,10 +211,7 @@ viewContent mainRace isSelected selected pearl races { content, name } color =
                         , onPress = Just <| ChoiceRelic ( relic, not isChoiceSelected )
                         }
             in
-            [ Theme.column [ height fill, Theme.padding ] <|
-                Theme.blocks [] before
-                    :: choicesView
-            ]
+            Theme.blocks [] before :: choicesView
 
 
 viewCosmicPearl :
@@ -249,33 +242,27 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
 
                     else
                         let
-                            isSwapSelected : Bool
-                            isSwapSelected =
+                            isButtonSelected : Bool
+                            isButtonSelected =
                                 Just to == existing
 
                             removed : List ( Affinity, Affinity )
                             removed =
                                 List.filter (\( f, _ ) -> f /= from) pearl.change
-                        in
-                        Theme.maybeButton
-                            [ if isSwapSelected then
-                                Border.glow (Theme.intToColor <| Theme.affinityToColor to) 4
 
-                              else
-                                Border.width 0
-                            , Border.rounded 999
-                            ]
-                            { onPress =
-                                (if isSwapSelected then
-                                    { pearl | change = removed }
+                            msg : Choice
+                            msg =
+                                { pearl
+                                    | change =
+                                        if isButtonSelected then
+                                            removed
 
-                                 else
-                                    { pearl | change = ( from, to ) :: removed }
-                                )
+                                        else
+                                            ( from, to ) :: removed
+                                }
                                     |> ChoiceCosmicPearl
-                                    |> Just
-                            , label = Theme.viewAffinity to
-                            }
+                        in
+                        Affinity.button isButtonSelected msg to
             in
             Theme.column [ width fill ] <|
                 [ Theme.row []
@@ -283,7 +270,7 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                     , Theme.viewAffinity from
                     , Theme.blocks [] "with"
                     ]
-                , Theme.wrappedRow [] <| List.map viewSwap Types.allAffinities
+                , Theme.wrappedRow [] <| List.map viewSwap Affinity.all
                 ]
 
         addAffinityRow : Int -> Affinity -> Element Choice
@@ -292,49 +279,39 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                 viewAdd : Affinity -> Element Choice
                 viewAdd to =
                     let
-                        isAddSelected : Bool
-                        isAddSelected =
+                        isButtonSelected : Bool
+                        isButtonSelected =
                             to == existing
 
                         removed : List Affinity
                         removed =
                             List.filter (\t -> t /= existing) pearl.add
-                    in
-                    Theme.maybeButton
-                        [ if isAddSelected then
-                            Border.glow (Theme.intToColor <| Theme.affinityToColor to) 4
 
-                          else
-                            Border.width 0
-                        , Border.rounded 999
-                        ]
-                        { onPress =
-                            (if isAddSelected then
-                                { pearl | add = removed }
+                        msg : Choice
+                        msg =
+                            { pearl
+                                | add =
+                                    if isButtonSelected then
+                                        removed
 
-                             else
-                                { pearl
-                                    | add =
-                                        if index == 0 then
-                                            List.Extra.unique <| to :: removed
+                                    else if index == 0 then
+                                        List.Extra.unique <| to :: removed
 
-                                        else
-                                            List.Extra.unique <| removed ++ [ to ]
-                                }
-                            )
+                                    else
+                                        List.Extra.unique <| removed ++ [ to ]
+                            }
                                 |> ChoiceCosmicPearl
-                                |> Just
-                        , label = Theme.viewAffinity to
-                        }
+                    in
+                    Affinity.button isButtonSelected msg to
             in
             Theme.column [ width fill ]
                 [ Theme.blocks [ width fill ] "Add an affinity: "
-                , Theme.wrappedRow [] <| List.map viewAdd Types.allAffinities
+                , Theme.wrappedRow [] <| List.map viewAdd Affinity.all
                 ]
 
         swapBlock : Race -> List (Element Choice)
         swapBlock race =
-            List.map swapAffinityRow (Types.baseAffinities race)
+            List.map swapAffinityRow (Affinity.baseAffinities race)
 
         addBlock : List (Element Choice)
         addBlock =
@@ -346,36 +323,34 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                     pearl.add ++ [ All ]
                 )
     in
-    [ Theme.column [ width fill, Theme.padding ]
-        [ Theme.blocks [ height fill ] block
-        , if isSelected then
-            Theme.button
-                [ width fill
-                , Font.center
-                ]
-                { onPress =
-                    Just (ChoiceRelic ( { name = name, cost = cost }, False ))
-                , label = text "Remove"
-                }
-
-          else
-            Element.none
-        , Theme.column
+    [ Theme.blocks [ height fill ] block
+    , if isSelected then
+        Theme.button
             [ width fill
-            , Theme.backgroundColor 0
-            , Font.color <| Element.rgb 1 1 1
-            , Theme.rounded
-            , Theme.padding
+            , Font.center
             ]
-          <|
-            case ( mainRace, races ) of
-                ( Just main, _ ) ->
-                    swapBlock main ++ addBlock
+            { onPress =
+                Just (ChoiceRelic ( { name = name, cost = cost }, False ))
+            , label = text "Remove"
+            }
 
-                ( _, [ main ] ) ->
-                    swapBlock main ++ addBlock
-
-                _ ->
-                    Theme.blocks [] "You need to select a main race to change its affinities" :: addBlock
+      else
+        Element.none
+    , Theme.column
+        [ width fill
+        , Theme.backgroundColor 0
+        , Font.color <| Element.rgb 1 1 1
+        , Theme.rounded
+        , Theme.padding
         ]
+      <|
+        case ( mainRace, races ) of
+            ( Just main, _ ) ->
+                swapBlock main ++ addBlock
+
+            ( _, [ main ] ) ->
+                swapBlock main ++ addBlock
+
+            _ ->
+                Theme.blocks [] "You need to select a main race to change its affinities" :: addBlock
     ]

@@ -262,11 +262,9 @@ viewContent selected { content, name } color =
                 tiersView =
                     List.indexedMap viewTier tiers
             in
-            [ Theme.column [ height fill, width fill, Theme.padding ] <|
-                Theme.blocks [] before
-                    :: tiersView
-                    ++ [ Theme.blocks [] after ]
-            ]
+            Theme.blocks [] before
+                :: tiersView
+                ++ [ Theme.blocks [] after ]
 
         WithChoices before choices after ->
             let
@@ -306,11 +304,9 @@ viewContent selected { content, name } color =
                         , onPress = Just ( complication, not isChoiceSelected )
                         }
             in
-            [ Theme.column [ height fill, width fill, Theme.padding ] <|
-                Theme.blocks [] before
-                    :: choicesView
-                    ++ [ Theme.blocks [] after ]
-            ]
+            Theme.blocks [] before
+                :: choicesView
+                ++ [ Theme.blocks [] after ]
 
         WithCosts before costs ->
             View.costButtons color selected before costs <|

@@ -1,5 +1,6 @@
 module View.Menu exposing (viewMenu)
 
+import Data.Affinity as Affinity
 import Data.Costs as Costs exposing (Points)
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
 import Element.Background as Background
@@ -32,7 +33,7 @@ viewMenu model =
 
         affinities : List Affinity
         affinities =
-            Types.affinities model
+            Affinity.fromModel model
                 |> List.Extra.remove Types.All
 
         warnings : List String

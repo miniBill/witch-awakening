@@ -568,7 +568,7 @@ card attrs config =
 
             content : List (Element msg)
             content =
-                el
+                [ el
                     (Border.rounded cardRoundness
                         :: (if config.display == DisplayFull then
                                 height <| px config.imageHeight
@@ -587,7 +587,13 @@ card attrs config =
                         ++ config.imageAttrs
                     )
                     Element.none
-                    :: config.content
+                , column
+                    [ padding
+                    , height fill
+                    , width fill
+                    ]
+                    config.content
+                ]
         in
         maybeButton (cardAttributes ++ attrs)
             { label =

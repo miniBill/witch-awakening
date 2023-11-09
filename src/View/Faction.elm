@@ -234,8 +234,7 @@ factionBox display selected { name, motto, description, location, relations, per
                                 (gradientText 3 Gradients.blueGradient perk)
                             ]
                         , content =
-                            [ Theme.blocks
-                                [ Theme.padding ]
+                            [ Theme.blocks []
                                 (perkContent ++ "\n\n_*" ++ Types.factionToMagic name ++ "*_ is half price for you, stacks with affinity.")
                             ]
                         , onPress = Just perkMsg

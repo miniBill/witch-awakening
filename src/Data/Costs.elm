@@ -1,5 +1,6 @@
 module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, negate, perksValue, powerCap, powerToPoints, relicsValue, startingValue, totalPoints, totalRewards, typePerksValue, zero)
 
+import Data.Affinity as Affinity
 import Data.Companion as Companion
 import Data.Complication as Complication
 import Data.FactionalMagic as FactionalMagic
@@ -7,7 +8,7 @@ import Data.Magic as Magic
 import Data.Perk as Perk
 import Data.Relic as Relic
 import Data.TypePerk as TypePerk
-import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Race, Relic(..))
+import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Race(..), Relic(..))
 import List.Extra
 import Results exposing (Results(..))
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
@@ -102,18 +103,42 @@ totalPoints model =
 
                         else
                             acc
-                in
-                { result
-                    | warnings =
-                        result.warnings
-                            |> addIf result.rewardPoints "Not enough reward points! Try converting some power."
-                            |> addIf result.power
-                                (if model.gameMode == Just StoryArc && not model.capBuild then
-                                    "Not enough power!"
 
-                                 else
-                                    "Not enough power! Try adding complications."
-                                )
+                    isGemini : Bool
+                    isGemini =
+                        List.any
+                            (\race ->
+                                case race of
+                                    Gemini _ ->
+                                        True
+
+                                    _ ->
+                                        False
+                            )
+                            model.races
+                in
+                { power =
+                    if isGemini then
+                        result.power // 2
+
+                    else
+                        result.power
+                , rewardPoints =
+                    if isGemini then
+                        result.rewardPoints // 2
+
+                    else
+                        result.rewardPoints
+                , warnings =
+                    result.warnings
+                        |> addIf result.rewardPoints "Not enough reward points! Try converting some power."
+                        |> addIf result.power
+                            (if model.gameMode == Just StoryArc && not model.capBuild then
+                                "Not enough power!"
+
+                             else
+                                "Not enough power! Try adding complications."
+                            )
                 }
             )
 
@@ -349,7 +374,7 @@ magicsValue model =
     let
         affinities : List Affinity
         affinities =
-            Types.affinities model
+            Affinity.fromModel model
     in
     resultSum (magicValue affinities model) model.magic
         |> Results.map powerToPoints
@@ -470,7 +495,7 @@ perksCost model =
     let
         affinities : List Affinity
         affinities =
-            Types.affinities model
+            Affinity.fromModel model
     in
     resultSum (perkCost affinities model.class) model.perks
         |> Results.map powerToPoints

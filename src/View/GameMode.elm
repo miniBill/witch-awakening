@@ -1,7 +1,7 @@
 module View.GameMode exposing (viewGameMode)
 
 import Data.GameMode as GameMode
-import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, height, moveDown, moveUp, spacing, width)
+import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, moveDown, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (GameMode)
@@ -115,12 +115,6 @@ gameModeBox display selected { name, content } =
                     Types.gameModeToString name
                 )
             ]
-        , content =
-            [ Theme.blocks
-                [ height fill
-                , Theme.padding
-                ]
-                content
-            ]
+        , content = [ Theme.blocks [] content ]
         , onPress = Just msg
         }

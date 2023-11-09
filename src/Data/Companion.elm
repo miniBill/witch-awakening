@@ -1,6 +1,6 @@
 module Data.Companion exposing (Details, MaybeClass(..), Score(..), all, intro)
 
-import Generated.Types exposing (Class(..), Companion(..), Faction(..), Race(..))
+import Generated.Types exposing (Affinity(..), Class(..), Companion(..), Faction(..), Race(..))
 
 
 type alias Details =
@@ -871,7 +871,9 @@ kingDaemianKain : Details
 kingDaemianKain =
     { name = KingDaemianKain
     , class = ClassOne Sorceress
-    , races = [ Dravir ]
+
+    -- TODO: check this
+    , races = [ Dravir Fire ]
     , hasPerk = True
     , cost = Just 12
     , power = NormalScore 10
@@ -1090,7 +1092,9 @@ cassandra : Details
 cassandra =
     { name = Cassandra
     , class = ClassOne Sorceress
-    , races = [ Dravir ]
+
+    -- TODO: check this
+    , races = [ Dravir Fire ]
     , hasPerk = False
     , cost = Just 6
     , power = NormalScore 3
@@ -2040,7 +2044,9 @@ jin : Details
 jin =
     { name = JinChooseAName
     , class = ClassSpecial
-    , races = [ Genie ]
+
+    -- TODO allow the user to choose the affinity
+    , races = [ Genie Life ]
     , hasPerk = False
     , cost = Just 20
     , power = NormalScore 10

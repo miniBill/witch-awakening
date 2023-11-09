@@ -212,12 +212,7 @@ viewContent : Maybe Race -> List Race -> Int -> List RankedPerk -> Perk.Details 
 viewContent mainRace races color selected { content, name } =
     case content of
         Single _ block ->
-            [ Theme.blocks
-                [ height fill
-                , width fill
-                , Theme.padding
-                ]
-                block
+            [ Theme.blocks [] block
             ]
 
         WithChoices before choices after ->
@@ -226,11 +221,9 @@ viewContent mainRace races color selected { content, name } =
                 choicesView =
                     List.map (viewChoice color selected name) choices
             in
-            [ Theme.column [ height fill, width fill, Theme.padding ] <|
-                Theme.blocks [] before
-                    :: choicesView
-                    ++ [ Theme.blocks [] after ]
-            ]
+            Theme.blocks [] before
+                :: choicesView
+                ++ [ Theme.blocks [] after ]
 
         WithChoicesHybridize before choices ->
             let
@@ -238,11 +231,9 @@ viewContent mainRace races color selected { content, name } =
                 choicesView =
                     List.map (viewChoice color selected name) choices
             in
-            [ Theme.column [ height fill, width fill, Theme.padding ] <|
-                Theme.blocks [] before
-                    :: choicesView
-                    ++ racePicker color mainRace races
-            ]
+            Theme.blocks [] before
+                :: choicesView
+                ++ racePicker color mainRace races
 
         WithCosts before costs ->
             List.map (Element.map ChoicePerk) <|

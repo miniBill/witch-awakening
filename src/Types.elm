@@ -1,10 +1,8 @@
-module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, affinities, allAffinities, baseAffinities, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot, nextDisplay)
+module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot, nextDisplay)
 
 import Browser exposing (UrlRequest)
 import Browser.Navigation
-import Data.Race as Race
-import Generated.Types exposing (Affinity(..), Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Relic, Slot(..))
-import List.Extra
+import Generated.Types exposing (Affinity, Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Relic, Slot(..))
 
 
 type Msg
@@ -213,43 +211,3 @@ nextDisplay display =
 
         DisplayCollapsed ->
             DisplayFull
-
-
-affinities : Model -> List Affinity
-affinities { races, mainRace, cosmicPearl } =
-    let
-        base : List Affinity
-        base =
-            case ( mainRace, races ) of
-                ( Just race, _ ) ->
-                    baseAffinities race
-
-                ( Nothing, [ race ] ) ->
-                    baseAffinities race
-
-                _ ->
-                    []
-
-        afterChange : List Affinity
-        afterChange =
-            List.foldl
-                (\( from, to ) acc -> to :: List.Extra.remove from acc)
-                base
-                cosmicPearl.change
-    in
-    (afterChange ++ cosmicPearl.add)
-        |> (::) All
-        |> List.Extra.unique
-
-
-baseAffinities : Race -> List Affinity
-baseAffinities race =
-    Race.all
-        |> List.Extra.find (\{ name } -> name == race)
-        |> Maybe.map .affinities
-        |> Maybe.withDefault []
-
-
-allAffinities : List Affinity
-allAffinities =
-    [ Beast, Blood, Body, Earth, Fire, Life, Metal, Mind, Nature, Necro, Soul, Water, Wind ]

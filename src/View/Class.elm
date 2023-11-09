@@ -1,7 +1,7 @@
 module View.Class exposing (viewClass)
 
 import Data.Class as Class
-import Element exposing (Element, alignBottom, centerX, el, fill, height, moveUp, spacing, width)
+import Element exposing (Element, alignBottom, centerX, el, fill, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Types as Types exposing (Class)
@@ -86,12 +86,6 @@ classBox display selected { name, content } =
                     Types.classToString name
                 )
             ]
-        , content =
-            [ Theme.blocks
-                [ height fill
-                , Theme.padding
-                ]
-                content
-            ]
+        , content = [ Theme.blocks [] content ]
         , onPress = Just msg
         }

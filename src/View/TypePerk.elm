@@ -1,7 +1,7 @@
 module View.TypePerk exposing (viewTypePerks)
 
 import Data.TypePerk as TypePerk
-import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, px, rgb, spacing, width)
+import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, px, rgb, spacing, width)
 import Element.Font as Font
 import Generated.Types as Types exposing (Race(..), Slot)
 import Gradients
@@ -13,6 +13,12 @@ import View
 
 viewTypePerks : List Race -> Display -> List Race -> Element Choice
 viewTypePerks witchRaces display typePerks =
+    let
+        boxes : List (Element ( Race, Bool ))
+        boxes =
+            TypePerk.all
+                |> List.map (typePerkBox witchRaces display typePerks)
+    in
     View.collapsible
         [ Theme.style "background-image" <| "url(\"" ++ Images.typePerksBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
         , Theme.style "background-repeat" "no-repeat, no-repeat"
@@ -32,15 +38,13 @@ viewTypePerks witchRaces display typePerks =
             , Theme.rounded
             ]
             "These are particular perks that can be optionally taken by a witch of a given racial type. If hybridized (via later perk), you can purchase type perks of both types."
-        , TypePerk.all
-            |> List.map (typePerkBox witchRaces display typePerks)
+        , boxes
             |> Theme.wrappedRow
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
         ]
-        [ TypePerk.all
-            |> List.map (typePerkBox witchRaces display typePerks)
+        [ boxes
             |> Theme.column
                 [ width fill
                 , spacing <| Theme.rythm * 3
@@ -88,16 +92,19 @@ typePerkBox witchRaces display selected { race, cost, content } =
                 Fairy ->
                     Images.typePerkFairy
 
-                Genie ->
+                Genie _ ->
                     Images.typePerkGenie
 
-                Gemini ->
+                Gemini _ ->
                     Images.typePerkGemini
 
                 _ ->
                     Types.raceToImage race
         , inFront =
             [ Types.raceToString race
+                |> String.split "-"
+                |> List.take 1
+                |> String.concat
                 |> gradientText 6 Gradients.yellowGradient
                 |> el
                     [ Theme.captureIt
@@ -117,12 +124,6 @@ typePerkBox witchRaces display selected { race, cost, content } =
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom ]
             ]
-        , content =
-            [ Theme.blocks
-                [ height fill
-                , Theme.padding
-                ]
-                content
-            ]
+        , content = [ Theme.blocks [] content ]
         , onPress = Just ( race, not isSelected )
         }

@@ -1,6 +1,7 @@
 module Data.Race exposing (Details, all, intro, title)
 
 import Generated.Types exposing (Affinity(..), Race(..), Size(..))
+import List.Extra
 
 
 type alias Details =
@@ -12,9 +13,9 @@ type alias Details =
     }
 
 
-all : List Details
-all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir Fire, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie All, gemini All ]
+all : List Race -> List Details
+all races =
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races ]
 
 
 neutral : Details
@@ -327,9 +328,24 @@ wulong =
     }
 
 
-dravir : Affinity -> Details
-dravir affinity =
-    { name = Dravir
+dravir : List Race -> Details
+dravir races =
+    let
+        affinity : Affinity
+        affinity =
+            List.Extra.findMap
+                (\r ->
+                    case r of
+                        Dravir aff ->
+                            Just aff
+
+                        _ ->
+                            Nothing
+                )
+                races
+                |> Maybe.withDefault All
+    in
+    { name = Dravir affinity
     , tank = Low
     , affinities = [ Beast, affinity ]
     , charge = Med
@@ -599,9 +615,24 @@ fairy =
     }
 
 
-genie : Affinity -> Details
-genie affinity =
-    { name = Genie
+genie : List Race -> Details
+genie races =
+    let
+        affinity : Affinity
+        affinity =
+            List.Extra.findMap
+                (\r ->
+                    case r of
+                        Genie aff ->
+                            Just aff
+
+                        _ ->
+                            Nothing
+                )
+                races
+                |> Maybe.withDefault All
+    in
+    { name = Genie affinity
     , tank = High
     , affinities = [ All, affinity ]
     , charge = Low
@@ -613,9 +644,24 @@ genie affinity =
     }
 
 
-gemini : Affinity -> Details
-gemini affinity =
-    { name = Gemini
+gemini : List Race -> Details
+gemini races =
+    let
+        affinity : Affinity
+        affinity =
+            List.Extra.findMap
+                (\r ->
+                    case r of
+                        Gemini aff ->
+                            Just aff
+
+                        _ ->
+                            Nothing
+                )
+                races
+                |> Maybe.withDefault All
+    in
+    { name = Gemini affinity
     , tank = High
     , affinities = [ Earth, affinity ]
     , charge = Low

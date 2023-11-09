@@ -1,6 +1,6 @@
 module View exposing (collapsible, costButtons)
 
-import Element exposing (Attribute, Element, centerX, centerY, el, fill, height, px, spacing, text, width)
+import Element exposing (Attribute, Element, centerX, centerY, el, fill, px, spacing, text, width)
 import Element.Font as Font
 import Gradients
 import Theme
@@ -66,10 +66,8 @@ costButtons color selected before costs builder =
                 |> Theme.wrappedRow []
             ]
     in
-    [ Theme.column [ height fill, width fill, Theme.padding ] <|
-        Theme.blocks [] before
-            :: children
-    ]
+    Theme.blocks [] before
+        :: children
 
 
 costButton : Int -> List c -> c -> Int -> Element ( c, Bool )
