@@ -43,17 +43,18 @@ collapsible attrs display displayMsg choiceMsg title full compact =
 
 
 costButtons :
-    Int
+    String
+    -> Int
     -> List a
     -> String
     -> List Int
     -> (Int -> Int -> a)
     -> List (Element ( a, Bool ))
-costButtons color selected before costs builder =
+costButtons label color selected before costs builder =
     let
         children : List (Element ( a, Bool ))
         children =
-            [ el [ Font.bold ] <| text "Cost:"
+            [ el [ Font.bold ] <| text <| label ++ ":"
             , costs
                 |> List.indexedMap
                     (\index cost ->

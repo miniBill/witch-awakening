@@ -488,9 +488,9 @@ fitWitch : Details
 fitWitch =
     { name = FitWitch
     , class = Just Sorceress
-    , content = Single 2 """
+    , content = WithCosts """
             Your magic ability is more closely intertwined with your physical ability. In order to grow your magical ability, you have to maintain your physique the old fashioned way: Exercise. While magic can shape your body, this has no bearing on the magic. For every day you don’t exercise for 1 hour or more, you lose 10% overall magic effectiveness. (Damage, range, area, duration ect). For every 5 hours of overall exercise of minimum 30 minute intervals to count towards the total, you raise it by 10% up to 100%. Exercise counts if it’s sufficiently strenuous and makes you sweat (If you would be capable of sweating or not). This only stacks to a reduction of -50% at the worst, but can stack to -100% for an extra +2.
-                        """
+            """ [ 2, 4 ]
     }
 
 

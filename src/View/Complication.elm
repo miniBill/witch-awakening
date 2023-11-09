@@ -309,5 +309,5 @@ viewContent selected { content, name } color =
                 ++ [ Theme.blocks [] after ]
 
         WithCosts before costs ->
-            View.costButtons color selected before costs <|
+            View.costButtons "Gain" color selected before costs <|
                 \tier _ -> { name = name, kind = Tiered (tier + 1) }

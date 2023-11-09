@@ -237,7 +237,7 @@ viewContent mainRace races color selected { content, name } =
 
         WithCosts before costs ->
             List.map (Element.map ChoicePerk) <|
-                View.costButtons color selected before costs <|
+                View.costButtons "Cost" color selected before costs <|
                     \_ cost -> { name = name, cost = cost }
 
 
