@@ -1587,7 +1587,7 @@ agent9s =
         , "+ As tenacious as Max"
         ]
     , negatives =
-        [ "- May ‘disappear’ people that annoyed her"
+        [ "- May “disappear” people that annoyed her"
         , "- Used to working alone."
         ]
     , mixed = [ "+/- A semi-lethal rivalry with the ORC, Richard Max in particular, a little Mr. and Ms. Smith style" ]

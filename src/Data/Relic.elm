@@ -85,7 +85,7 @@ jadeBolt =
     { name = JadeBolt
     , class = Warlock
     , content = Single 6 """
-        This heavy gold ‘handgun’ projects green quartz shards with equivalent force of a 45 Long Colt, growing its own ammo. You can direct a curse at the jade and emerald skull to imbue its shots with the curse effects until you replace the curse with another. Injuries caused by this weapon do not heal or benefit from healing effects for 1 week, during which time any means of cheating death are put on pause so long as their body is pierced with the quartz shards.
+        This heavy gold “handgun” projects green quartz shards with equivalent force of a 45 Long Colt, growing its own ammo. You can direct a curse at the jade and emerald skull to imbue its shots with the curse effects until you replace the curse with another. Injuries caused by this weapon do not heal or benefit from healing effects for 1 week, during which time any means of cheating death are put on pause so long as their body is pierced with the quartz shards.
         """
     }
 
@@ -263,7 +263,7 @@ violetLenses =
     { name = VioletLenses
     , class = Warlock
     , content = Single 2 """
-        These pink sunglasses let you see into the hearts of intelligent beings, seeing a sort of ‘flame’ or ball of turbulent energy within them. The color and reactivity of the flame can allow you to judge their character and feelings towards others. If they deeply love someone on an intimate level, a small duplicate of their love’s own flame can be seen buming above their own. By swiping a finger along the left arm of the glasses, you can switch to X-Ray vision, selectively seeing through chosen objects or substances. Along the right arm, and you can switch to a thermal vision that has accurate detail Any given modes can stack with each other. Disable heartsight with a tap to the bridge.
+        These pink sunglasses let you see into the hearts of intelligent beings, seeing a sort of “flame” or ball of turbulent energy within them. The color and reactivity of the flame can allow you to judge their character and feelings towards others. If they deeply love someone on an intimate level, a small duplicate of their love’s own flame can be seen buming above their own. By swiping a finger along the left arm of the glasses, you can switch to X-Ray vision, selectively seeing through chosen objects or substances. Along the right arm, and you can switch to a thermal vision that has accurate detail Any given modes can stack with each other. Disable heartsight with a tap to the bridge.
         """
     }
 
@@ -467,7 +467,7 @@ greatWarRifle =
     { name = GreatWarRifle
     , class = Warlock
     , content = Single 6 """
-        Relics of witch involvement during the World Wars, in a parallel conflict referred to as the Lockheart Shism, where the witch community was divided in opinions roughly correlated to the human’s own dividing lines. These rifles look like mundane rifles at a glance, but they hide complex arcanotech engineering. They can generate a runic scope as effective as a full telescope in sync with your intentions to show trajectory calculations and distances. Spell Bullets fired from it are five times as potent with high velocity and the base aoe burst is 4m. Each rifle has a short ‘chant’ using r4 mana drain to imbue the rifle itself with power to add 1 mile of range to the projectile, and adding the force of a howitzer shell to the attack.
+        Relics of witch involvement during the World Wars, in a parallel conflict referred to as the Lockheart Shism, where the witch community was divided in opinions roughly correlated to the human’s own dividing lines. These rifles look like mundane rifles at a glance, but they hide complex arcanotech engineering. They can generate a runic scope as effective as a full telescope in sync with your intentions to show trajectory calculations and distances. Spell Bullets fired from it are five times as potent with high velocity and the base aoe burst is 4m. Each rifle has a short “chant” using r4 mana drain to imbue the rifle itself with power to add 1 mile of range to the projectile, and adding the force of a howitzer shell to the attack.
         """
     }
 
@@ -545,7 +545,7 @@ hydron =
     { name = Hydron
     , class = Academic
     , content = Single 2 """
-        This masterwork cauldron is prized among potionmakers. These cauldrons are able to brew six different potions within the same pot all at once by pouring or inserting separate ingredients in through the six different ‘heads’ adorning the cauldron, Shared ingredients like water can go in through the main opening. The six heads can be lowered down and opened/closed to pour that batch of potion out like a nozzle. By starting with an empty hydron, you can pour functional potions into the heads to mix the potions into a singular potion with the effects of all at once distilled into a single vial.
+        This masterwork cauldron is prized among potionmakers. These cauldrons are able to brew six different potions within the same pot all at once by pouring or inserting separate ingredients in through the six different “heads” adorning the cauldron, Shared ingredients like water can go in through the main opening. The six heads can be lowered down and opened/closed to pour that batch of potion out like a nozzle. By starting with an empty hydron, you can pour functional potions into the heads to mix the potions into a singular potion with the effects of all at once distilled into a single vial.
         """
     }
 
@@ -565,6 +565,6 @@ witchKisses =
     { name = WitchKisses
     , class = Warlock
     , content = WithChoices """
-        One of the closest things to a standardized currency in witchdom. Any witch can tap into Kisses as a source of mana or as a ritual reagent, spending them for practical purpose giving them intrinsic value. There are Gold, Silver, and Copper kisses. with two sizes each, large and small. Small Coppers are K1 large coppers are K5, small silvers are K25, large silvers are K100. Small golds are K1,000 Large golds are K10,000 “Burning” K25 would max out a novice witch’s Low mana capacity. For each purchase of this ‘Relic’, you acquire K1,000,000. Repeat purchases are totaled, not separate.
+        One of the closest things to a standardized currency in witchdom. Any witch can tap into Kisses as a source of mana or as a ritual reagent, spending them for practical purpose giving them intrinsic value. There are Gold, Silver, and Copper kisses. with two sizes each, large and small. Small Coppers are K1 large coppers are K5, small silvers are K25, large silvers are K100. Small golds are K1,000 Large golds are K10,000 “Burning” K25 would max out a novice witch’s Low mana capacity. For each purchase of this “Relic”, you acquire K1,000,000. Repeat purchases are totaled, not separate.
         """ (List.map ((*) 2) <| List.range 1 20)
     }

@@ -119,7 +119,7 @@ energized =
     , affinity = Wind
     , isMeta = False
     , content = Single 4 """
-        You passively emanate an electric aura that fills the air with a harmless sense of static and slight ozone smell. This passively charges any device within 10m of you, and you can focus to spike it to damage electronics within 30m or deliver a tazer-like zap to point you can see within 60m. Your touch slightly tingles, and with focus you can amplify this sensation. During a storm, you can focus your will on a target location to ‘cause a lightning strike with a rough accuracy of a 6ft sphere, it can be skewed by lightning rods.
+        You passively emanate an electric aura that fills the air with a harmless sense of static and slight ozone smell. This passively charges any device within 10m of you, and you can focus to spike it to damage electronics within 30m or deliver a tazer-like zap to point you can see within 60m. Your touch slightly tingles, and with focus you can amplify this sensation. During a storm, you can focus your will on a target location to cause a lightning strike with a rough accuracy of a 6ft sphere, it can be skewed by lightning rods.
         """
     }
 

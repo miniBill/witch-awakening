@@ -215,7 +215,7 @@ gadgetry =
     , affinities = Regular []
     , faction = TheORC
     , description =
-        """Laid out in the manner of the Magic Specializations, _Gadgetry_ is the training and clearance to be issued with special equipment. Humans use it to compete with witches and improve their field effectiveness themselves, but witches can be issued with gadgets as well, if they need it, and gadgets can be shared with Alphazon, Lunabella or Arcadia. Hespatians and Watchers and most independents would have to steal Gadgets if they want to make use of this ‘specialization’.
+        """Laid out in the manner of the Magic Specializations, _Gadgetry_ is the training and clearance to be issued with special equipment. Humans use it to compete with witches and improve their field effectiveness themselves, but witches can be issued with gadgets as well, if they need it, and gadgets can be shared with Alphazon, Lunabella or Arcadia. Hespatians and Watchers and most independents would have to steal Gadgets if they want to make use of this “specialization”.
 
         _With Rank 0_, any agent can request a utility belt tailored to your needs containing any mundane item and an __*Omnicom*__; a ghost-band radio for private communications with ORC headquarters and can link with traditional communication networks, from anywhere in the multiverse that isn’t cut off and disrupted by abnormal means, intentional or natural. Omnicoms by nature route through the ORC, so it’s not useful if you want to hide from them, such as Hespatian thieves who’ve acquired one. Other common belt items include a 9mm or .45, notepad, pencil, or PDA / secured smartphone, utility knife, dog tags."""
     , ranks =
