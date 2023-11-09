@@ -88,7 +88,7 @@ complicationBox display selected ({ name, class, content } as complication) =
                 ( WithChoices _ _ _, Nothing ) ->
                     Nothing
 
-                ( WithCosts _ _, Nothing ) ->
+                ( WithGains _ _, Nothing ) ->
                     Nothing
 
         gradient : List ( Int, Int, Int )
@@ -112,7 +112,7 @@ complicationBox display selected ({ name, class, content } as complication) =
                 WithChoices _ choices _ ->
                     List.map Tuple.second choices
 
-                WithCosts _ costs ->
+                WithGains _ costs ->
                     costs
 
                 Single gain _ ->
@@ -308,6 +308,6 @@ viewContent selected { content, name } color =
                 :: choicesView
                 ++ [ Theme.blocks [] after ]
 
-        WithCosts before costs ->
+        WithGains before costs ->
             View.costButtons "Gain" color selected before costs <|
                 \tier _ -> { name = name, kind = Tiered (tier + 1) }

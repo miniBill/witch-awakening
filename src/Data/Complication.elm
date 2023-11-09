@@ -14,7 +14,7 @@ type Content
     = WithTiers String (List ( String, Int )) String
     | Single Int String
     | WithChoices String (List ( String, Int )) String
-    | WithCosts String (List Int)
+    | WithGains String (List Int)
 
 
 all : List Details
@@ -177,7 +177,7 @@ restriction =
     { name = Restriction
     , class = Just Sorceress
     , content =
-        WithCosts """
+        WithGains """
             You are incapable of learning any magic from one chosen archetype. Potions, Hexes, ect. You can take this up to 3 times. This includes a magic’s rank 0 effect normally available to all witches. This cannot restrict you from Faction magic of factions you don’t belong to.
 
             For example, you could restrict _Wands_ only if you chose Hawthorne as your faction.
@@ -452,7 +452,7 @@ kryptonite =
     { name = Kryptonite
     , class = Just Warlock
     , content =
-        WithCosts """
+        WithGains """
             Some witches express magic on a wavelength that can be disrupted by some substance. You have a kryptonite. It can be rare but it’s not rare enough that your enemies can’t make use of it. Its rarity affects the power gain:
 
             - Very common: +10.
@@ -488,7 +488,7 @@ fitWitch : Details
 fitWitch =
     { name = FitWitch
     , class = Just Sorceress
-    , content = WithCosts """
+    , content = WithGains """
             Your magic ability is more closely intertwined with your physical ability. In order to grow your magical ability, you have to maintain your physique the old fashioned way: Exercise. While magic can shape your body, this has no bearing on the magic. For every day you don’t exercise for 1 hour or more, you lose 10% overall magic effectiveness. (Damage, range, area, duration ect). For every 5 hours of overall exercise of minimum 30 minute intervals to count towards the total, you raise it by 10% up to 100%. Exercise counts if it’s sufficiently strenuous and makes you sweat (If you would be capable of sweating or not). This only stacks to a reduction of -50% at the worst, but can stack to -100% for an extra +2.
             """ [ 2, 4 ]
     }

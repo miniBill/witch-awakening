@@ -317,7 +317,7 @@ complicationValue model complication =
                         ( Complication.WithChoices _ choices _, Tiered tier ) ->
                             Results.map Tuple.second <| get tier choices
 
-                        ( Complication.WithCosts _ costs, Tiered tier ) ->
+                        ( Complication.WithGains _ costs, Tiered tier ) ->
                             get tier costs
 
                         ( _, Nontiered ) ->
