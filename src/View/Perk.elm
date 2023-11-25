@@ -1,14 +1,16 @@
 module View.Perk exposing (viewPerks)
 
 import Data.Perk as Perk exposing (Content(..))
+import Data.Race as Race
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paragraph, px, rgba, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (Race, Slot(..))
+import Generated.Types as Types exposing (Perk(..), Race, Slot(..))
 import Gradients
 import Images
 import List.Extra
+import Maybe.Extra
 import String.Extra
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display, RankedPerk)
@@ -23,14 +25,14 @@ viewPerks display mainRace races perks =
         identity
         "# Perks"
         [ introBlock
-        , Perk.all
+        , Perk.all perks
             |> List.map (perkBox display perks mainRace races)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
-        [ Perk.all
+        [ Perk.all perks
             |> List.map (perkBox display perks mainRace races)
             |> Theme.column
                 [ centerX
@@ -94,6 +96,9 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 ( WithChoicesHybridize _ _, Nothing ) ->
                     Nothing
 
+                ( WithChoicesChargeSwap _ _, Nothing ) ->
+                    Nothing
+
                 ( WithCosts _ _, Nothing ) ->
                     Nothing
 
@@ -104,6 +109,9 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                     List.map Tuple.second choices
 
                 WithChoicesHybridize _ choices ->
+                    List.map Tuple.second choices
+
+                WithChoicesChargeSwap _ choices ->
                     List.map Tuple.second choices
 
                 WithCosts _ k ->
@@ -193,6 +201,9 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 _ ->
                     viewSlot White
             , Types.perkToString name
+                |> String.split "-"
+                |> List.take 1
+                |> String.concat
                 |> String.Extra.softBreak 16
                 |> List.map (gradientText 4 Gradients.blueGradient)
                 |> paragraph
@@ -233,7 +244,59 @@ viewContent mainRace races color selected { content, name } =
             in
             Theme.blocks [] before
                 :: choicesView
-                ++ racePicker color mainRace races
+                ++ racePicker "Pick your main race:" ChoiceMainRace color mainRace races
+
+        WithChoicesChargeSwap before choices ->
+            let
+                choicesView : List (Element Choice)
+                choicesView =
+                    List.map (viewChoice color selected name) choices
+
+                ( cost, swapRace ) =
+                    List.Extra.findMap
+                        (\perk ->
+                            case perk.name of
+                                ChargeSwap r ->
+                                    Just ( perk.cost, Just r )
+
+                                _ ->
+                                    Nothing
+                        )
+                        selected
+                        |> Maybe.Extra.withDefaultLazy
+                            (\_ ->
+                                ( choices
+                                    |> List.head
+                                    |> Maybe.map Tuple.second
+                                    |> Maybe.withDefault 999
+                                , Nothing
+                                )
+                            )
+            in
+            Theme.blocks [] before
+                :: choicesView
+                ++ racePicker "Pick the race:"
+                    (\newRace ->
+                        case newRace of
+                            Just r ->
+                                ChoicePerk
+                                    ( { name = ChargeSwap r
+                                      , cost = cost
+                                      }
+                                    , True
+                                    )
+
+                            Nothing ->
+                                ChoicePerk
+                                    ( { name = ChargeSwap <| Maybe.withDefault Types.Neutral swapRace
+                                      , cost = cost
+                                      }
+                                    , False
+                                    )
+                    )
+                    color
+                    swapRace
+                    (List.map .name <| Race.all races)
 
         WithCosts before costs ->
             List.map (Element.map ChoicePerk) <|
@@ -241,8 +304,8 @@ viewContent mainRace races color selected { content, name } =
                     \_ cost -> { name = name, cost = cost }
 
 
-racePicker : Int -> Maybe Race -> List Race -> List (Element Choice)
-racePicker color mainRace races =
+racePicker : String -> (Maybe Race -> Choice) -> Int -> Maybe Race -> List Race -> List (Element Choice)
+racePicker label toMsg color mainRace races =
     let
         viewRace : Race -> Element Choice
         viewRace race =
@@ -255,12 +318,17 @@ racePicker color mainRace races =
                         ( [], Just race )
             in
             Theme.button (width fill :: Font.center :: attrs)
-                { label = text <| Types.raceToString race
-                , onPress = Just <| ChoiceMainRace newValue
+                { label =
+                    Types.raceToString race
+                        |> String.split "-"
+                        |> List.take 1
+                        |> String.concat
+                        |> text
+                , onPress = Just <| toMsg newValue
                 }
     in
     if List.length races > 1 then
-        [ el [ Font.bold ] <| text "Pick your main race:"
+        [ el [ Font.bold ] <| text label
         , races
             |> List.map viewRace
             |> Theme.wrappedRow [ width fill ]

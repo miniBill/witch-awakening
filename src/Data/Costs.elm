@@ -497,13 +497,13 @@ perksCost model =
         affinities =
             Affinity.fromModel model
     in
-    resultSum (perkCost affinities model.class) model.perks
+    resultSum (perkCost model.perks affinities model.class) model.perks
         |> Results.map powerToPoints
 
 
-perkCost : List Affinity -> Maybe Class -> RankedPerk -> Results Int
-perkCost affinities class { name, cost } =
-    find "Perk" .name name Perk.all Types.perkToString
+perkCost : List RankedPerk -> List Affinity -> Maybe Class -> RankedPerk -> Results Int
+perkCost perks affinities class { name, cost } =
+    find "Perk" .name name (Perk.all perks) Types.perkToString
         |> Results.map
             (\perk ->
                 let

@@ -431,7 +431,14 @@ parseUrl navKey url =
 
         parsePerk : String -> Maybe Types.RankedPerk
         parsePerk =
-            withCost Types.perkFromString
+            withCost
+                (\raw ->
+                    if String.startsWith "Charge Swap" raw && not (String.contains "-" raw) then
+                        Types.perkFromString (raw ++ "-Neutral")
+
+                    else
+                        Types.perkFromString raw
+                )
 
         parseRelic : String -> Maybe Types.RankedRelic
         parseRelic =

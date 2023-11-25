@@ -26,7 +26,9 @@ enums =
     , build "GameMode" gameModes |> withImages
     , build "Slot" slots |> withImages
     , build "Magic" magics |> withImages
-    , build "Perk" perks |> withImages
+    , build "Perk" perks
+        |> withImages
+        |> withArguments "Charge Swap" [ "Race" ]
     , build "Faction" factions
     , build "Companion" companions
         |> withImages

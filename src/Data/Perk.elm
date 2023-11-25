@@ -1,6 +1,8 @@
 module Data.Perk exposing (Content(..), Details, all, hybridizeCost, intro)
 
-import Generated.Types exposing (Affinity(..), Class(..), Perk(..))
+import Generated.Types exposing (Affinity(..), Class(..), Perk(..), Race(..))
+import List.Extra
+import Types exposing (RankedPerk)
 
 
 type alias Details =
@@ -17,6 +19,7 @@ type Content
     | WithChoices String (List ( String, Int )) String
     | WithCosts String (List Int)
     | WithChoicesHybridize String (List ( String, Int ))
+    | WithChoicesChargeSwap String (List ( String, Int ))
 
 
 intro : String
@@ -26,9 +29,9 @@ intro =
     """
 
 
-all : List Details
-all =
-    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast, isekaiWorlds, isekaiHeritage, summerSchool, magicalHeart, miniaturization, soulWarrior, comfyPocket, improvedRod, witchHut, company, petBreak, magicShop, keeper, soulGraft ]
+all : List RankedPerk -> List Details
+all perks =
+    [ oracle, jackOfAll, transformationSequence, poisoner, witchflame, energized, conjuration, elephantTrunk, prestidigitation, suggestion, fascinate, pantomime, beautySleep, thirdEye, soulJellies, hatTrick, moodWeather, improvedFamiliar, hybridize, apex, chargeSwap perks, crystallize, memorize, maidHand, hotSwap, menagerie, bloodWitch, gunwitch, levitation, isekaid, heritage, magicFriendship, windsong, broomBeast, isekaiWorlds, isekaiHeritage, summerSchool, magicalHeart, miniaturization, soulWarrior, comfyPocket, improvedRod, witchHut, company, petBreak, magicShop, keeper, soulGraft ]
 
 
 oracle : Details
@@ -328,20 +331,35 @@ apex =
     }
 
 
-chargeSwap : Details
-chargeSwap =
-    { name = ChargeSwap
+chargeSwap : List RankedPerk -> Details
+chargeSwap perks =
+    let
+        race : Race
+        race =
+            List.Extra.findMap
+                (\{ name } ->
+                    case name of
+                        ChargeSwap r ->
+                            Just r
+
+                        _ ->
+                            Nothing
+                )
+                perks
+                |> Maybe.withDefault Neutral
+    in
+    { name = ChargeSwap race
     , class = Warlock
     , affinity = Soul
     , isMeta = False
     , content =
-        WithChoices """
+        WithChoicesChargeSwap
+            """
             Replace your Charge method with the method of another race, unless the chosen charge type would not be possible without an integral aspect of that race. ie; Can’t take the Aurai charge type if you don’t have the Aurai paradox voice, or a Gorgon’s charge without their petrify. This changes your charge rate to match, as it’s inherent to the method, not the type.
             """
             [ ( "This is the basic version and costs 4 power", 4 )
             , ( "_For an extra 6 power_, you instead _gain_ the desired charge method as an _additional_ charge method. They can both be providing mana gain at the same time, at their individual rates", 10 )
             ]
-            ""
     }
 
 
