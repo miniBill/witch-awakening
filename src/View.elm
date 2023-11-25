@@ -56,6 +56,7 @@ costButtons label color selected before costs builder =
         children =
             [ el [ Font.bold ] <| text <| label ++ ":"
             , costs
+                |> List.sort
                 |> List.indexedMap
                     (\index cost ->
                         costButton
