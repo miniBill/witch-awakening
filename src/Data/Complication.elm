@@ -346,11 +346,20 @@ sensoryDisability : Details
 sensoryDisability =
     { name = SensoryDisability
     , class = Just Academic
-    , content = Single 2 """
+    , content =
+        WithGains """
             You have a sense that doesn’t function properly. Any of the 5 senses. Compared to sight; You’d be very nearsighted and have to squint to read normal sized text from around 1ft Hearing would mean you’d not notice someone whispering 5ft away, and their casual speaking volume would be muffled. With scent, you can only faintly smell something directly under your nose. With touch, you feel only about 10% the pleasure or pain someone else would and wouldn’t notice a squirrel climbing up your leg, and you’d only faintly feel a cat digging its claws into your back. Stepping on a leggo would be tolerable. With taste, you only taste extremes, So you might have to enjoy food in other ways like with heat or texture, or very oversaturated flavors. For 5p, you’re completely missing a sense instead.
 
-            Can take up to 3 times
+            Can take up to 3 times.
             """
+            (List.range 0 3
+                |> List.concatMap
+                    (\low ->
+                        List.range 0 (3 - low)
+                            |> List.map (\high -> low * 2 + high * 5)
+                    )
+                |> List.filter ((/=) 0)
+            )
     }
 
 
@@ -358,13 +367,13 @@ physicalDisability : Details
 physicalDisability =
     { name = PhysicalDisability
     , class = Just Academic
-    , content = Single 2 """
+    , content = WithGains """
             For some reason your true form is missing a limb as a core part of your identity, your true form is a manifestation of the reality of your being, so it’s a little more important than that.
 
-            Replacements wont work and it persists through transformation magic. Inorganic prosthetics do work, or a symbiotic lifeform that could operate on its own
+            Replacements won’t work and it persists through transformation magic. Inorganic prosthetics do work, or a symbiotic lifeform that could operate on its own
 
             You can take this up to 4 times.
-            """
+            """ [ 2, 4, 6, 8 ]
     }
 
 
@@ -372,9 +381,13 @@ sensoryShock : Details
 sensoryShock =
     { name = SensoryShock
     , class = Just Sorceress
-    , content = Single 2 """
+    , content =
+        WithGains """
             Opposite to sensory disability, one of your senses is acutely hyperaware. Can’t take with the same sense as you have a sensory disability. If vision, you see very sharply and at great distance but you get overwhelmed with complex colors and patterns and with too much movement to take in all at once, excellent low light vision but sudden bright light can blind you like daggers to the eyes. If scent, you can smell a campfire from miles away but strong unpleasant odours can completely overwhelm you, with some scents worse than others such as garlic. If touch, you might be perpetually uncomfortable by all but masterwork silk clothing and the finest cottons, and more sensitive to pain. Etc.
+
+            Can take up to 3 times
             """
+            [ 2, 4, 6 ]
     }
 
 
