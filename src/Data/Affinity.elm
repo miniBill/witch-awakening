@@ -1,13 +1,13 @@
 module Data.Affinity exposing (all, baseAffinities, fromModel)
 
 import Data.Race as Race
-import Generated.Types exposing (Affinity(..), Race)
+import Generated.Types exposing (Affinity(..), Race(..))
 import List.Extra
 import Types exposing (Model)
 
 
 fromModel : Model -> List Affinity
-fromModel { races, mainRace, cosmicPearl } =
+fromModel { races, mainRace, cosmicPearl, typePerks } =
     let
         base : List Affinity
         base =
@@ -21,6 +21,14 @@ fromModel { races, mainRace, cosmicPearl } =
                 _ ->
                     []
 
+        nymphPerk : List Affinity
+        nymphPerk =
+            if List.member Nymph typePerks then
+                [ Mind ]
+
+            else
+                []
+
         afterChange : List Affinity
         afterChange =
             List.foldl
@@ -28,7 +36,7 @@ fromModel { races, mainRace, cosmicPearl } =
                 base
                 cosmicPearl.change
     in
-    (afterChange ++ cosmicPearl.add)
+    (afterChange ++ cosmicPearl.add ++ nymphPerk)
         |> (::) All
         |> List.Extra.unique
 
