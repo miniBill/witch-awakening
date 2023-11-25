@@ -32,6 +32,8 @@ enums =
         |> withImages
         |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
     , build "Relic" relics |> withImages
+
+    -- |> withArguments "Magic Talisman" [ "Magic" ]
     ]
 
 

@@ -359,6 +359,7 @@ sensoryDisability =
                             |> List.map (\high -> low * 2 + high * 5)
                     )
                 |> List.filter ((/=) 0)
+                |> List.sort
             )
     }
 
