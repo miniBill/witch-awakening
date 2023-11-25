@@ -342,6 +342,14 @@ toUrl model =
             Types.relicToString name ++ String.fromInt cost
         )
         model.relics
+    , list "addAffinity" Types.affinityToString model.cosmicPearl.add
+    , list "changeAffinity"
+        (\( from, to ) ->
+            Types.affinityToString from
+                ++ "-"
+                ++ Types.affinityToString to
+        )
+        model.cosmicPearl.change
     ]
         |> List.concat
         |> Url.Builder.toQuery
