@@ -1,7 +1,5 @@
 module Data exposing (Enum, enums)
 
-import Dict exposing (Dict)
-
 
 type alias Enum =
     { name : String
@@ -16,11 +14,9 @@ enums =
     [ build "Class" classes |> withImages
     , build "Race" races
         |> withImages
-        |> withArguments
-            [ ( "Dravir", [ "Affinity" ] )
-            , ( "Genie", [ "Affinity" ] )
-            , ( "Gemini", [ "Affinity" ] )
-            ]
+        |> withArguments "Dravir" [ "Affinity" ]
+        |> withArguments "Genie" [ "Affinity" ]
+        |> withArguments "Gemini" [ "Affinity" ]
     , build "Size" sizes
     , build "Affinity" affinities
         |> withImages
@@ -58,21 +54,17 @@ withExceptions exceptions enum =
     { enum | exceptions = exceptions }
 
 
-withArguments : List ( String, List String ) -> Enum -> Enum
-withArguments arguments enum =
-    let
-        argumentsDict : Dict String (List String)
-        argumentsDict =
-            Dict.fromList arguments
-    in
+withArguments : String -> List String -> Enum -> Enum
+withArguments name arguments enum =
     { enum
         | variants =
             List.map
                 (\( variant, orig ) ->
-                    ( variant
-                    , Dict.get variant argumentsDict
-                        |> Maybe.withDefault orig
-                    )
+                    if variant == name then
+                        ( variant, arguments )
+
+                    else
+                        ( variant, orig )
                 )
                 enum.variants
     }
