@@ -166,7 +166,7 @@ crutch =
     { name = Crutch
     , class = Just Academic
     , content =
-        Single 2 """
+        Single 4 """
             You can’t use magic on your own, you have to rely on a specially prepared magical medium; Wands, Staves, Tomes, Crystal Balls, Decks of arcana cards, and so on. Without a medium, you cannot use magic.
             """
     }
