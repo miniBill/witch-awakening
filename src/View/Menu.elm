@@ -497,7 +497,11 @@ relicSlider model =
 
 linkLabel : String -> Maybe String -> Element Msg
 linkLabel label target =
-    Input.button []
-        { onPress = Just <| ScrollTo <| String.Extra.underscored <| Maybe.withDefault label target
-        , label = el [ Font.bold, width fill ] <| text label
-        }
+    if label == "Result" then
+        el [ Font.bold, width fill ] <| text label
+
+    else
+        Input.button [ Font.underline ]
+            { onPress = Just <| ScrollTo <| String.Extra.underscored <| Maybe.withDefault label target
+            , label = el [ Font.bold, width fill ] <| text label
+            }
