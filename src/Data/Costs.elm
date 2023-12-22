@@ -78,7 +78,7 @@ normalInitialWarning =
 -- Total --
 
 
-totalPoints : Model -> Results Points
+totalPoints : Model key -> Results Points
 totalPoints model =
     [ Results.map negate <| classValue model
     , Results.map negate <| startingValue model
@@ -143,7 +143,7 @@ totalPoints model =
             )
 
 
-totalRewards : Model -> Results Points
+totalRewards : Model key -> Results Points
 totalRewards model =
     [ classValue model
     , conversion model
@@ -155,7 +155,7 @@ totalRewards model =
 -- Class --
 
 
-classValue : Model -> Results Points
+classValue : Model key -> Results Points
 classValue model =
     case model.class of
         Just class ->
@@ -177,7 +177,7 @@ classValue model =
 -- Power cap --
 
 
-powerCap : Model -> Results Points
+powerCap : Model key -> Results Points
 powerCap model =
     case model.gameMode of
         Nothing ->
@@ -207,7 +207,7 @@ powerCap model =
 -- Starting power  --
 
 
-startingValue : Model -> Results Points
+startingValue : Model key -> Results Points
 startingValue model =
     let
         power : Results Int
@@ -243,7 +243,7 @@ startingValue model =
 -- Complications --
 
 
-complicationsValue : Model -> Results Points
+complicationsValue : Model key -> Results Points
 complicationsValue model =
     complicationsRawValue model
         |> Results.andThen
@@ -282,12 +282,12 @@ complicationsValue model =
             )
 
 
-complicationsRawValue : Model -> Results Int
+complicationsRawValue : Model key -> Results Int
 complicationsRawValue model =
     resultSum (complicationValue model) model.complications
 
 
-complicationValue : Model -> Types.RankedComplication -> Results Int
+complicationValue : Model key -> Types.RankedComplication -> Results Int
 complicationValue model complication =
     let
         get : Int -> List a -> Results a
@@ -343,7 +343,7 @@ complicationValue model complication =
 -- Type perks --
 
 
-typePerksValue : Model -> Results Points
+typePerksValue : Model key -> Results Points
 typePerksValue model =
     resultSum typePerkValue model.typePerks
         |> Results.map powerToPoints
@@ -369,7 +369,7 @@ find label toKey value list toString =
 -- Magics --
 
 
-magicsValue : Model -> Results Points
+magicsValue : Model key -> Results Points
 magicsValue model =
     let
         affinities : List Affinity
@@ -380,7 +380,7 @@ magicsValue model =
         |> Results.map powerToPoints
 
 
-magicValue : List Affinity -> Model -> RankedMagic -> Results Int
+magicValue : List Affinity -> Model key -> RankedMagic -> Results Int
 magicValue affinities { faction, class } { name, rank } =
     case
         Magic.all
@@ -484,13 +484,13 @@ magicCost affinities class rank magic =
 -- Perks --
 
 
-perksValue : Model -> Results Points
+perksValue : Model key -> Results Points
 perksValue model =
     perksCost model
         |> Results.map negate
 
 
-perksCost : Model -> Results Points
+perksCost : Model key -> Results Points
 perksCost model =
     let
         affinities : List Affinity
@@ -534,7 +534,7 @@ perkCost perks affinities class { name, cost } =
 -- Faction --
 
 
-factionValue : Model -> Results Points
+factionValue : Model key -> Results Points
 factionValue model =
     case model.faction of
         Nothing ->
@@ -551,7 +551,7 @@ factionValue model =
 -- Companions --
 
 
-companionsValue : Model -> Results Points
+companionsValue : Model key -> Results Points
 companionsValue model =
     let
         totalCost : List ( Maybe Faction, Companion.Details ) -> Results Int
@@ -698,7 +698,7 @@ getCompanion companion =
 -- Relics --
 
 
-relicsValue : Model -> Results Points
+relicsValue : Model key -> Results Points
 relicsValue model =
     resultSum (relicCost model.class model.cosmicPearl) model.relics
         |> Results.map (\cost -> { zero | rewardPoints = -cost })
@@ -734,7 +734,7 @@ relicCost class pearl { name, cost } =
             )
 
 
-conversion : Model -> Results Points
+conversion : Model key -> Results Points
 conversion model =
     Oks
         { zero

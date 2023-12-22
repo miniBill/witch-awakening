@@ -52,8 +52,8 @@ type alias CosmicPearlData =
     }
 
 
-type alias Model =
-    { key : Browser.Navigation.Key
+type alias Model key =
+    { key : key
     , capBuild : Bool
     , towardsCap : Int
     , powerToRewards : Int

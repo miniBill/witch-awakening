@@ -6,7 +6,7 @@ import List.Extra
 import Types exposing (Model)
 
 
-fromModel : Model -> List Affinity
+fromModel : Model key -> List Affinity
 fromModel { races, mainRace, cosmicPearl, typePerks } =
     let
         base : List Affinity

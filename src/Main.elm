@@ -39,7 +39,7 @@ type alias Flags =
     {}
 
 
-main : Program Flags Model Msg
+main : Program Flags (Model Nav.Key) Msg
 main =
     Browser.application
         { init = init
@@ -51,14 +51,14 @@ main =
         }
 
 
-init : flags -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init : flags -> Url.Url -> Nav.Key -> ( Model Nav.Key, Cmd Msg )
 init _ url key =
     ( parseUrl key url
     , Cmd.none
     )
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model Nav.Key -> ( Model Nav.Key, Cmd Msg )
 update msg model =
     case msg of
         UrlClicked urlRequest ->
@@ -78,7 +78,7 @@ update msg model =
 
         Choice choice ->
             let
-                newModel : Model
+                newModel : Model Nav.Key
                 newModel =
                     updateOnChoice choice model
                         |> fixupModel
@@ -143,7 +143,7 @@ update msg model =
             ( model, Cmd.none )
 
 
-fixupModel : Model -> Model
+fixupModel : Model key -> Model key
 fixupModel model =
     { model
         | mainRace =
@@ -199,7 +199,7 @@ toggle selected item list =
         List.Extra.remove item list
 
 
-updateOnChoice : Choice -> Model -> Model
+updateOnChoice : Choice -> Model key -> Model key
 updateOnChoice choice model =
     case choice of
         ChoiceClass class ->
@@ -281,7 +281,7 @@ updateOnChoice choice model =
             { model | powerToRewards = powerToRewards }
 
 
-toUrl : Model -> String
+toUrl : Model key -> String
 toUrl model =
     let
         one : String -> (a -> String) -> Maybe a -> List QueryParameter
@@ -371,7 +371,7 @@ boolToString bool =
         "False"
 
 
-parseUrl : Nav.Key -> Url.Url -> Model
+parseUrl : Nav.Key -> Url.Url -> Model Nav.Key
 parseUrl navKey url =
     let
         appUrl : AppUrl
@@ -539,7 +539,7 @@ stringToBool bool =
             Nothing
 
 
-view : Model -> Browser.Document Msg
+view : Model key -> Browser.Document Msg
 view model =
     { title = ""
     , body =
@@ -558,7 +558,7 @@ view model =
     }
 
 
-innerView : Model -> Element Msg
+innerView : Model key -> Element Msg
 innerView model =
     let
         allCompact : Bool
@@ -592,7 +592,7 @@ innerView model =
         |> Element.map Choice
 
 
-subscriptions : Model -> Sub Msg
+subscriptions : Model key -> Sub Msg
 subscriptions _ =
     Browser.Events.onKeyUp keyDecoder
 

@@ -16,7 +16,7 @@ import Theme
 import Types exposing (Choice(..), Model, Msg(..))
 
 
-viewMenu : Model -> Element Msg
+viewMenu : Model key -> Element Msg
 viewMenu model =
     let
         totalPoints : Results Points
@@ -90,7 +90,7 @@ viewMenu model =
         ]
 
 
-menuLabel : Model -> Results Points -> List String -> String
+menuLabel : Model key -> Results Points -> List String -> String
 menuLabel model totalPointsResult warnings =
     let
         availablePoints : Results Points
@@ -158,7 +158,7 @@ wrapInt before value after =
     before ++ String.fromInt value ++ after
 
 
-viewCalculations : Model -> Results Points -> List String -> List Affinity -> Element Msg
+viewCalculations : Model key -> Results Points -> List String -> List Affinity -> Element Msg
 viewCalculations model power warnings affinities =
     let
         resultRow : ( String, Element Msg )
@@ -311,7 +311,7 @@ row label result target =
                 ]
 
 
-capBuildSwitch : Model -> Element Msg
+capBuildSwitch : Model key -> Element Msg
 capBuildSwitch { capBuild } =
     let
         roundIf : Bool -> number
@@ -405,7 +405,7 @@ rightText value =
         (Theme.blocks [] value)
 
 
-capSlider : Model -> Element Msg
+capSlider : Model key -> Element Msg
 capSlider model =
     let
         label : String
@@ -455,7 +455,7 @@ capSlider model =
             Element.none
 
 
-relicSlider : Model -> Element Msg
+relicSlider : Model key -> Element Msg
 relicSlider model =
     Input.slider
         [ width fill
