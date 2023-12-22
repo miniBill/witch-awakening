@@ -3,10 +3,17 @@ module Data.Affinity exposing (all, baseAffinities, fromModel)
 import Data.Race as Race
 import Generated.Types exposing (Affinity(..), Race(..))
 import List.Extra
-import Types exposing (Model)
+import Types exposing (CosmicPearlData)
 
 
-fromModel : Model key -> List Affinity
+fromModel :
+    { a
+        | races : List Race
+        , mainRace : Maybe Race
+        , cosmicPearl : CosmicPearlData
+        , typePerks : List Race
+    }
+    -> List Affinity
 fromModel { races, mainRace, cosmicPearl, typePerks } =
     let
         base : List Affinity

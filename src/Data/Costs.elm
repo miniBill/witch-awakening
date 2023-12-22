@@ -369,7 +369,17 @@ find label toKey value list toString =
 -- Magics --
 
 
-magicsValue : Model key -> Results Points
+magicsValue :
+    { a
+        | class : Maybe Class
+        , races : List Race
+        , mainRace : Maybe Race
+        , typePerks : List Race
+        , magic : List RankedMagic
+        , faction : Maybe ( Faction, Bool )
+        , cosmicPearl : CosmicPearlData
+    }
+    -> Results Points
 magicsValue model =
     let
         affinities : List Affinity
@@ -380,7 +390,15 @@ magicsValue model =
         |> Results.map powerToPoints
 
 
-magicValue : List Affinity -> Model key -> RankedMagic -> Results Int
+magicValue :
+    List Affinity
+    ->
+        { a
+            | faction : Maybe ( Faction, Bool )
+            , class : Maybe Class
+        }
+    -> RankedMagic
+    -> Results Int
 magicValue affinities { faction, class } { name, rank } =
     case
         Magic.all
@@ -402,10 +420,29 @@ magicValue affinities { faction, class } { name, rank } =
                                     magicCost affinities class rank magic
                             in
                             if Just ( magic.faction, True ) == faction then
-                                Maybe.map (\c -> (c + 1) // 2) cost
+                                Maybe.map
+                                    (\c ->
+                                        if c > 0 then
+                                            c * 2
+
+                                        else
+                                            (c - 1) // 2
+                                    )
+                                    cost
+
+                            else if Just ( magic.faction, False ) == faction then
+                                cost
 
                             else
-                                Maybe.map ((*) 2) cost
+                                Maybe.map
+                                    (\c ->
+                                        if c > 0 then
+                                            c
+
+                                        else
+                                            c * 2
+                                    )
+                                    cost
                         )
             of
                 Just cost ->
