@@ -534,12 +534,12 @@ perksCost model =
         affinities =
             Affinity.fromModel model
     in
-    resultSum (perkCost model.perks affinities model.class) model.perks
+    resultSum (perkCost model.races model.perks affinities model.class) model.perks
         |> Results.map powerToPoints
 
 
-perkCost : List RankedPerk -> List Affinity -> Maybe Class -> RankedPerk -> Results Int
-perkCost perks affinities class { name, cost } =
+perkCost : List Race -> List RankedPerk -> List Affinity -> Maybe Class -> RankedPerk -> Results Int
+perkCost races perks affinities class { name, cost } =
     find "Perk" .name name (Perk.all perks) Types.perkToString
         |> Results.map
             (\perk ->
@@ -551,19 +551,28 @@ perkCost perks affinities class { name, cost } =
                     isAffinity : Bool
                     isAffinity =
                         List.member perk.affinity affinities
+
+                    changelinged : Int
+                    changelinged =
+                        if List.member Changeling races then
+                            cost - 3
+
+                        else
+                            cost
+
+                    classed : Int
+                    classed =
+                        if isClass then
+                            changelinged - 2
+
+                        else
+                            changelinged
                 in
-                if isClass then
-                    if isAffinity then
-                        (cost - 2 + 1) // 2
-
-                    else
-                        cost - 2
-
-                else if isAffinity then
-                    (cost + 1) // 2
+                if isAffinity then
+                    (classed + 1) // 2
 
                 else
-                    cost
+                    classed
             )
 
 
