@@ -1,11 +1,11 @@
-module CostTest exposing (suite)
+module CostTest exposing (magicCosts, perkCosts)
 
 import Data.Costs
 import Expect
-import Generated.Types exposing (Class(..), Faction(..), Magic(..), Race(..))
+import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
 import Results exposing (Results(..))
 import Test exposing (Test, describe, test)
-import Types exposing (CosmicPearlData, RankedMagic)
+import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
 
 type alias MagicModel =
@@ -50,8 +50,68 @@ expectPower power value =
         value
 
 
-suite : Test
-suite =
+perkCosts : Test
+perkCosts =
+    describe "Perk costs"
+        [ jackOfAllTest
+        ]
+
+
+jackOfAllTest : Test
+jackOfAllTest =
+    let
+        defaultModel :
+            { class : Maybe Class
+            , races : List Race
+            , mainRace : Maybe Race
+            , cosmicPearl : CosmicPearlData
+            , typePerks : List Race
+            , perks : List RankedPerk
+            }
+        defaultModel =
+            { class = Just Warlock
+            , races = [ Neutral ] -- Soul and Body
+            , mainRace = Just Neutral
+            , cosmicPearl =
+                { add = []
+                , change = []
+                }
+            , typePerks = []
+            , perks = [ jack12 ]
+            }
+
+        changelingModel : { class : Maybe Class, races : List Race, mainRace : Maybe Race, cosmicPearl : CosmicPearlData, typePerks : List Race, perks : List RankedPerk }
+        changelingModel =
+            { defaultModel
+                | races = [ Changeling ] -- Body and Mind
+                , mainRace = Just Changeling
+            }
+    in
+    describe "Jack-of-All"
+        [ describe "12p version"
+            [ testJack12 "Off affinity, off class" defaultModel 10
+            , testJack12 "In affinity, off class" changelingModel 10
+            , testJack12 "Off affinity, in class" { defaultModel | class = Just Academic } 12
+            , testJack12 "In affinity, in class" { changelingModel | class = Just Academic } 12
+            ]
+        ]
+
+
+jack12 : { name : Perk, cost : number }
+jack12 =
+    { name = JackOfAll, cost = -10 }
+
+
+testJack12 : String -> { a | class : Maybe Class, races : List Race, mainRace : Maybe Race, cosmicPearl : CosmicPearlData, typePerks : List Race, perks : List RankedPerk } -> Int -> Test
+testJack12 label model expected =
+    test label <|
+        \_ ->
+            Data.Costs.perkCost model jack12
+                |> Expect.equal (Oks -expected)
+
+
+magicCosts : Test
+magicCosts =
     describe "Magic costs"
         [ describe "Factionless"
             [ testRanks sorceressDryad "Off affinity, off class" Runes 1 3 6 10 15

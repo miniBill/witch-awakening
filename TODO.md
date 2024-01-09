@@ -1,7 +1,6 @@
 # v2
 
 Jack-of-all not selected from URL
-possibly Jack is the only entry that takes Affinity and gives points? so it's halving the points it gives you
 Heirloom
 Jack of All free perk
 Mark which magic from Talisman

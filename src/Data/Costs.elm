@@ -1,4 +1,4 @@
-module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, negate, perksValue, powerCap, powerToPoints, relicsValue, startingValue, totalPoints, totalRewards, typePerksValue, zero)
+module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, negate, perkCost, perksValue, powerCap, powerToPoints, relicsValue, startingValue, totalPoints, totalRewards, typePerksValue, zero)
 
 import Data.Affinity as Affinity
 import Data.Companion as Companion
@@ -8,7 +8,7 @@ import Data.Magic as Magic
 import Data.Perk as Perk
 import Data.Relic as Relic
 import Data.TypePerk as TypePerk
-import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Race(..), Relic(..))
+import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Perk(..), Race(..), Relic(..))
 import List.Extra
 import Results exposing (Results(..))
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
@@ -521,26 +521,55 @@ magicCost affinities class rank magic =
 -- Perks --
 
 
-perksValue : Model key -> Results Points
+perksValue :
+    { a
+        | races : List Race
+        , mainRace : Maybe Race
+        , cosmicPearl : CosmicPearlData
+        , typePerks : List Race
+        , perks : List RankedPerk
+        , class : Maybe Class
+    }
+    -> Results Points
 perksValue model =
-    perksCost model
+    resultSum (perkCost model) model.perks
+        |> Results.map powerToPoints
         |> Results.map negate
 
 
-perksCost : Model key -> Results Points
+perksCost :
+    { a
+        | races : List Race
+        , mainRace : Maybe Race
+        , cosmicPearl : CosmicPearlData
+        , typePerks : List Race
+        , perks : List RankedPerk
+        , class : Maybe Class
+    }
+    -> Results Points
 perksCost model =
+    perksValue model
+        |> Results.map negate
+
+
+perkCost :
+    { a
+        | class : Maybe Class
+        , races : List Race
+        , mainRace : Maybe Race
+        , cosmicPearl : CosmicPearlData
+        , typePerks : List Race
+        , perks : List RankedPerk
+    }
+    -> RankedPerk
+    -> Results Int
+perkCost ({ class } as model) { name, cost } =
     let
         affinities : List Affinity
         affinities =
             Affinity.fromModel model
     in
-    resultSum (perkCost model.races model.perks affinities model.class) model.perks
-        |> Results.map powerToPoints
-
-
-perkCost : List Race -> List RankedPerk -> List Affinity -> Maybe Class -> RankedPerk -> Results Int
-perkCost races perks affinities class { name, cost } =
-    find "Perk" .name name (Perk.all perks) Types.perkToString
+    find "Perk" .name name (Perk.all model.perks) Types.perkToString
         |> Results.map
             (\perk ->
                 let
@@ -554,25 +583,20 @@ perkCost races perks affinities class { name, cost } =
 
                     changelinged : Int
                     changelinged =
-                        if List.member Changeling races then
-                            cost - 3
+                        case name of
+                            ChargeSwap _ ->
+                                if List.member Changeling model.races then
+                                    cost - 3
 
-                        else
-                            cost
+                                else
+                                    cost
 
-                    classed : Int
-                    classed =
-                        if isClass then
-                            changelinged - 2
-
-                        else
-                            changelinged
+                            _ ->
+                                cost
                 in
-                if isAffinity then
-                    (classed + 1) // 2
-
-                else
-                    classed
+                changelinged
+                    |> applyClassBonusIf isClass
+                    |> halveIfPositiveAnd isAffinity
             )
 
 
@@ -828,3 +852,21 @@ powerToPoints value =
 zeroOut : Points -> Points
 zeroOut points =
     { points | power = 0, rewardPoints = 0 }
+
+
+applyClassBonusIf : Bool -> Int -> Int
+applyClassBonusIf isClass cost =
+    if isClass then
+        cost - 2
+
+    else
+        cost
+
+
+halveIfPositiveAnd : Bool -> Int -> Int
+halveIfPositiveAnd condition cost =
+    if condition && cost > 0 then
+        (cost + 1) // 2
+
+    else
+        cost

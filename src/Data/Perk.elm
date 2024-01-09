@@ -62,7 +62,7 @@ jackOfAll =
         WithChoices """
             "Oh. Looks like I was wrong about the rank 5 magic". You lose the ability to take any magic to rank 5. In return, you gain either
             """
-            [ ( "12 Power,", -12 )
+            [ ( "12 Power,", -10 )
             , ( "or any 1 perk with a static cost for free", 2 )
             ]
             """
