@@ -1,6 +1,5 @@
 # v2
 
-Jack-of-all not selected from URL
 Heirloom
 Jack of All free perk
 Mark which magic from Talisman

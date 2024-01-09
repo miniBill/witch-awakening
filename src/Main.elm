@@ -396,10 +396,12 @@ parseUrl navKey url =
         pair : (String -> Maybe a) -> (a -> Maybe Int -> Maybe b) -> String -> Maybe b
         pair parser builder value =
             let
-                ( before, after ) =
+                ( after, before ) =
                     value
                         |> String.toList
-                        |> List.Extra.break Char.isDigit
+                        |> List.reverse
+                        |> List.Extra.break (\c -> not (Char.isDigit c || c == '-'))
+                        |> Tuple.mapBoth List.reverse List.reverse
             in
             (parser <| String.fromList before)
                 |> Maybe.andThen
