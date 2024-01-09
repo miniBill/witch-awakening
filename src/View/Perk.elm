@@ -201,9 +201,12 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 _ ->
                     viewSlot White
             , Types.perkToString name
-                |> String.split "-"
-                |> List.take 1
-                |> String.concat
+                |> (if name == JackOfAll then
+                        identity
+
+                    else
+                        String.split "-" >> List.take 1 >> String.concat
+                   )
                 |> String.Extra.softBreak 16
                 |> List.map (gradientText 4 Gradients.blueGradient)
                 |> paragraph
