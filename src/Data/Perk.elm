@@ -574,7 +574,7 @@ summerSchool =
     , isMeta = True
     , content =
         WithCosts """
-            Looks like there’s space available in a special class at Arcadia or Hawthorne. _Neither needs to be our primary faction._ Take the _Summer School cyoa_ [https://imgur.com/a/lR5RVvV], and swap out any class subject with one Magic Specialization, choosing any teacher and adapt their summary to that magic school. You can replace a teacher with someone from the Companions page with R4+ in that magic. Over the summer, you do not gain Focus, Might, or Favor, but at the end each Magic specialization will be brought to Rank 3 (1 rank per month). You can replace Friends with Companions, who will learn the magic too. This perk costs 4p per magic class you take. You can take this repeatedly for up to 5 magic classes.
+            Looks like there’s space available in a special class at Arcadia or Hawthorne. _Neither needs to be our primary faction._ Take the _Summer School cyoa_ [https://imgchest.com/p/m9yxg5j34qn], and swap out any class subject with one Magic Specialization, choosing any teacher and adapt their summary to that magic school. You can replace a teacher with someone from the Companions page with R4+ in that magic. Over the summer, you do not gain Focus, Might, or Favor, but at the end each Magic specialization will be brought to Rank 3 (1 rank per month). You can replace Friends with Companions, who will learn the magic too. This perk costs 4p per magic class you take. You can take this repeatedly for up to 5 magic classes.
             """
             [ 4, 8, 12, 16, 20 ]
     }
@@ -605,7 +605,7 @@ miniaturization =
         WithCosts """
             4 Power cost if you’re a Sprite. You have the ability to shrink! You can toggle off or on a mini form. Use The Fairy’s Curse, [https://imgur.com/a/Y1YEt]. “Fairy” costs 5 less, as its only real benefit is wings, as a Witch you can already perform magic better than most non-witch fairies.
 
-            Or you can can take Entrusted by a Goddess [https://imgur.com/9bn2t3z], to gain a mini-person as a Companion. If you also took Fairy Curse, then you can instead apply the Boons to yourself in your mini form ie as though you were the aforementioned daughter, with the canon player perks being applied to your non-mini form.
+            Or you can can take Entrusted by a Goddess [https://imgchest.com/p/vj4jvjle48m], to gain a mini-person as a Companion. If you also took Fairy Curse, then you can instead apply the Boons to yourself in your mini form ie as though you were the aforementioned daughter, with the canon player perks being applied to your non-mini form.
 
             You can take this repeatedly, either for more currency in one or for the others, or to have both the mini companion and your own.
             """
@@ -636,7 +636,7 @@ comfyPocket =
     , content = Single 6 """
         _Requires Witchery 5_.
 
-        Improves your pocketspace. Take _Time Stop Chill Zone_ by Rosanon or _Solitude_ by Acheld, or _The Village_ [https://imgur.com/a/KGtCkOI], and apply your choices to your pocketspace. Can add one of the others as well for +3p/each, melding relevant options together as appropriate. Time stopping likewise stops your power growth rate, though you could increase your skilled usage of what you already have. Ignore Solitude’s limit. Entrance Methods work independently of how you normally enter pocketspace. ZoneBook applies as normal to other witches with this perk. Some options may be redundant. Options remain limited to within the pocketspace. Can take Village repeatedly, creating new regions Make up your own job(s).
+        Improves your pocketspace. Take _Time Stop Chill Zone_ by Rosanon [https://imgchest.com/p/9p4nlwj57nq] or _Solitude_ by Acheld [https://moreinteractivecyoas.neocities.org/cyoas/solitude/], or _The Village_ [https://imgchest.com/p/qb4zk9mg4jm], and apply your choices to your pocketspace. Can add one of the others as well for +3p/each, melding relevant options together as appropriate. Time stopping likewise stops your power growth rate, though you could increase your skilled usage of what you already have. Ignore Solitude’s limit. Entrance Methods work independently of how you normally enter pocketspace. ZoneBook applies as normal to other witches with this perk. Some options may be redundant. Options remain limited to within the pocketspace. Can take Village repeatedly, creating new regions Make up your own job(s).
         """
     }
 
@@ -649,7 +649,7 @@ improvedRod =
     , isMeta = True
     , content =
         WithCosts """
-            Improve your Rod (Witchery R0+) using _Arcane Focus_ by TroonTC [https://imgur.com/a/dZKhA9q] for 6p. The Seal can be incorporated into your existing familiar or be a separate entity (And can be independently augmented by Company or Pet Break if so).
+            Improve your Rod (Witchery R0+) using _Arcane Focus_ by TroonTC [https://imgchest.com/p/9p4nl5mz7nq] for 6p. The Seal can be incorporated into your existing familiar or be a separate entity (And can be independently augmented by Company or Pet Break if so).
 
             Using your improved Rod, you are able to create Cantrips via Cantrip CYOA. [https://imgur.com/a/ptneo0t]. Ignore point options. Instead, gain 5 Cantrip points per Power point you invest in this perk. You require your Improved Rod (Arcane Focus) to be on your person in order to use Cantrips, but not necessarily using it directly. Training or teaching cantrips requires the individual have power to invest into it. Humans don’t have power by default. Most witches have between 10-50.
             """
@@ -664,7 +664,7 @@ witchHut =
     , affinity = Life
     , isMeta = True
     , content = Single 15 """
-        You could have an old witch hut, or you can hire the Terry Bros to build you a Witch _Trailer_! Build a trailer from Celty’s Comfy Trailer [https://imgur.com/a/eWhrAYV]. (If you know a higher resolution one, do share. Or I might have to remake it myself with a witch hut theme...) If you have the Magic Shop perk, you can incorporate trailer rooms into your magic shop instead, or add Magic Shop rooms to your trailer as extensions.
+        You could have an old witch hut, or you can hire the Terry Bros to build you a Witch _Trailer_! Build a trailer from Celty’s Comfy Trailer [https://imgchest.com/p/dl7pqdj6yox]. (If you know a higher resolution one, do share. Or I might have to remake it myself with a witch hut theme...) If you have the Magic Shop perk, you can incorporate trailer rooms into your magic shop instead, or add Magic Shop rooms to your trailer as extensions.
 
         For Roomates, you can also choose any Companions you have as a roommate, allowing for a closer relationship to that companion.
 
@@ -715,10 +715,8 @@ magicShop =
     , isMeta = True
     , content =
         WithCosts """
-            You are of will be the proud owner of a brand new magical shop. Design your shop using your choice of _Magic Item Shop_ by Bliss and Beri or _Starfall Cafe_ by Femdo. If you buy this twice, you could do both into a merged shop or separate locations. Or you could buy it to do the same cyoa again with doubled resources / currency, again for a larger shop or for separate shops
+            You are or will be the proud owner of a brand new magical shop. Design your shop using your choice of _Magic Item Shop_ by Bliss and Beri [https://imgchest.com/p/5xy2la3z4ld] or _Starfall Cafe_ by Femdo [https://imgchest.com/p/9249jwp87nk]. If you buy this twice, you could do both into a merged shop or separate locations. Or you could buy it to do the same cyoa again with doubled resources / currency, again for a larger shop or for separate shops.
 
-            [https://imgur.com/a/4HgA72h] & [https://imgur.com/VUb1n7d].
-            
             Instead of locations presented by those cyoas, you can if you wish, choose any location mentioned in this cyoa. Adapt any other flavor as appropriate. Skip Magic Item Shop’s Blessings unless you pay 4 Power for it, with an appropriate Affinity. ([Fire], [???], [Nature], [Body], [Mind], [Nature], [Water], [Life], [Body]). You can spend 1p for +50 Stardust.
             """
             (List.range 6 28)
@@ -733,7 +731,7 @@ keeper =
     , isMeta = True
     , content =
         WithCosts """
-            Sometime within the next few years tops, you’ll meet my greattimes-8 grandmother who has an. offer for you. She knows some unique ancient magics and can teach you a thing or two. Take the _Keeper of Magic by TroyXPage_ [https://imgur.com/a/2rYOpr6].
+            Sometime within the next few years tops, you’ll meet my greattimes-8 grandmother who has an. offer for you. She knows some unique ancient magics and can teach you a thing or two. Take the _Keeper of Magic by TroyXPage_ [https://imgur.com/a/yoKPeub], [https://imgur.com/a/BoACmQp], [https://imgur.com/a/4GHVEQa].
 
             Ignore the 3 categories: Pick one category per 15 Power spent on this perk. Otherwise adapt any given lore appropriately. You can take "No Magic" as though buying a companion, at 20p.
 
