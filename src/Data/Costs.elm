@@ -10,6 +10,7 @@ import Data.Relic as Relic
 import Data.TypePerk as TypePerk
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Magic(..), Perk(..), Race(..), Relic(..))
 import List.Extra
+import Maybe.Extra
 import Result.Extra
 import ResultME exposing (ResultME)
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
@@ -405,56 +406,68 @@ magicValue affinities { faction, class, typePerks } { name, rank } =
     case
         Magic.all
             |> List.Extra.find (\magic -> magic.name == name)
-            |> Maybe.andThen (magicCost affinities class rank)
+            |> Maybe.andThen
+                (\magic ->
+                    let
+                        cost : Maybe Int
+                        cost =
+                            magicCost affinities class rank magic
+                    in
+                    if magic.name == Arachnescence && List.member Spider typePerks then
+                        Maybe.map factionDiscount cost
+
+                    else
+                        cost
+                )
+            |> Maybe.Extra.orElseLazy
+                (\_ ->
+                    FactionalMagic.all
+                        |> List.Extra.find (\magic -> magic.name == name)
+                        |> Maybe.andThen
+                            (\magic ->
+                                let
+                                    cost : Maybe Int
+                                    cost =
+                                        magicCost affinities class rank magic
+                                in
+                                if
+                                    (Just ( magic.faction, True ) == faction)
+                                        || (List.member Cyborg typePerks && List.member magic.name [ Gadgetry, Integration ])
+                                then
+                                    Maybe.map
+                                        factionDiscount
+                                        cost
+
+                                else if Just ( magic.faction, False ) == faction then
+                                    cost
+
+                                else
+                                    Maybe.map
+                                        (\c ->
+                                            if c > 0 then
+                                                c
+
+                                            else
+                                                c * 2
+                                        )
+                                        cost
+                            )
+                )
     of
         Just cost ->
             Ok cost
 
         Nothing ->
-            case
-                FactionalMagic.all
-                    |> List.Extra.find (\magic -> magic.name == name)
-                    |> Maybe.andThen
-                        (\magic ->
-                            let
-                                cost : Maybe Int
-                                cost =
-                                    magicCost affinities class rank magic
-                            in
-                            if
-                                (Just ( magic.faction, True ) == faction)
-                                    || (List.member Cyborg typePerks && List.member magic.name [ Gadgetry, Integration ])
-                            then
-                                Maybe.map
-                                    (\c ->
-                                        if c > 0 then
-                                            c * 2
+            ResultME.error <| "Magic " ++ Types.magicToString name ++ " not found"
 
-                                        else
-                                            (c - 1) // 2
-                                    )
-                                    cost
 
-                            else if Just ( magic.faction, False ) == faction then
-                                cost
+factionDiscount : Int -> Int
+factionDiscount c =
+    if c > 0 then
+        c * 2
 
-                            else
-                                Maybe.map
-                                    (\c ->
-                                        if c > 0 then
-                                            c
-
-                                        else
-                                            c * 2
-                                    )
-                                    cost
-                        )
-            of
-                Just cost ->
-                    Ok cost
-
-                Nothing ->
-                    ResultME.error <| "Magic " ++ Types.magicToString name ++ " not found"
+    else
+        (c - 1) // 2
 
 
 magicCost :

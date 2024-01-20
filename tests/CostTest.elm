@@ -158,7 +158,7 @@ magicCosts =
             , testRanks { sorceressCyborg | typePerks = [ Cyborg ] } "Integration is in affinity" Integration 1 2 3 5 8
             ]
         , describe "Spiders with perk"
-            [ testRanks { sorceressSpider | typePerks = [ Spider ] } "Arachnescence is in affinity" Arachnescence 1 2 4 6 9
+            [ testRanks { sorceressSpider | typePerks = [ Spider ] } "Arachnescence is in affinity" Arachnescence 1 1 2 3 5
             ]
         ]
 
