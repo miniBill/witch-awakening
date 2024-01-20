@@ -327,7 +327,7 @@ divination =
         """, """
         _*Identity*_: Unless masked by wards or countermeasures, identify now reveals private information like your private name (not True Name), main place of residence, factions, and your ranks in magic specializations, perks, owned relics, and major relations (Companions, Family, Romantic entanglements, etc).
 
-        _*Status*_: Now reveals the source of the status effect, how long it has been applied, and predicted results (le; Death in 2 minutes), and suggestions on counteracting the status.
+        _*Status*_: Now reveals the source of the status effect, how long it has been applied, and predicted results (eg: Death in 2 minutes), and suggestions on counteracting the status.
 
         _*Map*_: Mapping can now work retroactively through your memories to generate map data of places you’ve already been and It now requires no focus to keep active, and it automatically applies Identify information to map data.
 

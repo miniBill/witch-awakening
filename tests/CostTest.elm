@@ -3,7 +3,7 @@ module CostTest exposing (magicCosts, perkCosts)
 import Data.Costs
 import Expect
 import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
-import Results exposing (Results(..))
+import ResultME exposing (ResultME)
 import Test exposing (Test, describe, test)
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
@@ -38,14 +38,14 @@ academicDryad =
     }
 
 
-expectPower : Int -> Results Data.Costs.Points -> Expect.Expectation
+expectPower : Int -> ResultME String Data.Costs.Points -> Expect.Expectation
 expectPower power value =
     Expect.equal
         ({ power = power
          , rewardPoints = 0
          , warnings = []
          }
-            |> Oks
+            |> Ok
         )
         value
 
@@ -107,7 +107,7 @@ testJack12 label model expected =
     test label <|
         \_ ->
             Data.Costs.perkCost model jack12
-                |> Expect.equal (Oks -expected)
+                |> Expect.equal (Ok -expected)
 
 
 magicCosts : Test

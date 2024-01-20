@@ -10,7 +10,8 @@ import Element.Input as Input
 import Element.Keyed
 import Generated.Types as Types exposing (Affinity)
 import List.Extra
-import Results exposing (Results(..))
+import List.Nonempty
+import ResultME exposing (ResultME)
 import String.Extra
 import Theme
 import Types exposing (Choice(..), Model, Msg(..))
@@ -19,17 +20,17 @@ import Types exposing (Choice(..), Model, Msg(..))
 viewMenu : Model key -> Element Msg
 viewMenu model =
     let
-        totalPoints : Results Points
+        totalPoints : ResultME String Points
         totalPoints =
             Costs.totalCost model
 
         ( rawWarnings, errors ) =
             case totalPoints of
-                Oks points ->
+                Ok points ->
                     ( List.Extra.unique points.warnings, [] )
 
-                Errs es ->
-                    ( [], List.Extra.unique es )
+                Err es ->
+                    ( [], List.Extra.unique <| List.Nonempty.toList es )
 
         affinities : List Affinity
         affinities =
@@ -90,10 +91,10 @@ viewMenu model =
         ]
 
 
-menuLabel : Model key -> Results Points -> List String -> String
+menuLabel : Model key -> ResultME String Points -> List String -> String
 menuLabel model totalPointsResult warnings =
     let
-        availablePoints : Results Points
+        availablePoints : ResultME String Points
         availablePoints =
             if model.capBuild || model.gameMode == Just Types.EarlyBird then
                 Costs.powerCap model
@@ -102,12 +103,12 @@ menuLabel model totalPointsResult warnings =
                 Costs.startingValue model
     in
     case
-        Results.map3 (\t a r -> ( t, a, r ))
+        Result.map3 (\t a r -> ( t, a, r ))
             totalPointsResult
             availablePoints
             (Costs.totalRewards model)
     of
-        Oks ( totalPoints, available, rewards ) ->
+        Ok ( totalPoints, available, rewards ) ->
             let
                 warningsIcon : String
                 warningsIcon =
@@ -149,7 +150,7 @@ menuLabel model totalPointsResult warnings =
                 in
                 "{center} " ++ powerString ++ "\n\n{center} " ++ rewardString
 
-        Errs _ ->
+        Err _ ->
             "[E]"
 
 
@@ -158,7 +159,7 @@ wrapInt before value after =
     before ++ String.fromInt value ++ after
 
 
-viewCalculations : Model key -> Results Points -> List String -> List Affinity -> Element Msg
+viewCalculations : Model key -> ResultME String Points -> List String -> List Affinity -> Element Msg
 viewCalculations model power warnings affinities =
     let
         resultRow : ( String, Element Msg )
@@ -166,8 +167,8 @@ viewCalculations model power warnings affinities =
             keyedRow
                 "Result"
                 (power
-                    |> Results.map Costs.negate
-                    |> Results.mapErrors (\_ -> [ "There are errors in the computation" ])
+                    |> Result.map Costs.negate
+                    |> Result.mapError (\_ -> List.Nonempty.singleton "There are errors in the computation")
                 )
                 Nothing
 
@@ -277,15 +278,15 @@ viewCalculations model power warnings affinities =
         ]
 
 
-keyedRow : String -> Results Points -> Maybe String -> ( String, Element Msg )
+keyedRow : String -> ResultME String Points -> Maybe String -> ( String, Element Msg )
 keyedRow label result target =
     ( label, row label result target )
 
 
-row : String -> Results Points -> Maybe String -> Element Msg
+row : String -> ResultME String Points -> Maybe String -> Element Msg
 row label result target =
     case result of
-        Errs es ->
+        Err es ->
             let
                 errorViews : List (Element msg)
                 errorViews =
@@ -298,13 +299,13 @@ row label result target =
                                 ]
                                 [ text e ]
                         )
-                        es
+                        (List.Nonempty.toList es)
             in
             Theme.column [ width fill ] <|
                 linkLabel label target
                     :: errorViews
 
-        Oks value ->
+        Ok value ->
             paragraph [ width fill ]
                 [ linkLabel label target
                 , rightPoints value
@@ -434,7 +435,7 @@ capSlider model =
                             , rightPoints <| Costs.powerToPoints model.towardsCap
                             ]
                 , min = 0
-                , max = toFloat <| Results.withDefault 0 <| Costs.complicationsRawValue model
+                , max = toFloat <| Result.withDefault 0 <| Costs.complicationsRawValue model
                 , value = toFloat model.towardsCap
                 , step = Just 1
                 , thumb = Input.defaultThumb
@@ -445,7 +446,7 @@ capSlider model =
 
         Just Types.StoryArc ->
             row label
-                (Results.map Costs.powerToPoints <| Costs.complicationsRawValue model)
+                (Result.map Costs.powerToPoints <| Costs.complicationsRawValue model)
                 (Just "Game Mode")
 
         Just Types.SkillTree ->
@@ -487,8 +488,8 @@ relicSlider model =
                             }
                         ]
                     ]
-        , min = negate <| toFloat <| Results.withDefault 0 <| Results.map .rewardPoints <| Costs.classValue model
-        , max = negate <| toFloat <| Results.withDefault 0 <| Results.map .rewardPoints <| Costs.relicsValue model
+        , min = negate <| toFloat <| Result.withDefault 0 <| Result.map .rewardPoints <| Costs.classValue model
+        , max = negate <| toFloat <| Result.withDefault 0 <| Result.map .rewardPoints <| Costs.relicsValue model
         , value = toFloat model.powerToRewards
         , step = Just 1
         , thumb = Input.defaultThumb
