@@ -1,4 +1,4 @@
-module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, negate, perkCost, perksValue, powerCap, powerToPoints, relicsValue, startingValue, totalPoints, totalRewards, typePerksValue, zero)
+module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, negate, perkCost, perksValue, powerCap, powerToPoints, relicsValue, startingValue, totalCost, totalRewards, typePerksValue, zero)
 
 import Data.Affinity as Affinity
 import Data.Companion as Companion
@@ -78,8 +78,8 @@ normalInitialWarning =
 -- Total --
 
 
-totalPoints : Model key -> Results Points
-totalPoints model =
+totalCost : Model key -> Results Points
+totalCost model =
     [ Results.map negate <| classValue model
     , Results.map negate <| startingValue model
     , Results.map negate <| complicationsValue model
@@ -624,8 +624,8 @@ factionValue model =
 companionsValue : Model key -> Results Points
 companionsValue model =
     let
-        totalCost : List ( Maybe Faction, Companion.Details ) -> Results Int
-        totalCost companions =
+        totalCompanionCost : List ( Maybe Faction, Companion.Details ) -> Results Int
+        totalCompanionCost companions =
             companions
                 |> Results.combineMap
                     (\( _, { name, cost } ) ->
@@ -713,7 +713,7 @@ companionsValue model =
             (\companions ->
                 Results.map
                     (\calculatedCost -> forFree companions - calculatedCost)
-                    (totalCost companions)
+                    (totalCompanionCost companions)
             )
         |> Results.map powerToPoints
 

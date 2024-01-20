@@ -21,7 +21,7 @@ viewMenu model =
     let
         totalPoints : Results Points
         totalPoints =
-            Costs.totalPoints model
+            Costs.totalCost model
 
         ( rawWarnings, errors ) =
             case totalPoints of
