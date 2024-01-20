@@ -13,7 +13,7 @@
 - Check non-Sorcs only select one off-affinity elementalism
 - Genie double discount for All
 
-- oh huh the Doll type perk also doesn't have multi-costing going on, maybe you just haven't looked at it specifically yet, Which Is Valid, There's A Lot
+- Doll type perk multicost: 1-4
 
 # v3
 
