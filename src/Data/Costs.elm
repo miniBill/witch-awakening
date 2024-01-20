@@ -8,7 +8,7 @@ import Data.Magic as Magic
 import Data.Perk as Perk
 import Data.Relic as Relic
 import Data.TypePerk as TypePerk
-import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Perk(..), Race(..), Relic(..))
+import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Magic(..), Perk(..), Race(..), Relic(..))
 import List.Extra
 import Result.Extra
 import ResultME exposing (ResultME)
@@ -397,10 +397,11 @@ magicValue :
         { a
             | faction : Maybe ( Faction, Bool )
             , class : Maybe Class
+            , typePerks : List Race
         }
     -> RankedMagic
     -> ResultME String Int
-magicValue affinities { faction, class } { name, rank } =
+magicValue affinities { faction, class, typePerks } { name, rank } =
     case
         Magic.all
             |> List.Extra.find (\magic -> magic.name == name)
@@ -420,7 +421,10 @@ magicValue affinities { faction, class } { name, rank } =
                                 cost =
                                     magicCost affinities class rank magic
                             in
-                            if Just ( magic.faction, True ) == faction then
+                            if
+                                (Just ( magic.faction, True ) == faction)
+                                    || (List.member Cyborg typePerks && List.member magic.name [ Gadgetry, Integration ])
+                            then
                                 Maybe.map
                                     (\c ->
                                         if c > 0 then

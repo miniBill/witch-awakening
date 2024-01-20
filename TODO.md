@@ -3,8 +3,6 @@
 - Heirloom
 - Jack of All free perk
 - Mark which magic from Talisman
-- Cyborg perk reduction to (integration and gadgetry)
-- Spider perk reduction to Arachnescence
 
 - Positive/negative traits' alignment in companions
 
