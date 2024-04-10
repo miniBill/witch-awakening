@@ -5,7 +5,9 @@
     "elm-test": "^0.19.1-revision12",
     "elm-watch": "^1.2.0-beta.4"
   },
+  "resolutions": {
+    "**/wrap-ansi": "^7.0.0"
+  },
   "name": "witch-awakening",
-  "packageManager": "yarn@4.0.2",
   "license": "MIT"
 }
