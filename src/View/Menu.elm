@@ -9,6 +9,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed
 import Generated.Types as Types exposing (Affinity)
+import Html.Attributes
 import List.Extra
 import List.Nonempty
 import ResultME exposing (ResultME)
@@ -306,7 +307,10 @@ row label result target =
                     :: errorViews
 
         Ok value ->
-            paragraph [ width fill ]
+            paragraph
+                [ width fill
+                , Element.htmlAttribute <| Html.Attributes.title <| String.join "\n" value.infos
+                ]
                 [ linkLabel label target
                 , rightPoints value
                 ]

@@ -711,16 +711,16 @@ companionsValue model =
                                         2
                                     )
 
-                sameKind : List ( Int, Companion.Details )
+                sameKind : List ( String, Int, Companion.Details )
                 sameKind =
                     byCost
                         |> List.filterMap
                             (\( _, cost, companion ) ->
-                                if
-                                    sameRace companion model.races
-                                        || sameClass companion model.class
-                                then
-                                    Just ( cost, companion )
+                                if sameRace companion model.races then
+                                    Just ( "Same race", cost, companion )
+
+                                else if sameClass companion model.class then
+                                    Just ( "Same class", cost, companion )
 
                                 else
                                     Nothing
@@ -733,10 +733,18 @@ companionsValue model =
                                 2
                             )
 
-                tryPick : List ( String, List ( Int, Companion.Details ) ) -> Points
+                withReason :
+                    String
+                    -> List ( Int, Companion.Details )
+                    -> List ( String, Int, Companion.Details )
+                withReason label group =
+                    List.map
+                        (\( cost, details ) -> ( label, cost, details ))
+                        group
+
+                tryPick : List (List ( String, Int, Companion.Details )) -> Points
                 tryPick lists =
                     lists
-                        |> List.map (\( label, group ) -> List.map (\( cost, details ) -> ( label, cost, details )) group)
                         |> List.Extra.removeWhen List.isEmpty
                         |> List.Extra.cartesianProduct
                         |> List.map
@@ -780,16 +788,16 @@ companionsValue model =
                             byCost
                 in
                 tryPick
-                    [ ( "Same faction", sameFaction )
-                    , ( "Same faction - True Treasure bonus", sameFaction )
-                    , ( "Same kind", sameKind )
-                    , ( "Possibly friendly faction - True Treasure bonus", possiblyFriendly )
+                    [ withReason "Same faction" sameFaction
+                    , withReason "Same faction - True Treasure bonus" sameFaction
+                    , sameKind
+                    , withReason "Possibly friendly faction - True Treasure bonus" possiblyFriendly
                     ]
 
             else
                 tryPick
-                    [ ( "Same faction", sameFaction )
-                    , ( "Same kind", sameKind )
+                    [ withReason "Same faction" sameFaction
+                    , sameKind
                     ]
     in
     model.companions
