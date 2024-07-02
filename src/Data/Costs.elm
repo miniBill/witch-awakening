@@ -8,7 +8,7 @@ import Data.Magic as Magic
 import Data.Perk as Perk
 import Data.Relic as Relic
 import Data.TypePerk as TypePerk
-import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..))
+import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..), companionToString)
 import List.Extra
 import Maybe.Extra
 import Result.Extra
@@ -20,6 +20,7 @@ type alias Points =
     { power : Int
     , rewardPoints : Int
     , warnings : List String
+    , infos : List String
     }
 
 
@@ -28,6 +29,7 @@ zero =
     { power = 0
     , rewardPoints = 0
     , warnings = []
+    , infos = []
     }
 
 
@@ -141,6 +143,7 @@ totalCost model =
                              else
                                 "Not enough power! Try adding complications."
                             )
+                , infos = result.infos
                 }
             )
 
@@ -641,7 +644,7 @@ factionValue model =
 companionsValue : Model key -> ResultME String Points
 companionsValue model =
     let
-        totalCompanionCost : List ( Maybe Faction, Companion.Details ) -> ResultME String Int
+        totalCompanionCost : List ( Maybe Faction, Companion.Details ) -> ResultME String Points
         totalCompanionCost companions =
             companions
                 |> Result.Extra.combineMap
@@ -653,9 +656,20 @@ companionsValue model =
                             Nothing ->
                                 ResultME.error <| "Companion " ++ Types.companionToString name ++ " does not have a fixed cost"
                     )
-                |> Result.map List.sum
+                |> Result.map
+                    (\list ->
+                        let
+                            power : Int
+                            power =
+                                List.sum list
+                        in
+                        { zero
+                            | power = power
+                            , infos = [ "Total companion cost: " ++ String.fromInt power ]
+                        }
+                    )
 
-        forFree : List ( Maybe Faction, Companion.Details ) -> Int
+        forFree : List ( Maybe Faction, Companion.Details ) -> Points
         forFree companions =
             let
                 treasure : Bool
@@ -718,76 +732,66 @@ companionsValue model =
                              else
                                 2
                             )
+
+                tryPick : List (List ( Int, Companion.Details )) -> Points
+                tryPick lists =
+                    lists
+                        |> List.Extra.removeWhen List.isEmpty
+                        |> List.Extra.cartesianProduct
+                        |> List.map
+                            (\picked ->
+                                let
+                                    unique =
+                                        picked
+                                            |> List.Extra.uniqueBy (\( _, { name } ) -> name)
+                                in
+                                { zero
+                                    | power =
+                                        unique
+                                            |> List.map Tuple.first
+                                            |> List.sum
+                                    , infos =
+                                        [ (picked
+                                            |> List.map (\( _, { name } ) -> companionToString name)
+                                            |> String.join " and "
+                                          )
+                                            ++ " for free"
+                                        ]
+                                }
+                            )
+                        |> List.Extra.maximumBy .power
+                        |> Maybe.withDefault zero
             in
-            if List.isEmpty sameFaction then
-                sameKind
-                    |> List.take
-                        (if treasure then
-                            2
+            if treasure then
+                let
+                    possiblyFriendly : List ( Int, Companion.Details )
+                    possiblyFriendly =
+                        List.filterMap
+                            (\( f, cost, c ) ->
+                                if f == Just TheOutsiders || f == Just AlphazonIndustries then
+                                    Nothing
 
-                         else
-                            1
-                        )
-                    |> List.map (\( cost, _ ) -> cost)
-                    |> List.sum
-
-            else if List.isEmpty sameKind then
-                sameFaction
-                    |> List.take
-                        (if treasure then
-                            2
-
-                         else
-                            1
-                        )
-                    |> List.map (\( cost, _ ) -> cost)
-                    |> List.sum
-
-            else if treasure then
-                List.Extra.lift4
-                    (\a b c d ->
-                        [ a, b, c, d ]
-                            |> List.Extra.uniqueBy (\( _, { name } ) -> name)
-                            |> List.map Tuple.first
-                            |> List.sum
-                    )
-                    sameFaction
-                    sameFaction
-                    sameKind
-                    (List.filterMap
-                        (\( f, cost, c ) ->
-                            if f == Just TheOutsiders || f == Just AlphazonIndustries then
-                                Nothing
-
-                            else
-                                Just ( cost, c )
-                        )
-                        byCost
-                    )
-                    |> List.maximum
-                    |> Maybe.withDefault 0
+                                else
+                                    Just ( cost, c )
+                            )
+                            byCost
+                in
+                tryPick [ sameFaction, sameFaction, sameKind, possiblyFriendly ]
 
             else
-                List.Extra.lift2
-                    (\( sfCost, sf ) ( skCost, sk ) ->
-                        if sf.name == sk.name then
-                            sfCost
-
-                        else
-                            sfCost + skCost
-                    )
-                    sameFaction
-                    sameKind
-                    |> List.maximum
-                    |> Maybe.withDefault 0
+                tryPick [ sameFaction, sameKind ]
     in
     model.companions
         |> Result.Extra.combineMap getCompanion
         |> Result.andThen
             (\companions ->
-                Result.map
-                    (\calculatedCost -> powerToPoints <| forFree companions - calculatedCost)
-                    (totalCompanionCost companions)
+                totalCompanionCost companions
+                    |> Result.map
+                        (\calculatedCost ->
+                            sum
+                                (forFree companions)
+                                (negate calculatedCost)
+                        )
             )
 
 
@@ -900,6 +904,7 @@ sum l r =
     { power = l.power + r.power
     , rewardPoints = l.rewardPoints + r.rewardPoints
     , warnings = l.warnings ++ r.warnings
+    , infos = l.infos ++ r.infos
     }
 
 
