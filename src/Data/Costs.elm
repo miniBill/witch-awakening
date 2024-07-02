@@ -754,7 +754,16 @@ companionsValue model =
                     sameFaction
                     sameFaction
                     sameKind
-                    (List.map (\( _, cost, c ) -> ( cost, c )) byCost)
+                    (List.filterMap
+                        (\( f, cost, c ) ->
+                            if f == Just TheOutsiders || f == Just AlphazonIndustries then
+                                Nothing
+
+                            else
+                                Just ( cost, c )
+                        )
+                        byCost
+                    )
                     |> List.maximum
                     |> Maybe.withDefault 0
 
