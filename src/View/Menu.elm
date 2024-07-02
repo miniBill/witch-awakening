@@ -13,6 +13,7 @@ import Html.Attributes
 import List.Extra
 import List.Nonempty
 import ResultME exposing (ResultME)
+import Set exposing (Set)
 import String.Extra
 import Theme
 import Types exposing (Choice(..), Model, Msg(..))
@@ -167,6 +168,7 @@ viewCalculations model power warnings affinities =
         resultRow =
             keyedRow
                 "Result"
+                model.showInfo
                 (power
                     |> Result.map Costs.negate
                     |> Result.mapError (\_ -> List.Nonempty.singleton "There are errors in the computation")
@@ -217,17 +219,17 @@ viewCalculations model power warnings affinities =
           )
         , section [] "Build kind"
         , ( "Switch", capBuildSwitch model )
-        , keyedRow "Class" (Costs.classValue model) <| Just "True Form - Class"
+        , keyedRow "Class" model.showInfo (Costs.classValue model) <| Just "True Form - Class"
         , link "Race" <| Just "True Form - Race"
-        , keyedRow "Starting power" (Costs.startingValue model) <| Just "Game Mode"
-        , keyedRow "Complications" (Costs.complicationsValue model) Nothing
-        , keyedRow "Type perks" (Costs.typePerksValue model) Nothing
-        , keyedRow "Magic" (Costs.magicsValue model) <| Just "The Magic"
-        , keyedRow "Perks" (Costs.perksValue model) Nothing
-        , keyedRow "Faction" (Costs.factionValue model) <| Just "Factions"
-        , keyedRow "Companions" (Costs.companionsValue model) Nothing
+        , keyedRow "Starting power" model.showInfo (Costs.startingValue model) <| Just "Game Mode"
+        , keyedRow "Complications" model.showInfo (Costs.complicationsValue model) Nothing
+        , keyedRow "Type perks" model.showInfo (Costs.typePerksValue model) Nothing
+        , keyedRow "Magic" model.showInfo (Costs.magicsValue model) <| Just "The Magic"
+        , keyedRow "Perks" model.showInfo (Costs.perksValue model) Nothing
+        , keyedRow "Faction" model.showInfo (Costs.factionValue model) <| Just "Factions"
+        , keyedRow "Companions" model.showInfo (Costs.companionsValue model) Nothing
         , ( "RelicSlider", relicSlider model )
-        , keyedRow "Relics" (Costs.relicsValue model) Nothing
+        , keyedRow "Relics" model.showInfo (Costs.relicsValue model) Nothing
         , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
         , resultRow
         , if List.isEmpty warnings then
@@ -267,7 +269,7 @@ viewCalculations model power warnings affinities =
                     List.map Theme.viewAffinity affinities
           )
         , ( "Cap Slider", capSlider model )
-        , keyedRow "Power cap" (Costs.powerCap model) <| Just "Game Mode"
+        , keyedRow "Power cap" model.showInfo (Costs.powerCap model) <| Just "Game Mode"
         , button
             { onPress = CompactAll
             , label = "Compact all"
@@ -279,13 +281,13 @@ viewCalculations model power warnings affinities =
         ]
 
 
-keyedRow : String -> ResultME String Points -> Maybe String -> ( String, Element Msg )
-keyedRow label result target =
-    ( label, row label result target )
+keyedRow : String -> Set String -> ResultME String Points -> Maybe String -> ( String, Element Msg )
+keyedRow label showInfo result target =
+    ( label, row label showInfo result target )
 
 
-row : String -> ResultME String Points -> Maybe String -> Element Msg
-row label result target =
+row : String -> Set String -> ResultME String Points -> Maybe String -> Element Msg
+row label showInfo result target =
     case result of
         Err es ->
             let
@@ -309,7 +311,11 @@ row label result target =
         Ok value ->
             paragraph
                 [ width fill
-                , Element.htmlAttribute <| Html.Attributes.title <| String.join "\n" value.infos
+                , if Set.member label showInfo then
+                    Element.htmlAttribute <| Html.Attributes.title <| String.join "\n" value.infos
+
+                  else
+                    width fill
                 ]
                 [ linkLabel label target
                 , rightPoints value
@@ -449,7 +455,9 @@ capSlider model =
             Element.none
 
         Just Types.StoryArc ->
-            row label
+            row
+                label
+                model.showInfo
                 (Result.map Costs.powerToPoints <| Costs.complicationsRawValue model)
                 (Just "Game Mode")
 

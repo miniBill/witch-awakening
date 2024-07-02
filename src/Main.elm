@@ -15,6 +15,8 @@ import Generated.Types as Types exposing (Perk(..), Relic(..))
 import Json.Decode as JD
 import List.Extra
 import Maybe.Extra
+import Set
+import Set.Extra
 import Task
 import Theme
 import Types exposing (Choice(..), Display(..), Model, Msg(..))
@@ -262,9 +264,6 @@ updateOnChoice choice model =
         DisplayCompanions companionsDisplay ->
             { model | companionsDisplay = companionsDisplay }
 
-        InfoCompanions companionsInfo ->
-            { model | companionsInfo = companionsInfo }
-
         ChoiceRelic ( relic, selected ) ->
             { model | relics = toggle selected relic model.relics }
 
@@ -282,6 +281,9 @@ updateOnChoice choice model =
 
         PowerToRewards powerToRewards ->
             { model | powerToRewards = powerToRewards }
+
+        ToggleInfo label ->
+            { model | showInfo = Set.Extra.toggle label model.showInfo }
 
 
 toUrl : Model key -> String
@@ -511,7 +513,6 @@ parseUrl navKey url =
     , factionalMagicDisplay = DisplayFull
     , companions = parseMany "companion" Types.companionFromString
     , companionsDisplay = DisplayFull
-    , companionsInfo = False
     , relics = parseMany "relic" parseRelic
     , relicsDisplay = DisplayFull
     , cosmicPearl =
@@ -529,6 +530,7 @@ parseUrl navKey url =
                             Nothing
                 )
         }
+    , showInfo = Set.empty
     }
 
 

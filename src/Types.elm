@@ -2,6 +2,7 @@ module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Displa
 
 import Browser exposing (UrlRequest)
 import Generated.Types exposing (Affinity, Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Relic, Slot(..))
+import Set exposing (Set)
 
 
 type Msg
@@ -37,13 +38,13 @@ type Choice
     | DisplayFactionalMagic Display
     | ChoiceCompanion ( Companion, Bool )
     | DisplayCompanions Display
-    | InfoCompanions Bool
     | ChoiceRelic ( RankedRelic, Bool )
     | DisplayRelics Display
     | ChoiceCosmicPearl CosmicPearlData
     | TowardsCap Int
     | PowerToRewards Int
     | ChoiceCapBuild Bool
+    | ToggleInfo String
 
 
 type alias CosmicPearlData =
@@ -78,10 +79,10 @@ type alias Model key =
     , factionalMagicDisplay : Display
     , companions : List Companion
     , companionsDisplay : Display
-    , companionsInfo : Bool
     , relics : List RankedRelic
     , relicsDisplay : Display
     , cosmicPearl : CosmicPearlData
+    , showInfo : Set String
     }
 
 
