@@ -4,8 +4,6 @@
     - Jack of All free perk
     - Mark which magic from Talisman
 
-    - Positive/negative traits' alignment in companions
-
     - Two free schools for Academic
     - One free elemental school for Sorc
     - Check all faction perks implementations
