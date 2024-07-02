@@ -390,7 +390,7 @@ parseUrl navKey url =
         parseMany : String -> (String -> Maybe a) -> List a
         parseMany key parser =
             Dict.get key appUrl.queryParameters
-                |> Maybe.andThen (Maybe.Extra.traverse parser)
+                |> Maybe.andThen (Maybe.Extra.combineMap parser)
                 |> Maybe.withDefault []
 
         pair : (String -> Maybe a) -> (a -> Maybe Int -> Maybe b) -> String -> Maybe b
