@@ -122,7 +122,7 @@ energized =
     , affinity = Wind
     , isMeta = False
     , content = Single 4 """
-        You passively emanate an electric aura that fills the air with a harmless sense of static and slight ozone smell. This passively charges any device within 10m of you, and you can focus to spike it to damage electronics within 30m or deliver a tazer-like zap to point you can see within 60m. Your touch slightly tingles, and with focus you can amplify this sensation. During a storm, you can focus your will on a target location to cause a lightning strike with a rough accuracy of a 6ft sphere, it can be skewed by lightning rods.
+        You passively emanate an electric aura that fills the air with a harmless sense of static and slight ozone smell. This passively charges any device within 10m of you, and you can focus to spike it to damage electronics within 30m or deliver a taser-like zap to point you can see within 60m. Your touch slightly tingles, and with focus you can amplify this sensation. During a storm, you can focus your will on a target location to cause a lightning strike with a rough accuracy of a 6ft sphere, it can be skewed by lightning rods.
         """
     }
 
@@ -424,7 +424,7 @@ menagerie =
     , content = Single 6 """
         _Requires Witchery 5._
 
-        In your pocketspace you gain 75 golden camels, 53 purple peacocks, 95 persian monkeys, 429 homunculi (synthetic humans) slaves, servants, and flunkies. 60 elephants, 231 llamas galore, 9 bears and lions. 40 holy sages (Real human spirits bound to your pocketspace that dedictated their lives to witches past) as scholars and philosophers though their information is a few millenia out of date. 1,000 birds of exotic varieties. You house them all in an elaborate palace complex the size of a small city that appears in your pocketspace, in a design of your choosing. Objects and wealth are false matter, but the creatures are real and can survive on false matter creations.
+        In your pocketspace you gain 75 golden camels, 53 purple peacocks, 95 persian monkeys, 429 homunculi (synthetic humans) slaves, servants, and flunkies. 60 elephants, 231 llamas galore, 9 bears and lions. 40 holy sages (Real human spirits bound to your pocketspace that dedicated their lives to witches past) as scholars and philosophers though their information is a few millennia out of date. 1,000 birds of exotic varieties. You house them all in an elaborate palace complex the size of a small city that appears in your pocketspace, in a design of your choosing. Objects and wealth are false matter, but the creatures are real and can survive on false matter creations.
         """
     }
 
@@ -462,7 +462,7 @@ levitation =
     , affinity = All
     , isMeta = False
     , content = Single 6 """
-        Your relationship with space is pretty relative. You can move yourself omnidirectionaly through space as though moving reality relative to you rather than moving your body itself. You’d appear to levitate as you wish and never need to touch the ground again You can disconnect any object you touch to be severed from the effects of gravity and it would remain as you last left it unless acted upon by another force, though acting as though it had notable friction to slow itself or resist wind. You "fly" at up to 25mph, as casual to you as a light jog. If you have Witchery, you add your potential speed if you were to use your broomstick, though you need not actually use it to gain speed.
+        Your relationship with space is pretty relative. You can move yourself omnidirectionally through space as though moving reality relative to you rather than moving your body itself. You’d appear to levitate as you wish and never need to touch the ground again You can disconnect any object you touch to be severed from the effects of gravity and it would remain as you last left it unless acted upon by another force, though acting as though it had notable friction to slow itself or resist wind. You "fly" at up to 25mph, as casual to you as a light jog. If you have Witchery, you add your potential speed if you were to use your broomstick, though you need not actually use it to gain speed.
         """
     }
 
@@ -666,7 +666,7 @@ witchHut =
     , content = Single 15 """
         You could have an old witch hut, or you can hire the Terry Bros to build you a Witch _Trailer_! Build a trailer from Celty’s Comfy Trailer [https://imgchest.com/p/dl7pqdj6yox]. (If you know a higher resolution one, do share. Or I might have to remake it myself with a witch hut theme...) If you have the Magic Shop perk, you can incorporate trailer rooms into your magic shop instead, or add Magic Shop rooms to your trailer as extensions.
 
-        For Roomates, you can also choose any Companions you have as a roommate, allowing for a closer relationship to that companion.
+        For Roommates, you can also choose any Companions you have as a roommate, allowing for a closer relationship to that companion.
 
         Options that grant or could grant power, such as Armory or Lab Sigma, cannot exceed the power level of a Rank 3 spell. One creation or effect can match R5.
         """
@@ -731,7 +731,7 @@ keeper =
     , isMeta = True
     , content =
         WithCosts """
-            Sometime within the next few years tops, you’ll meet my greattimes-8 grandmother who has an. offer for you. She knows some unique ancient magics and can teach you a thing or two. Take the _Keeper of Magic by TroyXPage_ [https://imgur.com/a/yoKPeub], [https://imgur.com/a/BoACmQp], [https://imgur.com/a/4GHVEQa].
+            Sometime within the next few years tops, you’ll meet my great-times-8 grandmother who has an. offer for you. She knows some unique ancient magics and can teach you a thing or two. Take the _Keeper of Magic by TroyXPage_ [https://imgur.com/a/yoKPeub], [https://imgur.com/a/BoACmQp], [https://imgur.com/a/4GHVEQa].
 
             Ignore the 3 categories: Pick one category per 15 Power spent on this perk. Otherwise adapt any given lore appropriately. You can take "No Magic" as though buying a companion, at 20p.
 
