@@ -733,29 +733,31 @@ companionsValue model =
                                 2
                             )
 
-                tryPick : List (List ( Int, Companion.Details )) -> Points
+                tryPick : List ( String, List ( Int, Companion.Details ) ) -> Points
                 tryPick lists =
                     lists
+                        |> List.map (\( label, group ) -> List.map (\( cost, details ) -> ( label, cost, details )) group)
                         |> List.Extra.removeWhen List.isEmpty
                         |> List.Extra.cartesianProduct
                         |> List.map
                             (\picked ->
                                 let
-                                    unique : List ( Int, Companion.Details )
+                                    unique : List ( String, Int, Companion.Details )
                                     unique =
                                         picked
-                                            |> List.Extra.uniqueBy (\( _, { name } ) -> name)
+                                            |> List.Extra.uniqueBy (\( _, _, { name } ) -> name)
                                 in
                                 { zero
                                     | power =
                                         unique
-                                            |> List.map Tuple.first
+                                            |> List.map (\( _, cost, _ ) -> cost)
                                             |> List.sum
                                     , infos =
-                                        [ (unique
-                                            |> List.map (\( _, { name } ) -> companionToString name)
-                                            |> String.join " and "
-                                          )
+                                        [ "Got "
+                                            ++ (unique
+                                                    |> List.map (\( label, _, { name } ) -> companionToString name ++ " (" ++ label ++ ")")
+                                                    |> String.join " and "
+                                               )
                                             ++ " for free"
                                         ]
                                 }
@@ -777,10 +779,18 @@ companionsValue model =
                             )
                             byCost
                 in
-                tryPick [ sameFaction, sameFaction, sameKind, possiblyFriendly ]
+                tryPick
+                    [ ( "Same faction", sameFaction )
+                    , ( "Same faction - True Treasure bonus", sameFaction )
+                    , ( "Same kind", sameKind )
+                    , ( "Possibly friendly faction - True Treasure bonus", possiblyFriendly )
+                    ]
 
             else
-                tryPick [ sameFaction, sameKind ]
+                tryPick
+                    [ ( "Same faction", sameFaction )
+                    , ( "Same kind", sameKind )
+                    ]
     in
     model.companions
         |> Result.Extra.combineMap getCompanion
