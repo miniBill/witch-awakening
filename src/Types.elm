@@ -1,7 +1,6 @@
 module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot, nextDisplay)
 
 import Browser exposing (UrlRequest)
-import Browser.Navigation
 import Generated.Types exposing (Affinity, Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Relic, Slot(..))
 
 
