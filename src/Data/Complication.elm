@@ -336,9 +336,9 @@ addiction : Details
 addiction =
     { name = Addiction
     , class = Just Warlock
-    , content = Single 2 """
+    , content = WithGains """
             You have an addiction of some form. You cannot go more than a week without it willingly, and that’s a good week. It’s usually a daily habit and you won’t feel like yourself without having engaged with it, Whether it is a substance or stimuli. It can be a drug, or it could be coffee, or lewd actions. You have a 25% chance of being incapable of resisting your addiction whenever it crops up which increases by 5% with every repeat exposure until you give in. An addiction to lewd things for example, would count any attractive sight as an exposure. This doesn’t mean immediate gratification but when you have a reasonable moment to indulge, while going a little out of your way to have the opportunity. The addiction can’t be something generally seen as productive or healthy (Honestly). This can be taken up to 3 times.
-            """
+            """ [ 2, 4, 6 ]
     }
 
 
