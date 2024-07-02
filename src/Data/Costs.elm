@@ -582,15 +582,14 @@ perkCost :
     -> RankedPerk
     -> ResultME String Int
 perkCost ({ class } as model) { name, cost } =
-    let
-        affinities : List Affinity
-        affinities =
-            Affinity.fromModel model
-    in
     find "Perk" .name name (Perk.all model.perks) Types.perkToString
         |> Result.map
             (\perk ->
                 let
+                    affinities : List Affinity
+                    affinities =
+                        Affinity.fromModel model
+
                     isClass : Bool
                     isClass =
                         Just perk.class == class
@@ -668,7 +667,9 @@ companionsValue model =
                     companions
                         |> List.filterMap
                             (\( f, c ) ->
-                                c.cost |> Maybe.map (\cost -> ( f, cost, c ))
+                                Maybe.map
+                                    (\cost -> ( f, cost, c ))
+                                    c.cost
                             )
                         |> List.sortBy (\( _, cost, _ ) -> -cost)
 
