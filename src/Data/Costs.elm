@@ -741,6 +741,7 @@ companionsValue model =
                         |> List.map
                             (\picked ->
                                 let
+                                    unique : List ( Int, Companion.Details )
                                     unique =
                                         picked
                                             |> List.Extra.uniqueBy (\( _, { name } ) -> name)
@@ -751,7 +752,7 @@ companionsValue model =
                                             |> List.map Tuple.first
                                             |> List.sum
                                     , infos =
-                                        [ (picked
+                                        [ (unique
                                             |> List.map (\( _, { name } ) -> companionToString name)
                                             |> String.join " and "
                                           )
