@@ -311,10 +311,14 @@ row label showInfo result target =
             textColumn [ width fill ]
                 (paragraph [ width fill ]
                     [ linkLabel label target
-                    , Input.button [ alignRight ]
-                        { label = rightPoints value
-                        , onPress = ToggleInfo label |> Choice |> Just
-                        }
+                    , if List.isEmpty value.infos then
+                        rightPoints value
+
+                      else
+                        Input.button [ alignRight ]
+                            { label = rightPoints value
+                            , onPress = ToggleInfo label |> Choice |> Just
+                            }
                     ]
                     :: (if Set.member label showInfo then
                             List.map
