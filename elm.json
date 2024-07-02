@@ -20,7 +20,6 @@
             "lydell/elm-app-url": "1.0.4",
             "mdgriffith/elm-ui": "1.1.8",
             "mgold/elm-nonempty-list": "4.2.0",
-            "miniBill/elm-result-extra": "1.0.0",
             "rtfeldman/elm-hex": "1.0.0",
             "the-sett/elm-error-handling": "2.2.1"
         },
