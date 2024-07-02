@@ -200,14 +200,13 @@ evelynnPWillowcrane =
         [ "+ Outgoing"
         , "+ Empathetic"
         , "+ Adaptable and cooperative"
-        , "+/- Also known for being dtf"
         ]
     , negatives =
         [ "- Not the most powerful"
         , "- Can be caught up in the moment"
         , "- A _little_ pushy, tactfully"
         ]
-    , mixed = []
+    , mixed = [ "+/- Also known for being dtf" ]
     , has = "Evelynn has Waterworking 1, Witchery 1, Divination 2, Digicasting 2, Runes 3 & _Fascinate_"
     }
 

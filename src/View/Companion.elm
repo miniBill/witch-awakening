@@ -1,7 +1,7 @@
 module View.Companion exposing (viewCompanions)
 
 import Data.Companion as Companion exposing (MaybeClass(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, table, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -281,14 +281,36 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                                 Element.none
 
                             else
-                                items
-                                    |> toBlocks
-                                    |> (::) (el [ Font.bold ] <| text <| label ++ ":")
-                                    |> column
-                                        [ width fill
-                                        , alignTop
-                                        , spacing <| Theme.rythm // 2
-                                        ]
+                                column
+                                    [ width fill
+                                    , alignTop
+                                    , spacing <| Theme.rythm // 2
+                                    ]
+                                    [ el [ Font.bold ] <| text <| label ++ ":"
+                                    , table [ width fill, spacing <| Theme.rythm // 2 ]
+                                        { data =
+                                            List.map
+                                                (\line ->
+                                                    case String.split " " line of
+                                                        [] ->
+                                                            ( "", "" )
+
+                                                        head :: tail ->
+                                                            ( head, String.join " " tail )
+                                                )
+                                                items
+                                        , columns =
+                                            [ { header = Element.none
+                                              , width = shrink
+                                              , view = \( sign, _ ) -> text sign
+                                              }
+                                            , { header = Element.none
+                                              , width = fill
+                                              , view = \( _, tail ) -> Theme.blocks [] tail
+                                              }
+                                            ]
+                                        }
+                                    ]
 
                         beforeBlock : Element msg
                         beforeBlock =
