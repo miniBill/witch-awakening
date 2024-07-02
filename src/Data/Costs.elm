@@ -753,7 +753,7 @@ companionsValue model =
                     sameFaction
                     sameFaction
                     sameKind
-                    sameKind
+                    (List.map (\( _, cost, c ) -> ( cost, c )) byCost)
                     |> List.maximum
                     |> Maybe.withDefault 0
 
