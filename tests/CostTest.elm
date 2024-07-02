@@ -60,6 +60,7 @@ expectPower power value =
         ({ power = power
          , rewardPoints = 0
          , warnings = []
+         , infos = []
          }
             |> Ok
         )
