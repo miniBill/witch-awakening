@@ -262,6 +262,9 @@ updateOnChoice choice model =
         DisplayCompanions companionsDisplay ->
             { model | companionsDisplay = companionsDisplay }
 
+        InfoCompanions companionsInfo ->
+            { model | companionsInfo = companionsInfo }
+
         ChoiceRelic ( relic, selected ) ->
             { model | relics = toggle selected relic model.relics }
 
@@ -508,6 +511,7 @@ parseUrl navKey url =
     , factionalMagicDisplay = DisplayFull
     , companions = parseMany "companion" Types.companionFromString
     , companionsDisplay = DisplayFull
+    , companionsInfo = False
     , relics = parseMany "relic" parseRelic
     , relicsDisplay = DisplayFull
     , cosmicPearl =

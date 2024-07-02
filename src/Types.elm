@@ -37,6 +37,7 @@ type Choice
     | DisplayFactionalMagic Display
     | ChoiceCompanion ( Companion, Bool )
     | DisplayCompanions Display
+    | InfoCompanions Bool
     | ChoiceRelic ( RankedRelic, Bool )
     | DisplayRelics Display
     | ChoiceCosmicPearl CosmicPearlData
@@ -77,6 +78,7 @@ type alias Model key =
     , factionalMagicDisplay : Display
     , companions : List Companion
     , companionsDisplay : Display
+    , companionsInfo : Bool
     , relics : List RankedRelic
     , relicsDisplay : Display
     , cosmicPearl : CosmicPearlData
