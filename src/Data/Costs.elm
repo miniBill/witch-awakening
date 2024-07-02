@@ -657,16 +657,10 @@ companionsValue model =
                                 ResultME.error <| "Companion " ++ Types.companionToString name ++ " does not have a fixed cost"
                     )
                 |> Result.map
-                    (\list ->
-                        let
-                            power : Int
-                            power =
-                                List.sum list
-                        in
-                        { zero
-                            | power = power
-                            , infos = [ "Total companion cost: " ++ String.fromInt power ]
-                        }
+                    (\points ->
+                        points
+                            |> List.sum
+                            |> powerToPoints
                     )
 
         forFree : List ( Maybe Faction, Companion.Details ) -> Points
@@ -761,13 +755,14 @@ companionsValue model =
                                             |> List.map (\( _, cost, _ ) -> cost)
                                             |> List.sum
                                     , infos =
-                                        [ "Got "
-                                            ++ (unique
-                                                    |> List.map (\( label, _, { name } ) -> companionToString name ++ " (" ++ label ++ ")")
-                                                    |> String.join " and "
-                                               )
-                                            ++ " for free"
-                                        ]
+                                        unique
+                                            |> List.map
+                                                (\( label, _, { name } ) ->
+                                                    companionToString name
+                                                        ++ " is free ("
+                                                        ++ label
+                                                        ++ ")"
+                                                )
                                 }
                             )
                         |> List.Extra.maximumBy .power
@@ -779,7 +774,7 @@ companionsValue model =
                     possiblyFriendly =
                         List.filterMap
                             (\( f, cost, c ) ->
-                                if f == Just TheOutsiders || f == Just AlphazonIndustries then
+                                if f == Just TheOutsiders || f == Just AlphazonIndustries || f == Just TheCollegeOfArcadia then
                                     Nothing
 
                                 else
@@ -789,9 +784,9 @@ companionsValue model =
                 in
                 tryPick
                     [ withReason "Same faction" sameFaction
-                    , withReason "Same faction - True Treasure bonus" sameFaction
+                    , withReason "Same faction - True Treasure" sameFaction
                     , sameKind
-                    , withReason "Possibly friendly faction - True Treasure bonus" possiblyFriendly
+                    , withReason "Possibly friendly faction - True Treasure" possiblyFriendly
                     ]
 
             else

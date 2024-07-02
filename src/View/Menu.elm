@@ -2,7 +2,7 @@ module View.Menu exposing (viewMenu)
 
 import Data.Affinity as Affinity
 import Data.Costs as Costs exposing (Points)
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, textColumn, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -309,17 +309,33 @@ row label showInfo result target =
                     :: errorViews
 
         Ok value ->
-            paragraph
-                [ width fill
-                , if Set.member label showInfo then
-                    Element.htmlAttribute <| Html.Attributes.title <| String.join "\n" value.infos
+            textColumn [ width fill ]
+                (paragraph [ width fill ]
+                    [ linkLabel label target
+                    , Input.button [ alignRight ]
+                        { label = rightPoints value
+                        , onPress = Just (Choice (ToggleInfo label))
+                        }
+                    ]
+                    :: (if Set.member label showInfo then
+                            List.map
+                                (\line ->
+                                    paragraph
+                                        [ Element.paddingEach
+                                            { top = 8
+                                            , left = 0
+                                            , right = 0
+                                            , bottom = 0
+                                            }
+                                        ]
+                                        [ text line ]
+                                )
+                                value.infos
 
-                  else
-                    width fill
-                ]
-                [ linkLabel label target
-                , rightPoints value
-                ]
+                        else
+                            []
+                       )
+                )
 
 
 capBuildSwitch : Model key -> Element Msg
