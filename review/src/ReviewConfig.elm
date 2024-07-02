@@ -58,11 +58,12 @@ config =
 pipelineConfig : List (ReviewPipelineStyles.PipelineRule ())
 pipelineConfig =
     List.concat
-        [ ReviewPipelineStyles.Premade.noSingleLineRightPizza
+        [-- ReviewPipelineStyles.Premade.noSingleLineRightPizza
 
         -- , ReviewPipelineStyles.Premade.noMultilineLeftPizza
         -- , ReviewPipelineStyles.Premade.noPipelinesWithSimpleInputs
-        , ReviewPipelineStyles.Premade.noRepeatedParentheticalApplication
+        --,
+         ReviewPipelineStyles.Premade.noRepeatedParentheticalApplication
         , ReviewPipelineStyles.Premade.noPipelinesWithConfusingNonCommutativeFunctions
         , ReviewPipelineStyles.Premade.noSemanticallyInfixFunctionsInLeftPipelines
         ]
