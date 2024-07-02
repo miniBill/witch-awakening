@@ -1,7 +1,5 @@
 # v2
 
-    - Arcadia True Companion => free companions
-
     - Heirloom
     - Jack of All free perk
     - Mark which magic from Talisman

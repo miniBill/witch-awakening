@@ -8,7 +8,7 @@ import Data.Magic as Magic
 import Data.Perk as Perk
 import Data.Relic as Relic
 import Data.TypePerk as TypePerk
-import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction, GameMode(..), Magic(..), Perk(..), Race(..), Relic(..))
+import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..))
 import List.Extra
 import Maybe.Extra
 import Result.Extra
@@ -659,12 +659,20 @@ companionsValue model =
         forFree : List ( Maybe Faction, Companion.Details ) -> Int
         forFree companions =
             let
-                byCost : List ( Maybe Faction, Companion.Details )
+                treasure : Bool
+                treasure =
+                    model.faction == Just ( TheCollegeOfArcadia, True )
+
+                byCost : List ( Maybe Faction, Int, Companion.Details )
                 byCost =
                     companions
-                        |> List.sortBy (\( _, { cost } ) -> -(Maybe.withDefault -1 cost))
+                        |> List.filterMap
+                            (\( f, c ) ->
+                                c.cost |> Maybe.map (\cost -> ( f, cost, c ))
+                            )
+                        |> List.sortBy (\( _, cost, _ ) -> -cost)
 
-                sameFaction : List Companion.Details
+                sameFaction : List ( Int, Companion.Details )
                 sameFaction =
                     case model.faction of
                         Nothing ->
@@ -673,55 +681,93 @@ companionsValue model =
                         Just ( f, _ ) ->
                             byCost
                                 |> List.filterMap
-                                    (\( faction, c ) ->
+                                    (\( faction, cost, c ) ->
                                         if faction == Just f then
-                                            Just c
+                                            Just ( cost, c )
 
                                         else
                                             Nothing
                                     )
-                                |> List.take 2
+                                |> List.take
+                                    (if treasure then
+                                        4
 
-                sameKind : List Companion.Details
+                                     else
+                                        2
+                                    )
+
+                sameKind : List ( Int, Companion.Details )
                 sameKind =
                     byCost
                         |> List.filterMap
-                            (\( _, companion ) ->
+                            (\( _, cost, companion ) ->
                                 if
                                     sameRace companion model.races
                                         || sameClass companion model.class
                                 then
-                                    Just companion
+                                    Just ( cost, companion )
 
                                 else
                                     Nothing
                             )
-                        |> List.take 2
+                        |> List.take
+                            (if treasure then
+                                4
+
+                             else
+                                2
+                            )
             in
             if List.isEmpty sameFaction then
                 sameKind
-                    |> List.head
-                    |> Maybe.andThen (\{ cost } -> cost)
-                    |> Maybe.withDefault 0
+                    |> List.take
+                        (if treasure then
+                            2
+
+                         else
+                            1
+                        )
+                    |> List.map (\( cost, _ ) -> cost)
+                    |> List.sum
 
             else if List.isEmpty sameKind then
                 sameFaction
-                    |> List.head
-                    |> Maybe.andThen (\{ cost } -> cost)
+                    |> List.take
+                        (if treasure then
+                            2
+
+                         else
+                            1
+                        )
+                    |> List.map (\( cost, _ ) -> cost)
+                    |> List.sum
+
+            else if treasure then
+                List.Extra.lift4
+                    (\a b c d ->
+                        [ a, b, c, d ]
+                            |> List.Extra.uniqueBy (\( _, { name } ) -> name)
+                            |> List.map Tuple.first
+                            |> List.sum
+                    )
+                    sameFaction
+                    sameFaction
+                    sameKind
+                    sameKind
+                    |> List.maximum
                     |> Maybe.withDefault 0
 
             else
                 List.Extra.lift2
-                    (\sf sk ->
+                    (\( sfCost, sf ) ( skCost, sk ) ->
                         if sf.name == sk.name then
-                            sf.cost
+                            sfCost
 
                         else
-                            Maybe.map2 (+) sf.cost sk.cost
+                            sfCost + skCost
                     )
                     sameFaction
                     sameKind
-                    |> List.filterMap identity
                     |> List.maximum
                     |> Maybe.withDefault 0
     in
@@ -847,6 +893,11 @@ sum l r =
     }
 
 
+sumPoints : List Points -> Points
+sumPoints =
+    List.foldl sum zero
+
+
 resultSum : (item -> ResultME String Int) -> List item -> ResultME String Int
 resultSum toValue list =
     list
@@ -858,7 +909,7 @@ resultsSum : List (ResultME String Points) -> ResultME String Points
 resultsSum list =
     list
         |> Result.Extra.combine
-        |> Result.map (List.foldl sum zero)
+        |> Result.map sumPoints
 
 
 powerToPoints : Int -> Points
