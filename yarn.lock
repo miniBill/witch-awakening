@@ -379,10 +379,10 @@ elm-test-rs@^3.0.0-5:
     "@mattpiz/elm-test-rs-linux-x64" "3.0.0-0"
     "@mattpiz/elm-test-rs-win32-x64" "3.0.0-0"
 
-elm-watch@^2.0.0-beta.2:
-  version "2.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/elm-watch/-/elm-watch-2.0.0-beta.2.tgz#d8e44ac4ed2f8f2d324d388baf46e1810e52a735"
-  integrity sha512-/mkNiU9tM9VIWuo+Kd1gJ0XQwPT9FZEYW5BjQWUqJviflP3PqXsSYhk749ZxLysJfNhI7OzI7saDkIb/cysAjw==
+elm-watch@^2.0.0-beta.3:
+  version "2.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/elm-watch/-/elm-watch-2.0.0-beta.3.tgz#3bb7f7952559c9e297734d87a283f0fb8e5b1496"
+  integrity sha512-rEi3cZiPgjnvmHX3toqUEwf+DJsGTqsMeNXVTGIC6POHyGjAXeyaUrp2RxMSrV6IS0hSBDu++KCBGO1tgJ/iew==
   dependencies:
     chokidar "^3.5.3"
     cross-spawn "^7.0.3"

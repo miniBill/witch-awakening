@@ -32,4 +32,4 @@ build:
 
 .PHONY: run
 run: generated/Images.elm
-	sh -c "tmux new-session 'yarn elm-watch hot' \; split-window 'python -m http.server 8002'"
+	yarn elm-watch hot
