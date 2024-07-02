@@ -2,14 +2,13 @@ module View.Menu exposing (viewMenu)
 
 import Data.Affinity as Affinity
 import Data.Costs as Costs exposing (Points)
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, textColumn, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, textColumn, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed
 import Generated.Types as Types exposing (Affinity)
-import Html.Attributes
 import List.Extra
 import List.Nonempty
 import ResultME exposing (ResultME)
@@ -314,7 +313,7 @@ row label showInfo result target =
                     [ linkLabel label target
                     , Input.button [ alignRight ]
                         { label = rightPoints value
-                        , onPress = Just (Choice (ToggleInfo label))
+                        , onPress = ToggleInfo label |> Choice |> Just
                         }
                     ]
                     :: (if Set.member label showInfo then
