@@ -34,7 +34,7 @@ daeva =
     { race = Daeva
     , cost = 1
     , content = """
-        Learn to manifest fine tuned control over the functions of body. You can raise or lower your temperature to tolerate limited temperature extremes such as laying comfortably bare in snow, or hot desert sands. You can reduce your heart rate to just one beat per 10 minutes in a trance state where you can survive without air and general delay death for up to weeks. You have perfect fertility control, and you can choose to pass on Witchiness to your offspring to gurantee or prevent witch children, as well as choose sex and gene expression.
+        Learn to manifest fine tuned control over the functions of body. You can raise or lower your temperature to tolerate limited temperature extremes such as laying comfortably bare in snow, or hot desert sands. You can reduce your heart rate to just one beat per 10 minutes in a trance state where you can survive without air and general delay death for up to weeks. You have perfect fertility control, and you can choose to pass on Witchiness to your offspring to guarantee or prevent witch children, as well as choose sex and gene expression.
         """
     }
 
@@ -142,7 +142,7 @@ luxal =
     { race = Luxal
     , cost = 3
     , content = """
-        Leam to trigger explosive growths of your associated gemstone or metal, growing from your body in the way you see fit. You can grow no more metal or stones than you have consumed in the past week, which then doesn’t count to subsequent growth after it is used. Simple shapes like blades or spikes are easy, but precise craftsmanship requires actual artistic skills, though with the skill or a reference on hand, you could create jewelry or mint coins.
+        Learn to trigger explosive growths of your associated gemstone or metal, growing from your body in the way you see fit. You can grow no more metal or stones than you have consumed in the past week, which then doesn’t count to subsequent growth after it is used. Simple shapes like blades or spikes are easy, but precise craftsmanship requires actual artistic skills, though with the skill or a reference on hand, you could create jewelry or mint coins.
 
         Your growths can be disconnected to simply fall off, or can be projected with the force of a 50 cal bullet. How that force translates to the actual projectile depends on the projectile, a spear of metal being slower than a small bolt or bullet shape.
         """
@@ -154,7 +154,7 @@ kekubi =
     { race = Kekubi
     , cost = 5
     , content = """
-        Advanced control over the ash, soot, or smoke produced from their body, both what they produce deliberately, and what composes their own body. They can use this to manipulate it (Aesthetically a lot like some form of shadow manipulation) within 30 meters of themselves, in addition to effectively turning any other magic into this manner of soot manipulation. The primary unique usage of this would be the control of their own body, freely breaking apart their body to control it remotely and in pieces as small as a grain of soot, or a full limb, or to levitate themself in full. They can still receive damage when broken apart, though naturally they’re harder to physically damage (Blunt/Pierce/Slash).
+        Advanced control over the ash, soot, or smoke produced from their body, both what they produce deliberately, and what composes their own body. They can use this to manipulate it (Aesthetically a lot like some form of shadow manipulation) within 30 meters of themselves, in addition to effectively turning any other magic into this manner of soot manipulation. The primary unique usage of this would be the control of their own body, freely breaking apart their body to control it remotely and in pieces as small as a grain of soot, or a full limb, or to levitate themselves in full. They can still receive damage when broken apart, though naturally they’re harder to physically damage (Blunt/Pierce/Slash).
         """
     }
 
@@ -164,7 +164,7 @@ sylph =
     { race = Sylph
     , cost = 3
     , content = """
-        Some sylphs inherit the ability to take their near-etherealization to the next level; With this perk you can fully phase yourself to ignore solid matter, allowing you to walk through walls. This is a psuedobiological trait, so you can’t bring other objects along with you that you want, it’s all or nothing. This includes your mothergifts, so you might want to avoid witches and mediums while ethereal, and you’ll need a different escape method if you want to bail out of an area with an object you intended to swipe and I’d recommend leaming to summon your mothergifts quicker to regain modesty when you end the ethereal phase. You can’t breathe while phased, but you’re invulnerable to anything that can’t harm a spirit.
+        Some sylphs inherit the ability to take their near-etherealization to the next level; With this perk you can fully phase yourself to ignore solid matter, allowing you to walk through walls. This is a pseudo-biological trait, so you can’t bring other objects along with you that you want, it’s all or nothing. This includes your mothergifts, so you might want to avoid witches and mediums while ethereal, and you’ll need a different escape method if you want to bail out of an area with an object you intended to swipe and I’d recommend learning to summon your mothergifts quicker to regain modesty when you end the ethereal phase. You can’t breathe while phased, but you’re invulnerable to anything that can’t harm a spirit.
         """
     }
 
@@ -174,7 +174,7 @@ undine =
     { race = Undine
     , cost = 2
     , content = """
-         Undine can be mildly difficult to notice underwater, but some are able to fine tune their body to become perfectly transparent within a body of water. Effectively, an undine with this perk is outright invisible within water and camouflaged within rain, and is able to maintain control and movement in nonsolid forms, such as moving around as a puddle, where normal undine would be immobile without becoming more solid. This allows the undine to pass through any surface that water could pass through, such as cracks under a door or seams of improperly sealed wood. You could invade the body of a creature but no, becoming solid within won’t do harm, being limited to available space.
+         Undine can be mildly difficult to notice underwater, but some are able to fine tune their body to become perfectly transparent within a body of water. Effectively, an undine with this perk is outright invisible within water and camouflaged within rain, and is able to maintain control and movement in non-solid forms, such as moving around as a puddle, where normal undine would be immobile without becoming more solid. This allows the undine to pass through any surface that water could pass through, such as cracks under a door or seams of improperly sealed wood. You could invade the body of a creature but no, becoming solid within won’t do harm, being limited to available space.
         """
     }
 
@@ -422,7 +422,7 @@ spider =
     { race = Spider
     , cost = 8
     , content = """
-        There are those among the spiders that can adopt the shape of a much smaller spider for convenience, between the size of a dime or a halfdollar, or they can freely assume the form of a much larger spider that in its normal stance would be eye level with an adult human male’s chest. In this form their exoskeleton is plated like thick steel armor, and their speed matches that of a sports car.
+        There are those among the spiders that can adopt the shape of a much smaller spider for convenience, between the size of a dime or a half dollar, or they can freely assume the form of a much larger spider that in its normal stance would be eye level with an adult human male’s chest. In this form their exoskeleton is plated like thick steel armor, and their speed matches that of a sports car.
 
         In this form they can produce webbing as thick and sturdy as a metal cable on demand capable of reaching roughly 100 meters when launched, easily latching on to nearly any surface, or they can create 10ft increments of nanowebbing very difficult to see that when properly anchored will slice through bone with just the force of a victim walking into it.
 
@@ -452,7 +452,7 @@ pixie =
     { race = Pixie
     , cost = 3
     , content = """
-        Notable pixies are capable of generating pixiedust with their wings, a flap of their wings with intention to do so can release a pinch of pixiedust, well a pinch compared to a full size humanoid.
+        Notable pixies are capable of generating pixie dust with their wings, a flap of their wings with intention to do so can release a pinch of pixie dust, well a pinch compared to a full size humanoid.
 
         - On Animals of sub-human intelligence, this lets the pixie issue commands that it will follow for up to 1 week.
         - On Plants, this causes an instantaneous bloom so long as. the plant is mature enough to do so, or invigorates the plant allowing it to grow 200% above normal, with 200% larger fruits or vegetables, etc.

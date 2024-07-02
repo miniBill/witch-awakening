@@ -55,7 +55,7 @@ ifrit =
     , content = """
         Ifriti are beings native to the elemental plane of fire. Their connection manifests in the most obvious manner of the hitches, as their bodies are burned away in their awakening, their body becoming a living conflagration of flame made flesh anchored and governed by a core skull. They bleed plasma and smoke while limbs severed from their core flicker away like dying flames. The fire of their bodies is slightly above room temp and does not burn, and is tangible enough to touch, feeling like normal flesh, though their hair is more gaseous and warmer. Their body is only a little transparent, enough to see the skull but not all the way through them. They inherently do not age, but can “eat” flammable fuel sources along with traditionally edible materials. Damage to the body is superficial and mended by absorbing flames, though damage to the skull must be healed by traditional means.
 
-        __Ifriti draw Mana__ from Burning, the release of energy released by matter through buming caused by the witch.
+        __Ifriti draw Mana__ from Burning, the release of energy released by matter through burning caused by the witch.
         """
     }
 
@@ -97,7 +97,7 @@ dryad =
     , content = """
         Dryads have plantlike bodies given human form, from which leaves or bark can grow. Many have branches or twigs forming horns or crowns, tiaras, and diadems, that can include berries or fruits. Dryads age normally but are able to assume the form of a tree, in which they can gain any nutrients from light and soil, and de-age at 10x the rate they’d age. The presence of a dryad prevents the growth of infectious diseases and enhances the growth of plants and creatures by 200%, growing with added Vitality. Fruits are sweeter and larger, animals are larger and healthier, etc. All dryads additionally have an internal seed the size of avocado pit. If they die, this pit will grow into a large underground pod with a radiant flower, that will regrow the dryad’s body over 3 months to roughly the equivalent of an 8 year old human. They’ll regain their memories over a week.
 
-        __Dryads draw Mana__ from Nurture, from the growth of other living things directly contributable to the Dryad’s effort, whether it’s tending to plants, or feeding a person.
+        __Dryads draw Mana__ from Nurture, from the growth of other living things directly attributable to the Dryad’s effort, whether it’s tending to plants, or feeding a person.
         """
     }
 
@@ -137,7 +137,7 @@ aurai =
     , affinities = [ Wind, Necro ]
     , charge = High
     , content = """
-        Aurae are closely associated with the faewilds. Their irises are like kaleidoscopic gemstones, and have slender claw-like nails. Their voice innately carries with it a withering drain that steals a year of life per half second of exposure, which restores the Aurai’s own age to around age 20, banking excess drain. Their screams can induce a horrific vision where the listener is displaced to a random point in time at least 100 years in the past, for anywhere from 1 week to the rest of their life, remaining until they find a glowing butterfly never more than 1 mile away that serves as an anchor, only to return to the moment after they heard the scream, then drop dead if slain in the past at any point. This never affects the existing timeline. When slain, they experience this vision themself and finding the butterfly resurrects them.
+        Aurae are closely associated with the faewilds. Their irises are like kaleidoscopic gemstones, and have slender claw-like nails. Their voice innately carries with it a withering drain that steals a year of life per half second of exposure, which restores the Aurai’s own age to around age 20, banking excess drain. Their screams can induce a horrific vision where the listener is displaced to a random point in time at least 100 years in the past, for anywhere from 1 week to the rest of their life, remaining until they find a glowing butterfly never more than 1 mile away that serves as an anchor, only to return to the moment after they heard the scream, then drop dead if slain in the past at any point. This never affects the existing timeline. When slain, they experience this vision themselves and finding the butterfly resurrects them.
 
         __Aurae draw Mana__ from Displacement, gaining power through the corrective measures involved in covering up paradoxes in the timeline as it mends itself from disruptions caused by sending a being backward in time.
         """
@@ -307,7 +307,7 @@ taura =
     , affinities = [ Nature, Beast ]
     , charge = Med
     , content = """
-        Taurai are very obvious at a glance for their large animal lower “halves” where the upper torso of a human from the hips up replace an animal head and neck, the whole body shoulders-down of another animal replacing what would be their human legs. They may or may not have animal features on their head or back as well up to the extent of being Sphinx-like. This can be any legged animal from lizard or spider to rabbit or horse. This is usually a hooved animal but pawed animals aren’t that rare, and spider taura are fairly common in places. Their lower bodies are generally powerful and have a high sprint speed and endurance.
+        Taurai are very obvious at a glance for their large animal lower “halves” where the upper torso of a human from the hips up replace an animal head and neck, the whole body shoulders-down of another animal replacing what would be their human legs. They may or may not have animal features on their head or back as well up to the extent of being Sphinx-like. This can be any legged animal from lizard or spider to rabbit or horse. This is usually a hoofed animal but pawed animals aren’t that rare, and spider taura are fairly common in places. Their lower bodies are generally powerful and have a high sprint speed and endurance.
 
         __Taura draw Mana__ from Conservation, when acting in harmony with a natural state of being, which generally revolves around sustainability and continuity of life, land protecting nature or historical artifacts or buildings 60+ years old. Non-invasive improvements or protections will cause a passive mana gain for 100x the time it took to build/fix/set up. High charge while actively guarding within a 100m area.
         """
@@ -321,7 +321,7 @@ wulong =
     , affinities = [ Beast, Mind ]
     , charge = Med
     , content = """
-        Wulong are exclusively a type of witch, associated with the asian lung dragons Wulong have jagged but usually smooth tipped horns like deer, or coral, and stained or painted-like arms up past their elbows that can look like stained glass or tie-dye, and they have long tails with a strip of soft fur ending in a tuft. Wulong are able to fly by force of will with somewhat strenuous effort equivalent to a full sprint Their blood is an ink the same color as the dominant color of their horns and arms. Wulong age like Elves, slowing from age 3 until reaching 18 at 100. Aslain wulong can be reborn from a painting or statue that the wulong had formed a bond with using a drop of blood. Post-death, If someone with enough passion and knowledge of the wulong’s body creates an accurate masterwork, they can be reborn without a prior bonded work of art, from no remains.
+        Wulong are exclusively a type of witch, associated with the asian lung dragons Wulong have jagged but usually smooth tipped horns like deer, or coral, and stained or painted-like arms up past their elbows that can look like stained glass or tie-dye, and they have long tails with a strip of soft fur ending in a tuft. Wulong are able to fly by force of will with somewhat strenuous effort equivalent to a full sprint Their blood is an ink the same color as the dominant color of their horns and arms. Wulong age like Elves, slowing from age 3 until reaching 18 at 100. A slain wulong can be reborn from a painting or statue that the wulong had formed a bond with using a drop of blood. Post-death, If someone with enough passion and knowledge of the wulong’s body creates an accurate masterwork, they can be reborn without a prior bonded work of art, from no remains.
 
         __Wulong draw Mana__ from Artistry, charging in proximity to works of art. Any work of art, made with creative and/or meaningful intent imbued with subjective value of the creator. Paintings, Storybooks, Statues, etc.
         """
@@ -364,7 +364,7 @@ doll =
     , affinities = [ Soul, Necro ]
     , charge = High
     , content = """
-        Dolls are artificial beings. If you’ve awakened into a Doll form, your soul is likely a reincarnation of a soul used in the creation of a Doll in the past but it could be exposure to experimental energies that corrupted your witch type. Dolls get their name as most Dolls are literally ball jointed dolls of wood or porcelain but dolls can also be fully organic made of sewn flesh of different bodyparts, others are clockwork, or recently Alphazon has been making fullsynth dolls. Black market deals in Asia have been making dolls with limited self-governance and selling them.
+        Dolls are artificial beings. If you’ve awakened into a Doll form, your soul is likely a reincarnation of a soul used in the creation of a Doll in the past but it could be exposure to experimental energies that corrupted your witch type. Dolls get their name as most Dolls are literally ball jointed dolls of wood or porcelain but dolls can also be fully organic made of sewn flesh of different body parts, others are clockwork, or recently Alphazon has been making fullsynth dolls. Black market deals in Asia have been making dolls with limited self-governance and selling them.
 
         Dolls don’t age or have biological functions by default, though some can have living organic parts. A doll can’t die, only cease function. If repaired then they regain function. They have all normal senses, even touch- Pain or pleasure both, but a maker can adjust these along with personality elements or even memory,
 
@@ -380,7 +380,7 @@ vanir =
     , affinities = [ Water, Nature ]
     , charge = High
     , content = """
-        Vanir are beings associated with winter, and hidden groves of life amid the frost. The presence of a vanir will allow plantlife to thrive in the cold and while creatures will still feel cold, they won’t suffer actual harm, including themselves, though they don’t feel discomfort at all with the cold. Their bodies are blue, white, or gray emitting a cold chill, from which ice crystals form like scales, spikes, or horns.
+        Vanir are beings associated with winter, and hidden groves of life amid the frost. The presence of a vanir will allow plant life to thrive in the cold and while creatures will still feel cold, they won’t suffer actual harm, including themselves, though they don’t feel discomfort at all with the cold. Their bodies are blue, white, or gray emitting a cold chill, from which ice crystals form like scales, spikes, or horns.
 
         Vanir age normally until their apparent age freezes randomly between 18-25. A slain vanir flash freezes and shatters into a mist of ice crystals. Somewhere within the nearest tundra (such as a snowcapped mountain peak), a new body will form out of ice over 3 months, then crack to free them with new life.
 
@@ -424,7 +424,7 @@ orc =
     , affinities = [ Body, Earth ]
     , charge = Low
     , content = """
-        Orcs were widely present along with the elves with a hostile relationship back then. Orcs come in three colors, green with tusks, red with horns, and blue with neither. Exceptions exist, and half-breeds often have very muted colors like a tint to a more typical skin tone. They typically have elf-like ears, but are known for being strongly built and large in stature with an average height of 6'8\\". They have low light vision capable of seeing in dark with the faintest light source, and can go without any air for hours, or days on thin air. Orcs have a sense for ore and faultlines. Orcs age normally, but when an orc dies they are reborn from the closest member of their family tree to rapidly age back to 20 equivalent within 3 months.
+        Orcs were widely present along with the elves with a hostile relationship back then. Orcs come in three colors, green with tusks, red with horns, and blue with neither. Exceptions exist, and half-breeds often have very muted colors like a tint to a more typical skin tone. They typically have elf-like ears, but are known for being strongly built and large in stature with an average height of 6'8\\". They have low light vision capable of seeing in dark with the faintest light source, and can go without any air for hours, or days on thin air. Orcs have a sense for ore and fault lines. Orcs age normally, but when an orc dies they are reborn from the closest member of their family tree to rapidly age back to 20 equivalent within 3 months.
 
         __Orcs draw Mana__ from Birth, fueled by the growth of new life created by the orc More effective for female orcs growing it themselves, male orcs have about a tenth the same energy gain while a currently pregnant orc gains charge very rapidly then it levels out into background charge as the offspring grow.
         """
@@ -524,7 +524,7 @@ sword =
     , affinities = [ Metal, Blood ]
     , charge = Low
     , content = """
-        Wait what? Oh I’ve heard of these before. Huh, you may be a Sword Yeah, a sentient sword and a living relic. “Swords” have a humanoid body that can visually look like any other race shown here, but they adopt a sword form that is their true form. If unconscious or slain, they’d adopt their sword form. They have no biological needs, but do age up until age 20 equivalent, their sword form starting out as a knife and will grow with their body over time into some type of sword based on their personality, Can include polearms, just swords with long handles, and axes, weird swords with long handles, or hammers... swords with very weird flat blades. Don’t ask questions, just stab. Their sword form heals over time, damage reflecting in their humanoid body. Adead sword can be brought to life by using the inert sword to take a life. In sword form, they have all their magic abilities without requiring hands, and all magic manifests in some sword related way. They can synchronize with the thoughts and intentions a wielder.
+        Wait what? Oh I’ve heard of these before. Huh, you may be a Sword Yeah, a sentient sword and a living relic. “Swords” have a humanoid body that can visually look like any other race shown here, but they adopt a sword form that is their true form. If unconscious or slain, they’d adopt their sword form. They have no biological needs, but do age up until age 20 equivalent, their sword form starting out as a knife and will grow with their body over time into some type of sword based on their personality, Can include polearms, just swords with long handles, and axes, weird swords with long handles, or hammers... swords with very weird flat blades. Don’t ask questions, just stab. Their sword form heals over time, damage reflecting in their humanoid body. A dead sword can be brought to life by using the inert sword to take a life. In sword form, they have all their magic abilities without requiring hands, and all magic manifests in some sword related way. They can synchronize with the thoughts and intentions a wielder.
 
         __Swords draw Mana__ from Battle, gaining MP during conflict. Increases to Med after 2 minutes, & High after 10 minutes.
         """
@@ -583,7 +583,7 @@ gnome =
     , content = """
         Gnomes are tiny inventive people that even in the wilds in history they were a productive and innovative people relying heavily on cunning works of primitive engineering to construct safe communities and traps to deal with a world of far larger threats, working with trees, roots, and earth. Now they’re natural at working metals into complex contraptions. They stand only 4 inches tall but have the strength of a typical humanoid child, impressive for their size, and the speed of a cat with strong limbs and durable bodies that are near immune to blunt damage
 
-        __Gnomes draw Mana__ from Tinkering, any time they create anything, they gain mana from doing so proportional to the material value, skill necessary, and time required. Juryrigging a quick contraption in a minute with a practical function and purpose could net you as much as 15% of your mana capacity. A long project that takes 4 hours could be a full restore, or 5 minutes with high skill, value, and risk of failure. Major projects taking a week to build can double their capacity for a week."""
+        __Gnomes draw Mana__ from Tinkering, any time they create anything, they gain mana from doing so proportional to the material value, skill necessary, and time required. Jury rigging a quick contraption in a minute with a practical function and purpose could net you as much as 15% of your mana capacity. A long project that takes 4 hours could be a full restore, or 5 minutes with high skill, value, and risk of failure. Major projects taking a week to build can double their capacity for a week."""
     }
 
 
@@ -594,7 +594,7 @@ pixie =
     , affinities = [ Nature, Wind ]
     , charge = High
     , content = """
-        Pixies are fae related to the Sprites, associated with plants where Sprites are associated with a manner of animal life. They can have wings like a sprite, or they can have leafy wings in any shape or color a leaf can have, though it may be thin to the point of transparency. Otherwise, pixies look like humans, elves, or dwarves but on a tiny scale, standing around an inch tall. They have a dryad-like ability to take on the form of any flower they’ve planted that has bloomed, and the ability to take pollens, seeds, or related traces of any two different flowers to breed a hybrid flower. Pixies flatly do not age, they merely grow from a baby size, to their adult size of around an inch. Aslain pixie can be reborn from any flower they have planted.
+        Pixies are fae related to the Sprites, associated with plants where Sprites are associated with a manner of animal life. They can have wings like a sprite, or they can have leafy wings in any shape or color a leaf can have, though it may be thin to the point of transparency. Otherwise, pixies look like humans, elves, or dwarves but on a tiny scale, standing around an inch tall. They have a dryad-like ability to take on the form of any flower they’ve planted that has bloomed, and the ability to take pollens, seeds, or related traces of any two different flowers to breed a hybrid flower. Pixies flatly do not age, they merely grow from a baby size, to their adult size of around an inch. A slain pixie can be reborn from any flower they have planted.
 
         __Pixies draw Mana__ from Blooming, whenever a flower created by the pixie blooms or a flower that the pixie has slept in the petals of, blooms then the pixie receives mana. As such, pixies tend to manage gardens of many different types of flowers, or in the wild range far to claim or plant them in fields or forests.
         """
@@ -608,7 +608,7 @@ fairy =
     , affinities = [ Soul, Mind ]
     , charge = Low
     , content = """
-        Fairies are fae related to the Sprites, but without either the flora or fauna association. They can have wings like a sprite, or they can have wafer wings of light transparent or opaque, that can emit a faint glow or light like a torch obscuring the fairy’s body. Otherwise, fairies look like humans, elves, or dwarves but on a tiny scale, standing around an inch tall. Fairies have the ability to on touch induce euphoria and bliss in creatures, filling them up with either a happiness that compels them to dance and sing, or a carnal impulse that compels. them to indulge vices of the body. Creatures so affected are temporally locked with no sense of time, and don’t age. Fairies flatly do not age, they merely grow from a baby size, to their adult size of around an inch. A slain fairy can reincarnlate at any still ongoing revelry they started.
+        Fairies are fae related to the Sprites, but without either the flora or fauna association. They can have wings like a sprite, or they can have wafer wings of light transparent or opaque, that can emit a faint glow or light like a torch obscuring the fairy’s body. Otherwise, fairies look like humans, elves, or dwarves but on a tiny scale, standing around an inch tall. Fairies have the ability to on touch induce euphoria and bliss in creatures, filling them up with either a happiness that compels them to dance and sing, or a carnal impulse that compels. them to indulge vices of the body. Creatures so affected are temporally locked with no sense of time, and don’t age. Fairies flatly do not age, they merely grow from a baby size, to their adult size of around an inch. A slain fairy can reincarnate at any still ongoing revelry they started.
 
         __Fairies draw Mana__ from revelry, whenever a creature of human intelligence or greater is locked in a fairy’s revelry, they gain charge over time. 1 human in revelry for 8 hours will charge a fairy’s mana capacity by around 25%. They stack.
         """

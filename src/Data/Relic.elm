@@ -65,7 +65,7 @@ nightlight =
     { name = Nightlight
     , class = Warlock
     , content = Single 6 """
-        This black candle actively produces darkness. It repels light, and physically produces an inky black haze. Those who close their eyes within the antilight of this candle will open them to find themselves in the Darkened World, the _World of Terror_ as shown in the Cosmology. If you lack portals, you may be trapped. Why? Well, the lit candle reduces the component cost of Alchemy and other magics by 3 ranks worth, even reducing to 0 cost.
+        This black candle actively produces darkness. It repels light, and physically produces an inky black haze. Those who close their eyes within the anti-light of this candle will open them to find themselves in the Darkened World, the _World of Terror_ as shown in the Cosmology. If you lack portals, you may be trapped. Why? Well, the lit candle reduces the component cost of Alchemy and other magics by 3 ranks worth, even reducing to 0 cost.
         """
     }
 
@@ -75,7 +75,7 @@ stainedSliver =
     { name = StainedSliver
     , class = Warlock
     , content = Single 6 """
-        This ruby red obsidian dagger with a thin hollow injector in its core is an ancient sacrificial dagger. It has two purposes. A) Itcan store a potion within it to apply its effects on a stab, getting 3 extra uses out of one potion. B) When empty and used in a ritual sacrifice, it syringes up blood, and with it the soul, refined and primed to be used later on demand to fuel an effect requiring it. While it has a soul, wounds it causes refuse to heal unless holding the dagger.
+        This ruby red obsidian dagger with a thin hollow injector in its core is an ancient sacrificial dagger. It has two purposes. A) It can store a potion within it to apply its effects on a stab, getting 3 extra uses out of one potion. B) When empty and used in a ritual sacrifice, it syringes up blood, and with it the soul, refined and primed to be used later on demand to fuel an effect requiring it. While it has a soul, wounds it causes refuse to heal unless holding the dagger.
         """
     }
 
@@ -121,9 +121,9 @@ alchemistStone =
     { name = AlchemistStone
     , class = Academic
     , content = Single 6 """
-        A ruby gem that can bond with your rod (Witchery), to augment it with a transmutation catalyst that acts as a reusable medium for using Hexes. Begins as a Rank 1 medium, you can upgrade it to let it work as a higher rank medium by letting it absorb 1 ton of materials of the higher rank. Itcan also store any amount of Kisses to use for magic, such as Alchemy, and Runes.
+        A ruby gem that can bond with your rod (Witchery), to augment it with a transmutation catalyst that acts as a reusable medium for using Hexes. Begins as a Rank 1 medium, you can upgrade it to let it work as a higher rank medium by letting it absorb 1 ton of materials of the higher rank. It can also store any amount of Kisses to use for magic, such as Alchemy, and Runes.
 
-        You can feed the stone magic items to extract the Kiss value of the item, directly into kisses stored within the stone. Itcan also transmute Kisses into other Kisses of different values. Kisses can of course be extracted when desired.
+        You can feed the stone magic items to extract the Kiss value of the item, directly into kisses stored within the stone. It can also transmute Kisses into other Kisses of different values. Kisses can of course be extracted when desired.
         """
     }
 
@@ -167,7 +167,7 @@ hellrider =
     { name = Hellrider
     , class = Warlock
     , content = Single 6 """
-        This infernal machine is a construct of hell. Its chitinous wrought iron frame is unnaturally durable and heavy yet its ability to travel is subjective, relative to its own point of reference. You could drive up the side of a building or on a ceiling, and on the surface of water. Travels at up to 260mph. You can summon or unsummon it with basic unranked witchery, or you can bond it with your Rod to act as an alternate form, doing so adds your broomstick’s speed to the hellride’s top speed, and it gains the ability to fly. And likewise, is like new again on each summon.
+        This infernal machine is a construct of hell. Its chitinous wrought iron frame is unnaturally durable and heavy yet its ability to travel is subjective, relative to its own point of reference. You could drive up the side of a building or on a ceiling, and on the surface of water. Travels at up to 260mph. You can summon or unsummon it with basic unranked witchery, or you can bond it with your Rod to act as an alternate form, doing so adds your broomstick’s speed to the hellrider’s top speed, and it gains the ability to fly. And likewise, is like new again on each summon.
 
         It has a builtin flamethrower, and can leave a trail of fire between 10ft - 6 inches tall for 10 seconds.
         """
@@ -191,7 +191,7 @@ assassinsEdge =
     { name = AssassinSEdge
     , class = Warlock
     , content = Single 12 """
-        This ruby-like dagger holds a malicious edge that leaves aggravated wounds that actively draw blood out from the injury, bleeding 10x as much as it should. By infusing it with r3 tier mana, you can cause the next injury to violently expel all blood within a wounded target, leaving a desiccated husk. By infusing it with r5 tier mana, you can create 12 rapiers with the same ruby appearance and aggravated bloodloss. Each rapier a _dancing blade_, self-animated in synch with your own intentions as though wielded by a master swordsman. When moving in a straight line, they can move with the speed of an arrow up to 60m from you.
+        This ruby-like dagger holds a malicious edge that leaves aggravated wounds that actively draw blood out from the injury, bleeding 10x as much as it should. By infusing it with r3 tier mana, you can cause the next injury to violently expel all blood within a wounded target, leaving a desiccated husk. By infusing it with r5 tier mana, you can create 12 rapiers with the same ruby appearance and aggravated blood loss. Each rapier a _dancing blade_, self-animated in synch with your own intentions as though wielded by a master swordsman. When moving in a straight line, they can move with the speed of an arrow up to 60m from you.
         """
     }
 
@@ -263,7 +263,7 @@ violetLenses =
     { name = VioletLenses
     , class = Warlock
     , content = Single 2 """
-        These pink sunglasses let you see into the hearts of intelligent beings, seeing a sort of “flame” or ball of turbulent energy within them. The color and reactivity of the flame can allow you to judge their character and feelings towards others. If they deeply love someone on an intimate level, a small duplicate of their love’s own flame can be seen buming above their own. By swiping a finger along the left arm of the glasses, you can switch to X-Ray vision, selectively seeing through chosen objects or substances. Along the right arm, and you can switch to a thermal vision that has accurate detail Any given modes can stack with each other. Disable heartsight with a tap to the bridge.
+        These pink sunglasses let you see into the hearts of intelligent beings, seeing a sort of “flame” or ball of turbulent energy within them. The color and reactivity of the flame can allow you to judge their character and feelings towards others. If they deeply love someone on an intimate level, a small duplicate of their love’s own flame can be seen burning above their own. By swiping a finger along the left arm of the glasses, you can switch to X-Ray vision, selectively seeing through chosen objects or substances. Along the right arm, and you can switch to a thermal vision that has accurate detail Any given modes can stack with each other. Disable heartsight with a tap to the bridge.
         """
     }
 
@@ -333,7 +333,7 @@ riftblade =
     , content = Single 4 """
         Normally portals are stationary, but the some witches managed to figure out how to convert one-way proxima rifts into a sliver acting as a blade that freely moves through space unanchored, bound only to its hilt. Rifts as mentioned, are the sharpest known objects in Witchdom, a riftblade will cut through anything without resistance except other rifts, but will also share the effects of any proxima the witch has access to, if any, contained to only apply an effect on contact. This also alters the appearance of the riftblade as appropriate, such as red heat rifts, yellow storm rifts, white cold rifts, blue water rifts, black void rifts.
 
-        Basic riftblades look like mirrors The blade can still be shattered as described by Portals, starting from R1. If broken, just retoggle it.
+        Basic riftblades look like mirrors The blade can still be shattered as described by Portals, starting from R1. If broken, just re-toggle it.
         """
     }
 
@@ -397,7 +397,7 @@ cosmicPearl =
     { name = CosmicPearl
     , class = Sorceress
     , content = CosmicPearlContent 10 """
-        This pearl of great power is less of a material object than it is a tangible fold of crystalized probabilities. You can soak it in any water and that water will become equivalent to a T4 ingredient for Alchemy or other magics, and when on your person it buffs Elemental magic by 25%. Or, you can melt the pearl into a solution of molten gold, to disperse it throughout and transmute it into an “Elixir of Many Colors”. In drinking it, you can permanently replace one affinity you possess with any other, or add a new one entirely. A creature can only hold a limit of 4 affinities at any one time. A Warlock with a Soulbound Pearl has 1 use for changing affinities, and keeps the passive benefit.
+        This pearl of great power is less of a material object than it is a tangible fold of crystallized probabilities. You can soak it in any water and that water will become equivalent to a T4 ingredient for Alchemy or other magics, and when on your person it buffs Elemental magic by 25%. Or, you can melt the pearl into a solution of molten gold, to disperse it throughout and transmute it into an “Elixir of Many Colors”. In drinking it, you can permanently replace one affinity you possess with any other, or add a new one entirely. A creature can only hold a limit of 4 affinities at any one time. A Warlock with a Soulbound Pearl has 1 use for changing affinities, and keeps the passive benefit.
         """
     }
 
@@ -417,7 +417,7 @@ battleship =
     { name = Battleship
     , class = Warlock
     , content = Single 20 """
-        Holy _basil_, you found an entire heckin’ arcanotech battleship. It has zeppelin-like bulbous frame with a top like a military destroyer. It flies at up to 120mph at full steam which drains its stored up power over an hour but cruises at 80 without gaining or losing power. Has ammo bays that fabricate crystal cannonballs while keeping them stable, storing up to 9 each for a total of 90 shots, generating 1 ball per minute. The balls wink out of existence after 10 minutes of exposure. When lsed in one of the cannons, they travel in a straight line until impact, causing a 40ft diameter explosion as a swirling meat grinder of armor piercing crystal slivers that shreds tanks. Hull is foot thick mythril plating.
+        Holy _basil_, you found an entire heckin’ arcanotech battleship. It has zeppelin-like bulbous frame with a top like a military destroyer. It flies at up to 120mph at full steam which drains its stored up power over an hour but cruises at 80 without gaining or losing power. Has ammo bays that fabricate crystal cannonballs while keeping them stable, storing up to 9 each for a total of 90 shots, generating 1 ball per minute. The balls wink out of existence after 10 minutes of exposure. When used in one of the cannons, they travel in a straight line until impact, causing a 40ft diameter explosion as a swirling meat grinder of armor piercing crystal slivers that shreds tanks. Hull is foot thick mythril plating.
         """
     }
 
@@ -439,7 +439,7 @@ ritualInks =
     , content = Single 2 """
         A set of relic needles and a tome of ritual preparations necessary to create inks, paints, or blades that allow the direct application of Runes to the living body itself. Flesh isn’t as durable as metal trinkets, but it can come in handy to always have a rune on your person on your very skin.
 
-        The rune can be disrupted if you suffer injury to the site of the mark, whether it’s a tattoo or bodypaint. Healing will restore a damaged tattoo or scaring, though not bodypaint.
+        The rune can be disrupted if you suffer injury to the site of the mark, whether it’s a tattoo or body paint. Healing will restore a damaged tattoo or scaring, though not body paint.
 
         Fortunately, the inking / painting process is more cost efficient than classical runescribing, saving you 50% the standard costs when using Kisses and can utilize cheaper equivalent ingredients if not utilizing Kisses, for roughly the same general savings.
         """
@@ -487,7 +487,7 @@ jesterOniMask =
     { name = JesterOniMask
     , class = Warlock
     , content = Single 6 """
-        This mask has a mind of its own, a sliver of The Shadow. When on your head its eye can be seen moving with a glimmer of a keen intellect. It has 360 perception within 120m, while its vision is telescopic. It can speak to you in a mirror of your own voice, within your head. Ithas great insights, but has its own goals and agendas, which usually include helping you out in most things When worn over your face, the rest of your body becomes enveloped in shadows and you gain a doppelganger of yourself that shares the telepathic link but is its own entity. By infusing the mask with R5 mana when you remove the mask from your face, the doppelganger can remain unshadowed like a twin of yourself. Only one at a time.
+        This mask has a mind of its own, a sliver of The Shadow. When on your head its eye can be seen moving with a glimmer of a keen intellect. It has 360 perception within 120m, while its vision is telescopic. It can speak to you in a mirror of your own voice, within your head. It has great insights, but has its own goals and agendas, which usually include helping you out in most things When worn over your face, the rest of your body becomes enveloped in shadows and you gain a doppelganger of yourself that shares the telepathic link but is its own entity. By infusing the mask with R5 mana when you remove the mask from your face, the doppelganger can remain unshadowed like a twin of yourself. Only one at a time.
         """
     }
 
