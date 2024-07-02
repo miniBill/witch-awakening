@@ -370,7 +370,7 @@ crystallize =
     , affinity = Earth
     , isMeta = False
     , content = Single 6 """
-        Internalize a spark of elemental Earth that allows you to change your form into living crystal like a diamond. Appearance is up to you, such as ruby or sapphire. You are invulnerable to physical harm while diamond, but this has heavy mana drain. With Low Mana stores you’d last 60 seconds before empty. With High, you might last 10 minutes. You can partially crystallize parts of your body like just a hand, for 1/10th the cost, or you can passively maintain a lesser surface crystallization that is as protective as half-inch thick steel plating, With a minor initial mana cost but Ino passive drain. You could also project crystal shards equivalent to a 9mm firearm
+        Internalize a spark of elemental Earth that allows you to change your form into living crystal like a diamond. Appearance is up to you, such as ruby or sapphire. You are invulnerable to physical harm while diamond, but this has heavy mana drain. With Low Mana stores you’d last 60 seconds before empty. With High, you might last 10 minutes. You can partially crystallize parts of your body like just a hand, for 1/10th the cost, or you can passively maintain a lesser surface crystallization that is as protective as half-inch thick steel plating, With a minor initial mana cost but no passive drain. You could also project crystal shards equivalent to a 9mm firearm
         """
     }
 
