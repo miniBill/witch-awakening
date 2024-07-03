@@ -327,7 +327,7 @@ nemesis =
     { name = Nemesis
     , class = Just Sorceress
     , content = Single 8 """
-            Oh no. It’s been a long time since I’ve seen anyone with this in their fate. Your awakening will provoke a paired awakening in another individual. It can be anyone in your life that you would hesitate to kill. If you have. nobody, or by chance, it can be an entirely new being retroactively woven into your life and you will have new memories of them that you can’t distinguish from your old life. You WILL care about them, and they will care about you to an extent, but they will resent you deep to their core. They don’t want you to die, but they will want you to fail or suffer. If you have something good, they want it for theirself. If you succeed at something, they want to be better at it than you. Expect to never have peace unless there is an equilibrium between you and them. They have any and every special ability you have, including drawbacks, perks, relics. They’ll have roughly equivalent companions. Turning their heart will take a LONG storyarc, if at all.
+            Oh no. It’s been a long time since I’ve seen anyone with this in their fate. Your awakening will provoke a paired awakening in another individual. It can be anyone in your life that you would hesitate to kill. If you have. nobody, or by chance, it can be an entirely new being retroactively woven into your life and you will have new memories of them that you can’t distinguish from your old life. You WILL care about them, and they will care about you to an extent, but they will resent you deep to their core. They don’t want you to die, but they will want you to fail or suffer. If you have something good, they want it for themselves. If you succeed at something, they want to be better at it than you. Expect to never have peace unless there is an equilibrium between you and them. They have any and every special ability you have, including drawbacks, perks, relics. They’ll have roughly equivalent companions. Turning their heart will take a LONG story arc, if at all.
             """
     }
 
@@ -348,7 +348,7 @@ sensoryDisability =
     , class = Just Academic
     , content =
         WithGains """
-            You have a sense that doesn’t function properly. Any of the 5 senses. Compared to sight; You’d be very nearsighted and have to squint to read normal sized text from around 1ft Hearing would mean you’d not notice someone whispering 5ft away, and their casual speaking volume would be muffled. With scent, you can only faintly smell something directly under your nose. With touch, you feel only about 10% the pleasure or pain someone else would and wouldn’t notice a squirrel climbing up your leg, and you’d only faintly feel a cat digging its claws into your back. Stepping on a leggo would be tolerable. With taste, you only taste extremes, So you might have to enjoy food in other ways like with heat or texture, or very oversaturated flavors. For 5p, you’re completely missing a sense instead.
+            You have a sense that doesn’t function properly. Any of the 5 senses. Compared to sight; You’d be very nearsighted and have to squint to read normal sized text from around 1ft Hearing would mean you’d not notice someone whispering 5ft away, and their casual speaking volume would be muffled. With scent, you can only faintly smell something directly under your nose. With touch, you feel only about 10% the pleasure or pain someone else would and wouldn’t notice a squirrel climbing up your leg, and you’d only faintly feel a cat digging its claws into your back. Stepping on a Lego would be tolerable. With taste, you only taste extremes, So you might have to enjoy food in other ways like with heat or texture, or very oversaturated flavors. For 5p, you’re completely missing a sense instead.
 
             Can take up to 3 times.
             """
@@ -371,7 +371,7 @@ physicalDisability =
     , content = WithGains """
             For some reason your true form is missing a limb as a core part of your identity, your true form is a manifestation of the reality of your being, so it’s a little more important than that.
 
-            Replacements won’t work and it persists through transformation magic. Inorganic prosthetics do work, or a symbiotic lifeform that could operate on its own
+            Replacements won’t work and it persists through transformation magic. Inorganic prosthetics do work, or a symbiotic life form that could operate on its own
 
             You can take this up to 4 times.
             """ [ 2, 4, 6, 8 ]

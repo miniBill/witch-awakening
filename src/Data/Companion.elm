@@ -625,7 +625,7 @@ norikoDuNichols =
 
 watchers : List Details
 watchers =
-    [ francisIsaacGiovanni, ifraAlZahra, sariahJSnow, claireBelmontegra, sylvarraAsDomonina, madellineLPeach, reinaAkatsuki, minnieAndrus ]
+    [ francisIsaacGiovanni, ifraAlZahra, sariahJSnow, claireBelMontegra, sylvarraAsDomonina, madellineLPeach, reinaAkatsuki, minnieAndrus ]
 
 
 francisIsaacGiovanni : Details
@@ -650,7 +650,7 @@ francisIsaacGiovanni =
         , "- Has been a loner for centuries."
         ]
     , mixed = [ "+/- Learned to stop thinking in blanket generalities and now views evil as more of an infection or virus" ]
-    , has = "Isaac has Consortation 4, Ministration 4, Runes 5, _Sun Shard_, _Mythril Armor_, and _Memorize_."
+    , has = "Isaac has Consortation 4, Ministration 4, Runes 5, _Sun Shard_, _Mithril Armor_, and _Memorize_."
     }
 
 
@@ -707,8 +707,8 @@ sariahJSnow =
     }
 
 
-claireBelmontegra : Details
-claireBelmontegra =
+claireBelMontegra : Details
+claireBelMontegra =
     { name = ClaireBelMontegra
     , class = ClassOne Sorceress
     , races = [ Nymph ]
@@ -990,7 +990,7 @@ scarlet =
     , sociability = NormalScore 9
     , morality = NormalScore 8
     , quote = "_*“A valued cultist of the Dragon, but she saved my little sister’s life from the razing of Port Charlotte. That she caused.” - Alliance Merchant*_"
-    , description = "Scarlet was once a simple village girl known for her red hood, until a werewolf stalked her and murdered her grandmother. In the terror of the situation, her awakening triggered naturally as a Dravir, ared dragon. She ate the wolf the way it ate her only relative but it left a human body Scarlet would go on a downward spiral and end up in Hespatia under King Damien Kain’s favored family."
+    , description = "Scarlet was once a simple village girl known for her red hood, until a werewolf stalked her and murdered her grandmother. In the terror of the situation, her awakening triggered naturally as a Dravir, a red dragon. She ate the wolf the way it ate her only relative but it left a human body Scarlet would go on a downward spiral and end up in Hespatia under King Damien Kain’s favored family."
     , positives =
         [ "+ Cheerful and upbeat"
         , "+ Secretly very analytical."
@@ -1071,7 +1071,7 @@ diana =
     , sociability = NormalScore 7
     , morality = NormalScore 9
     , quote = "_*“Around here when you hear the wolves howl to the moon, you can feel safer, knowing the huntresses are here.” - ORC agent on a certain grove.*_"
-    , description = "Diana isn’t actually a changeling despite her youthful appearance, but settle into maintaining her looks a certain way a long time ago to be with her late changeling husband who she hasn’t seen in over a thousand years. She doesn’t know what happened to him, but has kept her vows ever since, living as an eternal maiden huntress with her wolf, and started a sorority of celebate huntresses to join her."
+    , description = "Diana isn’t actually a changeling despite her youthful appearance, but settle into maintaining her looks a certain way a long time ago to be with her late changeling husband who she hasn’t seen in over a thousand years. She doesn’t know what happened to him, but has kept her vows ever since, living as an eternal maiden huntress with her wolf, and started a sorority of celibate huntresses to join her."
     , positives =
         [ "+ Perfect accuracy."
         , "+ Expert survivalist."
@@ -1101,7 +1101,7 @@ cassandra =
     , sociability = NormalScore 5
     , morality = NormalScore 7
     , quote = "_*“I love visiting Cass but I don’t get why she’s so reclusive. She’s obviously not antisocial, I just don’t get it...” - Lunabellan.*_"
-    , description = "Used to be a renown oracle and her spat with Culicarius stuck in the rumormill long enough to become fable, back in his asshole phase in Greece, though she wasn’t a saint either. They both got better. She manages her own domain bubble where she emphasizes large tall mountains and cliffs topped with estates where she practices ritual magics."
+    , description = "Used to be a renown oracle and her spat with Culicarius stuck in the rumor mill long enough to become fable, back in his asshole phase in Greece, though she wasn’t a saint either. They both got better. She manages her own domain bubble where she emphasizes large tall mountains and cliffs topped with estates where she practices ritual magics."
     , positives =
         [ "+ Generous and hospitable"
         , "+ Dotes on friends and servants"

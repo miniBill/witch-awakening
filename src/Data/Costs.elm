@@ -601,20 +601,20 @@ perkCost ({ class } as model) { name, cost } =
                     isAffinity =
                         List.member perk.affinity affinities
 
-                    changelinged : Int
-                    changelinged =
+                    changelingDiff : Int
+                    changelingDiff =
                         case name of
                             ChargeSwap _ ->
                                 if List.member Changeling model.races then
-                                    cost - 3
+                                    -3
 
                                 else
-                                    cost
+                                    0
 
                             _ ->
-                                cost
+                                0
                 in
-                changelinged
+                (cost + changelingDiff)
                     |> applyClassBonusIf isClass
                     |> halveIfPositiveAnd isAffinity
             )
