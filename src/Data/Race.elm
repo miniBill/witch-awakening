@@ -15,7 +15,7 @@ type alias Details =
 
 all : List Race -> List Details
 all races =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegeton, moorwalker ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegeton, moorwalker, dictum ]
 
 
 neutral : Details
@@ -698,11 +698,27 @@ moorwalker =
     , affinities = [ Earth, Wind ]
     , charge = Low
     , content = """
-        Moorwalkers look like rough-hewn statues with edges worn soft by centuries of wind. When looking closely at them while they're sitting still in calm air, a careful observer can notice that their hair, eyes, and fingernails are not all there - they're translucent air. This is also noticeable with skin contact, where it will always feel like they 'just missed you' and a faint breeze will touch your skin. (For this reason they avoid handshakes with mortals, where the 'missed' feeling stands out.) Gusts of wind never seem to affect moorwalkers as much as things around them, though this is subtle until the winds reach gale force..
+        Moorwalkers look like rough-hewn statues with edges worn soft by centuries of wind. When looking closely at them while they're sitting still in calm air, a careful observer can notice that their hair, eyes, and fingernails are not all there - they're translucent air. This is also noticeable with skin contact, where it will always feel like they 'just missed you' and a faint breeze will touch your skin. (For this reason they avoid handshakes with mortals, where the 'missed' feeling stands out.) Gusts of wind never seem to affect moorwalkers as much as things around them, though this is subtle until the winds reach gale force.
 
         If there is ever no sapient person within ten miles of the spot a moorwalker died, or within ten miles of the largest piece of their bone remaining, they resurrect instantly on the spot.
 
         __Moorwalkers draw Mana__ from Solitude, Moorwalkers gain mana only when at least one hundred feet from any other person. This increases if there are no animals either (bugs and smaller excepted), and with the distance - if a mile from any other people, production increases to Medium. However, this increase is negated if they're not close to solid land and their rate gets even slower if not in atmosphere.
+        """
+    }
+
+
+dictum : Details
+dictum =
+    { name = Dictum
+    , tank = Med
+    , affinities = [ Mind, Metal ]
+    , charge = Med
+    , content = """
+        When they Awake, Dicta look like metallic-ceramic composite androids of their previous form. They are not actually robotic or technological, but purely magical: their form is a symbolic reflection of immutable Order. As they age, their appearance changes at 10% the rate of humans, but they gradually grow larger, adding 1% of their current height per year. Their natural strength is merely a very fit human's, but it grows proportionately to their body weight, so an old Dictum will be quite strong.
+
+        The changes of appearance with age are cosmetic, not impairing. If killed, after ten million seconds they will wake in a staging area on the border of the World of Order and Earth, at the age and size they were when they Awoke.
+
+        __Dicta draw Mana__ from Promises, the more often it comes up and the greater the impact, the more it charges passively. Breaking a promise drains a substantial fraction of its total production instantly, and decreases production for a long time.
         """
     }
 

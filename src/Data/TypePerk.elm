@@ -12,7 +12,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegeton, moorwalker ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegeton, moorwalker, dictum ]
 
 
 neutral : Details
@@ -511,6 +511,16 @@ moorwalker =
     , cost = 2
     , content = """
         A few Moorwalkers who have ventured into space or unusual realms have found that they slowly convert desolation into moor, bare stone and vacuum changing to moss and thin air, then soil and a full atmosphere. This takes years of their presence to complete, but can affect a very large area.
+        """
+    }
+
+
+dictum : Details
+dictum =
+    { race = Dictum
+    , cost = 5
+    , content = """
+        Some Dicta are Oathbrokers, able to make voluntary oaths between two other parties self-enforcing, with a curse befalling any party who breaks the oath. They choose the rank of Curse, maximum equal to the strongest specialization they possess, but if it exceeds their ranks in Curse they can't control its details.
         """
     }
 
