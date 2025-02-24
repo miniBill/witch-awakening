@@ -12,7 +12,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegeton ]
 
 
 neutral : Details
@@ -491,6 +491,16 @@ gemini =
         Geminai with this type perk have even stronger bonds, capable of trading their consciousness and their half of their soul to trade places between their Egos (however minimal or great they may be divergent), or they can swap entirely as though teleporting. Gemini share a mental bond to feel the other’s emotional state, senses, & intention such that they can act as a whole, or they can fully communicate telepathically, each hearing the mental dialogue of the other if they “raise their voice”, or both parties can tighten the connection to hear their passive internal dialogue entirely as though speaking out loud to oneself near the other.
 
         Nothing can sever this connection, short of death.
+        """
+    }
+
+
+phlegeton : Details
+phlegeton =
+    { race = Phlegeton
+    , cost = 4
+    , content = """
+        Some Phlegethons learn to deliberately release a layer of their blood and keep it under control, acting as a sheath of boiling-hot mist which explodes into flames whenever it is struck. This doesn't impede their senses or injure them.
         """
     }
 

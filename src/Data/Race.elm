@@ -15,7 +15,7 @@ type alias Details =
 
 all : List Race -> List Details
 all races =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegeton ]
 
 
 neutral : Details
@@ -671,6 +671,22 @@ gemini races =
         A dead Gemini half will fade into stardust, but will reappear when the surviving half sleeps, waking in the other half’s arms.
 
         __Geminai draw Mana__ from Pairing, the more in synch the two halves are in mind, intent, and appearance, the more mana they generate proportional to distance to each other. They feel this charge rate and are uncomfortable when it is weakened.
+        """
+    }
+
+
+phlegeton : Details
+phlegeton =
+    { name = Phlegeton
+    , tank = Med
+    , affinities = [ Fire, Blood ]
+    , charge = Med
+    , content = """
+        In a desert, Phlegethontes look entirely human. In humid places, though, their skin steams softly, and in the cold, their flesh gradually goes clear, showing their veins, which seem to flow with liquid fire, and their eye sockets, which have roaring candle flames behind the eyeballs. Cutting them releases the burning blood. They have a sixth sense for other people around them, the heat of their breath and beating of their blood standing out to a Phlegethon like a spotlight, though they can't distinguish individuals well.
+
+        On death, the flames from their blood spread explosively, and cannot be quenched without magic. If the flames take a life, or an intact heart is fed into them, the Phlegethon will reconstitute themself.
+
+        __Phlegethontes draw Mana__ from Crowds, Phlegethontes charge when in the presence of many people. They can gain a trickle from as few as two others, but only reach their full rate when a half-dozen people are nearby. If there are two dozen mortals or a hundred witches or other magical people within a hundred foot radius, they charge at a High rate.
         """
     }
 
