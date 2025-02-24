@@ -10,7 +10,8 @@
         "**/wrap-ansi": "^7.0.0"
     },
     "scripts": {
-        "start": "make run"
+        "start": "make run",
+        "build": "make build"
     },
     "name": "witch-awakening",
     "license": "MIT"
