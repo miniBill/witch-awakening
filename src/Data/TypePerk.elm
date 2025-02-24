@@ -12,7 +12,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegeton, moorwalker, dictum ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegeton, moorwalker, dictum, firebird ]
 
 
 neutral : Details
@@ -521,6 +521,16 @@ dictum =
     , cost = 5
     , content = """
         Some Dicta are Oathbrokers, able to make voluntary oaths between two other parties self-enforcing, with a curse befalling any party who breaks the oath. They choose the rank of Curse, maximum equal to the strongest specialization they possess, but if it exceeds their ranks in Curse they can't control its details.
+        """
+    }
+
+
+firebird : Details
+firebird =
+    { race = Firebird
+    , cost = 5
+    , content = """
+        True phoenixes' can freely shapeshift to and from a pure bird form, about the size and shape of an eagle, which shares their flame effect. Additionally, they passively heal, and optionally calm and reassure, everyone in their presence, and gain an affinity for [Life]
         """
     }
 

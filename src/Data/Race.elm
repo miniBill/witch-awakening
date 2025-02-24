@@ -15,7 +15,7 @@ type alias Details =
 
 all : List Race -> List Details
 all races =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegeton, moorwalker, dictum ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegeton, moorwalker, dictum, firebird ]
 
 
 neutral : Details
@@ -719,6 +719,22 @@ dictum =
         The changes of appearance with age are cosmetic, not impairing. If killed, after ten million seconds they will wake in a staging area on the border of the World of Order and Earth, at the age and size they were when they Awoke.
 
         __Dicta draw Mana__ from Promises, the more often it comes up and the greater the impact, the more it charges passively. Breaking a promise drains a substantial fraction of its total production instantly, and decreases production for a long time.
+        """
+    }
+
+
+firebird : Details
+firebird =
+    { name = Firebird
+    , tank = Med
+    , affinities = [ Fire, Beast ]
+    , charge = High
+    , content = """
+        Firebirds, or Phoenixes, are feathered all down their arms, back, and legs in shades of red and gold, and their arms have the structure and strength of real wings, though with careful clothing choice they can appear human to a casual inspection. They are not constantly aflame, but the faster they move, the more the feathers become flames. This generates natural thermals, so with their light bones, they can fly under their own power.
+
+        Of all natural methods of immortality, theirs is probably the hardest to foil. On death, they ignite and leave a torso-sized egg that will in a matter of days hatch into themself again, but if this egg is destroyed, it will reappear instantly elsewhere, appearing further and further away, and hatching faster and faster, if it is destroyed repeatedly. Even trapping them in stagnant time or petrification will not stick, causing them to temporarily shatter the effect in a burst of flame.
+
+        __Firebirds draw Mana__ from Conviction, whether their own strong confidence in what they are doing, or the feeling of certain rightness in others, a phoenix charges when those near them or closely tied to them experience strong confidence in the moral rightness of their cause or actions. Whether those beliefs are correct is entirely irrelevant.
         """
     }
 

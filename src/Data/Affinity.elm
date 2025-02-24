@@ -30,7 +30,11 @@ fromModel { races, mainRace, cosmicPearl, typePerks } =
 
         fromTypePerk : List Affinity
         fromTypePerk =
-            [ ( Nymph, Mind ), ( Empusa, Wind ), ( Doll, Mind ) ]
+            [ ( Nymph, Mind )
+            , ( Empusa, Wind )
+            , ( Doll, Mind )
+            , ( Firebird, Life )
+            ]
                 |> List.filterMap
                     (\( type_, affinity ) ->
                         if List.member type_ typePerks then
