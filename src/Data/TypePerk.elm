@@ -12,7 +12,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegeton ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegeton, moorwalker ]
 
 
 neutral : Details
@@ -501,6 +501,16 @@ phlegeton =
     , cost = 4
     , content = """
         Some Phlegethons learn to deliberately release a layer of their blood and keep it under control, acting as a sheath of boiling-hot mist which explodes into flames whenever it is struck. This doesn't impede their senses or injure them.
+        """
+    }
+
+
+moorwalker : Details
+moorwalker =
+    { race = Moorwalker
+    , cost = 2
+    , content = """
+        A few Moorwalkers who have ventured into space or unusual realms have found that they slowly convert desolation into moor, bare stone and vacuum changing to moss and thin air, then soil and a full atmosphere. This takes years of their presence to complete, but can affect a very large area.
         """
     }
 

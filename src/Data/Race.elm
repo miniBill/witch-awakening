@@ -15,7 +15,7 @@ type alias Details =
 
 all : List Race -> List Details
 all races =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegeton ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegeton, moorwalker ]
 
 
 neutral : Details
@@ -687,6 +687,22 @@ phlegeton =
         On death, the flames from their blood spread explosively, and cannot be quenched without magic. If the flames take a life, or an intact heart is fed into them, the Phlegethon will reconstitute themself.
 
         __Phlegethontes draw Mana__ from Crowds, Phlegethontes charge when in the presence of many people. They can gain a trickle from as few as two others, but only reach their full rate when a half-dozen people are nearby. If there are two dozen mortals or a hundred witches or other magical people within a hundred foot radius, they charge at a High rate.
+        """
+    }
+
+
+moorwalker : Details
+moorwalker =
+    { name = Moorwalker
+    , tank = Med
+    , affinities = [ Earth, Wind ]
+    , charge = Low
+    , content = """
+        Moorwalkers look like rough-hewn statues with edges worn soft by centuries of wind. When looking closely at them while they're sitting still in calm air, a careful observer can notice that their hair, eyes, and fingernails are not all there - they're translucent air. This is also noticeable with skin contact, where it will always feel like they 'just missed you' and a faint breeze will touch your skin. (For this reason they avoid handshakes with mortals, where the 'missed' feeling stands out.) Gusts of wind never seem to affect moorwalkers as much as things around them, though this is subtle until the winds reach gale force..
+
+        If there is ever no sapient person within ten miles of the spot a moorwalker died, or within ten miles of the largest piece of their bone remaining, they resurrect instantly on the spot.
+
+        __Moorwalkers draw Mana__ from Solitude, Moorwalkers gain mana only when at least one hundred feet from any other person. This increases if there are no animals either (bugs and smaller excepted), and with the distance - if a mile from any other people, production increases to Medium. However, this increase is negated if they're not close to solid land and their rate gets even slower if not in atmosphere.
         """
     }
 
