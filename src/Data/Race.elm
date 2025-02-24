@@ -15,7 +15,7 @@ type alias Details =
 
 all : List Race -> List Details
 all races =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegeton, moorwalker, dictum, firebird ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegethon, moorwalker, dictum, firebird ]
 
 
 neutral : Details
@@ -675,9 +675,9 @@ gemini races =
     }
 
 
-phlegeton : Details
-phlegeton =
-    { name = Phlegeton
+phlegethon : Details
+phlegethon =
+    { name = Phlegethon
     , tank = Med
     , affinities = [ Fire, Blood ]
     , charge = Med
