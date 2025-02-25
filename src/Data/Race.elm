@@ -15,7 +15,7 @@ type alias Details =
 
 all : List Race -> List Details
 all races =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegethon, moorwalker, dictum, firebird ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegethon, moorwalker, phantasm, golem, muspel, dictum, qareen, rusalka, firebird ]
 
 
 neutral : Details
@@ -686,7 +686,7 @@ phlegethon =
 
         On death, the flames from their blood spread explosively, and cannot be quenched without magic. If the flames take a life, or an intact heart is fed into them, the Phlegethon will reconstitute themself.
 
-        __Phlegethontes draw Mana__ from Crowds, Phlegethontes charge when in the presence of many people. They can gain a trickle from as few as two others, but only reach their full rate when a half-dozen people are nearby. If there are two dozen mortals or a hundred witches or other magical people within a hundred foot radius, they charge at a High rate.
+        __Phlegethontes draw Mana__ from Crowds. Phlegethontes charge when in the presence of many people. They can gain a trickle from as few as two others, but only reach their full rate when a half-dozen people are nearby. If there are two dozen mortals or a hundred witches or other magical people within a hundred foot radius, they charge at a High rate.
         """
     }
 
@@ -702,7 +702,55 @@ moorwalker =
 
         If there is ever no sapient person within ten miles of the spot a moorwalker died, or within ten miles of the largest piece of their bone remaining, they resurrect instantly on the spot.
 
-        __Moorwalkers draw Mana__ from Solitude, Moorwalkers gain mana only when at least one hundred feet from any other person. This increases if there are no animals either (bugs and smaller excepted), and with the distance - if a mile from any other people, production increases to Medium. However, this increase is negated if they're not close to solid land and their rate gets even slower if not in atmosphere.
+        __Moorwalkers draw Mana__ from Solitude. Moorwalkers gain mana only when at least one hundred feet from any other person. This increases if there are no animals either (bugs and smaller excepted), and with the distance - if a mile from any other people, production increases to Medium. However, this increase is negated if they're not close to solid land and their rate gets even slower if not in atmosphere.
+        """
+    }
+
+
+phantasm : Details
+phantasm =
+    { name = Phantasm
+    , tank = High
+    , affinities = [ Wind, Mind ]
+    , charge = Med
+    , content = """
+        Phantasms are, in their natural state, completely invisible and intangible; a free-floating mind, not tethered to any physical form whatsoever. Even the air around them is completely permeable. For those who were born human, this tends to make them habitually touch-starved, especially before they get used to their aerokinesis and the tactile sense it can give them when they have mastered it enough to be automatic. Somewhat more difficult is mastering the art of creating a visual body with the shimmering of the air. This always leaves them looking ghostly, usually like a transparent image of (a slightly idealized version of) their mortal form, but it is largely an illusion.
+
+        Not even the vacuum of space is dangerous to a Phantasm; they have no physical form. At worst, direct attacks on their mind can render them comatose, at which point they become nigh-impossible to locate and therefore recover freely.
+
+        __Phantasms draw Mana__ from Voyeurism. Phantasms gain mana by observing events without the target's knowledge. This charges faster if they are learning secrets that the one under observation would wish to protect.
+        """
+    }
+
+
+golem : Details
+golem =
+    { name = Golem
+    , tank = High
+    , affinities = [ Earth, Mind ]
+    , charge = Low
+    , content = """
+        A golem is a rock tricked into thinking. Unlike other thinking rocks such as computers, this is done by inscribing particular words on fine paper with magical ink, and forming a clay brain around them. Golems are not initially well defined, looking approximately like an artist's posable figurine made of clay, but they can slowly shift their appearance, and most adult golems look like swarthy humans. They are extremely durable and resilient, and can shut off pain easily. The only damage which is truly serious is things which manage to damage the animating inscription. This normally requires destroying most of the golem's head, which does not otherwise impair them.
+
+        If the animating scroll is destroyed, a golem ceases to function. Rewriting the scroll precisely, with a particular golem in mind, and placing it in a new clay body, will resuscitate the dead golem. If not quite correct, this may create a new person instead, or the golem may not animate.
+
+        __Golems draw Mana__ from Writing. Golems charge through the act of writing, cataloging facts and observations about the world. This must be hand-written, in ink on paper (including parchment, papyrus, etc.). The importance and relevance of the information is not important, but it must be true or believed to be true; fiction is not acceptable.
+        """
+    }
+
+
+muspel : Details
+muspel =
+    { name = Muspel
+    , tank = High
+    , affinities = [ Earth, Fire ]
+    , charge = High
+    , content = """
+        Muspel are lava wrapped in stone wrapped in flesh, and must be careful not to move too quickly lest one of the layers rupture, which cause damage that can be healed quickly, but not instantly. Almost no external force can cause similar damage, even to the outermost layer; Muspel are monstrously tough, and only damage themselves because they are also monstrously strong. They have an affinity for the sun, always knowing precisely where it is relative to them, even at night; they find realms without a true sun, such as much of Alfheimr, very disconcerting.
+
+        Muspel whose core is destroyed slowly reform at the edges of the nearest active lava flow. It takes three days to form the stone layer, and three weeks for the flesh.
+
+        __Muspels draw Mana__ from Annihilation. Muspel gain mana when destroying all record of some knowledge. This can be trivial knowledge, as long as it is not new and is having its last record destroyed. Old Muspel make a habit of recording trivial facts such as series of die rolls, so that they may annihilate it a decade later to charge.
         """
     }
 
@@ -718,7 +766,39 @@ dictum =
 
         The changes of appearance with age are cosmetic, not impairing. If killed, after ten million seconds they will wake in a staging area on the border of the World of Order and Earth, at the age and size they were when they Awoke.
 
-        __Dicta draw Mana__ from Promises, the more often it comes up and the greater the impact, the more it charges passively. Breaking a promise drains a substantial fraction of its total production instantly, and decreases production for a long time.
+        __Dicta draw Mana__ from Promises. The more often it comes up and the greater the impact, the more it charges passively. Breaking a promise drains a substantial fraction of its total production instantly, and decreases production for a long time.
+        """
+    }
+
+
+qareen : Details
+qareen =
+    { name = Qareen
+    , tank = Med
+    , affinities = [ Fire, Water ]
+    , charge = High
+    , content = """
+        A Qareen is a very mutable being, usually imitating flesh and blood but fundamentally made of heat and mist, not solid. They are heavily influenced by primal Chaos, and harming them is difficult because the reaction of their body is inconsistent and unpredictable even to themselves. They have a natural affinity for illusion and shape-changing; since their natural form is inconsistent, they may as well direct the change to resemble someone else. They can never keep this up for long without other magic, though, as Qurana are naturally unstable.
+
+        If destroyed, a Qareen will awake in the borderlands of the World of Chaos and Earth some time later. 80% of the time this will be a year or less, but the duration is random.
+
+        __Qurana draw Mana__ from Risk. Whenever a Qareen puts something important to them at risk from random chance or natural forces (not from intentional harm from another person) they gain mana. The greater the importance the greater the charge. Whether or not the stakes are won or lost makes no difference; a lucky Qareen may gain a lot of mana without losing anything important.
+        """
+    }
+
+
+rusalka : Details
+rusalka =
+    { name = Rusalka
+    , tank = Low
+    , affinities = [ Necro, Water ]
+    , charge = High
+    , content = """
+        Rusalki form in bodies of water, usually rivers, where much death has occurred. Opinions vary on whether they are forgetful ghosts in watery bodies or new souls anchored to death. Their hair is long, algae-covered, and perpetually growing, and cutting or styling it is physically painful to the rusalka. Rusalki have an intuitive sense for the greatest regrets and grievances of spirits around them, and can learn to sense these from the living as well. They cannot breed true without drowning the father, but their spontaneously generation is often near others.
+
+        A dead rusalka's spirit migrates to the nearest fresh water, where it will regain physical form the next time someone drowns, consuming the soul of the drowned.
+
+        __Rusalki draw Mana__ from Hair. The longer and messier a rusalka's hair, the more quickly she will generate mana. A ponytail (the neatest that is painless) will generate a trickle if at least four feet long, as will a messy tangle cut to one foot; six feet of tangle is the 'standard' High level.
         """
     }
 
@@ -734,7 +814,7 @@ firebird =
 
         Of all natural methods of immortality, theirs is probably the hardest to foil. On death, they ignite and leave a torso-sized egg that will in a matter of days hatch into themself again, but if this egg is destroyed, it will reappear instantly elsewhere, appearing further and further away, and hatching faster and faster, if it is destroyed repeatedly. Even trapping them in stagnant time or petrification will not stick, causing them to temporarily shatter the effect in a burst of flame.
 
-        __Firebirds draw Mana__ from Conviction, whether their own strong confidence in what they are doing, or the feeling of certain rightness in others, a phoenix charges when those near them or closely tied to them experience strong confidence in the moral rightness of their cause or actions. Whether those beliefs are correct is entirely irrelevant.
+        __Firebirds draw Mana__ from Conviction. Whether their own strong confidence in what they are doing, or the feeling of certain rightness in others, a phoenix charges when those near them or closely tied to them experience strong confidence in the moral rightness of their cause or actions. Whether those beliefs are correct is entirely irrelevant.
         """
     }
 

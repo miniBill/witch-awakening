@@ -12,7 +12,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegethon, moorwalker, dictum, firebird ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegethon, moorwalker, phantasm, golem, muspel, dictum, qareen, rusalka, firebird ]
 
 
 neutral : Details
@@ -510,7 +510,37 @@ moorwalker =
     { race = Moorwalker
     , cost = 2
     , content = """
-        A few Moorwalkers who have ventured into space or unusual realms have found that they slowly convert desolation into moor, bare stone and vacuum changing to moss and thin air, then soil and a full atmosphere. This takes years of their presence to complete, but can affect a very large area.
+        A few Moorwalkers who have ventured into space or unusual realms have found that they slowly convert desolation into moor, bare stone and vacuum changing to moss and thin air, then soil and a fulll atmosphere. This takes years of their presence to complete, but can affect a very large area.
+        """
+    }
+
+
+phantasm : Details
+phantasm =
+    { race = Phantasm
+    , cost = 3
+    , content = """
+        Talented or practiced Phantasms decouple their projected image from their 'natural form', and can manipulate it to take any shape or size, though it will remain translucent and keeping tactile sense requires that it stay approximately humanoid. It is possible that any Phantasm can learn this, but very few bother to try.
+        """
+    }
+
+
+golem : Details
+golem =
+    { race = Golem
+    , cost = 4
+    , content = """
+        Old golems, and occasionally talented youngsters, learn to change the material their body is made of, shifting to clay for mobility, granite for durability, or pumice for lightness, or grow obsidian 'claws'. Metal is not possible without extensive other magic.
+        """
+    }
+
+
+muspel : Details
+muspel =
+    { race = Muspel
+    , cost = 2
+    , content = """
+        Some Muspel are able to channel their inner flames and stone against each other, weakening them but allowing them to move more freely and so pass more easily for mortal. This also has the effect of improving their external skin's resistance to heat, flames, and magma substantially, making a lava bath merely mildly inconvenient. If they're seriously wounded, the same results occur regardless.
         """
     }
 
@@ -525,12 +555,32 @@ dictum =
     }
 
 
+qareen : Details
+qareen =
+    { race = Qareen
+    , cost = 5
+    , content = """
+        Some Qareen can gamble for more than just money, playing games where the players wager mana, magical potential, souls, names, or anything else they and the other players can establish shared understanding of. Must be agreed in advance and believed, or it won't transfer.
+        """
+    }
+
+
+rusalka : Details
+rusalka =
+    { race = Rusalka
+    , cost = 4
+    , content = """
+        Cursebearer rusalka can take on the grievance or regret of a spirit or living person (but must set down one if they wish to take up another). While enacting violence in fulfillment of that cause, their spells, particularly elementalism, curses, and hexes, are cheaper and more powerful.
+        """
+    }
+
+
 firebird : Details
 firebird =
     { race = Firebird
-    , cost = 5
+    , cost = 6
     , content = """
-        True phoenixes' can freely shapeshift to and from a pure bird form, about the size and shape of an eagle, which shares their flame effect. Additionally, they passively heal, and optionally calm and reassure, everyone in their presence, and gain an affinity for [Life]
+        'True phoenixes' can freely shapeshift to and from a pure bird form, about the size and shape of an eagle, which shares their flame effect. Additionally, they passively heal, and optionally calm and reassure, everyone in their presence, and gain an affinity for [Life].
         """
     }
 
