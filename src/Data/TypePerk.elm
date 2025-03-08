@@ -500,7 +500,7 @@ phlegethon =
     { race = Phlegethon
     , cost = 4
     , content = """
-        Some Phlegethons learn to deliberately release a layer of their blood and keep it under control, acting as a sheath of boiling-hot mist which explodes into flames whenever it is struck. This doesn't impede their senses or injure them.
+        Some Phlegethons learn to deliberately release a layer of their blood and keep it under control, acting as a sheath of boiling-hot mist which explodes into flames whenever it is struck. This doesn’t impede their senses or injure them.
         """
     }
 
@@ -520,7 +520,7 @@ phantasm =
     { race = Phantasm
     , cost = 3
     , content = """
-        Talented or practiced Phantasms decouple their projected image from their 'natural form', and can manipulate it to take any shape or size, though it will remain translucent and keeping tactile sense requires that it stay approximately humanoid. It is possible that any Phantasm can learn this, but very few bother to try.
+        Talented or practiced Phantasms decouple their projected image from their ‘natural form’, and can manipulate it to take any shape or size, though it will remain translucent and keeping tactile sense requires that it stay approximately humanoid. It is possible that any Phantasm can learn this, but very few bother to try.
         """
     }
 
@@ -530,7 +530,7 @@ golem =
     { race = Golem
     , cost = 4
     , content = """
-        Old golems, and occasionally talented youngsters, learn to change the material their body is made of, shifting to clay for mobility, granite for durability, or pumice for lightness, or grow obsidian 'claws'. Metal is not possible without extensive other magic.
+        Old golems, and occasionally talented youngsters, learn to change the material their body is made of, shifting to clay for mobility, granite for durability, or pumice for lightness, or grow obsidian ‘claws’. Metal is not possible without extensive other magic.
         """
     }
 
@@ -540,7 +540,7 @@ muspel =
     { race = Muspel
     , cost = 2
     , content = """
-        Some Muspel are able to channel their inner flames and stone against each other, weakening them but allowing them to move more freely and so pass more easily for mortal. This also has the effect of improving their external skin's resistance to heat, flames, and magma substantially, making a lava bath merely mildly inconvenient. If they're seriously wounded, the same results occur regardless.
+        Some Muspel are able to channel their inner flames and stone against each other, weakening them but allowing them to move more freely and so pass more easily for mortal. This also has the effect of improving their external skin’s resistance to heat, flames, and magma substantially, making a lava bath merely mildly inconvenient. If they’re seriously wounded, the same results occur regardless.
         """
     }
 
@@ -550,7 +550,7 @@ dictum =
     { race = Dictum
     , cost = 5
     , content = """
-        Some Dicta are Oathbrokers, able to make voluntary oaths between two other parties self-enforcing, with a curse befalling any party who breaks the oath. They choose the rank of Curse, maximum equal to the strongest specialization they possess, but if it exceeds their ranks in Curse they can't control its details.
+        Some Dicta are Oathbrokers, able to make voluntary oaths between two other parties self-enforcing, with a curse befalling any party who breaks the oath. They choose the rank of Curse, maximum equal to the strongest specialization they possess, but if it exceeds their ranks in Curse they can’t control its details.
         """
     }
 
@@ -560,7 +560,7 @@ qareen =
     { race = Qareen
     , cost = 5
     , content = """
-        Some Qareen can gamble for more than just money, playing games where the players wager mana, magical potential, souls, names, or anything else they and the other players can establish shared understanding of. Must be agreed in advance and believed, or it won't transfer.
+        Some Qareen can gamble for more than just money, playing games where the players wager mana, magical potential, souls, names, or anything else they and the other players can establish shared understanding of. Must be agreed in advance and believed, or it won’t transfer.
         """
     }
 
@@ -580,7 +580,7 @@ lares =
     { race = Lares
     , cost = 3
     , content = """
-        Unusual Lares can teleport to anywhere within their bonded home, or to their bonded family if within five miles of home, and may be selectively invisible while in their bonded family's presence or bonded home.
+        Unusual Lares can teleport to anywhere within their bonded home, or to their bonded family if within five miles of home, and may be selectively invisible while in their bonded family’s presence or bonded home.
         """
     }
 
@@ -590,7 +590,7 @@ firebird =
     { race = Firebird
     , cost = 6
     , content = """
-        'True phoenixes' can freely shapeshift to and from a pure bird form, about the size and shape of an eagle, which shares their flame effect. Additionally, they passively heal, and optionally calm and reassure, everyone in their presence, and gain an affinity for [Life].
+        ‘True phoenixes’ can freely shapeshift to and from a pure bird form, about the size and shape of an eagle, which shares their flame effect. Additionally, they passively heal, and optionally calm and reassure, everyone in their presence, and gain an affinity for [Life].
         """
     }
 
@@ -600,7 +600,7 @@ fresco =
     { race = Fresco
     , cost = 2
     , content = """
-        Some Frescoes have an intuition for the zeitgeist, and what history and fiction is popular both globally and in any local subcommunity. This doesn't scale below a dozen or so and works better on mortal humans.
+        Some Frescoes have an intuition for the zeitgeist, and what history and fiction is popular both globally and in any local subcommunity. This doesn’t scale below a dozen or so and works better on mortal humans.
         """
     }
 

@@ -682,7 +682,7 @@ phlegethon =
     , affinities = [ Fire, Blood ]
     , charge = Med
     , content = """
-        In a desert, Phlegethontes look entirely human. In humid places, though, their skin steams softly, and in the cold, their flesh gradually goes clear, showing their veins, which seem to flow with liquid fire, and their eye sockets, which have roaring candle flames behind the eyeballs. Cutting them releases the burning blood. They have a sixth sense for other people around them, the heat of their breath and beating of their blood standing out to a Phlegethon like a spotlight, though they can't distinguish individuals well.
+        In a desert, Phlegethontes look entirely human. In humid places, though, their skin steams softly, and in the cold, their flesh gradually goes clear, showing their veins, which seem to flow with liquid fire, and their eye sockets, which have roaring candle flames behind the eyeballs. Cutting them releases the burning blood. They have a sixth sense for other people around them, the heat of their breath and beating of their blood standing out to a Phlegethon like a spotlight, though they can’t distinguish individuals well.
 
         On death, the flames from their blood spread explosively, and cannot be quenched without magic. If the flames take a life, or an intact heart is fed into them, the Phlegethon will reconstitute themself.
 
@@ -698,11 +698,11 @@ moorwalker =
     , affinities = [ Earth, Wind ]
     , charge = Low
     , content = """
-        Moorwalkers look like rough-hewn statues with edges worn soft by centuries of wind. When looking closely at them while they're sitting still in calm air, a careful observer can notice that their hair, eyes, and fingernails are not all there - they're translucent air. This is also noticeable with skin contact, where it will always feel like they 'just missed you' and a faint breeze will touch your skin. (For this reason they avoid handshakes with mortals, where the 'missed' feeling stands out.) Gusts of wind never seem to affect moorwalkers as much as things around them, though this is subtle until the winds reach gale force.
+        Moorwalkers look like rough-hewn statues with edges worn soft by centuries of wind. When looking closely at them while they’re sitting still in calm air, a careful observer can notice that their hair, eyes, and fingernails are not all there - they’re translucent air. This is also noticeable with skin contact, where it will always feel like they ‘just missed you’ and a faint breeze will touch your skin. (For this reason they avoid handshakes with mortals, where the ‘missed’ feeling stands out.) Gusts of wind never seem to affect moorwalkers as much as things around them, though this is subtle until the winds reach gale force.
 
         If there is ever no sapient person within ten miles of the spot a moorwalker died, or within ten miles of the largest piece of their bone remaining, they resurrect instantly on the spot.
 
-        __Moorwalkers draw Mana__ from Solitude. Moorwalkers gain mana only when at least one hundred feet from any other person. This increases if there are no animals either (bugs and smaller excepted), and with the distance - if a mile from any other people, production increases to Medium. However, this increase is negated if they're not close to solid land and their rate gets even slower if not in atmosphere.
+        __Moorwalkers draw Mana__ from Solitude. Moorwalkers gain mana only when at least one hundred feet from any other person. This increases if there are no animals either (bugs and smaller excepted), and with the distance - if a mile from any other people, production increases to Medium. However, this increase is negated if they’re not close to solid land and their rate gets even slower if not in atmosphere.
         """
     }
 
@@ -718,7 +718,7 @@ phantasm =
 
         Not even the vacuum of space is dangerous to a Phantasm; they have no physical form. At worst, direct attacks on their mind can render them comatose, at which point they become nigh-impossible to locate and therefore recover freely.
 
-        __Phantasms draw Mana__ from Voyeurism. Phantasms gain mana by observing events without the target's knowledge. This charges faster if they are learning secrets that the one under observation would wish to protect.
+        __Phantasms draw Mana__ from Voyeurism. Phantasms gain mana by observing events without the target’s knowledge. This charges faster if they are learning secrets that the one under observation would wish to protect.
         """
     }
 
@@ -730,7 +730,7 @@ golem =
     , affinities = [ Earth, Mind ]
     , charge = Low
     , content = """
-        A golem is a rock tricked into thinking. Unlike other thinking rocks such as computers, this is done by inscribing particular words on fine paper with magical ink, and forming a clay brain around them. Golems are not initially well defined, looking approximately like an artist's posable figurine made of clay, but they can slowly shift their appearance, and most adult golems look like swarthy humans. They are extremely durable and resilient, and can shut off pain easily. The only damage which is truly serious is things which manage to damage the animating inscription. This normally requires destroying most of the golem's head, which does not otherwise impair them.
+        A golem is a rock tricked into thinking. Unlike other thinking rocks such as computers, this is done by inscribing particular words on fine paper with magical ink, and forming a clay brain around them. Golems are not initially well defined, looking approximately like an artist’s posable figurine made of clay, but they can slowly shift their appearance, and most adult golems look like swarthy humans. They are extremely durable and resilient, and can shut off pain easily. The only damage which is truly serious is things which manage to damage the animating inscription. This normally requires destroying most of the golem’s head, which does not otherwise impair them.
 
         If the animating scroll is destroyed, a golem ceases to function. Rewriting the scroll precisely, with a particular golem in mind, and placing it in a new clay body, will resuscitate the dead golem. If not quite correct, this may create a new person instead, or the golem may not animate.
 
@@ -762,7 +762,7 @@ dictum =
     , affinities = [ Mind, Metal ]
     , charge = Med
     , content = """
-        When they Awake, Dicta look like metallic-ceramic composite androids of their previous form. They are not actually robotic or technological, but purely magical: their form is a symbolic reflection of immutable Order. As they age, their appearance changes at 10% the rate of humans, but they gradually grow larger, adding 1% of their current height per year. Their natural strength is merely a very fit human's, but it grows proportionately to their body weight, so an old Dictum will be quite strong.
+        When they Awake, Dicta look like metallic-ceramic composite androids of their previous form. They are not actually robotic or technological, but purely magical: their form is a symbolic reflection of immutable Order. As they age, their appearance changes at 10% the rate of humans, but they gradually grow larger, adding 1% of their current height per year. Their natural strength is merely a very fit human’s, but it grows proportionately to their body weight, so an old Dictum will be quite strong.
 
         The changes of appearance with age are cosmetic, not impairing. If killed, after ten million seconds they will wake in a staging area on the border of the World of Order and Earth, at the age and size they were when they Awoke.
 
@@ -796,9 +796,9 @@ rusalka =
     , content = """
         Rusalki form in bodies of water, usually rivers, where much death has occurred. Opinions vary on whether they are forgetful ghosts in watery bodies or new souls anchored to death. Their hair is long, algae-covered, and perpetually growing, and cutting or styling it is physically painful to the rusalka. Rusalki have an intuitive sense for the greatest regrets and grievances of spirits around them, and can learn to sense these from the living as well. They cannot breed true without drowning the father, but their spontaneously generation is often near others.
 
-        A dead rusalka's spirit migrates to the nearest fresh water, where it will regain physical form the next time someone drowns, consuming the soul of the drowned.
+        A dead rusalka’s spirit migrates to the nearest fresh water, where it will regain physical form the next time someone drowns, consuming the soul of the drowned.
 
-        __Rusalki draw Mana__ from Hair. The longer and messier a rusalka's hair, the more quickly she will generate mana. A ponytail (the neatest that is painless) will generate a trickle if at least four feet long, as will a messy tangle cut to one foot; six feet of tangle is the 'standard' High level.
+        __Rusalki draw Mana__ from Hair. The longer and messier a rusalka‘s hair, the more quickly she will generate mana. A ponytail (the neatest that is painless) will generate a trickle if at least four feet long, as will a messy tangle cut to one foot; six feet of tangle is the ‘standard’ High level.
         """
     }
 
@@ -810,7 +810,7 @@ lares =
     , content = """
         Also derogatorily called Brownies, Lares are the protector spirits of old families. Most Laral lineages originate with a very old family of Neutral witches, and in these cases at least some of the family remain associated with their originators and their homes. A Lar bonded to a family and residence passively repairs their surroundings by their presence, and has an extra sense that tells them when the building or family is damaged or in danger. Most have some talent for moving quickly that they use to come to the defense of their charges, and these are more effective than usual when they do.
 
-        A Lar who dies bonded will be roused back toward life every time a fire is lit in the home or family's hearth. A dozen or two fires will see them awakened, and they will appear the next night while the hearth is unobserved.
+        A Lar who dies bonded will be roused back toward life every time a fire is lit in the home or family‘s hearth. A dozen or two fires will see them awakened, and they will appear the next night while the hearth is unobserved.
 
         __Lares draw Mana__ from Maintenance. A Lar charges by taking care of chores and maintenance of a residence, particularly while unobserved. They can also charge from performing first aid and nonmagical medicine on their bonded family, but this is hard to do unobserved. While observed, their charge rate drops to Medium.
         """
@@ -858,7 +858,7 @@ silverstream =
     , affinities = [ Water, Metal ]
     , charge = Low
     , content = """
-        Looking like living mercury sculptures, silverstreams can be as hard and rigid as metal or as flexible and elusive as water. They have a consistent total mass and have difficulty adopting hollow shapes or non-humanoid body plans, but they're extremely flexible. Losing parts of their body is annoying but not crucial; they will reattach if they recover the stream-silver or slowly regrow it back up to their full normal mass. Silverstreams have little trouble maintaining a consistent shape, and can slowly change their default, but making it move like a human is trickier.
+        Looking like living mercury sculptures, silverstreams can be as hard and rigid as metal or as flexible and elusive as water. They have a consistent total mass and have difficulty adopting hollow shapes or non-humanoid body plans, but they‘re extremely flexible. Losing parts of their body is annoying but not crucial; they will reattach if they recover the stream-silver or slowly regrow it back up to their full normal mass. Silverstreams have little trouble maintaining a consistent shape, and can slowly change their default, but making it move like a human is trickier.
 
         A drop of dead stream-silver in still water or on tarnishable metal will slowly convert it to stream-silver over the course of a week for a full body mass. Smaller amounts will need help transferring to new seed matter.
 
@@ -890,7 +890,7 @@ petrichor =
     , affinities = [ Earth, Blood ]
     , charge = High
     , content = """
-        Petrichor lineages are born from places where gods bled. Their forms resemble clay statues of the wounded god, and missing limbs are particularly common. They all have weak connections to their divine 'ancestor' and senses for things pertaining to their domains. Treating ordinary clay with sapient's blood allows them to repair the damage to their forms, but this breaks their divine connection, immortality, and charge if taken too far.
+        Petrichor lineages are born from places where gods bled. Their forms resemble clay statues of the wounded god, and missing limbs are particularly common. They all have weak connections to their divine ‘ancestor‘ and senses for things pertaining to their domains. Treating ordinary clay with sapient‘s blood allows them to repair the damage to their forms, but this breaks their divine connection, immortality, and charge if taken too far.
 
         A destroyed Petrichor reforms slowly from their ancestral creation point, over the course of a year. Clay gardens tended by the lineage can serve as a replacement location, at most one per world.
 
