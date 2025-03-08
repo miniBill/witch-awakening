@@ -12,7 +12,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegethon, moorwalker, phantasm, golem, muspel, dictum, qareen, rusalka, firebird ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegethon, moorwalker, phantasm, golem, muspel, dictum, qareen, rusalka, lares, firebird, fresco, silverstream, petrichor ]
 
 
 neutral : Details
@@ -510,7 +510,7 @@ moorwalker =
     { race = Moorwalker
     , cost = 2
     , content = """
-        A few Moorwalkers who have ventured into space or unusual realms have found that they slowly convert desolation into moor, bare stone and vacuum changing to moss and thin air, then soil and a fulll atmosphere. This takes years of their presence to complete, but can affect a very large area.
+        A few Moorwalkers who have ventured into space or unusual realms have found that they slowly convert desolation into moor, bare stone and vacuum changing to moss and thin air, then soil and a full atmosphere. This takes years of their presence to complete, but can affect a very large area.
         """
     }
 
@@ -575,12 +575,52 @@ rusalka =
     }
 
 
+lares : Details
+lares =
+    { race = Lares
+    , cost = 3
+    , content = """
+        Unusual Lares can teleport to anywhere within their bonded home, or to their bonded family if within five miles of home, and may be selectively invisible while in their bonded family's presence or bonded home.
+        """
+    }
+
+
 firebird : Details
 firebird =
     { race = Firebird
     , cost = 6
     , content = """
         'True phoenixes' can freely shapeshift to and from a pure bird form, about the size and shape of an eagle, which shares their flame effect. Additionally, they passively heal, and optionally calm and reassure, everyone in their presence, and gain an affinity for [Life].
+        """
+    }
+
+
+fresco : Details
+fresco =
+    { race = Fresco
+    , cost = 2
+    , content = """
+        Some Frescoes have an intuition for the zeitgeist, and what history and fiction is popular both globally and in any local subcommunity. This doesn't scale below a dozen or so and works better on mortal humans.
+        """
+    }
+
+
+silverstream : Details
+silverstream =
+    { race = Silverstream
+    , cost = 4
+    , content = """
+        Silverstream transmuters can convert metal and water to stream-silver even while alive, and may use this as a catalyst or ingredient in Runes and Alchemy to reduce costs and, if pairing both magics, enhance effects.
+        """
+    }
+
+
+petrichor : Details
+petrichor =
+    { race = Petrichor
+    , cost = 6
+    , content = """
+        Some Petrichor draw the attention of their ancestral god, who gives them tasks like a Warlock patron (or a second patron), and rewards them with soul-bound artifacts rather than direct magical power.
         """
     }
 

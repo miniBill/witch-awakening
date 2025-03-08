@@ -15,7 +15,7 @@ type alias Details =
 
 all : List Race -> List Details
 all races =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegethon, moorwalker, phantasm, golem, muspel, dictum, qareen, rusalka, firebird ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegethon, moorwalker, phantasm, golem, muspel, dictum, qareen, rusalka, lares, firebird, fresco, silverstream, revenant, petrichor ]
 
 
 neutral : Details
@@ -803,6 +803,22 @@ rusalka =
     }
 
 
+lares : Details
+lares =
+    { name = Lares
+    , affinities = [ Blood, Life ]
+    , content = """
+        Also derogatorily called Brownies, Lares are the protector spirits of old families. Most Laral lineages originate with a very old family of Neutral witches, and in these cases at least some of the family remain associated with their originators and their homes. A Lar bonded to a family and residence passively repairs their surroundings by their presence, and has an extra sense that tells them when the building or family is damaged or in danger. Most have some talent for moving quickly that they use to come to the defense of their charges, and these are more effective than usual when they do.
+
+        A Lar who dies bonded will be roused back toward life every time a fire is lit in the home or family's hearth. A dozen or two fires will see them awakened, and they will appear the next night while the hearth is unobserved.
+
+        __Lares draw Mana__ from Maintenance. A Lar charges by taking care of chores and maintenance of a residence, particularly while unobserved. They can also charge from performing first aid and nonmagical medicine on their bonded family, but this is hard to do unobserved. While observed, their charge rate drops to Medium.
+        """
+    , tank = Med
+    , charge = High
+    }
+
+
 firebird : Details
 firebird =
     { name = Firebird
@@ -815,6 +831,70 @@ firebird =
         Of all natural methods of immortality, theirs is probably the hardest to foil. On death, they ignite and leave a torso-sized egg that will in a matter of days hatch into themself again, but if this egg is destroyed, it will reappear instantly elsewhere, appearing further and further away, and hatching faster and faster, if it is destroyed repeatedly. Even trapping them in stagnant time or petrification will not stick, causing them to temporarily shatter the effect in a burst of flame.
 
         __Firebirds draw Mana__ from Conviction. Whether their own strong confidence in what they are doing, or the feeling of certain rightness in others, a phoenix charges when those near them or closely tied to them experience strong confidence in the moral rightness of their cause or actions. Whether those beliefs are correct is entirely irrelevant.
+        """
+    }
+
+
+fresco : Details
+fresco =
+    { name = Fresco
+    , tank = High
+    , affinities = [ Life, Soul ]
+    , charge = Med
+    , content = """
+        Frescoes are one of the oddest races behind the Veil, because they are, for the most part, two-dimensional. They have limited telekinesis that provides a tactile sense and fills space, but even Fresco witches walking in public must wear cloaks made of a single large piece of cloth so that they can keep their body on the cloak and project out with telekinesis to fill the space under it and keep it supported in the correct shape for a human. Frescoes usually form from memories; reborn souls who either were present for widely-remembered events or who were remembered themselves. Positive memories are more likely to cause Frescoes, and far more likely to awaken as witches, with the weight of the collective good regard granting them their elemental affinities.
+
+        A Fresco is not dead while its origin is still remembered. To rebind it to the world, inscribe or illustrate the memory that formed it onto a wall; it will reshape itself into the form of the Fresco in a matter of hours.
+
+        __Frescoes draw Mana__ from Teaching. Whether leading a classroom, tutoring, or demonstrating a skill actively, Frescoes charge mana by imparting knowledge to others. Accuracy not required, but honesty is, and inattentive students charge slower.
+        """
+    }
+
+
+silverstream : Details
+silverstream =
+    { name = Silverstream
+    , tank = High
+    , affinities = [ Water, Metal ]
+    , charge = Low
+    , content = """
+        Looking like living mercury sculptures, silverstreams can be as hard and rigid as metal or as flexible and elusive as water. They have a consistent total mass and have difficulty adopting hollow shapes or non-humanoid body plans, but they're extremely flexible. Losing parts of their body is annoying but not crucial; they will reattach if they recover the stream-silver or slowly regrow it back up to their full normal mass. Silverstreams have little trouble maintaining a consistent shape, and can slowly change their default, but making it move like a human is trickier.
+
+        A drop of dead stream-silver in still water or on tarnishable metal will slowly convert it to stream-silver over the course of a week for a full body mass. Smaller amounts will need help transferring to new seed matter.
+
+        __Silverstreams draw Mana__ from Avoidance. Evading consequences for their actions or refusing to deal with something they need but do not want cause silverstreams to gain mana. This stacks. Dodging pain or injury give brief spikes of high gain.
+        """
+    }
+
+
+revenant : Details
+revenant =
+    { name = Revenant
+    , tank = Med
+    , affinities = [ Body, Necro ]
+    , charge = High
+    , content = """
+        Revenants are not alive, though they look very much like humans with slightly pallid coloring; they have no internal organs, their forms never change, and they repair damage rapidly if it does not destroy them, restoring their full form. They reproduce only by guarding intimate partners (or others with a strong physical connection) through their own deaths.
+
+        Revenants are very difficult to kill. If they are and their body is laid in the grave with someone who died cursing death, they will revive after about a tenth of the time since the deceased died.
+
+        __Revenants draw Mana__ from Endurance. Revenants gain main by subjecting themselves to things they dislike and remaining in their presence without acting to stop them. Taking up annoying fiddly hobbies or exercising to the point of pain are popular methods.
+        """
+    }
+
+
+petrichor : Details
+petrichor =
+    { name = Petrichor
+    , tank = Med
+    , affinities = [ Earth, Blood ]
+    , charge = High
+    , content = """
+        Petrichor lineages are born from places where gods bled. Their forms resemble clay statues of the wounded god, and missing limbs are particularly common. They all have weak connections to their divine 'ancestor' and senses for things pertaining to their domains. Treating ordinary clay with sapient's blood allows them to repair the damage to their forms, but this breaks their divine connection, immortality, and charge if taken too far.
+
+        A destroyed Petrichor reforms slowly from their ancestral creation point, over the course of a year. Clay gardens tended by the lineage can serve as a replacement location, at most one per world.
+
+        __Petrichors draw Mana__ from Maiming. Impairment from missing limbs or similar durable injuries gives a Petrichor charge. Any prothesis (like a peg leg) reduces it, and a full-replacement one like the artifact drops it to a trickle.
         """
     }
 
