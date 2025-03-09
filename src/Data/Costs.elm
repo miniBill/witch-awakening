@@ -333,7 +333,7 @@ complicationValue model complication =
                     let
                         bonus : Int
                         bonus =
-                            if details.class == model.class && details.class /= Nothing then
+                            if details.class /= Nothing && details.class == model.class then
                                 2
 
                             else
