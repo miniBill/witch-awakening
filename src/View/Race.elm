@@ -124,7 +124,7 @@ affinityPicker race =
     in
     case race of
         Dravir currentAffinity ->
-            picker Dravir currentAffinity [ Fire, Wind, Water, Metal, Nature ]
+            picker Dravir currentAffinity [ Fire, Wind, Water, Earth, Metal, Nature ]
 
         Genie currentAffinity ->
             picker Genie currentAffinity Affinity.all
