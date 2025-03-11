@@ -818,8 +818,8 @@ companionsValue model =
             (\companions ->
                 map2
                     sum
-                    (forFree companions)
                     (map negate (totalCompanionCost companions))
+                    (forFree companions)
             )
 
 

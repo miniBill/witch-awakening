@@ -1,6 +1,7 @@
 module CostTest exposing (magicCosts, perkCosts)
 
 import Data.Costs
+import Data.Costs.Monad
 import Expect
 import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
 import ResultME exposing (ResultME)
@@ -54,11 +55,13 @@ sorceressSpider =
     sorceress Spider
 
 
-expectPower : Int -> ResultME String Data.Costs.Points -> Expect.Expectation
+expectPower : Int -> Data.Costs.Monad.Monad Data.Costs.Points -> Expect.Expectation
 expectPower power value =
     Expect.equal
-        ({ power = power
-         , rewardPoints = 0
+        ({ value =
+            { power = power
+            , rewardPoints = 0
+            }
          , warnings = []
          , infos = []
          }
@@ -124,6 +127,7 @@ testJack12 label model expected =
     test label <|
         \_ ->
             Data.Costs.perkCost model jack12
+                |> Result.map .value
                 |> Expect.equal (Ok -expected)
 
 
