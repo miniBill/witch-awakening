@@ -321,20 +321,26 @@ complicationValue model complication =
                         ( _, Nontiered ) ->
                             Monad.error <| "Need a tier for complication " ++ Types.complicationToString complication.name
             in
-            map
-                (\r ->
-                    let
-                        bonus : Int
-                        bonus =
-                            if details.class /= Nothing && details.class == model.class then
-                                2
+            raw
+                |> map
+                    (\r ->
+                        let
+                            bonus : Int
+                            bonus =
+                                if details.class /= Nothing && details.class == model.class then
+                                    2
 
-                            else
-                                0
-                    in
-                    r + bonus
-                )
-                raw
+                                else
+                                    0
+                        in
+                        r + bonus
+                    )
+                |> Monad.andThen
+                    (\v ->
+                        succeed v
+                            |> Monad.withInfo
+                                (Types.complicationToString details.name ++ ": " ++ String.fromInt v)
+                    )
 
 
 
