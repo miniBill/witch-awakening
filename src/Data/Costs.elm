@@ -3,6 +3,7 @@ module Data.Costs exposing (Points, classValue, companionsValue, complicationsRa
 import Data.Affinity as Affinity
 import Data.Companion as Companion
 import Data.Complication as Complication
+import Data.Costs.Monad as Monad exposing (Monad, andThen, combine, map, map2, mapAndSum, succeed, withWarning)
 import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic
 import Data.Perk as Perk
@@ -11,16 +12,12 @@ import Data.TypePerk as TypePerk
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..), companionToString)
 import List.Extra
 import Maybe.Extra
-import Result.Extra
-import ResultME exposing (ResultME)
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
 
 
 type alias Points =
     { power : Int
     , rewardPoints : Int
-    , warnings : List String
-    , infos : List String
     }
 
 
@@ -28,26 +25,26 @@ zero : Points
 zero =
     { power = 0
     , rewardPoints = 0
-    , warnings = []
-    , infos = []
     }
 
 
-slotUnsupported : ResultME String value
+slotUnsupported : Monad value
 slotUnsupported =
-    ResultME.error "Slot modes not supported yet"
+    Monad.error "Slot modes not supported yet"
 
 
-capWithWarning : Int -> String -> Int -> Points
+capWithWarning : Int -> String -> Int -> Monad Points
 capWithWarning cap warning value =
     if value > cap then
         { zero
             | power = cap
-            , warnings = [ warning ]
         }
+            |> succeed
+            |> withWarning warning
 
     else
         { zero | power = value }
+            |> succeed
 
 
 {-| "In Early Bird mode, complications can only increase the starting power/power cap by up to 30 points"
@@ -82,28 +79,28 @@ normalInitialWarning =
 -- Total --
 
 
-totalCost : Model key -> ResultME String Points
+totalCost : Model key -> Monad Points
 totalCost model =
-    [ Result.map negate <| classValue model
-    , Result.map negate <| startingValue model
-    , Result.map negate <| complicationsValue model
-    , Result.map negate <| typePerksValue model
-    , Result.map negate <| magicsValue model
+    [ map negate <| classValue model
+    , map negate <| startingValue model
+    , map negate <| complicationsValue model
+    , map negate <| typePerksValue model
+    , map negate <| magicsValue model
     , perksCost model
-    , Result.map negate <| factionValue model
-    , Result.map negate <| companionsValue model
-    , Result.map negate <| relicsValue model
-    , Result.map negate <| conversion model
-    , Result.map zeroOut <| powerCap model
+    , succeed (negate (factionValue model))
+    , map negate <| companionsValue model
+    , map negate <| relicsValue model
+    , map negate <| conversion model
+    , map zeroOut <| powerCap model
     ]
-        |> resultsSum
-        |> Result.map
+        |> combineAndSum
+        |> andThen
             (\result ->
                 let
-                    addIf : Int -> String -> List String -> List String
-                    addIf b warning acc =
+                    warningIf : Int -> String -> Monad q -> Monad q
+                    warningIf b warning acc =
                         if b > 0 then
-                            warning :: acc
+                            acc |> withWarning warning
 
                         else
                             acc
@@ -133,73 +130,70 @@ totalCost model =
 
                     else
                         result.rewardPoints
-                , warnings =
-                    result.warnings
-                        |> addIf result.rewardPoints "Not enough reward points! Try converting some power."
-                        |> addIf result.power
-                            (if model.gameMode == Just StoryArc && not model.capBuild then
-                                "Not enough power!"
-
-                             else
-                                "Not enough power! Try adding complications."
-                            )
-                , infos = result.infos
                 }
+                    |> succeed
+                    |> warningIf result.rewardPoints "Not enough reward points! Try converting some power."
+                    |> warningIf result.power
+                        (if model.gameMode == Just StoryArc && not model.capBuild then
+                            "Not enough power!"
+
+                         else
+                            "Not enough power! Try adding complications."
+                        )
             )
 
 
-totalRewards : Model key -> ResultME String Points
+totalRewards : Model key -> Monad Points
 totalRewards model =
     [ classValue model
     , conversion model
     ]
-        |> resultsSum
+        |> combineAndSum
 
 
 
 -- Class --
 
 
-classValue : Model key -> ResultME String Points
+classValue : Model key -> Monad Points
 classValue model =
     case model.class of
         Just class ->
             case class of
                 Warlock ->
-                    Ok { zero | rewardPoints = 20 }
+                    succeed { zero | rewardPoints = 20 }
 
                 Academic ->
-                    Ok zero
+                    succeed zero
 
                 Sorceress ->
-                    Ok zero
+                    succeed zero
 
         Nothing ->
-            ResultME.error "You need to select a class"
+            Monad.error "You need to select a class"
 
 
 
 -- Power cap --
 
 
-powerCap : Model key -> ResultME String Points
+powerCap : Model key -> Monad Points
 powerCap model =
     case model.gameMode of
         Nothing ->
             model.towardsCap
                 |> capWithWarning 30 normalCapWarning
-                |> sum { zero | power = 100 }
-                |> Ok
+                |> map (sum { zero | power = 100 })
 
         Just StoryArc ->
             complicationsRawValue model
-                |> Result.map (capWithWarning 60 storyArcWarning)
-                |> Result.map (sum { zero | power = 150 })
+                |> andThen (capWithWarning 60 storyArcWarning)
+                |> map (sum { zero | power = 150 })
 
         Just EarlyBird ->
             complicationsRawValue model
-                |> Result.map (capWithWarning 30 earlyBirdWarning)
-                |> Result.map (sum { zero | power = 75 })
+                |> andThen (capWithWarning 30 earlyBirdWarning)
+                |> map (sum { zero | power = 75 })
 
         Just SkillTree ->
             slotUnsupported
@@ -212,21 +206,21 @@ powerCap model =
 -- Starting power  --
 
 
-startingValue : Model key -> ResultME String Points
+startingValue : Model key -> Monad Points
 startingValue model =
     let
-        power : ResultME String Int
+        power : Monad Int
         power =
             case model.gameMode of
                 Just StoryArc ->
                     if model.capBuild then
-                        Ok 150
+                        succeed 150
 
                     else
-                        Ok 10
+                        succeed 10
 
                 Just EarlyBird ->
-                    Ok 75
+                    succeed 75
 
                 Just SkillTree ->
                     slotUnsupported
@@ -236,37 +230,35 @@ startingValue model =
 
                 Nothing ->
                     if model.capBuild then
-                        Ok 100
+                        succeed 100
 
                     else
-                        Ok 30
+                        succeed 30
     in
-    Result.map powerToPoints power
+    map powerToPoints power
 
 
 
 -- Complications --
 
 
-complicationsValue : Model key -> ResultME String Points
+complicationsValue : Model key -> Monad Points
 complicationsValue model =
     complicationsRawValue model
-        |> Result.andThen
+        |> andThen
             (\value ->
                 case model.gameMode of
                     Just StoryArc ->
                         if model.capBuild then
                             value
                                 |> capWithWarning 60 storyArcWarning
-                                |> Ok
 
                         else
-                            Ok zero
+                            succeed zero
 
                     Just EarlyBird ->
                         value
                             |> capWithWarning 30 earlyBirdWarning
-                            |> Ok
 
                     Just SkillTree ->
                         slotUnsupported
@@ -278,57 +270,58 @@ complicationsValue model =
                         if model.capBuild then
                             model.towardsCap
                                 |> capWithWarning 30 normalInitialWarning
-                                |> Ok
 
                         else
                             (value - model.towardsCap)
                                 |> capWithWarning 30 normalInitialWarning
-                                |> Ok
             )
 
 
-complicationsRawValue : Model key -> ResultME String Int
+complicationsRawValue : Model key -> Monad Int
 complicationsRawValue model =
-    resultSum (complicationValue model) model.complications
+    model.complications
+        |> List.map (complicationValue model)
+        |> combine
+        |> map List.sum
 
 
-complicationValue : Model key -> Types.RankedComplication -> ResultME String Int
+complicationValue : Model key -> Types.RankedComplication -> Monad Int
 complicationValue model complication =
     let
-        get : Int -> List a -> ResultME String a
+        get : Int -> List a -> Monad a
         get tier list =
             case List.Extra.getAt (tier - 1) list of
                 Just v ->
-                    Ok v
+                    succeed v
 
                 Nothing ->
-                    ResultME.error <| "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name
+                    Monad.error <| "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name
     in
     case List.Extra.find (\{ name } -> name == complication.name) Complication.all of
         Nothing ->
-            ResultME.error <| "Could not find complication " ++ Types.complicationToString complication.name
+            Monad.error <| "Could not find complication " ++ Types.complicationToString complication.name
 
         Just details ->
             let
-                raw : ResultME String Int
+                raw : Monad Int
                 raw =
                     case ( details.content, complication.kind ) of
                         ( Complication.Single value _, _ ) ->
-                            Ok value
+                            succeed value
 
                         ( Complication.WithTiers _ tiers _, Tiered tier ) ->
-                            Result.map Tuple.second <| get tier tiers
+                            map Tuple.second <| get tier tiers
 
                         ( Complication.WithChoices _ choices _, Tiered tier ) ->
-                            Result.map Tuple.second <| get tier choices
+                            map Tuple.second <| get tier choices
 
                         ( Complication.WithGains _ costs, Tiered tier ) ->
                             get tier costs
 
                         ( _, Nontiered ) ->
-                            ResultME.error <| "Need a tier for complication " ++ Types.complicationToString complication.name
+                            Monad.error <| "Need a tier for complication " ++ Types.complicationToString complication.name
             in
-            Result.map
+            map
                 (\r ->
                     let
                         bonus : Int
@@ -348,26 +341,26 @@ complicationValue model complication =
 -- Type perks --
 
 
-typePerksValue : Model key -> ResultME String Points
+typePerksValue : Model key -> Monad Points
 typePerksValue model =
-    resultSum typePerkValue model.typePerks
-        |> Result.map powerToPoints
+    mapAndSum typePerkValue model.typePerks
+        |> map powerToPoints
 
 
-typePerkValue : Race -> ResultME String Int
+typePerkValue : Race -> Monad Int
 typePerkValue race =
     find "Type perk" .race race TypePerk.all Types.raceToString
-        |> Result.map (\{ cost } -> -cost)
+        |> map (\{ cost } -> -cost)
 
 
-find : String -> (item -> key) -> key -> List item -> (key -> String) -> ResultME String item
+find : String -> (item -> key) -> key -> List item -> (key -> String) -> Monad item
 find label toKey value list toString =
     case List.Extra.find (\candidate -> toKey candidate == value) list of
         Nothing ->
-            ResultME.error <| label ++ " " ++ toString value ++ " not found"
+            Monad.error <| label ++ " " ++ toString value ++ " not found"
 
         Just v ->
-            Ok v
+            succeed v
 
 
 
@@ -384,15 +377,18 @@ magicsValue :
         , faction : Maybe ( Faction, Bool )
         , cosmicPearl : CosmicPearlData
     }
-    -> ResultME String Points
+    -> Monad Points
 magicsValue model =
     let
         affinities : List Affinity
         affinities =
             Affinity.fromModel model
     in
-    resultSum (magicValue affinities model) model.magic
-        |> Result.map powerToPoints
+    model.magic
+        |> List.map (magicValue affinities model)
+        |> combine
+        |> map List.sum
+        |> map powerToPoints
 
 
 magicValue :
@@ -404,7 +400,7 @@ magicValue :
             , typePerks : List Race
         }
     -> RankedMagic
-    -> ResultME String Int
+    -> Monad Int
 magicValue affinities { faction, class, typePerks } { name, rank } =
     case
         Magic.all
@@ -458,10 +454,10 @@ magicValue affinities { faction, class, typePerks } { name, rank } =
                 )
     of
         Just cost ->
-            Ok cost
+            succeed cost
 
         Nothing ->
-            ResultME.error <| "Magic " ++ Types.magicToString name ++ " not found"
+            Monad.error <| "Magic " ++ Types.magicToString name ++ " not found"
 
 
 factionDiscount : Int -> Int
@@ -551,11 +547,11 @@ perksValue :
         , perks : List RankedPerk
         , class : Maybe Class
     }
-    -> ResultME String Points
+    -> Monad Points
 perksValue model =
-    resultSum (perkCost model) model.perks
-        |> Result.map powerToPoints
-        |> Result.map negate
+    mapAndSum (perkCost model) model.perks
+        |> map powerToPoints
+        |> map negate
 
 
 perksCost :
@@ -567,10 +563,10 @@ perksCost :
         , perks : List RankedPerk
         , class : Maybe Class
     }
-    -> ResultME String Points
+    -> Monad Points
 perksCost model =
     perksValue model
-        |> Result.map negate
+        |> map negate
 
 
 perkCost :
@@ -583,10 +579,10 @@ perkCost :
         , perks : List RankedPerk
     }
     -> RankedPerk
-    -> ResultME String Int
+    -> Monad Int
 perkCost ({ class } as model) { name, cost } =
     find "Perk" .name name (Perk.all model.perks) Types.perkToString
-        |> Result.map
+        |> map
             (\perk ->
                 let
                     affinities : List Affinity
@@ -624,46 +620,47 @@ perkCost ({ class } as model) { name, cost } =
 -- Faction --
 
 
-factionValue : Model key -> ResultME String Points
+factionValue : Model key -> Points
 factionValue model =
     case model.faction of
         Nothing ->
-            Ok { zero | power = 4 }
+            { zero | power = 4 }
 
         Just ( _, False ) ->
-            Ok { zero | power = 2 }
+            { zero | power = 2 }
 
         Just ( _, True ) ->
-            Ok zero
+            zero
 
 
 
 -- Companions --
 
 
-companionsValue : Model key -> ResultME String Points
+companionsValue : Model key -> Monad Points
 companionsValue model =
     let
-        totalCompanionCost : List ( Maybe Faction, Companion.Details ) -> ResultME String Points
+        totalCompanionCost : List ( Maybe Faction, Companion.Details ) -> Monad Points
         totalCompanionCost companions =
             companions
-                |> Result.Extra.combineMap
+                |> List.map
                     (\( _, { name, cost } ) ->
                         case cost of
                             Just v ->
-                                Ok v
+                                succeed v
 
                             Nothing ->
-                                ResultME.error <| "Companion " ++ Types.companionToString name ++ " does not have a fixed cost"
+                                Monad.error <| "Companion " ++ Types.companionToString name ++ " does not have a fixed cost"
                     )
-                |> Result.map
+                |> combine
+                |> map
                     (\points ->
                         points
                             |> List.sum
                             |> powerToPoints
                     )
 
-        forFree : List ( Maybe Faction, Companion.Details ) -> Points
+        forFree : List ( Maybe Faction, Companion.Details ) -> Monad Points
         forFree companions =
             let
                 treasure : Bool
@@ -736,7 +733,7 @@ companionsValue model =
                         (\( cost, details ) -> ( label, cost, details ))
                         group
 
-                tryPick : List (List ( String, Int, Companion.Details )) -> Points
+                tryPick : List (List ( String, Int, Companion.Details )) -> Monad Points
                 tryPick lists =
                     lists
                         |> List.Extra.removeWhen List.isEmpty
@@ -749,24 +746,32 @@ companionsValue model =
                                         picked
                                             |> List.Extra.uniqueBy (\( _, _, { name } ) -> name)
                                 in
-                                { zero
-                                    | power =
-                                        unique
-                                            |> List.map (\( _, cost, _ ) -> cost)
-                                            |> List.sum
-                                    , infos =
-                                        unique
-                                            |> List.map
-                                                (\( label, _, { name } ) ->
-                                                    companionToString name
-                                                        ++ " is free ("
-                                                        ++ label
-                                                        ++ ")"
-                                                )
+                                { value =
+                                    { zero
+                                        | power =
+                                            unique
+                                                |> List.map (\( _, cost, _ ) -> cost)
+                                                |> List.sum
+                                    }
+                                , warnings = []
+                                , infos =
+                                    unique
+                                        |> List.map
+                                            (\( label, _, { name } ) ->
+                                                companionToString name
+                                                    ++ " is free ("
+                                                    ++ label
+                                                    ++ ")"
+                                            )
                                 }
                             )
-                        |> List.Extra.maximumBy .power
-                        |> Maybe.withDefault zero
+                        |> List.Extra.maximumBy (\{ value } -> value.power)
+                        |> Maybe.withDefault
+                            { value = zero
+                            , warnings = []
+                            , infos = []
+                            }
+                        |> Ok
             in
             if treasure then
                 let
@@ -796,16 +801,14 @@ companionsValue model =
                     ]
     in
     model.companions
-        |> Result.Extra.combineMap getCompanion
-        |> Result.andThen
+        |> List.map getCompanion
+        |> combine
+        |> andThen
             (\companions ->
-                totalCompanionCost companions
-                    |> Result.map
-                        (\calculatedCost ->
-                            sum
-                                (forFree companions)
-                                (negate calculatedCost)
-                        )
+                map2
+                    sum
+                    (forFree companions)
+                    (map negate (totalCompanionCost companions))
             )
 
 
@@ -831,7 +834,7 @@ sameRace companion races =
         || List.any (\companionRace -> List.member companionRace races) companion.races
 
 
-getCompanion : Companion -> ResultME String ( Maybe Faction, Companion.Details )
+getCompanion : Companion -> Monad ( Maybe Faction, Companion.Details )
 getCompanion companion =
     case
         List.Extra.findMap
@@ -849,26 +852,26 @@ getCompanion companion =
             Companion.all
     of
         Just p ->
-            Ok p
+            succeed p
 
         Nothing ->
-            ResultME.error <| "Companion " ++ Types.companionToString companion ++ " not found"
+            Monad.error <| "Companion " ++ Types.companionToString companion ++ " not found"
 
 
 
 -- Relics --
 
 
-relicsValue : Model key -> ResultME String Points
+relicsValue : Model key -> Monad Points
 relicsValue model =
-    resultSum (relicCost model.class model.cosmicPearl) model.relics
-        |> Result.map (\cost -> { zero | rewardPoints = -cost })
+    mapAndSum (relicCost model.class model.cosmicPearl) model.relics
+        |> map (\cost -> { zero | rewardPoints = -cost })
 
 
-relicCost : Maybe Class -> CosmicPearlData -> RankedRelic -> ResultME String Int
+relicCost : Maybe Class -> CosmicPearlData -> RankedRelic -> Monad Int
 relicCost class pearl { name, cost } =
     find "Relic" .name name Relic.all Types.relicToString
-        |> Result.map
+        |> map
             (\relic ->
                 let
                     isClass : Bool
@@ -895,13 +898,13 @@ relicCost class pearl { name, cost } =
             )
 
 
-conversion : Model key -> ResultME String Points
+conversion : Model key -> Monad Points
 conversion model =
-    Ok
-        { zero
-            | power = -model.powerToRewards
-            , rewardPoints = model.powerToRewards
-        }
+    { zero
+        | power = -model.powerToRewards
+        , rewardPoints = model.powerToRewards
+    }
+        |> succeed
 
 
 
@@ -917,8 +920,6 @@ sum : Points -> Points -> Points
 sum l r =
     { power = l.power + r.power
     , rewardPoints = l.rewardPoints + r.rewardPoints
-    , warnings = l.warnings ++ r.warnings
-    , infos = l.infos ++ r.infos
     }
 
 
@@ -927,18 +928,11 @@ sumPoints =
     List.foldl sum zero
 
 
-resultSum : (item -> ResultME String Int) -> List item -> ResultME String Int
-resultSum toValue list =
+combineAndSum : List (Monad Points) -> Monad Points
+combineAndSum list =
     list
-        |> Result.Extra.combineMap toValue
-        |> Result.map List.sum
-
-
-resultsSum : List (ResultME String Points) -> ResultME String Points
-resultsSum list =
-    list
-        |> Result.Extra.combine
-        |> Result.map sumPoints
+        |> combine
+        |> map sumPoints
 
 
 powerToPoints : Int -> Points

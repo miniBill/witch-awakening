@@ -2,6 +2,7 @@ module View.Menu exposing (viewMenu)
 
 import Data.Affinity as Affinity
 import Data.Costs as Costs exposing (Points)
+import Data.Costs.Monad as CostsMonad
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, textColumn, width)
 import Element.Background as Background
 import Element.Border as Border
@@ -11,7 +12,6 @@ import Element.Keyed
 import Generated.Types as Types exposing (Affinity)
 import List.Extra
 import List.Nonempty
-import ResultME exposing (ResultME)
 import Set exposing (Set)
 import String.Extra
 import Theme
@@ -21,7 +21,7 @@ import Types exposing (Choice(..), Model, Msg(..))
 viewMenu : Model key -> Element Msg
 viewMenu model =
     let
-        totalPoints : ResultME String Points
+        totalPoints : CostsMonad.Monad Points
         totalPoints =
             Costs.totalCost model
 
@@ -92,10 +92,10 @@ viewMenu model =
         ]
 
 
-menuLabel : Model key -> ResultME String Points -> List String -> String
+menuLabel : Model key -> CostsMonad.Monad Points -> List String -> String
 menuLabel model totalPointsResult warnings =
     let
-        availablePoints : ResultME String Points
+        availablePoints : CostsMonad.Monad Points
         availablePoints =
             if model.capBuild || model.gameMode == Just Types.EarlyBird then
                 Costs.powerCap model
@@ -104,13 +104,16 @@ menuLabel model totalPointsResult warnings =
                 Costs.startingValue model
     in
     case
-        Result.map3 (\t a r -> ( t, a, r ))
+        CostsMonad.map3 (\t a r -> ( t, a, r ))
             totalPointsResult
             availablePoints
             (Costs.totalRewards model)
     of
-        Ok ( totalPoints, available, rewards ) ->
+        Ok { value } ->
             let
+                ( totalPoints, available, rewards ) =
+                    value
+
                 warningsIcon : String
                 warningsIcon =
                     if List.isEmpty warnings then
@@ -160,7 +163,7 @@ wrapInt before value after =
     before ++ String.fromInt value ++ after
 
 
-viewCalculations : Model key -> ResultME String Points -> List String -> List Affinity -> Element Msg
+viewCalculations : Model key -> CostsMonad.Monad Points -> List String -> List Affinity -> Element Msg
 viewCalculations model power warnings affinities =
     let
         resultRow : ( String, Element Msg )
@@ -169,7 +172,7 @@ viewCalculations model power warnings affinities =
                 "Result"
                 model.showInfo
                 (power
-                    |> Result.map Costs.negate
+                    |> CostsMonad.map Costs.negate
                     |> Result.mapError (\_ -> List.Nonempty.singleton "There are errors in the computation")
                 )
                 Nothing
@@ -225,7 +228,7 @@ viewCalculations model power warnings affinities =
         , keyedRow "Type perks" model.showInfo (Costs.typePerksValue model) Nothing
         , keyedRow "Magic" model.showInfo (Costs.magicsValue model) <| Just "The Magic"
         , keyedRow "Perks" model.showInfo (Costs.perksValue model) Nothing
-        , keyedRow "Faction" model.showInfo (Costs.factionValue model) <| Just "Factions"
+        , keyedRow "Faction" model.showInfo (CostsMonad.succeed (Costs.factionValue model)) <| Just "Factions"
         , keyedRow "Companions" model.showInfo (Costs.companionsValue model) Nothing
         , ( "RelicSlider", relicSlider model )
         , keyedRow "Relics" model.showInfo (Costs.relicsValue model) Nothing
@@ -280,12 +283,12 @@ viewCalculations model power warnings affinities =
         ]
 
 
-keyedRow : String -> Set String -> ResultME String Points -> Maybe String -> ( String, Element Msg )
+keyedRow : String -> Set String -> CostsMonad.Monad Points -> Maybe String -> ( String, Element Msg )
 keyedRow label showInfo result target =
     ( label, row label showInfo result target )
 
 
-row : String -> Set String -> ResultME String Points -> Maybe String -> Element Msg
+row : String -> Set String -> CostsMonad.Monad Points -> Maybe String -> Element Msg
 row label showInfo result target =
     case result of
         Err es ->
@@ -312,11 +315,11 @@ row label showInfo result target =
                 (paragraph [ width fill ]
                     [ linkLabel label target
                     , if List.isEmpty value.infos then
-                        rightPoints value
+                        rightPoints value.value
 
                       else
                         Input.button [ alignRight ]
-                            { label = rightPoints value
+                            { label = rightPoints value.value
                             , onPress = ToggleInfo label |> Choice |> Just
                             }
                     ]
@@ -464,7 +467,11 @@ capSlider model =
                             , rightPoints <| Costs.powerToPoints model.towardsCap
                             ]
                 , min = 0
-                , max = toFloat <| Result.withDefault 0 <| Costs.complicationsRawValue model
+                , max =
+                    Costs.complicationsRawValue model
+                        |> Result.map .value
+                        |> Result.withDefault 0
+                        |> toFloat
                 , value = toFloat model.towardsCap
                 , step = Just 1
                 , thumb = Input.defaultThumb
@@ -477,7 +484,9 @@ capSlider model =
             row
                 label
                 model.showInfo
-                (Result.map Costs.powerToPoints <| Costs.complicationsRawValue model)
+                (Costs.complicationsRawValue model
+                    |> CostsMonad.map Costs.powerToPoints
+                )
                 (Just "Game Mode")
 
         Just Types.SkillTree ->
@@ -519,8 +528,18 @@ relicSlider model =
                             }
                         ]
                     ]
-        , min = negate <| toFloat <| Result.withDefault 0 <| Result.map .rewardPoints <| Costs.classValue model
-        , max = negate <| toFloat <| Result.withDefault 0 <| Result.map .rewardPoints <| Costs.relicsValue model
+        , min =
+            Costs.classValue model
+                |> Result.map (\{ value } -> value.rewardPoints)
+                |> Result.withDefault 0
+                |> toFloat
+                |> negate
+        , max =
+            Costs.relicsValue model
+                |> Result.map (\{ value } -> value.rewardPoints)
+                |> Result.withDefault 0
+                |> toFloat
+                |> negate
         , value = toFloat model.powerToRewards
         , step = Just 1
         , thumb = Input.defaultThumb
