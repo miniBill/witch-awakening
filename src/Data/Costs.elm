@@ -215,12 +215,15 @@ startingValue model =
                 Just StoryArc ->
                     if model.capBuild then
                         succeed 150
+                            |> Monad.withInfo "Story Arc (cap): 150"
 
                     else
                         succeed 10
+                            |> Monad.withInfo "Story Arc: 10"
 
                 Just EarlyBird ->
                     succeed 75
+                        |> Monad.withInfo "Early Bird: 75"
 
                 Just SkillTree ->
                     slotUnsupported
@@ -231,9 +234,11 @@ startingValue model =
                 Nothing ->
                     if model.capBuild then
                         succeed 100
+                            |> Monad.withInfo "Normal game mode (cap): 100"
 
                     else
                         succeed 30
+                            |> Monad.withInfo "Normal game mode: 30"
     in
     map powerToPoints power
 
