@@ -485,7 +485,7 @@ dwarf =
         They have low-light vision & don’t need air. A dead Dwarf given a dwarven burial (even if no body remains) can be reborn to a relative, to regain memories at age 10. Someone can volunteer at the funeral.
 
         __Dwarves draw Mana__ from Community, the presence of other dwarves or creatures with this charge method. Low with 1 other, Med with 6, High with 20+.
-"""
+        """
     }
 
 
@@ -540,7 +540,8 @@ xeno =
     , content = """
         Xenos are a new species only discovered in the last 10 years by an Alphazon research team on Titan. A crashed ship from outside the solar system. Normal Xenos are monstrous predators, but after killing some witches on the team, they started hatching hybrids that are more humanoid and less feral. These hybrids have established a colony. They run at 120mph, can throw cars, and have hard carapaces equivalent to mithril armor with claws and bladed tails. Remarkably quiet in movement and can see infrared and UV.
 
-        __Xenos draw Mana__ from _Eggs_, laid by the xeno if female. Male xenos benefit from the eggs laid by their parent or eggs laid by their own mate. Each egg individually provides about 1% total mana per minute af fa range of 500 meters, .5 for an additional 500, .1 in another 500. Stacks. Eggs can’t be fertilized after being laid, remaining as mana batteries, but are fertilized during formation like the sexual reproduction most witches are familiar with. An egg lasts 1 month before running dry, unless supplied blood. 1 drop = 1% charge."""
+        __Xenos draw Mana__ from _Eggs_, laid by the xeno if female. Male xenos benefit from the eggs laid by their parent or eggs laid by their own mate. Each egg individually provides about 1% total mana per minute af fa range of 500 meters, .5 for an additional 500, .1 in another 500. Stacks. Eggs can’t be fertilized after being laid, remaining as mana batteries, but are fertilized during formation like the sexual reproduction most witches are familiar with. An egg lasts 1 month before running dry, unless supplied blood. 1 drop = 1% charge.
+        """
     }
 
 
@@ -583,7 +584,8 @@ gnome =
     , content = """
         Gnomes are tiny inventive people that even in the wilds in history they were a productive and innovative people relying heavily on cunning works of primitive engineering to construct safe communities and traps to deal with a world of far larger threats, working with trees, roots, and earth. Now they’re natural at working metals into complex contraptions. They stand only 4 inches tall but have the strength of a typical humanoid child, impressive for their size, and the speed of a cat with strong limbs and durable bodies that are near immune to blunt damage
 
-        __Gnomes draw Mana__ from Tinkering, any time they create anything, they gain mana from doing so proportional to the material value, skill necessary, and time required. Jury rigging a quick contraption in a minute with a practical function and purpose could net you as much as 15% of your mana capacity. A long project that takes 4 hours could be a full restore, or 5 minutes with high skill, value, and risk of failure. Major projects taking a week to build can double their capacity for a week."""
+        __Gnomes draw Mana__ from Tinkering, any time they create anything, they gain mana from doing so proportional to the material value, skill necessary, and time required. Jury rigging a quick contraption in a minute with a practical function and purpose could net you as much as 15% of your mana capacity. A long project that takes 4 hours could be a full restore, or 5 minutes with high skill, value, and risk of failure. Major projects taking a week to build can double their capacity for a week.
+        """
     }
 
 
@@ -806,7 +808,9 @@ rusalka =
 lares : Details
 lares =
     { name = Lares
+    , tank = Med
     , affinities = [ Blood, Life ]
+    , charge = High
     , content = """
         Also derogatorily called Brownies, Lares are the protector spirits of old families. Most Laral lineages originate with a very old family of Neutral witches, and in these cases at least some of the family remain associated with their originators and their homes. A Lar bonded to a family and residence passively repairs their surroundings by their presence, and has an extra sense that tells them when the building or family is damaged or in danger. Most have some talent for moving quickly that they use to come to the defense of their charges, and these are more effective than usual when they do.
 
@@ -814,8 +818,6 @@ lares =
 
         __Lares draw Mana__ from Maintenance. A Lar charges by taking care of chores and maintenance of a residence, particularly while unobserved. They can also charge from performing first aid and nonmagical medicine on their bonded family, but this is hard to do unobserved. While observed, their charge rate drops to Medium.
         """
-    , tank = Med
-    , charge = High
     }
 
 
