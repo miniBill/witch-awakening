@@ -6,6 +6,7 @@ type alias Enum =
     , variants : List ( String, List String )
     , exceptions : List ( String, String )
     , toImage : Bool
+    , hasDLC : Bool
     }
 
 
@@ -45,6 +46,7 @@ build name variants =
     , variants = List.map (\variant -> ( variant, [] )) variants
     , exceptions = []
     , toImage = False
+    , hasDLC = False
     }
 
 
@@ -72,6 +74,11 @@ withArguments name arguments enum =
                 )
                 enum.variants
     }
+
+
+withDLC : Enum -> Enum
+withDLC enum =
+    { enum | hasDLC = True }
 
 
 classes : List String

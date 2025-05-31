@@ -4,21 +4,21 @@ module Generate exposing (main)
 
 import Data exposing (Enum)
 import Dict exposing (Dict)
+import Dict.Extra
 import Elm
 import Elm.Annotation
+import Elm.Arg
 import Elm.Case
-import Elm.Case.Branch
 import Elm.Op
 import Gen.CodeGen.Generate as Generate
-import Gen.Debug
 import Gen.Maybe
 import Gen.Parser
 import Gen.Result
 import Json.Decode exposing (Decoder, Value)
-import List.Extra
 import Parser exposing ((|.), (|=), Parser)
 import Result.Extra
 import String.Extra
+import Triple.Extra
 
 
 main : Program Value () ()
@@ -73,7 +73,7 @@ toFiles flags =
                             enumsFile : Elm.File
                             enumsFile =
                                 Elm.file [ "Generated", "Types" ]
-                                    (List.concatMap enumToDeclarations Data.enums)
+                                    (List.map enumToDeclarations Data.enums)
                         in
                         { info = []
                         , files = gradientsFile :: enumsFile :: List.concatMap Tuple.first list
@@ -81,8 +81,8 @@ toFiles flags =
                     )
 
 
-enumToDeclarations : Enum -> List Elm.Declaration
-enumToDeclarations { name, exceptions, variants, toImage } =
+enumToDeclarations : Enum -> Elm.Declaration
+enumToDeclarations { name, exceptions, variants, toImage, hasDLC } =
     let
         type_ : Elm.Annotation.Annotation
         type_ =
@@ -111,71 +111,60 @@ enumToDeclarations { name, exceptions, variants, toImage } =
         toStringDeclaration : Elm.Declaration
         toStringDeclaration =
             (\value ->
-                Elm.Case.custom value
-                    type_
-                    (List.map
-                        (\( variant, args ) ->
-                            let
-                                variantString : Elm.Expression
-                                variantString =
-                                    Dict.get variant exceptionsDict
-                                        |> Maybe.withDefault variant
-                                        |> Elm.string
+                let
+                    variantToBranch : ( String, List String ) -> Elm.Case.Branch
+                    variantToBranch ( variant, args ) =
+                        let
+                            variantString : Elm.Expression
+                            variantString =
+                                Dict.get variant exceptionsDict
+                                    |> Maybe.withDefault variant
+                                    |> Elm.string
 
-                                toStrings : List ( String, Elm.Expression ) -> Elm.Expression
-                                toStrings =
-                                    List.foldl
-                                        (\( arg, val ) acc ->
-                                            Elm.Op.append
-                                                (Elm.Op.append
-                                                    acc
-                                                    (Elm.string "-")
+                            toStrings : List ( String, Elm.Expression ) -> Elm.Expression
+                            toStrings =
+                                List.foldl
+                                    (\( arg, val ) acc ->
+                                        Elm.Op.append
+                                            (Elm.Op.append
+                                                acc
+                                                (Elm.string "-")
+                                            )
+                                            (Elm.apply
+                                                (Elm.val <|
+                                                    String.Extra.decapitalize arg
+                                                        ++ "ToString"
                                                 )
-                                                (Elm.apply
-                                                    (Elm.val <|
-                                                        String.Extra.decapitalize arg
-                                                            ++ "ToString"
-                                                    )
-                                                    [ val ]
-                                                )
-                                        )
-                                        variantString
-                            in
-                            case args of
-                                [] ->
+                                                [ val ]
+                                            )
+                                    )
                                     variantString
-                                        |> Elm.Case.branch0 (yassify variant)
+                        in
+                        Elm.Case.branch
+                            (Elm.Arg.customType (yassify variant) identity
+                                |> Elm.Arg.items (List.map Elm.Arg.var args)
+                            )
+                        <|
+                            \vals ->
+                                toStrings (List.map2 Tuple.pair args vals)
+                in
+                if hasDLC then
+                    let
+                        dlcBranch : Elm.Case.Branch
+                        dlcBranch =
+                            Elm.Case.branch
+                                (Elm.Arg.customType ("DLC" ++ name) identity
+                                    |> Elm.Arg.item (Elm.Arg.var "name")
+                                )
+                            <|
+                                \customName -> customName
+                    in
+                    Elm.Case.custom value type_ (List.map variantToBranch variants ++ [ dlcBranch ])
 
-                                [ arg0 ] ->
-                                    Elm.Case.branch1 (yassify variant)
-                                        ( "arg0", Elm.Annotation.named [] arg0 )
-                                    <|
-                                        \val0 ->
-                                            toStrings
-                                                [ ( arg0, val0 )
-                                                ]
-
-                                [ arg0, arg1 ] ->
-                                    Elm.Case.branch2 (yassify variant)
-                                        ( "arg0", Elm.Annotation.named [] arg0 )
-                                        ( "arg1", Elm.Annotation.named [] arg0 )
-                                    <|
-                                        \val0 val1 ->
-                                            toStrings
-                                                [ ( arg0, val0 )
-                                                , ( arg1, val1 )
-                                                ]
-
-                                _ ->
-                                    Elm.Case.Branch.ignore <|
-                                        Gen.Debug.todo <|
-                                            "[toStringDeclaration] "
-                                                ++ String.fromInt (List.length args)
-                        )
-                        variants
-                    )
+                else
+                    Elm.Case.custom value type_ (List.map variantToBranch variants)
             )
-                |> Elm.fn ( lowerName, Just type_ )
+                |> Elm.fn (Elm.Arg.varWith lowerName type_)
                 |> Elm.declaration (lowerName ++ "ToString")
 
         parserDeclaration : Elm.Declaration
@@ -238,7 +227,7 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                 )
                     |> Elm.withType (Elm.Annotation.maybe type_)
             )
-                |> Elm.fn ( lowerName, Just Elm.Annotation.string )
+                |> Elm.fn (Elm.Arg.varWith lowerName Elm.Annotation.string)
                 |> Elm.declaration (lowerName ++ "FromString")
 
         toImageDeclaration : Elm.Declaration
@@ -260,28 +249,18 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                                         , annotation = Nothing
                                         }
                             in
-                            case args of
-                                [] ->
-                                    Elm.Case.branch0 constructor image
-
-                                [ _ ] ->
-                                    Elm.Case.branch1 constructor ( "_", Elm.Annotation.unit ) <| \_ -> image
-
-                                _ ->
-                                    Elm.Case.Branch.ignore <|
-                                        Gen.Debug.todo <|
-                                            "[toStringDeclaration] "
-                                                ++ String.fromInt (List.length args)
+                            Elm.Case.branch
+                                (Elm.Arg.customType constructor identity
+                                    |> Elm.Arg.items (List.map (always Elm.Arg.ignore) args)
+                                )
+                            <|
+                                \_ -> image
                         )
                     |> Elm.Case.custom value (Elm.Annotation.named [] name)
                     |> Elm.withType (Elm.Annotation.named [ "Images" ] "Image")
             )
-                |> Elm.fn
-                    ( lowerName
-                    , Just <| Elm.Annotation.named [] name
-                    )
+                |> Elm.fn (Elm.Arg.varWith lowerName <| Elm.Annotation.named [] name)
                 |> Elm.declaration (lowerName ++ "ToImage")
-                |> Elm.exposeWith { group = Just name, exposeConstructor = False }
     in
     (if toImage then
         [ typeDeclaration
@@ -298,12 +277,9 @@ enumToDeclarations { name, exceptions, variants, toImage } =
         , fromStringDeclaration
         ]
     )
-        |> List.map
-            (Elm.exposeWith
-                { exposeConstructor = True
-                , group = Just name
-                }
-            )
+        |> List.map Elm.exposeConstructor
+        |> (::) (Elm.docs ("# " ++ name))
+        |> Elm.group
 
 
 isEnum : List ( String, List String ) -> Bool
@@ -369,7 +345,17 @@ gradient name content =
 images : String -> Result (List Generate.Error) Elm.File
 images sizes =
     let
-        fromLine : String -> String -> Result String ( Elm.Declaration, Maybe ( String, Int, String ) )
+        fromLine :
+            String
+            -> String
+            ->
+                Result
+                    String
+                    { name : String
+                    , section : String
+                    , declaration : Elm.Declaration
+                    , group : Maybe { name : String, index : Int }
+                    }
         fromLine filePath size =
             let
                 fileName : Maybe String
@@ -396,25 +382,29 @@ images sizes =
                                 |> Elm.record
                                 |> Elm.withType (Elm.Annotation.named [] "Image")
                                 |> Elm.declaration name
-                                |> Elm.exposeWith
-                                    { exposeConstructor = True
-                                    , group = Just group
-                                    }
 
-                        group : String
-                        group =
+                        section : String
+                        section =
                             name
                                 |> String.Extra.humanize
                                 |> String.split " "
                                 |> List.take 1
                                 |> String.join " "
                     in
-                    case Parser.run imageGroupParser name of
-                        Ok ( groupName, index ) ->
-                            Ok ( declaration, Just ( groupName, index, name ) )
-
-                        Err _ ->
-                            Ok ( declaration, Nothing )
+                    { name = name
+                    , section = section
+                    , declaration = declaration
+                    , group =
+                        Parser.run imageGroupParser name
+                            |> Result.toMaybe
+                            |> Maybe.map
+                                (\( groupName, indexInGroup ) ->
+                                    { name = groupName
+                                    , index = indexInGroup
+                                    }
+                                )
+                    }
+                        |> Ok
 
                 _ ->
                     Err <| "Unexpected size: " ++ size
@@ -447,27 +437,34 @@ images sizes =
         |> Result.map
             (\declarations ->
                 let
-                    groupDeclarations : List Elm.Declaration
-                    groupDeclarations =
+                    groupedDeclarations : List Elm.Declaration
+                    groupedDeclarations =
                         declarations
-                            |> List.filterMap Tuple.second
-                            |> List.Extra.gatherEqualsBy
-                                (\( groupName, _, _ ) -> groupName)
-                            |> List.map groupDeclaration
-
-                    groupDeclaration :
-                        ( ( String, Int, String )
-                        , List ( String, Int, String )
-                        )
-                        -> Elm.Declaration
-                    groupDeclaration ( ( groupName, _, _ ) as head, tail ) =
-                        (head :: tail)
-                            |> List.map
-                                (\( _, imageIndex, imageName ) ->
-                                    ( imageIndex, imageName )
+                            |> Dict.Extra.groupBy .section
+                            |> Dict.map
+                                (\section decls ->
+                                    Elm.group (Elm.docs ("## " ++ section) :: List.map .declaration decls)
                                 )
+                            |> Dict.values
+
+                    declarationsForGroups : Elm.Declaration
+                    declarationsForGroups =
+                        declarations
+                            |> List.filterMap
+                                (\{ name, group } ->
+                                    Maybe.map (\g -> ( name, g.name, g.index )) group
+                                )
+                            |> Dict.Extra.groupBy Triple.Extra.second
+                            |> Dict.map groupDeclaration
+                            |> Dict.values
+                            |> (::) (Elm.docs "## Groups")
+                            |> Elm.group
+
+                    groupDeclaration : String -> List ( String, String, Int ) -> Elm.Declaration
+                    groupDeclaration groupName decls =
+                        decls
                             |> List.map
-                                (\( index, name ) ->
+                                (\( name, _, index ) ->
                                     ( "image" ++ String.fromInt index
                                     , Elm.val name
                                         |> Elm.withType
@@ -476,24 +473,19 @@ images sizes =
                                 )
                             |> Elm.record
                             |> Elm.declaration groupName
-                            |> Elm.exposeWith
-                                { exposeConstructor = True
-                                , group = Just "Groups"
-                                }
                 in
-                Elm.file [ "Images" ]
-                    (Elm.expose
-                        (Elm.alias "Image"
-                            (Elm.Annotation.record
-                                [ ( "width", Elm.Annotation.int )
-                                , ( "height", Elm.Annotation.int )
-                                , ( "src", Elm.Annotation.string )
-                                ]
-                            )
-                        )
-                        :: List.map Tuple.first declarations
-                        ++ groupDeclarations
+                (Elm.alias "Image"
+                    (Elm.Annotation.record
+                        [ ( "width", Elm.Annotation.int )
+                        , ( "height", Elm.Annotation.int )
+                        , ( "src", Elm.Annotation.string )
+                        ]
                     )
+                    :: groupedDeclarations
+                    ++ [ declarationsForGroups ]
+                )
+                    |> List.map Elm.expose
+                    |> Elm.file [ "Images" ]
             )
 
 
