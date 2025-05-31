@@ -33,3 +33,7 @@ build:
 .PHONY: run
 run: generated/Images.elm
 	yarn elm-watch hot
+
+.PHONY: test
+test: generated/Images.elm
+	yarn elm-test-rs --watch --compiler $(which lamdera)
