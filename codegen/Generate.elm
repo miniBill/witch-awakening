@@ -82,7 +82,7 @@ toFiles flags =
 
 
 enumToDeclarations : Enum -> Elm.Declaration
-enumToDeclarations { name, exceptions, variants, toImage, hasDLC } =
+enumToDeclarations { name, exceptions, variants, toImage } =
     let
         type_ : Elm.Annotation.Annotation
         type_ =
@@ -148,21 +148,7 @@ enumToDeclarations { name, exceptions, variants, toImage, hasDLC } =
                             \vals ->
                                 toStrings (List.map2 Tuple.pair args vals)
                 in
-                if hasDLC then
-                    let
-                        dlcBranch : Elm.Case.Branch
-                        dlcBranch =
-                            Elm.Case.branch
-                                (Elm.Arg.customType ("DLC" ++ name) identity
-                                    |> Elm.Arg.item (Elm.Arg.var "name")
-                                )
-                            <|
-                                \customName -> customName
-                    in
-                    Elm.Case.custom value type_ (List.map variantToBranch variants ++ [ dlcBranch ])
-
-                else
-                    Elm.Case.custom value type_ (List.map variantToBranch variants)
+                Elm.Case.custom value type_ (List.map variantToBranch variants)
             )
                 |> Elm.fn (Elm.Arg.varWith lowerName type_)
                 |> Elm.declaration (lowerName ++ "ToString")
@@ -233,29 +219,33 @@ enumToDeclarations { name, exceptions, variants, toImage, hasDLC } =
         toImageDeclaration : Elm.Declaration
         toImageDeclaration =
             (\value ->
-                variants
-                    |> List.map
-                        (\( variant, args ) ->
-                            let
-                                constructor : String
-                                constructor =
-                                    yassify variant
+                let
+                    baseBranches =
+                        variants
+                            |> List.map
+                                (\( variant, args ) ->
+                                    let
+                                        constructor : String
+                                        constructor =
+                                            yassify variant
 
-                                image : Elm.Expression
-                                image =
-                                    Elm.value
-                                        { importFrom = [ "Images" ]
-                                        , name = lowerName ++ constructor
-                                        , annotation = Nothing
-                                        }
-                            in
-                            Elm.Case.branch
-                                (Elm.Arg.customType constructor identity
-                                    |> Elm.Arg.items (List.map (always Elm.Arg.ignore) args)
+                                        image : Elm.Expression
+                                        image =
+                                            Elm.value
+                                                { importFrom = [ "Images" ]
+                                                , name = lowerName ++ constructor
+                                                , annotation = Nothing
+                                                }
+                                    in
+                                    Elm.Case.branch
+                                        (Elm.Arg.customType constructor identity
+                                            |> Elm.Arg.items (List.map (always Elm.Arg.ignore) args)
+                                        )
+                                    <|
+                                        \_ -> image
                                 )
-                            <|
-                                \_ -> image
-                        )
+                in
+                baseBranches
                     |> Elm.Case.custom value (Elm.Annotation.named [] name)
                     |> Elm.withType (Elm.Annotation.named [ "Images" ] "Image")
             )
