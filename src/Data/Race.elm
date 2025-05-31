@@ -6,8 +6,8 @@ import List.Extra
 
 type alias Details =
     { name : Race
-    , tank : Size
     , affinities : List Affinity
+    , tank : Size
     , charge : Size
     , content : String
     }
