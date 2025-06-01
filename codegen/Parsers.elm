@@ -1,6 +1,6 @@
 module Parsers exposing (DLC, DLCItem(..), Perk, Race, dlc)
 
-import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, commit, getChompedString, keyword, map, oneOf, sequence, spaces, succeed, symbol)
+import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, keyword, map, oneOf, sequence, spaces, succeed, symbol)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
 
 
@@ -79,7 +79,10 @@ race =
                         , description = description
                         }
                 )
-                |. header "###" "Perk"
+                |. symbol "###"
+                |. spaces
+                |. keyword "Perk"
+                |. spaces
                 |= (listItem "Cost" |> andThen intParser)
                 |= paragraphs
             , succeed Nothing
@@ -100,7 +103,7 @@ paragraphs =
         |> Parser.map String.trim
 
 
-paragraph : Parser a
+paragraph : Parser ()
 paragraph =
     Parser.chompIf (\c -> c /= '-' && c /= '#')
         |. chompUntilEndOrAfter "\n"
@@ -143,10 +146,11 @@ intParser raw =
 header : String -> String -> Parser String
 header level key =
     succeed String.trim
-        |. backtrackable (keyword level)
-        |. spaces
+        |. backtrackable
+            (keyword level
+                |. spaces
+            )
         |. keyword key
-        |. commit ()
         |. spaces
         |. symbol ":"
         |. spaces
@@ -162,7 +166,6 @@ listItem key =
                 |. spaces
             )
         |. keyword key
-        |. commit ()
         |. symbol ":"
         |. spaces
         |= getChompedString (chompUntilAfter "\n")
