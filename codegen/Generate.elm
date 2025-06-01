@@ -178,8 +178,8 @@ enumToDeclarations { name, variants, toImage } =
                 |> List.map
                     (\( variantName, variant ) ->
                         let
-                            init : Elm.Expression
-                            init =
+                            start : Elm.Expression
+                            start =
                                 Elm.Op.skip
                                     (Gen.Parser.succeed (Elm.val <| yassify variantName))
                                     (variant.toStringException
@@ -197,7 +197,7 @@ enumToDeclarations { name, variants, toImage } =
                                     )
                                     (Elm.val <| String.Extra.decapitalize arg ++ "Parser")
                             )
-                            init
+                            start
                             variant.arguments
                     )
                 |> Gen.Parser.oneOf
