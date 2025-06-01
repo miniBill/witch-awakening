@@ -87,7 +87,7 @@ totalCost model =
     , map negate <| typePerksValue model
     , map negate <| magicsValue model
     , perksCost model
-    , succeed (negate (factionValue model))
+    , factionValue model |> negate |> succeed
     , map negate <| companionsValue model
     , map negate <| relicsValue model
     , map negate <| conversion model
