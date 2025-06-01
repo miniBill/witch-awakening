@@ -2,6 +2,7 @@ module Data exposing (Enum, Variant, enums)
 
 import Dict exposing (Dict)
 import Dict.Extra
+import Parsers
 
 
 type alias Enum =
@@ -18,14 +19,17 @@ type alias Variant =
     }
 
 
-enums : List Enum
-enums =
+enums : List Parsers.DLC -> List Enum
+enums parsedDLCs =
     let
         combinedDLC : DLC
         combinedDLC =
-            core
-                |> withDLC "Loose Assets" looseAssets
-                |> withDLC "Elemental Harmony" elementalHarmony
+            List.foldl (\e acc -> acc |> withDLC e.name (fromParsed e))
+                (core
+                    |> withDLC "Loose Assets" looseAssets
+                    |> withDLC "Elemental Harmony" elementalHarmony
+                )
+                parsedDLCs
     in
     [ buildEnum "Class" combinedDLC.classes
         |> withImages
@@ -53,6 +57,29 @@ enums =
         |> withImages
     , buildEnum "Faction" (buildVariants coreFactions)
     ]
+
+
+fromParsed : { name : String, items : List Parsers.DLCItem } -> DLC
+fromParsed { name, items } =
+    let
+        variant : Variant
+        variant =
+            { arguments = []
+            , toStringException = Nothing
+            , dlc = Just name
+            }
+    in
+    List.foldl
+        (\item dlc ->
+            case item of
+                Parsers.DLCRace v ->
+                    { dlc | races = Dict.insert v.name variant dlc.races }
+
+                Parsers.DLCPerk v ->
+                    { dlc | perks = Dict.insert v.name variant dlc.perks }
+        )
+        emptyDLC
+        items
 
 
 withDLC : String -> DLC -> DLC -> DLC
@@ -295,5 +322,5 @@ elementalHarmony =
 
 elementalHarmonyRaces : Dict String Variant
 elementalHarmonyRaces =
-    [ "Phlegethon", "Moorwalker", "Phantasm", "Golem", "Muspel", "Dictum", "Qareen", "Rusalka", "Lares", "Firebird", "Fresco", "Silverstream", "Revenant", "Petrichor" ]
+    [ "Moorwalker", "Phantasm", "Golem", "Muspel", "Dictum", "Qareen", "Rusalka", "Lares", "Firebird", "Fresco", "Silverstream", "Revenant", "Petrichor" ]
         |> buildVariants

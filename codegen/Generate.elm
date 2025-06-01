@@ -16,6 +16,7 @@ import Gen.Parser
 import Gen.Result
 import Json.Decode exposing (Decoder, Value)
 import Parser exposing ((|.), (|=), Parser)
+import Parsers
 import Result.Extra
 import String.Extra
 import Triple.Extra
@@ -68,13 +69,17 @@ toFiles (Generate.Directory { files }) =
                         images fileContent
                             |> Result.map
                                 (\file ->
-                                    ( [ file ], [] )
+                                    ( [ file ], [], [] )
                                 )
 
                     _ ->
                         if String.endsWith "_gradient.ppm" fileName then
                             gradient (String.dropRight (String.length "_gradient.ppm") fileName) fileContent
-                                |> Result.map (\declaration -> ( [], [ declaration ] ))
+                                |> Result.map (\declaration -> ( [], [ declaration ], [] ))
+
+                        else if String.endsWith ".md" fileName then
+                            parseDLC fileName fileContent
+                                |> Result.map (\dlc -> ( [], [], [ dlc ] ))
 
                         else
                             Err
@@ -89,17 +94,91 @@ toFiles (Generate.Directory { files }) =
                     gradientsFile : Elm.File
                     gradientsFile =
                         Elm.file [ "Gradients" ]
-                            (List.concatMap Tuple.second list)
+                            (List.concatMap Triple.Extra.second list)
+
+                    dlcList : List Parsers.DLC
+                    dlcList =
+                        List.concatMap Triple.Extra.third list
 
                     enumsFile : Elm.File
                     enumsFile =
                         Elm.file [ "Generated", "Types" ]
-                            (List.map enumToDeclarations Data.enums)
+                            (List.map enumToDeclarations (Data.enums dlcList))
                 in
                 { info = []
-                , files = gradientsFile :: enumsFile :: List.concatMap Tuple.first list
+                , files = gradientsFile :: enumsFile :: List.concatMap Triple.Extra.first list
                 }
             )
+
+
+parseDLC : String -> String -> Result (List Generate.Error) Parsers.DLC
+parseDLC filename content =
+    Parser.run Parsers.dlc content
+        |> Result.mapError
+            (\deadEnds ->
+                [ { title = "Error parsing DLC file"
+                  , description =
+                        "Could not parse " ++ filename ++ "\n" ++ errorToString deadEnds
+                  }
+                ]
+            )
+
+
+errorToString : List Parser.DeadEnd -> String
+errorToString deadEnds =
+    String.join "\n" <|
+        List.map deadEndToString deadEnds
+
+
+deadEndToString : Parser.DeadEnd -> String
+deadEndToString deadEnd =
+    "At " ++ String.fromInt deadEnd.row ++ ":" ++ String.fromInt deadEnd.col ++ ": " ++ problemToString deadEnd.problem
+
+
+problemToString : Parser.Problem -> String
+problemToString problem =
+    case problem of
+        Parser.ExpectingInt ->
+            "Expecting int"
+
+        Parser.ExpectingHex ->
+            "Expecting hex"
+
+        Parser.ExpectingOctal ->
+            "Expecting octal"
+
+        Parser.ExpectingBinary ->
+            "Expecting binary"
+
+        Parser.ExpectingFloat ->
+            "Expecting float"
+
+        Parser.ExpectingNumber ->
+            "Expecting number"
+
+        Parser.ExpectingVariable ->
+            "Expecting variable"
+
+        Parser.ExpectingSymbol s ->
+            "Expecting symbol " ++ s
+
+        Parser.ExpectingKeyword k ->
+            "Expecting keyword " ++ k
+
+        Parser.Expecting e ->
+            "Expecting " ++ e
+
+        Parser.ExpectingEnd ->
+            "Expecting end"
+
+        Parser.UnexpectedChar ->
+            "Unexpected char"
+
+        Parser.Problem p ->
+            "Problem: " ++ p
+
+        Parser.BadRepeat ->
+            "Bad repetition"
 
 
 enumToDeclarations : Enum -> Elm.Declaration
