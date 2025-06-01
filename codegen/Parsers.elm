@@ -1,7 +1,13 @@
-module Parsers exposing (DLCItem(..), Perk, Race, dlc)
+module Parsers exposing (DLC, DLCItem(..), Perk, Race, dlc)
 
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, commit, getChompedString, keyword, map, oneOf, sequence, spaces, succeed, symbol)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
+
+
+type alias DLC =
+    { name : String
+    , items : List DLCItem
+    }
 
 
 type DLCItem
@@ -9,20 +15,24 @@ type DLCItem
     | DLCPerk Perk
 
 
-dlc : Parser (List DLCItem)
+dlc : Parser DLC
 dlc =
-    sequence
-        { start = ""
-        , end = ""
-        , item =
-            oneOf
-                [ map DLCRace race
-                , map DLCPerk perk
-                ]
-        , separator = ""
-        , spaces = spaces
-        , trailing = Parser.Optional
-        }
+    succeed DLC
+        |. keyword "#"
+        |= map String.trim (getChompedString (chompUntilAfter "\n"))
+        |. spaces
+        |= sequence
+            { start = ""
+            , end = ""
+            , item =
+                oneOf
+                    [ map DLCRace race
+                    , map DLCPerk perk
+                    ]
+            , separator = ""
+            , spaces = spaces
+            , trailing = Parser.Optional
+            }
 
 
 
