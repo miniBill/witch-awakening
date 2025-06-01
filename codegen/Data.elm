@@ -24,6 +24,7 @@ enums =
         combinedDLC : DLC
         combinedDLC =
             core
+                |> withDLC "Loose Assets" looseAssets
                 |> withDLC "Elemental Harmony" elementalHarmony
     in
     [ buildEnum "Class" combinedDLC.classes
@@ -38,6 +39,8 @@ enums =
         |> withImages
     , buildEnum "Relic" combinedDLC.relics
         |> withImages
+    , buildEnum "Magic" combinedDLC.magics
+        |> withImages
 
     --
     , buildEnum "Size" (buildVariants coreSizes)
@@ -47,8 +50,6 @@ enums =
     , buildEnum "GameMode" (buildVariants coreGameModes)
         |> withImages
     , buildEnum "Slot" (buildVariants coreSlots)
-        |> withImages
-    , buildEnum "Magic" (buildVariants coreMagics)
         |> withImages
     , buildEnum "Faction" (buildVariants coreFactions)
     ]
@@ -74,6 +75,7 @@ withDLC dlcName original additional =
     , affinities = merge .affinities
     , companions = merge .companions
     , relics = merge .relics
+    , magics = merge .magics
     }
 
 
@@ -150,36 +152,47 @@ type alias DLC =
     , affinities : Dict String Variant
     , companions : Dict String Variant
     , relics : Dict String Variant
+    , magics : Dict String Variant
+    }
+
+
+emptyDLC : DLC
+emptyDLC =
+    { classes = Dict.empty
+    , races = Dict.empty
+    , perks = Dict.empty
+    , affinities = Dict.empty
+    , companions = Dict.empty
+    , relics = Dict.empty
+    , magics = Dict.empty
     }
 
 
 core : DLC
 core =
-    { classes = buildVariants [ "Academic", "Sorceress", "Warlock" ]
-    , races =
-        buildVariants coreRaces
-            |> withArguments "Dravir" [ "Affinity" ]
-            |> withArguments "Genie" [ "Affinity" ]
-            |> withArguments "Gemini" [ "Affinity" ]
-    , perks =
-        buildVariants corePerks
-            |> withArguments "Charge Swap" [ "Race" ]
-    , affinities =
-        buildVariants coreAffinities
-            |> withExceptions [ ( "All", "???" ) ]
-    , companions =
-        buildVariants coreCompanions
-            |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
-    , relics =
-        buildVariants coreRelics
-
-    -- |> withArguments "Magic Talisman" [ "Magic" ]
+    { classes = coreClasses
+    , races = coreRaces
+    , perks = corePerks
+    , affinities = coreAffinities
+    , companions = coreCompanions
+    , relics = coreRelics
+    , magics = coreMagics
     }
 
 
-coreRaces : List String
+coreClasses : Dict String Variant
+coreClasses =
+    [ "Academic", "Sorceress", "Warlock" ]
+        |> buildVariants
+
+
+coreRaces : Dict String Variant
 coreRaces =
-    [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine", "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya", "Taura", "Wulong", "Dravir", "Doll", "Vanir", "Changeling", "Elf", "Orc", "Pharon", "Jotun", "Hollow", "Dwarf", "Wither", "Mimi", "Sword", "Xeno", "Cyborg", "Spider", "Gnome", "Pixie", "Fairy", "Genie", "Gemini" ]
+    [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine", "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya", "Taura", "Wulong", "Dravir", "Doll", "Vanir", "Changeling", "Elf", "Orc", "Pharon", "Jotun", "Hollow", "Dwarf", "Wither", "Mimi", "Sword" ]
+        |> buildVariants
+        |> withArguments "Dravir" [ "Affinity" ]
+        |> withArguments "Genie" [ "Affinity" ]
+        |> withArguments "Gemini" [ "Affinity" ]
 
 
 coreSizes : List String
@@ -187,9 +200,11 @@ coreSizes =
     [ "Low", "Med", "High" ]
 
 
-coreAffinities : List String
+coreAffinities : Dict String Variant
 coreAffinities =
     [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ]
+        |> buildVariants
+        |> withExceptions [ ( "All", "???" ) ]
 
 
 coreComplicationCategories : List String
@@ -212,14 +227,17 @@ coreSlots =
     [ "White", "Folk", "Noble", "Heroic", "Epic" ]
 
 
-coreMagics : List String
+coreMagics : Dict String Variant
 coreMagics =
-    [ "Aethernautics", "Alchemy", "Consortation", "Curses", "Divination", "Earthmoving", "Familiarity", "Firecalling", "Hexes", "Metallurgy", "Metamorphosis", "Naturalism", "Necromancy", "Portals", "Psychotics", "Runes", "Waterworking", "Windkeeping", "Witchery", "Digicasting", "Wands", "Ministration", "Occultism", "Dominion", "Covenants", "Monstrosity", "Gadgetry", "Integration", "Lifeweaving", "Visceramancy", "Arachnescence" ]
+    [ "Aethernautics", "Alchemy", "Consortation", "Curses", "Divination", "Earthmoving", "Familiarity", "Firecalling", "Hexes", "Metallurgy", "Metamorphosis", "Naturalism", "Necromancy", "Portals", "Psychotics", "Runes", "Waterworking", "Windkeeping", "Witchery", "Digicasting", "Wands", "Ministration", "Occultism", "Dominion", "Covenants", "Monstrosity", "Gadgetry", "Integration" ]
+        |> buildVariants
 
 
-corePerks : List String
+corePerks : Dict String Variant
 corePerks =
     [ "Oracle", "Jack-of-All", "Transformation Sequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "Elephant Trunk", "Prestidigitation", "Suggestion", "Fascinate", "Pantomime", "Beauty Sleep", "Third Eye", "Soul Jellies", "Hat Trick", "Mood Weather", "Improved Familiar", "Hybridize", "Apex", "Charge Swap", "Crystallize", "Memorize", "Maid Hand", "Hot Swap", "Menagerie", "Blood Witch", "Gunwitch", "Levitation", "Isekaid", "Heritage", "Magic Friendship", "Windsong", "Broom Beast", "Isekai Worlds", "Isekai Heritage", "Summer School", "Magical Heart", "Miniaturization", "Soul Warrior", "Comfy Pocket", "Improved Rod", "Witch... hut?", "Company", "Pet Break", "Magic Shop", "Keeper", "Soul Graft" ]
+        |> buildVariants
+        |> withArguments "Charge Swap" [ "Race" ]
 
 
 coreFactions : List String
@@ -227,27 +245,55 @@ coreFactions =
     [ "The College of Arcadia", "Hawthorne Academia", "The Watchers", "The Hespatian Coven", "Lunabella", "Alfheimr Alliance", "The Outsiders", "The O.R.C.", "Alphazon Industries" ]
 
 
-coreCompanions : List String
+coreCompanions : Dict String Variant
 coreCompanions =
-    [ "Rachel Pool", "Anne Laurenchi", "Canday Wesbank", "Tessa-Marie Kudashov", "Evelynn P. Willowcrane", "John Doe", "Hannah Grangely", "Elizabell Sinclaire", "Ashley Lovenko", "Sylvanne Mae Kanzaki", "Francis Isaac Giovanni", "Ifra al-Zahra", "Sariah J. Snow", "Claire Bel’montegra", "Lucille M. Bright", "King Daemian Kain", "Whisper", "Red Mother", "Diana", "Cassandra", "King Culicarius", "Einodia - Kate", "Victoria Watts", "Richard Max Johnson", "Bethadonna Rossbaum", "Miranda Quincy", "Samantha Nat Ponds", "Jennifer K. Young", "Agent 7Y", "Agent 9s", "Alex K. Halls", "Isabella Mable Oaks", "Evangelina Rosa Costaval", "Penelope", "The Caretaker", "Lost Queen", "Gift from Beyond", "Agent 9s (Original)", "Princess Dael’ezra of Charis", "Anaphalon Greenwield", "Briar Gracehollow", "Duchess Sael’astra of Odalle", "Mandy Hunts", "Eskhander Mahabadi", "Experiment 627", "August Rose o’Bare", "Saya Kurosawa", "Francesca Astrenichtys", "Elaine A. Victorica", "Maimonada Majesteim", "Azurelliea Ad’Madelline", "Melissa Vincimvitch", "Laura D. Devonshire", "Caroline", "Suzy the Miasma", "Noriko du Nichols", "Sylvarra as’Domonina", "Madelline L. Peach", "Reina Akatsuki", "Minnie Andrus", "Nova", "Scarlet", "Huntress", "Malice", "Persephone", "Betilda Arai Buckland", "Nichte Y’ir", "Ælfflæd (now Daphne)", "Megan Minosine", "Jane “Kit” Adams", "Alicia Red Velvetine", "Julia May Caldwin", "Twins Sara & Kara", "Vesuvianelle Lalahon", "Amber Ogden “Vix”", "XIN: Dollmaker", "Ophelia Reisha", "Esther Reisha", "Custom", "Eris Julianari Stonefallen", "Xiao Liena", "\"Jin\" [Choose a Name]", "Sara Star", "Red Betty" ]
+    [ "Rachel Pool", "Anne Laurenchi", "Canday Wesbank", "Tessa-Marie Kudashov", "Evelynn P. Willowcrane", "John Doe", "Hannah Grangely", "Elizabell Sinclaire", "Ashley Lovenko", "Sylvanne Mae Kanzaki", "Francis Isaac Giovanni", "Ifra al-Zahra", "Sariah J. Snow", "Claire Bel’montegra", "Lucille M. Bright", "King Daemian Kain", "Whisper", "Red Mother", "Diana", "Cassandra", "King Culicarius", "Einodia - Kate", "Victoria Watts", "Richard Max Johnson", "Bethadonna Rossbaum", "Miranda Quincy", "Samantha Nat Ponds", "Jennifer K. Young", "Agent 7Y", "Agent 9s", "Alex K. Halls", "Isabella Mable Oaks", "Evangelina Rosa Costaval", "Penelope", "The Caretaker", "Lost Queen", "Gift from Beyond", "Agent 9s (Original)", "Princess Dael’ezra of Charis", "Anaphalon Greenwield", "Briar Gracehollow", "Duchess Sael’astra of Odalle", "Mandy Hunts", "Eskhander Mahabadi", "Experiment 627", "August Rose o’Bare", "Saya Kurosawa", "Francesca Astrenichtys", "Elaine A. Victorica", "Maimonada Majesteim", "Azurelliea Ad’Madelline", "Melissa Vincimvitch", "Laura D. Devonshire", "Caroline", "Suzy the Miasma", "Noriko du Nichols", "Sylvarra as’Domonina", "Madelline L. Peach", "Reina Akatsuki", "Minnie Andrus", "Nova", "Scarlet", "Huntress", "Malice", "Persephone", "Betilda Arai Buckland", "Nichte Y’ir", "Ælfflæd (now Daphne)", "Megan Minosine", "Jane “Kit” Adams", "Alicia Red Velvetine", "Julia May Caldwin", "Twins Sara & Kara", "Vesuvianelle Lalahon", "Amber Ogden “Vix”", "XIN: Dollmaker", "Ophelia Reisha", "Esther Reisha", "Custom", "Eris Julianari Stonefallen" ]
+        |> buildVariants
 
 
-coreRelics : List String
+coreRelics : Dict String Variant
 coreRelics =
     [ "HexVPN", "Storm Brew", "Nightlight", "Stained Sliver", "Jade Bolt", "Golden Fish", "Necronomicon", "Alchemist Stone", "Yaga Root", "Nymph Vessel", "Longing Mirror", "Hellrider", "Archer’s Bow", "Assassin’s edge", "Warden’s Maul", "Devil’s Trident", "Guardian’s Wall", "Alchemist Stash", "Gem of Renewal", "Prosthesis", "Violet Lenses", "Mana Core", "Magic Talisman", "Treasurer’s Mint", "Companion Brick", "Heirloom", "Riftblade", "Life Record", "Servant Dolls", "Dollmaker’s Kit", "Thaumic Spikes", "Secret Elixir", "Cosmic Pearl", "Witch Deck", "Battleship", "Mythril Armor", "Ritual Inks", "Spell Bullets", "Great War Rifle", "Witch Pistol", "Jester Oni Mask", "Far Talisman", "Master Key", "Pewter Crown", "Sun Shard", "Hydron", "Collection", "Witch Kisses" ]
+        -- |> withArguments "Magic Talisman" [ "Magic" ]
+        |> buildVariants
+
+
+looseAssets : DLC
+looseAssets =
+    { emptyDLC
+        | races = looseAssetsRaces
+        , companions = looseAssetsCompanions
+        , magics = looseAssetsMagics
+    }
+
+
+looseAssetsRaces : Dict String Variant
+looseAssetsRaces =
+    [ "Xeno", "Cyborg", "Spider", "Gnome", "Pixie", "Fairy", "Genie", "Gemini" ]
+        |> buildVariants
+
+
+looseAssetsCompanions : Dict String Variant
+looseAssetsCompanions =
+    [ "Xiao Liena", "\"Jin\" [Choose a Name]", "Sara Star", "Red Betty" ]
+        |> buildVariants
+        |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
+
+
+looseAssetsMagics : Dict String Variant
+looseAssetsMagics =
+    [ "Lifeweaving", "Visceramancy", "Arachnescence" ]
+        |> buildVariants
 
 
 elementalHarmony : DLC
 elementalHarmony =
-    { classes = Dict.empty
-    , races = buildVariants elementalHarmonyRaces
-    , perks = Dict.empty
-    , affinities = Dict.empty
-    , companions = Dict.empty
-    , relics = Dict.empty
+    { emptyDLC
+        | races = elementalHarmonyRaces
     }
 
 
-elementalHarmonyRaces : List String
+elementalHarmonyRaces : Dict String Variant
 elementalHarmonyRaces =
     [ "Phlegethon", "Moorwalker", "Phantasm", "Golem", "Muspel", "Dictum", "Qareen", "Rusalka", "Lares", "Firebird", "Fresco", "Silverstream", "Revenant", "Petrichor" ]
+        |> buildVariants
