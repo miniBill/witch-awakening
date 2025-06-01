@@ -10,7 +10,7 @@ import Elm.Annotation
 import Elm.Arg
 import Elm.Case
 import Elm.Op
-import Gen.CodeGen.Generate as Generate
+import Gen.CodeGen.Generate as Generate exposing (Directory)
 import Gen.Maybe
 import Gen.Parser
 import Gen.Result
@@ -23,62 +23,83 @@ import Triple.Extra
 
 main : Program Value () ()
 main =
-    Generate.withFeedback toFiles
+    Platform.worker
+        { init = init
+        , update = \_ model -> ( model, Cmd.none )
+        , subscriptions = \_ -> Sub.none
+        }
+
+
+init : Value -> ( (), Cmd () )
+init flags =
+    case Json.Decode.decodeValue directoryDecoder flags of
+        Ok input ->
+            ( ()
+            , case toFiles input of
+                Ok result ->
+                    Cmd.batch <|
+                        List.map Generate.info result.info
+                            ++ [ Generate.files result.files ]
+
+                Err errors ->
+                    Generate.error errors
+            )
+
+        Err e ->
+            ( ()
+            , Generate.error
+                [ { title = "Error decoding flags"
+                  , description = Json.Decode.errorToString e
+                  }
+                ]
+            )
 
 
 toFiles :
-    Value
-    ->
-        Result
-            (List Generate.Error)
-            { info : List String, files : List Elm.File }
-toFiles flags =
-    case Json.Decode.decodeValue directoryDecoder flags of
-        Err _ ->
-            Err [ { title = "Invalid flags", description = "Could not decode flags" } ]
+    Directory
+    -> Result (List Generate.Error) { info : List String, files : List Elm.File }
+toFiles (Generate.Directory { files }) =
+    files
+        |> Dict.toList
+        |> Result.Extra.combineMap
+            (\( fileName, fileContent ) ->
+                case fileName of
+                    "sizes" ->
+                        images fileContent
+                            |> Result.map
+                                (\file ->
+                                    ( [ file ], [] )
+                                )
 
-        Ok (Generate.Directory { files }) ->
-            files
-                |> Dict.toList
-                |> Result.Extra.combineMap
-                    (\( fileName, fileContent ) ->
-                        case fileName of
-                            "sizes" ->
-                                images fileContent
-                                    |> Result.map
-                                        (\file ->
-                                            ( [ file ], [] )
-                                        )
+                    _ ->
+                        if String.endsWith "_gradient.ppm" fileName then
+                            gradient (String.dropRight (String.length "_gradient.ppm") fileName) fileContent
+                                |> Result.map (\declaration -> ( [], [ declaration ] ))
 
-                            _ ->
-                                if String.endsWith "_gradient.ppm" fileName then
-                                    gradient (String.dropRight (String.length "_gradient.ppm") fileName) fileContent
-                                        |> Result.map (\declaration -> ( [], [ declaration ] ))
+                        else
+                            Err
+                                [ { title = "Unexpected file"
+                                  , description = "File " ++ fileName ++ " unexpected, don’t know how to handle it"
+                                  }
+                                ]
+            )
+        |> Result.map
+            (\list ->
+                let
+                    gradientsFile : Elm.File
+                    gradientsFile =
+                        Elm.file [ "Gradients" ]
+                            (List.concatMap Tuple.second list)
 
-                                else
-                                    Err
-                                        [ { title = "Unexpected file"
-                                          , description = "File " ++ fileName ++ " unexpected, don’t know how to handle it"
-                                          }
-                                        ]
-                    )
-                |> Result.map
-                    (\list ->
-                        let
-                            gradientsFile : Elm.File
-                            gradientsFile =
-                                Elm.file [ "Gradients" ]
-                                    (List.concatMap Tuple.second list)
-
-                            enumsFile : Elm.File
-                            enumsFile =
-                                Elm.file [ "Generated", "Types" ]
-                                    (List.map enumToDeclarations Data.enums)
-                        in
-                        { info = []
-                        , files = gradientsFile :: enumsFile :: List.concatMap Tuple.first list
-                        }
-                    )
+                    enumsFile : Elm.File
+                    enumsFile =
+                        Elm.file [ "Generated", "Types" ]
+                            (List.map enumToDeclarations Data.enums)
+                in
+                { info = []
+                , files = gradientsFile :: enumsFile :: List.concatMap Tuple.first list
+                }
+            )
 
 
 enumToDeclarations : Enum -> Elm.Declaration
