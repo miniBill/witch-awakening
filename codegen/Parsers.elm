@@ -19,7 +19,10 @@ dlc : Parser DLC
 dlc =
     succeed DLC
         |. keyword "#"
-        |= map String.trim (getChompedString (chompUntilAfter "\n"))
+        |= (chompUntilAfter "\n"
+                |> getChompedString
+                |> map String.trim
+           )
         |. spaces
         |= sequence
             { start = ""

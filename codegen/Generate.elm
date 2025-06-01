@@ -115,15 +115,14 @@ enumToDeclarations { name, variants, toImage } =
 
         typeDeclaration : Elm.Declaration
         typeDeclaration =
-            Elm.customType name
-                (List.map
+            Dict.toList variants
+                |> List.map
                     (\( variantName, variant ) ->
-                        Elm.variantWith
-                            (yassify variantName)
-                            (List.map (Elm.Annotation.named []) variant.arguments)
+                        variant.arguments
+                            |> List.map (Elm.Annotation.named [])
+                            |> Elm.variantWith (yassify variantName)
                     )
-                    (Dict.toList variants)
-                )
+                |> Elm.customType name
 
         toStringDeclaration : Elm.Declaration
         toStringDeclaration =
@@ -165,7 +164,9 @@ enumToDeclarations { name, variants, toImage } =
                             \vals ->
                                 toStrings (List.map2 Tuple.pair variant.arguments vals)
                 in
-                Elm.Case.custom value type_ (List.map variantToBranch (Dict.toList variants))
+                Dict.toList variants
+                    |> List.map variantToBranch
+                    |> Elm.Case.custom value type_
             )
                 |> Elm.fn (Elm.Arg.varWith lowerName type_)
                 |> Elm.declaration (lowerName ++ "ToString")
