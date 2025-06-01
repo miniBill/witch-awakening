@@ -23,7 +23,7 @@ codegen/Gen/Basics.elm: codegen/elm.codegen.json
 
 build/elm-codegen-flags/%.ppm: public/gradients/%.png
 	mkdir -p build/elm-codegen-flags
-	convert $^ -compress none $@
+	magick $^ -compress none $@
 
 .PHONY: build
 build:
