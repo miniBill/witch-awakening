@@ -218,8 +218,6 @@ coreRaces =
     [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine", "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya", "Taura", "Wulong", "Dravir", "Doll", "Vanir", "Changeling", "Elf", "Orc", "Pharon", "Jotun", "Hollow", "Dwarf", "Wither", "Mimi", "Sword" ]
         |> buildVariants
         |> withArguments "Dravir" [ "Affinity" ]
-        |> withArguments "Genie" [ "Affinity" ]
-        |> withArguments "Gemini" [ "Affinity" ]
 
 
 coreSizes : List String
@@ -298,6 +296,8 @@ looseAssetsRaces : Dict String Variant
 looseAssetsRaces =
     [ "Xeno", "Cyborg", "Spider", "Gnome", "Pixie", "Fairy", "Genie", "Gemini" ]
         |> buildVariants
+        |> withArguments "Genie" [ "Affinity" ]
+        |> withArguments "Gemini" [ "Affinity" ]
 
 
 looseAssetsCompanions : Dict String Variant
