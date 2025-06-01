@@ -30,11 +30,18 @@ enums =
         |> withImages
     , buildEnum "Race" combinedDLC.races
         |> withImages
-    , buildEnum "Size" (buildVariants coreSizes)
-    , buildEnum "Affinity" (buildVariants coreAffinities)
+    , buildEnum "Perk" combinedDLC.perks
         |> withImages
-        |> withExceptions [ ( "All", "???" ) ]
-    , buildEnum "ComplicationCategory" (buildVariants [ "WorldShift" ])
+    , buildEnum "Affinity" combinedDLC.affinities
+        |> withImages
+    , buildEnum "Companion" combinedDLC.companions
+        |> withImages
+    , buildEnum "Relic" combinedDLC.relics
+        |> withImages
+
+    --
+    , buildEnum "Size" (buildVariants coreSizes)
+    , buildEnum "ComplicationCategory" (buildVariants coreComplicationCategories)
     , buildEnum "Complication" (buildVariants coreComplications)
         |> withImages
     , buildEnum "GameMode" (buildVariants coreGameModes)
@@ -43,22 +50,16 @@ enums =
         |> withImages
     , buildEnum "Magic" (buildVariants coreMagics)
         |> withImages
-    , buildEnum "Perk" combinedDLC.perks
-        |> withImages
     , buildEnum "Faction" (buildVariants coreFactions)
-    , buildEnum "Companion" (buildVariants coreCompanions)
-        |> withImages
-        |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
-    , buildEnum "Relic" (buildVariants coreRelics)
-        |> withImages
-
-    -- |> withArguments "Magic Talisman" [ "Magic" ]
     ]
 
 
 withDLC : String -> DLC -> DLC -> DLC
 withDLC dlcName original additional =
     let
+        merge :
+            (DLC -> Dict String Variant)
+            -> Dict String Variant
         merge prop =
             prop original
                 |> Dict.union
@@ -70,6 +71,9 @@ withDLC dlcName original additional =
     { classes = merge .classes
     , races = merge .races
     , perks = merge .perks
+    , affinities = merge .affinities
+    , companions = merge .companions
+    , relics = merge .relics
     }
 
 
@@ -103,9 +107,9 @@ withImages enum =
     { enum | toImage = True }
 
 
-withExceptions : List ( String, String ) -> Enum -> Enum
+withExceptions : List ( String, String ) -> Dict String Variant -> Dict String Variant
 withExceptions exceptions enum =
-    updateEnum
+    updateDict
         (\value variant ->
             { variant | toStringException = Just value }
         )
@@ -113,21 +117,18 @@ withExceptions exceptions enum =
         enum
 
 
-updateEnum :
+updateDict :
     (a -> Variant -> Variant)
     -> List ( String, a )
-    -> Enum
-    -> Enum
-updateEnum f pairs enum =
+    -> Dict String Variant
+    -> Dict String Variant
+updateDict f pairs enum =
     List.foldl
         (\( key, value ) acc ->
-            { acc
-                | variants =
-                    Dict.Extra.updateIfExists
-                        key
-                        (f value)
-                        enum.variants
-            }
+            Dict.Extra.updateIfExists
+                key
+                (f value)
+                acc
         )
         enum
         pairs
@@ -146,6 +147,9 @@ type alias DLC =
     { classes : Dict String Variant
     , races : Dict String Variant
     , perks : Dict String Variant
+    , affinities : Dict String Variant
+    , companions : Dict String Variant
+    , relics : Dict String Variant
     }
 
 
@@ -160,6 +164,16 @@ core =
     , perks =
         buildVariants corePerks
             |> withArguments "Charge Swap" [ "Race" ]
+    , affinities =
+        buildVariants coreAffinities
+            |> withExceptions [ ( "All", "???" ) ]
+    , companions =
+        buildVariants coreCompanions
+            |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
+    , relics =
+        buildVariants coreRelics
+
+    -- |> withArguments "Magic Talisman" [ "Magic" ]
     }
 
 
@@ -176,6 +190,11 @@ coreSizes =
 coreAffinities : List String
 coreAffinities =
     [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ]
+
+
+coreComplicationCategories : List String
+coreComplicationCategories =
+    [ "WorldShift" ]
 
 
 coreComplications : List String
@@ -223,6 +242,9 @@ elementalHarmony =
     { classes = Dict.empty
     , races = buildVariants elementalHarmonyRaces
     , perks = Dict.empty
+    , affinities = Dict.empty
+    , companions = Dict.empty
+    , relics = Dict.empty
     }
 
 
