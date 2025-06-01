@@ -15,7 +15,12 @@ type alias Details =
 
 all : List Race -> List Details
 all races =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races, phlegethon, moorwalker, phantasm, golem, muspel, dictum, qareen, rusalka, lares, firebird, fresco, silverstream, revenant, petrichor ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races ] ++ elementalHarmony
+
+
+elementalHarmony : List Details
+elementalHarmony =
+    [ phlegethon, moorwalker, phantasm, golem, muspel, dictum, qareen, rusalka, lares, firebird, fresco, silverstream, revenant, petrichor ]
 
 
 neutral : Details
