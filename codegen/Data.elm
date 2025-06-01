@@ -1,51 +1,101 @@
-module Data exposing (Enum, enums)
+module Data exposing (Enum, Variant, enums)
+
+import Dict exposing (Dict)
+import Dict.Extra
 
 
 type alias Enum =
     { name : String
-    , variants : List ( String, List String )
-    , exceptions : List ( String, String )
+    , variants : Dict String Variant
     , toImage : Bool
+    }
+
+
+type alias Variant =
+    { arguments : List String
+    , dlc : Maybe String
+    , toStringException : Maybe String
     }
 
 
 enums : List Enum
 enums =
-    [ build "Class" classes |> withImages
-    , build "Race" races
+    let
+        combinedDLC : DLC
+        combinedDLC =
+            core
+                |> withDLC "Elemental Harmony" elementalHarmony
+    in
+    [ buildEnum "Class" combinedDLC.classes
         |> withImages
-        |> withArguments "Dravir" [ "Affinity" ]
-        |> withArguments "Genie" [ "Affinity" ]
-        |> withArguments "Gemini" [ "Affinity" ]
-    , build "Size" sizes
-    , build "Affinity" affinities
+    , buildEnum "Race" combinedDLC.races
+        |> withImages
+    , buildEnum "Size" (buildVariants coreSizes)
+    , buildEnum "Affinity" (buildVariants coreAffinities)
         |> withImages
         |> withExceptions [ ( "All", "???" ) ]
-    , build "ComplicationCategory" [ "WorldShift" ]
-    , build "Complication" complications |> withImages
-    , build "GameMode" gameModes |> withImages
-    , build "Slot" slots |> withImages
-    , build "Magic" magics |> withImages
-    , build "Perk" perks
+    , buildEnum "ComplicationCategory" (buildVariants [ "WorldShift" ])
+    , buildEnum "Complication" (buildVariants coreComplications)
         |> withImages
-        |> withArguments "Charge Swap" [ "Race" ]
-    , build "Faction" factions
-    , build "Companion" companions
+    , buildEnum "GameMode" (buildVariants coreGameModes)
+        |> withImages
+    , buildEnum "Slot" (buildVariants coreSlots)
+        |> withImages
+    , buildEnum "Magic" (buildVariants coreMagics)
+        |> withImages
+    , buildEnum "Perk" combinedDLC.perks
+        |> withImages
+    , buildEnum "Faction" (buildVariants coreFactions)
+    , buildEnum "Companion" (buildVariants coreCompanions)
         |> withImages
         |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
-    , build "Relic" relics |> withImages
+    , buildEnum "Relic" (buildVariants coreRelics)
+        |> withImages
 
     -- |> withArguments "Magic Talisman" [ "Magic" ]
     ]
 
 
-build : String -> List String -> Enum
-build name variants =
+withDLC : String -> DLC -> DLC -> DLC
+withDLC dlcName original additional =
+    let
+        merge prop =
+            prop original
+                |> Dict.union
+                    (prop additional
+                        |> Dict.map
+                            (\_ variant -> { variant | dlc = Just dlcName })
+                    )
+    in
+    { classes = merge .classes
+    , races = merge .races
+    , perks = merge .perks
+    }
+
+
+buildEnum : String -> Dict String Variant -> Enum
+buildEnum name variants =
     { name = name
-    , variants = List.map (\variant -> ( variant, [] )) variants
-    , exceptions = []
+    , variants = variants
     , toImage = False
     }
+
+
+buildVariants : List String -> Dict String Variant
+buildVariants variants =
+    let
+        toVariant : String -> ( String, Variant )
+        toVariant variant =
+            ( variant
+            , { arguments = []
+              , toStringException = Nothing
+              , dlc = Nothing
+              }
+            )
+    in
+    variants
+        |> List.map toVariant
+        |> Dict.fromList
 
 
 withImages : Enum -> Enum
@@ -55,80 +105,127 @@ withImages enum =
 
 withExceptions : List ( String, String ) -> Enum -> Enum
 withExceptions exceptions enum =
-    { enum | exceptions = exceptions }
+    updateEnum
+        (\value variant ->
+            { variant | toStringException = Just value }
+        )
+        exceptions
+        enum
 
 
-withArguments : String -> List String -> Enum -> Enum
+updateEnum :
+    (a -> Variant -> Variant)
+    -> List ( String, a )
+    -> Enum
+    -> Enum
+updateEnum f pairs enum =
+    List.foldl
+        (\( key, value ) acc ->
+            { acc
+                | variants =
+                    Dict.Extra.updateIfExists
+                        key
+                        (f value)
+                        enum.variants
+            }
+        )
+        enum
+        pairs
+
+
+withArguments : String -> List String -> Dict String Variant -> Dict String Variant
 withArguments name arguments enum =
-    { enum
-        | variants =
-            List.map
-                (\( variant, orig ) ->
-                    if variant == name then
-                        ( variant, arguments )
+    Dict.Extra.updateIfExists name
+        (\variant ->
+            { variant | arguments = arguments }
+        )
+        enum
 
-                    else
-                        ( variant, orig )
-                )
-                enum.variants
+
+type alias DLC =
+    { classes : Dict String Variant
+    , races : Dict String Variant
+    , perks : Dict String Variant
     }
 
 
-classes : List String
-classes =
-    [ "Academic", "Sorceress", "Warlock" ]
+core : DLC
+core =
+    { classes = buildVariants [ "Academic", "Sorceress", "Warlock" ]
+    , races =
+        buildVariants coreRaces
+            |> withArguments "Dravir" [ "Affinity" ]
+            |> withArguments "Genie" [ "Affinity" ]
+            |> withArguments "Gemini" [ "Affinity" ]
+    , perks =
+        buildVariants corePerks
+            |> withArguments "Charge Swap" [ "Race" ]
+    }
 
 
-races : List String
-races =
-    [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine", "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya", "Taura", "Wulong", "Dravir", "Doll", "Vanir", "Changeling", "Elf", "Orc", "Pharon", "Jotun", "Hollow", "Dwarf", "Wither", "Mimi", "Sword", "Xeno", "Cyborg", "Spider", "Gnome", "Pixie", "Fairy", "Genie", "Gemini", "Phlegethon", "Moorwalker", "Phantasm", "Golem", "Muspel", "Dictum", "Qareen", "Rusalka", "Lares", "Firebird", "Fresco", "Silverstream", "Revenant", "Petrichor" ]
+coreRaces : List String
+coreRaces =
+    [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine", "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya", "Taura", "Wulong", "Dravir", "Doll", "Vanir", "Changeling", "Elf", "Orc", "Pharon", "Jotun", "Hollow", "Dwarf", "Wither", "Mimi", "Sword", "Xeno", "Cyborg", "Spider", "Gnome", "Pixie", "Fairy", "Genie", "Gemini" ]
 
 
-sizes : List String
-sizes =
+coreSizes : List String
+coreSizes =
     [ "Low", "Med", "High" ]
 
 
-affinities : List String
-affinities =
+coreAffinities : List String
+coreAffinities =
     [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ]
 
 
-complications : List String
-complications =
+coreComplications : List String
+coreComplications =
     [ "Brutality", "Masquerade", "True Names", "Monsters", "Population", "*Bonk*", "Dysfunction", "Vulnerability", "Rejection", "Crutch", "Restriction", "Hunted", "Dislikeable", "Monster Bait", "Black Swan", "Spell Sink", "Like a duck", "Like a rock", "Eye Catcher", "Silly Goose", "Hard Lessons", "Cold Heart", "Hideous", "Witch Mark", "Nemesis", "Addiction", "Sensory Disability", "Physical Disability", "Sensory Shock", "Adoring Fan", "Very Dere", "Requirement", "Unveiled", "Nightmares", "Kryptonite", "Fit Witch", "Branded", "No Privacy", "Blood Feud", "Marked", "Defeated", "Fixation", "All Natural", "Witchknight", "Inadequacy", "Dysphoria", "Betrayal", "Compulsion" ]
 
 
-gameModes : List String
-gameModes =
+coreGameModes : List String
+coreGameModes =
     [ "Story Arc", "Early Bird", "Skill Tree", "Constellation" ]
 
 
-slots : List String
-slots =
+coreSlots : List String
+coreSlots =
     [ "White", "Folk", "Noble", "Heroic", "Epic" ]
 
 
-magics : List String
-magics =
+coreMagics : List String
+coreMagics =
     [ "Aethernautics", "Alchemy", "Consortation", "Curses", "Divination", "Earthmoving", "Familiarity", "Firecalling", "Hexes", "Metallurgy", "Metamorphosis", "Naturalism", "Necromancy", "Portals", "Psychotics", "Runes", "Waterworking", "Windkeeping", "Witchery", "Digicasting", "Wands", "Ministration", "Occultism", "Dominion", "Covenants", "Monstrosity", "Gadgetry", "Integration", "Lifeweaving", "Visceramancy", "Arachnescence" ]
 
 
-perks : List String
-perks =
+corePerks : List String
+corePerks =
     [ "Oracle", "Jack-of-All", "Transformation Sequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "Elephant Trunk", "Prestidigitation", "Suggestion", "Fascinate", "Pantomime", "Beauty Sleep", "Third Eye", "Soul Jellies", "Hat Trick", "Mood Weather", "Improved Familiar", "Hybridize", "Apex", "Charge Swap", "Crystallize", "Memorize", "Maid Hand", "Hot Swap", "Menagerie", "Blood Witch", "Gunwitch", "Levitation", "Isekaid", "Heritage", "Magic Friendship", "Windsong", "Broom Beast", "Isekai Worlds", "Isekai Heritage", "Summer School", "Magical Heart", "Miniaturization", "Soul Warrior", "Comfy Pocket", "Improved Rod", "Witch... hut?", "Company", "Pet Break", "Magic Shop", "Keeper", "Soul Graft" ]
 
 
-factions : List String
-factions =
+coreFactions : List String
+coreFactions =
     [ "The College of Arcadia", "Hawthorne Academia", "The Watchers", "The Hespatian Coven", "Lunabella", "Alfheimr Alliance", "The Outsiders", "The O.R.C.", "Alphazon Industries" ]
 
 
-companions : List String
-companions =
+coreCompanions : List String
+coreCompanions =
     [ "Rachel Pool", "Anne Laurenchi", "Canday Wesbank", "Tessa-Marie Kudashov", "Evelynn P. Willowcrane", "John Doe", "Hannah Grangely", "Elizabell Sinclaire", "Ashley Lovenko", "Sylvanne Mae Kanzaki", "Francis Isaac Giovanni", "Ifra al-Zahra", "Sariah J. Snow", "Claire Bel’montegra", "Lucille M. Bright", "King Daemian Kain", "Whisper", "Red Mother", "Diana", "Cassandra", "King Culicarius", "Einodia - Kate", "Victoria Watts", "Richard Max Johnson", "Bethadonna Rossbaum", "Miranda Quincy", "Samantha Nat Ponds", "Jennifer K. Young", "Agent 7Y", "Agent 9s", "Alex K. Halls", "Isabella Mable Oaks", "Evangelina Rosa Costaval", "Penelope", "The Caretaker", "Lost Queen", "Gift from Beyond", "Agent 9s (Original)", "Princess Dael’ezra of Charis", "Anaphalon Greenwield", "Briar Gracehollow", "Duchess Sael’astra of Odalle", "Mandy Hunts", "Eskhander Mahabadi", "Experiment 627", "August Rose o’Bare", "Saya Kurosawa", "Francesca Astrenichtys", "Elaine A. Victorica", "Maimonada Majesteim", "Azurelliea Ad’Madelline", "Melissa Vincimvitch", "Laura D. Devonshire", "Caroline", "Suzy the Miasma", "Noriko du Nichols", "Sylvarra as’Domonina", "Madelline L. Peach", "Reina Akatsuki", "Minnie Andrus", "Nova", "Scarlet", "Huntress", "Malice", "Persephone", "Betilda Arai Buckland", "Nichte Y’ir", "Ælfflæd (now Daphne)", "Megan Minosine", "Jane “Kit” Adams", "Alicia Red Velvetine", "Julia May Caldwin", "Twins Sara & Kara", "Vesuvianelle Lalahon", "Amber Ogden “Vix”", "XIN: Dollmaker", "Ophelia Reisha", "Esther Reisha", "Custom", "Eris Julianari Stonefallen", "Xiao Liena", "\"Jin\" [Choose a Name]", "Sara Star", "Red Betty" ]
 
 
-relics : List String
-relics =
+coreRelics : List String
+coreRelics =
     [ "HexVPN", "Storm Brew", "Nightlight", "Stained Sliver", "Jade Bolt", "Golden Fish", "Necronomicon", "Alchemist Stone", "Yaga Root", "Nymph Vessel", "Longing Mirror", "Hellrider", "Archer’s Bow", "Assassin’s edge", "Warden’s Maul", "Devil’s Trident", "Guardian’s Wall", "Alchemist Stash", "Gem of Renewal", "Prosthesis", "Violet Lenses", "Mana Core", "Magic Talisman", "Treasurer’s Mint", "Companion Brick", "Heirloom", "Riftblade", "Life Record", "Servant Dolls", "Dollmaker’s Kit", "Thaumic Spikes", "Secret Elixir", "Cosmic Pearl", "Witch Deck", "Battleship", "Mythril Armor", "Ritual Inks", "Spell Bullets", "Great War Rifle", "Witch Pistol", "Jester Oni Mask", "Far Talisman", "Master Key", "Pewter Crown", "Sun Shard", "Hydron", "Collection", "Witch Kisses" ]
+
+
+elementalHarmony : DLC
+elementalHarmony =
+    { classes = Dict.empty
+    , races = buildVariants elementalHarmonyRaces
+    , perks = Dict.empty
+    }
+
+
+elementalHarmonyRaces : List String
+elementalHarmonyRaces =
+    [ "Phlegethon", "Moorwalker", "Phantasm", "Golem", "Muspel", "Dictum", "Qareen", "Rusalka", "Lares", "Firebird", "Fresco", "Silverstream", "Revenant", "Petrichor" ]

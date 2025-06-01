@@ -2,7 +2,7 @@ module Generate exposing (main)
 
 {-| -}
 
-import Data exposing (Enum)
+import Data exposing (Enum, Variant)
 import Dict exposing (Dict)
 import Dict.Extra
 import Elm
@@ -82,15 +82,11 @@ toFiles flags =
 
 
 enumToDeclarations : Enum -> Elm.Declaration
-enumToDeclarations { name, exceptions, variants, toImage } =
+enumToDeclarations { name, variants, toImage } =
     let
         type_ : Elm.Annotation.Annotation
         type_ =
             Elm.Annotation.named [] name
-
-        exceptionsDict : Dict String String
-        exceptionsDict =
-            Dict.fromList exceptions
 
         lowerName : String
         lowerName =
@@ -100,25 +96,25 @@ enumToDeclarations { name, exceptions, variants, toImage } =
         typeDeclaration =
             Elm.customType name
                 (List.map
-                    (\( variant, args ) ->
+                    (\( variantName, variant ) ->
                         Elm.variantWith
-                            (yassify variant)
-                            (List.map (Elm.Annotation.named []) args)
+                            (yassify variantName)
+                            (List.map (Elm.Annotation.named []) variant.arguments)
                     )
-                    variants
+                    (Dict.toList variants)
                 )
 
         toStringDeclaration : Elm.Declaration
         toStringDeclaration =
             (\value ->
                 let
-                    variantToBranch : ( String, List String ) -> Elm.Case.Branch
-                    variantToBranch ( variant, args ) =
+                    variantToBranch : ( String, Variant ) -> Elm.Case.Branch
+                    variantToBranch ( variantName, variant ) =
                         let
                             variantString : Elm.Expression
                             variantString =
-                                Dict.get variant exceptionsDict
-                                    |> Maybe.withDefault variant
+                                variant.toStringException
+                                    |> Maybe.withDefault variantName
                                     |> Elm.string
 
                             toStrings : List ( String, Elm.Expression ) -> Elm.Expression
@@ -141,14 +137,14 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                                     variantString
                         in
                         Elm.Case.branch
-                            (Elm.Arg.customType (yassify variant) identity
-                                |> Elm.Arg.items (List.map Elm.Arg.var args)
+                            (Elm.Arg.customType (yassify variantName) identity
+                                |> Elm.Arg.items (List.map Elm.Arg.var variant.arguments)
                             )
                         <|
                             \vals ->
-                                toStrings (List.map2 Tuple.pair args vals)
+                                toStrings (List.map2 Tuple.pair variant.arguments vals)
                 in
-                Elm.Case.custom value type_ (List.map variantToBranch variants)
+                Elm.Case.custom value type_ (List.map variantToBranch (Dict.toList variants))
             )
                 |> Elm.fn (Elm.Arg.varWith lowerName type_)
                 |> Elm.declaration (lowerName ++ "ToString")
@@ -156,14 +152,16 @@ enumToDeclarations { name, exceptions, variants, toImage } =
         parserDeclaration : Elm.Declaration
         parserDeclaration =
             variants
+                |> Dict.toList
                 |> List.map
-                    (\( variant, args ) ->
+                    (\( variantName, variant ) ->
                         let
+                            init : Elm.Expression
                             init =
                                 Elm.Op.skip
-                                    (Gen.Parser.succeed (Elm.val <| yassify variant))
-                                    (Dict.get variant exceptionsDict
-                                        |> Maybe.withDefault variant
+                                    (Gen.Parser.succeed (Elm.val <| yassify variantName))
+                                    (variant.toStringException
+                                        |> Maybe.withDefault variantName
                                         |> String.replace "\"" "\\\""
                                         |> Gen.Parser.symbol
                                     )
@@ -178,7 +176,7 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                                     (Elm.val <| String.Extra.decapitalize arg ++ "Parser")
                             )
                             init
-                            args
+                            variant.arguments
                     )
                 |> Gen.Parser.oneOf
                 |> Elm.withType (Gen.Parser.annotation_.parser type_)
@@ -191,14 +189,14 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                     Elm.Case.string value
                         { cases =
                             List.map
-                                (\( variant, _ ) ->
-                                    ( Dict.get variant exceptionsDict
-                                        |> Maybe.withDefault variant
+                                (\( variantName, variant ) ->
+                                    ( variant.toStringException
+                                        |> Maybe.withDefault variantName
                                         |> String.replace "\"" "\\\""
-                                    , Gen.Maybe.make_.just <| Elm.val <| yassify variant
+                                    , Gen.Maybe.make_.just <| Elm.val <| yassify variantName
                                     )
                                 )
-                                variants
+                                (Dict.toList variants)
                         , otherwise = Gen.Maybe.make_.nothing
                         }
 
@@ -220,14 +218,16 @@ enumToDeclarations { name, exceptions, variants, toImage } =
         toImageDeclaration =
             (\value ->
                 let
+                    baseBranches : List Elm.Case.Branch
                     baseBranches =
                         variants
+                            |> Dict.toList
                             |> List.map
-                                (\( variant, args ) ->
+                                (\( variantName, variant ) ->
                                     let
                                         constructor : String
                                         constructor =
-                                            yassify variant
+                                            yassify variantName
 
                                         image : Elm.Expression
                                         image =
@@ -239,7 +239,7 @@ enumToDeclarations { name, exceptions, variants, toImage } =
                                     in
                                     Elm.Case.branch
                                         (Elm.Arg.customType constructor identity
-                                            |> Elm.Arg.items (List.map (always Elm.Arg.ignore) args)
+                                            |> Elm.Arg.items (List.map (always Elm.Arg.ignore) variant.arguments)
                                         )
                                     <|
                                         \_ -> image
@@ -272,9 +272,9 @@ enumToDeclarations { name, exceptions, variants, toImage } =
         |> Elm.group
 
 
-isEnum : List ( String, List String ) -> Bool
+isEnum : Dict String Variant -> Bool
 isEnum variants =
-    List.all (\( _, args ) -> List.isEmpty args) variants
+    Dict.Extra.all (\_ variant -> List.isEmpty variant.arguments) variants
 
 
 gradient :
