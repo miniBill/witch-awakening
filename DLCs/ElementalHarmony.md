@@ -302,7 +302,11 @@ Looking closely at a living being, you can see the most efficient way you could 
 - Class: Sorceress
 - Cost: 4
 
-Must not be a bloodless race. You can tell how closely related two individuals are at a glance, unless their race is bloodless, i.e. has neither blood nor a reasonable facsimile of it.* A new person who is related to a previous acquaintance will probably feel familiar in a way you can't quite place. If personally procreating, or present to assist with others who are, you can manipulate their blood to pick a possible outcome within the racial mix that would otherwise be possible, e.g. ensuring a Mimi+/Elf+ couple produce a Mimi/Elf hybrid with the Elf perk but not the Mimi one.
+Must not be a bloodless race. You can tell how closely related two individuals are at a glance, unless their race is bloodless, i.e. has neither blood nor a reasonable facsimile of it.
+
+A new person who is related to a previous acquaintance will probably feel familiar in a way you can't quite place.
+
+If personally procreating, or present to assist with others who are, you can manipulate their blood to pick a possible outcome within the racial mix that would otherwise be possible, e.g. ensuring a Mimi+/Elf+ couple produce a Mimi/Elf hybrid with the Elf perk but not the Mimi one.
 
 
 ## Perk: Technopath
