@@ -52,14 +52,11 @@ allRaces dlcRaces =
     <|
         \races ->
             Elm.Op.append
-                (Elm.Op.append
-                    (Gen.Data.Race.call_.core races)
-                    (dlcRaces
-                        |> List.map (\( _, race ) -> Elm.val (String.Extra.decapitalize race.name))
-                        |> Elm.list
-                    )
+                (dlcRaces
+                    |> List.map (\( _, race ) -> Elm.val (String.Extra.decapitalize race.name))
+                    |> Elm.list
                 )
-                (Gen.Data.Race.call_.looseAssets races)
+                (Gen.Data.Race.call_.all races)
                 |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
 
 
@@ -97,10 +94,12 @@ allPerks dlcPerks =
         )
     <|
         \perks ->
-            dlcPerks
-                |> List.map (\( _, perk ) -> Elm.val (String.Extra.decapitalize (yassify perk.name)))
-                |> Elm.list
-                |> Elm.Op.append (Gen.Data.Perk.call_.all perks)
+            Elm.Op.append
+                (Gen.Data.Perk.call_.all perks)
+                (dlcPerks
+                    |> List.map (\( _, perk ) -> Elm.val (String.Extra.decapitalize (yassify perk.name)))
+                    |> Elm.list
+                )
                 |> Elm.withType (Elm.Annotation.list Gen.Data.Perk.annotation_.details)
 
 
@@ -141,17 +140,19 @@ typePerksFile dlcRaces =
 
 allTypePerks : List ( Maybe String, Parsers.Race ) -> Elm.Expression
 allTypePerks dlcRaces =
-    dlcRaces
-        |> List.filterMap
-            (\( _, race ) ->
-                if race.perk == Nothing then
-                    Nothing
+    Elm.Op.append
+        (dlcRaces
+            |> List.filterMap
+                (\( _, race ) ->
+                    if race.perk == Nothing then
+                        Nothing
 
-                else
-                    Just (Elm.val (String.Extra.decapitalize race.name))
-            )
-        |> Elm.list
-        |> Elm.Op.append Gen.Data.TypePerk.all
+                    else
+                        Just (Elm.val (String.Extra.decapitalize race.name))
+                )
+            |> Elm.list
+        )
+        Gen.Data.TypePerk.all
         |> Elm.withType (Elm.Annotation.list Gen.Data.TypePerk.annotation_.details)
 
 

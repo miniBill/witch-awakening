@@ -23,6 +23,7 @@ viewRace display races =
         raceBoxes : Element ( Race, Bool )
         raceBoxes =
             Generated.Races.all races
+                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.map (raceBox display races)
                 |> Theme.wrappedRow
                     [ width fill

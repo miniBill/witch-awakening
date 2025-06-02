@@ -18,6 +18,7 @@ viewTypePerks witchRaces display typePerks =
         boxes : List (Element ( Race, Bool ))
         boxes =
             Generated.TypePerks.all
+                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.map (typePerkBox witchRaces display typePerks)
     in
     View.collapsible

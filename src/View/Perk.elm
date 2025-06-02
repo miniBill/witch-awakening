@@ -27,6 +27,7 @@ viewPerks display mainRace races perks =
         "# Perks"
         [ introBlock
         , Generated.Perks.all perks
+            |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.map (perkBox display perks mainRace races)
             |> Theme.wrappedRow
                 [ centerX
@@ -34,6 +35,7 @@ viewPerks display mainRace races perks =
                 ]
         ]
         [ Generated.Perks.all perks
+            |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.map (perkBox display perks mainRace races)
             |> Theme.column
                 [ centerX

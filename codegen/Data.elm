@@ -212,7 +212,7 @@ coreClasses =
 
 coreRaces : List Variant
 coreRaces =
-    [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine", "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya", "Taura", "Wulong", "Dravir", "Doll", "Vanir", "Changeling", "Elf", "Orc", "Pharon", "Jotun", "Hollow", "Dwarf", "Wither", "Mimi", "Sword" ]
+    [ "Dravir" ]
         |> buildVariants
         |> withArguments "Dravir" [ "Affinity" ]
 
