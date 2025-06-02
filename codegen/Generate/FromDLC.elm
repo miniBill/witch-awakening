@@ -1,4 +1,4 @@
-module Generate.FromDLC exposing (..)
+module Generate.FromDLC exposing (files)
 
 import Elm
 import Elm.Annotation
@@ -66,6 +66,7 @@ dlcToRaces races =
                 , tank = fromTypes race.manaCapacity
                 , affinities = Elm.list (List.map fromTypes race.elements)
                 , charge = fromTypes race.manaRate
+                , dlc = Elm.maybe (Just (Elm.string dlcName))
                 }
                 |> Elm.declaration (yassify race.name)
                 |> Elm.expose
@@ -106,6 +107,7 @@ dlcToPerks perks =
                 , affinity = fromTypes perk.element
                 , isMeta = Elm.bool False
                 , content = Gen.Data.Perk.make_.single (Elm.int perk.cost) (Elm.string perk.description)
+                , dlc = Elm.maybe (Just (Elm.string dlcName))
                 }
                 |> Elm.declaration (yassify perk.name)
                 |> Elm.expose

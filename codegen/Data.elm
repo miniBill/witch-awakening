@@ -1,19 +1,19 @@
 module Data exposing (Enum, Variant, enums)
 
-import Dict exposing (Dict)
-import Dict.Extra
+import List.Extra
 import Parsers
 
 
 type alias Enum =
     { name : String
-    , variants : Dict String Variant
+    , variants : List Variant
     , toImage : Bool
     }
 
 
 type alias Variant =
-    { arguments : List String
+    { name : String
+    , arguments : List String
     , dlc : Maybe String
     , toStringException : Maybe String
     }
@@ -62,21 +62,22 @@ enums parsedDLCs =
 fromParsed : { name : String, items : List Parsers.DLCItem } -> DLC
 fromParsed { name, items } =
     let
-        variant : Variant
-        variant =
-            { arguments = []
+        variant : String -> Variant
+        variant variantName =
+            { name = variantName
+            , arguments = []
             , toStringException = Nothing
             , dlc = Just name
             }
     in
-    List.foldl
+    List.foldr
         (\item dlc ->
             case item of
                 Parsers.DLCRace v ->
-                    { dlc | races = Dict.insert v.name variant dlc.races }
+                    { dlc | races = variant v.name :: dlc.races }
 
                 Parsers.DLCPerk v ->
-                    { dlc | perks = Dict.insert v.name variant dlc.perks }
+                    { dlc | perks = variant v.name :: dlc.perks }
         )
         emptyDLC
         items
@@ -86,15 +87,14 @@ withDLC : String -> DLC -> DLC -> DLC
 withDLC dlcName original additional =
     let
         merge :
-            (DLC -> Dict String Variant)
-            -> Dict String Variant
+            (DLC -> List Variant)
+            -> List Variant
         merge prop =
             prop original
-                |> Dict.union
-                    (prop additional
-                        |> Dict.map
-                            (\_ variant -> { variant | dlc = Just dlcName })
-                    )
+                ++ (prop additional
+                        |> List.map
+                            (\variant -> { variant | dlc = Just dlcName })
+                   )
     in
     { classes = merge .classes
     , races = merge .races
@@ -106,7 +106,7 @@ withDLC dlcName original additional =
     }
 
 
-buildEnum : String -> Dict String Variant -> Enum
+buildEnum : String -> List Variant -> Enum
 buildEnum name variants =
     { name = name
     , variants = variants
@@ -114,21 +114,18 @@ buildEnum name variants =
     }
 
 
-buildVariants : List String -> Dict String Variant
+buildVariants : List String -> List Variant
 buildVariants variants =
     let
-        toVariant : String -> ( String, Variant )
+        toVariant : String -> Variant
         toVariant variant =
-            ( variant
-            , { arguments = []
-              , toStringException = Nothing
-              , dlc = Nothing
-              }
-            )
+            { name = variant
+            , arguments = []
+            , toStringException = Nothing
+            , dlc = Nothing
+            }
     in
-    variants
-        |> List.map toVariant
-        |> Dict.fromList
+    List.map toVariant variants
 
 
 withImages : Enum -> Enum
@@ -136,7 +133,7 @@ withImages enum =
     { enum | toImage = True }
 
 
-withExceptions : List ( String, String ) -> Dict String Variant -> Dict String Variant
+withExceptions : List ( String, String ) -> List Variant -> List Variant
 withExceptions exceptions enum =
     updateDict
         (\value variant ->
@@ -149,13 +146,13 @@ withExceptions exceptions enum =
 updateDict :
     (a -> Variant -> Variant)
     -> List ( String, a )
-    -> Dict String Variant
-    -> Dict String Variant
+    -> List Variant
+    -> List Variant
 updateDict f pairs enum =
     List.foldl
         (\( key, value ) acc ->
-            Dict.Extra.updateIfExists
-                key
+            List.Extra.updateIf
+                (\variant -> variant.name == key)
                 (f value)
                 acc
         )
@@ -163,9 +160,10 @@ updateDict f pairs enum =
         pairs
 
 
-withArguments : String -> List String -> Dict String Variant -> Dict String Variant
+withArguments : String -> List String -> List Variant -> List Variant
 withArguments name arguments enum =
-    Dict.Extra.updateIfExists name
+    List.Extra.updateIf
+        (\variant -> variant.name == name)
         (\variant ->
             { variant | arguments = arguments }
         )
@@ -173,25 +171,25 @@ withArguments name arguments enum =
 
 
 type alias DLC =
-    { classes : Dict String Variant
-    , races : Dict String Variant
-    , perks : Dict String Variant
-    , affinities : Dict String Variant
-    , companions : Dict String Variant
-    , relics : Dict String Variant
-    , magics : Dict String Variant
+    { classes : List Variant
+    , races : List Variant
+    , perks : List Variant
+    , affinities : List Variant
+    , companions : List Variant
+    , relics : List Variant
+    , magics : List Variant
     }
 
 
 emptyDLC : DLC
 emptyDLC =
-    { classes = Dict.empty
-    , races = Dict.empty
-    , perks = Dict.empty
-    , affinities = Dict.empty
-    , companions = Dict.empty
-    , relics = Dict.empty
-    , magics = Dict.empty
+    { classes = []
+    , races = []
+    , perks = []
+    , affinities = []
+    , companions = []
+    , relics = []
+    , magics = []
     }
 
 
@@ -207,13 +205,13 @@ core =
     }
 
 
-coreClasses : Dict String Variant
+coreClasses : List Variant
 coreClasses =
     [ "Academic", "Sorceress", "Warlock" ]
         |> buildVariants
 
 
-coreRaces : Dict String Variant
+coreRaces : List Variant
 coreRaces =
     [ "Neutral", "Daeva", "Ifrit", "Siren", "Naiad", "Dryad", "Oread", "Lamia", "Aurai", "Nymph", "Gorgon", "Luxal", "Kekubi", "Sylph", "Undine", "Sprite", "Empusa", "Lilin", "Erinyes", "Hannya", "Taura", "Wulong", "Dravir", "Doll", "Vanir", "Changeling", "Elf", "Orc", "Pharon", "Jotun", "Hollow", "Dwarf", "Wither", "Mimi", "Sword" ]
         |> buildVariants
@@ -225,7 +223,7 @@ coreSizes =
     [ "Low", "Medium", "High" ]
 
 
-coreAffinities : Dict String Variant
+coreAffinities : List Variant
 coreAffinities =
     [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ]
         |> buildVariants
@@ -252,13 +250,13 @@ coreSlots =
     [ "White", "Folk", "Noble", "Heroic", "Epic" ]
 
 
-coreMagics : Dict String Variant
+coreMagics : List Variant
 coreMagics =
     [ "Aethernautics", "Alchemy", "Consortation", "Curses", "Divination", "Earthmoving", "Familiarity", "Firecalling", "Hexes", "Metallurgy", "Metamorphosis", "Naturalism", "Necromancy", "Portals", "Psychotics", "Runes", "Waterworking", "Windkeeping", "Witchery", "Digicasting", "Wands", "Ministration", "Occultism", "Dominion", "Covenants", "Monstrosity", "Gadgetry", "Integration" ]
         |> buildVariants
 
 
-corePerks : Dict String Variant
+corePerks : List Variant
 corePerks =
     [ "Oracle", "Jack-of-All", "Transformation Sequence", "Poisoner", "Witchflame", "Energized", "Conjuration", "Elephant Trunk", "Prestidigitation", "Suggestion", "Fascinate", "Pantomime", "Beauty Sleep", "Third Eye", "Soul Jellies", "Hat Trick", "Mood Weather", "Improved Familiar", "Hybridize", "Apex", "Charge Swap", "Crystallize", "Memorize", "Maid Hand", "Hot Swap", "Menagerie", "Blood Witch", "Gunwitch", "Levitation", "Isekaid", "Heritage", "Magic Friendship", "Windsong", "Broom Beast", "Isekai Worlds", "Isekai Heritage", "Summer School", "Magical Heart", "Miniaturization", "Soul Warrior", "Comfy Pocket", "Improved Rod", "Witch... hut?", "Company", "Pet Break", "Magic Shop", "Keeper", "Soul Graft" ]
         |> buildVariants
@@ -270,13 +268,13 @@ coreFactions =
     [ "The College of Arcadia", "Hawthorne Academia", "The Watchers", "The Hespatian Coven", "Lunabella", "Alfheimr Alliance", "The Outsiders", "The O.R.C.", "Alphazon Industries" ]
 
 
-coreCompanions : Dict String Variant
+coreCompanions : List Variant
 coreCompanions =
     [ "Rachel Pool", "Anne Laurenchi", "Canday Wesbank", "Tessa-Marie Kudashov", "Evelynn P. Willowcrane", "John Doe", "Hannah Grangely", "Elizabell Sinclaire", "Ashley Lovenko", "Sylvanne Mae Kanzaki", "Francis Isaac Giovanni", "Ifra al-Zahra", "Sariah J. Snow", "Claire Bel’montegra", "Lucille M. Bright", "King Daemian Kain", "Whisper", "Red Mother", "Diana", "Cassandra", "King Culicarius", "Einodia - Kate", "Victoria Watts", "Richard Max Johnson", "Bethadonna Rossbaum", "Miranda Quincy", "Samantha Nat Ponds", "Jennifer K. Young", "Agent 7Y", "Agent 9s", "Alex K. Halls", "Isabella Mable Oaks", "Evangelina Rosa Costaval", "Penelope", "The Caretaker", "Lost Queen", "Gift from Beyond", "Agent 9s (Original)", "Princess Dael’ezra of Charis", "Anaphalon Greenwield", "Briar Gracehollow", "Duchess Sael’astra of Odalle", "Mandy Hunts", "Eskhander Mahabadi", "Experiment 627", "August Rose o’Bare", "Saya Kurosawa", "Francesca Astrenichtys", "Elaine A. Victorica", "Maimonada Majesteim", "Azurelliea Ad’Madelline", "Melissa Vincimvitch", "Laura D. Devonshire", "Caroline", "Suzy the Miasma", "Noriko du Nichols", "Sylvarra as’Domonina", "Madelline L. Peach", "Reina Akatsuki", "Minnie Andrus", "Nova", "Scarlet", "Huntress", "Malice", "Persephone", "Betilda Arai Buckland", "Nichte Y’ir", "Ælfflæd (now Daphne)", "Megan Minosine", "Jane “Kit” Adams", "Alicia Red Velvetine", "Julia May Caldwin", "Twins Sara & Kara", "Vesuvianelle Lalahon", "Amber Ogden “Vix”", "XIN: Dollmaker", "Ophelia Reisha", "Esther Reisha", "Custom", "Eris Julianari Stonefallen" ]
         |> buildVariants
 
 
-coreRelics : Dict String Variant
+coreRelics : List Variant
 coreRelics =
     [ "HexVPN", "Storm Brew", "Nightlight", "Stained Sliver", "Jade Bolt", "Golden Fish", "Necronomicon", "Alchemist Stone", "Yaga Root", "Nymph Vessel", "Longing Mirror", "Hellrider", "Archer’s Bow", "Assassin’s edge", "Warden’s Maul", "Devil’s Trident", "Guardian’s Wall", "Alchemist Stash", "Gem of Renewal", "Prosthesis", "Violet Lenses", "Mana Core", "Magic Talisman", "Treasurer’s Mint", "Companion Brick", "Heirloom", "Riftblade", "Life Record", "Servant Dolls", "Dollmaker’s Kit", "Thaumic Spikes", "Secret Elixir", "Cosmic Pearl", "Witch Deck", "Battleship", "Mythril Armor", "Ritual Inks", "Spell Bullets", "Great War Rifle", "Witch Pistol", "Jester Oni Mask", "Far Talisman", "Master Key", "Pewter Crown", "Sun Shard", "Hydron", "Collection", "Witch Kisses" ]
         -- |> withArguments "Magic Talisman" [ "Magic" ]
@@ -292,7 +290,7 @@ looseAssets =
     }
 
 
-looseAssetsRaces : Dict String Variant
+looseAssetsRaces : List Variant
 looseAssetsRaces =
     [ "Xeno", "Cyborg", "Spider", "Gnome", "Pixie", "Fairy", "Genie", "Gemini" ]
         |> buildVariants
@@ -300,14 +298,14 @@ looseAssetsRaces =
         |> withArguments "Gemini" [ "Affinity" ]
 
 
-looseAssetsCompanions : Dict String Variant
+looseAssetsCompanions : List Variant
 looseAssetsCompanions =
     [ "Xiao Liena", "\"Jin\" [Choose a Name]", "Sara Star", "Red Betty" ]
         |> buildVariants
         |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
 
 
-looseAssetsMagics : Dict String Variant
+looseAssetsMagics : List Variant
 looseAssetsMagics =
     [ "Lifeweaving", "Visceramancy", "Arachnescence" ]
         |> buildVariants
@@ -320,7 +318,7 @@ elementalHarmony =
     }
 
 
-elementalHarmonyRaces : Dict String Variant
+elementalHarmonyRaces : List Variant
 elementalHarmonyRaces =
     [ "Moorwalker", "Phantasm", "Golem", "Muspel", "Dictum", "Qareen", "Rusalka", "Lares", "Firebird", "Fresco", "Silverstream", "Revenant", "Petrichor" ]
         |> buildVariants
