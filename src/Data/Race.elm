@@ -19,26 +19,41 @@ all races =
     [ dravir races, genie races, gemini races ]
 
 
-dravir : List Race -> Details
-dravir races =
+withVariantAffinity :
+    (Race -> Maybe Affinity)
+    ->
+        { name : Affinity -> Race
+        , tank : Size
+        , affinities : List Affinity
+        , charge : Size
+        , dlc : Maybe String
+        , content : String
+        }
+    -> List Race
+    -> Details
+withVariantAffinity match details races =
     let
         affinity : Affinity
         affinity =
             List.Extra.findMap
-                (\r ->
-                    case r of
-                        Dravir aff ->
-                            Just aff
-
-                        _ ->
-                            Nothing
-                )
+                match
                 races
                 |> Maybe.withDefault All
     in
-    { name = Dravir affinity
+    { name = details.name affinity
+    , tank = details.tank
+    , affinities = details.affinities ++ [ affinity ]
+    , charge = details.charge
+    , dlc = details.dlc
+    , content = details.content
+    }
+
+
+dravir : List Race -> Details
+dravir =
+    { name = Dravir
     , tank = Low
-    , affinities = [ Beast, affinity ]
+    , affinities = [ Beast ]
     , charge = Medium
     , dlc = Nothing
     , content = """
@@ -47,28 +62,22 @@ dravir races =
         __Dravir draw Mana__ from Destruction, when they undo the work and labor that went into producing something of value based on its value and purpose to someone else. This includes the taking of life, particularly human or witch life, which briefly provides a High charge rate.
         """
     }
+        |> withVariantAffinity
+            (\r ->
+                case r of
+                    Dravir aff ->
+                        Just aff
+
+                    _ ->
+                        Nothing
+            )
 
 
 genie : List Race -> Details
-genie races =
-    let
-        affinity : Affinity
-        affinity =
-            List.Extra.findMap
-                (\r ->
-                    case r of
-                        Genie aff ->
-                            Just aff
-
-                        _ ->
-                            Nothing
-                )
-                races
-                |> Maybe.withDefault All
-    in
-    { name = Genie affinity
+genie =
+    { name = Genie
     , tank = High
-    , affinities = [ All, affinity ]
+    , affinities = [ All ]
     , charge = Low
     , dlc = Just "Loose Assets"
     , content = """
@@ -77,28 +86,22 @@ genie races =
         __Genies draw Mana__ from Wishes, whenever any person says "I wish", and the genie is capable of satisfying that wish with her available abilities, the genie gains a low mana charge for the next hour. If her master is the one to wish, she gains her full mana capacity for meeting the wish.
         """
     }
+        |> withVariantAffinity
+            (\r ->
+                case r of
+                    Genie aff ->
+                        Just aff
+
+                    _ ->
+                        Nothing
+            )
 
 
 gemini : List Race -> Details
-gemini races =
-    let
-        affinity : Affinity
-        affinity =
-            List.Extra.findMap
-                (\r ->
-                    case r of
-                        Gemini aff ->
-                            Just aff
-
-                        _ ->
-                            Nothing
-                )
-                races
-                |> Maybe.withDefault All
-    in
-    { name = Gemini affinity
+gemini =
+    { name = Gemini
     , tank = High
-    , affinities = [ Earth, affinity ]
+    , affinities = [ Earth ]
     , charge = Low
     , dlc = Just "Loose Assets"
     , content = """
@@ -109,6 +112,15 @@ gemini races =
         __Geminai draw Mana__ from Pairing, the more in synch the two halves are in mind, intent, and appearance, the more mana they generate proportional to distance to each other. They feel this charge rate and are uncomfortable when it is weakened.
         """
     }
+        |> withVariantAffinity
+            (\r ->
+                case r of
+                    Gemini aff ->
+                        Just aff
+
+                    _ ->
+                        Nothing
+            )
 
 
 title : String
