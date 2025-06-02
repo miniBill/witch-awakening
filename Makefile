@@ -1,5 +1,5 @@
 .PHONY: all
-all: generated/Images.elm
+all: build
 
 GRADIENT_SRC = $(wildcard public/gradients/*.png)
 GRADIENT_OUT = $(patsubst public/gradients/%.png,build/elm-codegen-flags/%.ppm,$(GRADIENT_SRC))
@@ -25,8 +25,7 @@ build/elm-codegen-flags/%.ppm: public/gradients/%.png
 	mkdir -p build/elm-codegen-flags
 	magick $^ -compress none $@
 
-.PHONY: build
-build: generated/Images.elm
+out/build/main.js: generated/Images.elm $(wildcard src/**/*.elm)
 	rm -rf out
 	mkdir -p out
 	mkdir -p out/public
@@ -35,6 +34,10 @@ build: generated/Images.elm
 	cp index.html favicon.ico out
 	cp public/*.* out/public
 	cp build/main.js out/build
+
+# Utils
+.PHONY: build
+build: out/build/main.js
 
 .PHONY: run
 run: generated/Images.elm
