@@ -50,7 +50,7 @@ view dlc =
             Generated.Races.all []
                 |> List.filter (\race -> race.dlc == dlc)
                 |> List.map (dumpRace typePerks)
-                |> String.join "\n\n"
+                |> String.join "\n\n\n"
     in
     Html.div []
         [ Html.div

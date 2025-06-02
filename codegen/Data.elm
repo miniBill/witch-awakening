@@ -27,7 +27,6 @@ enums parsedDLCs =
             List.foldl (\e acc -> acc |> withDLC e.name (fromParsed e))
                 (core
                     |> withDLC "Loose Assets" looseAssets
-                    |> withDLC "Elemental Harmony" elementalHarmony
                 )
                 parsedDLCs
     in
@@ -308,17 +307,4 @@ looseAssetsCompanions =
 looseAssetsMagics : List Variant
 looseAssetsMagics =
     [ "Lifeweaving", "Visceramancy", "Arachnescence" ]
-        |> buildVariants
-
-
-elementalHarmony : DLC
-elementalHarmony =
-    { emptyDLC
-        | races = elementalHarmonyRaces
-    }
-
-
-elementalHarmonyRaces : List Variant
-elementalHarmonyRaces =
-    [  "Phantasm", "Golem", "Muspel", "Dictum", "Qareen", "Rusalka", "Lares", "Firebird", "Fresco", "Silverstream", "Revenant", "Petrichor" ]
         |> buildVariants

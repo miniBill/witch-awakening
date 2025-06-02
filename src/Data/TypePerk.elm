@@ -13,12 +13,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegethon ] ++ elementalHarmony
-
-
-elementalHarmony : List Details
-elementalHarmony =
-    [ phantasm, golem, muspel, dictum, qareen, rusalka, lares, firebird, fresco, silverstream, petrichor ]
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie, gemini, phlegethon ]
 
 
 neutral : Details
@@ -551,127 +546,6 @@ phlegethon =
     , dlc = Nothing
     , content = """
         Some Phlegethons learn to deliberately release a layer of their blood and keep it under control, acting as a sheath of boiling-hot mist which explodes into flames whenever it is struck. This doesn’t impede their senses or injure them.
-        """
-    }
-
-
-phantasm : Details
-phantasm =
-    { race = Phantasm
-    , cost = 3
-    , dlc = Nothing
-    , content = """
-        Talented or practiced Phantasms decouple their projected image from their ‘natural form’, and can manipulate it to take any shape or size, though it will remain translucent and keeping tactile sense requires that it stay approximately humanoid. It is possible that any Phantasm can learn this, but very few bother to try.
-        """
-    }
-
-
-golem : Details
-golem =
-    { race = Golem
-    , cost = 4
-    , dlc = Nothing
-    , content = """
-        Old golems, and occasionally talented youngsters, learn to change the material their body is made of, shifting to clay for mobility, granite for durability, or pumice for lightness, or grow obsidian ‘claws’. Metal is not possible without extensive other magic.
-        """
-    }
-
-
-muspel : Details
-muspel =
-    { race = Muspel
-    , cost = 2
-    , dlc = Nothing
-    , content = """
-        Some Muspel are able to channel their inner flames and stone against each other, weakening them but allowing them to move more freely and so pass more easily for mortal. This also has the effect of improving their external skin’s resistance to heat, flames, and magma substantially, making a lava bath merely mildly inconvenient. If they’re seriously wounded, the same results occur regardless.
-        """
-    }
-
-
-dictum : Details
-dictum =
-    { race = Dictum
-    , cost = 5
-    , dlc = Nothing
-    , content = """
-        Some Dicta are Oathbrokers, able to make voluntary oaths between two other parties self-enforcing, with a curse befalling any party who breaks the oath. They choose the rank of Curse, maximum equal to the strongest specialization they possess, but if it exceeds their ranks in Curse they can’t control its details.
-        """
-    }
-
-
-qareen : Details
-qareen =
-    { race = Qareen
-    , cost = 5
-    , dlc = Nothing
-    , content = """
-        Some Qareen can gamble for more than just money, playing games where the players wager mana, magical potential, souls, names, or anything else they and the other players can establish shared understanding of. Must be agreed in advance and believed, or it won’t transfer.
-        """
-    }
-
-
-rusalka : Details
-rusalka =
-    { race = Rusalka
-    , cost = 4
-    , dlc = Nothing
-    , content = """
-        Cursebearer rusalka can take on the grievance or regret of a spirit or living person (but must set down one if they wish to take up another). While enacting violence in fulfillment of that cause, their spells, particularly elementalism, curses, and hexes, are cheaper and more powerful.
-        """
-    }
-
-
-lares : Details
-lares =
-    { race = Lares
-    , cost = 3
-    , dlc = Nothing
-    , content = """
-        Unusual Lares can teleport to anywhere within their bonded home, or to their bonded family if within five miles of home, and may be selectively invisible while in their bonded family’s presence or bonded home.
-        """
-    }
-
-
-firebird : Details
-firebird =
-    { race = Firebird
-    , cost = 6
-    , dlc = Nothing
-    , content = """
-        ‘True phoenixes’ can freely shapeshift to and from a pure bird form, about the size and shape of an eagle, which shares their flame effect. Additionally, they passively heal, and optionally calm and reassure, everyone in their presence, and gain an affinity for [Life].
-        """
-    }
-
-
-fresco : Details
-fresco =
-    { race = Fresco
-    , cost = 2
-    , dlc = Nothing
-    , content = """
-        Some Frescoes have an intuition for the zeitgeist, and what history and fiction is popular both globally and in any local subcommunity. This doesn’t scale below a dozen or so and works better on mortal humans.
-        """
-    }
-
-
-silverstream : Details
-silverstream =
-    { race = Silverstream
-    , cost = 4
-    , dlc = Nothing
-    , content = """
-        Silverstream transmuters can convert metal and water to stream-silver even while alive, and may use this as a catalyst or ingredient in Runes and Alchemy to reduce costs and, if pairing both magics, enhance effects.
-        """
-    }
-
-
-petrichor : Details
-petrichor =
-    { race = Petrichor
-    , cost = 6
-    , dlc = Nothing
-    , content = """
-        Some Petrichor draw the attention of their ancestral god, who gives them tasks like a Warlock patron (or a second patron), and rewards them with soul-bound artifacts rather than direct magical power.
         """
     }
 

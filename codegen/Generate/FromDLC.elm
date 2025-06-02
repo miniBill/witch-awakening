@@ -137,7 +137,14 @@ typePerksFile dlcRaces =
 allTypePerks : List ( String, Parsers.Race ) -> Elm.Expression
 allTypePerks dlcRaces =
     dlcRaces
-        |> List.map (\( _, race ) -> Elm.val (String.Extra.decapitalize race.name))
+        |> List.filterMap
+            (\( _, race ) ->
+                if race.perk == Nothing then
+                    Nothing
+
+                else
+                    Just (Elm.val (String.Extra.decapitalize race.name))
+            )
         |> Elm.list
         |> Elm.Op.append Gen.Data.TypePerk.all
         |> Elm.withType (Elm.Annotation.list Gen.Data.TypePerk.annotation_.details)
