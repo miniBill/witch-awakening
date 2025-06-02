@@ -11,3 +11,6 @@ public/raw
 public/originals
 generated
 
+
+# Local Netlify folder
+.netlify
