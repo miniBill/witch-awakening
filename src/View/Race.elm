@@ -46,7 +46,7 @@ raceBox :
     -> List Race
     -> Race.Details
     -> Element ( Race, Bool )
-raceBox display selected { name, tank, affinities, charge, content } =
+raceBox display selected { name, tank, affinities, charge, content, dlc } =
     let
         isSelected : Bool
         isSelected =
@@ -75,6 +75,18 @@ raceBox display selected { name, tank, affinities, charge, content } =
                 , centerX
                 ]
                 (gradientText 6 Gradients.yellowGradient shortName)
+            , case dlc of
+                Nothing ->
+                    Element.none
+
+                Just dlcName ->
+                    el
+                        [ centerX
+                        , Theme.captureIt
+                        , Font.size 24
+                        , moveDown 60
+                        ]
+                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
             ]
         , content =
             Theme.row [ centerX ]

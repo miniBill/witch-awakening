@@ -59,7 +59,7 @@ typePerkBox :
     -> List Race
     -> TypePerk.Details
     -> Element ( Race, Bool )
-typePerkBox witchRaces display selected { race, cost, content } =
+typePerkBox witchRaces display selected { race, cost, content, dlc } =
     let
         isSelected : Bool
         isSelected =
@@ -121,6 +121,18 @@ typePerkBox witchRaces display selected { race, cost, content } =
                     , moveDown 16
                     , Font.size 30
                     ]
+            , case dlc of
+                Nothing ->
+                    Element.none
+
+                Just dlcName ->
+                    el
+                        [ centerX
+                        , Theme.captureIt
+                        , Font.size 24
+                        , moveDown 60
+                        ]
+                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
             , Types.slotToImage slot
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom ]

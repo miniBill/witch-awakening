@@ -76,7 +76,7 @@ perkBox :
     -> List Race
     -> Perk.Details
     -> Element Choice
-perkBox display selected mainRace races ({ name, affinity, class, content, isMeta } as perk) =
+perkBox display selected mainRace races ({ name, affinity, class, content, isMeta, dlc } as perk) =
     let
         isSelected : Maybe RankedPerk
         isSelected =
@@ -189,6 +189,24 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
 
               else
                 Element.none
+            , case dlc of
+                Nothing ->
+                    Element.none
+
+                Just dlcName ->
+                    el
+                        [ centerX
+                        , Theme.captureIt
+                        , Font.size 24
+                        , moveDown
+                            (if isMeta then
+                                40
+
+                             else
+                                8
+                            )
+                        ]
+                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
             , Theme.classToBadge class
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom ]
