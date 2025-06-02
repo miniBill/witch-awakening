@@ -3,6 +3,10 @@
         "Main": {
             "inputs": ["src/Main.elm"],
             "output": "build/main.js"
+        },
+        "Dump": {
+            "inputs": ["src/Dump.elm"],
+            "output": "build/dump.js"
         }
     },
     "port": 16666,

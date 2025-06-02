@@ -14,7 +14,7 @@ __Phlegethontes draw Mana__ from Crowds. Phlegethontes charge when in the presen
 ### Perk
 - Cost: 4
 
-Some Phlegethons learn to deliberately release a layer of their blood and keep it under control, acting as a sheath of boiling-hot mist which explodes into flames whenever it is struck. This doesn't impede their senses or injure them.
+Some Phlegethons learn to deliberately release a layer of their blood and keep it under control, acting as a sheath of boiling-hot mist which explodes into flames whenever it is struck. This doesn’t impede their senses or injure them.
 
 ## Perk: Skimmer Dancing
 - Element: Water
