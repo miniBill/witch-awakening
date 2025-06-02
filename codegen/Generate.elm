@@ -7,11 +7,9 @@ import Dict
 import Dict.Extra
 import Elm
 import Elm.Annotation
-import Elm.Arg
-import Elm.Op
 import Gen.CodeGen.Generate as Generate exposing (Directory)
-import Gen.Data.Race
 import Generate.Enums
+import Generate.FromDLC
 import Json.Decode exposing (Decoder, Value)
 import Parser exposing ((|.), (|=), Parser)
 import Parsers
@@ -67,7 +65,7 @@ toFiles (Generate.Directory { files }) =
                         images fileContent
                             |> Result.map
                                 (\file ->
-                                    ( [ file ], [], [] )
+                                    ( file, [], [] )
                                 )
 
                     _ ->
@@ -94,80 +92,28 @@ toFiles (Generate.Directory { files }) =
                         Elm.file [ "Gradients" ]
                             (List.concatMap Triple.Extra.second list)
 
-                    dlcList : List Parsers.DLC
-                    dlcList =
-                        List.concatMap Triple.Extra.third list
-
                     enumsFile : Elm.File
                     enumsFile =
                         Elm.file [ "Generated", "Types" ]
                             (List.map Generate.Enums.enumToDeclarations (Data.enums dlcList))
 
-                    { dlcRaces, dlcPerks } =
-                        List.foldl
-                            (\( dlcName, item ) acc ->
-                                case item of
-                                    Parsers.DLCRace race ->
-                                        { acc | dlcRaces = ( dlcName, race ) :: acc.dlcRaces }
+                    imagesFile : Elm.File
+                    imagesFile =
+                        Elm.file [ "Images" ]
+                            (List.concatMap Triple.Extra.first list)
 
-                                    Parsers.DLCPerk perk ->
-                                        { acc | dlcPerks = ( dlcName, perk ) :: acc.dlcPerks }
-                            )
-                            { dlcRaces = [], dlcPerks = [] }
-                            (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
-
-                    racesFile : Elm.File
-                    racesFile =
-                        let
-                            allRaces : Elm.Expression
-                            allRaces =
-                                Elm.fn
-                                    (Elm.Arg.varWith "races"
-                                        (Elm.Annotation.list (Elm.Annotation.named [ "Generated", "Types" ] "Race"))
-                                    )
-                                <|
-                                    \races ->
-                                        dlcRaces
-                                            |> List.map (\( _, race ) -> Elm.val (String.Extra.decapitalize race.name))
-                                            |> Elm.list
-                                            |> Elm.Op.append (Gen.Data.Race.call_.all races)
-                                            |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
-                        in
-                        Elm.file [ "Generated", "Races" ]
-                            (Elm.expose (Elm.declaration "all" allRaces)
-                                :: dlcToRaces dlcRaces
-                            )
+                    dlcList : List Parsers.DLC
+                    dlcList =
+                        List.concatMap Triple.Extra.third list
                 in
                 { info = []
-                , files = gradientsFile :: enumsFile :: racesFile :: List.concatMap Triple.Extra.first list
+                , files =
+                    gradientsFile
+                        :: enumsFile
+                        :: imagesFile
+                        :: Generate.FromDLC.files dlcList
                 }
             )
-
-
-dlcToRaces : List ( String, Parsers.Race ) -> List Elm.Declaration
-dlcToRaces races =
-    let
-        fromTypes : String -> Elm.Expression
-        fromTypes name =
-            Elm.value
-                { importFrom = [ "Generated", "Types" ]
-                , name = name
-                , annotation = Nothing
-                }
-    in
-    List.map
-        (\( dlcName, race ) ->
-            Gen.Data.Race.make_.details
-                { name = fromTypes race.name
-                , content = Elm.string race.description
-                , tank = fromTypes race.manaCapacity
-                , affinities = Elm.list (List.map fromTypes race.elements)
-                , charge = fromTypes race.manaRate
-                }
-                |> Elm.declaration race.name
-                |> Elm.expose
-        )
-        races
 
 
 parseDLC : String -> String -> Result (List Generate.Error) Parsers.DLC
@@ -295,7 +241,7 @@ gradient name content =
             Err [ { title = "Invalid file", description = "Could not parse file" } ]
 
 
-images : String -> Result (List Generate.Error) Elm.File
+images : String -> Result (List Generate.Error) (List Elm.Declaration)
 images sizes =
     let
         fromLine :
@@ -438,7 +384,6 @@ images sizes =
                     ++ [ declarationsForGroups ]
                 )
                     |> List.map Elm.expose
-                    |> Elm.file [ "Images" ]
             )
 
 
