@@ -43,3 +43,7 @@ run: generated/Images.elm
 .PHONY: test
 test: generated/Images.elm
 	yarn elm-test-rs --watch --compiler $(which lamdera)
+
+.PHONY: deploy
+deploy:
+	yarn netlify deploy --prod
