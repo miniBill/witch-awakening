@@ -6,9 +6,9 @@ import Data.Complication as Complication
 import Data.Costs.Monad as Monad exposing (Monad, andThen, combine, map, map2, mapAndSum, succeed, withWarning)
 import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic
-import Data.Perk as Perk
 import Data.Relic as Relic
 import Data.TypePerk as TypePerk
+import Generated.Perks as Perk
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..), companionToString)
 import List.Extra
 import Maybe.Extra

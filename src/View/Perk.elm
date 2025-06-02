@@ -5,6 +5,7 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, e
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Perks
 import Generated.Races
 import Generated.Types as Types exposing (Perk(..), Race, Slot(..))
 import Gradients
@@ -25,14 +26,14 @@ viewPerks display mainRace races perks =
         identity
         "# Perks"
         [ introBlock
-        , Perk.all perks
+        , Generated.Perks.all perks
             |> List.map (perkBox display perks mainRace races)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
-        [ Perk.all perks
+        [ Generated.Perks.all perks
             |> List.map (perkBox display perks mainRace races)
             |> Theme.column
                 [ centerX
