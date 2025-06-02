@@ -1,4 +1,4 @@
-module Data.Race exposing (Details, all, intro, title)
+module Data.Race exposing (Details, core, intro, looseAssets, title)
 
 import Generated.Types exposing (Affinity(..), Race(..), Size(..))
 import List.Extra
@@ -14,9 +14,14 @@ type alias Details =
     }
 
 
-all : List Race -> List Details
-all races =
-    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword, xeno, cyborg, spider, gnome, pixie, fairy, genie races, gemini races ]
+core : List Race -> List Details
+core races =
+    [ neutral, daeva, ifrit, siren, naiad, dryad, oread, lamia, aurai, nymph, gorgon, luxal, kekubi, sylph, undine, sprite, empusa, lilin, erinyes, hannya, taura, wulong, dravir races, doll, vanir, changeling, elf, orc, pharon, jotun, hollow, dwarf, wither, mimi, sword ]
+
+
+looseAssets : List Race -> List Details
+looseAssets races =
+    [ genie races, gemini races ]
 
 
 neutral : Details
@@ -567,98 +572,6 @@ sword =
     }
 
 
-xeno : Details
-xeno =
-    { name = Xeno
-    , tank = Medium
-    , affinities = [ Beast, Blood ]
-    , charge = High
-    , dlc = Nothing
-    , content = """
-        Xenos are a new species only discovered in the last 10 years by an Alphazon research team on Titan. A crashed ship from outside the solar system. Normal Xenos are monstrous predators, but after killing some witches on the team, they started hatching hybrids that are more humanoid and less feral. These hybrids have established a colony. They run at 120mph, can throw cars, and have hard carapaces equivalent to mithril armor with claws and bladed tails. Remarkably quiet in movement and can see infrared and UV.
-
-        __Xenos draw Mana__ from _Eggs_, laid by the xeno if female. Male xenos benefit from the eggs laid by their parent or eggs laid by their own mate. Each egg individually provides about 1% total mana per minute af fa range of 500 meters, .5 for an additional 500, .1 in another 500. Stacks. Eggs can’t be fertilized after being laid, remaining as mana batteries, but are fertilized during formation like the sexual reproduction most witches are familiar with. An egg lasts 1 month before running dry, unless supplied blood. 1 drop = 1% charge.
-        """
-    }
-
-
-cyborg : Details
-cyborg =
-    { name = Cyborg
-    , tank = Medium
-    , affinities = [ Body, Metal ]
-    , charge = High
-    , dlc = Nothing
-    , content = """
-        Cyborgs can be simulated a number of ways but this Cyborg type is a particular instance and a common type of witch back on Terra Prima, combining flesh and synthetic components. Cyborgs don’t age past their appearance, and a dead cyborg will have a small backup chip that can be inserted into a new cyborg body. Cyborgs can have up to 5 mundane items integrated into their body for use in some manner.
-
-        __Cyborgs draw Mana__ from Electricity, using internal reactors, typically in the form of fuel pellets, little beads any alchemist can learn to make using stardust and a potion of stamina of any rank. R1: Restores 1% mana capacity per minute for up to 24 hrs. R2: 2%. R3:5%. R4: 10% per 30 seconds for 1 hour. R5: 25% per 10 seconds for half an hour. A cyborg with no fuel pellet will feel a hunger-like sensation
-
-        They can of course tap into any power source to drain electricity at the rate at which the system is rated for, such as 1,50 watts for an outlet, which can charge 5% per minute. Cyborgs are not immune to electrical damage from unregulated attacks.
-        """
-    }
-
-
-spider : Details
-spider =
-    { name = Spider
-    , tank = Medium
-    , affinities = [ Beast, Metal ]
-    , charge = High
-    , dlc = Nothing
-    , content = """
-        A species of *Manaweaver* spiders that can produce witches, but usually it’s humans who awaken and tum into one. The size of a human hand, they can produce a foot of semi-metallic webbing per minute as thick as yam, their bites can paralyze any creature not magically protected, they climb walls as you’d expect. They age comparable to a human but can cocoon themselves for 48 hours to emerge youthful again, between 12-24 depending on how long they were cooking in there. A dead Spider witch can assume direct control over the body of any unintelligent children they’ve created by laying eggs in the hundreds, only creating intelligent spiders if they reproduce sexually if you must know.
-
-        __Spiders draw Mana__ from Bondage. Look, I know how that sounds and that’s not wrong either, but so long as a spider has a human or supernatural creature bound in their webbing, they produce charge similar to a gorgon’s stash of statues. Bound targets each provide about 1% capacity per min. A willing participant provides 5%. If a bound target is killed, it provides an instant +50%.
-        """
-    }
-
-
-gnome : Details
-gnome =
-    { name = Gnome
-    , tank = Medium
-    , affinities = [ Nature, Metal ]
-    , charge = High
-    , dlc = Nothing
-    , content = """
-        Gnomes are tiny inventive people that even in the wilds in history they were a productive and innovative people relying heavily on cunning works of primitive engineering to construct safe communities and traps to deal with a world of far larger threats, working with trees, roots, and earth. Now they’re natural at working metals into complex contraptions. They stand only 4 inches tall but have the strength of a typical humanoid child, impressive for their size, and the speed of a cat with strong limbs and durable bodies that are near immune to blunt damage
-
-        __Gnomes draw Mana__ from Tinkering, any time they create anything, they gain mana from doing so proportional to the material value, skill necessary, and time required. Jury rigging a quick contraption in a minute with a practical function and purpose could net you as much as 15% of your mana capacity. A long project that takes 4 hours could be a full restore, or 5 minutes with high skill, value, and risk of failure. Major projects taking a week to build can double their capacity for a week.
-        """
-    }
-
-
-pixie : Details
-pixie =
-    { name = Pixie
-    , tank = Low
-    , affinities = [ Nature, Wind ]
-    , charge = High
-    , dlc = Nothing
-    , content = """
-        Pixies are fae related to the Sprites, associated with plants where Sprites are associated with a manner of animal life. They can have wings like a sprite, or they can have leafy wings in any shape or color a leaf can have, though it may be thin to the point of transparency. Otherwise, pixies look like humans, elves, or dwarves but on a tiny scale, standing around an inch tall. They have a dryad-like ability to take on the form of any flower they’ve planted that has bloomed, and the ability to take pollens, seeds, or related traces of any two different flowers to breed a hybrid flower. Pixies flatly do not age, they merely grow from a baby size, to their adult size of around an inch. A slain pixie can be reborn from any flower they have planted.
-
-        __Pixies draw Mana__ from Blooming, whenever a flower created by the pixie blooms or a flower that the pixie has slept in the petals of, blooms then the pixie receives mana. As such, pixies tend to manage gardens of many different types of flowers, or in the wild range far to claim or plant them in fields or forests.
-        """
-    }
-
-
-fairy : Details
-fairy =
-    { name = Fairy
-    , tank = High
-    , affinities = [ Soul, Mind ]
-    , charge = Low
-    , dlc = Nothing
-    , content = """
-        Fairies are fae related to the Sprites, but without either the flora or fauna association. They can have wings like a sprite, or they can have wafer wings of light transparent or opaque, that can emit a faint glow or light like a torch obscuring the fairy’s body. Otherwise, fairies look like humans, elves, or dwarves but on a tiny scale, standing around an inch tall. Fairies have the ability to on touch induce euphoria and bliss in creatures, filling them up with either a happiness that compels them to dance and sing, or a carnal impulse that compels. them to indulge vices of the body. Creatures so affected are temporally locked with no sense of time, and don’t age. Fairies flatly do not age, they merely grow from a baby size, to their adult size of around an inch. A slain fairy can reincarnate at any still ongoing revelry they started.
-
-        __Fairies draw Mana__ from revelry, whenever a creature of human intelligence or greater is locked in a fairy’s revelry, they gain charge over time. 1 human in revelry for 8 hours will charge a fairy’s mana capacity by around 25%. They stack.
-        """
-    }
-
-
 genie : List Race -> Details
 genie races =
     let
@@ -680,7 +593,7 @@ genie races =
     , tank = High
     , affinities = [ All, affinity ]
     , charge = Low
-    , dlc = Nothing
+    , dlc = Just "Loose Assets"
     , content = """
         Genies are avatars of raw magic. They have the [???] type, meaning [???] types are double discounted and rounded down. All Genies then can pick any one affinity as their secondary type which heavily influences their appearance in spirit form. Their spirit form looking like a humanoid elemental of their chosen type from 1 inch to 30f tall. All genies then have a physical form based on any other witch race, as though using Hybridize to acquire it, but they can’t gain the type perks or their form of cheating death. Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free, used personally, not via Mammon, & costs nothing if used to satisfy a Master’s wish Genies do not age. A slain genie returns to her Vessel, see type perk.
 
@@ -710,7 +623,7 @@ gemini races =
     , tank = High
     , affinities = [ Earth, affinity ]
     , charge = Low
-    , dlc = Nothing
+    , dlc = Just "Loose Assets"
     , content = """
         Gemini are split soul beings that inhabit two bodies as one synchronous whole. The bodies are always nearly identical. Geminai have bodies composed of an associated gem associated with an Affinity, ruby fire affinity for example. Each of the pair have a different gem. This gem influences the coloration of parts of their body besides their skin, though they can have gem protrusions through their skin, which is still soft like flesh on the surface. Each half of the Gemini spends Power separately on its own effects, evenly splitting their power total between them. Gemini are born looking around 8 and age 1 year per 10 for around 80-120 years before they stop aging entirely.
 

@@ -36,6 +36,8 @@ dlc =
             , spaces = spaces
             , trailing = Parser.Optional
             }
+        |. spaces
+        |. Parser.end
 
 
 
@@ -105,7 +107,7 @@ paragraphs =
 
 paragraph : Parser ()
 paragraph =
-    Parser.chompIf (\c -> c /= '-' && c /= '#')
+    Parser.chompIf (\c -> c /= '#')
         |. chompUntilEndOrAfter "\n"
         |. Parser.spaces
 

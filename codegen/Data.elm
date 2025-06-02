@@ -291,7 +291,7 @@ looseAssets =
 
 looseAssetsRaces : List Variant
 looseAssetsRaces =
-    [ "Xeno", "Cyborg", "Spider", "Gnome", "Pixie", "Fairy", "Genie", "Gemini" ]
+    [ "Genie", "Gemini" ]
         |> buildVariants
         |> withArguments "Genie" [ "Affinity" ]
         |> withArguments "Gemini" [ "Affinity" ]

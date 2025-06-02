@@ -34,7 +34,7 @@ main =
 
 init : Model
 init =
-    Just "Elemental Harmony"
+    Nothing
 
 
 view : Model -> Html Msg

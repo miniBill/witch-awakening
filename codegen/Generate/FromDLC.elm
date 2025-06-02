@@ -51,10 +51,15 @@ allRaces dlcRaces =
         )
     <|
         \races ->
-            dlcRaces
-                |> List.map (\( _, race ) -> Elm.val (String.Extra.decapitalize race.name))
-                |> Elm.list
-                |> Elm.Op.append (Gen.Data.Race.call_.all races)
+            Elm.Op.append
+                (Elm.Op.append
+                    (Gen.Data.Race.call_.core races)
+                    (dlcRaces
+                        |> List.map (\( _, race ) -> Elm.val (String.Extra.decapitalize race.name))
+                        |> Elm.list
+                    )
+                )
+                (Gen.Data.Race.call_.looseAssets races)
                 |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
 
 
