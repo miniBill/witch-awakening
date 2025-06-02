@@ -145,7 +145,7 @@ companionBox :
     -> List Companion
     -> Companion.Details
     -> Element ( Companion, Bool )
-companionBox display selected ({ name, races, hasPerk, quote, cost, class, description, positives, mixed, negatives, has } as companion) =
+companionBox display selected ({ name, races, hasPerk, quote, cost, class, description, positives, mixed, negatives, has, dlc } as companion) =
     let
         isSelected : Bool
         isSelected =
@@ -259,6 +259,17 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                                 Images.badgeSpecial
                                     |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
                         ]
+                    , case dlc of
+                        Nothing ->
+                            Element.none
+
+                        Just dlcName ->
+                            el
+                                [ centerX
+                                , Theme.captureIt
+                                , Font.size 24
+                                ]
+                                (Theme.gradientText 4 Gradients.purpleGradient dlcName)
                     , statsTable companion
                     , Theme.blocks [ Font.size 14 ] quote
                     , Theme.blocks [] description

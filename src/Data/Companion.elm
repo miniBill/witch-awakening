@@ -19,6 +19,7 @@ type alias Details =
     , negatives : List String
     , mixed : List String
     , has : String
+    , dlc : Maybe String
     }
 
 
@@ -95,6 +96,7 @@ rachelPool =
         [ "+ Will at least _try_ things beyond her comfort zone."
         ]
     , has = "Rachel has Potions 2, Witchery 1, Hexes 2, Familiarity 3, and Naturalism 3"
+    , dlc = Nothing
     }
 
 
@@ -125,6 +127,7 @@ anneLaurenchi =
         [ "+ Likes to show off dreamworlds with friends."
         ]
     , has = "Anne has Familiar 1, Aether 2, Portal 3, Psycho 3, Digicasting 4, as well as _Beauty Sleep_"
+    , dlc = Nothing
     }
 
 
@@ -152,6 +155,7 @@ candayWesbank =
         ]
     , mixed = [ "+/- Celebate until marriage. {smol (Though not a virgin).}" ]
     , has = "Wess has Runes 5 and an Improved Familiar"
+    , dlc = Nothing
     }
 
 
@@ -180,6 +184,7 @@ tessaMarieKudashov =
         ]
     , mixed = [ "+/- Bit of a freak. take that as you will." ]
     , has = "Tess has Potions 3, Hexes 4, has a _Hydron_"
+    , dlc = Nothing
     }
 
 
@@ -208,6 +213,7 @@ evelynnPWillowcrane =
         ]
     , mixed = [ "+/- Also known for being dtf" ]
     , has = "Evelynn has Waterworking 1, Witchery 1, Divination 2, Digicasting 2, Runes 3 & _Fascinate_"
+    , dlc = Nothing
     }
 
 
@@ -237,6 +243,7 @@ johnDoe =
         [ "+/- Overly focused on gaining new experiences."
         ]
     , has = "John has Alchemy, Runes, and Witchery at 2, and unspent _Jack-of-All_, and _Memorize_"
+    , dlc = Nothing
     }
 
 
@@ -265,6 +272,7 @@ sayaKurosawa =
         [ "+/- Perhaps you could redirect her feelings from Elaina with some time and effort, if you wanted?"
         ]
     , has = "Saya has Runes 1, Wands 3, Witchery 4, Digicasting 4, Broom Beast (4p), _Mana Core, & a Witch Pistol_"
+    , dlc = Nothing
     }
 
 
@@ -291,6 +299,7 @@ francescaAstrenichtys =
         [ "+/- Loves butterflies, visually influences her magic"
         ]
     , has = "Fran has Digicasting 1, Earthmoving 3, Firecalling 3, Aethernautics 3, Metallurgy 3, Runes 4, Alchemy 5, Wands 5 _& a Mana Core_"
+    , dlc = Nothing
     }
 
 
@@ -318,6 +327,7 @@ elaineAVictorica =
         [ "+/- While “yuri” is normal among witches due to gender disparity, unfortunately for Saya, Elaina is very straight, she doesn’t even think in that way to recognize such options."
         ]
     , has = "Elaina has Digicasting 1, Witchery 4, Potions 4, Wands 5, _Broom Beast_ (6p), _Mana Core, & a Witch Pistol_"
+    , dlc = Nothing
     }
 
 
@@ -345,6 +355,7 @@ maimonadaMajesteim =
         [ "+/- She is very frugal and lives lightly, being content with the basics despite having expensive tastes and interests."
         ]
     , has = "Mai has Necromancy 2, Waterworking 3, Portals 4, Witchery 4, Aethernautics 5, Divination 5, _Oracle, Third Eye, Prestidigitation_"
+    , dlc = Nothing
     }
 
 
@@ -372,6 +383,7 @@ azurellieaAdMadelline =
         [ "+/- Not opposed to choking perverts out with cold water"
         ]
     , has = "Azure has Necromancy 1, Wands 2, Witchery 3, Waterworking 5 & Consortation 5. Wished for Power & Life (4 & 19)"
+    , dlc = Nothing
     }
 
 
@@ -400,6 +412,7 @@ melissaVincimvitch =
         [ "+/- Teaches Witch History & Alchemy, & tutors runes"
         ]
     , has = "Liz has Portals 1, Witchery 3, Divination 4, Alchemy 5, Runes 5, Windkeeping 5, _Energized, Third Eye, Windsong_. + Keeper x2 _Alchemy & Eromancy_* _{smol Don’t get the wrong idea perv}_*"
+    , dlc = Nothing
     }
 
 
@@ -434,6 +447,7 @@ hannahGrangely =
     , mixed =
         [ "+/- Helps avoid rulebreaking, but obligated to report" ]
     , has = "Hannah has 1 in every core Specialization, and has Waterworking 3, Wands 4 & _Master Wand_."
+    , dlc = Nothing
     }
 
 
@@ -463,6 +477,7 @@ elizabellSinclaire =
     , mixed =
         [ "+/- Isn’t a domme by heart, but a talented switch." ]
     , has = "Eliza has Wands 3, Occultism 3, Witchery 3, Consortation 4, Windkeeping 5, and _Energize_."
+    , dlc = Nothing
     }
 
 
@@ -491,6 +506,7 @@ ashleyLovenko =
         ]
     , mixed = [ "+/- Hard to dislike her the more you get to know her, despite often really bad first impressions" ]
     , has = "Ash has Familiarity 2, Witchery 2, Firecalling 3, Windkeeping 4, Wands 5 & _Magic Friendship_."
+    , dlc = Nothing
     }
 
 
@@ -518,6 +534,7 @@ sylvanneMaeKanzaki =
         ]
     , mixed = [ "+/- Little too quick to put her own life on the line" ]
     , has = "Mae has Wands 1, Familiarity 2 (Hawk), Ministration 3, Witchery 4, _Hat Trick_ and _Sun Shard_."
+    , dlc = Nothing
     }
 
 
@@ -543,6 +560,7 @@ lauraDDevonshire =
         ]
     , mixed = [ "+/- Spends a lot of her time in study or practice." ]
     , has = "Laura has every core magic at rank 2, Alchemy 3, Hexes 4, Naturalism 4, Wands 5, _Master Wand_"
+    , dlc = Nothing
     }
 
 
@@ -569,6 +587,7 @@ caroline =
         ]
     , mixed = [ "+/- Her draining voice withers 10 years instead of 1." ]
     , has = "Carol has Hexes 2, Familiarity 2, Witchery 3, Windkeeping 3, _Third Eye, Longing Mirror, Silly Goose_"
+    , dlc = Nothing
     }
 
 
@@ -595,6 +614,7 @@ suzyTheMiasma =
         ]
     , mixed = [ "+/- Single-minded in poisoncraft. Her poisons are 3x as effective, but other potions are 80% less potent." ]
     , has = "Suzy has Portals 2, Witchery 2, Wands 3, Hexes 3, Alchemy 5, _Poisoner, Witchflame, Alchemist Stash_"
+    , dlc = Nothing
     }
 
 
@@ -620,6 +640,7 @@ norikoDuNichols =
         ]
     , mixed = [ "+/- Some people might have blackmail on her past." ]
     , has = "Nori has Consortation 2, Witchery 4, Divination 4, Wands 5, Hexes 5, _Improved Rod (8p in cantrips), Master Wand_"
+    , dlc = Nothing
     }
 
 
@@ -651,6 +672,7 @@ francisIsaacGiovanni =
         ]
     , mixed = [ "+/- Learned to stop thinking in blanket generalities and now views evil as more of an infection or virus" ]
     , has = "Isaac has Consortation 4, Ministration 4, Runes 5, _Sun Shard_, _Mithril Armor_, and _Memorize_."
+    , dlc = Nothing
     }
 
 
@@ -677,6 +699,7 @@ ifraAlZahra =
         ]
     , mixed = [ "+/- Reads a lot of, in her words, “degenerate filth!” like premarital handholding in both “Weeb stuff” & romcoms." ]
     , has = "Ifra has Ministration 1, Familiarity 2, Curses 3, Hexes 4, Earthmoving 4 and has _False Light_."
+    , dlc = Nothing
     }
 
 
@@ -704,6 +727,7 @@ sariahJSnow =
         ]
     , mixed = [ "+/- Wants a new husband, but always holds her, late husband as her true partner to be reunited eventual" ]
     , has = "Sariah has Necromancy 2, Witchery 3, Divination 4, Waterworking 5, Ministration 5, _Oracle_, _Mythril Armor_ & _Artifact Keeper_"
+    , dlc = Nothing
     }
 
 
@@ -730,6 +754,7 @@ claireBelMontegra =
         ]
     , mixed = [ "+/- Doesn’t really consider anyone a friend until they’ve shared a bed while on mission together more than once" ]
     , has = "Claire has Curses 2, Ministration 3, Wind 4, Witchery 4, Hexes 5 & _False Light_"
+    , dlc = Nothing
     }
 
 
@@ -755,6 +780,7 @@ sylvarraAsDomonina =
         ]
     , mixed = [ "+/- Doesn’t need to kill - Can make you forget about witches entirely, while no longer being one yourself." ]
     , has = "Syl has Ministration 3, Witchery 3, Hexes 4, Occultism 4, Covenants 4, Divination 4, Windkeeping 5, Psychotics 5, _Secret Elixir, Mana Core, Violet Lenses, Life Record, Master Key_"
+    , dlc = Nothing
     }
 
 
@@ -780,6 +806,7 @@ madellineLPeach =
         ]
     , mixed = [ "+/- Though lesbians are normal for witches, even among Watchers, Peach is pissed she can’t find a witch husband." ]
     , has = "Peach has Alchemy 2, Runes 2, Ministration 4, Familiarity 4, Necromancy 5, Metallurgy 5, Curses 5, _Blood Witch, Mana Core, Apex, Necronomicon, Pewter Crown, Ritual Inks_"
+    , dlc = Nothing
     }
 
 
@@ -806,6 +833,7 @@ reinaAkatsuki =
         ]
     , mixed = [ "+/- Would not hesitate to sacrifice herself for another" ]
     , has = "Reina has Ministration 2, Curses 3, Necromancy 4, Occultism 4, _Blood Witch, Soul Graft (Vampire), False Light_"
+    , dlc = Nothing
     }
 
 
@@ -830,6 +858,7 @@ minnieAndrus =
         ]
     , mixed = [ "+/- A lot of aspects of reality differ from her old one." ]
     , has = "Minnie has Familiarity 1, Witchery 3, and Runes 4, _+ Pet Break (Phoenix + Luck Magic & Intelligence)_"
+    , dlc = Nothing
     }
 
 
@@ -863,6 +892,7 @@ lucilleMBright =
         ]
     , mixed = [ "+/- Believes there is no truth but power, the strong survive, If something _can_ be destroyed, it _should_ be destroyed." ]
     , has = "Lucille has Necromancy 3, Hexes 4, Consortation 4, Divination 4, Familiarity 5, _Blood Witch, Necronomicon & Hellrider_"
+    , dlc = Nothing
     }
 
 
@@ -893,6 +923,7 @@ kingDaemianKain =
         ]
     , mixed = [ "+/- Great guy to know if you need to get rid of a body" ]
     , has = "Kain has Familiarity 3, Firecalling 4, Curses 5, Consortation 5, Metamorphize 5 (Dragon) _Secret Magic & Family Line_"
+    , dlc = Nothing
     }
 
 
@@ -921,6 +952,7 @@ whisper =
         ]
     , mixed = [ "+/- Wont trust you if you don’t join in her “parties”." ]
     , has = "Whisper has Witchery 3, Familiarity 5, Occultism 5, Psychotics 5, _Visceramancy 5, Toximancy, Blood Witch & Shroud_"
+    , dlc = Nothing
     }
 
 
@@ -949,6 +981,7 @@ redMother =
         ]
     , mixed = [ "+/- Won’t _kill_ children or parents, but might abduct" ]
     , has = "Mom has Occultism 4, Necromancy 5, Alchemy 5, Consortation 5, _Visceramancy 5, Blood Witch, Family Line, and Immortal Blood_"
+    , dlc = Nothing
     }
 
 
@@ -975,6 +1008,7 @@ nova =
         ]
     , mixed = [ "+/- Do NOT take off her collar or let anyone touch it" ]
     , has = "Nova has Firecalling 5, Windkeeping 5, Curses 5, _Charge\u{00A0}Swap+ (Draviri), Mana Core, Magical Heart (20p worth)_"
+    , dlc = Nothing
     }
 
 
@@ -1000,6 +1034,7 @@ scarlet =
         ]
     , mixed = [ "+/- A little duplicitous, she’ll do what’s required of her but undermines evil actions subtly within bounds of orders" ]
     , has = "Scarlet has Witchery 3, Runes 4, Portals 4, Firecalling 5, Metamorphize (Red Dragon), _Windsong, Blood Witch_"
+    , dlc = Nothing
     }
 
 
@@ -1025,6 +1060,7 @@ huntress =
         ]
     , mixed = [ "+/- She has strong morals, strangely unsuited to her job." ]
     , has = "Huntress has Runes 3, Witchery 4, Occultism 4, Familiarity 5, _Windsong, Archer’s Bow, Violent Lenses, Shroud_"
+    , dlc = Nothing
     }
 
 
@@ -1051,6 +1087,7 @@ malice =
         ]
     , mixed = [ "+/- Strictly black and white in her worldview: You’re either family, or a threat. Anything against a threat is excused." ]
     , has = "Malice has Psychotics 2, Monstrosity 3, Hexes 4, Necromancy 5, _Guardian’s Wall & Maid Hand_"
+    , dlc = Nothing
     }
 
 
@@ -1084,6 +1121,7 @@ diana =
         ]
     , mixed = [ "+/- Rarely goes without at least 2 huntresses with her" ]
     , has = "Diana has Ministration 2, Familiarity 4 (Owl), Witchery 5, _Improved Familiar (Dire Wolf) & Memorize_"
+    , dlc = Nothing
     }
 
 
@@ -1114,6 +1152,7 @@ cassandra =
         ]
     , mixed = [ "+/- Dreamer with her head in the clouds, she thinks about the future at the expense of the present a lot." ]
     , has = "Cass has Familiarity 2, Potions 3, Occultism 3, Hexes 4, Divination 5, Domain 5, with _Oracle_"
+    , dlc = Nothing
     }
 
 
@@ -1140,6 +1179,7 @@ kingCulicarius =
         ]
     , mixed = [ "+/- You can’t convince him to change Lunabella, for better or worse, without serious evidence that it isn’t working: and, it is, and he’s seen a thousand alternatives to their ends." ]
     , has = "He has Ministration 3, Potions 4, Curses 5, Consortation 5, Firecalling 5, Divination 5, Oracle, Synthetic Hive, Embody Time"
+    , dlc = Nothing
     }
 
 
@@ -1167,6 +1207,7 @@ einodiaKate =
         ]
     , mixed = [ "+/- Driven by curiosity, secrets eat at her mind." ]
     , has = "Kate has Witchery 4, Potions 5, Runes 5, Windkeeping 5, Necromancy 5, Portals 5, Aethernautics 5, and Domain 6"
+    , dlc = Nothing
     }
 
 
@@ -1195,6 +1236,7 @@ persephone =
         , "+/- Maaay want your babies (F/F is no issue for witches), she’s big into genetics & experiments in lineage for witch offspring."
         ]
     , has = "Seph has Hexes 3, Witchery 3, Potions 4, Aethernautics 4, Familiarity 4 (Cow), Domain 5, Portals 5, Divination 5, _Cornucopia, Life Record, Companion Brick (You)_"
+    , dlc = Nothing
     }
 
 
@@ -1220,6 +1262,7 @@ betildaAraiBuckland =
         ]
     , mixed = [ "+/- If she says she’ll do something, she’d rather die than fail." ]
     , has = "Betty has Necromancy 2, Familiarity 4, Runes 5, Alchemy 5, Domain 5, _Levitation, Alchemist Stash & Stone_"
+    , dlc = Nothing
     }
 
 
@@ -1245,6 +1288,7 @@ nichteYIr =
         ]
     , mixed = [ "+/- Has a voluntary slave crest that acts as an anchor to avoid losing herself to Outsiders by binding to a master. " ]
     , has = "Nichte has Psychotics 3, Firecalling 3, Aethernautics 3, Domain 4, Necromancy 5, Monstrosity 5, _Memorize, Sun Shard, Cornucopia_"
+    , dlc = Nothing
     }
 
 
@@ -1269,6 +1313,7 @@ aelfflaedNowDaphne =
         ]
     , mixed = [ "+/- Daph has 6 _Pumpkin Boons_: choose 6 _personal perks_ & tweak to something similar and roughly as effective" ]
     , has = "Daph has Witchery 3, Necromancy 3, Domain 4, Familiarity 4, Wands 5, Fire 5+Nature 5 = _Jack’o Lantern magic_"
+    , dlc = Nothing
     }
 
 
@@ -1300,6 +1345,7 @@ victoriaWatts =
         ]
     , mixed = [ "+/- On speaking terms with some suits at Alphazon enough to acquire some of their tech without much pressure" ]
     , has = "V has Integration 4 (_No Observer_), and Gadgetry 5 with the _ORC License_ and _Collection_"
+    , dlc = Nothing
     }
 
 
@@ -1326,6 +1372,7 @@ richardMaxJohnson =
         ]
     , mixed = [ "+ Can produce gadgets from a box of scraps & bubblegum" ]
     , has = "Max has Gadgetry 5, _ORC License_, and a metric Freedom load of firearms and ammo"
+    , dlc = Nothing
     }
 
 
@@ -1352,6 +1399,7 @@ bethadonnaRossbaum =
         ]
     , mixed = [ "+/- Sweet christmas, you do _not_ want to make mother mad." ]
     , has = "Beth has Familiarity 5, Consortation 5, Necromancy Portals 5, Occultism 5, and _ORC License, Golden Fish, Third Eye, and Pantomime_. _Wished for Power_."
+    , dlc = Nothing
     }
 
 
@@ -1378,6 +1426,7 @@ mirandaQuincy =
         ]
     , mixed = [ "+/- Doesn’t believe in mercy, for enemies, or for allies; Will save your life no matter the pain, to eventually recover" ]
     , has = "Doc has Gadgetry 2, Hexes 3, Witchery 4, Firecalling 4, Potions 5, and Familiar 5 (Fox), _ORC License_"
+    , dlc = Nothing
     }
 
 
@@ -1408,6 +1457,7 @@ meganMinosine =
         , "+/- She can use her magics almost exclusively for explosions, which are 3x more potent & large than usual."
         ]
     , has = "Meg has Firecalling 5, Windkeeping 5, Curses 5, _Charge Swap+ (Draviri), Mana Core, Magical Heart (20p worth)_"
+    , dlc = Nothing
     }
 
 
@@ -1433,6 +1483,7 @@ janeKitAdams =
         ]
     , mixed = [ "+/- Trained more in martial and skill, than in magic use." ]
     , has = "Kit has Witchery 2, Psychotics 2, Familiarity 3, Portals 4, _Master Key, Assassin’s Edge, Memorize_"
+    , dlc = Nothing
     }
 
 
@@ -1457,6 +1508,7 @@ aliciaRedVelvetine =
         ]
     , mixed = [ "+/- Very into the theatrics and roleplaying scenarios." ]
     , has = "Red has Necromancy 2, Portals 3, Witchery 4, Metallurgy 5, _Memorize, Gunwitch, Hot Swap, Mana Core, Apex_"
+    , dlc = Nothing
     }
 
 
@@ -1483,6 +1535,7 @@ juliaMayCaldwin =
         ]
     , mixed = [ "+/- May pushes the limits on what it means to be human in a world of magic and gods, she’s more human than human" ]
     , has = "May has _Soul Warrior (Scepter), Soul Graft (Fountain, Stay Human), Magic Talisman (Portals), Collection (Runes)_"
+    , dlc = Nothing
     }
 
 
@@ -1514,6 +1567,7 @@ samanthaNatPonds =
         ]
     , mixed = [ "+/- Not naive, but doesn’t ask questions that aren’t directly relevant to a given task" ]
     , has = "Sam has Divination 3, Gadgetry 4, Integration 5"
+    , dlc = Nothing
     }
 
 
@@ -1540,6 +1594,7 @@ jenniferKYoung =
         ]
     , mixed = [ "+/- Smarter than she presents herself to be, as an easy ditzy airhead, and does contribute with info gathering." ]
     , has = "Jen has Divination 3, Integration 4 & a _Gold Card_"
+    , dlc = Nothing
     }
 
 
@@ -1565,6 +1620,7 @@ agent7Y =
         ]
     , mixed = [ "+/- Can read your ID through the reflection on the wall through the window. Knows what you did last night." ]
     , has = "Sev has Integration 5 (many reserve bodies), DIvination 5 & _Gold Card_, (+2 Spysats, with observers)"
+    , dlc = Nothing
     }
 
 
@@ -1591,6 +1647,7 @@ agent9s =
         ]
     , mixed = [ "+/- A semi-lethal rivalry with the ORC, Richard Max in particular, a little Mr. and Ms. Smith style" ]
     , has = "Nines has Integration 2, Witchery 3, Potions 3, Occultism 4, Psychotics 4, Familiarity 5 & _Gold Card_"
+    , dlc = Nothing
     }
 
 
@@ -1617,6 +1674,7 @@ twinsSaraAndKara =
         ]
     , mixed = [ "+/- Two for the price of one? They’re an inseparable pair," ]
     , has = "Twins both have _Magic Friendship (twin)_ & Witchery 4; Sara\u{00A0}has\u{00A0}Ministration\u{00A0}4, Domain 4, Covenants 4, Divination 5; Kara\u{00A0}has\u{00A0}Consortation\u{00A0}4, Portals 4, Occultism 4, Aethernautics\u{00A0}5"
+    , dlc = Nothing
     }
 
 
@@ -1643,6 +1701,7 @@ vesuvianelleLalahon =
         ]
     , mixed = [ "+/- Used to be worshipped, some sects remain" ]
     , has = "Suvi has Potions 3, Runes 4, Familiarity 5, Earthmoving 5, Firecalling 5, _Soul Warrior (Gladius), Soul Graft (Jackalope)_"
+    , dlc = Nothing
     }
 
 
@@ -1671,6 +1730,7 @@ amberOgdenVix =
         ]
     , mixed = [ "+/- Pro use of alchemy and runes to enhance rides" ]
     , has = "Vix has Consortation 1, Necromancy 2, Wands 3, Runes 3, Metallurgy 5, Alchemy 5, Witchery 5, _Hellrider, Broom Beast 6, Witch Pistol_"
+    , dlc = Nothing
     }
 
 
@@ -1697,6 +1757,7 @@ xINDollmaker =
         ]
     , mixed = [ "+/- Her body is a combination of flesh and ball-joint doll" ]
     , has = "Xin has Runes 3, Hexes 4, Necromancy 5, Windkeeping 5, Arachnescence 5, _Jester Mask, Ritual Inks, Dollmaker Kit, Servant Dolls_"
+    , dlc = Nothing
     }
 
 
@@ -1730,6 +1791,7 @@ alexKHalls =
         ]
     , mixed = [ "+/- Really easily flustered by her new body and attention." ]
     , has = "Alex has Familiarity 1 (Cat) & _Jack-of-All_"
+    , dlc = Nothing
     }
 
 
@@ -1756,6 +1818,7 @@ isabellaMableOaks =
         ]
     , mixed = [ "+/- Has never even dreamed of causing harm to anybody will take a lot to be much help in a fight." ]
     , has = "“I dunno what she will have yet.” (Build her up as a second build from scratch)"
+    , dlc = Nothing
     }
 
 
@@ -1781,6 +1844,7 @@ evangelinaRosaCostaval =
         ]
     , mixed = [ "+/- Is stronger when well fed, weakens with hunger" ]
     , has = "Rosa is a vampire + copies the (magical) power & perks of the last person she fed on"
+    , dlc = Nothing
     }
 
 
@@ -1807,6 +1871,7 @@ penelope =
         ]
     , mixed = [ "+/- \"Sometimes, I just care too much, I love to travel and take long walks on the beach. I’m not like other girls\" /s" ]
     , has = "Pen has Potions 3, Hexes 3, Domain 3, Familiar 4 (Cow), Witchery 4, Necromancy 5, Divination 5, _Cornucopia, Prestidigitation, Third Eye & Yaga Root_"
+    , dlc = Nothing
     }
 
 
@@ -1833,6 +1898,7 @@ mandyHunts =
         ]
     , mixed = [ "+/- By witch standards, defenseless against the monsters that can now see her as easily as she sees them" ]
     , has = "Mandy is a human, no faction relation"
+    , dlc = Nothing
     }
 
 
@@ -1858,6 +1924,7 @@ eskhanderMahabadi =
         ]
     , mixed = [ "+/- Understands the wider world he woke up to is different than what he knew, and is patient in learning new norms." ]
     , has = "Khan has Runes 2, Earthmoving 3, Witchery 5, Familiarity 5, Metamorphize 5 (Zooarch), _Transform Sequence, and Menagerie_"
+    , dlc = Nothing
     }
 
 
@@ -1884,6 +1951,7 @@ experiment627 =
         ]
     , mixed = [ "+/- Her body is a combination of flesh and ball-joint doll." ]
     , has = "627 has Necromancy 3, Windcalling 3, Hexes 4, Witchery 4, _Hot Swap, Maid Hand, and Levitation_"
+    , dlc = Nothing
     }
 
 
@@ -1904,6 +1972,7 @@ augustRoseOBare =
     , negatives = []
     , mixed = []
     , has = ""
+    , dlc = Nothing
     }
 
 
@@ -1931,6 +2000,7 @@ opheliaReisha =
         ]
     , mixed = [ "+/- Without Ess, Eli is a single minded workaholic to her detriment. With Ess, she’ll lighten up and be playful." ]
     , has = "Eli has Portals 2, Consortation 3, Hexes 3, Witchery 4, Wands 4, Alchemy 4, Domain 5, Firecalling 5 _& Prestidigitation_"
+    , dlc = Nothing
     }
 
 
@@ -1958,6 +2028,7 @@ estherReisha =
         ]
     , mixed = [ "+/- Without Eli, Ess loses focus and starts to care less about others, feeling disconnected from the world." ]
     , has = "Ess has Ministration 1, Hexes 3, Necromancy 3, Witchery 4, Familiarity 5, Firecalling 5 _& Prestidigitation, Memorize, Windsong_"
+    , dlc = Nothing
     }
 
 
@@ -1987,6 +2058,7 @@ custom =
         ]
     , mixed = [ "+/- A quality that could go either way based on player opinion, or has it’s ups and downs," ]
     , has = "What stuff do they have? For every 1p companion cost, use 4 Power for their build costs."
+    , dlc = Nothing
     }
 
 
@@ -2012,6 +2084,7 @@ erisJulianariStonefallen =
         ]
     , mixed = [ "+/- Incredibly innocent despite what most might expect" ]
     , has = "Eris has Potions 3, Witchery 3, Occultism 3, Waterworking 3, Familiarity 5 (*_black unicorn_*), _Shroud, Gold Card_"
+    , dlc = Nothing
     }
 
 
@@ -2036,6 +2109,7 @@ xiaoLiena =
         ]
     , mixed = [ "+/- The Chinese ORC has no relation to the PRC since the Mao regime, and is based out of Taiwan now. In short, Liena is not complicit in Chinese actions since pre-Mao." ]
     , has = "Li has Lifeweaving 1, Familiarity 2, Ministration 3, Windcalling 3, Witchery 4, Divination 4, Alchemy 5, _Alchemist Stash_"
+    , dlc = Nothing
     }
 
 
@@ -2062,6 +2136,7 @@ jin =
         ]
     , mixed = [ "+/- Can refuse orders within her vessel or about her past." ]
     , has = "Jin has Digicasting 4, Divination 4, Witchery 5, Wishcasting 5, Psychotics 5, _Soul Graft (Jinn), Witch hut? (Inside Vessel), Keeper x3, Comfy Pocket (TSCZ), Magical Heart (20p)_"
+    , dlc = Nothing
     }
 
 
@@ -2088,6 +2163,7 @@ saraStar =
         ]
     , mixed = [ "+/- Being a homeless witch from a lost world, she’s in the market for a new home and new connections, maybe love." ]
     , has = "Sara has Runes 2, Alchemy 2, Aethernautics 2, Windcalling 3, Hexes 3, Dominion 4, Divination 4, Integration 5 _Her ship: Red Betty_"
+    , dlc = Nothing
     }
 
 
@@ -2108,6 +2184,7 @@ redBetty =
     , negatives = []
     , mixed = []
     , has = "Red Betty is made with Comfy Spaceship: [https://imgur.com/a/OGMd0JN]. *_Human Space Yacht, Wood Paneling | Plant Garden 1, Fabricator 2, Cloning Tank 2, Medical Lab 3, AR Room 1, Bathing Amenities 1, Expanded Cabin 1, Training Complex 1, Recreational Activities 1 & 2 | A.I. Companion, Synthetic Android 3, Powered Armor 1, Holo Map 1, EVA Suit 1, Bridge Windows 1. | Wonders irrelevant_*"
+    , dlc = Nothing
     }
 
 
@@ -2137,6 +2214,7 @@ theCaretaker =
         ]
     , mixed = [ "+/- Frequently mutters in a far-speech, receiving inspiration and visions of what to do, making her seem super lucky" ]
     , has = "The Caretaker has Necromancy 3, Occultism 4, Aethernautics 4, Waterworking 5, Monstrosity 5, _Aberration & Crystallize_"
+    , dlc = Nothing
     }
 
 
@@ -2162,6 +2240,7 @@ lostQueen =
         ]
     , mixed = [ "+/- Arabella is uniquely able to use Hexes to replicate the effects of Gadgetry and Integration combined." ]
     , has = "Arabella has Alchemy 1, Necromancy 2, Monstrosity 3, Windcalling 4, Curses 4, Hexes 5, and Covenants 5"
+    , dlc = Nothing
     }
 
 
@@ -2182,6 +2261,7 @@ giftFromBeyond =
     , negatives = []
     , mixed = []
     , has = "Egg has 3x Power to spend & Any 2 Affinities"
+    , dlc = Nothing
     }
 
 
@@ -2206,6 +2286,7 @@ agent9sOriginal =
         ]
     , mixed = [ "+/- Her only purpose in life is to satisfy the White Serpent, who promises her peace and...a simple family life, someday" ]
     , has = "9s has Alchemy 3, Runes 4, Occult 4, Psychotics 5, Familiar 5 (Snake), Monstrosity 5, _Aberration_"
+    , dlc = Nothing
     }
 
 
@@ -2237,6 +2318,7 @@ princessDaelEzraOfCharis =
         ]
     , mixed = [ "+/- Somewhat lofty and larger than life, everything around her feels more serious and important." ]
     , has = "Ezra has Witchery 2, Necromancy 2, Portals 3, Wands 3, Ministration 4, Divination 4, Covenants 5 _& Fae Step_"
+    , dlc = Nothing
     }
 
 
@@ -2263,6 +2345,7 @@ anaphalonGreenwield =
         ]
     , mixed = [ "+/- Defers to authority above him, the same as he expects authority to be deferred to him by those below." ]
     , has = "Talon has Dominion 3, Windcalling 3, Covenants 5, _Soul Warrior_ (Design a sword) _& Fae Step_"
+    , dlc = Nothing
     }
 
 
@@ -2292,6 +2375,7 @@ briarGracehollow =
         [ "+/- Will obey all orders of the “alpha”, if no one becomes “alpha” then she will take on this role."
         ]
     , has = "Briar has Covenants 2, (_Improved_) Familiar 2 (Dire Wolf), Naturalism 4, and _Poisoner_"
+    , dlc = Nothing
     }
 
 
@@ -2318,4 +2402,5 @@ duchessSaelAstraOfOdalle =
         ]
     , mixed = [ "+/- Especially potent magic, approximately 78% as potent as would be expected of a witch of her ranking." ]
     , has = "Astra has Runes 2, Witchery 3, Aethernautics 4, Windcalling 5, Waterworking 5 (Ice), _Fae Step, Hybrid, & Mood Weather_"
+    , dlc = Nothing
     }
