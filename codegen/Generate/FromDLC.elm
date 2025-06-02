@@ -16,7 +16,7 @@ files : List Parsers.DLC -> List Elm.File
 files dlcList =
     let
         { dlcRaces, dlcPerks } =
-            List.foldl
+            List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
                         Parsers.DLCRace race ->
