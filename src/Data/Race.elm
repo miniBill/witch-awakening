@@ -26,9 +26,9 @@ elementalHarmony =
 neutral : Details
 neutral =
     { name = Neutral
-    , tank = Med
+    , tank = Medium
     , affinities = [ Soul, Body ]
-    , charge = Med
+    , charge = Medium
     , content = """
         The overwhelming majority of witches are Neutrals. There is nothing visually abnormal about them (by default). Even some witches who have the option to awaken as another race may want to choose to be Neutral for its baseline casual existence, no new dependencies or anything abnormal to consider. They’re effectively the “Human” witch, but witches refer to them as neutral rather than human to distinguish them from the mundane. They age slower than humans, at half the rate, and do so very gracefully, and they tend to be more attractive than the average human, and are harder to kill, with more efficient biology to reduce inconveniences with less biological requirements than normal by 25%, and prevent dying from a papercut, or from a tiny air bubble in the wrong place.
 
@@ -40,7 +40,7 @@ neutral =
 daeva : Details
 daeva =
     { name = Daeva
-    , tank = Med
+    , tank = Medium
     , affinities = [ Body, Life ]
     , charge = High
     , content = """
@@ -126,7 +126,7 @@ lamia =
     { name = Lamia
     , tank = High
     , affinities = [ Fire, Beast ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Lamiæ are like twin counterparts to the Naiad with a bit of an inversion; Lamiæ by default have the lower body of a snake comparable to the Naiad’s tail but around a third+ longer, being 5-7 times the length of their human upper body. Their body itself may or may not have scales, but they usually have slitted irises and retractile fangs with a venom that induces sleep. Lamiæ can lay an egg that grows a young new body, catching their soul to hatch if later slain.
 
@@ -138,7 +138,7 @@ lamia =
 aurai : Details
 aurai =
     { name = Aurai
-    , tank = Med
+    , tank = Medium
     , affinities = [ Wind, Necro ]
     , charge = High
     , content = """
@@ -166,7 +166,7 @@ nymph =
 gorgon : Details
 gorgon =
     { name = Gorgon
-    , tank = Med
+    , tank = Medium
     , affinities = [ Beast, Necro ]
     , charge = Low
     , content = """
@@ -180,9 +180,9 @@ gorgon =
 luxal : Details
 luxal =
     { name = Luxal
-    , tank = Med
+    , tank = Medium
     , affinities = [ Metal, Life ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Luxin have an associated metal the way an Oread or Siren have an associated animal. Their bones are formed of this metal, and they can have random metal growths visible on their skin or growing from their body such as a visible metal plate over their sternum, or dotted along their spine, or growths like horns or crowns. Their irises are literal gemstones that match the large gemstone that forms their heart equivalent. They don’t bleed or burn. Metals melt like butter in their mouth, which they eat in addition to normal food. So long as they eat metal, they don’t age for the day. Age can be regressed with overconsumption of metals. A dead Luxal can regrow from their gem heart if submerged in a molten pool of their associated metal, emerging whole as though aging from 0, gaining 1 year per hour spent submerged up to 24.
 
@@ -194,7 +194,7 @@ luxal =
 kekubi : Details
 kekubi =
     { name = Kekubi
-    , tank = Med
+    , tank = Medium
     , affinities = [ Fire, Body ]
     , charge = High
     , content = """
@@ -238,9 +238,9 @@ undine =
 sprite : Details
 sprite =
     { name = Sprite
-    , tank = Med
+    , tank = Medium
     , affinities = [ Nature, Life ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Sprites typically denizens of the faewild, Sprites are inherently tiny, about an inch tall, and have an associated winged insect that skews their appearance. All Sprites have wings while a wasp sprite might grow a smooth chitin plating covering their back and limbs to one extent or another. Whatever the insect, all Sprites can produce both silk webbing and honey, and both can be combined to produce hive materials. They have retractile stingers in their wrists that can inject a paralytic venom, which when combined with their honey can form a thick wax that firms up when worked like dough. Bathing in their honey reverses and prevents aging around prime. A dead sprite can be buried in a honey to revive in 3-7 days based on severity.
 
@@ -280,7 +280,7 @@ lilin =
 erinyes : Details
 erinyes =
     { name = Erinyes
-    , tank = Med
+    , tank = Medium
     , affinities = [ Wind, Blood ]
     , charge = High
     , content = """
@@ -296,7 +296,7 @@ hannya =
     { name = Hannya
     , tank = High
     , affinities = [ Water, Mind ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Hannya are known as raging drunkards heavily addicted to alcohol, almost always blushed with at least a light buzz. They have long slender horns that also “blush” like their cheeks. This blush effect is amplified into overdrive when they experience strong passions, turning bright red when enflamed by anger, which easily applies to most combat scenarios among other things as they have a habit of working themselves up. The redder they get, the more physical prowess they have, both in strength, and dexterity, and general stamina. They actually age in reverse, but whenever they are completely drunken their age will change to represent how they imagine themselves or want to be on a whim until they become sober. A dead Hannya can be brought back to life by first mending the body, then dousing with ice cold water.
 
@@ -310,7 +310,7 @@ taura =
     { name = Taura
     , tank = Low
     , affinities = [ Nature, Beast ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Taurai are very obvious at a glance for their large animal lower “halves” where the upper torso of a human from the hips up replace an animal head and neck, the whole body shoulders-down of another animal replacing what would be their human legs. They may or may not have animal features on their head or back as well up to the extent of being Sphinx-like. This can be any legged animal from lizard or spider to rabbit or horse. This is usually a hoofed animal but pawed animals aren’t that rare, and spider taura are fairly common in places. Their lower bodies are generally powerful and have a high sprint speed and endurance.
 
@@ -324,7 +324,7 @@ wulong =
     { name = Wulong
     , tank = High
     , affinities = [ Beast, Mind ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Wulong are exclusively a type of witch, associated with the asian lung dragons Wulong have jagged but usually smooth tipped horns like deer, or coral, and stained or painted-like arms up past their elbows that can look like stained glass or tie-dye, and they have long tails with a strip of soft fur ending in a tuft. Wulong are able to fly by force of will with somewhat strenuous effort equivalent to a full sprint Their blood is an ink the same color as the dominant color of their horns and arms. Wulong age like Elves, slowing from age 3 until reaching 18 at 100. A slain wulong can be reborn from a painting or statue that the wulong had formed a bond with using a drop of blood. Post-death, If someone with enough passion and knowledge of the wulong’s body creates an accurate masterwork, they can be reborn without a prior bonded work of art, from no remains.
 
@@ -353,7 +353,7 @@ dravir races =
     { name = Dravir affinity
     , tank = Low
     , affinities = [ Beast, affinity ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Draviri are what happens when those princesses end up sacrificed to the dragon with no hero(ine) to save the day. Leaving the details aside, Draviri have the horns, tail, and scales of a dragon, typically having full claws on their hands and feet. Draviri pick their secondary elemental affinity, which is manifest in a breath weapon that affects a 15ft cone or 30ft line of flame [Fire], lightning [Wind], cold and ice [Water], stone/metal shrapnel [Earth] [Metal], or poison gas / thorns [Nature] For every 10 years of life, this area increases by 5ft. Their dense draconic muscle gives them strength and stamina like a Daeva Draviri age like Elves, and if slain an egg can be found within their body that will hatch the reborn dravir within a year in the right conditions, until hatched or destroyed.
 
@@ -397,9 +397,9 @@ vanir =
 changeling : Details
 changeling =
     { name = Changeling
-    , tank = Med
+    , tank = Medium
     , affinities = [ Body, Mind ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Some universes only produce Witches as changelings, albeit usually under different mechanics. Changelings look like human children anywhere from 0 to 14, and are notably able to freely shapeshift in the blink of an eye to assume any other appearance that matches that description, including perfectly copying the appearance of another at a glance. A changeling cannot physically age past 14 or even use transformation magic to push past it and are biologically immortal. A slain changeling will re-awaken from a mortal human child randomly within the same plane/realm. (ie; Earth), replacing them. The replaced soul and mind will find itself in The Nursery (A realm).
 
@@ -413,7 +413,7 @@ elf =
     { name = Elf
     , tank = High
     , affinities = [ Body, Nature ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Elves once ruled Earth, as plentiful as modern humans currently are, with great empires of megalithic works and a global atmospheric energy grid... anyway, surviving elves come in Sun, Moon, and Sky varieties. Suns are golden-bronze skinned and favor forests. Moons are silvery-plum skinned and favor subterranean living, typically short. Sky elves are fair skinned and taller than most. Elves start out aging like humans but rapidly slow down. 100 is equivalent to a human’s 18, while they might look 30 at 1,000 and never exceed looking like 40. A slain elf will resurrect at the last Elven Lifeshrine they interacted with (Or their parent if they haven’t yet). Lifeshrines are rare on Earth, but most factions will have at least one. Also, Elves are *not* lewd, they’re a proud & noble people darn it.
 
@@ -453,7 +453,7 @@ pharon =
 jotun : Details
 jotun =
     { name = Jotun
-    , tank = Med
+    , tank = Medium
     , affinities = [ Body, Blood ]
     , charge = Low
     , content = """
@@ -481,7 +481,7 @@ hollow =
 dwarf : Details
 dwarf =
     { name = Dwarf
-    , tank = Med
+    , tank = Medium
     , affinities = [ Earth, Metal ]
     , charge = High
     , content = """
@@ -499,7 +499,7 @@ wither =
     { name = Wither
     , tank = High
     , affinities = [ Necro, Metal ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Withers are cursed people as a result of the horrific actions of their ancestors or past incarnation of themselves. They’ll be born thinking they’re Neutral but will be plagued with bad fortunes and health issues. At around age 18, they’ll die of a mysterious condition only to rise again in 3 days to a cold body with blackened limbs rotting on the bone. They’re no longer unlucky, but their undead body continually tries to rot from the extremities inward, they’d have skeletal fingers by the time their shoulders begin to blacken, over a week duration, They can delay and reverse decay through cannibalizing humanoid flesh leaving behind a skeleton, to regrow their own and remain whole for 1 week. An arm for an arm, body for body, ect. They can do this at a distance of 30ft. They have an aura of decay that makes people feel ill, and rapidly rusts metals. A nail would be dustin a minute They cannot die, they continue to reanimate every full moon unless impaled on a gold or silver spike with coins over the eyes / eye sockets.
 
@@ -539,7 +539,7 @@ sword =
 xeno : Details
 xeno =
     { name = Xeno
-    , tank = Med
+    , tank = Medium
     , affinities = [ Beast, Blood ]
     , charge = High
     , content = """
@@ -553,7 +553,7 @@ xeno =
 cyborg : Details
 cyborg =
     { name = Cyborg
-    , tank = Med
+    , tank = Medium
     , affinities = [ Body, Metal ]
     , charge = High
     , content = """
@@ -569,7 +569,7 @@ cyborg =
 spider : Details
 spider =
     { name = Spider
-    , tank = Med
+    , tank = Medium
     , affinities = [ Beast, Metal ]
     , charge = High
     , content = """
@@ -583,7 +583,7 @@ spider =
 gnome : Details
 gnome =
     { name = Gnome
-    , tank = Med
+    , tank = Medium
     , affinities = [ Nature, Metal ]
     , charge = High
     , content = """
@@ -685,9 +685,9 @@ gemini races =
 phlegethon : Details
 phlegethon =
     { name = Phlegethon
-    , tank = Med
+    , tank = Medium
     , affinities = [ Fire, Blood ]
-    , charge = Med
+    , charge = Medium
     , content = """
         In a desert, Phlegethontes look entirely human. In humid places, though, their skin steams softly, and in the cold, their flesh gradually goes clear, showing their veins, which seem to flow with liquid fire, and their eye sockets, which have roaring candle flames behind the eyeballs. Cutting them releases the burning blood. They have a sixth sense for other people around them, the heat of their breath and beating of their blood standing out to a Phlegethon like a spotlight, though they can’t distinguish individuals well.
 
@@ -701,7 +701,7 @@ phlegethon =
 moorwalker : Details
 moorwalker =
     { name = Moorwalker
-    , tank = Med
+    , tank = Medium
     , affinities = [ Earth, Wind ]
     , charge = Low
     , content = """
@@ -719,7 +719,7 @@ phantasm =
     { name = Phantasm
     , tank = High
     , affinities = [ Wind, Mind ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Phantasms are, in their natural state, completely invisible and intangible; a free-floating mind, not tethered to any physical form whatsoever. Even the air around them is completely permeable. For those who were born human, this tends to make them habitually touch-starved, especially before they get used to their aerokinesis and the tactile sense it can give them when they have mastered it enough to be automatic. Somewhat more difficult is mastering the art of creating a visual body with the shimmering of the air. This always leaves them looking ghostly, usually like a transparent image of (a slightly idealized version of) their mortal form, but it is largely an illusion.
 
@@ -765,9 +765,9 @@ muspel =
 dictum : Details
 dictum =
     { name = Dictum
-    , tank = Med
+    , tank = Medium
     , affinities = [ Mind, Metal ]
-    , charge = Med
+    , charge = Medium
     , content = """
         When they Awake, Dicta look like metallic-ceramic composite androids of their previous form. They are not actually robotic or technological, but purely magical: their form is a symbolic reflection of immutable Order. As they age, their appearance changes at 10% the rate of humans, but they gradually grow larger, adding 1% of their current height per year. Their natural strength is merely a very fit human’s, but it grows proportionately to their body weight, so an old Dictum will be quite strong.
 
@@ -781,7 +781,7 @@ dictum =
 qareen : Details
 qareen =
     { name = Qareen
-    , tank = Med
+    , tank = Medium
     , affinities = [ Fire, Water ]
     , charge = High
     , content = """
@@ -813,7 +813,7 @@ rusalka =
 lares : Details
 lares =
     { name = Lares
-    , tank = Med
+    , tank = Medium
     , affinities = [ Blood, Life ]
     , charge = High
     , content = """
@@ -829,7 +829,7 @@ lares =
 firebird : Details
 firebird =
     { name = Firebird
-    , tank = Med
+    , tank = Medium
     , affinities = [ Fire, Beast ]
     , charge = High
     , content = """
@@ -847,7 +847,7 @@ fresco =
     { name = Fresco
     , tank = High
     , affinities = [ Life, Soul ]
-    , charge = Med
+    , charge = Medium
     , content = """
         Frescoes are one of the oddest races behind the Veil, because they are, for the most part, two-dimensional. They have limited telekinesis that provides a tactile sense and fills space, but even Fresco witches walking in public must wear cloaks made of a single large piece of cloth so that they can keep their body on the cloak and project out with telekinesis to fill the space under it and keep it supported in the correct shape for a human. Frescoes usually form from memories; reborn souls who either were present for widely-remembered events or who were remembered themselves. Positive memories are more likely to cause Frescoes, and far more likely to awaken as witches, with the weight of the collective good regard granting them their elemental affinities.
 
@@ -877,7 +877,7 @@ silverstream =
 revenant : Details
 revenant =
     { name = Revenant
-    , tank = Med
+    , tank = Medium
     , affinities = [ Body, Necro ]
     , charge = High
     , content = """
@@ -893,7 +893,7 @@ revenant =
 petrichor : Details
 petrichor =
     { name = Petrichor
-    , tank = Med
+    , tank = Medium
     , affinities = [ Earth, Blood ]
     , charge = High
     , content = """

@@ -222,7 +222,7 @@ coreRaces =
 
 coreSizes : List String
 coreSizes =
-    [ "Low", "Med", "High" ]
+    [ "Low", "Medium", "High" ]
 
 
 coreAffinities : Dict String Variant
