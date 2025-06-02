@@ -1,5 +1,5 @@
 .PHONY: all
-all: build
+all: generated/Images.elm
 
 GRADIENT_SRC = $(wildcard public/gradients/*.png)
 GRADIENT_OUT = $(patsubst public/gradients/%.png,build/elm-codegen-flags/%.ppm,$(GRADIENT_SRC))
