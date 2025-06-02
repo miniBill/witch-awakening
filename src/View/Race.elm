@@ -6,6 +6,7 @@ import Element exposing (Attribute, Element, alignTop, centerX, el, fill, moveDo
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Races
 import Generated.Types as Types exposing (Affinity(..), Race(..), Size)
 import Gradients
 import Images exposing (Image)
@@ -21,7 +22,7 @@ viewRace display races =
     let
         raceBoxes : Element ( Race, Bool )
         raceBoxes =
-            Race.all races
+            Generated.Races.all races
                 |> List.map (raceBox display races)
                 |> Theme.wrappedRow
                     [ width fill

@@ -1,11 +1,11 @@
 module View.Perk exposing (viewPerks)
 
 import Data.Perk as Perk exposing (Content(..))
-import Data.Race as Race
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paragraph, px, rgba, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Races
 import Generated.Types as Types exposing (Perk(..), Race, Slot(..))
 import Gradients
 import Images
@@ -299,7 +299,7 @@ viewContent mainRace races color selected { content, name } =
                     )
                     color
                     swapRace
-                    (List.map .name <| Race.all races)
+                    (List.map .name <| Generated.Races.all races)
 
         WithCosts before costs ->
             List.map (Element.map ChoicePerk) <|

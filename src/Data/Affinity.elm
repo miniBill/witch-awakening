@@ -1,6 +1,6 @@
 module Data.Affinity exposing (all, baseAffinities, fromModel)
 
-import Data.Race as Race
+import Generated.Races
 import Generated.Types exposing (Affinity(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData)
@@ -58,7 +58,7 @@ fromModel { races, mainRace, cosmicPearl, typePerks } =
 
 baseAffinities : Race -> List Affinity
 baseAffinities race =
-    Race.all [ race ]
+    Generated.Races.all [ race ]
         |> List.Extra.find (\{ name } -> name == race)
         |> Maybe.map .affinities
         |> Maybe.withDefault []
