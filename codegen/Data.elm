@@ -26,7 +26,7 @@ enums parsedDLCs =
         combinedDLC =
             List.foldl (\e acc -> acc |> withDLC e.name (fromParsed e))
                 (core
-                    |> withDLC "Loose Assets" looseAssets
+                    |> withDLC (Just "Loose Assets") looseAssets
                 )
                 parsedDLCs
     in
@@ -58,7 +58,7 @@ enums parsedDLCs =
     ]
 
 
-fromParsed : { name : String, items : List Parsers.DLCItem } -> DLC
+fromParsed : Parsers.DLC -> DLC
 fromParsed { name, items } =
     let
         variant : String -> Variant
@@ -66,7 +66,7 @@ fromParsed { name, items } =
             { name = variantName
             , arguments = []
             , toStringException = Nothing
-            , dlc = Just name
+            , dlc = name
             }
     in
     List.foldr
@@ -82,7 +82,7 @@ fromParsed { name, items } =
         items
 
 
-withDLC : String -> DLC -> DLC -> DLC
+withDLC : Maybe String -> DLC -> DLC -> DLC
 withDLC dlcName original additional =
     let
         merge :
@@ -92,7 +92,7 @@ withDLC dlcName original additional =
             prop original
                 ++ (prop additional
                         |> List.map
-                            (\variant -> { variant | dlc = Just dlcName })
+                            (\variant -> { variant | dlc = dlcName })
                    )
     in
     { classes = merge .classes

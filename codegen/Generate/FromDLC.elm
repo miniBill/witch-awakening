@@ -35,7 +35,7 @@ files dlcList =
     ]
 
 
-racesFile : List ( String, Parsers.Race ) -> Elm.File
+racesFile : List ( Maybe String, Parsers.Race ) -> Elm.File
 racesFile dlcRaces =
     Elm.file [ "Generated", "Races" ]
         (Elm.expose (Elm.declaration "all" (allRaces dlcRaces))
@@ -43,7 +43,7 @@ racesFile dlcRaces =
         )
 
 
-allRaces : List ( String, Parsers.Race ) -> Elm.Expression
+allRaces : List ( Maybe String, Parsers.Race ) -> Elm.Expression
 allRaces dlcRaces =
     Elm.fn
         (Elm.Arg.varWith "races"
@@ -63,7 +63,7 @@ allRaces dlcRaces =
                 |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
 
 
-dlcToRaces : List ( String, Parsers.Race ) -> List Elm.Declaration
+dlcToRaces : List ( Maybe String, Parsers.Race ) -> List Elm.Declaration
 dlcToRaces races =
     List.map
         (\( dlcName, race ) ->
@@ -73,7 +73,7 @@ dlcToRaces races =
                 , tank = fromTypes race.manaCapacity
                 , affinities = Elm.list (List.map fromTypes race.elements)
                 , charge = fromTypes race.manaRate
-                , dlc = Elm.maybe (Just (Elm.string dlcName))
+                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (yassify race.name)
                 |> Elm.expose
@@ -81,7 +81,7 @@ dlcToRaces races =
         races
 
 
-perksFile : List ( String, Parsers.Perk ) -> Elm.File
+perksFile : List ( Maybe String, Parsers.Perk ) -> Elm.File
 perksFile dlcPerks =
     Elm.file [ "Generated", "Perks" ]
         (Elm.expose (Elm.declaration "all" (allPerks dlcPerks))
@@ -89,7 +89,7 @@ perksFile dlcPerks =
         )
 
 
-allPerks : List ( String, Parsers.Perk ) -> Elm.Expression
+allPerks : List ( Maybe String, Parsers.Perk ) -> Elm.Expression
 allPerks dlcPerks =
     Elm.fn
         (Elm.Arg.varWith "perks"
@@ -104,7 +104,7 @@ allPerks dlcPerks =
                 |> Elm.withType (Elm.Annotation.list Gen.Data.Perk.annotation_.details)
 
 
-dlcToPerks : List ( String, Parsers.Perk ) -> List Elm.Declaration
+dlcToPerks : List ( Maybe String, Parsers.Perk ) -> List Elm.Declaration
 dlcToPerks perks =
     List.map
         (\( dlcName, perk ) ->
@@ -114,7 +114,7 @@ dlcToPerks perks =
                 , affinity = fromTypes perk.element
                 , isMeta = Elm.bool False
                 , content = Gen.Data.Perk.make_.single (Elm.int perk.cost) (Elm.string perk.description)
-                , dlc = Elm.maybe (Just (Elm.string dlcName))
+                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (yassify perk.name)
                 |> Elm.expose
@@ -131,7 +131,7 @@ fromTypes name =
         }
 
 
-typePerksFile : List ( String, Parsers.Race ) -> Elm.File
+typePerksFile : List ( Maybe String, Parsers.Race ) -> Elm.File
 typePerksFile dlcRaces =
     Elm.file [ "Generated", "TypePerks" ]
         (Elm.expose (Elm.declaration "all" (allTypePerks dlcRaces))
@@ -139,7 +139,7 @@ typePerksFile dlcRaces =
         )
 
 
-allTypePerks : List ( String, Parsers.Race ) -> Elm.Expression
+allTypePerks : List ( Maybe String, Parsers.Race ) -> Elm.Expression
 allTypePerks dlcRaces =
     dlcRaces
         |> List.filterMap
@@ -155,7 +155,7 @@ allTypePerks dlcRaces =
         |> Elm.withType (Elm.Annotation.list Gen.Data.TypePerk.annotation_.details)
 
 
-dlcToTypePerks : List ( String, Parsers.Race ) -> List Elm.Declaration
+dlcToTypePerks : List ( Maybe String, Parsers.Race ) -> List Elm.Declaration
 dlcToTypePerks races =
     List.filterMap
         (\( dlcName, race ) ->
@@ -166,7 +166,7 @@ dlcToTypePerks races =
                             { race = fromTypes race.name
                             , content = Elm.string perk.description
                             , cost = Elm.int perk.cost
-                            , dlc = Elm.maybe (Just (Elm.string dlcName))
+                            , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                             }
                             |> Elm.declaration (yassify race.name)
                             |> Elm.expose

@@ -5,7 +5,7 @@ import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
 
 
 type alias DLC =
-    { name : String
+    { name : Maybe String
     , items : List DLCItem
     }
 
@@ -21,7 +21,15 @@ dlc =
         |. keyword "#"
         |= (chompUntilAfter "\n"
                 |> getChompedString
-                |> map String.trim
+                |> map
+                    (\rawName ->
+                        case String.trim rawName of
+                            "Core" ->
+                                Nothing
+
+                            trimmed ->
+                                Just trimmed
+                    )
            )
         |. spaces
         |= sequence
