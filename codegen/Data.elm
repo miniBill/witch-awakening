@@ -320,5 +320,5 @@ elementalHarmony =
 
 elementalHarmonyRaces : List Variant
 elementalHarmonyRaces =
-    [ "Moorwalker", "Phantasm", "Golem", "Muspel", "Dictum", "Qareen", "Rusalka", "Lares", "Firebird", "Fresco", "Silverstream", "Revenant", "Petrichor" ]
+    [  "Phantasm", "Golem", "Muspel", "Dictum", "Qareen", "Rusalka", "Lares", "Firebird", "Fresco", "Silverstream", "Revenant", "Petrichor" ]
         |> buildVariants

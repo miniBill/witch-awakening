@@ -3,6 +3,7 @@ module View.TypePerk exposing (viewTypePerks)
 import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, px, rgb, spacing, width)
 import Element.Font as Font
+import Generated.TypePerks
 import Generated.Types as Types exposing (Race(..), Slot)
 import Gradients
 import Images
@@ -16,7 +17,7 @@ viewTypePerks witchRaces display typePerks =
     let
         boxes : List (Element ( Race, Bool ))
         boxes =
-            TypePerk.all
+            Generated.TypePerks.all
                 |> List.map (typePerkBox witchRaces display typePerks)
     in
     View.collapsible

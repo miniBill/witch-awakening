@@ -6,6 +6,7 @@ import Elm.Arg
 import Elm.Op
 import Gen.Data.Perk
 import Gen.Data.Race
+import Gen.Data.TypePerk
 import Gen.Types
 import Generate.Utils exposing (yassify)
 import Parsers exposing (DLCItem(..))
@@ -29,6 +30,7 @@ files dlcList =
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
     [ racesFile dlcRaces
+    , typePerksFile dlcRaces
     , perksFile dlcPerks
     ]
 
@@ -122,3 +124,40 @@ fromTypes name =
         , name = yassify name
         , annotation = Nothing
         }
+
+
+typePerksFile : List ( String, Parsers.Race ) -> Elm.File
+typePerksFile dlcRaces =
+    Elm.file [ "Generated", "TypePerks" ]
+        (Elm.expose (Elm.declaration "all" (allTypePerks dlcRaces))
+            :: dlcToTypePerks dlcRaces
+        )
+
+
+allTypePerks : List ( String, Parsers.Race ) -> Elm.Expression
+allTypePerks dlcRaces =
+    dlcRaces
+        |> List.map (\( _, race ) -> Elm.val (String.Extra.decapitalize race.name))
+        |> Elm.list
+        |> Elm.Op.append Gen.Data.TypePerk.all
+        |> Elm.withType (Elm.Annotation.list Gen.Data.TypePerk.annotation_.details)
+
+
+dlcToTypePerks : List ( String, Parsers.Race ) -> List Elm.Declaration
+dlcToTypePerks races =
+    List.filterMap
+        (\( dlcName, race ) ->
+            race.perk
+                |> Maybe.map
+                    (\perk ->
+                        Gen.Data.TypePerk.make_.details
+                            { race = fromTypes race.name
+                            , content = Elm.string perk.description
+                            , cost = Elm.int perk.cost
+                            , dlc = Elm.maybe (Just (Elm.string dlcName))
+                            }
+                            |> Elm.declaration (yassify race.name)
+                            |> Elm.expose
+                    )
+        )
+        races

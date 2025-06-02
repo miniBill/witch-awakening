@@ -6,6 +6,7 @@ import Data.TypePerk
 import Dict exposing (Dict)
 import Dict.Extra
 import Generated.Races
+import Generated.TypePerks
 import Generated.Types exposing (affinityToString, raceToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
@@ -41,7 +42,7 @@ view dlc =
     let
         typePerks : Dict String Data.TypePerk.Details
         typePerks =
-            Data.TypePerk.all
+            Generated.TypePerks.all
                 |> Dict.Extra.fromListBy (\typePerk -> raceToString typePerk.race)
 
         raw : String

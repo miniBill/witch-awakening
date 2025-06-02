@@ -26,7 +26,7 @@ core races =
 
 elementalHarmony : List Details
 elementalHarmony =
-    [ moorwalker, phantasm, golem, muspel, dictum, qareen, rusalka, lares, firebird, fresco, silverstream, revenant, petrichor ]
+    [ phantasm, golem, muspel, dictum, qareen, rusalka, lares, firebird, fresco, silverstream, revenant, petrichor ]
 
 
 neutral : Details
@@ -727,23 +727,6 @@ gemini races =
         A dead Gemini half will fade into stardust, but will reappear when the surviving half sleeps, waking in the other half’s arms.
 
         __Geminai draw Mana__ from Pairing, the more in synch the two halves are in mind, intent, and appearance, the more mana they generate proportional to distance to each other. They feel this charge rate and are uncomfortable when it is weakened.
-        """
-    }
-
-
-moorwalker : Details
-moorwalker =
-    { name = Moorwalker
-    , tank = Medium
-    , affinities = [ Earth, Wind ]
-    , charge = Low
-    , dlc = Nothing
-    , content = """
-        Moorwalkers look like rough-hewn statues with edges worn soft by centuries of wind. When looking closely at them while they’re sitting still in calm air, a careful observer can notice that their hair, eyes, and fingernails are not all there - they’re translucent air. This is also noticeable with skin contact, where it will always feel like they ‘just missed you’ and a faint breeze will touch your skin. (For this reason they avoid handshakes with mortals, where the ‘missed’ feeling stands out.) Gusts of wind never seem to affect moorwalkers as much as things around them, though this is subtle until the winds reach gale force.
-
-        If there is ever no sapient person within ten miles of the spot a moorwalker died, or within ten miles of the largest piece of their bone remaining, they resurrect instantly on the spot.
-
-        __Moorwalkers draw Mana__ from Solitude. Moorwalkers gain mana only when at least one hundred feet from any other person. This increases if there are no animals either (bugs and smaller excepted), and with the distance - if a mile from any other people, production increases to Medium. However, this increase is negated if they’re not close to solid land and their rate gets even slower if not in atmosphere.
         """
     }
 

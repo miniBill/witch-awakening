@@ -16,6 +16,24 @@ __Phlegethontes draw Mana__ from Crowds. Phlegethontes charge when in the presen
 
 Some Phlegethons learn to deliberately release a layer of their blood and keep it under control, acting as a sheath of boiling-hot mist which explodes into flames whenever it is struck. This doesn’t impede their senses or injure them.
 
+
+## Race: Moorwalker
+- Elements: Earth, Wind
+- Mana capacity: Medium
+- Mana rate: Low
+
+Moorwalkers look like rough-hewn statues with edges worn soft by centuries of wind. When looking closely at them while they’re sitting still in calm air, a careful observer can notice that their hair, eyes, and fingernails are not all there - they’re translucent air. This is also noticeable with skin contact, where it will always feel like they ‘just missed you’ and a faint breeze will touch your skin. (For this reason they avoid handshakes with mortals, where the ‘missed’ feeling stands out.) Gusts of wind never seem to affect moorwalkers as much as things around them, though this is subtle until the winds reach gale force.
+
+If there is ever no sapient person within ten miles of the spot a moorwalker died, or within ten miles of the largest piece of their bone remaining, they resurrect instantly on the spot.
+
+__Moorwalkers draw Mana__ from Solitude. Moorwalkers gain mana only when at least one hundred feet from any other person. This increases if there are no animals either (bugs and smaller excepted), and with the distance - if a mile from any other people, production increases to Medium. However, this increase is negated if they’re not close to solid land and their rate gets even slower if not in atmosphere.
+
+### Perk
+- Cost: 2
+
+A few Moorwalkers who have ventured into space or unusual realms have found that they slowly convert desolation into moor, bare stone and vacuum changing to moss and thin air, then soil and a full atmosphere. This takes years of their presence to complete, but can affect a very large area.
+
+
 ## Perk: Skimmer Dancing
 - Element: Water
 - Class: Sorceress
