@@ -26,7 +26,7 @@ build/elm-codegen-flags/%.ppm: public/gradients/%.png
 	magick $^ -compress none $@
 
 .PHONY: build
-build:
+build: generated/Images.elm
 	rm -rf out
 	mkdir -p out
 	mkdir -p out/public
