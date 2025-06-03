@@ -55,9 +55,13 @@ init flags =
 toFiles :
     Directory
     -> Result (List Generate.Error) { info : List String, files : List Elm.File }
-toFiles (Generate.Directory { files }) =
-    files
-        |> Dict.toList
+toFiles root =
+    let
+        go : Generate.Directory -> List ( String, String )
+        go (Generate.Directory { files, directories }) =
+            Dict.toList files ++ List.concatMap go (Dict.values directories)
+    in
+    go root
         |> Result.Extra.combineMap
             (\( fileName, fileContent ) ->
                 case fileName of
@@ -105,6 +109,20 @@ toFiles (Generate.Directory { files }) =
                     dlcList : List Parsers.DLC
                     dlcList =
                         List.concatMap Triple.Extra.third list
+                            |> Dict.Extra.groupBy (\{ name } -> Maybe.withDefault "" name)
+                            |> Dict.foldl
+                                (\name grouped acc ->
+                                    { name =
+                                        if String.isEmpty name then
+                                            Nothing
+
+                                        else
+                                            Just name
+                                    , items = List.concatMap .items grouped
+                                    }
+                                        :: acc
+                                )
+                                []
                 in
                 { info = []
                 , files =

@@ -3,7 +3,7 @@ all: generated/Images.elm
 
 GRADIENT_SRC = $(wildcard public/gradients/*.png)
 GRADIENT_OUT = $(patsubst public/gradients/%.png,build/elm-codegen-flags/%.ppm,$(GRADIENT_SRC))
-DLCS_SRC = $(wildcard DLCs/*.md)
+DLCS_SRC = $(wildcard DLCs/**/*.md)
 DLCS_OUT = $(patsubst DLCs/%.md,build/elm-codegen-flags/%.md,$(DLCS_SRC))
 
 generated/Images.elm: $(wildcard codegen/*.elm) $(wildcard codegen/Generate/*.elm) codegen/Gen/Basics.elm build/elm-codegen-flags/sizes $(GRADIENT_OUT) $(DLCS_OUT)
@@ -15,7 +15,7 @@ build/elm-codegen-flags/sizes: $(wildcard public/*.png) $(wildcard public/*.jpg)
 	identify $^ > $@
 
 build/elm-codegen-flags/%.md: DLCs/%.md
-	mkdir -p build/elm-codegen-flags
+	mkdir -p $(dir $@)
 	cp $^ $@
 
 codegen/Gen/Basics.elm: codegen/elm.codegen.json
