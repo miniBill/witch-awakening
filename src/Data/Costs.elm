@@ -888,7 +888,7 @@ relicCost class pearl { name, cost } =
                 let
                     isClass : Bool
                     isClass =
-                        Just relic.class == class
+                        relic.class == class
 
                     baseCost : Int
                     baseCost =

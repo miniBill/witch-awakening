@@ -11,7 +11,6 @@ import Gen.Data.Perk
 import Gen.Data.Race
 import Gen.Data.Relic
 import Gen.Data.TypePerk
-import Gen.Debug
 import Gen.Types
 import Generate.Utils exposing (yassify)
 import Parsers exposing (DLCItem(..))
@@ -142,7 +141,7 @@ dlcToPerks perks =
                         Parsers.WithCosts costs description ->
                             Gen.Data.Perk.make_.withCosts (Elm.list (List.map Elm.int costs)) (Elm.string description)
 
-                        Parsers.WithChoices before choices after ->
+                        Parsers.WithChoices () before choices after ->
                             Gen.Data.Perk.make_.withChoices
                                 (Elm.string before)
                                 (choices
@@ -331,7 +330,7 @@ dlcToRelics relics =
         (\( dlcName, relic ) ->
             Gen.Data.Relic.make_.details
                 { name = fromTypes relic.name
-                , class = fromTypes relic.class
+                , class = Elm.maybe (Maybe.map fromTypes relic.class)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , content =
                     case relic.content of
@@ -345,8 +344,8 @@ dlcToRelics relics =
                         Parsers.WithCosts costs description ->
                             Gen.Data.Relic.make_.withChoices (Elm.list (List.map Elm.int costs)) (Elm.string description)
 
-                        Parsers.WithChoices before choices after ->
-                            Gen.Debug.todo "Wrong input?"
+                        Parsers.WithChoices ever _ _ _ ->
+                            never ever
                 }
                 |> Elm.declaration (yassify relic.name)
                 |> Elm.expose

@@ -5,7 +5,7 @@ import Generated.Types exposing (Class(..), Relic(..))
 
 type alias Details =
     { name : Relic
-    , class : Class
+    , class : Maybe Class
     , content : Content
     , dlc : Maybe String
     }

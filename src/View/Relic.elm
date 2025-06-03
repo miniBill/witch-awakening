@@ -152,9 +152,14 @@ relicBox mainRace display selected pearl races ({ name, class, content, dlc } as
                         , moveDown 8
                         ]
                         (Theme.gradientText 4 Gradients.purpleGradient dlcName)
-            , Theme.classToBadge class
-                |> Theme.image [ width <| px 40 ]
-                |> el [ alignBottom ]
+            , case class of
+                Nothing ->
+                    Element.none
+
+                Just c ->
+                    Theme.classToBadge c
+                        |> Theme.image [ width <| px 40 ]
+                        |> el [ alignBottom ]
             , case costs of
                 [] ->
                     Element.none

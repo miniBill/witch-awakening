@@ -107,13 +107,13 @@ type alias Perk =
     , element : String
     , class : String
     , isMeta : Bool
-    , content : Content
+    , content : Content ()
     }
 
 
-type Content
+type Content a
     = Single Int String
-    | WithChoices String (List ( String, Int )) String
+    | WithChoices a String (List ( String, Int )) String
     | WithCosts (List Int) String
 
 
@@ -134,7 +134,7 @@ perk =
             , succeed WithCosts
                 |= listItem "Costs" intListParser
                 |= paragraphs True
-            , succeed WithChoices
+            , succeed (WithChoices ())
                 |= paragraphs False
                 |= many
                     (succeed (\c d -> ( String.trim d, c ))
@@ -258,8 +258,8 @@ affinity =
 
 type alias Relic =
     { name : String
-    , class : String
-    , content : Content
+    , class : Maybe String
+    , content : Content Never
     }
 
 
@@ -267,7 +267,10 @@ relic : Parser Relic
 relic =
     succeed Relic
         |= header "##" "Relic"
-        |= listItem "Class" succeed
+        |= Parser.oneOf
+            [ listItem "Class" (\class -> succeed (Just class))
+            , succeed Nothing
+            ]
         |= Parser.oneOf
             [ succeed Single
                 |= listItem "Cost" intParser
