@@ -6,7 +6,7 @@ import Generated.Types exposing (Affinity(..), Class(..), Faction(..), Magic(..)
 
 type alias Details =
     { name : Magic
-    , star : Bool
+    , hasRankZero : Bool
     , class : Maybe Class
     , faction : Faction
     , affinities : Affinities
@@ -24,7 +24,7 @@ all =
 digicasting : Details
 digicasting =
     { name = Digicasting
-    , star = False
+    , hasRankZero = False
     , class = Just Academic
     , faction = TheCollegeOfArcadia
     , affinities = Regular [ Soul, Mind, Life ]
@@ -44,7 +44,7 @@ digicasting =
 wands : Details
 wands =
     { name = Wands
-    , star = False
+    , hasRankZero = False
     , class = Just Academic
     , affinities = Regular [ All ]
     , dlc = Nothing
@@ -68,7 +68,7 @@ wands =
 ministration : Details
 ministration =
     { name = Ministration
-    , star = False
+    , hasRankZero = False
     , class = Just Warlock
     , affinities = Regular [ Life, Metal, Soul ]
     , dlc = Nothing
@@ -105,7 +105,7 @@ ministration =
 occultism : Details
 occultism =
     { name = Occultism
-    , star = False
+    , hasRankZero = False
     , class = Just Warlock
     , affinities = Regular [ Blood, Necro, Soul ]
     , dlc = Nothing
@@ -142,7 +142,7 @@ occultism =
 dominion : Details
 dominion =
     { name = Dominion
-    , star = True
+    , hasRankZero = True
     , class = Just Academic
     , affinities = Regular [ Nature, Earth, Wind ]
     , dlc = Nothing
@@ -166,7 +166,7 @@ dominion =
 covenants : Details
 covenants =
     { name = Covenants
-    , star = False
+    , hasRankZero = False
     , class = Just Warlock
     , affinities = Regular [ Nature, Life, Soul ]
     , dlc = Nothing
@@ -194,7 +194,7 @@ covenants =
 monstrosity : Details
 monstrosity =
     { name = Monstrosity
-    , star = False
+    , hasRankZero = False
     , class = Just Warlock
     , affinities = Regular [ Beast, Blood, Body ]
     , dlc = Nothing
@@ -218,7 +218,7 @@ monstrosity =
 gadgetry : Details
 gadgetry =
     { name = Gadgetry
-    , star = True
+    , hasRankZero = True
     , class = Nothing
     , affinities = Regular []
     , dlc = Nothing
@@ -240,7 +240,7 @@ gadgetry =
 integration : Details
 integration =
     { name = Integration
-    , star = False
+    , hasRankZero = False
     , class = Nothing
     , affinities = Regular []
     , dlc = Nothing

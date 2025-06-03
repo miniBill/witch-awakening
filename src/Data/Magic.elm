@@ -5,7 +5,7 @@ import Generated.Types exposing (Affinity(..), Class(..), Magic(..))
 
 type alias Details =
     { name : Magic
-    , star : Bool
+    , hasRankZero : Bool
     , class : Maybe Class
     , affinities : Affinities
     , isElementalism : Bool
@@ -38,7 +38,7 @@ elementalism =
 alchemy : Details
 alchemy =
     { name = Alchemy
-    , star = False
+    , hasRankZero = False
     , class = Just Academic
     , affinities = Regular [ Water, Nature, Life ]
     , dlc = Nothing
@@ -76,7 +76,7 @@ alchemy =
 runes : Details
 runes =
     { name = Runes
-    , star = False
+    , hasRankZero = False
     , class = Just Academic
     , affinities = Regular [ Soul, Mind, Metal ]
     , dlc = Nothing
@@ -102,7 +102,7 @@ runes =
 curses : Details
 curses =
     { name = Curses
-    , star = False
+    , hasRankZero = False
     , class = Just Warlock
     , affinities = Regular [ Necro, Nature, Mind ]
     , dlc = Nothing
@@ -127,7 +127,7 @@ curses =
 hexes : Details
 hexes =
     { name = Hexes
-    , star = True
+    , hasRankZero = True
     , class = Just Warlock
     , affinities = Regular [ Body, Beast, Blood ]
     , dlc = Nothing
@@ -172,7 +172,7 @@ hexes =
 witchery : Details
 witchery =
     { name = Witchery
-    , star = True
+    , hasRankZero = True
     , class = Just Academic
     , affinities = Regular [ All ]
     , dlc = Nothing
@@ -205,7 +205,7 @@ witchery =
 familiarity : Details
 familiarity =
     { name = Familiarity
-    , star = True
+    , hasRankZero = True
     , class = Just Sorceress
     , affinities = Regular [ Beast, Soul, Nature ]
     , dlc = Nothing
@@ -231,7 +231,7 @@ familiarity =
 necromancy : Details
 necromancy =
     { name = Necromancy
-    , star = True
+    , hasRankZero = True
     , class = Just Warlock
     , affinities = Regular [ Necro, Blood, Soul ]
     , dlc = Nothing
@@ -257,7 +257,7 @@ necromancy =
 consortation : Details
 consortation =
     { name = Consortation
-    , star = False
+    , hasRankZero = False
     , class = Just Warlock
     , affinities = Regular [ Blood, Beast, Soul ]
     , dlc = Nothing
@@ -287,7 +287,7 @@ consortation =
 portals : Details
 portals =
     { name = Portals
-    , star = False
+    , hasRankZero = False
     , class = Just Academic
     , affinities = Regular [ Life, Nature, Mind ]
     , dlc = Nothing
@@ -315,7 +315,7 @@ portals =
 divination : Details
 divination =
     { name = Divination
-    , star = False
+    , hasRankZero = False
     , class = Just Warlock
     , affinities = Regular [ Soul, Life, Mind ]
     , dlc = Nothing
@@ -383,7 +383,7 @@ divination =
 aethernautics : Details
 aethernautics =
     { name = Aethernautics
-    , star = False
+    , hasRankZero = False
     , class = Just Academic
     , affinities = Regular [ All ]
     , dlc = Nothing
@@ -425,7 +425,7 @@ aethernautics =
 firecalling : Details
 firecalling =
     { name = Firecalling
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Fire ], [ Metal, Wind ] ]
     , dlc = Nothing
@@ -453,7 +453,7 @@ firecalling =
 windkeeping : Details
 windkeeping =
     { name = Windkeeping
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Wind ], [ Nature, Soul ] ]
     , dlc = Nothing
@@ -481,7 +481,7 @@ windkeeping =
 waterworking : Details
 waterworking =
     { name = Waterworking
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Water ], [ Life, Wind ] ]
     , dlc = Nothing
@@ -509,7 +509,7 @@ waterworking =
 earthmoving : Details
 earthmoving =
     { name = Earthmoving
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Earth ], [ Nature, Body ] ]
     , dlc = Nothing
@@ -535,7 +535,7 @@ earthmoving =
 naturalism : Details
 naturalism =
     { name = Naturalism
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Nature ], [ Life, Water ] ]
     , dlc = Nothing
@@ -561,7 +561,7 @@ naturalism =
 metamorphosis : Details
 metamorphosis =
     { name = Metamorphosis
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Regular [ Beast ]
     , dlc = Nothing
@@ -592,7 +592,7 @@ metamorphosis =
 psychotics : Details
 psychotics =
     { name = Psychotics
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Mind ], [ Life, Soul ] ]
     , dlc = Nothing
@@ -618,7 +618,7 @@ psychotics =
 metallurgy : Details
 metallurgy =
     { name = Metallurgy
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Metal ], [ Fire, Earth ] ]
     , dlc = Nothing
@@ -644,7 +644,7 @@ metallurgy =
 lifeweaving : Details
 lifeweaving =
     { name = Lifeweaving
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Life ], [ Fire, Soul ] ]
     , dlc = Just "Loose Assets"
@@ -670,7 +670,7 @@ lifeweaving =
 visceramancy : Details
 visceramancy =
     { name = Visceramancy
-    , star = False
+    , hasRankZero = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Blood ], [ Body, Necro ] ]
     , dlc = Just "Loose Assets"
@@ -696,7 +696,7 @@ visceramancy =
 arachnescence : Details
 arachnescence =
     { name = Arachnescence
-    , star = False
+    , hasRankZero = False
     , class = Just Warlock
     , affinities = Regular [ Beast, Necro, Mind ]
     , dlc = Just "Loose Assets"

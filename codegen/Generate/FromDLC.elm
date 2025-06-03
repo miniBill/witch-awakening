@@ -232,7 +232,7 @@ dlcToMagics magics =
             Gen.Data.Magic.make_.details
                 { name = fromTypes magic.name
                 , class = Elm.maybe (Maybe.map fromTypes magic.class)
-                , star = Elm.bool magic.star
+                , hasRankZero = Elm.bool magic.hasRankZero
                 , isElementalism = Elm.bool magic.isElementalism
                 , affinities = Gen.Data.Magic.make_.regular (Elm.list (List.map fromTypes magic.elements))
                 , description = Elm.string magic.description

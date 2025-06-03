@@ -157,7 +157,7 @@ type alias Magic =
     { name : String
     , class : Maybe String
     , elements : List String
-    , star : Bool
+    , hasRankZero : Bool
     , isElementalism : Bool
     , description : String
     , ranks : Dict Int String
@@ -180,7 +180,7 @@ magic =
                     |> succeed
             )
         |= Parser.oneOf
-            [ listItem "Star" boolParser
+            [ listItem "Has rank zero" boolParser
             , succeed False
             ]
         |= Parser.oneOf

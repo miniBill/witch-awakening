@@ -222,7 +222,7 @@ magicBox :
     -> Bool
     -> List RankedMagic
     -> Int
-    -> { a | star : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic, dlc : Maybe String }
+    -> { a | hasRankZero : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic, dlc : Maybe String }
     -> Element ( RankedMagic, Bool )
 magicBox display factional selected index details =
     if display == DisplayCompact && List.all (\sel -> sel.name /= details.name) selected then
@@ -251,7 +251,7 @@ magicImage { name } =
         Element.none
 
 
-viewContent : Display -> List RankedMagic -> { a | name : Magic, description : String, ranks : List String, star : Bool, class : Maybe Class, affinities : Affinities, dlc : Maybe String } -> Element ( RankedMagic, Bool )
+viewContent : Display -> List RankedMagic -> { a | name : Magic, description : String, ranks : List String, hasRankZero : Bool, class : Maybe Class, affinities : Affinities, dlc : Maybe String } -> Element ( RankedMagic, Bool )
 viewContent display selected ({ name, description, ranks, dlc } as details) =
     let
         isSelected : Maybe RankedMagic
@@ -292,8 +292,8 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
         }
 
 
-magicTitle : Display -> { a | name : Magic, star : Bool, class : Maybe Class, affinities : Affinities } -> Element msg
-magicTitle display { name, star, class, affinities } =
+magicTitle : Display -> { a | name : Magic, hasRankZero : Bool, class : Maybe Class, affinities : Affinities } -> Element msg
+magicTitle display { name, hasRankZero, class, affinities } =
     Theme.wrappedRow
         [ Theme.morpheus
         , Font.size 40
@@ -308,7 +308,7 @@ magicTitle display { name, star, class, affinities } =
                     Theme.image
                         [ width <| px 32, centerY ]
                         (Theme.classToBadge c)
-            , if star then
+            , if hasRankZero then
                 el [ Font.size 48, moveUp 8, centerY ] <|
                     Theme.gradientText 1 Gradients.yellowGradient "★"
 
