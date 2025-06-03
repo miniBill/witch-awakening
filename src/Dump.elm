@@ -20,7 +20,9 @@ import String.Multiline
 
 
 type alias Model =
-    { dlc : Maybe String, category : Category }
+    { dlc : Maybe String
+    , category : Category
+    }
 
 
 type Msg
@@ -56,7 +58,7 @@ update msg model =
 init : Model
 init =
     { dlc = Nothing
-    , category = Perk
+    , category = Magic
     }
 
 
@@ -76,7 +78,12 @@ view model =
             [ Html.Attributes.style "display" "flex"
             , Html.Attributes.style "gap" "8px"
             ]
-            (List.map categoryButton [ ( "Races", Race ), ( "Perks", Perk ) ])
+            (List.map categoryButton
+                [ ( "Races", Race )
+                , ( "Perks", Perk )
+                , ( "Magic", Magic )
+                ]
+            )
         , Html.pre [] [ Html.text (dump model) ]
         ]
 
