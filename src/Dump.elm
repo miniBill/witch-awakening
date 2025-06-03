@@ -182,6 +182,11 @@ dumpPerk details =
                 [ Just <| "## Perk: " ++ perkToString details.name
                 , Just <| "- Element: " ++ affinityToString details.affinity
                 , Just <| "- Class: " ++ classToString details.class
+                , if details.isMeta then
+                    Just "- Meta: True"
+
+                  else
+                    Nothing
                 , maybeCost
                     |> Maybe.map
                         (\costs ->
@@ -192,11 +197,6 @@ dumpPerk details =
                                 _ ->
                                     "- Costs: " ++ String.join ", " (List.map String.fromInt costs)
                         )
-                , if details.isMeta then
-                    Just "- Meta: True"
-
-                  else
-                    Nothing
                 , Just ""
                 , Just content
                 ]

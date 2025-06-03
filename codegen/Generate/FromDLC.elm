@@ -111,8 +111,24 @@ dlcToPerks perks =
                 { name = fromTypes perk.name
                 , class = fromTypes perk.class
                 , affinity = fromTypes perk.element
-                , isMeta = Elm.bool False
-                , content = Gen.Data.Perk.make_.single (Elm.int perk.cost) (Elm.string perk.description)
+                , isMeta = Elm.bool perk.isMeta
+                , content =
+                    case perk.content of
+                        Parsers.Single cost description ->
+                            Gen.Data.Perk.make_.single (Elm.int cost) (Elm.string description)
+
+                        Parsers.WithCosts description costs ->
+                            Gen.Data.Perk.make_.withCosts (Elm.string description) (Elm.list (List.map Elm.int costs))
+
+                        Parsers.WithChoices before choices after ->
+                            Gen.Data.Perk.make_.withChoices
+                                (Elm.string before)
+                                (choices
+                                    |> List.map
+                                        (\( choice, cost ) -> Elm.tuple (Elm.string choice) (Elm.int cost))
+                                    |> Elm.list
+                                )
+                                (Elm.string after)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (yassify perk.name)

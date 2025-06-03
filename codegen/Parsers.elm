@@ -1,6 +1,7 @@
-module Parsers exposing (DLC, DLCItem(..), Perk, Race, dlc)
+module Parsers exposing (Content(..), DLC, DLCItem(..), Perk, Race, dlc)
 
-import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, keyword, map, oneOf, sequence, spaces, succeed, symbol)
+import Maybe.Extra
+import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, problem, sequence, spaces, succeed, symbol)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
 
 
@@ -70,17 +71,16 @@ race : Parser Race
 race =
     succeed Race
         |= header "##" "Race"
-        |= (listItem "Elements"
-                |> map
-                    (\raw ->
-                        raw
-                            |> String.split ","
-                            |> List.map String.trim
-                    )
-           )
-        |= listItem "Mana capacity"
-        |= listItem "Mana rate"
-        |= paragraphs
+        |= listItem "Elements"
+            (\raw ->
+                raw
+                    |> String.split ","
+                    |> List.map String.trim
+                    |> succeed
+            )
+        |= listItem "Mana capacity" succeed
+        |= listItem "Mana rate" succeed
+        |= paragraphs True
         |= oneOf
             [ succeed
                 (\cost description ->
@@ -93,29 +93,29 @@ race =
                 |. spaces
                 |. keyword "Perk"
                 |. spaces
-                |= (listItem "Cost" |> andThen intParser)
-                |= paragraphs
+                |= listItem "Cost" intParser
+                |= paragraphs True
             , succeed Nothing
             ]
 
 
-paragraphs : Parser String
-paragraphs =
+paragraphs : Bool -> Parser String
+paragraphs acceptList =
     Parser.sequence
         { start = ""
         , end = ""
-        , item = paragraph
+        , item = paragraph acceptList
         , trailing = Parser.Optional
-        , spaces = Parser.succeed ()
+        , spaces = succeed ()
         , separator = ""
         }
         |> Parser.getChompedString
         |> Parser.map String.trim
 
 
-paragraph : Parser ()
-paragraph =
-    Parser.chompIf (\c -> c /= '#')
+paragraph : Bool -> Parser ()
+paragraph acceptList =
+    Parser.chompIf (\c -> (acceptList || c /= '-') && c /= '#')
         |. chompUntilEndOrAfter "\n"
         |. Parser.spaces
 
@@ -124,29 +124,96 @@ type alias Perk =
     { name : String
     , element : String
     , class : String
-    , cost : Int
-    , description : String
+    , isMeta : Bool
+    , content : Content
     }
+
+
+type Content
+    = Single Int String
+    | WithChoices String (List ( String, Int )) String
+    | WithCosts String (List Int)
 
 
 perk : Parser Perk
 perk =
     succeed Perk
         |= header "##" "Perk"
-        |= listItem "Element"
-        |= listItem "Class"
-        |= (listItem "Cost" |> andThen intParser)
-        |= paragraphs
+        |= listItem "Element" succeed
+        |= listItem "Class" succeed
+        |= Parser.oneOf
+            [ listItem "Meta" boolParser
+            , succeed False
+            ]
+        |= Parser.oneOf
+            [ succeed Single
+                |= listItem "Cost" intParser
+                |= paragraphs True
+            , succeed (\c d -> WithCosts d c)
+                |= listItem "Costs" intListParser
+                |= paragraphs True
+            , succeed WithChoices
+                |= paragraphs False
+                |= sequence
+                    { start = ""
+                    , end = ""
+                    , separator = ""
+                    , spaces = spaces
+                    , trailing = Parser.Optional
+                    , item =
+                        succeed (\c d -> ( String.trim d, c ))
+                            |. symbol "-"
+                            |. spaces
+                            |. symbol "["
+                            |. spaces
+                            |= oneOf
+                                [ succeed negate
+                                    |. symbol "-"
+                                    |. spaces
+                                    |= int
+                                , int
+                                ]
+                            |. spaces
+                            |. symbol "]"
+                            |. spaces
+                            |= getChompedString (chompUntilAfter "\n")
+                            |. spaces
+                    }
+                |= paragraphs False
+            ]
+
+
+boolParser : String -> Parser Bool
+boolParser raw =
+    case raw of
+        "True" ->
+            succeed True
+
+        "False" ->
+            succeed False
+
+        _ ->
+            problem (raw ++ " is not a valid boolean")
 
 
 intParser : String -> Parser Int
 intParser raw =
     case String.toInt raw of
         Nothing ->
-            Parser.problem (raw ++ " is not a valid number")
+            problem (raw ++ " is not a valid number")
 
         Just n ->
-            Parser.succeed n
+            succeed n
+
+
+intListParser : String -> Parser (List Int)
+intListParser raw =
+    case raw |> String.split "," |> Maybe.Extra.combineMap (\piece -> piece |> String.trim |> String.toInt) of
+        Nothing ->
+            problem (raw ++ " is not a valid list of numbers")
+
+        Just n ->
+            succeed n
 
 
 
@@ -168,8 +235,8 @@ header level key =
         |. spaces
 
 
-listItem : String -> Parser String
-listItem key =
+listItem : String -> (String -> Parser a) -> Parser a
+listItem key continuation =
     succeed String.trim
         |. backtrackable
             (symbol "-"
@@ -180,3 +247,4 @@ listItem key =
         |. spaces
         |= getChompedString (chompUntilAfter "\n")
         |. spaces
+        |> andThen continuation

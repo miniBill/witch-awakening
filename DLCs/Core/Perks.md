@@ -1,4 +1,5 @@
 # Core
+
 ## Perk: Oracle
 - Element: Mind
 - Class: Warlock
@@ -331,8 +332,8 @@ Be reborn as a the child of a particular lineage of your choice. You can also or
 ## Perk: Summer School
 - Element: Life
 - Class: Academic
-- Costs: 4, 8, 12, 16, 20
 - Meta: True
+- Costs: 4, 8, 12, 16, 20
 
 Looks like there’s space available in a special class at Arcadia or Hawthorne. _Neither needs to be our primary faction._ Take the _Summer School cyoa_ [https://imgchest.com/p/m9yxg5j34qn], and swap out any class subject with one Magic Specialization, choosing any teacher and adapt their summary to that magic school. You can replace a teacher with someone from the Companions page with R4+ in that magic. Over the summer, you do not gain Focus, Might, or Favor, but at the end each Magic specialization will be brought to Rank 3 (1 rank per month). You can replace Friends with Companions, who will learn the magic too. This perk costs 4p per magic class you take. You can take this repeatedly for up to 5 magic classes.
 
@@ -348,8 +349,8 @@ So, “Magical Girls” are real, and it looks like you might be one. If you hav
 ## Perk: Miniaturization
 - Element: Nature
 - Class: Sorceress
-- Costs: 4, 8, 12, 16
 - Meta: True
+- Costs: 4, 8, 12, 16
 
 4 Power cost if you’re a Sprite. You have the ability to shrink! You can toggle off or on a mini form. Use The Fairy’s Curse, [https://imgur.com/a/Y1YEt]. “Fairy” costs 5 less, as its only real benefit is wings, as a Witch you can already perform magic better than most non-witch fairies.
 
@@ -361,8 +362,8 @@ You can take this repeatedly, either for more currency in one or for the others,
 ## Perk: Soul Warrior
 - Element: All
 - Class: Warlock
-- Cost: 15
 - Meta: True
+- Cost: 15
 
 Improve your Rod and/or Garment and Hat, using _Soul Weapon_ [https://imgur.com/a/6qTz6uR]
 
@@ -372,8 +373,8 @@ Rod improvements stack with Improved Rod. If you have _Mythril Armor_, its prote
 ## Perk: Comfy Pocket
 - Element: Soul
 - Class: Sorceress
-- Cost: 6
 - Meta: True
+- Cost: 6
 
 _Requires Witchery 5_.
 
@@ -383,8 +384,8 @@ Improves your pocketspace. Take _Time Stop Chill Zone_ by Rosanon [https://imgch
 ## Perk: Improved Rod
 - Element: Soul
 - Class: Academic
-- Costs: 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
 - Meta: True
+- Costs: 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
 
 Improve your Rod (Witchery R0+) using _Arcane Focus_ by TroonTC [https://imgchest.com/p/9p4nl5mz7nq] for 6p. The Seal can be incorporated into your existing familiar or be a separate entity (And can be independently augmented by Company or Pet Break if so).
 
@@ -394,8 +395,8 @@ Using your improved Rod, you are able to create Cantrips via Cantrip CYOA. [http
 ## Perk: Witch... hut?
 - Element: Life
 - Class: Academic
-- Cost: 15
 - Meta: True
+- Cost: 15
 
 You could have an old witch hut, or you can hire the Terry Bros to build you a Witch _Trailer_! Build a trailer from Celty’s Comfy Trailer [https://imgchest.com/p/dl7pqdj6yox]. (If you know a higher resolution one, do share. Or I might have to remake it myself with a witch hut theme...) If you have the Magic Shop perk, you can incorporate trailer rooms into your magic shop instead, or add Magic Shop rooms to your trailer as extensions.
 
@@ -407,8 +408,8 @@ Options that grant or could grant power, such as Armory or Lab Sigma, cannot exc
 ## Perk: Company
 - Element: Soul
 - Class: Warlock
-- Costs: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
 - Meta: True
+- Costs: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
 
 _Requires Familiarity 5._
 
@@ -418,8 +419,8 @@ Your familiar evolves an extraordinarily rare and unique new form it can transfo
 ## Perk: Pet Break
 - Element: Beast
 - Class: Warlock
-- Costs: 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
 - Meta: True
+- Costs: 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
 
 Witches with an especially strong familiarity potential can select a magical creature as their familiar (R0+ Familiarity), looks like you might have that potential!
 
@@ -431,8 +432,8 @@ Choose any listed creature for 2 Power per soul point. (So you could choose a Re
 ## Perk: Magic Shop
 - Element: Life
 - Class: Academic
-- Costs: 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28
 - Meta: True
+- Costs: 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28
 
 You are or will be the proud owner of a brand new magical shop. Design your shop using your choice of _Magic Item Shop_ by Bliss and Beri [https://imgchest.com/p/5xy2la3z4ld] or _Starfall Cafe_ by Femdo [https://imgchest.com/p/9249jwp87nk]. If you buy this twice, you could do both into a merged shop or separate locations. Or you could buy it to do the same cyoa again with doubled resources / currency, again for a larger shop or for separate shops.
 
@@ -442,8 +443,8 @@ Instead of locations presented by those cyoas, you can if you wish, choose any l
 ## Perk: Keeper
 - Element: Life
 - Class: Academic
-- Costs: 20, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150
 - Meta: True
+- Costs: 20, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150
 
 Sometime within the next few years tops, you’ll meet my great-times-8 grandmother who has an. offer for you. She knows some unique ancient magics and can teach you a thing or two. Take the _Keeper of Magic by TroyXPage_ [https://imgur.com/a/yoKPeub], [https://imgur.com/a/BoACmQp], [https://imgur.com/a/4GHVEQa].
 
@@ -455,7 +456,7 @@ Any potential interactions may reasonably be extrapolated to magic and perks fro
 ## Perk: Soul Graft
 - Element: Soul
 - Class: Sorceress
-- Cost: 15
 - Meta: True
+- Cost: 15
 
 You’ll have the opportunity to enter the _Soul Graft Battle Royale by L_\__Circe_. [https://imgur.com/a/h5zbB4E]. It’s intended for mortals and humanoids (Non-witch members of the races shown in witch type). So you won’t have access to any witch magic or perks. If your racial life extension is triggered it’s considered a fail state. Otherwise, you play Soul Graft as normal, obtaining a Graft and two items, and whatever you pick up in the royale itself. The Prizes and the items are Relics. Graft can grow by defeating equivalent enemies outside of the royale. Regain witchhood at end. Jinn wish magic can’t break the masquerade on Earth. Masquerade doesn’t apply on the island, not being on Earth, and full of magic beings & monsters.
