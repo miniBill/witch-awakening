@@ -80,6 +80,17 @@ fromParsed { name, items } =
 
                 Parsers.DLCMagic v ->
                     { dlc | magics = variant v.name :: dlc.magics }
+
+                Parsers.DLCAffinity v ->
+                    { dlc
+                        | affinities =
+                            { name = v.name
+                            , arguments = []
+                            , dlc = name
+                            , toStringException = v.symbol
+                            }
+                                :: dlc.affinities
+                    }
         )
         emptyDLC
         items
@@ -200,7 +211,7 @@ core =
     { classes = coreClasses
     , races = coreRaces
     , perks = corePerks
-    , affinities = coreAffinities
+    , affinities = []
     , companions = coreCompanions
     , relics = coreRelics
     , magics = coreMagics
@@ -223,13 +234,6 @@ coreRaces =
 coreSizes : List String
 coreSizes =
     [ "Low", "Medium", "High" ]
-
-
-coreAffinities : List Variant
-coreAffinities =
-    [ "All", "Beast", "Blood", "Body", "Earth", "Fire", "Life", "Metal", "Mind", "Nature", "Necro", "Soul", "Water", "Wind" ]
-        |> buildVariants
-        |> withExceptions [ ( "All", "???" ) ]
 
 
 coreComplicationCategories : List String

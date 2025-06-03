@@ -16,6 +16,7 @@ type DLCItem
     = DLCRace Race
     | DLCPerk Perk
     | DLCMagic Magic
+    | DLCAffinity Affinity
 
 
 dlc : Parser DLC
@@ -40,6 +41,7 @@ dlc =
                 [ map DLCRace race
                 , map DLCPerk perk
                 , map DLCMagic magic
+                , map DLCAffinity affinity
                 ]
             )
         |. spaces
@@ -231,6 +233,22 @@ magic =
                 )
                 |> map Dict.fromList
            )
+
+
+type alias Affinity =
+    { name : String
+    , symbol : Maybe String
+    }
+
+
+affinity : Parser Affinity
+affinity =
+    succeed Affinity
+        |= header "##" "Affinity"
+        |= oneOf
+            [ listItem "Symbol" (\symbol -> succeed (Just symbol))
+            , succeed Nothing
+            ]
 
 
 

@@ -30,8 +30,15 @@ files dlcList =
 
                         Parsers.DLCMagic magic ->
                             { acc | dlcMagics = ( dlcName, magic ) :: acc.dlcMagics }
+
+                        Parsers.DLCAffinity affinity ->
+                            { acc | dlcAffinities = ( dlcName, affinity ) :: acc.dlcAffinities }
                 )
-                { dlcRaces = [], dlcPerks = [], dlcMagics = [] }
+                { dlcRaces = []
+                , dlcPerks = []
+                , dlcMagics = []
+                , dlcAffinities = []
+                }
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
     [ racesFile dlcRaces
