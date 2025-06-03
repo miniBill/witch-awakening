@@ -1,93 +1,93 @@
 @font-face {
-  font-family: "Bebas Neue";
-  src: url("BebasNeue.otf");
+    font-family: "Bebas Neue";
+    src: url("BebasNeue.otf");
 }
 
 @font-face {
-  font-family: "Morpheus";
-  src: url("Morpheus.ttf");
+    font-family: "Morpheus";
+    src: url("Morpheus.ttf");
 }
 
 @font-face {
-  font-family: "Celtic Hand";
-  src: url("CelticHand.ttf");
+    font-family: "Celtic Hand";
+    src: url("CelticHand.ttf");
 }
 
 @font-face {
-  font-family: "Capture It";
-  src: url("CaptureIt.ttf");
+    font-family: "Capture It";
+    src: url("CaptureIt.ttf");
 }
 
 @font-face {
-  font-family: "Baskerville";
-  src: url("Baskerville.ttf");
+    font-family: "Baskerville";
+    src: url("Baskerville.ttf");
 }
 
 @font-face {
-  font-family: "Baskerville";
-  src: url("BaskervilleBold.ttf");
-  font-weight: bold;
+    font-family: "Baskerville";
+    src: url("BaskervilleBold.ttf");
+    font-weight: bold;
 }
 
 @font-face {
-  font-family: "Baskerville";
-  src: url("BaskervilleItalic.ttf");
-  font-style: italic;
+    font-family: "Baskerville";
+    src: url("BaskervilleItalic.ttf");
+    font-style: italic;
 }
 
 @font-face {
-  font-family: "Baskerville";
-  src: url("BaskervilleBoldItalic.otf");
-  font-weight: bold;
-  font-style: italic;
+    font-family: "Baskerville";
+    src: url("BaskervilleBoldItalic.otf");
+    font-weight: bold;
+    font-style: italic;
 }
 
 ul {
-  margin: 0;
-  padding-inline-start: 20px;
+    margin: 0;
+    padding-inline-start: 20px;
 }
 
 a.link {
-  color: inherit;
-  font-variant-caps: small-caps;
-  font-size: 1.2em;
-  text-decoration: none;
+    color: inherit;
+    font-variant-caps: small-caps;
+    font-size: 1.2em;
+    text-decoration: none;
 }
 
 .markdown {
-  font-family: "Baskerville";
+    font-family: "Baskerville";
 }
 
 .markdown b {
-  font-size: 0.85em;
+    font-size: 0.85em;
 }
 
 .markdown i {
-  font-size: calc(1em / 0.85);
+    font-size: calc(1em / 0.85);
 }
 
 /* This is terrible and bad and I've yet to find a better way. */
 .outlined {
-  position: relative;
-  color: transparent;
+    position: relative;
+    color: transparent;
 }
 
 .outlined:after {
-  background: none;
-  content: attr(data-text);
-  left: 0;
-  position: absolute;
-  z-index: 1;
-  -webkit-text-stroke: var(--text-stroke);
+    background: none;
+    content: attr(data-text);
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    -webkit-text-stroke: var(--text-stroke);
 }
 
 .outlined:before {
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: var(--background);
-  content: attr(data-text);
-  left: 0;
-  position: absolute;
-  z-index: 2;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: var(--background);
+    content: attr(data-text);
+    left: 0;
+    position: absolute;
+    z-index: 2;
 }
