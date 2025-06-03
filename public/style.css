@@ -42,6 +42,11 @@
     font-style: italic;
 }
 
+@font-face {
+    font-family: "Unreal Tournament";
+    src: url("UnrealTournament.ttf");
+}
+
 ul {
     margin: 0;
     padding-inline-start: 20px;

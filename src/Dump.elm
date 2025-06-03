@@ -1,6 +1,7 @@
 module Dump exposing (main)
 
 import Browser
+import Data.Companion
 import Data.Magic
 import Data.Perk
 import Data.Race
@@ -8,12 +9,13 @@ import Data.Relic
 import Data.TypePerk
 import Dict exposing (Dict)
 import Dict.Extra
+import Generated.Companions
 import Generated.Magics
 import Generated.Perks
 import Generated.Races
 import Generated.Relics
 import Generated.TypePerks
-import Generated.Types exposing (classToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
+import Generated.Types exposing (Faction, classToString, companionToString, factionToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
@@ -37,6 +39,7 @@ type Category
     | Perk
     | Magic
     | Relic
+    | Companion
 
 
 main : Program () Model Msg
@@ -61,7 +64,7 @@ update msg model =
 init : Model
 init =
     { dlc = Nothing
-    , category = Relic
+    , category = Companion
     }
 
 
@@ -86,6 +89,7 @@ view model =
                 , ( "Perks", Perk )
                 , ( "Magic", Magic )
                 , ( "Relic", Relic )
+                , ( "Companion", Companion )
                 ]
             )
         , Html.pre [] [ Html.text (dump model) ]
@@ -135,6 +139,25 @@ dump model =
 
         Relic ->
             go dumpRelic Generated.Relics.all
+
+        Companion ->
+            Generated.Companions.all
+                |> List.filterMap
+                    (\( _, faction, companions ) ->
+                        let
+                            filtered : List Data.Companion.Details
+                            filtered =
+                                List.filter
+                                    (\companion -> companion.dlc == model.dlc)
+                                    companions
+                        in
+                        if List.isEmpty filtered then
+                            Nothing
+
+                        else
+                            Just (dumpCompanions faction filtered)
+                    )
+                |> String.join "\n\n\n"
 
 
 dlcs : List (Maybe String)
@@ -301,6 +324,39 @@ dumpRelic relic =
                 , Just (String.Multiline.here details)
                 ]
             )
+
+
+dumpCompanions : Maybe Faction -> List Data.Companion.Details -> String
+dumpCompanions faction companions =
+    companions
+        |> List.map (dumpCompanion faction)
+        |> String.join "\n\n\n"
+
+
+dumpCompanion : Maybe Faction -> Data.Companion.Details -> String
+dumpCompanion faction companion =
+    let
+        class : Maybe String
+        class =
+            case companion.class of
+                Data.Companion.ClassNone ->
+                    Nothing
+
+                Data.Companion.ClassAny ->
+                    Just "Any"
+
+                Data.Companion.ClassOne c ->
+                    Just (classToString c)
+
+                Data.Companion.ClassSpecial ->
+                    Just "Special"
+    in
+    [ Just <| "## Companion: " ++ companionToString companion.name
+    , Maybe.map (\f -> "- Faction: " ++ factionToString f) faction
+    , Maybe.map (\c -> "- Class: " ++ c) class
+    ]
+        |> List.filterMap identity
+        |> String.join "\n"
 
 
 affinitiesToString : Data.Magic.Affinities -> String

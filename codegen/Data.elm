@@ -37,7 +37,6 @@ enums parsedDLCs =
     , buildEnum "Perk" combinedDLC.perks
         |> withImages
     , buildEnum "Affinity" combinedDLC.affinities
-        |> withImages
     , buildEnum "Companion" combinedDLC.companions
         |> withImages
     , buildEnum "Relic" combinedDLC.relics
@@ -94,6 +93,9 @@ fromParsed { name, items } =
 
                 Parsers.DLCRelic v ->
                     { dlc | relics = variant v.name :: dlc.relics }
+
+                Parsers.DLCCompanion v ->
+                    { dlc | companions = variant v.name :: dlc.companions }
         )
         emptyDLC
         items

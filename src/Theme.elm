@@ -6,6 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Generated.Affinities
 import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Slot(..))
 import Gradients
 import Hex
@@ -309,7 +310,7 @@ viewPiece piece =
                 [ Html.text "⛔" ]
 
         Affinity affinity ->
-            Html.img [ Html.Attributes.src (Types.affinityToImage affinity).src ] []
+            viewAffinityBadge affinity
 
         Star ->
             Html.span
@@ -337,6 +338,19 @@ viewPiece piece =
                 [ Html.b [] [ Html.i [] [ Html.text "₭\u{200A}" ] ]
                 , Html.text value
                 ]
+
+
+viewAffinityBadge : Affinity -> Html msg
+viewAffinityBadge affinity =
+    let
+        affinityColor : String
+        affinityColor =
+            "#" ++ String.padLeft 6 '0' (Hex.toString (Generated.Affinities.affinityToColor affinity))
+    in
+    Html.div
+        [ Html.Attributes.style "background" affinityColor
+        ]
+        [ Html.text (Types.affinityToString affinity) ]
 
 
 slotToColor : Slot -> Int
@@ -513,7 +527,7 @@ style key value =
 
 viewAffinity : Affinity -> Element msg
 viewAffinity affinity =
-    image [] (Types.affinityToImage affinity)
+    Element.html (viewAffinityBadge affinity)
 
 
 cardRoundness : Int

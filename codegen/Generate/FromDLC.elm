@@ -6,6 +6,7 @@ import Elm.Annotation
 import Elm.Arg
 import Elm.Case
 import Elm.Op
+import Gen.Data.Companion
 import Gen.Data.Magic
 import Gen.Data.Perk
 import Gen.Data.Race
@@ -20,7 +21,7 @@ import String.Extra
 files : List Parsers.DLC -> List Elm.File
 files dlcList =
     let
-        { dlcRaces, dlcPerks, dlcMagics, dlcAffinities, dlcRelics } =
+        { dlcRaces, dlcPerks, dlcMagics, dlcAffinities, dlcRelics, dlcCompanions } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
@@ -38,12 +39,16 @@ files dlcList =
 
                         Parsers.DLCRelic relic ->
                             { acc | dlcRelics = ( dlcName, relic ) :: acc.dlcRelics }
+
+                        Parsers.DLCCompanion companion ->
+                            { acc | dlcCompanions = ( dlcName, companion ) :: acc.dlcCompanions }
                 )
                 { dlcRaces = []
                 , dlcPerks = []
                 , dlcMagics = []
                 , dlcAffinities = []
                 , dlcRelics = []
+                , dlcCompanions = []
                 }
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
@@ -53,6 +58,7 @@ files dlcList =
     , magicsFile dlcMagics
     , affinitiesFile dlcAffinities
     , relicsFile dlcRelics
+    , companionsFile dlcCompanions
     ]
 
 
@@ -351,3 +357,73 @@ dlcToRelics relics =
                 |> Elm.expose
         )
         relics
+
+
+companionsFile : List ( Maybe String, Parsers.Companion ) -> Elm.File
+companionsFile dlcCompanions =
+    Elm.file [ "Generated", "Companions" ]
+        (Elm.expose (Elm.declaration "all" (allCompanions dlcCompanions))
+            :: dlcToCompanions dlcCompanions
+        )
+
+
+allCompanions : List ( Maybe String, Parsers.Companion ) -> Elm.Expression
+allCompanions dlcCompanions =
+    Elm.Op.append
+        (dlcCompanions
+            |> List.map (\( _, companion ) -> Elm.val (String.Extra.decapitalize (yassify companion.name)))
+            |> Elm.list
+        )
+        Gen.Data.Companion.all
+        |> Elm.withType
+            (Elm.Annotation.list
+                (Elm.Annotation.triple
+                    Elm.Annotation.string
+                    (Elm.Annotation.maybe (Elm.Annotation.named [ "Generated", "Types" ] "Faction"))
+                    (Elm.Annotation.list Gen.Data.Companion.annotation_.details)
+                )
+            )
+
+
+dlcToCompanions : List ( Maybe String, Parsers.Companion ) -> List Elm.Declaration
+dlcToCompanions companions =
+    List.map
+        (\( dlcName, companion ) ->
+            let
+                class : Elm.Expression
+                class =
+                    case companion.class of
+                        Just "Any" ->
+                            Gen.Data.Companion.make_.classAny
+
+                        Just "Special" ->
+                            Gen.Data.Companion.make_.classSpecial
+
+                        Just c ->
+                            Gen.Data.Companion.make_.classOne (fromTypes c)
+
+                        Nothing ->
+                            Gen.Data.Companion.make_.classNone
+            in
+            Gen.Data.Companion.make_.details
+                { name = fromTypes companion.name
+                , class = class
+                , races = Elm.list (List.map fromTypes companion.races)
+                , hasPerk = Elm.bool companion.hasPerk
+                , cost = Elm.maybe (Maybe.map Elm.int companion.cost)
+                , power = fromTypes companion.power
+                , teamwork = fromTypes companion.teamwork
+                , sociability = fromTypes companion.sociability
+                , morality = fromTypes companion.morality
+                , quote = fromTypes companion.quote
+                , description = fromTypes companion.description
+                , positives = Elm.list (List.map Elm.string companion.positives)
+                , negatives = Elm.list (List.map Elm.string companion.negatives)
+                , mixed = Elm.list (List.map Elm.string companion.mixed)
+                , has = fromTypes companion.has
+                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                }
+                |> Elm.declaration (yassify companion.name)
+                |> Elm.expose
+        )
+        companions

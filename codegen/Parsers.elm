@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, dlc)
+module Parsers exposing (Affinity, Companion, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, dlc)
 
 import Dict exposing (Dict)
 import Hex
@@ -19,6 +19,7 @@ type DLCItem
     | DLCMagic Magic
     | DLCAffinity Affinity
     | DLCRelic Relic
+    | DLCCompanion Companion
 
 
 dlc : Parser DLC
@@ -45,6 +46,7 @@ dlc =
                 , map DLCMagic magic
                 , map DLCAffinity affinity
                 , map DLCRelic relic
+                , map DLCCompanion companion
                 ]
             )
         |. spaces
@@ -279,6 +281,51 @@ relic =
                 |= listItem "Costs" intListParser
                 |= paragraphs True
             ]
+
+
+type alias Companion =
+    { name : String
+    , class : Maybe String
+    , races : List String
+    , hasPerk : Bool
+    , cost : Maybe Int
+    , power : String
+    , teamwork : String
+    , sociability : String
+    , morality : String
+    , quote : String
+    , description : String
+    , positives : List String
+    , negatives : List String
+    , mixed : List String
+    , has : String
+    }
+
+
+companion : Parser Companion
+companion =
+    succeed Companion
+        |= header "##" "Companion"
+        |= oneOf
+            [ listItem "Class" (\class -> succeed (Just class))
+            , succeed Nothing
+            ]
+        |= oneOf
+            [ listItem "Race" (\r -> succeed [ r ])
+            , listItem "Races" (\r -> succeed (List.map String.trim (String.split "," r)))
+            ]
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
+        |= problem "TODO"
 
 
 
