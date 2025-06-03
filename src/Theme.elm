@@ -345,20 +345,52 @@ viewAffinityBadge affinity =
     let
         whiteGradient : String
         whiteGradient =
-            "linear-gradient(180deg, #ffffff 0%, #ffffff00 50%, #ffffff00 100%)"
+            linearGradient 180 [ ( 0xFFFFFF80, 0 ), ( 0xFFFFFF00, 30 ) ]
+
+        linearGradient : Int -> List ( Int, Int ) -> String
+        linearGradient angle stops =
+            "linear-gradient("
+                ++ String.fromInt angle
+                ++ "deg, "
+                ++ String.join ","
+                    (List.map
+                        (\( stopColor, stopPercent ) ->
+                            colorToCss stopColor
+                                ++ " "
+                                ++ String.fromInt stopPercent
+                                ++ "%"
+                        )
+                        stops
+                    )
+                ++ ")"
+
+        backgroundLayers : List String
+        backgroundLayers =
+            [ whiteGradient
+            , affinityColor
+            ]
 
         affinityColor : String
         affinityColor =
-            "#" ++ String.padLeft 6 '0' (Hex.toString (Generated.Affinities.affinityToColor affinity))
+            colorToCss (Generated.Affinities.affinityToColor affinity * 256 + 0xFF)
+
+        colorToCss color =
+            "#" ++ String.padLeft 8 '0' (Hex.toString color)
     in
     Html.div
-        [ Html.Attributes.style "background" (whiteGradient ++ ", " ++ affinityColor)
+        [ Html.Attributes.style "background" (String.join ", " backgroundLayers)
         , Html.Attributes.style "font-family" "Unreal Tournament"
-        , Html.Attributes.style "padding" "5px"
+        , Html.Attributes.style "font-size" "0.9em"
+        , Html.Attributes.style "font-weight" "bold"
+        , Html.Attributes.style "padding" "3px 10px"
+        , Html.Attributes.style "margin" "1px"
         , Html.Attributes.style "border-radius" "999px"
         , Html.Attributes.style "border" ("2px solid " ++ affinityColor)
         , Html.Attributes.style "color" "white"
-        , Html.Attributes.style "text-shadow" "1px 1px 2px black"
+        , Html.Attributes.style "text-shadow" "1px 2px 1px black"
+        , Html.Attributes.style "-webkit-text-stroke" "0.3px black"
+        , Html.Attributes.style "box-sizing" "border-box"
+        , Html.Attributes.style "display" "inline-block"
         ]
         [ Html.text (Types.affinityToString affinity) ]
 
@@ -537,7 +569,7 @@ style key value =
 
 viewAffinity : Affinity -> Element msg
 viewAffinity affinity =
-    Element.html (viewAffinityBadge affinity)
+    Element.el [] <| Element.html (viewAffinityBadge affinity)
 
 
 cardRoundness : Int

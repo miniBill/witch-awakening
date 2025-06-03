@@ -1,45 +1,45 @@
 # Core
 
 ## Affinity: All
-- Color: FFFFFF
+- Color: ffffff
 - Rainbow: True
 - Symbol: ???
 
 ## Affinity: Beast
-- Color: 8C6D33
+- Color: 8c6d33
 
 ## Affinity: Blood
-- Color: C21D1D
+- Color: 911313
 
 ## Affinity: Body
-- Color: 733E26
+- Color: 733e26
 
 ## Affinity: Earth
-- Color: A35A49
+- Color: 4c1c11
 
 ## Affinity: Fire
-- Color: FF5500
+- Color: c13e00
 
 ## Affinity: Life
-- Color: FF78DD
+- Color: c158a6
 
 ## Affinity: Metal
-- Color: A3A3A3
+- Color: 797979
 
 ## Affinity: Mind
-- Color: B322B3
+- Color: 861786
 
 ## Affinity: Nature
-- Color: 3CA62F
+- Color: 0a6607
 
 ## Affinity: Necro
-- Color: C0C0C0
+- Color: 000000
 
 ## Affinity: Soul
-- Color: FFFFFF
+- Color: c0c0c0
 
 ## Affinity: Water
-- Color: 1E93D6
+- Color: 146da0
 
 ## Affinity: Wind
-- Color: CABEDD
+- Color: 978ea6
