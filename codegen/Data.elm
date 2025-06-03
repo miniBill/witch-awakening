@@ -254,7 +254,7 @@ coreSlots =
 
 coreMagics : List Variant
 coreMagics =
-    [ "Aethernautics", "Alchemy", "Consortation", "Curses", "Divination", "Earthmoving", "Familiarity", "Firecalling", "Hexes", "Metallurgy", "Metamorphosis", "Naturalism", "Necromancy", "Portals", "Psychotics", "Runes", "Waterworking", "Windkeeping", "Witchery", "Digicasting", "Wands", "Ministration", "Occultism", "Dominion", "Covenants", "Monstrosity", "Gadgetry", "Integration" ]
+    [ "Digicasting", "Wands", "Ministration", "Occultism", "Dominion", "Covenants", "Monstrosity", "Gadgetry", "Integration" ]
         |> buildVariants
 
 
@@ -288,7 +288,6 @@ looseAssets =
     { emptyDLC
         | races = looseAssetsRaces
         , companions = looseAssetsCompanions
-        , magics = looseAssetsMagics
     }
 
 
@@ -305,9 +304,3 @@ looseAssetsCompanions =
     [ "Xiao Liena", "\"Jin\" [Choose a Name]", "Sara Star", "Red Betty" ]
         |> buildVariants
         |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
-
-
-looseAssetsMagics : List Variant
-looseAssetsMagics =
-    [ "Lifeweaving", "Visceramancy", "Arachnescence" ]
-        |> buildVariants

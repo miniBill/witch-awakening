@@ -239,6 +239,7 @@ dumpMagic details =
         Nothing
     , Just ""
     , Just <| String.Multiline.here details.description
+    , Just ""
     , details.ranks
         |> List.indexedMap Tuple.pair
         |> List.filterMap
@@ -247,7 +248,7 @@ dumpMagic details =
                     Nothing
 
                 else
-                    [ "### Rank " ++ String.fromInt rank
+                    [ "### Rank " ++ String.fromInt (rank + 1)
                     , String.Multiline.here description
                     ]
                         |> String.join "\n"

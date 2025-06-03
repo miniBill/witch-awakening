@@ -208,12 +208,9 @@ magicsFile dlcMagics =
 
 allMagics : List ( Maybe String, Parsers.Magic ) -> Elm.Expression
 allMagics dlcMagics =
-    Elm.Op.append
-        Gen.Data.Magic.all
-        (dlcMagics
-            |> List.map (\( _, magic ) -> Elm.val (String.Extra.decapitalize (yassify magic.name)))
-            |> Elm.list
-        )
+    dlcMagics
+        |> List.map (\( _, magic ) -> Elm.val (String.Extra.decapitalize (yassify magic.name)))
+        |> Elm.list
         |> Elm.withType (Elm.Annotation.list Gen.Data.Magic.annotation_.details)
 
 
