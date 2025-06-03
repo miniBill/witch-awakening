@@ -51,7 +51,7 @@ viewComplications display complications =
         ]
         [ (Complication.worldShifts ++ Complication.generic)
             |> List.filterMap (complicationBox display complications)
-            |> Theme.doubleColumn
+            |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]

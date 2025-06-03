@@ -47,7 +47,7 @@ viewTypePerks witchRaces display typePerks =
                 ]
         ]
         [ boxes
-            |> Theme.doubleColumn
+            |> Theme.wrappedRow
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]

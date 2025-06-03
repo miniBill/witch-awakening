@@ -1,7 +1,7 @@
 module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
-import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
+import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -12,6 +12,7 @@ import Hex
 import Html exposing (Html)
 import Html.Attributes
 import Images exposing (Image)
+import List.Extra
 import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
 import String.Extra
@@ -362,22 +363,21 @@ column attrs children =
     Element.column (spacing :: attrs) children
 
 
-doubleColumn : List (Attribute msg) -> List (Element msg) -> Element msg
-doubleColumn attrs children =
-    -- Element.table (spacing :: attrs)
-    --     { columns =
-    --         [ { header = Element.none
-    --           , view = \r -> r |> List.head |> Maybe.withDefault Element.none
-    --           , width = fill
-    --           }
-    --         , { header = Element.none
-    --           , view = \r -> r |> List.drop 1 |> List.head |> Maybe.withDefault Element.none
-    --           , width = fill
-    --           }
-    --         ]
-    --     , data = List.Extra.greedyGroupsOf 2 children
-    --     }
-    wrappedRow attrs children
+doubleColumn : List (Attribute msg) -> ( Length, Length ) -> List (Element msg) -> Element msg
+doubleColumn attrs ( leftLength, rightLength ) children =
+    Element.table (spacing :: attrs)
+        { columns =
+            [ { header = Element.none
+              , view = \r -> r |> List.head |> Maybe.withDefault Element.none
+              , width = leftLength
+              }
+            , { header = Element.none
+              , view = \r -> r |> List.drop 1 |> List.head |> Maybe.withDefault Element.none
+              , width = rightLength
+              }
+            ]
+        , data = List.Extra.greedyGroupsOf 2 children
+        }
 
 
 row : List (Attribute msg) -> List (Element msg) -> Element msg

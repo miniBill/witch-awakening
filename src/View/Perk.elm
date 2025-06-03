@@ -42,14 +42,14 @@ viewPerks display mainRace races perks =
         [ sorted
             |> List.filter isOverlong
             |> List.filterMap (perkBox display perks mainRace races)
-            |> Theme.doubleColumn
+            |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         , sorted
             |> List.Extra.removeWhen isOverlong
             |> List.filterMap (perkBox display perks mainRace races)
-            |> Theme.doubleColumn
+            |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]

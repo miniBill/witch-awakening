@@ -12,6 +12,7 @@ import Element.Keyed
 import Generated.Types as Types exposing (Affinity)
 import List.Extra
 import List.Nonempty
+import Parser exposing ((|.), (|=), Parser)
 import Set exposing (Set)
 import String.Extra
 import Theme
@@ -311,8 +312,44 @@ row label showInfo result target =
                     :: errorViews
 
         Ok value ->
-            textColumn [ width fill ]
-                (paragraph [ width fill ]
+            let
+                lineParser : Parser ( String, Int )
+                lineParser =
+                    Parser.succeed Tuple.pair
+                        |= (Parser.chompWhile (\c -> c /= ':')
+                                |> Parser.getChompedString
+                                |> Parser.map String.trim
+                           )
+                        |. Parser.symbol ":"
+                        |. Parser.spaces
+                        |= (Parser.chompWhile Char.isDigit
+                                |> Parser.getChompedString
+                                |> Parser.andThen
+                                    (\raw ->
+                                        case String.toInt raw of
+                                            Nothing ->
+                                                Parser.problem (raw ++ " is not a valid number")
+
+                                            Just n ->
+                                                Parser.succeed n
+                                    )
+                           )
+                        |. Parser.end
+
+                viewInfoBlock : String -> List (Element msg)
+                viewInfoBlock line =
+                    case Parser.run lineParser line of
+                        Ok ( key, lineValue ) ->
+                            [ paragraph [ width fill ] [ text key ]
+                            , el [ alignRight ] <|
+                                rightPoints { rewardPoints = 0, power = lineValue }
+                            ]
+
+                        Err _ ->
+                            [ paragraph [ width fill ] [ text line ], Element.none ]
+            in
+            Theme.column [ width fill ]
+                [ paragraph [ width fill ]
                     [ linkLabel label target
                     , if List.isEmpty value.infos then
                         rightPoints value.value
@@ -323,25 +360,15 @@ row label showInfo result target =
                             , onPress = ToggleInfo label |> Choice |> Just
                             }
                     ]
-                    :: (if Set.member label showInfo then
-                            List.map
-                                (\line ->
-                                    paragraph
-                                        [ Element.paddingEach
-                                            { top = 8
-                                            , left = 0
-                                            , right = 0
-                                            , bottom = 0
-                                            }
-                                        ]
-                                        [ text line ]
-                                )
-                                value.infos
+                , if Set.member label showInfo then
+                    Theme.doubleColumn
+                        [ width fill ]
+                        ( fill, shrink )
+                        (List.concatMap viewInfoBlock value.infos)
 
-                        else
-                            []
-                       )
-                )
+                  else
+                    Element.none
+                ]
 
 
 capBuildSwitch : Model key -> Element Msg
