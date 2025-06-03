@@ -362,7 +362,12 @@ typePerksValue model =
 typePerkValue : Race -> Monad Int
 typePerkValue race =
     find "Type perk" .race race Generated.TypePerks.all Types.raceToString
-        |> map (\{ cost } -> -cost)
+        |> Monad.andThen
+            (\{ cost } ->
+                Monad.succeed -cost
+                    |> Monad.withInfo
+                        (Types.raceToString race ++ ": " ++ String.fromInt -cost)
+            )
 
 
 find : String -> (item -> key) -> key -> List item -> (key -> String) -> Monad item
@@ -467,6 +472,7 @@ magicValue affinities { faction, class, typePerks } { name, rank } =
     of
         Just cost ->
             succeed cost
+                |> Monad.withInfo (Types.magicToString name ++ ": " ++ String.fromInt cost)
 
         Nothing ->
             Monad.error <| "Magic " ++ Types.magicToString name ++ " not found"
@@ -594,7 +600,7 @@ perkCost :
     -> Monad Int
 perkCost ({ class } as model) { name, cost } =
     find "Perk" .name name (Perk.all model.perks) Types.perkToString
-        |> map
+        |> andThen
             (\perk ->
                 let
                     affinities : List Affinity
@@ -621,10 +627,16 @@ perkCost ({ class } as model) { name, cost } =
 
                             _ ->
                                 0
+
+                    finalCost : Int
+                    finalCost =
+                        (cost + changelingDiff)
+                            |> applyClassBonusIf isClass
+                            |> halveIfPositiveAnd isAffinity
                 in
-                (cost + changelingDiff)
-                    |> applyClassBonusIf isClass
-                    |> halveIfPositiveAnd isAffinity
+                finalCost
+                    |> succeed
+                    |> Monad.withInfo (Types.perkToString name ++ ": " ++ String.fromInt -finalCost)
             )
 
 

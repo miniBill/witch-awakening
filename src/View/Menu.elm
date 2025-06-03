@@ -322,17 +322,23 @@ row label showInfo result target =
                            )
                         |. Parser.symbol ":"
                         |. Parser.spaces
-                        |= (Parser.chompWhile Char.isDigit
-                                |> Parser.getChompedString
-                                |> Parser.andThen
-                                    (\raw ->
-                                        case String.toInt raw of
-                                            Nothing ->
-                                                Parser.problem (raw ++ " is not a valid number")
+                        |= (Parser.succeed identity
+                                |= Parser.oneOf
+                                    [ Parser.succeed negate |. Parser.symbol "-"
+                                    , Parser.succeed identity
+                                    ]
+                                |= (Parser.chompWhile Char.isDigit
+                                        |> Parser.getChompedString
+                                        |> Parser.andThen
+                                            (\raw ->
+                                                case String.toInt raw of
+                                                    Nothing ->
+                                                        Parser.problem (raw ++ " is not a valid number")
 
-                                            Just n ->
-                                                Parser.succeed n
-                                    )
+                                                    Just n ->
+                                                        Parser.succeed n
+                                            )
+                                   )
                            )
                         |. Parser.end
 
