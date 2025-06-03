@@ -231,3 +231,20 @@ __Petrichors draw Mana__ from Maiming. Impairment from missing limbs or similar 
 - Cost: 6
 
 Some Petrichor draw the attention of their ancestral god, who gives them tasks like a Warlock patron (or a second patron), and rewards them with soul-bound artifacts rather than direct magical power.
+
+
+## Race: Hitodama
+- Elements: Fire, Soul
+- Mana capacity: High
+- Mana rate: Medium
+
+Cold fire bobbing in the air and pouring itself into ethereal bodies, Hitodama are fire spirits who are drawn to the passing of the recent dead and light the way to the afterlife for those yet to pass on. They can communicate with most spirits freely, though they often must sing their conversations or ring bells to hold their attention. They have a sense for spirits soon to become corrupted or faded and their light pauses either process if no other magic interferes.
+
+Unless they've gravely offended the Reapers, Hitodama are immediately sent back into the world on their deaths, though it may take as much as a month to reform their body beyond a ball of marsh-light.
+
+__Hitodama draw Mana__ from Remembrance. Hitodama charge by taking care of graves, tending shrines, writing obituaries, or in any other way keeping the memory of spirits and the dead alive.
+
+### Perk
+- Cost: 8
+
+Certain Hitodama are natural necromancers, but they bind ectoplasm and loose spirit essence rather than bone. These are more fragile than flesh constructs but fly freely and can be enhanced with alchemy as well a runes. Gain Rank 2 Necromancy for free.
