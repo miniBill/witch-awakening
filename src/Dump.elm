@@ -1,15 +1,17 @@
 module Dump exposing (main)
 
 import Browser
+import Data.Magic
 import Data.Perk
 import Data.Race
 import Data.TypePerk
 import Dict exposing (Dict)
 import Dict.Extra
+import Generated.Magics
 import Generated.Perks
 import Generated.Races
 import Generated.TypePerks
-import Generated.Types exposing (classToString, perkToString, raceToString, sizeToString)
+import Generated.Types exposing (classToString, magicToString, perkToString, raceToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
@@ -29,6 +31,7 @@ type Msg
 type Category
     = Race
     | Perk
+    | Magic
 
 
 main : Program () Model Msg
@@ -97,6 +100,12 @@ dump model =
             Generated.Perks.all []
                 |> List.filter (\perk -> perk.dlc == model.dlc)
                 |> List.filterMap dumpPerk
+                |> String.join "\n\n\n"
+
+        Magic ->
+            Generated.Magics.all
+                |> List.filter (\perk -> perk.dlc == model.dlc)
+                |> List.map dumpMagic
                 |> String.join "\n\n\n"
 
 
@@ -203,6 +212,62 @@ dumpPerk details =
                     |> List.filterMap identity
                     |> String.join "\n"
             )
+
+
+dumpMagic : Data.Magic.Details -> String
+dumpMagic details =
+    [ Just <| "## Magic: " ++ magicToString details.name
+    , details.class
+        |> Maybe.map (\class -> "- Class: " ++ classToString class)
+    , Just <| "- Elements: " ++ affinitiesToString details.affinities
+    , if details.hasRankZero then
+        Just "- Has rank zero: True"
+
+      else
+        Nothing
+    , if details.isElementalism then
+        Just "- Elementalism: True"
+
+      else
+        Nothing
+    , Just ""
+    , Just <| String.Multiline.here details.description
+    , details.ranks
+        |> List.indexedMap Tuple.pair
+        |> List.filterMap
+            (\( rank, description ) ->
+                if String.isEmpty description then
+                    Nothing
+
+                else
+                    [ "### Rank " ++ String.fromInt rank
+                    , String.Multiline.here description
+                    ]
+                        |> String.join "\n"
+                        |> Just
+            )
+        |> String.join "\n\n"
+        |> Just
+    ]
+        |> List.filterMap identity
+        |> String.join "\n"
+
+
+affinitiesToString : Data.Magic.Affinities -> String
+affinitiesToString magicAffinities =
+    case magicAffinities of
+        Data.Magic.Regular affinities ->
+            String.join ", " (List.map affinityToString affinities)
+
+        Data.Magic.Alternative alternatives ->
+            alternatives
+                |> List.map
+                    (\alternative ->
+                        alternative
+                            |> List.map affinityToString
+                            |> String.join " + "
+                    )
+                |> String.join ", "
 
 
 affinityToString : Generated.Types.Affinity -> String

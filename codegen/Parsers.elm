@@ -1,4 +1,4 @@
-module Parsers exposing (Content(..), DLC, DLCItem(..), Magic, Perk, Race, dlc)
+module Parsers exposing (Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, dlc)
 
 import Dict exposing (Dict)
 import Maybe.Extra
@@ -156,12 +156,17 @@ perk =
 type alias Magic =
     { name : String
     , class : Maybe String
-    , elements : List String
+    , elements : MagicAffinity
     , hasRankZero : Bool
     , isElementalism : Bool
     , description : String
     , ranks : Dict Int String
     }
+
+
+type MagicAffinity
+    = Regular (List String)
+    | Alternative (List (List String))
 
 
 magic : Parser Magic
@@ -174,9 +179,30 @@ magic =
             ]
         |= listItem "Elements"
             (\raw ->
-                raw
-                    |> String.split ","
-                    |> List.map String.trim
+                let
+                    splat =
+                        raw
+                            |> String.split ","
+                            |> List.map String.trim
+                            |> List.map
+                                (\alternative ->
+                                    alternative
+                                        |> String.split "+"
+                                        |> List.map String.trim
+                                )
+                in
+                splat
+                    |> Maybe.Extra.combineMap
+                        (\a ->
+                            case a of
+                                [ x ] ->
+                                    Just x
+
+                                _ ->
+                                    Nothing
+                        )
+                    |> Maybe.map Regular
+                    |> Maybe.withDefault (Alternative splat)
                     |> succeed
             )
         |= Parser.oneOf

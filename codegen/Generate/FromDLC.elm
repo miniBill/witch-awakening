@@ -234,7 +234,7 @@ dlcToMagics magics =
                 , class = Elm.maybe (Maybe.map fromTypes magic.class)
                 , hasRankZero = Elm.bool magic.hasRankZero
                 , isElementalism = Elm.bool magic.isElementalism
-                , affinities = Gen.Data.Magic.make_.regular (Elm.list (List.map fromTypes magic.elements))
+                , affinities = affinitiesToExpression magic.elements
                 , description = Elm.string magic.description
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , ranks =
@@ -251,3 +251,24 @@ dlcToMagics magics =
                 |> Elm.expose
         )
         magics
+
+
+affinitiesToExpression : Parsers.MagicAffinity -> Elm.Expression
+affinitiesToExpression affinity =
+    case affinity of
+        Parsers.Regular alternatives ->
+            alternatives
+                |> List.map fromTypes
+                |> Elm.list
+                |> Gen.Data.Magic.make_.regular
+
+        Parsers.Alternative alternatives ->
+            alternatives
+                |> List.map
+                    (\alternative ->
+                        alternative
+                            |> List.map fromTypes
+                            |> Elm.list
+                    )
+                |> Elm.list
+                |> Gen.Data.Magic.make_.alternative
