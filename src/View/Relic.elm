@@ -4,6 +4,7 @@ import Data.Affinity as Affinity
 import Data.Relic as Relic exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, paragraph, px, spacing, text, width)
 import Element.Font as Font
+import Generated.Relics
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
 import List.Extra
@@ -16,21 +17,26 @@ import View.Affinity as Affinity
 
 viewRelics : Display -> CosmicPearlData -> Maybe Race -> List Race -> List RankedRelic -> Element Choice
 viewRelics display pearl mainRace races relics =
+    let
+        sorted : List (Element Choice)
+        sorted =
+            Generated.Relics.all
+                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+                |> List.filterMap (relicBox mainRace display relics pearl races)
+    in
     View.collapsible []
         display
         DisplayRelics
         identity
         "# Relics"
         [ Theme.blocks [ centerX ] Relic.intro
-        , Relic.all
-            |> List.filterMap (relicBox mainRace display relics pearl races)
+        , sorted
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
-        [ Relic.all
-            |> List.filterMap (relicBox mainRace display relics pearl races)
+        [ sorted
             |> Theme.doubleColumn
                 [ centerX
                 , spacing <| Theme.rythm * 3
@@ -73,7 +79,7 @@ relicBox mainRace display selected pearl races ({ name, class, content } as reli
         costs : List Int
         costs =
             (case content of
-                WithChoices _ choices ->
+                WithChoices choices _ ->
                     choices
 
                 Single cost _ ->
@@ -171,7 +177,7 @@ viewContent mainRace isSelected selected pearl races { content, name } color =
         CosmicPearlContent cost block ->
             viewCosmicPearl mainRace isSelected pearl races name cost block
 
-        WithChoices before choices ->
+        WithChoices choices before ->
             let
                 choicesView : List (Element Choice)
                 choicesView =

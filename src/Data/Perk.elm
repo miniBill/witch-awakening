@@ -18,7 +18,7 @@ type alias Details =
 type Content
     = Single Int String
     | WithChoices String (List ( String, Int )) String
-    | WithCosts String (List Int)
+    | WithCosts (List Int) String
     | WithChoicesHybridize String (List ( String, Int ))
     | WithChoicesChargeSwap String (List ( String, Int ))
 

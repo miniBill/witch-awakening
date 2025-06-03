@@ -4,14 +4,16 @@ import Browser
 import Data.Magic
 import Data.Perk
 import Data.Race
+import Data.Relic
 import Data.TypePerk
 import Dict exposing (Dict)
 import Dict.Extra
 import Generated.Magics
 import Generated.Perks
 import Generated.Races
+import Generated.Relics
 import Generated.TypePerks
-import Generated.Types exposing (classToString, magicToString, perkToString, raceToString, sizeToString)
+import Generated.Types exposing (classToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
@@ -34,6 +36,7 @@ type Category
     = Race
     | Perk
     | Magic
+    | Relic
 
 
 main : Program () Model Msg
@@ -58,7 +61,7 @@ update msg model =
 init : Model
 init =
     { dlc = Nothing
-    , category = Magic
+    , category = Relic
     }
 
 
@@ -90,6 +93,29 @@ view model =
 
 dump : Model -> String
 dump model =
+    let
+        go :
+            ({ a | dlc : Maybe String } -> Maybe (List (Maybe String)))
+            -> List { a | dlc : Maybe String }
+            -> String
+        go inner list =
+            list
+                |> List.filterMap
+                    (\item ->
+                        if item.dlc == model.dlc then
+                            inner item
+                                |> Maybe.map
+                                    (\lines ->
+                                        lines
+                                            |> List.filterMap identity
+                                            |> String.join "\n"
+                                    )
+
+                        else
+                            Nothing
+                    )
+                |> String.join "\n\n\n"
+    in
     case model.category of
         Race ->
             let
@@ -98,22 +124,16 @@ dump model =
                     Generated.TypePerks.all
                         |> Dict.Extra.fromListBy (\typePerk -> raceToString typePerk.race)
             in
-            Generated.Races.all []
-                |> List.filter (\race -> race.dlc == model.dlc)
-                |> List.map (dumpRace typePerks)
-                |> String.join "\n\n\n"
+            go (dumpRace typePerks >> Just) (Generated.Races.all [])
 
         Perk ->
-            Generated.Perks.all []
-                |> List.filter (\perk -> perk.dlc == model.dlc)
-                |> List.filterMap dumpPerk
-                |> String.join "\n\n\n"
+            go dumpPerk (Generated.Perks.all [])
 
         Magic ->
-            Generated.Magics.all
-                |> List.filter (\perk -> perk.dlc == model.dlc)
-                |> List.map dumpMagic
-                |> String.join "\n\n\n"
+            go (dumpMagic >> Just) Generated.Magics.all
+
+        Relic ->
+            go dumpRelic Generated.Relics.all
 
 
 dlcs : List (Maybe String)
@@ -137,32 +157,30 @@ categoryButton ( name, category ) =
         [ Html.text name ]
 
 
-dumpRace : Dict String Data.TypePerk.Details -> Data.Race.Details -> String
+dumpRace : Dict String Data.TypePerk.Details -> Data.Race.Details -> List (Maybe String)
 dumpRace typePerks details =
-    ([ "## Race: " ++ raceToString details.name
-     , "- Elements: " ++ String.join ", " (List.map affinityToString details.affinities)
-     , "- Mana capacity: " ++ sizeToString details.tank
-     , "- Mana rate: " ++ sizeToString details.charge
-     , ""
-     , String.Multiline.here details.content
-     ]
+    [ Just <| "## Race: " ++ raceToString details.name
+    , Just <| "- Elements: " ++ String.join ", " (List.map affinityToString details.affinities)
+    , Just <| "- Mana capacity: " ++ sizeToString details.tank
+    , Just <| "- Mana rate: " ++ sizeToString details.charge
+    , Just ""
+    , Just <| String.Multiline.here details.content
+    ]
         ++ (case Dict.get (raceToString details.name) typePerks of
                 Nothing ->
                     []
 
                 Just typePerk ->
-                    [ ""
-                    , "### Perk"
-                    , "- Cost: " ++ String.fromInt typePerk.cost
-                    , ""
-                    , String.Multiline.here typePerk.content
+                    [ Just <| ""
+                    , Just <| "### Perk"
+                    , Just <| "- Cost: " ++ String.fromInt typePerk.cost
+                    , Just <| ""
+                    , Just <| String.Multiline.here typePerk.content
                     ]
            )
-    )
-        |> String.join "\n"
 
 
-dumpPerk : Data.Perk.Details -> Maybe String
+dumpPerk : Data.Perk.Details -> Maybe (List (Maybe String))
 dumpPerk details =
     let
         ( maybeCost, maybeContent ) =
@@ -183,7 +201,7 @@ dumpPerk details =
                         |> Just
                     )
 
-                Data.Perk.WithCosts c costs ->
+                Data.Perk.WithCosts costs c ->
                     ( Just costs, Just (String.Multiline.here c) )
 
                 Data.Perk.WithChoicesHybridize _ _ ->
@@ -216,12 +234,10 @@ dumpPerk details =
                 , Just ""
                 , Just content
                 ]
-                    |> List.filterMap identity
-                    |> String.join "\n"
             )
 
 
-dumpMagic : Data.Magic.Details -> String
+dumpMagic : Data.Magic.Details -> List (Maybe String)
 dumpMagic details =
     [ Just <| "## Magic: " ++ magicToString details.name
     , details.class
@@ -257,8 +273,33 @@ dumpMagic details =
         |> String.join "\n\n"
         |> Just
     ]
-        |> List.filterMap identity
-        |> String.join "\n"
+
+
+dumpRelic : Data.Relic.Details -> Maybe (List (Maybe String))
+dumpRelic relic =
+    let
+        maybeCostAndDescription : Maybe ( String, String )
+        maybeCostAndDescription =
+            case relic.content of
+                Data.Relic.Single cost details ->
+                    Just ( "- Cost: " ++ String.fromInt cost, details )
+
+                Data.Relic.WithChoices costs details ->
+                    Just ( "- Costs: " ++ String.join ", " (List.map String.fromInt costs), details )
+
+                Data.Relic.CosmicPearlContent _ _ ->
+                    Nothing
+    in
+    maybeCostAndDescription
+        |> Maybe.map
+            (\( costString, details ) ->
+                [ Just <| "## Relic: " ++ relicToString relic.name
+                , Just <| "- Class: " ++ classToString relic.class
+                , Just costString
+                , Just ""
+                , Just (String.Multiline.here details)
+                ]
+            )
 
 
 affinitiesToString : Data.Magic.Affinities -> String

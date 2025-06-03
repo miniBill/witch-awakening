@@ -9,7 +9,9 @@ import Elm.Op
 import Gen.Data.Magic
 import Gen.Data.Perk
 import Gen.Data.Race
+import Gen.Data.Relic
 import Gen.Data.TypePerk
+import Gen.Debug
 import Gen.Types
 import Generate.Utils exposing (yassify)
 import Parsers exposing (DLCItem(..))
@@ -19,7 +21,7 @@ import String.Extra
 files : List Parsers.DLC -> List Elm.File
 files dlcList =
     let
-        { dlcRaces, dlcPerks, dlcMagics, dlcAffinities } =
+        { dlcRaces, dlcPerks, dlcMagics, dlcAffinities, dlcRelics } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
@@ -34,11 +36,15 @@ files dlcList =
 
                         Parsers.DLCAffinity affinity ->
                             { acc | dlcAffinities = ( dlcName, affinity ) :: acc.dlcAffinities }
+
+                        Parsers.DLCRelic relic ->
+                            { acc | dlcRelics = ( dlcName, relic ) :: acc.dlcRelics }
                 )
                 { dlcRaces = []
                 , dlcPerks = []
                 , dlcMagics = []
                 , dlcAffinities = []
+                , dlcRelics = []
                 }
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
@@ -47,6 +53,7 @@ files dlcList =
     , perksFile dlcPerks
     , magicsFile dlcMagics
     , affinitiesFile dlcAffinities
+    , relicsFile dlcRelics
     ]
 
 
@@ -132,8 +139,8 @@ dlcToPerks perks =
                         Parsers.Single cost description ->
                             Gen.Data.Perk.make_.single (Elm.int cost) (Elm.string description)
 
-                        Parsers.WithCosts description costs ->
-                            Gen.Data.Perk.make_.withCosts (Elm.string description) (Elm.list (List.map Elm.int costs))
+                        Parsers.WithCosts costs description ->
+                            Gen.Data.Perk.make_.withCosts (Elm.list (List.map Elm.int costs)) (Elm.string description)
 
                         Parsers.WithChoices before choices after ->
                             Gen.Data.Perk.make_.withChoices
@@ -300,3 +307,48 @@ affinityToColor dlcAffinities =
                 |> Elm.Case.custom affinity (Elm.Annotation.named [ "Generated", "Types" ] "Affinity")
         )
         |> Elm.declaration "affinityToColor"
+
+
+relicsFile : List ( Maybe String, Parsers.Relic ) -> Elm.File
+relicsFile dlcRelics =
+    Elm.file [ "Generated", "Relics" ]
+        (Elm.expose (Elm.declaration "all" (allRelics dlcRelics))
+            :: dlcToRelics dlcRelics
+        )
+
+
+allRelics : List ( Maybe String, Parsers.Relic ) -> Elm.Expression
+allRelics dlcRelics =
+    dlcRelics
+        |> List.map (\( _, relic ) -> Elm.val (String.Extra.decapitalize (yassify relic.name)))
+        |> Elm.list
+        |> Elm.withType (Elm.Annotation.list Gen.Data.Relic.annotation_.details)
+
+
+dlcToRelics : List ( Maybe String, Parsers.Relic ) -> List Elm.Declaration
+dlcToRelics relics =
+    List.map
+        (\( dlcName, relic ) ->
+            Gen.Data.Relic.make_.details
+                { name = fromTypes relic.name
+                , class = fromTypes relic.class
+                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                , content =
+                    case relic.content of
+                        Parsers.Single cost description ->
+                            if relic.name == "Cosmic Pearl" then
+                                Gen.Data.Relic.make_.cosmicPearlContent (Elm.int cost) (Elm.string description)
+
+                            else
+                                Gen.Data.Relic.make_.single (Elm.int cost) (Elm.string description)
+
+                        Parsers.WithCosts costs description ->
+                            Gen.Data.Relic.make_.withChoices (Elm.list (List.map Elm.int costs)) (Elm.string description)
+
+                        Parsers.WithChoices before choices after ->
+                            Gen.Debug.todo "Wrong input?"
+                }
+                |> Elm.declaration (yassify relic.name)
+                |> Elm.expose
+        )
+        relics

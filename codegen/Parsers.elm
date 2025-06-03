@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, dlc)
+module Parsers exposing (Affinity, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, dlc)
 
 import Dict exposing (Dict)
 import Hex
@@ -18,6 +18,7 @@ type DLCItem
     | DLCPerk Perk
     | DLCMagic Magic
     | DLCAffinity Affinity
+    | DLCRelic Relic
 
 
 dlc : Parser DLC
@@ -43,6 +44,7 @@ dlc =
                 , map DLCPerk perk
                 , map DLCMagic magic
                 , map DLCAffinity affinity
+                , map DLCRelic relic
                 ]
             )
         |. spaces
@@ -112,7 +114,7 @@ type alias Perk =
 type Content
     = Single Int String
     | WithChoices String (List ( String, Int )) String
-    | WithCosts String (List Int)
+    | WithCosts (List Int) String
 
 
 perk : Parser Perk
@@ -129,7 +131,7 @@ perk =
             [ succeed Single
                 |= listItem "Cost" intParser
                 |= paragraphs True
-            , succeed (\c d -> WithCosts d c)
+            , succeed WithCosts
                 |= listItem "Costs" intListParser
                 |= paragraphs True
             , succeed WithChoices
@@ -251,6 +253,28 @@ affinity =
         |= oneOf
             [ listItem "Symbol" (\symbol -> succeed (Just symbol))
             , succeed Nothing
+            ]
+
+
+type alias Relic =
+    { name : String
+    , class : String
+    , content : Content
+    }
+
+
+relic : Parser Relic
+relic =
+    succeed Relic
+        |= header "##" "Relic"
+        |= listItem "Class" succeed
+        |= Parser.oneOf
+            [ succeed Single
+                |= listItem "Cost" intParser
+                |= paragraphs True
+            , succeed WithCosts
+                |= listItem "Costs" intListParser
+                |= paragraphs True
             ]
 
 

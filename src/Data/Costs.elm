@@ -6,9 +6,9 @@ import Data.Complication as Complication
 import Data.Costs.Monad as Monad exposing (Monad, andThen, combine, map, map2, mapAndSum, succeed, withWarning)
 import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic
-import Data.Relic as Relic
 import Generated.Magics
 import Generated.Perks as Perk
+import Generated.Relics
 import Generated.TypePerks
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..), companionToString)
 import List.Extra
@@ -882,7 +882,7 @@ relicsValue model =
 
 relicCost : Maybe Class -> CosmicPearlData -> RankedRelic -> Monad Int
 relicCost class pearl { name, cost } =
-    find "Relic" .name name Relic.all Types.relicToString
+    find "Relic" .name name Generated.Relics.all Types.relicToString
         |> map
             (\relic ->
                 let

@@ -148,7 +148,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 WithChoicesChargeSwap _ choices ->
                     List.map Tuple.second choices
 
-                WithCosts _ k ->
+                WithCosts k _ ->
                     k
 
                 Single cost _ ->
@@ -361,7 +361,7 @@ viewContent mainRace races color selected { content, name } =
                         |> List.map .name
                     )
 
-        WithCosts before costs ->
+        WithCosts costs before ->
             List.map (Element.map ChoicePerk) <|
                 View.costButtons "Cost" color selected before costs <|
                     \_ cost -> { name = name, cost = cost }
