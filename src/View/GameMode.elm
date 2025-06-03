@@ -91,7 +91,7 @@ gameModeBox display selected { name, content } =
             [ Border.width 4
             , Theme.borderColor color
             ]
-        , imageHeight = ( 400, 400 )
+        , imageHeight = 400
         , image = Types.gameModeToImage name
         , inFront =
             [ Element.column

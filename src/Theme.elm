@@ -12,7 +12,6 @@ import Hex
 import Html exposing (Html)
 import Html.Attributes
 import Images exposing (Image)
-import List.Extra
 import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
 import String.Extra
@@ -358,19 +357,20 @@ column attrs children =
 
 doubleColumn : List (Attribute msg) -> List (Element msg) -> Element msg
 doubleColumn attrs children =
-    Element.table (spacing :: attrs)
-        { columns =
-            [ { header = Element.none
-              , view = \r -> r |> List.head |> Maybe.withDefault Element.none
-              , width = fill
-              }
-            , { header = Element.none
-              , view = \r -> r |> List.drop 1 |> List.head |> Maybe.withDefault Element.none
-              , width = fill
-              }
-            ]
-        , data = List.Extra.greedyGroupsOf 2 children
-        }
+    -- Element.table (spacing :: attrs)
+    --     { columns =
+    --         [ { header = Element.none
+    --           , view = \r -> r |> List.head |> Maybe.withDefault Element.none
+    --           , width = fill
+    --           }
+    --         , { header = Element.none
+    --           , view = \r -> r |> List.drop 1 |> List.head |> Maybe.withDefault Element.none
+    --           , width = fill
+    --           }
+    --         ]
+    --     , data = List.Extra.greedyGroupsOf 2 children
+    --     }
+    wrappedRow attrs children
 
 
 row : List (Attribute msg) -> List (Element msg) -> Element msg
@@ -522,7 +522,7 @@ card :
         , onPress : Maybe msg
         , glow : Int
         , isSelected : Bool
-        , imageHeight : ( Int, Int )
+        , imageHeight : Int
         , imageAttrs : List (Attribute msg)
         , image : Image
         , inFront : List (Element msg)
@@ -581,27 +581,27 @@ card attrs config =
                     width <| Element.minimum 320 <| Element.maximum 400 fill
 
                   else
-                    width fill
+                    width <| Element.minimum 500 fill
                 ]
+
+            sizeAttrs =
+                if config.display == DisplayFull then
+                    [ height <| px config.imageHeight
+                    , width fill
+                    ]
+
+                else
+                    [ width <| Element.maximum (config.imageHeight * 3 // 2) fill
+                    , height <| Element.minimum config.imageHeight fill
+                    ]
 
             content : List (Element msg)
             content =
                 [ el
                     (Border.rounded cardRoundness
-                        :: (if config.display == DisplayFull then
-                                height <| px (Tuple.first config.imageHeight)
-
-                            else
-                                width <| px (Tuple.second config.imageHeight)
-                           )
-                        :: (if config.display == DisplayFull then
-                                width fill
-
-                            else
-                                height <| Element.minimum (Tuple.second config.imageHeight * 2 // 3) fill
-                           )
                         :: Background.image config.image.src
-                        :: List.map Element.inFront config.inFront
+                        :: sizeAttrs
+                        ++ List.map Element.inFront config.inFront
                         ++ config.imageAttrs
                     )
                     Element.none

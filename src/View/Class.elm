@@ -72,7 +72,7 @@ classBox display selected { name, content } =
             [ Border.width 8
             , Theme.borderColor <| Theme.classToColor name
             ]
-        , imageHeight = ( 400, 400 )
+        , imageHeight = 400
         , image = Types.classToImage name
         , inFront =
             [ el

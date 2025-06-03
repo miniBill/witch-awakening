@@ -203,7 +203,7 @@ complicationBox display selected ({ name, class, content } as complication) =
             [ Border.width 4
             , Theme.borderColor color
             ]
-        , imageHeight = ( 400, 320 )
+        , imageHeight = 400
         , image = Types.complicationToImage name
         , inFront = inFront
         , content = viewContent selected complication color

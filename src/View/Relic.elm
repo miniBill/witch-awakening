@@ -123,7 +123,7 @@ relicBox mainRace display selected pearl races ({ name, class, content } as reli
         , glow = color
         , isSelected = isSelected /= Nothing
         , imageAttrs = []
-        , imageHeight = ( 400, 320 )
+        , imageHeight = 400
         , image = Types.relicToImage name
         , inFront =
             [ el

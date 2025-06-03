@@ -66,7 +66,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
         , glow = 0x00F3EA6F
         , isSelected = isSelected
         , imageAttrs = []
-        , imageHeight = ( 600, 400 )
+        , imageHeight = 600
         , image = Types.raceToImage name
         , inFront =
             [ el

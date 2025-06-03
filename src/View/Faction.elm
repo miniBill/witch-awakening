@@ -222,7 +222,7 @@ factionBox display selected { name, motto, description, location, relations, per
                         , glow = glowColor
                         , isSelected = isPerkSelected
                         , imageAttrs = []
-                        , imageHeight = ( 240, 240 )
+                        , imageHeight = 240
                         , image = images.image5
                         , inFront =
                             [ el

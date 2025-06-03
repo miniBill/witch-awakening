@@ -47,7 +47,7 @@ viewTypePerks witchRaces display typePerks =
                 ]
         ]
         [ boxes
-            |> Theme.column
+            |> Theme.doubleColumn
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
@@ -76,7 +76,7 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
         , glow = 0x00F3EA6F
         , isSelected = isSelected
         , imageAttrs = [ Theme.style "background-position" "top" ]
-        , imageHeight = ( 360, 480 )
+        , imageHeight = 360
         , image =
             case race of
                 Jotun ->

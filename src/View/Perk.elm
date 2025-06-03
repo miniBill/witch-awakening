@@ -20,28 +20,59 @@ import View
 
 viewPerks : Display -> Maybe Race -> List Race -> List RankedPerk -> Element Choice
 viewPerks display mainRace races perks =
+    let
+        sorted : List Perk.Details
+        sorted =
+            Generated.Perks.all perks
+                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+    in
     View.collapsible (Theme.topBackground Images.perkIntro)
         display
         DisplayPerks
         identity
         "# Perks"
         [ introBlock
-        , Generated.Perks.all perks
-            |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+        , sorted
             |> List.filterMap (perkBox display perks mainRace races)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
-        [ Generated.Perks.all perks
-            |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+        [ sorted
+            |> List.filter isOverlong
+            |> List.filterMap (perkBox display perks mainRace races)
+            |> Theme.doubleColumn
+                [ centerX
+                , spacing <| Theme.rythm * 3
+                ]
+        , sorted
+            |> List.Extra.removeWhen isOverlong
             |> List.filterMap (perkBox display perks mainRace races)
             |> Theme.doubleColumn
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
+
+
+isOverlong : Perk.Details -> Bool
+isOverlong { content } =
+    case content of
+        Perk.WithChoicesChargeSwap _ _ ->
+            True
+
+        Perk.WithChoicesHybridize _ _ ->
+            False
+
+        Perk.Single _ _ ->
+            False
+
+        Perk.WithChoices _ _ _ ->
+            False
+
+        Perk.WithCosts _ _ ->
+            False
 
 
 introBlock : Element msg
@@ -159,12 +190,17 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
             0x00F3EA6F
     in
     Theme.card []
-        { display = display
+        { display =
+            case ( content, isSelected ) of
+                -- ( WithChoicesHybridize _ _, Just _ ) ->
+                --     Types.DisplayFull
+                _ ->
+                    display
         , forceShow = False
         , glow = color
         , isSelected = isSelected /= Nothing
         , imageAttrs = []
-        , imageHeight = ( 400, 320 )
+        , imageHeight = 400
         , image = Types.perkToImage name
         , inFront =
             [ el
