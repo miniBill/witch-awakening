@@ -4,6 +4,7 @@ import Dict
 import Elm
 import Elm.Annotation
 import Elm.Arg
+import Elm.Case
 import Elm.Op
 import Gen.Data.Magic
 import Gen.Data.Perk
@@ -18,7 +19,7 @@ import String.Extra
 files : List Parsers.DLC -> List Elm.File
 files dlcList =
     let
-        { dlcRaces, dlcPerks, dlcMagics } =
+        { dlcRaces, dlcPerks, dlcMagics, dlcAffinities } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
@@ -45,6 +46,7 @@ files dlcList =
     , typePerksFile dlcRaces
     , perksFile dlcPerks
     , magicsFile dlcMagics
+    , affinitiesFile dlcAffinities
     ]
 
 
@@ -276,3 +278,25 @@ affinitiesToExpression affinity =
                     )
                 |> Elm.list
                 |> Gen.Data.Magic.make_.alternative
+
+
+affinitiesFile : List ( Maybe String, Parsers.Affinity ) -> Elm.File
+affinitiesFile dlcAffinities =
+    Elm.file [ "Generated", "Affinities" ]
+        [ Elm.expose (affinityToColor dlcAffinities) ]
+
+
+affinityToColor : List ( Maybe String, Parsers.Affinity ) -> Elm.Declaration
+affinityToColor dlcAffinities =
+    Elm.fn (Elm.Arg.var "affinity")
+        (\affinity ->
+            dlcAffinities
+                |> List.map
+                    (\( _, affinityData ) ->
+                        Elm.Case.branch
+                            (Elm.Arg.customType affinityData.name ())
+                            (\() -> Elm.hex affinityData.color)
+                    )
+                |> Elm.Case.custom affinity (Elm.Annotation.named [ "Generated", "Types" ] "Affinity")
+        )
+        |> Elm.declaration "affinityToColor"

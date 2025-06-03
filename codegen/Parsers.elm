@@ -1,6 +1,7 @@
-module Parsers exposing (Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, dlc)
+module Parsers exposing (Affinity, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, dlc)
 
 import Dict exposing (Dict)
+import Hex
 import Maybe.Extra
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, problem, sequence, spaces, succeed, symbol)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
@@ -237,6 +238,7 @@ magic =
 
 type alias Affinity =
     { name : String
+    , color : Int
     , symbol : Maybe String
     }
 
@@ -245,6 +247,7 @@ affinity : Parser Affinity
 affinity =
     succeed Affinity
         |= header "##" "Affinity"
+        |= listItem "Color" hexParser
         |= oneOf
             [ listItem "Symbol" (\symbol -> succeed (Just symbol))
             , succeed Nothing
@@ -292,6 +295,16 @@ boolParser raw =
 
         _ ->
             problem (raw ++ " is not a valid boolean")
+
+
+hexParser : String -> Parser Int
+hexParser raw =
+    case Hex.fromString (String.toLower raw) of
+        Err e ->
+            problem (raw ++ " is not a valid hex number: " ++ e)
+
+        Ok n ->
+            succeed n
 
 
 intParser : String -> Parser Int
