@@ -28,7 +28,7 @@ viewPerks display mainRace races perks =
         [ introBlock
         , Generated.Perks.all perks
             |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
-            |> List.map (perkBox display perks mainRace races)
+            |> List.filterMap (perkBox display perks mainRace races)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
@@ -36,8 +36,8 @@ viewPerks display mainRace races perks =
         ]
         [ Generated.Perks.all perks
             |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
-            |> List.map (perkBox display perks mainRace races)
-            |> Theme.column
+            |> List.filterMap (perkBox display perks mainRace races)
+            |> Theme.doubleColumn
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
@@ -77,7 +77,7 @@ perkBox :
     -> Maybe Race
     -> List Race
     -> Perk.Details
-    -> Element Choice
+    -> Maybe (Element Choice)
 perkBox display selected mainRace races ({ name, affinity, class, content, isMeta, dlc } as perk) =
     let
         isSelected : Maybe RankedPerk
@@ -164,7 +164,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
         , glow = color
         , isSelected = isSelected /= Nothing
         , imageAttrs = []
-        , imageHeight = 400
+        , imageHeight = ( 400, 320 )
         , image = Types.perkToImage name
         , inFront =
             [ el

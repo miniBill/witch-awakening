@@ -1,4 +1,4 @@
-module Theme exposing (affinityToColor, backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (affinityToColor, backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -12,6 +12,7 @@ import Hex
 import Html exposing (Html)
 import Html.Attributes
 import Images exposing (Image)
+import List.Extra
 import MarkMini exposing (Block(..), Color(..), Piece(..))
 import Parser exposing ((|.))
 import String.Extra
@@ -355,6 +356,23 @@ column attrs children =
     Element.column (spacing :: attrs) children
 
 
+doubleColumn : List (Attribute msg) -> List (Element msg) -> Element msg
+doubleColumn attrs children =
+    Element.table (spacing :: attrs)
+        { columns =
+            [ { header = Element.none
+              , view = \r -> r |> List.head |> Maybe.withDefault Element.none
+              , width = fill
+              }
+            , { header = Element.none
+              , view = \r -> r |> List.drop 1 |> List.head |> Maybe.withDefault Element.none
+              , width = fill
+              }
+            ]
+        , data = List.Extra.greedyGroupsOf 2 children
+        }
+
+
 row : List (Attribute msg) -> List (Element msg) -> Element msg
 row attrs children =
     Element.row (spacing :: attrs) children
@@ -504,13 +522,13 @@ card :
         , onPress : Maybe msg
         , glow : Int
         , isSelected : Bool
-        , imageHeight : Int
+        , imageHeight : ( Int, Int )
         , imageAttrs : List (Attribute msg)
         , image : Image
         , inFront : List (Element msg)
         , content : List (Element msg)
         }
-    -> Element msg
+    -> Maybe (Element msg)
 card attrs config =
     let
         show : Bool
@@ -526,7 +544,7 @@ card attrs config =
                     False
     in
     if not show then
-        Element.none
+        Nothing
 
     else
         let
@@ -571,16 +589,16 @@ card attrs config =
                 [ el
                     (Border.rounded cardRoundness
                         :: (if config.display == DisplayFull then
-                                height <| px config.imageHeight
+                                height <| px (Tuple.first config.imageHeight)
 
                             else
-                                width <| px config.imageHeight
+                                width <| px (Tuple.second config.imageHeight)
                            )
                         :: (if config.display == DisplayFull then
                                 width fill
 
                             else
-                                height <| Element.minimum (config.imageHeight * 2 // 3) fill
+                                height <| Element.minimum (Tuple.second config.imageHeight * 2 // 3) fill
                            )
                         :: Background.image config.image.src
                         :: List.map Element.inFront config.inFront
@@ -604,6 +622,7 @@ card attrs config =
                     Element.row [ height fill, width fill ] content
             , onPress = config.onPress
             }
+            |> Just
 
 
 maybeButton :

@@ -23,15 +23,15 @@ viewRelics display pearl mainRace races relics =
         "# Relics"
         [ Theme.blocks [ centerX ] Relic.intro
         , Relic.all
-            |> List.map (relicBox mainRace display relics pearl races)
+            |> List.filterMap (relicBox mainRace display relics pearl races)
             |> Theme.wrappedRow
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
         ]
         [ Relic.all
-            |> List.map (relicBox mainRace display relics pearl races)
-            |> Theme.column
+            |> List.filterMap (relicBox mainRace display relics pearl races)
+            |> Theme.doubleColumn
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
@@ -45,7 +45,7 @@ relicBox :
     -> CosmicPearlData
     -> List Race
     -> Relic.Details
-    -> Element Choice
+    -> Maybe (Element Choice)
 relicBox mainRace display selected pearl races ({ name, class, content } as relic) =
     let
         isSelected : Maybe RankedRelic
@@ -123,7 +123,7 @@ relicBox mainRace display selected pearl races ({ name, class, content } as reli
         , glow = color
         , isSelected = isSelected /= Nothing
         , imageAttrs = []
-        , imageHeight = 400
+        , imageHeight = ( 400, 320 )
         , image = Types.relicToImage name
         , inFront =
             [ el

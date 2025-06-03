@@ -28,7 +28,7 @@ viewGameMode display gameMode =
         boxes : List (Element (Maybe GameMode))
         boxes =
             GameMode.all
-                |> List.map (gameModeBox display gameMode)
+                |> List.filterMap (gameModeBox display gameMode)
     in
     View.collapsible []
         display
@@ -54,7 +54,7 @@ gameModeBox :
     Display
     -> Maybe GameMode
     -> GameMode.Details
-    -> Element (Maybe GameMode)
+    -> Maybe (Element (Maybe GameMode))
 gameModeBox display selected { name, content } =
     let
         isSelected : Bool
@@ -91,7 +91,7 @@ gameModeBox display selected { name, content } =
             [ Border.width 4
             , Theme.borderColor color
             ]
-        , imageHeight = 400
+        , imageHeight = ( 400, 400 )
         , image = Types.gameModeToImage name
         , inFront =
             [ Element.column

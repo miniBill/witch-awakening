@@ -17,7 +17,7 @@ viewClass display class =
         classBoxes : List (Element (Maybe Class))
         classBoxes =
             Class.all
-                |> List.map (classBox display class)
+                |> List.filterMap (classBox display class)
     in
     View.collapsible []
         display
@@ -43,7 +43,7 @@ classBox :
     Display
     -> Maybe Class
     -> Class.Details
-    -> Element (Maybe Class)
+    -> Maybe (Element (Maybe Class))
 classBox display selected { name, content } =
     let
         isSelected : Bool
@@ -72,7 +72,7 @@ classBox display selected { name, content } =
             [ Border.width 8
             , Theme.borderColor <| Theme.classToColor name
             ]
-        , imageHeight = 400
+        , imageHeight = ( 400, 400 )
         , image = Types.classToImage name
         , inFront =
             [ el

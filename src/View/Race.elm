@@ -24,7 +24,7 @@ viewRace display races =
         raceBoxes =
             Generated.Races.all races
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
-                |> List.map (raceBox display races)
+                |> List.filterMap (raceBox display races)
                 |> Theme.wrappedRow
                     [ width fill
                     , spacing <| Theme.rythm * 3
@@ -46,7 +46,7 @@ raceBox :
     Display
     -> List Race
     -> Race.Details
-    -> Element ( Race, Bool )
+    -> Maybe (Element ( Race, Bool ))
 raceBox display selected { name, tank, affinities, charge, content, dlc } =
     let
         isSelected : Bool
@@ -66,7 +66,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
         , glow = 0x00F3EA6F
         , isSelected = isSelected
         , imageAttrs = []
-        , imageHeight = 600
+        , imageHeight = ( 600, 400 )
         , image = Types.raceToImage name
         , inFront =
             [ el

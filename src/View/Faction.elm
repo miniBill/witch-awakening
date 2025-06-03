@@ -35,7 +35,7 @@ viewFaction display faction =
                 (Faction.intro ++ String.repeat 4 "\n" ++ Faction.summaries)
             ]
         , Faction.witchFactions
-            |> List.map (factionBox display faction)
+            |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill
                 , spacing <| Theme.rythm * 3
@@ -65,14 +65,14 @@ viewFaction display faction =
             , el [ height <| px 40 ] Element.none
             ]
         , Faction.humanFactions
-            |> List.map (factionBox display faction)
+            |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
         ]
         [ (Faction.witchFactions ++ Faction.humanFactions)
-            |> List.map (factionBox display faction)
+            |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill
                 , spacing <| Theme.rythm * 3
@@ -84,10 +84,10 @@ factionBox :
     Display
     -> Maybe ( Faction, Bool )
     -> Faction.Details
-    -> Element (Maybe ( Faction, Bool ))
+    -> Maybe (Element (Maybe ( Faction, Bool )))
 factionBox display selected { name, motto, description, location, relations, perk, perkContent, images } =
     if display /= DisplayFull && Maybe.map Tuple.first selected /= Just name then
-        Element.none
+        Nothing
 
     else
         let
@@ -222,7 +222,7 @@ factionBox display selected { name, motto, description, location, relations, per
                         , glow = glowColor
                         , isSelected = isPerkSelected
                         , imageAttrs = []
-                        , imageHeight = 240
+                        , imageHeight = ( 240, 240 )
                         , image = images.image5
                         , inFront =
                             [ el
@@ -239,5 +239,7 @@ factionBox display selected { name, motto, description, location, relations, per
                             ]
                         , onPress = Just perkMsg
                         }
+                        |> Maybe.withDefault Element.none
                 ]
             ]
+            |> Just

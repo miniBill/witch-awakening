@@ -19,7 +19,7 @@ viewTypePerks witchRaces display typePerks =
         boxes =
             Generated.TypePerks.all
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
-                |> List.map (typePerkBox witchRaces display typePerks)
+                |> List.filterMap (typePerkBox witchRaces display typePerks)
     in
     View.collapsible
         [ Theme.style "background-image" <| "url(\"" ++ Images.typePerksBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
@@ -59,7 +59,7 @@ typePerkBox :
     -> Display
     -> List Race
     -> TypePerk.Details
-    -> Element ( Race, Bool )
+    -> Maybe (Element ( Race, Bool ))
 typePerkBox witchRaces display selected { race, cost, content, dlc } =
     let
         isSelected : Bool
@@ -76,7 +76,7 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
         , glow = 0x00F3EA6F
         , isSelected = isSelected
         , imageAttrs = [ Theme.style "background-position" "top" ]
-        , imageHeight = 360
+        , imageHeight = ( 360, 480 )
         , image =
             case race of
                 Jotun ->

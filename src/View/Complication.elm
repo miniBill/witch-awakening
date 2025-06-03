@@ -30,7 +30,7 @@ viewComplications display complications =
         Complication.title
         [ Theme.blocks [] Complication.intro
         , Theme.blocks [] "# World Shifts"
-        , (List.map
+        , (List.filterMap
             (complicationBox display complications)
             Complication.worldShifts
             ++ [ Theme.blocks
@@ -46,12 +46,12 @@ viewComplications display complications =
             |> wrappedRow
         , Theme.blocks [] "# Generic Complications"
         , Complication.generic
-            |> List.map (complicationBox display complications)
+            |> List.filterMap (complicationBox display complications)
             |> wrappedRow
         ]
         [ (Complication.worldShifts ++ Complication.generic)
-            |> List.map (complicationBox display complications)
-            |> Theme.column
+            |> List.filterMap (complicationBox display complications)
+            |> Theme.doubleColumn
                 [ centerX
                 , spacing <| Theme.rythm * 3
                 ]
@@ -62,7 +62,7 @@ complicationBox :
     Display
     -> List RankedComplication
     -> Complication.Details
-    -> Element ( RankedComplication, Bool )
+    -> Maybe (Element ( RankedComplication, Bool ))
 complicationBox display selected ({ name, class, content } as complication) =
     let
         isSelected : Maybe RankedComplication
@@ -203,7 +203,7 @@ complicationBox display selected ({ name, class, content } as complication) =
             [ Border.width 4
             , Theme.borderColor color
             ]
-        , imageHeight = 400
+        , imageHeight = ( 400, 320 )
         , image = Types.complicationToImage name
         , inFront = inFront
         , content = viewContent selected complication color
