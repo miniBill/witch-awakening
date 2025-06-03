@@ -149,52 +149,55 @@ dumpRace typePerks details =
 dumpPerk : Data.Perk.Details -> Maybe String
 dumpPerk details =
     let
-        maybeContent =
+        ( maybeCost, maybeContent ) =
             case details.content of
                 Data.Perk.Single cost c ->
-                    [ "- Cost: " ++ String.fromInt cost
-                    , String.Multiline.here c
-                    ]
-                        |> List.Extra.removeWhen String.isEmpty
-                        |> String.join "\n\n"
-                        |> Just
+                    ( Just [ cost ], Just (String.Multiline.here c) )
 
                 Data.Perk.WithChoices before choices after ->
-                    [ String.Multiline.here before
-                    , choices
-                        |> List.map (\( choice, cost ) -> "- [" ++ String.fromInt cost ++ "] " ++ choice)
-                        |> String.join "\n"
-                    , String.Multiline.here after
-                    ]
+                    ( Nothing
+                    , [ String.Multiline.here before
+                      , choices
+                            |> List.map (\( choice, cost ) -> "- [" ++ String.fromInt cost ++ "] " ++ choice)
+                            |> String.join "\n"
+                      , String.Multiline.here after
+                      ]
                         |> List.Extra.removeWhen String.isEmpty
                         |> String.join "\n\n"
                         |> Just
+                    )
 
                 Data.Perk.WithCosts c costs ->
-                    [ "- Costs: " ++ String.join ", " (List.map String.fromInt costs)
-                    , String.Multiline.here c
-                    ]
-                        |> List.Extra.removeWhen String.isEmpty
-                        |> String.join "\n\n"
-                        |> Just
+                    ( Just costs, Just (String.Multiline.here c) )
 
                 Data.Perk.WithChoicesHybridize _ _ ->
-                    Nothing
+                    ( Nothing, Nothing )
 
                 Data.Perk.WithChoicesChargeSwap _ _ ->
-                    Nothing
+                    ( Nothing, Nothing )
     in
     maybeContent
         |> Maybe.map
             (\content ->
                 [ Just <| "## Perk: " ++ perkToString details.name
-                , Just <| "- Class: " ++ classToString details.class
                 , Just <| "- Element: " ++ affinityToString details.affinity
+                , Just <| "- Class: " ++ classToString details.class
+                , maybeCost
+                    |> Maybe.map
+                        (\costs ->
+                            case costs of
+                                [ cost ] ->
+                                    "- Cost: " ++ String.fromInt cost
+
+                                _ ->
+                                    "- Costs: " ++ String.join ", " (List.map String.fromInt costs)
+                        )
                 , if details.isMeta then
                     Just "- Meta: True"
 
                   else
                     Nothing
+                , Just ""
                 , Just content
                 ]
                     |> List.filterMap identity
