@@ -155,6 +155,7 @@ dumpPerk details =
                     [ "- Cost: " ++ String.fromInt cost
                     , String.Multiline.here c
                     ]
+                        |> List.Extra.removeWhen String.isEmpty
                         |> String.join "\n\n"
                         |> Just
 
@@ -165,6 +166,7 @@ dumpPerk details =
                         |> String.join "\n"
                     , String.Multiline.here after
                     ]
+                        |> List.Extra.removeWhen String.isEmpty
                         |> String.join "\n\n"
                         |> Just
 
@@ -172,6 +174,7 @@ dumpPerk details =
                     [ "- Costs: " ++ String.join ", " (List.map String.fromInt costs)
                     , String.Multiline.here c
                     ]
+                        |> List.Extra.removeWhen String.isEmpty
                         |> String.join "\n\n"
                         |> Just
 
