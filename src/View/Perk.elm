@@ -320,7 +320,10 @@ viewContent mainRace races color selected { content, name } =
                     )
                     color
                     swapRace
-                    (List.map .name <| Generated.Races.all races)
+                    (Generated.Races.all races
+                        |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+                        |> List.map .name
+                    )
 
         WithCosts before costs ->
             List.map (Element.map ChoicePerk) <|
