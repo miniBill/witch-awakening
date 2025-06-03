@@ -21,6 +21,7 @@ type Piece
     | Bold (List Piece)
     | Slot Slot
     | Affinity Affinity
+    | Star
     | Text String
     | Link String
     | Power String
@@ -220,18 +221,24 @@ parseSquareBrackets str =
                     Affinity affinity
 
                 Nothing ->
-                    case str of
-                        "K" ->
+                    case ( str, String.toLower str ) of
+                        ( "K", _ ) ->
                             Kisses ""
 
-                        "W" ->
+                        ( "W", _ ) ->
                             Warning
 
-                        "E" ->
+                        ( "E", _ ) ->
                             Error
 
-                        "-" ->
+                        ( "-", _ ) ->
                             Power str
+
+                        ( "All", _ ) ->
+                            Affinity Types.All
+
+                        ( _, "star" ) ->
+                            Star
 
                         _ ->
                             if String.startsWith "http" str then

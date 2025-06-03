@@ -310,6 +310,13 @@ viewPiece piece =
         Affinity affinity ->
             Html.img [ Html.Attributes.src (Types.affinityToImage affinity).src ] []
 
+        Star ->
+            Html.span
+                [ Html.Attributes.style "font-family" "\"Capture It\""
+                , Html.Attributes.style "font-size" "20px"
+                ]
+                [ gradientTextHtml 4 Gradients.yellowGradient "★" ]
+
         Power value ->
             Html.span
                 [ Html.Attributes.style "font-family" "\"Capture It\""
