@@ -52,7 +52,7 @@ relicBox :
     -> List Race
     -> Relic.Details
     -> Maybe (Element Choice)
-relicBox mainRace display selected pearl races ({ name, class, content } as relic) =
+relicBox mainRace display selected pearl races ({ name, class, content, dlc } as relic) =
     let
         isSelected : Maybe RankedRelic
         isSelected =
@@ -140,6 +140,18 @@ relicBox mainRace display selected pearl races ({ name, class, content } as reli
                 , moveDown 4
                 ]
                 costGradient
+            , case dlc of
+                Nothing ->
+                    Element.none
+
+                Just dlcName ->
+                    el
+                        [ centerX
+                        , Theme.captureIt
+                        , Font.size 24
+                        , moveDown 8
+                        ]
+                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
             , Theme.classToBadge class
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom ]
