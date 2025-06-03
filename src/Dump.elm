@@ -85,6 +85,7 @@ view model =
                 [ ( "Races", Race )
                 , ( "Perks", Perk )
                 , ( "Magic", Magic )
+                , ( "Relic", Relic )
                 ]
             )
         , Html.pre [] [ Html.text (dump model) ]
