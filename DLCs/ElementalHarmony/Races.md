@@ -233,6 +233,57 @@ __Petrichors draw Mana__ from Maiming. Impairment from missing limbs or similar 
 Some Petrichor draw the attention of their ancestral god, who gives them tasks like a Warlock patron (or a second patron), and rewards them with soul-bound artifacts rather than direct magical power.
 
 
+## Race: Gabion
+- Elements: Wind, Metal
+- Mana capacity: Low
+- Mana rate: High
+
+Gabions have been forming for as long as mortals have harnessed the wind and dreamed of flight, forming in other worlds as echoes of particular sailboats, kites, or windmills that became especially loved or treasured. The wind blows between their thin lattice skeletons and against the cloth of their skin and clothes, and they can let it blow them away or stay grounded and heavy as they wish. They are born adults and don't age.
+
+A broken or dead gabion must be taken into the sky, completely out of contact with the ground or a building, and left flying for a full day, enough to fill their mana capacity ten times over, and the body will repair itself.
+
+__Gabion draw Mana__ from Elevation. Charge more the larger the drop from your location to its near surroundings, and more the further out the drop stretches. Skyscrapers, mountains, and airplanes all recommended.
+
+### Perk
+- Cost: 2
+
+Some gabions can control their reaction to the wind much more precisely, and fly easily in a gentle breeze like a living kite. They gain a sense for the winds at every elevation nearby and an uncanny skill for piloting ships, planes, or themselves.
+
+
+## Race: Solar
+- Elements: Mind, Life
+- Mana capacity: High
+- Mana rate: High
+
+Solars are the golden children of the sun and the community, and are innately attuned to the rhythms of the day, the year, and the people, from the life of the party to the political currents of the city. They have a sense for the health and security of everyone around them, which their natural affinities push them to use for good, but it also makes them natural cult leaders.
+
+Solar's eyes do not decay; if the pair each receive at least an hour of direct sun on the summer solstice, the light will return to the eyes, and she will reform around them at the next dawn.
+
+__Solars draw Mana__ from Healing. Helping anyone else heal physical or mental wounds makes a Solar charge for minutes to hours depending on severity of wounds and effectiveness of healing.
+
+### Perk
+- Cost: 6
+
+Some solars are blessed with special talents for healing. They gain an intuition for how best to help anyone around them with traumas greater or lesser, and have natural access to Lifeweaving without any divine blessing or quest required. Gain Lifeweaving 2 for free. 
+
+
+## Race: Iridian
+- Elements: Wind, Life
+- Mana capacity: Low
+- Mana rate: Medium
+
+Rainbow children, Iridiani live in the sunlight and the sky at heart, and can walk on the sky like an invisible bridge emulating the rainbow bridges in a dozen myths, though they can't fly unaided. Their embrace and breath is healing and restorative, enough to stabilize almost any injury and keep a mortal healthy in very thin air or light radiation.
+
+They only age at night in still air, and de-age at a rapid rate in direct unclouded sun or under a rainbow. If they die and a lock of their hair massing at least a tenth of a kilo is left under the open sky, it will begin to grow as soon as it reflects a rainbow and the body will coalesce from light when the hair reaches full length.
+
+__Iridiani draw Mana__ from Exposure. The more wind and light falls on an Iridian's skin and hair, the more they charge. Full-body sunbathing gets them up to High rate. Artificial lights that emulate sunlight are only good for a trickle.
+
+### Perk
+- Cost: 2
+
+Some Iridiani can swirl the air well enough to make the sky-walking platforms they use to climb into the air usable and visible for other people. This is tiring to maintain, unless there is a visible rainbow in the sky or strong night winds.
+
+
 ## Race: Hitodama
 - Elements: Fire, Soul
 - Mana capacity: High
@@ -248,3 +299,33 @@ __Hitodama draw Mana__ from Remembrance. Hitodama charge by taking care of grave
 - Cost: 8
 
 Certain Hitodama are natural necromancers, but they bind ectoplasm and loose spirit essence rather than bone. These are more fragile than flesh constructs but fly freely and can be enhanced with alchemy as well a runes. Gain Rank 2 Necromancy for free.
+
+
+## Race: Mummy
+- Elements: Earth, Necro
+- Mana capacity: High
+- Mana rate: High
+
+Mummies have an ancient connection to the earth, both the caverns that once served as gates to the underworld and afterlives and the bogs and sands in which bodies were placed as sacrifices and held in suffocating stasis. To the present day, they are shepherds of the recently dead, meditating to travel with their spirits to their afterlives. They have a sense for recently-made corpses and can find their way to their sides.
+If a Mummy accompanies a dying soul to the afterlife, they can return with another Mummy and bring them back to the living world. Families often pay diviners to let them know which afterlifes they are bound for, so they can more swiftly return their kin if lost.
+__Mummies draw Mana__ from Suffocation. Being stuck unable to breathe gives Mummy a High charge, imposing it on another gives a Medium charge as long as they last, and a death by suffocation (including their own if they return soon enough) makes the Medium charge last one month.
+
+### Perk
+- Cost: 2
+
+Some mummies are particularly tied to the marshy airless waters of the bogs. In stagnant water, they can sense their surroundings out for hundreds of meters and fly through the swamp at high speed without disturbing it, bringing others along if desired. They also gain the [Water] affinity.
+
+
+## Race: Gulabaa
+- Elements: Fire, Nature
+- Mana capacity: High
+- Mana rate: High
+
+Gulabaa are spirits of wildfires and the plants which rely on them, principally eucalyptus. They can travel though the upper branches of a forest nearly as fast as the wildfires they love, leaving the trees lightly scorched in their wake, and when in an actual wildfire, they are immune to the heat and easily run faster than a car.
+Gulabaa can plant any part of themselves in a tree of any kind, though it is usually one vulnerable to fire. If she dies, she will sprout from one of these tree's roots when one burns down in a wildfire.
+__Gulabaa draw Mana__ from cyles of Growth. Gulabaa charge both from destroying what they have nurtured and nurturing what they have destroyed. Hours of one spread over weeks are necessary before it will count for the other. Need not be physical destruction or nurturing.
+
+### Perk
+- Cost: 4
+
+Particularly spiritual Gulabaa can tend plants to resist fire while still feeding it, making trees or shrubs able to burn continuously, regrowing as fast as they burn. Meditating near one of these lets any gulabaa charge, and speaking from one to another of the same species on the same world is possible with coordination.
