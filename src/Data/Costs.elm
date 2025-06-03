@@ -7,6 +7,7 @@ import Data.Costs.Monad as Monad exposing (Monad, andThen, combine, map, map2, m
 import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic
 import Data.Relic as Relic
+import Generated.Magics
 import Generated.Perks as Perk
 import Generated.TypePerks
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..), companionToString)
@@ -414,7 +415,7 @@ magicValue :
     -> Monad Int
 magicValue affinities { faction, class, typePerks } { name, rank } =
     case
-        Magic.all
+        Generated.Magics.all
             |> List.Extra.find (\magic -> magic.name == name)
             |> Maybe.andThen
                 (\magic ->

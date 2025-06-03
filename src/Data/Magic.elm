@@ -1,4 +1,4 @@
-module Data.Magic exposing (Affinities(..), Details, all, elementalism, elementalismIntro, intro, nonElemental, slotDescription, title)
+module Data.Magic exposing (Affinities(..), Details, all, elementalismIntro, intro, slotDescription, title)
 
 import Generated.Types exposing (Affinity(..), Class(..), Magic(..))
 
@@ -8,8 +8,10 @@ type alias Details =
     , star : Bool
     , class : Maybe Class
     , affinities : Affinities
+    , isElementalism : Bool
     , description : String
     , ranks : List String
+    , dlc : Maybe String
     }
 
 
@@ -39,6 +41,8 @@ alchemy =
     , star = False
     , class = Just Academic
     , affinities = Regular [ Water, Nature, Life ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         Or “Potions”, a classic magic employed by witches, many would say particularly iconic. I’ll provide you a large, cast iron cauldron and stirrer, plus a big electric hotplate (For modem witches with no chimneys). You can sell potions to people, but be careful to ensure that they’re seen as a mumbo-jumbo unscientific remedy by most people I recommend selling it as homeopathic natural medicine that would ruin profit margins if it were widespread. Sprinkle some extra conspiracy about how the government could kill you if they spread the secret, which isn’t entirely untrue in your case. So long as you don’t hand out more outlandish potions you should be fine.
 
@@ -75,6 +79,8 @@ runes =
     , star = False
     , class = Just Academic
     , affinities = Regular [ Soul, Mind, Metal ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         Also known as _*“charms”*_, or _*“Enchantment”*_. A rune is a special word or phrase of power concentrated into a symbol that echos its meaning through spiritual channels that run deep into the fabric that holds reality together. Fragments of a dialect based on the First Language, possessing a sliver of that authority over the reality that we know. Simply knowing of a rune isn’t enough to utilize it, but requires practice to deeply harmonize your own contemplations to achieve understanding of that rune. To utilize runes, Witches prepare a ritual circle on which they place an item they wish to inscribe the rune onto, or placing the ritual circle on a surface around where you want to inscribe it, along with the necessary reagents to invoke the rune in question, and then place the rune on the item in some manner. Sewing, engraving, staining, or so on. The enchantment only lasts as long as the rune itself physically does, so more permanent methods of application are preferred. The ritual takes 1 minute, 10 minutes, 100 minutes, 1000 minutes, and 10000 minutes to complete, respective to rank. Rituals can be paused and continued, *and use 4x equivalent ingredients to a potion of its rank in the ritual process.* 75% of the ritual time can be passive, such as letting incense bum out, or gold dust to slowly melt into the item being enchanted, or other ritual elements not directly associated with the object, but such as performing a separate sub-ritual to harvest an ingredient or combine two ingredients into a necessary one.
         """
@@ -99,6 +105,8 @@ curses =
     , star = False
     , class = Just Warlock
     , affinities = Regular [ Necro, Nature, Mind ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         Curses aren’t evil, just misunderstood. So you made a guy throw up or every day of his life a waking nightmare. Is that really so much different than simply stabbing someone? That guy you fireballed? Probably disfigured and in pain for the rest of their life. That lightning bolt? Lifelong neurological complications. Honestly, who’s the real monster here? The primary curses are _*Sickness, Pariah, Madness, Disaster, and Spellbind*_. They grow in power as you rank up your Curses magic, though you can always still cast them at a lower rank, which will generally be quicker and easier to cast. To use a curse, you must chant the particular words for the curse for 2 seconds while keeping a finger pointed at your target, and while within 30ft (10m), unless otherwise stated. Curses can be given Conditions in how they apply. ie; Only occurs on the next full moon, when they say a word, when someone else says a word near them, when they cause someone harm, or go within a certain distance, or so on. Itonly triggers once unless it has a duration, in which case you can choose a window for when it activates and divide the duration up between activations. You can also stack curses to add triggers, activations, or duration.
         """
@@ -122,6 +130,8 @@ hexes =
     , star = True
     , class = Just Warlock
     , affinities = Regular [ Body, Beast, Blood ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         Also known as _*“Transmutation”*_, these spells transform something into something else using the base logic of “Inequivalent Exchange”. You will need a Medium, usually a lump of raw material, part of which will vanish when you cast the spell. You can cast most hexes the reverse way unless otherwise stated. (ie; Flesh-to-Stone can also tum Stone-to-Flesh). Hexes that can’t be reversed in that manner can still be undone by recasting the hex on that target. Casting a hex is as fatiguing as jogging 1 mile per rank used. If you want to try to leverage transmutation to make money, I’d recommend against doing so on any significant scale, as financial institutions and agencies are more adept than you’d expect at tracking assets, easily leading to masquerade violations. Just use it tastefully or for your own private usage, you shouldn’t have any problems unless you go off trying to use it as a crutch you center a business around making people wonder about your sources. Any polymorph spell cast on an intelligent creature can be undone by any other polymorph spell cast on that same creature, even without knowing they were polymorphed before; They’d instead revert.
 
@@ -165,6 +175,8 @@ witchery =
     , star = True
     , class = Just Academic
     , affinities = Regular [ All ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         A long time ago one of the very first witches to exist was very kind and motherly. She wove a spell to effect all her descendants, in flesh and in spirit which includes almost every witch to exist as her children became the dominant lineage and other families married in. Like Gengis Khan, you know, if he were a sweet mom.
 
@@ -196,6 +208,8 @@ familiarity =
     , star = True
     , class = Just Sorceress
     , affinities = Regular [ Beast, Soul, Nature ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         There’s an old spell, one of the first ever cast by a witch. It’s almost too easy to cast and never seems to leave a witch’s memory. A witch instinctively can figure it out for themselves just trying to use magic without direction as a rank 0 magic: _*Find Familiar*_. You can conjure a helpful benevolent spirit being, that may or may not parasitically conjoin with your own soul. It manifests in an animal form you can choose when you summon it. Cat, crab, crow, cow, bat, butterfly, dragonfly, frog / toad, hawk, horse, lizard, octopus, owl, snake, fish, rat, raven, sea horse, spider, weasel, ferret, goat, sheep, dog... or equivalent animals (Mockingbird > Raven, Squid > Octopus) It looks like a normal animal of your chosen type, but demonstrably has greater intelligence. It’s as smart as a trained dog and utterly loyal to you, and your survival and thriving is in its best interest as its life is tied to yours. If its body dies you can resummon, or dismiss, it casually, and it doesn’t age. You pick whether it is male or female. Familiars can interact with spirits. Reminder that this is rank 0. Any witch can have a familiar at this baseline.
     """
@@ -220,6 +234,8 @@ necromancy =
     , star = True
     , class = Just Warlock
     , affinities = Regular [ Necro, Blood, Soul ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         Necromancy! The magic of souls, undeath, and viscera! Bending organic matter to your whim for your own ends and contesting the very nature of mortality, Now with less grave robbing, and Necromancy has an innate _*Rank 0*_ effect for all witches: All witches are capable of seeing through the veil separating life from the dead, to see ghosts and spirit creatures (Including most demons and other things out to get you that most humans can’t see). Most spirits are collected by reapers and escorted to the afterlife of a deity that claimed them, while unclaimed souls go to limbo until granted passage to an actual afterlife. But some spirits flee from their reapers or their death went unnoticed, which is dangerous, as predatory spirits can prey on the weak and the spirit can be consumed, or get twisted over time to become a spirit beast itself.
     """
@@ -244,6 +260,8 @@ consortation =
     , star = False
     , class = Just Warlock
     , affinities = Regular [ Blood, Beast, Soul ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         Just because you can do something, doesn’t always mean you should. Demonology. To summon a demon you’ll need a summoning circle away from sunlight, and with fire in the area equivalent to 4 torches (or 16 candles), or more. Demons also appreciate incense, mood music, and mood lighting. Summoning them is fatiguing, but dismissing them is simple, like lifting something heavy and then just letting go. When summoned you have a psychic bond allowing two-way telepathic communication and know when the other wants to talk. They can’t refuse your coms, but you can refuse theirs. You have to provide your payment up front, after which they are bound into service until they fulfill their bargain.
     """
@@ -272,6 +290,8 @@ portals =
     , star = False
     , class = Just Academic
     , affinities = Regular [ Life, Nature, Mind ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         The magic of portals is sometimes called gatekeeping, planeswalking, or helldiving. By default, all witches are able to see most basic level hidden portals or rifts, and can enter them where normal mundane humans would pass through most as though it weren’t there, oblivious, sometimes experiencing vertigo or deja vu. Portals can be hidden anywhere in any number of forms with three main archetypes; Portkeys, which are objects spatially bound to another location that act like a ferry shifting between locations at regular or random intervals. Gateways, which are arches or door frames enchanted to act as a portal when triggered. And Rifts, which are wounds in timespace cut through by a witch on demand, or anomalous natural events. Rifts open as fast as you can complete its outline. Their outer edges are the sharpest "objects" known to witchdom.
 
@@ -298,6 +318,8 @@ divination =
     , star = False
     , class = Just Warlock
     , affinities = Regular [ Soul, Life, Mind ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         {choice This magic can also have no affinity, and be taken by human Alphazon agents with observers.}
 
@@ -364,6 +386,8 @@ aethernautics =
     , star = False
     , class = Just Academic
     , affinities = Regular [ All ]
+    , dlc = Nothing
+    , isElementalism = False
     , description = """
         Aethernautics is the magical studies of cosmological principles, planar physics, and spatial It’s field of magic used to safely explore the aether as well as long employed by astrologists and astronomers since ancient times to better glen insights from the stars above. Its utility in exploring space rather than the aether is a relatively more recent phenomenon, as space proves more difficult to navigate than the aether.
     """
@@ -404,6 +428,8 @@ firecalling =
     , star = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Fire ], [ Metal, Wind ] ]
+    , dlc = Nothing
+    , isElementalism = True
     , description = """
         Elemental magic of Fire. Every rank in Firecalling reduces harm from Heat sources by 50% until you’re immune to natural sources of heat at rank 3, where you could lay on lava if you wished, but resistance to magical sources of heat continues to be reduced by half per rank. If you have the Pyre weakness, you do not benefit from this resistance except in respect to hot sunny days, hot sands, or other non-fire heat sources.
     """
@@ -430,6 +456,8 @@ windkeeping =
     , star = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Wind ], [ Nature, Soul ] ]
+    , dlc = Nothing
+    , isElementalism = True
     , description = """
         Elemental magic of the winds. Every rank in Windkeeping reduces harm from air pressure sources, electrical currents, and your need for air by 50% and provides a buffer against winds until you’re immune to natural sources of air pressure at rank 3, where you could comfortably survive in the vacuum of space and natural lightning (and radiation) causes you no harm, but resistance to magical sources of winds and shock continues to be reduced by half per rank.
     """
@@ -456,6 +484,8 @@ waterworking =
     , star = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Water ], [ Life, Wind ] ]
+    , dlc = Nothing
+    , isElementalism = True
     , description = """
         Elemental magic of water. Every rank in Waterworking reduces harm from water pressure and sources of cold, and protection against water by 50%, until you’re immune to natural sources of water, water pressure, and cold at rank 3, where you could comfortably survive in the deep abyss of the ocean or in the middle of a blizzard, but resistance to magical sources of water or cold continues to be reduced by half per rank.
     """
@@ -482,6 +512,8 @@ earthmoving =
     , star = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Earth ], [ Nature, Body ] ]
+    , dlc = Nothing
+    , isElementalism = True
     , description = """
         Elemental magic of earth. Every rank in Earthmoving reduces harm from earthen materials and any source of blunt force trauma by 50%, until you’re immune to natural at rank 3, where you could survive a fall from any height if you landed on earth, including concrete, and a falling boulder would do no harm to you (You decide if you meld into it, it bounces off like styrofoam, or shatters), but resistance to magical sources of earth continues to be reduced by half per rank.
     """
@@ -506,6 +538,8 @@ naturalism =
     , star = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Nature ], [ Life, Water ] ]
+    , dlc = Nothing
+    , isElementalism = True
     , description = """
         Elemental magic of plants and woods. Every rank in Naturalism reduces harm from plant based materials and chemicals derived from plants or animals as well as diseases, and aggression of animals, by 50%, until you’re immune to natural sources at rank 3, where you could comfortably lay on a bed of poisonous thorns and the most belligerent of bears would be ambivalent or friendly toward you unless manipulated, but resistance to magical sources continues to be reduced by half per rank.
     """
@@ -530,6 +564,8 @@ metamorphosis =
     , star = False
     , class = Just Sorceress
     , affinities = Regular [ Beast ]
+    , dlc = Nothing
+    , isElementalism = True
     , description = """
         Metamorphosis is a school of magic built around shapeshifting the self. While Hexes can be used on yourself as well, Metamorphosis focuses on invoking inherent natures within the witch. As such, it is exclusive to witch types that possess the [Beast] affinity or witches with Improved Familiar, in which case this form is what the familiar itself can take. Siren, Naiad, Oread, Lamia, Gorgon, Taura, Mimi, Wulong, Dravir and Xeno. Naiads contain the form of the _*Leviathan*_. Sirens, Oreads, Taura, Mimis, and Pharon contain the form of a _*Zooarch*_, Lamia and Gorgons have the form of the _*Basilisk*_. Wulong, Dravir and Xeno have the form of the _*Dragon*_, asian long, european classic and Xeno respectively. A Hybrid can adopt the form as normal. A Hybrid of 2 Beast types chooses one unless they buy this again, though they can _visually_ adapt its appearance to be a mixed form. If they bought it twice they can turn into either, or tum into a full hybrid beast. Likewise if you have Improved Familiar and qualify yourself, both the familiar and the witch could have a form, bought separately. {choice _Each Metamorphosis form is considered Rank 5 magic and costs 15 points as though it had all 5 ranks as such, meaning it costs 9p if you have the Beast affinity (which you should to be eligible for it in most cases)_}. It takes a flat rate of 20% of your mana capacity to assume the form or trigger your familiar’s form, which can be indefinitely maintained. Transforming back costs nothing and refunds 10% the mana cost.
         """
@@ -559,6 +595,8 @@ psychotics =
     , star = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Mind ], [ Life, Soul ] ]
+    , dlc = Nothing
+    , isElementalism = True
     , description = """
         Elemental magic of the psyche. Every rank in Psychotics reduces harm from memetic hazards (Which includes observations of intrastellar phenomenon and Outsider Entities), psychological trauma, telekinetic assault, and psionic constructs by 50%, until you’re immune to natural sources at rank 3, but resistance to magical sources continue to be reduced by half per rank. Unless otherwise specified, all Psychotic effects require minor concentration that doesn’t take much effort.
     """
@@ -583,6 +621,8 @@ metallurgy =
     , star = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Metal ], [ Fire, Earth ] ]
+    , dlc = Nothing
+    , isElementalism = True
     , description = """
         Elemental magic of metal, of Iron and Steel, of Gold and Silver. Every rank in Metallurgy reduces damage from metal sources by 50% until you’re immune to natural and primitive sources at rank 3, so simple metal weapons will not harm you, neither will small arms fire, but resistance to magical or high-power sources of metal continue to be reduced by half per rank. If you chose to take the Iron vulnerability, then it ignores this.
     """
@@ -607,6 +647,8 @@ lifeweaving =
     , star = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Life ], [ Fire, Soul ] ]
+    , dlc = Just "Loose Assets"
+    , isElementalism = True
     , description = """
         Lifeweaving is the pseudo-elemental magic of Life, encompassing a spark of genesis from the moment of creation, it can also be considered the Light element. With Life magic, every rank increases your natural healing factor by 200%. At rank 3, you will never scar and lost organs or limbs can be recovered. At rank 5, you will continue to regenerate from the point of death so long as a living cell remains. If you have a means of cheating death that would be faster, you can choose to default to that first.
     """
@@ -631,6 +673,8 @@ visceramancy =
     , star = False
     , class = Just Sorceress
     , affinities = Alternative [ [ Blood ], [ Body, Necro ] ]
+    , dlc = Just "Loose Assets"
+    , isElementalism = True
     , description = """
         Visceramancy is the elemental magic of Flesh. With each rank, you become resistant to forced transformations up to your rank in visceramancy and immune to those from 1 rank less, resistance means the duration is halved or if there is no duration, it gains a duration of 5 minutes. You can focus to eat away at the duration faster at 1 minute of duration per second of focus. At rank 3, you cannot scar and healing effects can always result in the return of bodily function, limbs can be reattached or organs placed back. At rank 5, your body will always maintain functionality regardless of missing components. If your heart is removed, it would keep beating on its own, and your body would operate without it. You can still see and feel from removed parts. ie; placing an eye somewhere lets you keep sight of that area, for example.
     """
@@ -655,6 +699,8 @@ arachnescence =
     , star = False
     , class = Just Warlock
     , affinities = Regular [ Beast, Necro, Mind ]
+    , dlc = Just "Loose Assets"
+    , isElementalism = False
     , description = """
         Arachnescence is the magic of spiders woven by the spidergoddess personally to bless her favored children. This magic governs the weaving of webs through mana, body reinforcement, providing a base ability set of Arachnes. The form of an arachne can be imitated by spider Taura, who are more simply a manner of drider, where the Arachne is made after the pattern of the spider goddess.
     """

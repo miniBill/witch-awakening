@@ -5,6 +5,7 @@ import Element exposing (Element, centerX, centerY, column, el, fill, fillPortio
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Magics
 import Generated.Types as Types exposing (Class, Magic, Slot(..))
 import Gradients
 import Html
@@ -18,6 +19,12 @@ import View
 
 viewMagics : Display -> List RankedMagic -> Element Choice
 viewMagics display selected =
+    let
+        sorted : List Magic.Details
+        sorted =
+            Generated.Magics.all
+                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+    in
     View.collapsible []
         display
         DisplayMagic
@@ -42,15 +49,17 @@ viewMagics display selected =
             , Font.color <| rgb 1 1 1
             ]
             Magic.slotDescription
-        , Magic.nonElemental
+        , sorted
+            |> List.Extra.removeWhen .isElementalism
             |> List.indexedMap (magicBox display False selected)
             |> Theme.column []
         , elementalIntro
-        , Magic.elementalism
+        , sorted
+            |> List.filter .isElementalism
             |> List.indexedMap (magicBox display False selected)
             |> Theme.column []
         ]
-        [ (Magic.nonElemental ++ Magic.elementalism)
+        [ sorted
             |> List.indexedMap (magicBox display False selected)
             |> Theme.column []
         ]
@@ -213,7 +222,7 @@ magicBox :
     -> Bool
     -> List RankedMagic
     -> Int
-    -> { a | star : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic }
+    -> { a | star : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic, dlc : Maybe String }
     -> Element ( RankedMagic, Bool )
 magicBox display factional selected index details =
     if display == DisplayCompact && List.all (\sel -> sel.name /= details.name) selected then
@@ -242,8 +251,8 @@ magicImage { name } =
         Element.none
 
 
-viewContent : Display -> List RankedMagic -> { a | name : Magic, description : String, ranks : List String, star : Bool, class : Maybe Class, affinities : Affinities } -> Element ( RankedMagic, Bool )
-viewContent display selected ({ name, description, ranks } as details) =
+viewContent : Display -> List RankedMagic -> { a | name : Magic, description : String, ranks : List String, star : Bool, class : Maybe Class, affinities : Affinities, dlc : Maybe String } -> Element ( RankedMagic, Bool )
+viewContent display selected ({ name, description, ranks, dlc } as details) =
     let
         isSelected : Maybe RankedMagic
         isSelected =
@@ -257,6 +266,17 @@ viewContent display selected ({ name, description, ranks } as details) =
         { label =
             Theme.column [ width fill ]
                 [ magicTitle display details
+                , case dlc of
+                    Nothing ->
+                        Element.none
+
+                    Just dlcName ->
+                        el
+                            [ centerX
+                            , Theme.captureIt
+                            , Font.size 24
+                            ]
+                            (Theme.gradientText 4 Gradients.purpleGradient dlcName)
                 , Theme.column [ height fill, Theme.padding ] <|
                     Theme.blocks [] description
                         :: List.indexedMap

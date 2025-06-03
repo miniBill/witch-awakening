@@ -12,6 +12,7 @@ type alias Details =
     , affinities : Affinities
     , description : String
     , ranks : List String
+    , dlc : Maybe String
     }
 
 
@@ -27,6 +28,7 @@ digicasting =
     , class = Just Academic
     , faction = TheCollegeOfArcadia
     , affinities = Regular [ Soul, Mind, Life ]
+    , dlc = Nothing
     , description =
         """Ideas have power behind them. Every new thought is an echo of creation deep below the sub layers of the material reality, swimming on the edge of oblivion and nothingness where what’s real or not becomes a blurred line. With more attention, emotion, and repeat application of will, some ideas get rooted and cemented in that abyss, adding to the infinite expanse of the Something, the opposing sphere of influence encompassing all that is. To cut the preamble short: Digicasting is the access to worlds of imagination created over time from dedicated dreamers. The dream of an author giving birth to a new world line by line over years of dwelling on it. The shared imagination of countless developers, as well as players, that share in the experience of a digitally realized reality. Some forms of this magic have existed in isolated cases focused on dreams, Digicasting is a new specialization formalized in Arcadia and taught alongside planar theory."""
     , ranks =
@@ -45,6 +47,7 @@ wands =
     , star = False
     , class = Just Academic
     , affinities = Regular [ All ]
+    , dlc = Nothing
     , faction = HawthorneAcademia
     , description =
         """Hawthorne education revolves around a refined and specialized form of magic called General Arcana, or referred to as Wands. It’s partly based on underlying magic potential within all witches, and partly based on external Relic crafting, revolving around the use of -- you guessed it -- wands. Hawthorne issues out specialty wands to their students, but the practice of General Arcana applies with Rods accessible to nearly any witch. Its usage revolves around finding intrinsic combinations of command phrases and wand movements that resonate with the magic inside the witch, drawn out and amplified through the wand. Wearing pointy hats help with resonance, but it’s somewhat a placebo.
@@ -68,6 +71,7 @@ ministration =
     , star = False
     , class = Just Warlock
     , affinities = Regular [ Life, Metal, Soul ]
+    , dlc = Nothing
     , faction = TheWatchers
     , description =
         """Ministration is the act of invoking Celestial entities to petition for their favor. Using Ministration is a lot like combining mortal prayer with the practice of Consortation. Celestials like demons, require a price for their favor. The listed service is required within 24 hours prior to summoning the celestial. Premortal celestials are spirit beings invisible to most."""
@@ -104,6 +108,7 @@ occultism =
     , star = False
     , class = Just Warlock
     , affinities = Regular [ Blood, Necro, Soul ]
+    , dlc = Nothing
     , faction = TheHespatianCoven
     , description =
         """{choice Bear in mind the faction that practices this magic! Not every option is meant to suit everyone, but to have an array of character possibilities.}
@@ -140,6 +145,7 @@ dominion =
     , star = True
     , class = Just Academic
     , affinities = Regular [ Nature, Earth, Wind ]
+    , dlc = Nothing
     , faction = Lunabella
     , description =
         """Dominion is the magic of creating bubbles of artificial reality inserted over the true reality. The true reality beneath remains unchanged as you control the nature of the artificial bubble of your own influence; Your Domain. The domain is invisible to the outside as you see the true reality, and non-magic humans aren’t affected, they’d walk through into the true reality unaware of the bubble’s existence, likewise mortals within the area of the bubble when it is created simply disappear, not a part of the artificial, though copies of plant life and inorganic things still carry over. Bubbles can conform to the area of a given room, or ignore it to fill its full diameter. Bubbles are immobile and you can only have 1 bubble active at a time, the first blinking out as the first flickers into existence, but it can be maintained indefinitely. Witches can see a translucent outline of a bubble but can’t choose to enter the material instead of the artificial reality, other than rift mages and other teleportation tricks directly bypassing the bubble to enter the material version of that space. Dominion is unaffected by Warding, though warded individuals aren’t directly affected by any imposed extremes that differ from the material, such as false gravity. It takes 10 minutes of focused meditation to establish a bubble, which is about as exhausting as running a lap around a track (-50% per rank of size less than your max rank). You could let mortals into a Domain the same way a witch could access the material under a bubble; Portals.
@@ -163,6 +169,7 @@ covenants =
     , star = False
     , class = Just Warlock
     , affinities = Regular [ Nature, Life, Soul ]
+    , dlc = Nothing
     , faction = AlfheimrAlliance
     , description =
         """Covenants is the magic pioneered by the elves long, long ago. It is also known as “Pact” magic, it’s the magic of deals and lawmaking used to form binding agreements as well as establishing magically reinforced laws and geases. This is often used to make contracts with spirits to bind them to items or locations. Covenants are a particular magic that is hard to learn if you have not grown up in the faewild with exposure to it and the social dynamics of the Alfheimr courts. Contracts require comparable ingredients to an Alchemical potion of the same rank in. Inks, papers, or a surrounding ritual."""
@@ -190,6 +197,7 @@ monstrosity =
     , star = False
     , class = Just Warlock
     , affinities = Regular [ Beast, Blood, Body ]
+    , dlc = Nothing
     , faction = TheOutsiders
     , description =
         """In taking Monstrosity your existence begins to strain against the framework of reality as influences and powers from beyond this universe. Creatures from beyond, either from other spheres of Aether, from the deep abyss crawling out from the nothingness of the void, or heavily twisted infernal entities in hell that have denatured into something alien to even the demons and devils that dwell there. It can be possible to have Monstrosity without being an Outsider if you were somehow corrupted by a Far God, but you still empower that god."""
@@ -213,6 +221,7 @@ gadgetry =
     , star = True
     , class = Nothing
     , affinities = Regular []
+    , dlc = Nothing
     , faction = TheORC
     , description =
         """Laid out in the manner of the Magic Specializations, _Gadgetry_ is the training and clearance to be issued with special equipment. Humans use it to compete with witches and improve their field effectiveness themselves, but witches can be issued with gadgets as well, if they need it, and gadgets can be shared with Alphazon, Lunabella or Arcadia. Hespatians and Watchers and most independents would have to steal Gadgets if they want to make use of this “specialization”.
@@ -234,6 +243,7 @@ integration =
     , star = False
     , class = Nothing
     , affinities = Regular []
+    , dlc = Nothing
     , faction = AlphazonIndustries
     , description =
         """Integrated Magitech, Alphazon’s ace in the hole. Cybernetics may not have happened for another 50 years, but with a multifaceted approach to studying magic phenomenon with ridiculous resources brought to bear, Alphazon has in secret advanced the effective technology level by a century or two, internally, in specific areas where they had certain breakthroughs where research and application really took off. Integration is close to home kept internal and shared only with affiliates and begrudging crossover with ORC agents. It isn’t practical to steal the way Gadgetry can be acquired.

@@ -77,6 +77,9 @@ fromParsed { name, items } =
 
                 Parsers.DLCPerk v ->
                     { dlc | perks = variant v.name :: dlc.perks }
+
+                Parsers.DLCMagic v ->
+                    { dlc | magics = variant v.name :: dlc.magics }
         )
         emptyDLC
         items

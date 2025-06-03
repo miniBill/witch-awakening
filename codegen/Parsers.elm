@@ -1,5 +1,6 @@
-module Parsers exposing (Content(..), DLC, DLCItem(..), Perk, Race, dlc)
+module Parsers exposing (Content(..), DLC, DLCItem(..), Magic, Perk, Race, dlc)
 
+import Dict exposing (Dict)
 import Maybe.Extra
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, problem, sequence, spaces, succeed, symbol)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
@@ -14,6 +15,7 @@ type alias DLC =
 type DLCItem
     = DLCRace Race
     | DLCPerk Perk
+    | DLCMagic Magic
 
 
 dlc : Parser DLC
@@ -33,18 +35,13 @@ dlc =
                     )
            )
         |. spaces
-        |= sequence
-            { start = ""
-            , end = ""
-            , item =
-                oneOf
-                    [ map DLCRace race
-                    , map DLCPerk perk
-                    ]
-            , separator = ""
-            , spaces = spaces
-            , trailing = Parser.Optional
-            }
+        |= many
+            (oneOf
+                [ map DLCRace race
+                , map DLCPerk perk
+                , map DLCMagic magic
+                ]
+            )
         |. spaces
         |. Parser.end
 
@@ -97,27 +94,7 @@ race =
                 |= paragraphs True
             , succeed Nothing
             ]
-
-
-paragraphs : Bool -> Parser String
-paragraphs acceptList =
-    Parser.sequence
-        { start = ""
-        , end = ""
-        , item = paragraph acceptList
-        , trailing = Parser.Optional
-        , spaces = succeed ()
-        , separator = ""
-        }
-        |> Parser.getChompedString
-        |> Parser.map String.trim
-
-
-paragraph : Bool -> Parser ()
-paragraph acceptList =
-    Parser.chompIf (\c -> (acceptList || c /= '-') && c /= '#')
-        |. chompUntilEndOrAfter "\n"
-        |. Parser.spaces
+        |. spaces
 
 
 type alias Perk =
@@ -154,33 +131,110 @@ perk =
                 |= paragraphs True
             , succeed WithChoices
                 |= paragraphs False
-                |= sequence
-                    { start = ""
-                    , end = ""
-                    , separator = ""
-                    , spaces = spaces
-                    , trailing = Parser.Optional
-                    , item =
-                        succeed (\c d -> ( String.trim d, c ))
-                            |. symbol "-"
-                            |. spaces
-                            |. symbol "["
-                            |. spaces
-                            |= oneOf
-                                [ succeed negate
-                                    |. symbol "-"
+                |= many
+                    (succeed (\c d -> ( String.trim d, c ))
+                        |. symbol "-"
+                        |. spaces
+                        |. symbol "["
+                        |. spaces
+                        |= oneOf
+                            [ succeed negate
+                                |. symbol "-"
+                                |. spaces
+                                |= int
+                            , int
+                            ]
+                        |. spaces
+                        |. symbol "]"
+                        |. spaces
+                        |= getChompedString (chompUntilAfter "\n")
+                    )
+                |= paragraphs False
+            ]
+
+
+type alias Magic =
+    { name : String
+    , class : Maybe String
+    , elements : List String
+    , star : Bool
+    , isElementalism : Bool
+    , description : String
+    , ranks : Dict Int String
+    }
+
+
+magic : Parser Magic
+magic =
+    succeed Magic
+        |= header "##" "Magic"
+        |= oneOf
+            [ listItem "Class" (\class -> succeed (Just class))
+            , succeed Nothing
+            ]
+        |= listItem "Elements"
+            (\raw ->
+                raw
+                    |> String.split ","
+                    |> List.map String.trim
+                    |> succeed
+            )
+        |= Parser.oneOf
+            [ listItem "Star" boolParser
+            , succeed False
+            ]
+        |= Parser.oneOf
+            [ listItem "Elementalism" boolParser
+            , succeed False
+            ]
+        |= paragraphs True
+        |= (many
+                (succeed Tuple.pair
+                    |= (succeed String.trim
+                            |. backtrackable
+                                (keyword "###"
                                     |. spaces
-                                    |= int
-                                , int
-                                ]
-                            |. spaces
-                            |. symbol "]"
+                                )
+                            |. keyword "Rank"
                             |. spaces
                             |= getChompedString (chompUntilAfter "\n")
                             |. spaces
-                    }
-                |= paragraphs False
-            ]
+                            |> andThen intParser
+                       )
+                    |= paragraphs True
+                )
+                |> map Dict.fromList
+           )
+
+
+
+-- Generic parsers --
+
+
+many : Parser a -> Parser (List a)
+many inner =
+    sequence
+        { start = ""
+        , end = ""
+        , separator = ""
+        , spaces = succeed ()
+        , trailing = Parser.Optional
+        , item = inner
+        }
+
+
+paragraphs : Bool -> Parser String
+paragraphs acceptList =
+    many (paragraph acceptList)
+        |> Parser.getChompedString
+        |> Parser.map String.trim
+
+
+paragraph : Bool -> Parser ()
+paragraph acceptList =
+    Parser.chompIf (\c -> (acceptList || c /= '-') && c /= '#')
+        |. chompUntilEndOrAfter "\n"
+        |. Parser.spaces
 
 
 boolParser : String -> Parser Bool
@@ -214,10 +268,6 @@ intListParser raw =
 
         Just n ->
             succeed n
-
-
-
--- Utilities --
 
 
 header : String -> String -> Parser String

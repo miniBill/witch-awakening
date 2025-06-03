@@ -1,9 +1,11 @@
 module Generate.FromDLC exposing (files)
 
+import Dict
 import Elm
 import Elm.Annotation
 import Elm.Arg
 import Elm.Op
+import Gen.Data.Magic
 import Gen.Data.Perk
 import Gen.Data.Race
 import Gen.Data.TypePerk
@@ -16,7 +18,7 @@ import String.Extra
 files : List Parsers.DLC -> List Elm.File
 files dlcList =
     let
-        { dlcRaces, dlcPerks } =
+        { dlcRaces, dlcPerks, dlcMagics } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
@@ -25,13 +27,17 @@ files dlcList =
 
                         Parsers.DLCPerk perk ->
                             { acc | dlcPerks = ( dlcName, perk ) :: acc.dlcPerks }
+
+                        Parsers.DLCMagic magic ->
+                            { acc | dlcMagics = ( dlcName, magic ) :: acc.dlcMagics }
                 )
-                { dlcRaces = [], dlcPerks = [] }
+                { dlcRaces = [], dlcPerks = [], dlcMagics = [] }
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
     [ racesFile dlcRaces
     , typePerksFile dlcRaces
     , perksFile dlcPerks
+    , magicsFile dlcMagics
     ]
 
 
@@ -190,3 +196,58 @@ dlcToTypePerks races =
                     )
         )
         races
+
+
+magicsFile : List ( Maybe String, Parsers.Magic ) -> Elm.File
+magicsFile dlcMagics =
+    Elm.file [ "Generated", "Magics" ]
+        (Elm.expose (Elm.declaration "all" (allMagics dlcMagics))
+            :: dlcToMagics dlcMagics
+        )
+
+
+allMagics : List ( Maybe String, Parsers.Magic ) -> Elm.Expression
+allMagics dlcMagics =
+    Elm.Op.append
+        Gen.Data.Magic.all
+        (dlcMagics
+            |> List.map (\( _, magic ) -> Elm.val (String.Extra.decapitalize (yassify magic.name)))
+            |> Elm.list
+        )
+        |> Elm.withType (Elm.Annotation.list Gen.Data.Magic.annotation_.details)
+
+
+dlcToMagics : List ( Maybe String, Parsers.Magic ) -> List Elm.Declaration
+dlcToMagics magics =
+    List.map
+        (\( dlcName, magic ) ->
+            let
+                maxRank : Int
+                maxRank =
+                    magic.ranks
+                        |> Dict.keys
+                        |> List.maximum
+                        |> Maybe.withDefault 5
+            in
+            Gen.Data.Magic.make_.details
+                { name = fromTypes magic.name
+                , class = Elm.maybe (Maybe.map fromTypes magic.class)
+                , star = Elm.bool magic.star
+                , isElementalism = Elm.bool magic.isElementalism
+                , affinities = Gen.Data.Magic.make_.regular (Elm.list (List.map fromTypes magic.elements))
+                , description = Elm.string magic.description
+                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                , ranks =
+                    List.range 1 maxRank
+                        |> List.map
+                            (\rank ->
+                                Dict.get rank magic.ranks
+                                    |> Maybe.withDefault ""
+                                    |> Elm.string
+                            )
+                        |> Elm.list
+                }
+                |> Elm.declaration (yassify magic.name)
+                |> Elm.expose
+        )
+        magics
