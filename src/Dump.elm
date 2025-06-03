@@ -9,7 +9,7 @@ import Dict.Extra
 import Generated.Perks
 import Generated.Races
 import Generated.TypePerks
-import Generated.Types exposing (affinityToString, classToString, perkToString, raceToString, sizeToString)
+import Generated.Types exposing (classToString, perkToString, raceToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
@@ -200,3 +200,12 @@ dumpPerk details =
                     |> List.filterMap identity
                     |> String.join "\n"
             )
+
+
+affinityToString : Generated.Types.Affinity -> String
+affinityToString affinity =
+    if affinity == Generated.Types.All then
+        "All"
+
+    else
+        Generated.Types.affinityToString affinity
