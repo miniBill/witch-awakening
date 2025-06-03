@@ -531,98 +531,98 @@ card :
     -> Maybe (Element msg)
 card attrs config =
     let
-        show : Bool
-        show =
-            case config.display of
-                DisplayFull ->
-                    True
+        inner : Bool -> Maybe (Element msg)
+        inner compact =
+            let
+                cardAttributes : List (Attribute msg)
+                cardAttributes =
+                    [ height fill
+                    , Font.color <| rgb 0 0 0
+                    , if compact then
+                        Border.roundEach
+                            { topLeft = cardRoundness
+                            , topRight = 8
+                            , bottomLeft = cardRoundness
+                            , bottomRight = 8
+                            }
 
-                DisplayCompact ->
-                    config.forceShow || config.isSelected
+                      else
+                        Border.roundEach
+                            { topLeft = cardRoundness
+                            , topRight = cardRoundness
+                            , bottomLeft = 8
+                            , bottomRight = 8
+                            }
+                    , if config.isSelected then
+                        Background.color <| intToBackground config.glow
 
-                DisplayCollapsed ->
-                    False
+                      else
+                        Background.color <| rgb 1 1 1
+                    , if config.isSelected then
+                        borderGlow config.glow
+
+                      else
+                        Border.width 0
+                    , if compact then
+                        width <| Element.minimum 500 fill
+
+                      else
+                        width <| Element.minimum 320 <| Element.maximum 400 fill
+                    ]
+
+                sizeAttrs =
+                    if compact then
+                        [ width <| Element.maximum (config.imageHeight * 3 // 2) fill
+                        , height <| Element.minimum config.imageHeight fill
+                        ]
+
+                    else
+                        [ height <| px config.imageHeight
+                        , width fill
+                        ]
+
+                content : List (Element msg)
+                content =
+                    [ el
+                        (Border.rounded cardRoundness
+                            :: Background.image config.image.src
+                            :: sizeAttrs
+                            ++ List.map Element.inFront config.inFront
+                            ++ config.imageAttrs
+                        )
+                        Element.none
+                    , column
+                        [ padding
+                        , height fill
+                        , width fill
+                        ]
+                        config.content
+                    ]
+            in
+            maybeButton (cardAttributes ++ attrs)
+                { label =
+                    if compact then
+                        Element.row [ height fill, width fill ] content
+
+                    else
+                        Element.column [ height fill, width fill ] content
+                , onPress = config.onPress
+                }
+                |> Just
     in
-    if not show then
-        Nothing
+    case config.display of
+        DisplayFull ->
+            inner False
 
-    else
-        let
-            cardAttributes : List (Attribute msg)
-            cardAttributes =
-                [ height fill
-                , Font.color <| rgb 0 0 0
-                , if config.display == DisplayCompact then
-                    Border.roundEach
-                        { topLeft = cardRoundness
-                        , topRight = 8
-                        , bottomLeft = cardRoundness
-                        , bottomRight = 8
-                        }
+        DisplayCompact ->
+            if config.forceShow || config.isSelected then
+                inner True
 
-                  else
-                    Border.roundEach
-                        { topLeft = cardRoundness
-                        , topRight = cardRoundness
-                        , bottomLeft = 8
-                        , bottomRight = 8
-                        }
-                , if config.isSelected then
-                    Background.color <| intToBackground config.glow
+            else
+                Nothing
 
-                  else
-                    Background.color <| rgb 1 1 1
-                , if config.isSelected then
-                    borderGlow config.glow
-
-                  else
-                    Border.width 0
-                , if config.display == DisplayFull then
-                    width <| Element.minimum 320 <| Element.maximum 400 fill
-
-                  else
-                    width <| Element.minimum 500 fill
-                ]
-
-            sizeAttrs =
-                if config.display == DisplayFull then
-                    [ height <| px config.imageHeight
-                    , width fill
-                    ]
-
-                else
-                    [ width <| Element.maximum (config.imageHeight * 3 // 2) fill
-                    , height <| Element.minimum config.imageHeight fill
-                    ]
-
-            content : List (Element msg)
-            content =
-                [ el
-                    (Border.rounded cardRoundness
-                        :: Background.image config.image.src
-                        :: sizeAttrs
-                        ++ List.map Element.inFront config.inFront
-                        ++ config.imageAttrs
-                    )
-                    Element.none
-                , column
-                    [ padding
-                    , height fill
-                    , width fill
-                    ]
-                    config.content
-                ]
-        in
-        maybeButton (cardAttributes ++ attrs)
-            { label =
-                if config.display == DisplayFull then
-                    Element.column [ height fill, width fill ] content
-
-                else
-                    Element.row [ height fill, width fill ] content
-            , onPress = config.onPress
-            }
-            |> Just
+        DisplayCollapsed ->
+            Nothing
 
 
 maybeButton :
