@@ -343,12 +343,22 @@ viewPiece piece =
 viewAffinityBadge : Affinity -> Html msg
 viewAffinityBadge affinity =
     let
+        whiteGradient : String
+        whiteGradient =
+            "linear-gradient(180deg, #ffffff 0%, #ffffff00 50%, #ffffff00 100%)"
+
         affinityColor : String
         affinityColor =
             "#" ++ String.padLeft 6 '0' (Hex.toString (Generated.Affinities.affinityToColor affinity))
     in
     Html.div
-        [ Html.Attributes.style "background" affinityColor
+        [ Html.Attributes.style "background" (whiteGradient ++ ", " ++ affinityColor)
+        , Html.Attributes.style "font-family" "Unreal Tournament"
+        , Html.Attributes.style "padding" "5px"
+        , Html.Attributes.style "border-radius" "999px"
+        , Html.Attributes.style "border" ("2px solid " ++ affinityColor)
+        , Html.Attributes.style "color" "white"
+        , Html.Attributes.style "text-shadow" "1px 1px 2px black"
         ]
         [ Html.text (Types.affinityToString affinity) ]
 
