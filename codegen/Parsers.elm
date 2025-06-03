@@ -243,6 +243,7 @@ magic =
 type alias Affinity =
     { name : String
     , color : Int
+    , rainbow : Bool
     , symbol : Maybe String
     }
 
@@ -252,6 +253,10 @@ affinity =
     succeed Affinity
         |= header "##" "Affinity"
         |= listItem "Color" hexParser
+        |= oneOf
+            [ listItem "Rainbow" boolParser
+            , succeed False
+            ]
         |= oneOf
             [ listItem "Symbol" (\symbol -> succeed (Just symbol))
             , succeed Nothing

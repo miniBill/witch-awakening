@@ -2,6 +2,7 @@
 
 ## Affinity: All
 - Color: FFFFFF
+- Rainbow: True
 - Symbol: ???
 
 ## Affinity: Beast
@@ -11,7 +12,7 @@
 - Color: C21D1D
 
 ## Affinity: Body
-- Color: F5C49E
+- Color: 733E26
 
 ## Affinity: Earth
 - Color: A35A49
