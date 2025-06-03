@@ -570,7 +570,8 @@ card attrs config =
                         width <| Element.minimum 320 <| Element.maximum 400 fill
                     ]
 
-                sizeAttrs =
+                imageSizeAttrs : List (Attribute msg)
+                imageSizeAttrs =
                     if compact then
                         [ width <| Element.maximum (config.imageHeight * 3 // 2) fill
                         , height <| Element.minimum config.imageHeight fill
@@ -586,7 +587,7 @@ card attrs config =
                     [ el
                         (Border.rounded cardRoundness
                             :: Background.image config.image.src
-                            :: sizeAttrs
+                            :: imageSizeAttrs
                             ++ List.map Element.inFront config.inFront
                             ++ config.imageAttrs
                         )
