@@ -1,4 +1,4 @@
-module Data.Companion exposing (Details, MaybeClass(..), Score(..), all, intro)
+module Data.Companion exposing (Details, MaybeClass(..), Score(..), all, factionNameToCompanionsName, intro)
 
 import Generated.Types exposing (Affinity(..), Class(..), Companion(..), Faction(..), Race(..))
 
@@ -48,19 +48,53 @@ intro =
     """
 
 
-all : List ( String, Maybe Faction, List Details )
+all : List ( Maybe Faction, List Details )
 all =
-    [ ( "The Arcadians", Just TheCollegeOfArcadia, arcadians )
-    , ( "Hawthorne", Just HawthorneAcademia, hawthorne )
-    , ( "The Watchers", Just TheWatchers, watchers )
-    , ( "The Hespatians", Just TheHespatianCoven, hespatians )
-    , ( "The Lunabellans", Just Lunabella, lunabellans )
-    , ( "The ORCs / Badges", Just TheORC, theOrcs )
-    , ( "The Alphazonians / Suits", Just AlphazonIndustries, alphazonians )
-    , ( "Independents / Other", Nothing, independents )
-    , ( "Outsiders", Just TheOutsiders, outsiders )
-    , ( "Alliance", Just AlfheimrAlliance, alliance )
+    [ ( Just TheCollegeOfArcadia, arcadians )
+    , ( Just HawthorneAcademia, hawthorne )
+    , ( Just TheWatchers, watchers )
+    , ( Just TheHespatianCoven, hespatians )
+    , ( Just Lunabella, lunabellans )
+    , ( Just TheORC, theOrcs )
+    , ( Just AlphazonIndustries, alphazonians )
+    , ( Nothing, independents )
+    , ( Just TheOutsiders, outsiders )
+    , ( Just AlfheimrAlliance, alliance )
     ]
+
+
+factionNameToCompanionsName : Maybe Faction -> String
+factionNameToCompanionsName faction =
+    case faction of
+        Just TheCollegeOfArcadia ->
+            "The Arcadians"
+
+        Just HawthorneAcademia ->
+            "Hawthorne"
+
+        Just TheWatchers ->
+            "The Watchers"
+
+        Just TheHespatianCoven ->
+            "The Hespatians"
+
+        Just Lunabella ->
+            "The Lunabellans"
+
+        Just AlfheimrAlliance ->
+            "Alliance"
+
+        Just TheOutsiders ->
+            "Outsiders"
+
+        Just TheORC ->
+            "The ORCs / Badges"
+
+        Just AlphazonIndustries ->
+            "The Alphazonians / Suits"
+
+        Nothing ->
+            "Independents / Other"
 
 
 arcadians : List Details

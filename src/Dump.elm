@@ -143,7 +143,7 @@ dump model =
         Companion ->
             Generated.Companions.all
                 |> List.filterMap
-                    (\( _, faction, companions ) ->
+                    (\( faction, companions ) ->
                         let
                             filtered : List Data.Companion.Details
                             filtered =
@@ -350,10 +350,93 @@ dumpCompanion faction companion =
 
                 Data.Companion.ClassSpecial ->
                     Just "Special"
+
+        score : String -> Data.Companion.Score -> Maybe String
+        score label value =
+            let
+                valueString : String
+                valueString =
+                    case value of
+                        Data.Companion.NormalScore i ->
+                            String.fromInt i
+
+                        Data.Companion.SpecialEffect { better, worse } ->
+                            case worse of
+                                Nothing ->
+                                    "1-" ++ String.fromInt better
+
+                                Just w ->
+                                    String.fromInt w ++ "-" ++ String.fromInt better
+            in
+            Just ("- " ++ label ++ ": " ++ valueString)
+
+        name =
+            case companionToString companion.name of
+                "Xiao Liena 肖列娜" ->
+                    "Xiao Liena"
+
+                n ->
+                    n
     in
-    [ Just <| "## Companion: " ++ companionToString companion.name
+    [ Just <| "## Companion: " ++ name
+    , if companionToString companion.name == name then
+        Nothing
+
+      else
+        Just ("- Full name: " ++ companionToString companion.name)
     , Maybe.map (\f -> "- Faction: " ++ factionToString f) faction
     , Maybe.map (\c -> "- Class: " ++ c) class
+    , case List.map raceToString companion.races of
+        [] ->
+            Nothing
+
+        [ race ] ->
+            Just <| "- Race: " ++ race
+
+        races ->
+            Just <| "- Races: " ++ String.join ", " races
+    , if companion.hasPerk then
+        Just "- Has Perk: True"
+
+      else
+        Nothing
+    , companion.cost
+        |> Maybe.map
+            (\cost ->
+                "- Cost: " ++ String.fromInt cost
+            )
+    , score "Power" companion.power
+    , score "Teamwork" companion.teamwork
+    , score "Sociability" companion.sociability
+    , score "Morality" companion.morality
+    , if List.isEmpty companion.positives then
+        Nothing
+
+      else
+        companion.positives
+            |> List.map (\p -> "- Positive: " ++ p)
+            |> String.join "\n"
+            |> Just
+    , if List.isEmpty companion.negatives then
+        Nothing
+
+      else
+        companion.negatives
+            |> List.map (\p -> "- Negative: " ++ p)
+            |> String.join "\n"
+            |> Just
+    , if List.isEmpty companion.mixed then
+        Nothing
+
+      else
+        companion.mixed
+            |> List.map (\p -> "- Mixed: " ++ p)
+            |> String.join "\n"
+            |> Just
+    , Just <| "- Has: " ++ companion.has
+    , Just <| "- Quote: " ++ companion.quote
+    , Just ""
+    , Just (String.Multiline.here companion.description)
     ]
         |> List.filterMap identity
         |> String.join "\n"

@@ -6,6 +6,7 @@ import Data.Complication as Complication
 import Data.Costs.Monad as Monad exposing (Monad, andThen, combine, map, map2, mapAndSum, succeed, withWarning)
 import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic
+import Generated.Companions
 import Generated.Magics
 import Generated.Perks as Perk
 import Generated.Relics
@@ -862,7 +863,7 @@ getCompanion : Companion -> Monad ( Maybe Faction, Companion.Details )
 getCompanion companion =
     case
         List.Extra.findMap
-            (\( _, faction, group ) ->
+            (\( faction, group ) ->
                 List.Extra.findMap
                     (\({ name } as c) ->
                         if name == companion then
@@ -873,7 +874,7 @@ getCompanion companion =
                     )
                     group
             )
-            Companion.all
+            Generated.Companions.all
     of
         Just p ->
             succeed p

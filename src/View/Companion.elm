@@ -5,6 +5,7 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, 
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Companions
 import Generated.Types as Types exposing (Companion, Faction)
 import Gradients
 import Html.Attributes
@@ -18,21 +19,25 @@ import View
 
 viewCompanions : Display -> List Companion -> Element Choice
 viewCompanions display companions =
+    let
+        blocks : List (Element ( Companion, Bool ))
+        blocks =
+            Generated.Companions.all
+                |> List.concatMap (companionSection display companions)
+    in
     View.collapsible (Theme.topBackground Images.companionIntro)
         display
         DisplayCompanions
         ChoiceCompanion
         "# Companions"
         [ introBlock
-        , Companion.all
-            |> List.concatMap (companionSection display companions)
+        , blocks
             |> Theme.column
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
         ]
-        [ Companion.all
-            |> List.concatMap (companionSection display companions)
+        [ blocks
             |> Theme.wrappedRow
                 [ width fill
                 , spacing <| Theme.rythm * 3
@@ -88,10 +93,10 @@ introBlock =
         ]
 
 
-companionSection : Display -> List Companion -> ( String, Maybe Faction, List Companion.Details ) -> List (Element ( Companion, Bool ))
-companionSection display companions ( label, _, section ) =
+companionSection : Display -> List Companion -> ( Maybe Faction, List Companion.Details ) -> List (Element ( Companion, Bool ))
+companionSection display companions ( faction, section ) =
     if display == DisplayFull then
-        [ (label ++ ":")
+        [ (Companion.factionNameToCompanionsName faction ++ ":")
             |> Theme.gradientText 2 Gradients.yellowGradient
             |> el [ Theme.celticHand, Font.size 48 ]
         , section

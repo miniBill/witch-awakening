@@ -57,13 +57,29 @@ toFiles :
     -> Result (List Generate.Error) { info : List String, files : List Elm.File }
 toFiles root =
     let
-        go : Generate.Directory -> List ( String, String )
-        go (Generate.Directory { files, directories }) =
-            Dict.toList files ++ List.concatMap go (Dict.values directories)
+        go : String -> Generate.Directory -> List ( String, String, String )
+        go folder (Generate.Directory { files, directories }) =
+            List.map
+                (\( fileName, fileContent ) ->
+                    ( folder, fileName, fileContent )
+                )
+                (Dict.toList files)
+                ++ List.concatMap
+                    (\( directoryName, dir ) ->
+                        go
+                            (if String.isEmpty folder then
+                                directoryName
+
+                             else
+                                folder ++ "/" ++ directoryName
+                            )
+                            dir
+                    )
+                    (Dict.toList directories)
     in
-    go root
+    go "" root
         |> Result.Extra.combineMap
-            (\( fileName, fileContent ) ->
+            (\( folder, fileName, fileContent ) ->
                 case fileName of
                     "sizes" ->
                         images fileContent
@@ -78,7 +94,7 @@ toFiles root =
                                 |> Result.map (\declaration -> ( [], [ declaration ], [] ))
 
                         else if String.endsWith ".md" fileName then
-                            parseDLC fileName fileContent
+                            parseDLC folder fileName fileContent
                                 |> Result.map (\dlc -> ( [], [], [ dlc ] ))
 
                         else
@@ -134,14 +150,14 @@ toFiles root =
             )
 
 
-parseDLC : String -> String -> Result (List Generate.Error) Parsers.DLC
-parseDLC filename content =
+parseDLC : String -> String -> String -> Result (List Generate.Error) Parsers.DLC
+parseDLC folder filename content =
     Parser.run Parsers.dlc content
         |> Result.mapError
             (\deadEnds ->
                 [ { title = "Error parsing DLC file"
                   , description =
-                        "Could not parse " ++ filename ++ "\n" ++ errorToString deadEnds
+                        "Could not parse " ++ folder ++ "/" ++ filename ++ "\n" ++ errorToString deadEnds
                   }
                 ]
             )

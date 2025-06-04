@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Companion, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, dlc)
+module Parsers exposing (Affinity, Companion, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc)
 
 import Dict exposing (Dict)
 import Hex
@@ -125,11 +125,8 @@ perk =
         |= header "##" "Perk"
         |= listItem "Element" succeed
         |= listItem "Class" succeed
-        |= Parser.oneOf
-            [ listItem "Meta" boolParser
-            , succeed False
-            ]
-        |= Parser.oneOf
+        |= flag "Meta"
+        |= oneOf
             [ succeed Single
                 |= listItem "Cost" intParser
                 |= paragraphs True
@@ -212,14 +209,8 @@ magic =
                     |> Maybe.withDefault (Alternative splat)
                     |> succeed
             )
-        |= Parser.oneOf
-            [ listItem "Has rank zero" boolParser
-            , succeed False
-            ]
-        |= Parser.oneOf
-            [ listItem "Elementalism" boolParser
-            , succeed False
-            ]
+        |= flag "Has rank zero"
+        |= flag "Elementalism"
         |= paragraphs True
         |= (many
                 (succeed Tuple.pair
@@ -240,6 +231,14 @@ magic =
            )
 
 
+flag : String -> Parser Bool
+flag name =
+    oneOf
+        [ listItem name boolParser
+        , succeed False
+        ]
+
+
 type alias Affinity =
     { name : String
     , color : Int
@@ -253,10 +252,7 @@ affinity =
     succeed Affinity
         |= header "##" "Affinity"
         |= listItem "Color" hexParser
-        |= oneOf
-            [ listItem "Rainbow" boolParser
-            , succeed False
-            ]
+        |= flag "Rainbow"
         |= oneOf
             [ listItem "Symbol" (\symbol -> succeed (Just symbol))
             , succeed Nothing
@@ -274,11 +270,11 @@ relic : Parser Relic
 relic =
     succeed Relic
         |= header "##" "Relic"
-        |= Parser.oneOf
+        |= oneOf
             [ listItem "Class" (\class -> succeed (Just class))
             , succeed Nothing
             ]
-        |= Parser.oneOf
+        |= oneOf
             [ succeed Single
                 |= listItem "Cost" intParser
                 |= paragraphs True
@@ -290,27 +286,65 @@ relic =
 
 type alias Companion =
     { name : String
+    , fullName : Maybe String
+    , faction : Maybe String
     , class : Maybe String
     , races : List String
     , hasPerk : Bool
     , cost : Maybe Int
-    , power : String
-    , teamwork : String
-    , sociability : String
-    , morality : String
-    , quote : String
-    , description : String
+    , power : Score
+    , teamwork : Score
+    , sociability : Score
+    , morality : Score
     , positives : List String
     , negatives : List String
     , mixed : List String
     , has : String
+    , quote : String
+    , description : String
     }
+
+
+type Score
+    = NormalScore Int
+    | SpecialEffect { worse : Maybe Int, better : Int }
 
 
 companion : Parser Companion
 companion =
+    let
+        score : String -> Parser Score
+        score label =
+            listItem label
+                (\v ->
+                    case
+                        v
+                            |> String.split "-"
+                            |> Maybe.Extra.combineMap String.toInt
+                    of
+                        Just [ s ] ->
+                            succeed (NormalScore s)
+
+                        Just [ 1, better ] ->
+                            succeed (SpecialEffect { worse = Nothing, better = better })
+
+                        Just [ worse, better ] ->
+                            succeed (SpecialEffect { worse = Just worse, better = better })
+
+                        _ ->
+                            problem ("Invalid score: " ++ v)
+                )
+    in
     succeed Companion
         |= header "##" "Companion"
+        |= oneOf
+            [ listItem "Full name" (\fullName -> succeed (Just fullName))
+            , succeed Nothing
+            ]
+        |= oneOf
+            [ succeed Just |= listItem "Faction" succeed
+            , succeed Nothing
+            ]
         |= oneOf
             [ listItem "Class" (\class -> succeed (Just class))
             , succeed Nothing
@@ -318,19 +352,26 @@ companion =
         |= oneOf
             [ listItem "Race" (\r -> succeed [ r ])
             , listItem "Races" (\r -> succeed (List.map String.trim (String.split "," r)))
+            , succeed []
             ]
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
-        |= problem "TODO"
+        |= flag "Has Perk"
+        |= oneOf
+            [ succeed Just |= listItem "Cost" intParser
+            , succeed Nothing
+            ]
+        |= score "Power"
+        |= score "Teamwork"
+        |= score "Sociability"
+        |= score "Morality"
+        |= many (listItem "Positive" succeed)
+        |= many (listItem "Negative" succeed)
+        |= many (listItem "Mixed" succeed)
+        |= oneOf
+            [ listItem "Has" succeed
+            , succeed ""
+            ]
+        |= listItem "Quote" succeed
+        |= paragraphs True
 
 
 

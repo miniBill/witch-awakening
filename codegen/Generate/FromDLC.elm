@@ -14,6 +14,7 @@ import Gen.Data.Relic
 import Gen.Data.TypePerk
 import Gen.Types
 import Generate.Utils exposing (yassify)
+import List.Extra
 import Parsers exposing (DLCItem(..))
 import String.Extra
 
@@ -371,14 +372,26 @@ allCompanions : List ( Maybe String, Parsers.Companion ) -> Elm.Expression
 allCompanions dlcCompanions =
     Elm.Op.append
         (dlcCompanions
-            |> List.map (\( _, companion ) -> Elm.val (String.Extra.decapitalize (yassify companion.name)))
+            |> List.Extra.gatherEqualsBy (\( _, companion ) -> companion.faction)
+            |> List.map
+                (\( ( _, { faction } ) as head, tail ) ->
+                    Elm.tuple
+                        (Elm.maybe (Maybe.map fromTypes faction))
+                        ((head :: tail)
+                            |> List.map
+                                (\( _, companion ) ->
+                                    Elm.val
+                                        (String.Extra.decapitalize (yassify companion.name))
+                                )
+                            |> Elm.list
+                        )
+                )
             |> Elm.list
         )
         Gen.Data.Companion.all
         |> Elm.withType
             (Elm.Annotation.list
-                (Elm.Annotation.triple
-                    Elm.Annotation.string
+                (Elm.Annotation.tuple
                     (Elm.Annotation.maybe (Elm.Annotation.named [ "Generated", "Types" ] "Faction"))
                     (Elm.Annotation.list Gen.Data.Companion.annotation_.details)
                 )
@@ -404,23 +417,56 @@ dlcToCompanions companions =
 
                         Nothing ->
                             Gen.Data.Companion.make_.classNone
+
+                score : Parsers.Score -> Elm.Expression
+                score value =
+                    case value of
+                        Parsers.NormalScore s ->
+                            Gen.Data.Companion.make_.normalScore (Elm.int s)
+
+                        Parsers.SpecialEffect { worse, better } ->
+                            Gen.Data.Companion.make_.specialEffect
+                                (Elm.record
+                                    [ ( "worse", Elm.maybe (Maybe.map Elm.int worse) )
+                                    , ( "better", Elm.int better )
+                                    ]
+                                )
             in
             Gen.Data.Companion.make_.details
                 { name = fromTypes companion.name
                 , class = class
-                , races = Elm.list (List.map fromTypes companion.races)
+                , races =
+                    Elm.list
+                        (List.map
+                            (\race ->
+                                case
+                                    race
+                                        |> String.split "-"
+                                        |> List.map fromTypes
+                                of
+                                    [ x ] ->
+                                        x
+
+                                    h :: t ->
+                                        Elm.apply h t
+
+                                    [] ->
+                                        fromTypes "Empty list?"
+                            )
+                            companion.races
+                        )
                 , hasPerk = Elm.bool companion.hasPerk
                 , cost = Elm.maybe (Maybe.map Elm.int companion.cost)
-                , power = fromTypes companion.power
-                , teamwork = fromTypes companion.teamwork
-                , sociability = fromTypes companion.sociability
-                , morality = fromTypes companion.morality
-                , quote = fromTypes companion.quote
-                , description = fromTypes companion.description
+                , power = score companion.power
+                , teamwork = score companion.teamwork
+                , sociability = score companion.sociability
+                , morality = score companion.morality
+                , quote = Elm.string companion.quote
+                , description = Elm.string companion.description
                 , positives = Elm.list (List.map Elm.string companion.positives)
                 , negatives = Elm.list (List.map Elm.string companion.negatives)
                 , mixed = Elm.list (List.map Elm.string companion.mixed)
-                , has = fromTypes companion.has
+                , has = Elm.string companion.has
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (yassify companion.name)

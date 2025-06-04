@@ -95,7 +95,15 @@ fromParsed { name, items } =
                     { dlc | relics = variant v.name :: dlc.relics }
 
                 Parsers.DLCCompanion v ->
-                    { dlc | companions = variant v.name :: dlc.companions }
+                    { dlc
+                        | companions =
+                            { name = v.name
+                            , arguments = []
+                            , dlc = name
+                            , toStringException = v.fullName
+                            }
+                                :: dlc.companions
+                    }
         )
         emptyDLC
         items
@@ -217,7 +225,7 @@ core =
     , races = coreRaces
     , perks = corePerks
     , affinities = []
-    , companions = coreCompanions
+    , companions = []
     , relics = []
     , magics = coreMagics
     }
@@ -279,17 +287,10 @@ coreFactions =
     [ "The College of Arcadia", "Hawthorne Academia", "The Watchers", "The Hespatian Coven", "Lunabella", "Alfheimr Alliance", "The Outsiders", "The O.R.C.", "Alphazon Industries" ]
 
 
-coreCompanions : List Variant
-coreCompanions =
-    [ "Rachel Pool", "Anne Laurenchi", "Canday Wesbank", "Tessa-Marie Kudashov", "Evelynn P. Willowcrane", "John Doe", "Hannah Grangely", "Elizabell Sinclaire", "Ashley Lovenko", "Sylvanne Mae Kanzaki", "Francis Isaac Giovanni", "Ifra al-Zahra", "Sariah J. Snow", "Claire Bel’montegra", "Lucille M. Bright", "King Daemian Kain", "Whisper", "Red Mother", "Diana", "Cassandra", "King Culicarius", "Einodia - Kate", "Victoria Watts", "Richard Max Johnson", "Bethadonna Rossbaum", "Miranda Quincy", "Samantha Nat Ponds", "Jennifer K. Young", "Agent 7Y", "Agent 9s", "Alex K. Halls", "Isabella Mable Oaks", "Evangelina Rosa Costaval", "Penelope", "The Caretaker", "Lost Queen", "Gift from Beyond", "Agent 9s (Original)", "Princess Dael’ezra of Charis", "Anaphalon Greenwield", "Briar Gracehollow", "Duchess Sael’astra of Odalle", "Mandy Hunts", "Eskhander Mahabadi", "Experiment 627", "August Rose o’Bare", "Saya Kurosawa", "Francesca Astrenichtys", "Elaine A. Victorica", "Maimonada Majesteim", "Azurelliea Ad’Madelline", "Melissa Vincimvitch", "Laura D. Devonshire", "Caroline", "Suzy the Miasma", "Noriko du Nichols", "Sylvarra as’Domonina", "Madelline L. Peach", "Reina Akatsuki", "Minnie Andrus", "Nova", "Scarlet", "Huntress", "Malice", "Persephone", "Betilda Arai Buckland", "Nichte Y’ir", "Ælfflæd (now Daphne)", "Megan Minosine", "Jane “Kit” Adams", "Alicia Red Velvetine", "Julia May Caldwin", "Twins Sara & Kara", "Vesuvianelle Lalahon", "Amber Ogden “Vix”", "XIN: Dollmaker", "Ophelia Reisha", "Esther Reisha", "Custom", "Eris Julianari Stonefallen" ]
-        |> buildVariants
-
-
 looseAssets : DLC
 looseAssets =
     { emptyDLC
         | races = looseAssetsRaces
-        , companions = looseAssetsCompanions
     }
 
 
@@ -299,10 +300,3 @@ looseAssetsRaces =
         |> buildVariants
         |> withArguments "Genie" [ "Affinity" ]
         |> withArguments "Gemini" [ "Affinity" ]
-
-
-looseAssetsCompanions : List Variant
-looseAssetsCompanions =
-    [ "Xiao Liena", "\"Jin\" [Choose a Name]", "Sara Star", "Red Betty" ]
-        |> buildVariants
-        |> withExceptions [ ( "Xiao Liena", "Xiao Liena 肖列娜" ) ]
