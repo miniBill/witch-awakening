@@ -50,17 +50,7 @@ intro =
 
 all : List ( Maybe Faction, List Details )
 all =
-    [ ( Just TheCollegeOfArcadia, arcadians )
-    , ( Just HawthorneAcademia, hawthorne )
-    , ( Just TheWatchers, watchers )
-    , ( Just TheHespatianCoven, hespatians )
-    , ( Just Lunabella, lunabellans )
-    , ( Just TheORC, theOrcs )
-    , ( Just AlphazonIndustries, alphazonians )
-    , ( Nothing, independents )
-    , ( Just TheOutsiders, outsiders )
-    , ( Just AlfheimrAlliance, alliance )
-    ]
+    []
 
 
 factionNameToCompanionsName : Maybe Faction -> String

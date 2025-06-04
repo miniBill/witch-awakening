@@ -370,9 +370,46 @@ companionsFile dlcCompanions =
 
 allCompanions : List ( Maybe String, Parsers.Companion ) -> Elm.Expression
 allCompanions dlcCompanions =
+    let
+        toOrder faction =
+            case faction of
+                Just "The College of Arcadia" ->
+                    0
+
+                Just "Hawthorne Academia" ->
+                    1
+
+                Just "The Watchers" ->
+                    2
+
+                Just "The Hespatian Coven" ->
+                    3
+
+                Just "Lunabella" ->
+                    4
+
+                Just "AlfheimrAlliance" ->
+                    5
+
+                Just "The O.R.C." ->
+                    6
+
+                Just "Alphazon Industries" ->
+                    7
+
+                Nothing ->
+                    8
+
+                Just "The Outsiders" ->
+                    9
+
+                _ ->
+                    10
+    in
     Elm.Op.append
         (dlcCompanions
             |> List.Extra.gatherEqualsBy (\( _, companion ) -> companion.faction)
+            |> List.sortBy (\( ( _, { faction } ), _ ) -> toOrder faction)
             |> List.map
                 (\( ( _, { faction } ) as head, tail ) ->
                     Elm.tuple
