@@ -343,11 +343,7 @@ viewPiece piece =
 viewAffinityBadge : Affinity -> Html msg
 viewAffinityBadge affinity =
     let
-        whiteGradient : String
-        whiteGradient =
-            linearGradient 180 [ ( 0xFFFFFF80, 0 ), ( 0xFFFFFF00, 30 ) ]
-
-        linearGradient : Int -> List ( Int, Int ) -> String
+        linearGradient : Int -> List ( String, Int ) -> String
         linearGradient angle stops =
             "linear-gradient("
                 ++ String.fromInt angle
@@ -355,7 +351,7 @@ viewAffinityBadge affinity =
                 ++ String.join ","
                     (List.map
                         (\( stopColor, stopPercent ) ->
-                            colorToCss stopColor
+                            stopColor
                                 ++ " "
                                 ++ String.fromInt stopPercent
                                 ++ "%"
@@ -364,34 +360,77 @@ viewAffinityBadge affinity =
                     )
                 ++ ")"
 
-        backgroundLayers : List String
-        backgroundLayers =
-            [ whiteGradient
-            , affinityColor
-            ]
-
-        affinityColor : String
-        affinityColor =
-            colorToCss (Generated.Affinities.affinityToColor affinity * 256 + 0xFF)
+        opaque : Int -> Int
+        opaque f =
+            f * 256 + 0xFF
 
         colorToCss color =
             "#" ++ String.padLeft 8 '0' (Hex.toString color)
+
+        common : List (Html.Attribute msg)
+        common =
+            [ Html.Attributes.style "font-family" "Unreal Tournament"
+            , Html.Attributes.style "font-size" "0.9rem"
+            , Html.Attributes.style "font-weight" "bold"
+            , Html.Attributes.style "margin" "1px"
+            , Html.Attributes.style "border-radius" "999px"
+            , Html.Attributes.style "box-sizing" "border-box"
+            , Html.Attributes.style "display" "inline-block"
+            ]
+
+        perColor : List (Html.Attribute msg)
+        perColor =
+            if affinity == All then
+                let
+                    rainbowGradient : String
+                    rainbowGradient =
+                        List.range 0 9
+                            |> List.map
+                                (\i ->
+                                    ( let
+                                        c : Color.Color
+                                        c =
+                                            Color.hsl
+                                                ((290 - toFloat i * 30) / 360)
+                                                1
+                                                0.5
+                                      in
+                                      Color.toCssString c
+                                    , i * 10
+                                    )
+                                )
+                            |> linearGradient 90
+
+                    whiteRadial : String
+                    whiteRadial =
+                        "radial-gradient(ellipse,rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 60%, rgba(255, 255, 255, 0) 100%)"
+                in
+                [ Html.Attributes.style "background" (String.join ", " [ whiteRadial, rainbowGradient ])
+                , Html.Attributes.style "padding" "5px 12px"
+                , Html.Attributes.style "border" "none"
+                , Html.Attributes.style "color" "black"
+                , Html.Attributes.style "text-shadow" "1px 2px 1px gray, 1px -1px 0px gray"
+                ]
+
+            else
+                let
+                    affinityColor : String
+                    affinityColor =
+                        colorToCss (Generated.Affinities.affinityToColor affinity |> opaque)
+
+                    whiteGradient : String
+                    whiteGradient =
+                        linearGradient 180 [ ( "#FFFFFF80", 0 ), ( "#FFFFFF00", 30 ) ]
+                in
+                [ Html.Attributes.style "background" (String.join ", " [ whiteGradient, affinityColor ])
+                , Html.Attributes.style "padding" "3px 10px"
+                , Html.Attributes.style "border" ("2px solid " ++ affinityColor)
+                , Html.Attributes.style "color" "white"
+                , Html.Attributes.style "text-shadow" "1px 2px 1px black, 1px -1px 0px black"
+                ]
     in
     Html.div
-        [ Html.Attributes.style "background" (String.join ", " backgroundLayers)
-        , Html.Attributes.style "font-family" "Unreal Tournament"
-        , Html.Attributes.style "font-size" "0.9em"
-        , Html.Attributes.style "font-weight" "bold"
-        , Html.Attributes.style "padding" "3px 10px"
-        , Html.Attributes.style "margin" "1px"
-        , Html.Attributes.style "border-radius" "999px"
-        , Html.Attributes.style "border" ("2px solid " ++ affinityColor)
-        , Html.Attributes.style "color" "white"
-        , Html.Attributes.style "text-shadow" "1px 2px 1px black"
-        , Html.Attributes.style "-webkit-text-stroke" "0.3px black"
-        , Html.Attributes.style "box-sizing" "border-box"
-        , Html.Attributes.style "display" "inline-block"
-        ]
+        (common ++ perColor)
         [ Html.text (Types.affinityToString affinity) ]
 
 

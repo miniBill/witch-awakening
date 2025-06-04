@@ -1,6 +1,6 @@
 module Data.Relic exposing (Content(..), Details, intro)
 
-import Generated.Types exposing (Class(..), Relic(..))
+import Generated.Types exposing (Class, Relic)
 
 
 type alias Details =

@@ -3,7 +3,7 @@ module View.Menu exposing (viewMenu)
 import Data.Affinity as Affinity
 import Data.Costs as Costs exposing (Points)
 import Data.Costs.Monad as CostsMonad
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, textColumn, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
