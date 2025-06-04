@@ -159,33 +159,6 @@ withImages enum =
     { enum | toImage = True }
 
 
-withExceptions : List ( String, String ) -> List Variant -> List Variant
-withExceptions exceptions enum =
-    updateDict
-        (\value variant ->
-            { variant | toStringException = Just value }
-        )
-        exceptions
-        enum
-
-
-updateDict :
-    (a -> Variant -> Variant)
-    -> List ( String, a )
-    -> List Variant
-    -> List Variant
-updateDict f pairs enum =
-    List.foldl
-        (\( key, value ) acc ->
-            List.Extra.updateIf
-                (\variant -> variant.name == key)
-                (f value)
-                acc
-        )
-        enum
-        pairs
-
-
 withArguments : String -> List String -> List Variant -> List Variant
 withArguments name arguments enum =
     List.Extra.updateIf
