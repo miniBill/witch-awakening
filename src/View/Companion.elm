@@ -95,12 +95,18 @@ introBlock =
 
 companionSection : Display -> List Companion -> ( Maybe Faction, List Companion.Details ) -> List (Element ( Companion, Bool ))
 companionSection display companions ( faction, section ) =
+    let
+        boxes : List (Element ( Companion, Bool ))
+        boxes =
+            section
+                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+                |> List.map (companionBox display companions)
+    in
     if display == DisplayFull then
         [ (Companion.factionNameToCompanionsName faction ++ ":")
             |> Theme.gradientText 2 Gradients.yellowGradient
             |> el [ Theme.celticHand, Font.size 48 ]
-        , section
-            |> List.map (companionBox display companions)
+        , boxes
             |> Theme.wrappedRow
                 [ width fill
                 , spacing <| Theme.rythm * 3
@@ -108,7 +114,7 @@ companionSection display companions ( faction, section ) =
         ]
 
     else
-        List.map (companionBox display companions) section
+        boxes
 
 
 tableColumns : List { header : Element msg, width : Element.Length, view : ( ( Int, Int ), String ) -> Element msg }
