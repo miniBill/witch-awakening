@@ -3,7 +3,7 @@
 ## Affinity: All
 - Color: ffffff
 - Rainbow: True
-- Symbol: ? ? ?
+- Symbol: ???
 
 ## Affinity: Beast
 - Color: 8c6d33
