@@ -10,7 +10,7 @@ Puazi are a humanoid alien species. They have horizontal pupils, horns and tails
 
 Their families and relationships tend to be larger and more fluid than most races, naturally forming big polycules, although the rare monogamous Puazi do exist. Puazi find human pheromones incredibly enticing, making them go into heat unless they regularly take a specific (but widely available) medication for that.
 
-A dead Puazi can be reborn if the last person they had an intimate moment with decides they want to bear them. The child will be born with all the memories and magic of the dead witch, and grow up at an accelerated rate.
+A dead Puazi can be reborn if someone who carries as precious an intimate moment they shared decides they want to bear them. The child will be born with all the memories and magic of the dead witch, and grow up at an accelerated rate.
 
 __Puazi draw Mana__ from Intimacy, the shared vulnerability of people sharing something deep about them. Physical intimacy is very effective at recharging them, especially if it involves sharing of fluids, but emotional intimacy can be almost as effective, and listening to a close friend pouring her heart out can fully recharge a Puazi in the time it takes to share the secret.
 
