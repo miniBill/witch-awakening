@@ -6,7 +6,7 @@
 - Mana capacity: Low
 - Mana rate: High
 
-Puazi are a humanoid alien species. Their have horizontal pupils, horns and tails, reminding of earth deers. Their skin is orange, with brown fur patterns and blue accents. They have lighter bones, making them more fragile than humans but also giving them incredible dexterity and speed, being able to outrun anyone but Olympic athletes. They age comparably to humans, but Puazi witches benefit from slowed aging compared to baseline, at about half the speed. They tend to be very attractive, and a lot of them present very femme, regardless of their gender or sex.
+Puazi are a humanoid alien species. They have horizontal pupils, horns and tails, reminiscent of earth deers. Their skin is orange, with brown fur patterns and blue accents. They have lighter bones, making them more fragile than humans but also giving them incredible dexterity and speed, being able to outrun anyone but Olympic athletes. They age comparably to humans, but Puazi witches benefit from slowed aging compared to baseline, at about half the speed. They tend to be very attractive, and a lot of them present very femme, regardless of their gender or sex.
 
 Their families and relationships tend to be larger and more fluid than most races, naturally forming big polycules, although the rare monogamous Puazi do exist. Puazi find human pheromones incredibly enticing, making them go into heat unless they regularly take a specific (but widely available) medication for that.
 
