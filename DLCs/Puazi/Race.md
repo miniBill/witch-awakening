@@ -13,8 +13,3 @@ Their families and relationships tend to be larger and more fluid than most race
 A dead Puazi can be reborn if someone who carries as precious an intimate moment they shared decides they want to bear them. The child will be born with all the memories and magic of the dead witch, and grow up at an accelerated rate.
 
 __Puazi draw Mana__ from Intimacy, the shared vulnerability of people sharing something deep about them. Physical intimacy is very effective at recharging them, especially if it involves sharing of fluids, but emotional intimacy can be almost as effective, and listening to a close friend pouring her heart out can fully recharge a Puazi in the time it takes to share the secret.
-
-### Perk
-- Cost: -1
-
-Perk.
