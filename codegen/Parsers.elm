@@ -1,10 +1,12 @@
 module Parsers exposing (Affinity, Companion, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc)
 
 import Dict exposing (Dict)
+import Dict.Extra
 import Hex
 import Maybe.Extra
-import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, problem, sequence, spaces, succeed, symbol)
+import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, sequence, spaces, succeed, symbol)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
+import Set exposing (Set)
 
 
 type alias DLC =
@@ -73,17 +75,18 @@ type alias Race =
 
 race : Parser Race
 race =
-    succeed Race
-        |= header "##" "Race"
-        |= listItem "Elements"
+    (section "##" "Race" Race
+        |> requiredItem "Elements"
             (\raw ->
                 raw
                     |> String.split ","
                     |> List.map String.trim
-                    |> succeed
+                    |> Ok
             )
-        |= listItem "Mana capacity" succeed
-        |= listItem "Mana rate" succeed
+        |> requiredItem "Mana capacity" Ok
+        |> requiredItem "Mana rate" Ok
+        |> parseSection
+    )
         |= paragraphs True
         |= oneOf
             [ succeed
@@ -121,11 +124,12 @@ type Content a
 
 perk : Parser Perk
 perk =
-    succeed Perk
-        |= header "##" "Perk"
-        |= listItem "Element" succeed
-        |= listItem "Class" succeed
-        |= flag "Meta"
+    (section "##" "Perk" Perk
+        |> requiredItem "Element" Ok
+        |> requiredItem "Class" Ok
+        |> flag "Meta"
+        |> parseSection
+    )
         |= oneOf
             [ succeed Single
                 |= listItem "Cost" intParser
@@ -157,6 +161,140 @@ perk =
             ]
 
 
+type Section a
+    = Section
+        { key : String
+        , name : String
+        , parser : String -> Dict String (List String) -> Result String a
+        , items : Set String
+        }
+
+
+section : String -> String -> (String -> ctor) -> Section ctor
+section key name ctor =
+    Section
+        { key = key
+        , name = name
+        , parser = \n _ -> Ok (ctor n)
+        , items = Set.empty
+        }
+
+
+requiredItem : String -> (String -> Result String a) -> Section (a -> b) -> Section b
+requiredItem key parser (Section i) =
+    Section
+        { key = i.key
+        , name = i.name
+        , parser =
+            \n dict ->
+                Result.map2 identity
+                    (i.parser n dict)
+                    (case Dict.get key dict of
+                        Just [ value ] ->
+                            parser value
+
+                        Just [] ->
+                            Err ("Missing required property: " ++ key)
+
+                        Just (_ :: _ :: _) ->
+                            Err ("Multiple values for property: " ++ key)
+
+                        Nothing ->
+                            Err ("Missing required property: " ++ key)
+                    )
+        , items = Set.insert key i.items
+        }
+
+
+optionalItem : String -> a -> (String -> Result String a) -> Section (a -> b) -> Section b
+optionalItem key default parser (Section i) =
+    Section
+        { key = i.key
+        , name = i.name
+        , parser =
+            \n dict ->
+                Result.map2 identity
+                    (i.parser n dict)
+                    (case Dict.get key dict of
+                        Just [ value ] ->
+                            parser value
+
+                        Just [] ->
+                            Ok default
+
+                        Just (_ :: _ :: _) ->
+                            Err ("Multiple values for property: " ++ key)
+
+                        Nothing ->
+                            Ok default
+                    )
+        , items = Set.insert key i.items
+        }
+
+
+manyItems : String -> (List String -> Result String a) -> Section (a -> b) -> Section b
+manyItems key parser (Section i) =
+    Section
+        { key = i.key
+        , name = i.name
+        , parser =
+            \n dict ->
+                Result.map2 identity
+                    (i.parser n dict)
+                    (Dict.get key dict
+                        |> Maybe.withDefault []
+                        |> parser
+                    )
+        , items = Set.insert key i.items
+        }
+
+
+maybeItem : String -> (String -> Result String a) -> Section (Maybe a -> b) -> Section b
+maybeItem key parser s =
+    optionalItem key Nothing (\raw -> raw |> parser |> Result.map Just) s
+
+
+flag : String -> Section (Bool -> b) -> Section b
+flag key s =
+    optionalItem key False boolParser s
+
+
+parseSection : Section a -> Parser a
+parseSection (Section i) =
+    succeed Tuple.pair
+        |. backtrackable
+            (keyword i.key
+                |. spaces
+            )
+        |. keyword i.name
+        |. spaces
+        |. symbol ":"
+        |. spaces
+        |= getChompedString (chompUntilAfter "\n")
+        |. spaces
+        |= many
+            (i.items
+                |> Set.toList
+                |> List.sortBy (\j -> -(String.length j))
+                |> List.map
+                    (\key ->
+                        listItem key (\value -> Ok ( key, value ))
+                    )
+                |> oneOf
+            )
+        |> andThen
+            (\( n, k ) ->
+                i.parser (String.trim n)
+                    (Dict.Extra.groupBy Tuple.first k
+                        |> Dict.map
+                            (\_ v ->
+                                List.map Tuple.second v
+                            )
+                    )
+                    |> resultToParser
+            )
+
+
 type alias Magic =
     { name : String
     , class : Maybe String
@@ -175,15 +313,12 @@ type MagicAffinity
 
 magic : Parser Magic
 magic =
-    succeed Magic
-        |= header "##" "Magic"
-        |= oneOf
-            [ listItem "Class" (\class -> succeed (Just class))
-            , succeed Nothing
-            ]
-        |= listItem "Elements"
+    (section "##" "Magic" Magic
+        |> maybeItem "Class" Ok
+        |> requiredItem "Elements"
             (\raw ->
                 let
+                    splat : List (List String)
                     splat =
                         raw
                             |> String.split ","
@@ -194,23 +329,27 @@ magic =
                                         |> String.split "+"
                                         |> List.map String.trim
                                 )
-                in
-                splat
-                    |> Maybe.Extra.combineMap
-                        (\a ->
-                            case a of
-                                [ x ] ->
-                                    Just x
 
-                                _ ->
-                                    Nothing
-                        )
-                    |> Maybe.map Regular
-                    |> Maybe.withDefault (Alternative splat)
-                    |> succeed
+                    asSingleton : List a -> Maybe a
+                    asSingleton a =
+                        case a of
+                            [ x ] ->
+                                Just x
+
+                            _ ->
+                                Nothing
+                in
+                case Maybe.Extra.combineMap asSingleton splat of
+                    Just v ->
+                        Ok (Regular v)
+
+                    Nothing ->
+                        Ok (Alternative splat)
             )
-        |= flag "Has rank zero"
-        |= flag "Elementalism"
+        |> flag "Has rank zero"
+        |> flag "Elementalism"
+        |> parseSection
+    )
         |= paragraphs True
         |= (many
                 (succeed Tuple.pair
@@ -223,7 +362,11 @@ magic =
                             |. spaces
                             |= getChompedString (chompUntilAfter "\n")
                             |. spaces
-                            |> andThen intParser
+                            |> andThen
+                                (\raw ->
+                                    intParser raw
+                                        |> resultToParser
+                                )
                        )
                     |= paragraphs True
                 )
@@ -231,12 +374,14 @@ magic =
            )
 
 
-flag : String -> Parser Bool
-flag name =
-    oneOf
-        [ listItem name boolParser
-        , succeed False
-        ]
+resultToParser : Result String a -> Parser a
+resultToParser result =
+    case result of
+        Ok v ->
+            succeed v
+
+        Err e ->
+            Parser.problem e
 
 
 type alias Affinity =
@@ -249,14 +394,11 @@ type alias Affinity =
 
 affinity : Parser Affinity
 affinity =
-    succeed Affinity
-        |= header "##" "Affinity"
-        |= listItem "Color" hexParser
-        |= flag "Rainbow"
-        |= oneOf
-            [ listItem "Symbol" (\symbol -> succeed (Just symbol))
-            , succeed Nothing
-            ]
+    section "##" "Affinity" Affinity
+        |> requiredItem "Color" hexParser
+        |> flag "Rainbow"
+        |> maybeItem "Symbol" Ok
+        |> parseSection
 
 
 type alias Relic =
@@ -268,20 +410,62 @@ type alias Relic =
 
 relic : Parser Relic
 relic =
-    succeed Relic
-        |= header "##" "Relic"
-        |= oneOf
-            [ listItem "Class" (\class -> succeed (Just class))
-            , succeed Nothing
+    (section "##"
+        "Relic"
+        (\name class toContent content ->
+            { name = name
+            , class = class
+            , content = toContent content
+            }
+        )
+        |> maybeItem "Class" Ok
+        |> oneOfItems
+            [ requiredItem "Cost" (intParser >> Result.map Single)
+            , requiredItem "Costs" (intListParser >> Result.map WithCosts)
             ]
-        |= oneOf
-            [ succeed Single
-                |= listItem "Cost" intParser
-                |= paragraphs True
-            , succeed WithCosts
-                |= listItem "Costs" intListParser
-                |= paragraphs True
-            ]
+        |> parseSection
+    )
+        |= paragraphs True
+
+
+oneOfItems : List (Section a -> Section b) -> Section a -> Section b
+oneOfItems options (Section s) =
+    let
+        mapped =
+            options
+                |> List.map
+                    (\option ->
+                        let
+                            (Section r) =
+                                option (Section s)
+                        in
+                        r
+                    )
+    in
+    Section
+        { key = s.key
+        , name = s.name
+        , items = List.foldl (\e acc -> Set.union e.items acc) Set.empty mapped
+        , parser =
+            \n d ->
+                List.foldl
+                    (\e acc ->
+                        case acc of
+                            Ok v ->
+                                Ok v
+
+                            Err eacc ->
+                                case e.parser n d of
+                                    Ok v ->
+                                        Ok v
+
+                                    Err ee ->
+                                        Err (ee :: eacc)
+                    )
+                    (Err [])
+                    mapped
+                    |> Result.mapError (\es -> "Expected one of:" ++ String.join "\n" es)
+        }
 
 
 type alias Companion =
@@ -313,9 +497,9 @@ type Score
 companion : Parser Companion
 companion =
     let
-        score : String -> Parser Score
+        score : String -> Section (Score -> a) -> Section a
         score label =
-            listItem label
+            requiredItem label
                 (\v ->
                     case
                         v
@@ -323,54 +507,40 @@ companion =
                             |> Maybe.Extra.combineMap String.toInt
                     of
                         Just [ s ] ->
-                            succeed (NormalScore s)
+                            Ok (NormalScore s)
 
                         Just [ 1, better ] ->
-                            succeed (SpecialEffect { worse = Nothing, better = better })
+                            Ok (SpecialEffect { worse = Nothing, better = better })
 
                         Just [ worse, better ] ->
-                            succeed (SpecialEffect { worse = Just worse, better = better })
+                            Ok (SpecialEffect { worse = Just worse, better = better })
 
                         _ ->
-                            problem ("Invalid score: " ++ v)
+                            Err ("Invalid score: " ++ v)
                 )
     in
-    succeed Companion
-        |= header "##" "Companion"
-        |= oneOf
-            [ listItem "Full name" (\fullName -> succeed (Just fullName))
-            , succeed Nothing
+    (section "##" "Companion" Companion
+        |> maybeItem "Full name" Ok
+        |> maybeItem "Faction" Ok
+        |> maybeItem "Class" Ok
+        |> oneOfItems
+            [ requiredItem "Race" (\r -> Ok [ r ])
+            , requiredItem "Races" (\r -> Ok (List.map String.trim (String.split "," r)))
+            , optionalItem "___" [] (\_ -> Ok [])
             ]
-        |= oneOf
-            [ succeed Just |= listItem "Faction" succeed
-            , succeed Nothing
-            ]
-        |= oneOf
-            [ listItem "Class" (\class -> succeed (Just class))
-            , succeed Nothing
-            ]
-        |= oneOf
-            [ listItem "Race" (\r -> succeed [ r ])
-            , listItem "Races" (\r -> succeed (List.map String.trim (String.split "," r)))
-            , succeed []
-            ]
-        |= flag "Has Perk"
-        |= oneOf
-            [ succeed Just |= listItem "Cost" intParser
-            , succeed Nothing
-            ]
-        |= score "Power"
-        |= score "Teamwork"
-        |= score "Sociability"
-        |= score "Morality"
-        |= many (listItem "Positive" succeed)
-        |= many (listItem "Negative" succeed)
-        |= many (listItem "Mixed" succeed)
-        |= oneOf
-            [ listItem "Has" succeed
-            , succeed ""
-            ]
-        |= listItem "Quote" succeed
+        |> flag "Has Perk"
+        |> maybeItem "Cost" intParser
+        |> score "Power"
+        |> score "Teamwork"
+        |> score "Sociability"
+        |> score "Morality"
+        |> manyItems "Positive" Ok
+        |> manyItems "Negative" Ok
+        |> manyItems "Mixed" Ok
+        |> optionalItem "Has" "" Ok
+        |> requiredItem "Quote" Ok
+        |> parseSection
+    )
         |= paragraphs True
 
 
@@ -404,65 +574,46 @@ paragraph acceptList =
         |. Parser.spaces
 
 
-boolParser : String -> Parser Bool
+boolParser : String -> Result String Bool
 boolParser raw =
     case raw of
         "True" ->
-            succeed True
+            Ok True
 
         "False" ->
-            succeed False
+            Ok False
 
         _ ->
-            problem (raw ++ " is not a valid boolean")
+            Err (raw ++ " is not a valid boolean")
 
 
-hexParser : String -> Parser Int
+hexParser : String -> Result String Int
 hexParser raw =
-    case Hex.fromString (String.toLower raw) of
-        Err e ->
-            problem (raw ++ " is not a valid hex number: " ++ e)
-
-        Ok n ->
-            succeed n
+    Hex.fromString (String.toLower raw)
+        |> Result.mapError (\e -> raw ++ " is not a valid hex number: " ++ e)
 
 
-intParser : String -> Parser Int
+intParser : String -> Result String Int
 intParser raw =
     case String.toInt raw of
         Nothing ->
-            problem (raw ++ " is not a valid number")
+            Err (raw ++ " is not a valid number")
 
         Just n ->
-            succeed n
+            Ok n
 
 
-intListParser : String -> Parser (List Int)
+intListParser : String -> Result String (List Int)
 intListParser raw =
     case raw |> String.split "," |> Maybe.Extra.combineMap (\piece -> piece |> String.trim |> String.toInt) of
         Nothing ->
-            problem (raw ++ " is not a valid list of numbers")
+            Err (raw ++ " is not a valid list of numbers")
 
         Just n ->
-            succeed n
+            Ok n
 
 
-header : String -> String -> Parser String
-header level key =
-    succeed String.trim
-        |. backtrackable
-            (keyword level
-                |. spaces
-            )
-        |. keyword key
-        |. spaces
-        |. symbol ":"
-        |. spaces
-        |= getChompedString (chompUntilAfter "\n")
-        |. spaces
-
-
-listItem : String -> (String -> Parser a) -> Parser a
+listItem : String -> (String -> Result String a) -> Parser a
 listItem key continuation =
     succeed String.trim
         |. backtrackable
@@ -474,4 +625,8 @@ listItem key continuation =
         |. spaces
         |= getChompedString (chompUntilAfter "\n")
         |. spaces
-        |> andThen continuation
+        |> andThen
+            (\raw ->
+                continuation raw
+                    |> resultToParser
+            )
