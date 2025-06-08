@@ -21,7 +21,7 @@ type alias ClassesModule =
 module_ : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module ClassesModule
 module_ dlcClasses =
     Elm.Declare.module_ [ "Generated", "Classes" ] ClassesModule
-        |> Elm.Declare.with (allClasses dlcClasses)
+        |> Elm.Declare.with (all dlcClasses)
         |> Elm.Declare.with (classToColor dlcClasses)
         |> Elm.Declare.with classDetails.declaration
         |> Elm.Declare.Extra.withDeclarations (dlcToClasses dlcClasses)
@@ -46,8 +46,8 @@ classDetails =
         |> Elm.Declare.Extra.buildCustomRecord
 
 
-allClasses : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Value
-allClasses dlcClasses =
+all : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Value
+all dlcClasses =
     dlcClasses
         |> List.map (\( _, class ) -> Elm.val (String.Extra.decapitalize (yassify class.name)))
         |> Elm.list

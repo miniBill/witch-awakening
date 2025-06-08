@@ -19,13 +19,13 @@ type alias RelicsModule =
 relicsFile : List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Module RelicsModule
 relicsFile dlcRelics =
     Elm.Declare.module_ [ "Generated", "Relic" ] RelicsModule
-        |> Elm.Declare.with (allRelics dlcRelics)
-        |> Elm.Declare.with relicDetails.declaration
+        |> Elm.Declare.with (all dlcRelics)
+        |> Elm.Declare.with details.declaration
         |> Elm.Declare.Extra.withDeclarations (dlcToRelics dlcRelics)
 
 
-allRelics : List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Value
-allRelics dlcRelics =
+all : List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Value
+all dlcRelics =
     dlcRelics
         |> List.map (\( _, relic ) -> Elm.val (String.Extra.decapitalize (yassify relic.name)))
         |> Elm.list
@@ -33,7 +33,7 @@ allRelics dlcRelics =
         |> Elm.Declare.value "all"
 
 
-relicDetails :
+details :
     { declaration : Elm.Declare.Annotation
     , make :
         { name : Elm.Expression
@@ -43,7 +43,7 @@ relicDetails :
         }
         -> Elm.Expression
     }
-relicDetails =
+details =
     Elm.Declare.Extra.customRecord "Details"
         |> Elm.Declare.Extra.withField "name" .name (annotationFromTypes "Relic")
         |> Elm.Declare.Extra.withField "classes" .classes (Elm.Annotation.list (annotationFromTypes "Class"))
@@ -56,7 +56,7 @@ dlcToRelics : List ( Maybe String, Parsers.Relic ) -> List Elm.Declaration
 dlcToRelics relics =
     List.map
         (\( dlcName, relic ) ->
-            relicDetails.make
+            details.make
                 { name = valueFromTypes relic.name
                 , classes = Elm.list (List.map valueFromTypes relic.classes)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
