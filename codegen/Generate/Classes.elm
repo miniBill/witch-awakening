@@ -23,7 +23,7 @@ file : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module
 file types dlcClasses =
     Elm.Declare.module_ [ "Generated", "Classes" ] ClassesModule
         |> Elm.Declare.with (all types dlcClasses)
-        |> Elm.Declare.with (classToColor dlcClasses)
+        |> Elm.Declare.with (classToColor types dlcClasses)
         |> Elm.Declare.with (classDetails types)
         |> Elm.Declare.Extra.withDeclarations (dlcToClasses types dlcClasses)
 
@@ -60,8 +60,8 @@ all types dlcClasses =
         |> Elm.Declare.value "all"
 
 
-classToColor : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
-classToColor dlcClasses =
+classToColor : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+classToColor types dlcClasses =
     Elm.Declare.fn "classToColor"
         (Elm.Arg.var "class")
         (\class ->
@@ -72,7 +72,7 @@ classToColor dlcClasses =
                             (Elm.Arg.customType classData.name ())
                             (\() -> Elm.hex classData.color)
                     )
-                |> Elm.Case.custom class (Elm.Annotation.named [ "Generated", "Types" ] "Class")
+                |> Elm.Case.custom class types.class.annotation
         )
 
 

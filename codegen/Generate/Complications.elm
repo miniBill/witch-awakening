@@ -2,6 +2,8 @@ module Generate.Complications exposing (file)
 
 import Elm
 import Elm.Annotation
+import Elm.Declare
+import Elm.Declare.Extra
 import Gen.Data.Complication
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
@@ -9,22 +11,25 @@ import Parsers exposing (Content(..))
 import String.Extra
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Complication ) -> Elm.File
+type alias ComplicationModule =
+    { all : Elm.Expression
+    }
+
+
+file : TypesModule -> List ( Maybe String, Parsers.Complication ) -> Elm.Declare.Module ComplicationModule
 file types dlcComplications =
-    Elm.file [ "Generated", "Complication" ]
-        (all dlcComplications
-            :: dlcToComplications types dlcComplications
-        )
+    Elm.Declare.module_ [ "Generated", "Complication" ] ComplicationModule
+        |> Elm.Declare.with (all dlcComplications)
+        |> Elm.Declare.Extra.withDeclarations (dlcToComplications types dlcComplications)
 
 
-all : List ( Maybe String, Parsers.Complication ) -> Elm.Declaration
+all : List ( Maybe String, Parsers.Complication ) -> Elm.Declare.Value
 all dlcComplications =
     dlcComplications
         |> List.map (\( _, complication ) -> Elm.val (String.Extra.decapitalize (yassify complication.name)))
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list Gen.Data.Complication.annotation_.details)
-        |> Elm.declaration "all"
-        |> Elm.expose
+        |> Elm.Declare.value "all"
 
 
 dlcToComplications : TypesModule -> List ( Maybe String, Parsers.Complication ) -> List Elm.Declaration
