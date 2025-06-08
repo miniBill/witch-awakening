@@ -77,7 +77,7 @@ dlcToClasses classes =
     List.map
         (\( dlcName, class ) ->
             classDetails.make
-                { name = Generate.Types.value class.name
+                { name = Generate.Types.valueFrom class.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , color = Elm.hex class.color
                 , content = Elm.string class.description

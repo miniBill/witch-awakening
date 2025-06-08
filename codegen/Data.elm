@@ -1,4 +1,4 @@
-module Data exposing (Enum, Variant, enums)
+module Data exposing (Enum, Enums, Variant, enums)
 
 import List.Extra
 import Parsers
@@ -19,7 +19,15 @@ type alias Variant =
     }
 
 
-enums : List Parsers.DLC -> List Enum
+type alias Enums =
+    { class : Enum
+    , race : Enum
+    , relic : Enum
+    , others : List Enum
+    }
+
+
+enums : List Parsers.DLC -> Enums
 enums parsedDLCs =
     let
         combinedDLC : DLC
@@ -30,31 +38,36 @@ enums parsedDLCs =
                 )
                 parsedDLCs
     in
-    [ buildEnum "Class" combinedDLC.classes
-        |> withImages
-    , buildEnum "Race" combinedDLC.races
-        |> withImages
-    , buildEnum "Perk" combinedDLC.perks
-        |> withImages
-    , buildEnum "Affinity" combinedDLC.affinities
-    , buildEnum "Companion" combinedDLC.companions
-        |> withImages
-    , buildEnum "Relic" combinedDLC.relics
-        |> withImages
-    , buildEnum "Magic" combinedDLC.magics
-        |> withImages
-    , buildEnum "Complication" combinedDLC.complications
-        |> withImages
-    , buildEnum "ComplicationCategory" combinedDLC.complicationCategories
+    { race =
+        buildEnum "Race" combinedDLC.races
+            |> withImages
+    , class =
+        buildEnum "Class" combinedDLC.classes
+            |> withImages
+    , relic =
+        buildEnum "Relic" combinedDLC.relics
+            |> withImages
+    , others =
+        [ buildEnum "Perk" combinedDLC.perks
+            |> withImages
+        , buildEnum "Affinity" combinedDLC.affinities
+        , buildEnum "Companion" combinedDLC.companions
+            |> withImages
+        , buildEnum "Magic" combinedDLC.magics
+            |> withImages
+        , buildEnum "Complication" combinedDLC.complications
+            |> withImages
+        , buildEnum "ComplicationCategory" combinedDLC.complicationCategories
 
-    --
-    , buildEnum "Size" (buildVariants coreSizes)
-    , buildEnum "GameMode" (buildVariants coreGameModes)
-        |> withImages
-    , buildEnum "Slot" (buildVariants coreSlots)
-        |> withImages
-    , buildEnum "Faction" (buildVariants coreFactions)
-    ]
+        --
+        , buildEnum "Size" (buildVariants coreSizes)
+        , buildEnum "GameMode" (buildVariants coreGameModes)
+            |> withImages
+        , buildEnum "Slot" (buildVariants coreSlots)
+            |> withImages
+        , buildEnum "Faction" (buildVariants coreFactions)
+        ]
+    }
 
 
 fromParsed : Parsers.DLC -> DLC

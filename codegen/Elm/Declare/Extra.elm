@@ -1,4 +1,4 @@
-module Elm.Declare.Extra exposing (buildCustomRecord, customRecord, withDeclarations, withField, withHelper)
+module Elm.Declare.Extra exposing (buildCustomRecord, customRecord, exposeConstructor, withDeclarations, withField, withHelper)
 
 import Elm
 import Elm.Annotation
@@ -61,3 +61,8 @@ buildCustomRecord record =
     { declaration = Elm.Declare.alias record.name annotation
     , make = \v -> Elm.record (List.reverse (record.make v)) |> Elm.withType annotation
     }
+
+
+exposeConstructor : Elm.Declare.Annotation -> Elm.Declare.Annotation
+exposeConstructor unexposed =
+    { unexposed | declaration = Elm.exposeConstructor unexposed.declaration }

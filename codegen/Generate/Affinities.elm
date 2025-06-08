@@ -51,7 +51,7 @@ dlcToAffinities affinities =
     List.map
         (\( dlcName, affinity ) ->
             Gen.Data.Affinity.make_.details
-                { name = Generate.Types.value affinity.name
+                { name = Generate.Types.valueFrom affinity.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (affinityToVarName affinity.name)

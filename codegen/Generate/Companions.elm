@@ -28,7 +28,7 @@ all dlcCompanions =
             |> List.map
                 (\( ( _, { faction } ) as head, tail ) ->
                     Elm.tuple
-                        (Elm.maybe (Maybe.map Generate.Types.value faction))
+                        (Elm.maybe (Maybe.map Generate.Types.valueFrom faction))
                         ((head :: tail)
                             |> List.map
                                 (\( _, companion ) ->
@@ -104,7 +104,7 @@ dlcToCompanions companions =
                             Gen.Data.Companion.make_.classSpecial
 
                         Just c ->
-                            Gen.Data.Companion.make_.classOne (Generate.Types.value c)
+                            Gen.Data.Companion.make_.classOne (Generate.Types.valueFrom c)
 
                         Nothing ->
                             Gen.Data.Companion.make_.classNone
@@ -124,7 +124,7 @@ dlcToCompanions companions =
                                 )
             in
             Gen.Data.Companion.make_.details
-                { name = Generate.Types.value companion.name
+                { name = Generate.Types.valueFrom companion.name
                 , class = class
                 , races =
                     Elm.list
@@ -133,7 +133,7 @@ dlcToCompanions companions =
                                 case
                                     race
                                         |> String.split "-"
-                                        |> List.map Generate.Types.value
+                                        |> List.map Generate.Types.valueFrom
                                 of
                                     [ x ] ->
                                         x
@@ -142,7 +142,7 @@ dlcToCompanions companions =
                                         Elm.apply h t
 
                                     [] ->
-                                        Generate.Types.value "Empty list?"
+                                        Generate.Types.valueFrom "Empty list?"
                             )
                             companion.races
                         )

@@ -32,9 +32,9 @@ dlcToComplications complications =
     List.map
         (\( dlcName, complication ) ->
             Gen.Data.Complication.make_.details
-                { name = Generate.Types.value complication.name
-                , class = Elm.maybe (Maybe.map Generate.Types.value complication.class)
-                , category = Elm.maybe (Maybe.map Generate.Types.value complication.category)
+                { name = Generate.Types.valueFrom complication.name
+                , class = Elm.maybe (Maybe.map Generate.Types.valueFrom complication.class)
+                , category = Elm.maybe (Maybe.map Generate.Types.valueFrom complication.category)
                 , content =
                     case complication.content of
                         Parsers.Single cost description ->

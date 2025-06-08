@@ -200,6 +200,10 @@ dlcToFiles dlcList =
                 , dlcRelics = []
                 }
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
+
+        types : Elm.Declare.Module Generate.Types.TypesModule
+        types =
+            Generate.Types.file dlcList
     in
     [ Generate.Affinities.file dlcAffinities
     , Elm.Declare.toFile (Generate.Classes.file dlcClasses)
@@ -208,7 +212,7 @@ dlcToFiles dlcList =
     , Elm.Declare.toFile (Generate.Magics.file dlcMagics)
     , Elm.Declare.toFile (Generate.Perks.file dlcPerks)
     , Elm.Declare.toFile (Generate.Races.file dlcRaces)
-    , Elm.Declare.toFile (Generate.Relics.file dlcRelics)
+    , Elm.Declare.toFile (Generate.Relics.file types.call dlcRelics)
     , Elm.Declare.toFile (Generate.TypePerks.file dlcRaces)
-    , Elm.Declare.toFile (Generate.Types.file dlcList)
+    , Elm.Declare.toFile types
     ]

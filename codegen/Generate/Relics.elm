@@ -5,7 +5,7 @@ import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.Data.Relic
-import Generate.Types
+import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers exposing (Content(..))
 import String.Extra
@@ -17,12 +17,12 @@ type alias RelicsModule =
     }
 
 
-file : List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Module RelicsModule
-file dlcRelics =
+file : TypesModule -> List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Module RelicsModule
+file types dlcRelics =
     Elm.Declare.module_ [ "Generated", "Relic" ] RelicsModule
         |> Elm.Declare.with (all dlcRelics)
-        |> Elm.Declare.with details.declaration
-        |> Elm.Declare.Extra.withDeclarations (dlcToRelics dlcRelics)
+        |> Elm.Declare.with (details types).declaration
+        |> Elm.Declare.Extra.withDeclarations (dlcToRelics types dlcRelics)
 
 
 all : List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Value
@@ -35,31 +35,33 @@ all dlcRelics =
 
 
 details :
-    { declaration : Elm.Declare.Annotation
-    , make :
-        { name : Elm.Expression
-        , classes : Elm.Expression
-        , dlc : Elm.Expression
-        , content : Elm.Expression
+    TypesModule
+    ->
+        { declaration : Elm.Declare.Annotation
+        , make :
+            { name : Elm.Expression
+            , classes : Elm.Expression
+            , dlc : Elm.Expression
+            , content : Elm.Expression
+            }
+            -> Elm.Expression
         }
-        -> Elm.Expression
-    }
-details =
+details types =
     Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name (Generate.Types.annotation "Relic")
-        |> Elm.Declare.Extra.withField "classes" .classes (Elm.Annotation.list (Generate.Types.annotation "Class"))
+        |> Elm.Declare.Extra.withField "name" .name types.relic.annotation
+        |> Elm.Declare.Extra.withField "classes" .classes (Elm.Annotation.list types.class.annotation)
         |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
         |> Elm.Declare.Extra.withField "content" .content Gen.Data.Relic.annotation_.content
         |> Elm.Declare.Extra.buildCustomRecord
 
 
-dlcToRelics : List ( Maybe String, Parsers.Relic ) -> List Elm.Declaration
-dlcToRelics relics =
+dlcToRelics : TypesModule -> List ( Maybe String, Parsers.Relic ) -> List Elm.Declaration
+dlcToRelics types_ relics =
     List.map
         (\( dlcName, relic ) ->
-            details.make
-                { name = Generate.Types.value relic.name
-                , classes = Elm.list (List.map Generate.Types.value relic.classes)
+            (details types_).make
+                { name = Generate.Types.valueFrom relic.name
+                , classes = Elm.list (List.map Generate.Types.valueFrom relic.classes)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , content =
                     case relic.content of

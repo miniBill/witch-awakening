@@ -47,11 +47,11 @@ dlcToRaces races =
     List.map
         (\( dlcName, race ) ->
             Gen.Data.Race.make_.details
-                { name = Generate.Types.value race.name
+                { name = Generate.Types.valueFrom race.name
                 , content = Elm.string race.description
-                , tank = Generate.Types.value race.manaCapacity
-                , affinities = Elm.list (List.map Generate.Types.value race.elements)
-                , charge = Generate.Types.value race.manaRate
+                , tank = Generate.Types.valueFrom race.manaCapacity
+                , affinities = Elm.list (List.map Generate.Types.valueFrom race.elements)
+                , charge = Generate.Types.valueFrom race.manaRate
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (yassify race.name)
