@@ -1,12 +1,14 @@
 module Generate.FromDLC exposing (files)
 
 import Dict
+import Dict.Extra
 import Elm
 import Elm.Annotation
 import Elm.Arg
 import Elm.Case
 import Elm.Declare
 import Elm.Op
+import Gen.CodeGen.Generate as Generate
 import Gen.Data.Affinity
 import Gen.Data.Companion
 import Gen.Data.Complication
@@ -20,12 +22,109 @@ import Generate.Relics
 import Generate.Types
 import Generate.Utils exposing (valueFromTypes, yassify)
 import List.Extra
+import Parser
 import Parsers exposing (DLCItem(..))
+import Result.Extra
 import String.Extra
 
 
-files : List Parsers.DLC -> List Elm.File
-files dlcList =
+files : List ( String, String, String ) -> Result (List Generate.Error) (List Elm.File)
+files inputs =
+    inputs
+        |> Result.Extra.combineMap parseDLC
+        |> Result.map
+            (\dlcList ->
+                dlcList
+                    |> Dict.Extra.groupBy (\{ name } -> Maybe.withDefault "" name)
+                    |> Dict.foldl
+                        (\name grouped acc ->
+                            { name =
+                                if String.isEmpty name then
+                                    Nothing
+
+                                else
+                                    Just name
+                            , items = List.concatMap .items grouped
+                            }
+                                :: acc
+                        )
+                        []
+                    |> files_
+            )
+
+
+parseDLC : ( String, String, String ) -> Result (List Generate.Error) Parsers.DLC
+parseDLC ( folder, filename, content ) =
+    Parser.run Parsers.dlc content
+        |> Result.mapError
+            (\deadEnds ->
+                [ { title = "Error parsing DLC file"
+                  , description =
+                        "Could not parse " ++ folder ++ "/" ++ filename ++ "\n" ++ errorToString deadEnds
+                  }
+                ]
+            )
+
+
+errorToString : List Parser.DeadEnd -> String
+errorToString deadEnds =
+    String.join "\n" <|
+        List.map deadEndToString deadEnds
+
+
+deadEndToString : Parser.DeadEnd -> String
+deadEndToString deadEnd =
+    "At " ++ String.fromInt deadEnd.row ++ ":" ++ String.fromInt deadEnd.col ++ ": " ++ problemToString deadEnd.problem
+
+
+problemToString : Parser.Problem -> String
+problemToString problem =
+    case problem of
+        Parser.ExpectingInt ->
+            "Expecting int"
+
+        Parser.ExpectingHex ->
+            "Expecting hex"
+
+        Parser.ExpectingOctal ->
+            "Expecting octal"
+
+        Parser.ExpectingBinary ->
+            "Expecting binary"
+
+        Parser.ExpectingFloat ->
+            "Expecting float"
+
+        Parser.ExpectingNumber ->
+            "Expecting number"
+
+        Parser.ExpectingVariable ->
+            "Expecting variable"
+
+        Parser.ExpectingSymbol s ->
+            "Expecting symbol " ++ s
+
+        Parser.ExpectingKeyword k ->
+            "Expecting keyword " ++ k
+
+        Parser.Expecting e ->
+            "Expecting " ++ e
+
+        Parser.ExpectingEnd ->
+            "Expecting end"
+
+        Parser.UnexpectedChar ->
+            "Unexpected char"
+
+        Parser.Problem p ->
+            "Problem: " ++ p
+
+        Parser.BadRepeat ->
+            "Bad repetition"
+
+
+files_ : List Parsers.DLC -> List Elm.File
+files_ dlcList =
     let
         { dlcAffinities, dlcClasses, dlcCompanions, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics } =
             List.foldr
