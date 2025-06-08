@@ -1,7 +1,7 @@
 module View.FactionalMagic exposing (viewFactionalMagics)
 
 import Element exposing (Element, centerX, fill, width)
-import Generated.Magics
+import Generated.Magic
 import Theme
 import Types exposing (Choice(..), Display, RankedMagic)
 import View
@@ -13,7 +13,7 @@ viewFactionalMagics display selected =
     let
         boxes : Element ( RankedMagic, Bool )
         boxes =
-            Generated.Magics.all
+            Generated.Magic.all
                 |> List.filter (\{ faction } -> faction /= Nothing)
                 |> List.indexedMap (Magic.magicBox display True selected)
                 |> Theme.column []

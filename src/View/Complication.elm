@@ -4,7 +4,7 @@ import Data.Complication as Complication exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, px, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Complications
+import Generated.Complication
 import Generated.Types as Types exposing (ComplicationCategory(..), Slot(..))
 import Gradients
 import List.Extra
@@ -40,7 +40,7 @@ viewComplications display complications =
         Complication.title
         [ Theme.blocks [] Complication.intro
         , Theme.blocks [] "# World Shifts"
-        , ((Generated.Complications.all
+        , ((Generated.Complication.all
                 |> List.filter isWorldShift
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.filterMap
@@ -58,13 +58,13 @@ viewComplications display complications =
           )
             |> wrappedRow
         , Theme.blocks [] "# Generic Complications"
-        , Generated.Complications.all
+        , Generated.Complication.all
             |> List.filter (\complication -> not (isWorldShift complication))
             |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.filterMap (complicationBox display complications)
             |> wrappedRow
         ]
-        [ Generated.Complications.all
+        [ Generated.Complication.all
             |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.filterMap (complicationBox display complications)
             |> wrappedRow

@@ -4,8 +4,8 @@ import Data.Affinity as Affinity
 import Data.Relic as Relic exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, paragraph, px, spacing, text, width)
 import Element.Font as Font
-import Generated.Affinities
-import Generated.Relics
+import Generated.Affinity
+import Generated.Relic
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
 import Html
@@ -23,7 +23,7 @@ viewRelics display pearl mainRace races relics =
     let
         sorted : List (Element Choice)
         sorted =
-            Generated.Relics.all
+            Generated.Relic.all
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.filterMap (relicBox mainRace display relics pearl races)
     in
@@ -339,9 +339,9 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                     , Theme.viewAffinity from
                     , Theme.blocks [] "with"
                     ]
-                , Generated.Affinities.all
+                , Generated.Affinity.all
                     |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
-                    |> List.Extra.remove Generated.Affinities.all_
+                    |> List.Extra.remove Generated.Affinity.all_
                     |> List.map (\affinity -> viewSwap affinity.name)
                     |> Theme.wrappedRow []
                 ]
@@ -379,9 +379,9 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
             in
             Theme.column [ width fill ]
                 [ Theme.blocks [ width fill ] "Add an affinity: "
-                , Generated.Affinities.all
+                , Generated.Affinity.all
                     |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
-                    |> List.Extra.remove Generated.Affinities.all_
+                    |> List.Extra.remove Generated.Affinity.all_
                     |> List.map (\affinity -> viewAdd affinity.name)
                     |> Theme.wrappedRow []
                 ]

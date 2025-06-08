@@ -4,35 +4,42 @@ import Elm
 import Elm.Annotation
 import Elm.Arg
 import Elm.Case
+import Elm.Declare
+import Elm.Declare.Extra
 import Gen.Data.Affinity
-import Generate.Types
+import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
 
 
-file : List ( Maybe String, Parsers.Affinity ) -> Elm.File
-file dlcAffinities =
-    Elm.file [ "Generated", "Affinity" ]
-        (all dlcAffinities
-            :: Elm.expose (affinityToColor dlcAffinities)
-            :: dlcToAffinities dlcAffinities
-        )
+type alias AffinitiesModule =
+    { all : Elm.Expression
+    , affinityToColor : Elm.Expression -> Elm.Expression
+    }
 
 
-all : List ( Maybe String, Parsers.Affinity ) -> Elm.Declaration
+file : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Module AffinitiesModule
+file types dlcAffinities =
+    Elm.Declare.module_ [ "Generated", "Affinity" ] AffinitiesModule
+        |> Elm.Declare.with (all dlcAffinities)
+        |> Elm.Declare.with (affinityToColor types dlcAffinities)
+        |> Elm.Declare.Extra.withDeclarations (dlcToAffinities dlcAffinities)
+
+
+all : List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Value
 all dlcAffinities =
     dlcAffinities
         |> List.map (\( _, affinity ) -> Elm.val (affinityToVarName affinity.name))
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list Gen.Data.Affinity.annotation_.details)
-        |> Elm.declaration "all"
-        |> Elm.expose
+        |> Elm.Declare.value "all"
 
 
-affinityToColor : List ( Maybe String, Parsers.Affinity ) -> Elm.Declaration
-affinityToColor dlcAffinities =
-    Elm.fn (Elm.Arg.var "affinity")
+affinityToColor : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+affinityToColor types dlcAffinities =
+    Elm.Declare.fn "affinityToColor"
+        (Elm.Arg.var "affinity")
         (\affinity ->
             dlcAffinities
                 |> List.map
@@ -41,9 +48,8 @@ affinityToColor dlcAffinities =
                             (Elm.Arg.customType affinityData.name ())
                             (\() -> Elm.hex affinityData.color)
                     )
-                |> Elm.Case.custom affinity (Elm.Annotation.named [ "Generated", "Types" ] "Affinity")
+                |> Elm.Case.custom affinity types.affinity.annotation
         )
-        |> Elm.declaration "affinityToColor"
 
 
 dlcToAffinities : List ( Maybe String, Parsers.Affinity ) -> List Elm.Declaration

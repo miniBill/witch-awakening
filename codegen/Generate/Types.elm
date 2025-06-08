@@ -18,7 +18,8 @@ import String.Extra
 
 
 type alias TypesModule =
-    { class : EnumModule
+    { affinity : EnumModule
+    , class : EnumModule
     , race : EnumModule
     , relic : EnumModule
     }
@@ -31,7 +32,11 @@ moduleName =
 
 valueFrom : String -> Elm.Expression
 valueFrom name =
-    Elm.value { importFrom = moduleName, name = name, annotation = Nothing }
+    Elm.value
+        { importFrom = moduleName
+        , name = yassify name
+        , annotation = Nothing
+        }
 
 
 file : ImagesModule -> List Parsers.DLC -> Elm.Declare.Module TypesModule
@@ -42,6 +47,7 @@ file images dlcList =
             Data.enums dlcList
     in
     Elm.Declare.module_ moduleName TypesModule
+        |> Elm.Declare.withSubmodule (enumToDeclarations images enums.affinity)
         |> Elm.Declare.withSubmodule (enumToDeclarations images enums.class)
         |> Elm.Declare.withSubmodule (enumToDeclarations images enums.race)
         |> Elm.Declare.withSubmodule (enumToDeclarations images enums.relic)

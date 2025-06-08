@@ -5,7 +5,7 @@ import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fi
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Magics
+import Generated.Magic
 import Generated.Types as Types exposing (Faction)
 import Gradients
 import Images exposing (Image)
@@ -238,7 +238,7 @@ factionBox display selected { name, motto, description, location, relations, per
                                 (gradientText 3 Gradients.blueGradient perk)
                             ]
                         , content =
-                            case List.Extra.find (\magic -> magic.faction == Just name) Generated.Magics.all of
+                            case List.Extra.find (\magic -> magic.faction == Just name) Generated.Magic.all of
                                 Nothing ->
                                     []
 

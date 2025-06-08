@@ -7,7 +7,7 @@ import Elm.Declare
 import Elm.Declare.Extra
 import Elm.Op
 import Gen.Data.Race
-import Generate.Types
+import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
@@ -18,18 +18,18 @@ type alias RacesModule =
     }
 
 
-file : List ( Maybe String, Parsers.Race ) -> Elm.Declare.Module RacesModule
-file dlcRaces =
+file : TypesModule -> List ( Maybe String, Parsers.Race ) -> Elm.Declare.Module RacesModule
+file types dlcRaces =
     Elm.Declare.module_ [ "Generated", "Race" ] RacesModule
-        |> Elm.Declare.with (all dlcRaces)
+        |> Elm.Declare.with (all types dlcRaces)
         |> Elm.Declare.Extra.withDeclarations (dlcToRaces dlcRaces)
 
 
-all : List ( Maybe String, Parsers.Race ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
-all dlcRaces =
+all : TypesModule -> List ( Maybe String, Parsers.Race ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+all types dlcRaces =
     Elm.Declare.fn "all"
         (Elm.Arg.varWith "races"
-            (Elm.Annotation.list (Elm.Annotation.named [ "Generated", "Types" ] "Race"))
+            (Elm.Annotation.list types.race.annotation)
         )
     <|
         \races ->

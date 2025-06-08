@@ -5,8 +5,8 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, e
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Perks
-import Generated.Races
+import Generated.Perk
+import Generated.Race
 import Generated.Types as Types exposing (Perk(..), Race, Slot(..))
 import Gradients
 import Images
@@ -23,7 +23,7 @@ viewPerks display mainRace races perks =
     let
         sorted : List Perk.Details
         sorted =
-            Generated.Perks.all perks
+            Generated.Perk.all perks
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
     in
     View.collapsible (Theme.topBackground Images.perkIntro)
@@ -351,7 +351,7 @@ viewContent mainRace races color selected { content, name } =
                     )
                     color
                     swapRace
-                    (Generated.Races.all races
+                    (Generated.Race.all races
                         |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                         |> List.map .name
                     )

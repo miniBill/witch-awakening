@@ -10,11 +10,11 @@ import Data.Relic
 import Data.TypePerk
 import Dict exposing (Dict)
 import Dict.Extra
-import Generated.Companions
-import Generated.Complications
-import Generated.Magics
-import Generated.Perks
-import Generated.Races
+import Generated.Companion
+import Generated.Complication
+import Generated.Magic
+import Generated.Perk
+import Generated.Race
 import Generated.Relics
 import Generated.TypePerks
 import Generated.Types exposing (Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
@@ -133,22 +133,22 @@ dump model =
                     Generated.TypePerks.all
                         |> Dict.Extra.fromListBy (\typePerk -> raceToString typePerk.race)
             in
-            go (dumpRace typePerks >> Just) (Generated.Races.all [])
+            go (dumpRace typePerks >> Just) (Generated.Race.all [])
 
         Perk ->
-            go dumpPerk (Generated.Perks.all [])
+            go dumpPerk (Generated.Perk.all [])
 
         Magic ->
-            go (dumpMagic >> Just) Generated.Magics.all
+            go (dumpMagic >> Just) Generated.Magic.all
 
         Relic ->
             go dumpRelic Generated.Relics.all
 
         Complication ->
-            go dumpComplication Generated.Complications.all
+            go dumpComplication Generated.Complication.all
 
         Companion ->
-            Generated.Companions.all
+            Generated.Companion.all
                 |> List.filterMap
                     (\( faction, companions ) ->
                         let
@@ -169,7 +169,7 @@ dump model =
 
 dlcs : List (Maybe String)
 dlcs =
-    Generated.Races.all []
+    Generated.Race.all []
         |> List.map .dlc
         |> List.Extra.unique
 

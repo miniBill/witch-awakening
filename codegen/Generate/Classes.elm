@@ -6,7 +6,7 @@ import Elm.Arg
 import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
-import Generate.Types
+import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
@@ -19,40 +19,44 @@ type alias ClassesModule =
     }
 
 
-file : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module ClassesModule
-file dlcClasses =
+file : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module ClassesModule
+file types dlcClasses =
     Elm.Declare.module_ [ "Generated", "Classes" ] ClassesModule
-        |> Elm.Declare.with (all dlcClasses)
+        |> Elm.Declare.with (all types dlcClasses)
         |> Elm.Declare.with (classToColor dlcClasses)
-        |> Elm.Declare.with classDetails.declaration
-        |> Elm.Declare.Extra.withDeclarations (dlcToClasses dlcClasses)
+        |> Elm.Declare.with (classDetails types)
+        |> Elm.Declare.Extra.withDeclarations (dlcToClasses types dlcClasses)
 
 
 classDetails :
-    { declaration : Elm.Declare.Annotation
-    , make :
-        { content : Elm.Expression
-        , color : Elm.Expression
-        , dlc : Elm.Expression
-        , name : Elm.Expression
+    TypesModule
+    ->
+        { annotation : Elm.Annotation.Annotation
+        , declaration : Elm.Declaration
+        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
+        , make :
+            { content : Elm.Expression
+            , color : Elm.Expression
+            , dlc : Elm.Expression
+            , name : Elm.Expression
+            }
+            -> Elm.Expression
         }
-        -> Elm.Expression
-    }
-classDetails =
+classDetails types =
     Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name (Elm.Annotation.named [ "Generated", "Types" ] "Class")
+        |> Elm.Declare.Extra.withField "name" .name types.class.annotation
         |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
         |> Elm.Declare.Extra.withField "color" .color Elm.Annotation.int
         |> Elm.Declare.Extra.withField "content" .content Elm.Annotation.string
         |> Elm.Declare.Extra.buildCustomRecord
 
 
-all : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Value
-all dlcClasses =
+all : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Value
+all types dlcClasses =
     dlcClasses
         |> List.map (\( _, class ) -> Elm.val (String.Extra.decapitalize (yassify class.name)))
         |> Elm.list
-        |> Elm.withType (Elm.Annotation.list classDetails.declaration.annotation)
+        |> Elm.withType (Elm.Annotation.list (classDetails types).annotation)
         |> Elm.Declare.value "all"
 
 
@@ -72,11 +76,11 @@ classToColor dlcClasses =
         )
 
 
-dlcToClasses : List ( Maybe String, Parsers.Class ) -> List Elm.Declaration
-dlcToClasses classes =
+dlcToClasses : TypesModule -> List ( Maybe String, Parsers.Class ) -> List Elm.Declaration
+dlcToClasses types classes =
     List.map
         (\( dlcName, class ) ->
-            classDetails.make
+            (classDetails types).make
                 { name = Generate.Types.valueFrom class.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , color = Elm.hex class.color

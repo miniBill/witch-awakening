@@ -20,7 +20,8 @@ type alias Variant =
 
 
 type alias Enums =
-    { class : Enum
+    { affinity : Enum
+    , class : Enum
     , race : Enum
     , relic : Enum
     , others : List Enum
@@ -38,19 +39,13 @@ enums parsedDLCs =
                 )
                 parsedDLCs
     in
-    { race =
-        buildEnum "Race" combinedDLC.races
-            |> withImages
-    , class =
-        buildEnum "Class" combinedDLC.classes
-            |> withImages
-    , relic =
-        buildEnum "Relic" combinedDLC.relics
-            |> withImages
+    { affinity = buildEnum "Affinity" combinedDLC.affinities
+    , class = buildEnum "Class" combinedDLC.classes |> withImages
+    , race = buildEnum "Race" combinedDLC.races |> withImages
+    , relic = buildEnum "Relic" combinedDLC.relics |> withImages
     , others =
         [ buildEnum "Perk" combinedDLC.perks
             |> withImages
-        , buildEnum "Affinity" combinedDLC.affinities
         , buildEnum "Companion" combinedDLC.companions
             |> withImages
         , buildEnum "Magic" combinedDLC.magics

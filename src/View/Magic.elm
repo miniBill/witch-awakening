@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Classes
-import Generated.Magics
+import Generated.Magic
 import Generated.Types as Types exposing (Class, Magic, Slot(..))
 import Gradients
 import Html
@@ -23,7 +23,7 @@ viewMagics display selected =
     let
         sorted : List Magic.Details
         sorted =
-            Generated.Magics.all
+            Generated.Magic.all
                 |> List.filter (\{ faction } -> faction == Nothing)
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
     in

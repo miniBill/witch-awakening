@@ -3,7 +3,7 @@ module View.TypePerk exposing (viewTypePerks)
 import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, px, rgb, spacing, width)
 import Element.Font as Font
-import Generated.TypePerks
+import Generated.TypePerk
 import Generated.Types as Types exposing (Race(..), Slot)
 import Gradients
 import Images
@@ -17,7 +17,7 @@ viewTypePerks witchRaces display typePerks =
     let
         boxes : List (Element ( Race, Bool ))
         boxes =
-            Generated.TypePerks.all
+            Generated.TypePerk.all
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.filterMap (typePerkBox witchRaces display typePerks)
     in

@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Affinities
+import Generated.Affinity
 import Generated.Classes
 import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Slot(..))
 import Gradients
@@ -399,7 +399,7 @@ viewAffinityBadge affinity =
                 let
                     affinityColor : String
                     affinityColor =
-                        colorToCss (Generated.Affinities.affinityToColor affinity |> opaque)
+                        colorToCss (Generated.Affinity.affinityToColor affinity |> opaque)
 
                     whiteGradient : String
                     whiteGradient =

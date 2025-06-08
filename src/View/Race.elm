@@ -6,8 +6,8 @@ import Element exposing (Attribute, Element, alignTop, centerX, el, fill, moveDo
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Affinities
-import Generated.Races
+import Generated.Affinity
+import Generated.Race
 import Generated.Types as Types exposing (Affinity, Race(..), Size)
 import Gradients
 import Images exposing (Image)
@@ -23,7 +23,7 @@ viewRace display races =
     let
         raceBoxes : Element ( Race, Bool )
         raceBoxes =
-            Generated.Races.all races
+            Generated.Race.all races
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.filterMap (raceBox display races)
                 |> Theme.wrappedRow
@@ -121,7 +121,7 @@ affinityPicker race =
         picker ctor currentAffinity list =
             [ el [ Font.bold ] <| text "Pick an affinity:"
             , list
-                |> List.Extra.remove Generated.Affinities.all_
+                |> List.Extra.remove Generated.Affinity.all_
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.map .name
                 |> List.map
@@ -144,21 +144,21 @@ affinityPicker race =
         Dravir currentAffinity ->
             picker Dravir
                 currentAffinity
-                [ Generated.Affinities.fire
-                , Generated.Affinities.wind
-                , Generated.Affinities.water
-                , Generated.Affinities.earth
-                , Generated.Affinities.metal
-                , Generated.Affinities.nature
+                [ Generated.Affinity.fire
+                , Generated.Affinity.wind
+                , Generated.Affinity.water
+                , Generated.Affinity.earth
+                , Generated.Affinity.metal
+                , Generated.Affinity.nature
                 ]
 
         Genie currentAffinity ->
-            Generated.Affinities.all
+            Generated.Affinity.all
                 |> picker Genie currentAffinity
 
         Gemini currentAffinity ->
-            Generated.Affinities.all
-                |> List.Extra.remove Generated.Affinities.earth
+            Generated.Affinity.all
+                |> List.Extra.remove Generated.Affinity.earth
                 |> picker Gemini currentAffinity
 
         _ ->

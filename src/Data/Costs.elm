@@ -5,12 +5,12 @@ import Data.Companion as Companion
 import Data.Complication as Complication
 import Data.Costs.Monad as Monad exposing (Monad, andThen, combine, map, map2, mapAndSum, succeed, withWarning)
 import Data.Magic as Magic
-import Generated.Companions
-import Generated.Complications
-import Generated.Magics
-import Generated.Perks as Perk
-import Generated.Relics
-import Generated.TypePerks
+import Generated.Companion
+import Generated.Complication
+import Generated.Magic
+import Generated.Perk
+import Generated.Relic
+import Generated.TypePerk
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..), companionToString)
 import List.Extra
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
@@ -303,7 +303,7 @@ complicationValue model complication =
                 Nothing ->
                     Monad.error <| "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name
     in
-    case List.Extra.find (\{ name } -> name == complication.name) Generated.Complications.all of
+    case List.Extra.find (\{ name } -> name == complication.name) Generated.Complication.all of
         Nothing ->
             Monad.error <| "Could not find complication " ++ Types.complicationToString complication.name
 
@@ -361,7 +361,7 @@ typePerksValue model =
 
 typePerkValue : Race -> Monad Int
 typePerkValue race =
-    find "Type perk" .race race Generated.TypePerks.all Types.raceToString
+    find "Type perk" .race race Generated.TypePerk.all Types.raceToString
         |> Monad.andThen
             (\{ cost } ->
                 Monad.succeed -cost
@@ -420,7 +420,7 @@ magicValue :
     -> Monad Int
 magicValue affinities { faction, class, typePerks } { name, rank } =
     case
-        Generated.Magics.all
+        Generated.Magic.all
             |> List.Extra.find (\magic -> magic.name == name)
             |> Maybe.andThen
                 (\magic ->
@@ -595,7 +595,7 @@ perkCost :
     -> RankedPerk
     -> Monad Int
 perkCost ({ class } as model) { name, cost } =
-    find "Perk" .name name (Perk.all model.perks) Types.perkToString
+    find "Perk" .name name (Generated.Perk.all model.perks) Types.perkToString
         |> andThen
             (\perk ->
                 let
@@ -869,7 +869,7 @@ getCompanion companion =
                     )
                     group
             )
-            Generated.Companions.all
+            Generated.Companion.all
     of
         Just p ->
             succeed p
@@ -890,7 +890,7 @@ relicsValue model =
 
 relicCost : Maybe Class -> CosmicPearlData -> RankedRelic -> Monad Int
 relicCost class pearl { name, cost } =
-    find "Relic" .name name Generated.Relics.all Types.relicToString
+    find "Relic" .name name Generated.Relic.all Types.relicToString
         |> map
             (\relic ->
                 let

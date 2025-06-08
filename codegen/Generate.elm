@@ -207,13 +207,13 @@ dlcToFiles images dlcList =
         types =
             Generate.Types.file images dlcList
     in
-    [ Generate.Affinities.file dlcAffinities
-    , Elm.Declare.toFile (Generate.Classes.file dlcClasses)
+    [ Elm.Declare.toFile (Generate.Affinities.file types.call dlcAffinities)
+    , Elm.Declare.toFile (Generate.Classes.file types.call dlcClasses)
     , Generate.Companions.file dlcCompanions
     , Generate.Complications.file dlcComplications
     , Elm.Declare.toFile (Generate.Magics.file dlcMagics)
     , Elm.Declare.toFile (Generate.Perks.file dlcPerks)
-    , Elm.Declare.toFile (Generate.Races.file dlcRaces)
+    , Elm.Declare.toFile (Generate.Races.file types.call dlcRaces)
     , Elm.Declare.toFile (Generate.Relics.file types.call dlcRelics)
     , Elm.Declare.toFile (Generate.TypePerks.file dlcRaces)
     , Elm.Declare.toFile types

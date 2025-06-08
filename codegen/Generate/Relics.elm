@@ -21,7 +21,7 @@ file : TypesModule -> List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Module
 file types dlcRelics =
     Elm.Declare.module_ [ "Generated", "Relic" ] RelicsModule
         |> Elm.Declare.with (all dlcRelics)
-        |> Elm.Declare.with (details types).declaration
+        |> Elm.Declare.with (details types)
         |> Elm.Declare.Extra.withDeclarations (dlcToRelics types dlcRelics)
 
 
@@ -37,12 +37,14 @@ all dlcRelics =
 details :
     TypesModule
     ->
-        { declaration : Elm.Declare.Annotation
+        { annotation : Elm.Annotation.Annotation
+        , declaration : Elm.Declaration
+        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
         , make :
-            { name : Elm.Expression
-            , classes : Elm.Expression
+            { content : Elm.Expression
             , dlc : Elm.Expression
-            , content : Elm.Expression
+            , classes : Elm.Expression
+            , name : Elm.Expression
             }
             -> Elm.Expression
         }

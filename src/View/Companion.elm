@@ -5,7 +5,7 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, 
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Companions
+import Generated.Companion
 import Generated.Types as Types exposing (Companion, Faction)
 import Gradients
 import Html.Attributes
@@ -22,7 +22,7 @@ viewCompanions display companions =
     let
         blocks : List (Element ( Companion, Bool ))
         blocks =
-            Generated.Companions.all
+            Generated.Companion.all
                 |> List.concatMap (companionSection display companions)
     in
     View.collapsible (Theme.topBackground Images.companionIntro)
