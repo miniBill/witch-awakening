@@ -3,6 +3,7 @@ module Dump exposing (main)
 import Browser
 import Data.Companion
 import Data.Complication
+import Data.FactionalMagic
 import Data.Magic
 import Data.Perk
 import Data.Race
@@ -139,8 +140,9 @@ dump model =
             go dumpPerk (Generated.Perks.all [])
 
         Magic ->
-            go (dumpMagic >> Just) Generated.Magics.all
+            go (dumpMagic >> Just) Data.FactionalMagic.all
 
+        -- Generated.Magics.all
         Relic ->
             go dumpRelic Generated.Relics.all
 
@@ -280,6 +282,7 @@ dumpMagic : Data.Magic.Details -> List (Maybe String)
 dumpMagic details =
     [ Just <| "## Magic: " ++ magicToString details.name
     , maybeItem "Class" classToString details.class
+    , maybeItem "Faction" factionToString details.faction
     , item "Elements" affinitiesToString details.affinities
     , flagItem "Has rank zero" details.hasRankZero
     , flagItem "Elementalism" details.isElementalism

@@ -222,7 +222,7 @@ core =
     , affinities = []
     , companions = []
     , relics = []
-    , magics = coreMagics
+    , magics = []
     , complications = []
     , complicationCategories = []
     }
@@ -254,12 +254,6 @@ coreGameModes =
 coreSlots : List String
 coreSlots =
     [ "White", "Folk", "Noble", "Heroic", "Epic" ]
-
-
-coreMagics : List Variant
-coreMagics =
-    [ "Digicasting", "Wands", "Ministration", "Occultism", "Dominion", "Covenants", "Monstrosity", "Gadgetry", "Integration" ]
-        |> buildVariants
 
 
 corePerks : List Variant

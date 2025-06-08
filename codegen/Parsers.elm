@@ -297,7 +297,8 @@ magic =
     (section "##" "Magic" Magic
         |> maybeItem "Class" Ok
         |> maybeItem "Faction" Ok
-        |> requiredItem "Elements"
+        |> optionalItem "Elements"
+            (Regular [])
             (\raw ->
                 let
                     splat : List (List String)

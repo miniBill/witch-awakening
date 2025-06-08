@@ -4,7 +4,6 @@ import Data.Affinity as Affinity
 import Data.Companion as Companion
 import Data.Complication as Complication
 import Data.Costs.Monad as Monad exposing (Monad, andThen, combine, map, map2, mapAndSum, succeed, withWarning)
-import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic
 import Generated.Companions
 import Generated.Complications
@@ -421,7 +420,7 @@ magicValue :
     -> Monad Int
 magicValue affinities { faction, class, typePerks } { name, rank } =
     case
-        (Generated.Magics.all ++ FactionalMagic.all)
+        Generated.Magics.all
             |> List.Extra.find (\magic -> magic.name == name)
             |> Maybe.andThen
                 (\magic ->

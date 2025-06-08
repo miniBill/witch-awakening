@@ -23,6 +23,7 @@ viewMagics display selected =
         sorted : List Magic.Details
         sorted =
             Generated.Magics.all
+                |> List.filter (\{ faction } -> faction == Nothing)
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
     in
     View.collapsible []
