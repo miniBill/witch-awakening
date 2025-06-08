@@ -189,6 +189,7 @@ viewSize :
     -> Element msg
 viewSize attrs image gradient size =
     Types.sizeToString size
+        |> String.replace "Medium" "Med"
         |> Theme.gradientText 4 gradient
         |> el
             ([ Theme.morpheus
