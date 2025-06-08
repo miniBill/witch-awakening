@@ -692,10 +692,10 @@ compulsion =
     , dlc = Nothing
     , content =
         WithChoices "Somewhat of an advanced case of Addiction, you will have a particular compulsion that you can only overcome with great need only once in a while. The more infrequent the more overwhelming the compulsion is. This is measured by frequency:"
-            [ ( "*Rare*: 1p encountered an average of once each year", 1 )
-            , ( "*Very uncommon*: 2p encountered an average of once a month", 2 )
-            , ( "*Uncommon*: 4p encountered an average of once a day", 4 )
-            , ( "*Common*: 8p you’re likely to run into your compulsion multiple times a day", 8 )
+            [ ( "*Rare*: [1] encountered an average of once each year", 1 )
+            , ( "*Very uncommon*: [2] encountered an average of once a month", 2 )
+            , ( "*Uncommon*: [4] encountered an average of once a day", 4 )
+            , ( "*Common*: [8] you’re likely to run into your compulsion multiple times a day", 8 )
             ]
             """
             - *Finite*: -50% Your compulsion is a finite exposure of things you only do once. Example: To eat every pie you see vs Eat every NEW type of pie you see.
