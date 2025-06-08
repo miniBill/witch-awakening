@@ -1,7 +1,7 @@
-module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, factionToMagic, gainToSlot, nextDisplay)
+module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, gainToSlot, nextDisplay)
 
 import Browser exposing (UrlRequest)
-import Generated.Types exposing (Affinity, Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Relic, Slot(..))
+import Generated.Types exposing (Affinity, Class, Companion, Complication, Faction, GameMode, Magic, Perk, Race, Relic, Slot(..))
 import Set exposing (Set)
 
 
@@ -144,37 +144,6 @@ gainToSlot gain =
 
     else
         Epic
-
-
-factionToMagic : Faction -> String
-factionToMagic faction =
-    case faction of
-        TheCollegeOfArcadia ->
-            "Digicasting"
-
-        HawthorneAcademia ->
-            "Wands"
-
-        TheWatchers ->
-            "Ministrations"
-
-        TheHespatianCoven ->
-            "Occultism"
-
-        Lunabella ->
-            "Dominion"
-
-        AlfheimrAlliance ->
-            "Covenants"
-
-        TheOutsiders ->
-            "Monstrosity"
-
-        TheORC ->
-            "Gadgetry"
-
-        AlphazonIndustries ->
-            "Integration"
 
 
 nextDisplay : Display -> Display

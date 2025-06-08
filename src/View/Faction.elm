@@ -5,9 +5,11 @@ import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fi
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Magics
 import Generated.Types as Types exposing (Faction)
 import Gradients
 import Images exposing (Image)
+import List.Extra
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display(..))
 import View
@@ -234,9 +236,14 @@ factionBox display selected { name, motto, description, location, relations, per
                                 (gradientText 3 Gradients.blueGradient perk)
                             ]
                         , content =
-                            [ Theme.blocks []
-                                (perkContent ++ "\n\n_*" ++ Types.factionToMagic name ++ "*_ is half price for you, stacks with affinity.")
-                            ]
+                            case List.Extra.find (\magic -> magic.faction == Just name) Generated.Magics.all of
+                                Nothing ->
+                                    []
+
+                                Just magic ->
+                                    [ Theme.blocks []
+                                        (perkContent ++ "\n\n_*" ++ Types.magicToString magic.name ++ "*_ is half price for you, stacks with affinity.")
+                                    ]
                         , onPress = Just perkMsg
                         }
                         |> Maybe.withDefault Element.none
