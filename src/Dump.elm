@@ -310,8 +310,8 @@ dumpRelic relic =
     let
         ( cost, maybeDescription ) =
             case relic.content of
-                Data.Relic.Single cost details ->
-                    ( item "Cost" String.fromInt cost, Just details )
+                Data.Relic.Single costValue details ->
+                    ( item "Cost" String.fromInt costValue, Just details )
 
                 Data.Relic.WithChoices costs details ->
                     ( intListItem "Costs" costs, Just details )
