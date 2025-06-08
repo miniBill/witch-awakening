@@ -6,6 +6,7 @@ import Hex
 import Maybe.Extra
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, sequence, spaces, succeed, symbol)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
+import Regex
 import Set exposing (Set)
 
 
@@ -564,7 +565,18 @@ paragraphs : Bool -> Parser String
 paragraphs acceptList =
     many (paragraph acceptList)
         |> Parser.getChompedString
-        |> Parser.map String.trim
+        |> Parser.map
+            (\chomped ->
+                chomped
+                    |> String.trim
+                    |> Regex.replace commentRegex (\_ -> "")
+            )
+
+
+commentRegex : Regex.Regex
+commentRegex =
+    Regex.fromString "<!--.*-->"
+        |> Maybe.withDefault Regex.never
 
 
 paragraph : Bool -> Parser ()
