@@ -5,9 +5,9 @@ import Elm
 import Elm.Annotation
 import Elm.Arg
 import Elm.Case
+import Elm.Declare
 import Elm.Op
 import Gen.Data.Affinity
-import Gen.Data.Class
 import Gen.Data.Companion
 import Gen.Data.Complication
 import Gen.Data.Magic
@@ -16,6 +16,7 @@ import Gen.Data.Race
 import Gen.Data.Relic
 import Gen.Data.TypePerk
 import Gen.Types
+import Generate.FromDLC.Classes
 import Generate.Utils exposing (yassify)
 import List.Extra
 import Parsers exposing (DLCItem(..))
@@ -65,7 +66,7 @@ files dlcList =
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
     [ affinitiesFile dlcAffinities
-    , classesFile dlcClasses
+    , Elm.Declare.toFile (Generate.FromDLC.Classes.module_ dlcClasses)
     , companionsFile dlcCompanions
     , complicationsFile dlcComplications
     , magicsFile dlcMagics
@@ -78,7 +79,7 @@ files dlcList =
 
 racesFile : List ( Maybe String, Parsers.Race ) -> Elm.File
 racesFile dlcRaces =
-    Elm.file [ "Generated", "Races" ]
+    Elm.file [ "Generated", "Race" ]
         (Elm.expose (Elm.declaration "all" (allRaces dlcRaces))
             :: dlcToRaces dlcRaces
         )
@@ -121,7 +122,7 @@ dlcToRaces races =
 
 perksFile : List ( Maybe String, Parsers.Perk ) -> Elm.File
 perksFile dlcPerks =
-    Elm.file [ "Generated", "Perks" ]
+    Elm.file [ "Generated", "Perk" ]
         (Elm.expose (Elm.declaration "all" (allPerks dlcPerks))
             :: dlcToPerks dlcPerks
         )
@@ -189,7 +190,7 @@ fromTypes name =
 
 typePerksFile : List ( Maybe String, Parsers.Race ) -> Elm.File
 typePerksFile dlcRaces =
-    Elm.file [ "Generated", "TypePerks" ]
+    Elm.file [ "Generated", "TypePerk" ]
         (Elm.expose (Elm.declaration "all" (allTypePerks dlcRaces))
             :: dlcToTypePerks dlcRaces
         )
@@ -235,7 +236,7 @@ dlcToTypePerks races =
 
 magicsFile : List ( Maybe String, Parsers.Magic ) -> Elm.File
 magicsFile dlcMagics =
-    Elm.file [ "Generated", "Magics" ]
+    Elm.file [ "Generated", "Magic" ]
         (Elm.expose (Elm.declaration "all" (allMagics dlcMagics))
             :: dlcToMagics dlcMagics
         )
@@ -309,7 +310,7 @@ affinitiesToExpression affinity =
 
 affinitiesFile : List ( Maybe String, Parsers.Affinity ) -> Elm.File
 affinitiesFile dlcAffinities =
-    Elm.file [ "Generated", "Affinities" ]
+    Elm.file [ "Generated", "Affinity" ]
         (Elm.expose (Elm.declaration "all" (allAffinities dlcAffinities))
             :: Elm.expose (affinityToColor dlcAffinities)
             :: dlcToAffinities dlcAffinities
@@ -366,7 +367,7 @@ affinityToVarName affinity =
 
 relicsFile : List ( Maybe String, Parsers.Relic ) -> Elm.File
 relicsFile dlcRelics =
-    Elm.file [ "Generated", "Relics" ]
+    Elm.file [ "Generated", "Relic" ]
         (Elm.expose (Elm.declaration "all" (allRelics dlcRelics))
             :: dlcToRelics dlcRelics
         )
@@ -411,7 +412,7 @@ dlcToRelics relics =
 
 companionsFile : List ( Maybe String, Parsers.Companion ) -> Elm.File
 companionsFile dlcCompanions =
-    Elm.file [ "Generated", "Companions" ]
+    Elm.file [ "Generated", "Companion" ]
         (Elm.expose (Elm.declaration "all" (allCompanions dlcCompanions))
             :: dlcToCompanions dlcCompanions
         )
@@ -563,7 +564,7 @@ dlcToCompanions companions =
 
 complicationsFile : List ( Maybe String, Parsers.Complication ) -> Elm.File
 complicationsFile dlcComplications =
-    Elm.file [ "Generated", "Complications" ]
+    Elm.file [ "Generated", "Complication" ]
         (Elm.expose (Elm.declaration "all" (allComplications dlcComplications))
             :: dlcToComplications dlcComplications
         )
@@ -619,52 +620,3 @@ dlcToComplications complications =
                 |> Elm.expose
         )
         complications
-
-
-classesFile : List ( Maybe String, Parsers.Class ) -> Elm.File
-classesFile dlcClasses =
-    Elm.file [ "Generated", "Classes" ]
-        (Elm.expose (Elm.declaration "all" (allClasses dlcClasses))
-            :: Elm.expose (classToColor dlcClasses)
-            :: dlcToClasses dlcClasses
-        )
-
-
-allClasses : List ( Maybe String, Parsers.Class ) -> Elm.Expression
-allClasses dlcClasses =
-    dlcClasses
-        |> List.map (\( _, class ) -> Elm.val (String.Extra.decapitalize (yassify class.name)))
-        |> Elm.list
-        |> Elm.withType (Elm.Annotation.list Gen.Data.Class.annotation_.details)
-
-
-classToColor : List ( Maybe String, Parsers.Class ) -> Elm.Declaration
-classToColor dlcClasses =
-    Elm.fn (Elm.Arg.var "class")
-        (\class ->
-            dlcClasses
-                |> List.map
-                    (\( _, classData ) ->
-                        Elm.Case.branch
-                            (Elm.Arg.customType classData.name ())
-                            (\() -> Elm.hex classData.color)
-                    )
-                |> Elm.Case.custom class (Elm.Annotation.named [ "Generated", "Types" ] "Class")
-        )
-        |> Elm.declaration "classToColor"
-
-
-dlcToClasses : List ( Maybe String, Parsers.Class ) -> List Elm.Declaration
-dlcToClasses classes =
-    List.map
-        (\( dlcName, class ) ->
-            Gen.Data.Class.make_.details
-                { name = fromTypes class.name
-                , content = Elm.string class.description
-                , color = Elm.hex class.color
-                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                }
-                |> Elm.declaration (yassify class.name)
-                |> Elm.expose
-        )
-        classes

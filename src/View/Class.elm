@@ -1,6 +1,5 @@
 module View.Class exposing (viewClass)
 
-import Data.Class as Class
 import Element exposing (Element, alignBottom, centerX, el, fill, moveDown, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
@@ -55,7 +54,7 @@ intro =
 classBox :
     Display
     -> Maybe Class
-    -> Class.Details
+    -> Generated.Classes.Details
     -> Maybe (Element (Maybe Class))
 classBox display selected { name, dlc, color, content } =
     let
