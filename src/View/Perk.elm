@@ -190,12 +190,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
             0x00F3EA6F
     in
     Theme.card []
-        { display =
-            case ( content, isSelected ) of
-                -- ( WithChoicesHybridize _ _, Just _ ) ->
-                --     Types.DisplayFull
-                _ ->
-                    display
+        { display = display
         , forceShow = False
         , glow = color
         , isSelected = isSelected /= Nothing
