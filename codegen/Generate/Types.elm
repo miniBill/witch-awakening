@@ -1,4 +1,4 @@
-module Generate.Types exposing (TypesModule, file, valueFrom)
+module Generate.Types exposing (TypesModule, file)
 
 import Data exposing (Enum, Variant)
 import Elm
@@ -18,44 +18,52 @@ import String.Extra
 
 
 type alias TypesModule =
-    { affinity : EnumModule
+    { valueFrom : String -> Elm.Expression
+    , affinity : EnumModule
     , class : EnumModule
+    , faction : EnumModule
     , race : EnumModule
     , relic : EnumModule
     }
 
 
-moduleName : List String
-moduleName =
-    [ "Generated", "Types" ]
-
-
-valueFrom : String -> Elm.Expression
-valueFrom name =
-    Elm.value
-        { importFrom = moduleName
-        , name = yassify name
-        , annotation = Nothing
-        }
-
-
 file : ImagesModule -> List Parsers.DLC -> Elm.Declare.Module TypesModule
 file images dlcList =
     let
+        moduleName : List String
+        moduleName =
+            [ "Generated", "Types" ]
+
         enums : Data.Enums
         enums =
             Data.enums dlcList
+
+        valueFrom : String -> Elm.Expression
+        valueFrom name =
+            Elm.value
+                { importFrom = moduleName
+                , name = yassify name
+                , annotation = Nothing
+                }
+
+        module_ : Elm.Declare.Module TypesModule
+        module_ =
+            Elm.Declare.module_ moduleName (TypesModule valueFrom)
+                |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.affinity)
+                |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.class)
+                |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.faction)
+                |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.race)
+                |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.relic)
+                |> Elm.Declare.Extra.withDeclarations
+                    (List.concatMap
+                        (\enum -> (enumToDeclarations moduleName images enum).declarations)
+                        enums.others
+                    )
     in
-    Elm.Declare.module_ moduleName TypesModule
-        |> Elm.Declare.withSubmodule (enumToDeclarations images enums.affinity)
-        |> Elm.Declare.withSubmodule (enumToDeclarations images enums.class)
-        |> Elm.Declare.withSubmodule (enumToDeclarations images enums.race)
-        |> Elm.Declare.withSubmodule (enumToDeclarations images enums.relic)
-        |> Elm.Declare.Extra.withDeclarations
-            (List.concatMap
-                (\enum -> (enumToDeclarations images enum).declarations)
-                enums.others
-            )
+    { name = module_.name
+    , declarations = module_.declarations
+    , call = module_.call
+    }
 
 
 type alias EnumModule =
@@ -66,8 +74,8 @@ type alias EnumModule =
     }
 
 
-enumToDeclarations : ImagesModule -> Enum -> Elm.Declare.Module EnumModule
-enumToDeclarations images enum =
+enumToDeclarations : List String -> ImagesModule -> Enum -> Elm.Declare.Module EnumModule
+enumToDeclarations moduleName images enum =
     let
         type_ : Elm.Declare.Annotation
         type_ =

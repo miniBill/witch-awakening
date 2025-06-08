@@ -15,8 +15,8 @@ import Generated.Complication
 import Generated.Magic
 import Generated.Perk
 import Generated.Race
-import Generated.Relics
-import Generated.TypePerks
+import Generated.Relic
+import Generated.TypePerk
 import Generated.Types exposing (Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
@@ -130,7 +130,7 @@ dump model =
             let
                 typePerks : Dict String Data.TypePerk.Details
                 typePerks =
-                    Generated.TypePerks.all
+                    Generated.TypePerk.all
                         |> Dict.Extra.fromListBy (\typePerk -> raceToString typePerk.race)
             in
             go (dumpRace typePerks >> Just) (Generated.Race.all [])
@@ -142,7 +142,7 @@ dump model =
             go (dumpMagic >> Just) Generated.Magic.all
 
         Relic ->
-            go dumpRelic Generated.Relics.all
+            go dumpRelic Generated.Relic.all
 
         Complication ->
             go dumpComplication Generated.Complication.all

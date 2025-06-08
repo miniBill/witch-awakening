@@ -24,7 +24,7 @@ file types dlcAffinities =
     Elm.Declare.module_ [ "Generated", "Affinity" ] AffinitiesModule
         |> Elm.Declare.with (all dlcAffinities)
         |> Elm.Declare.with (affinityToColor types dlcAffinities)
-        |> Elm.Declare.Extra.withDeclarations (dlcToAffinities dlcAffinities)
+        |> Elm.Declare.Extra.withDeclarations (dlcToAffinities types dlcAffinities)
 
 
 all : List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Value
@@ -52,12 +52,12 @@ affinityToColor types dlcAffinities =
         )
 
 
-dlcToAffinities : List ( Maybe String, Parsers.Affinity ) -> List Elm.Declaration
-dlcToAffinities affinities =
+dlcToAffinities : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> List Elm.Declaration
+dlcToAffinities types affinities =
     List.map
         (\( dlcName, affinity ) ->
             Gen.Data.Affinity.make_.details
-                { name = Generate.Types.valueFrom affinity.name
+                { name = types.valueFrom affinity.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (affinityToVarName affinity.name)

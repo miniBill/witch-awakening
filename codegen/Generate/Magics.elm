@@ -6,7 +6,7 @@ import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.Data.Magic
-import Generate.Types
+import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
@@ -17,11 +17,11 @@ type alias MagicModule =
     }
 
 
-file : List ( Maybe String, Parsers.Magic ) -> Elm.Declare.Module MagicModule
-file dlcMagics =
+file : TypesModule -> List ( Maybe String, Parsers.Magic ) -> Elm.Declare.Module MagicModule
+file types dlcMagics =
     Elm.Declare.module_ [ "Generated", "Magic" ] MagicModule
         |> Elm.Declare.with (all dlcMagics)
-        |> Elm.Declare.Extra.withDeclarations (dlcToMagics dlcMagics)
+        |> Elm.Declare.Extra.withDeclarations (dlcToMagics types dlcMagics)
 
 
 all : List ( Maybe String, Parsers.Magic ) -> Elm.Declare.Value
@@ -33,8 +33,8 @@ all dlcMagics =
         |> Elm.Declare.value "all"
 
 
-dlcToMagics : List ( Maybe String, Parsers.Magic ) -> List Elm.Declaration
-dlcToMagics magics =
+dlcToMagics : TypesModule -> List ( Maybe String, Parsers.Magic ) -> List Elm.Declaration
+dlcToMagics types magics =
     List.map
         (\( dlcName, magic ) ->
             let
@@ -46,12 +46,12 @@ dlcToMagics magics =
                         |> Maybe.withDefault 5
             in
             Gen.Data.Magic.make_.details
-                { name = Generate.Types.valueFrom magic.name
-                , class = Elm.maybe (Maybe.map Generate.Types.valueFrom magic.class)
-                , faction = Elm.maybe (Maybe.map Generate.Types.valueFrom magic.faction)
+                { name = types.valueFrom magic.name
+                , class = Elm.maybe (Maybe.map types.valueFrom magic.class)
+                , faction = Elm.maybe (Maybe.map types.valueFrom magic.faction)
                 , hasRankZero = Elm.bool magic.hasRankZero
                 , isElementalism = Elm.bool magic.isElementalism
-                , affinities = affinitiesToExpression magic.elements
+                , affinities = affinitiesToExpression types magic.elements
                 , description = Elm.string magic.description
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , ranks =
@@ -70,12 +70,12 @@ dlcToMagics magics =
         magics
 
 
-affinitiesToExpression : Parsers.MagicAffinity -> Elm.Expression
-affinitiesToExpression affinity =
+affinitiesToExpression : TypesModule -> Parsers.MagicAffinity -> Elm.Expression
+affinitiesToExpression types affinity =
     case affinity of
         Parsers.Regular alternatives ->
             alternatives
-                |> List.map Generate.Types.valueFrom
+                |> List.map types.valueFrom
                 |> Elm.list
                 |> Gen.Data.Magic.make_.regular
 
@@ -84,7 +84,7 @@ affinitiesToExpression affinity =
                 |> List.map
                     (\alternative ->
                         alternative
-                            |> List.map Generate.Types.valueFrom
+                            |> List.map types.valueFrom
                             |> Elm.list
                     )
                 |> Elm.list

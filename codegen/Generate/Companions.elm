@@ -1,55 +1,56 @@
-module Generate.Companions exposing (file)
+module Generate.Companions exposing (CompanionModule, file)
 
 import Elm
 import Elm.Annotation
-import Elm.Op
+import Elm.Declare
+import Elm.Declare.Extra
 import Gen.Data.Companion
-import Generate.Types
+import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import List.Extra
 import Parsers exposing (Score(..))
 import String.Extra
 
 
-file : List ( Maybe String, Parsers.Companion ) -> Elm.File
-file dlcCompanions =
-    Elm.file [ "Generated", "Companion" ]
-        (all dlcCompanions
-            :: dlcToCompanions dlcCompanions
-        )
+type alias CompanionModule =
+    { all : Elm.Expression
+    }
 
 
-all : List ( Maybe String, Parsers.Companion ) -> Elm.Declaration
-all dlcCompanions =
-    Elm.Op.append
-        (dlcCompanions
-            |> List.Extra.gatherEqualsBy (\( _, companion ) -> companion.faction)
-            |> List.sortBy (\( ( _, { faction } ), _ ) -> factionToOrder faction)
-            |> List.map
-                (\( ( _, { faction } ) as head, tail ) ->
-                    Elm.tuple
-                        (Elm.maybe (Maybe.map Generate.Types.valueFrom faction))
-                        ((head :: tail)
-                            |> List.map
-                                (\( _, companion ) ->
-                                    Elm.val
-                                        (String.Extra.decapitalize (yassify companion.name))
-                                )
-                            |> Elm.list
-                        )
-                )
-            |> Elm.list
-        )
-        Gen.Data.Companion.all
+file : TypesModule -> List ( Maybe String, Parsers.Companion ) -> Elm.Declare.Module CompanionModule
+file types dlcCompanions =
+    Elm.Declare.module_ [ "Generated", "Companion" ] CompanionModule
+        |> Elm.Declare.with (all types dlcCompanions)
+        |> Elm.Declare.Extra.withDeclarations (dlcToCompanions types dlcCompanions)
+
+
+all : TypesModule -> List ( Maybe String, Parsers.Companion ) -> Elm.Declare.Value
+all types dlcCompanions =
+    dlcCompanions
+        |> List.Extra.gatherEqualsBy (\( _, companion ) -> companion.faction)
+        |> List.sortBy (\( ( _, { faction } ), _ ) -> factionToOrder faction)
+        |> List.map
+            (\( ( _, { faction } ) as head, tail ) ->
+                Elm.tuple
+                    (Elm.maybe (Maybe.map types.valueFrom faction))
+                    ((head :: tail)
+                        |> List.map
+                            (\( _, companion ) ->
+                                Elm.val
+                                    (String.Extra.decapitalize (yassify companion.name))
+                            )
+                        |> Elm.list
+                    )
+            )
+        |> Elm.list
         |> Elm.withType
             (Elm.Annotation.list
                 (Elm.Annotation.tuple
-                    (Elm.Annotation.maybe (Elm.Annotation.named [ "Generated", "Types" ] "Faction"))
+                    (Elm.Annotation.maybe types.faction.annotation)
                     (Elm.Annotation.list Gen.Data.Companion.annotation_.details)
                 )
             )
-        |> Elm.declaration "all"
-        |> Elm.expose
+        |> Elm.Declare.value "all"
 
 
 factionToOrder : Maybe String -> Int
@@ -89,8 +90,8 @@ factionToOrder faction =
             10
 
 
-dlcToCompanions : List ( Maybe String, Parsers.Companion ) -> List Elm.Declaration
-dlcToCompanions companions =
+dlcToCompanions : TypesModule -> List ( Maybe String, Parsers.Companion ) -> List Elm.Declaration
+dlcToCompanions types companions =
     List.map
         (\( dlcName, companion ) ->
             let
@@ -104,7 +105,7 @@ dlcToCompanions companions =
                             Gen.Data.Companion.make_.classSpecial
 
                         Just c ->
-                            Gen.Data.Companion.make_.classOne (Generate.Types.valueFrom c)
+                            Gen.Data.Companion.make_.classOne (types.valueFrom c)
 
                         Nothing ->
                             Gen.Data.Companion.make_.classNone
@@ -124,7 +125,7 @@ dlcToCompanions companions =
                                 )
             in
             Gen.Data.Companion.make_.details
-                { name = Generate.Types.valueFrom companion.name
+                { name = types.valueFrom companion.name
                 , class = class
                 , races =
                     Elm.list
@@ -133,7 +134,7 @@ dlcToCompanions companions =
                                 case
                                     race
                                         |> String.split "-"
-                                        |> List.map Generate.Types.valueFrom
+                                        |> List.map types.valueFrom
                                 of
                                     [ x ] ->
                                         x
@@ -142,7 +143,7 @@ dlcToCompanions companions =
                                         Elm.apply h t
 
                                     [] ->
-                                        Generate.Types.valueFrom "Empty list?"
+                                        types.valueFrom "Empty list?"
                             )
                             companion.races
                         )

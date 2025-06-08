@@ -58,12 +58,12 @@ details types =
 
 
 dlcToRelics : TypesModule -> List ( Maybe String, Parsers.Relic ) -> List Elm.Declaration
-dlcToRelics types_ relics =
+dlcToRelics types relics =
     List.map
         (\( dlcName, relic ) ->
-            (details types_).make
-                { name = Generate.Types.valueFrom relic.name
-                , classes = Elm.list (List.map Generate.Types.valueFrom relic.classes)
+            (details types).make
+                { name = types.valueFrom relic.name
+                , classes = Elm.list (List.map types.valueFrom relic.classes)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , content =
                     case relic.content of

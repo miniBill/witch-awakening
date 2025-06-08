@@ -22,7 +22,7 @@ file : TypesModule -> List ( Maybe String, Parsers.Race ) -> Elm.Declare.Module 
 file types dlcRaces =
     Elm.Declare.module_ [ "Generated", "Race" ] RacesModule
         |> Elm.Declare.with (all types dlcRaces)
-        |> Elm.Declare.Extra.withDeclarations (dlcToRaces dlcRaces)
+        |> Elm.Declare.Extra.withDeclarations (dlcToRaces types dlcRaces)
 
 
 all : TypesModule -> List ( Maybe String, Parsers.Race ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
@@ -42,16 +42,16 @@ all types dlcRaces =
                 |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
 
 
-dlcToRaces : List ( Maybe String, Parsers.Race ) -> List Elm.Declaration
-dlcToRaces races =
+dlcToRaces : TypesModule -> List ( Maybe String, Parsers.Race ) -> List Elm.Declaration
+dlcToRaces types races =
     List.map
         (\( dlcName, race ) ->
             Gen.Data.Race.make_.details
-                { name = Generate.Types.valueFrom race.name
+                { name = types.valueFrom race.name
                 , content = Elm.string race.description
-                , tank = Generate.Types.valueFrom race.manaCapacity
-                , affinities = Elm.list (List.map Generate.Types.valueFrom race.elements)
-                , charge = Generate.Types.valueFrom race.manaRate
+                , tank = types.valueFrom race.manaCapacity
+                , affinities = Elm.list (List.map types.valueFrom race.elements)
+                , charge = types.valueFrom race.manaRate
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (yassify race.name)

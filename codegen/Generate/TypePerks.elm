@@ -6,7 +6,7 @@ import Elm.Declare
 import Elm.Declare.Extra
 import Elm.Op
 import Gen.Data.TypePerk
-import Generate.Types
+import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
@@ -17,11 +17,11 @@ type alias TypePerksModule =
     }
 
 
-file : List ( Maybe String, Parsers.Race ) -> Elm.Declare.Module TypePerksModule
-file dlcRaces =
+file : TypesModule -> List ( Maybe String, Parsers.Race ) -> Elm.Declare.Module TypePerksModule
+file types dlcRaces =
     Elm.Declare.module_ [ "Generated", "TypePerk" ] TypePerksModule
         |> Elm.Declare.with (all dlcRaces)
-        |> Elm.Declare.Extra.withDeclarations (dlcToTypePerks dlcRaces)
+        |> Elm.Declare.Extra.withDeclarations (dlcToTypePerks types dlcRaces)
 
 
 all : List ( Maybe String, Parsers.Race ) -> Elm.Declare.Value
@@ -43,15 +43,15 @@ all dlcRaces =
         |> Elm.Declare.value "all"
 
 
-dlcToTypePerks : List ( Maybe String, Parsers.Race ) -> List Elm.Declaration
-dlcToTypePerks races =
+dlcToTypePerks : TypesModule -> List ( Maybe String, Parsers.Race ) -> List Elm.Declaration
+dlcToTypePerks types races =
     List.filterMap
         (\( dlcName, race ) ->
             race.perk
                 |> Maybe.map
                     (\perk ->
                         Gen.Data.TypePerk.make_.details
-                            { race = Generate.Types.valueFrom race.name
+                            { race = types.valueFrom race.name
                             , content = Elm.string perk.description
                             , cost = Elm.int perk.cost
                             , dlc = Elm.maybe (Maybe.map Elm.string dlcName)

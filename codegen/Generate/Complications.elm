@@ -3,17 +3,17 @@ module Generate.Complications exposing (file)
 import Elm
 import Elm.Annotation
 import Gen.Data.Complication
-import Generate.Types
+import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers exposing (Content(..))
 import String.Extra
 
 
-file : List ( Maybe String, Parsers.Complication ) -> Elm.File
-file dlcComplications =
+file : TypesModule -> List ( Maybe String, Parsers.Complication ) -> Elm.File
+file types dlcComplications =
     Elm.file [ "Generated", "Complication" ]
         (all dlcComplications
-            :: dlcToComplications dlcComplications
+            :: dlcToComplications types dlcComplications
         )
 
 
@@ -27,14 +27,14 @@ all dlcComplications =
         |> Elm.expose
 
 
-dlcToComplications : List ( Maybe String, Parsers.Complication ) -> List Elm.Declaration
-dlcToComplications complications =
+dlcToComplications : TypesModule -> List ( Maybe String, Parsers.Complication ) -> List Elm.Declaration
+dlcToComplications types complications =
     List.map
         (\( dlcName, complication ) ->
             Gen.Data.Complication.make_.details
-                { name = Generate.Types.valueFrom complication.name
-                , class = Elm.maybe (Maybe.map Generate.Types.valueFrom complication.class)
-                , category = Elm.maybe (Maybe.map Generate.Types.valueFrom complication.category)
+                { name = types.valueFrom complication.name
+                , class = Elm.maybe (Maybe.map types.valueFrom complication.class)
+                , category = Elm.maybe (Maybe.map types.valueFrom complication.category)
                 , content =
                     case complication.content of
                         Parsers.Single cost description ->

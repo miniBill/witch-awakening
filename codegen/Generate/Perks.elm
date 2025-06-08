@@ -8,7 +8,7 @@ import Elm.Declare.Extra
 import Elm.Op
 import Gen.Data.Perk
 import Gen.Types
-import Generate.Types
+import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers exposing (Content(..))
 import String.Extra
@@ -19,11 +19,11 @@ type alias PerkModule =
     }
 
 
-file : List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Module PerkModule
-file dlcPerks =
+file : TypesModule -> List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Module PerkModule
+file types dlcPerks =
     Elm.Declare.module_ [ "Generated", "Perk" ] PerkModule
         |> Elm.Declare.with (all dlcPerks)
-        |> Elm.Declare.Extra.withDeclarations (dlcToPerks dlcPerks)
+        |> Elm.Declare.Extra.withDeclarations (dlcToPerks types dlcPerks)
 
 
 all : List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
@@ -43,14 +43,14 @@ all dlcPerks =
                 |> Elm.withType (Elm.Annotation.list Gen.Data.Perk.annotation_.details)
 
 
-dlcToPerks : List ( Maybe String, Parsers.Perk ) -> List Elm.Declaration
-dlcToPerks perks =
+dlcToPerks : TypesModule -> List ( Maybe String, Parsers.Perk ) -> List Elm.Declaration
+dlcToPerks types perks =
     List.map
         (\( dlcName, perk ) ->
             Gen.Data.Perk.make_.details
-                { name = Generate.Types.valueFrom perk.name
-                , class = Generate.Types.valueFrom perk.class
-                , affinity = Generate.Types.valueFrom perk.element
+                { name = types.valueFrom perk.name
+                , class = types.valueFrom perk.class
+                , affinity = types.valueFrom perk.element
                 , isMeta = Elm.bool perk.isMeta
                 , content =
                     case perk.content of

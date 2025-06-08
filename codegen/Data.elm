@@ -22,6 +22,7 @@ type alias Variant =
 type alias Enums =
     { affinity : Enum
     , class : Enum
+    , faction : Enum
     , race : Enum
     , relic : Enum
     , others : List Enum
@@ -41,26 +42,20 @@ enums parsedDLCs =
     in
     { affinity = buildEnum "Affinity" combinedDLC.affinities
     , class = buildEnum "Class" combinedDLC.classes |> withImages
+    , faction = buildEnum "Faction" combinedDLC.factions
     , race = buildEnum "Race" combinedDLC.races |> withImages
     , relic = buildEnum "Relic" combinedDLC.relics |> withImages
     , others =
-        [ buildEnum "Perk" combinedDLC.perks
-            |> withImages
-        , buildEnum "Companion" combinedDLC.companions
-            |> withImages
-        , buildEnum "Magic" combinedDLC.magics
-            |> withImages
-        , buildEnum "Complication" combinedDLC.complications
-            |> withImages
+        [ buildEnum "Perk" combinedDLC.perks |> withImages
+        , buildEnum "Companion" combinedDLC.companions |> withImages
+        , buildEnum "Magic" combinedDLC.magics |> withImages
+        , buildEnum "Complication" combinedDLC.complications |> withImages
         , buildEnum "ComplicationCategory" combinedDLC.complicationCategories
 
         --
         , buildEnum "Size" (buildVariants coreSizes)
-        , buildEnum "GameMode" (buildVariants coreGameModes)
-            |> withImages
-        , buildEnum "Slot" (buildVariants coreSlots)
-            |> withImages
-        , buildEnum "Faction" (buildVariants coreFactions)
+        , buildEnum "GameMode" (buildVariants coreGameModes) |> withImages
+        , buildEnum "Slot" (buildVariants coreSlots) |> withImages
         ]
     }
 
@@ -149,15 +144,16 @@ withDLC dlcName original additional =
                             (\variant -> { variant | dlc = dlcName })
                    )
     in
-    { classes = merge .classes
-    , races = merge .races
-    , perks = merge .perks
-    , affinities = merge .affinities
+    { affinities = merge .affinities
+    , classes = merge .classes
     , companions = merge .companions
-    , relics = merge .relics
-    , magics = merge .magics
-    , complications = merge .complications
     , complicationCategories = merge .complicationCategories
+    , complications = merge .complications
+    , factions = merge .factions
+    , magics = merge .magics
+    , perks = merge .perks
+    , races = merge .races
+    , relics = merge .relics
     }
 
 
@@ -199,36 +195,39 @@ withArguments name arguments enum =
 
 
 type alias DLC =
-    { classes : List Variant
-    , races : List Variant
-    , perks : List Variant
-    , affinities : List Variant
+    { affinities : List Variant
+    , classes : List Variant
     , companions : List Variant
-    , relics : List Variant
-    , magics : List Variant
-    , complications : List Variant
     , complicationCategories : List Variant
+    , complications : List Variant
+    , factions : List Variant
+    , magics : List Variant
+    , perks : List Variant
+    , races : List Variant
+    , relics : List Variant
     }
 
 
 emptyDLC : DLC
 emptyDLC =
-    { classes = []
-    , races = []
-    , perks = []
-    , affinities = []
+    { affinities = []
+    , classes = []
     , companions = []
-    , relics = []
-    , magics = []
-    , complications = []
     , complicationCategories = []
+    , complications = []
+    , factions = []
+    , magics = []
+    , perks = []
+    , races = []
+    , relics = []
     }
 
 
 core : DLC
 core =
     { emptyDLC
-        | races = coreRaces
+        | factions = coreFactions
+        , races = coreRaces
         , perks = corePerks
     }
 
@@ -262,9 +261,10 @@ corePerks =
         |> withArguments "Charge Swap" [ "Race" ]
 
 
-coreFactions : List String
+coreFactions : List Variant
 coreFactions =
     [ "The College of Arcadia", "Hawthorne Academia", "The Watchers", "The Hespatian Coven", "Lunabella", "Alfheimr Alliance", "The Outsiders", "The O.R.C.", "Alphazon Industries" ]
+        |> buildVariants
 
 
 looseAssets : DLC

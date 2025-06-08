@@ -1,4 +1,4 @@
-module Data.Companion exposing (Details, MaybeClass(..), Score(..), all, factionNameToCompanionsName, intro)
+module Data.Companion exposing (Details, MaybeClass(..), Score(..), factionNameToCompanionsName, intro)
 
 import Generated.Types exposing (Class, Companion, Faction(..), Race)
 
@@ -46,11 +46,6 @@ intro =
 
     Take your pick:
     """
-
-
-all : List ( Maybe Faction, List Details )
-all =
-    []
 
 
 factionNameToCompanionsName : Maybe Faction -> String
