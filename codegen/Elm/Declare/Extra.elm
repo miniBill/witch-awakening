@@ -7,7 +7,7 @@ import Elm.Declare
 
 withDeclarations : List Elm.Declaration -> Elm.Declare.Module val -> Elm.Declare.Module val
 withDeclarations declarations module_ =
-    { module_ | declarations = module_.declarations ++ declarations }
+    { module_ | declarations = List.reverse declarations ++ module_.declarations }
 
 
 withHelper : a -> Elm.Declare.Module (a -> b) -> Elm.Declare.Module b

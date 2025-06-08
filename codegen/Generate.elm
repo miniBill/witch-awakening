@@ -2,14 +2,14 @@ module Generate exposing (main)
 
 {-| -}
 
-import Data
 import Dict
 import Dict.Extra
 import Elm
 import Elm.Annotation
+import Elm.Declare
 import Gen.CodeGen.Generate as Generate exposing (Directory)
-import Generate.Enums
 import Generate.FromDLC
+import Generate.Types
 import Json.Decode exposing (Decoder, Value)
 import Parser exposing ((|.), (|=), Parser)
 import Parsers
@@ -114,8 +114,7 @@ toFiles root =
 
                     enumsFile : Elm.File
                     enumsFile =
-                        Elm.file [ "Generated", "Types" ]
-                            (List.map Generate.Enums.enumToDeclarations (Data.enums dlcList))
+                        Elm.Declare.toFile (Generate.Types.module_ dlcList)
 
                     imagesFile : Elm.File
                     imagesFile =

@@ -1,4 +1,4 @@
-module Generate.FromDLC.Classes exposing (module_)
+module Generate.Classes exposing (module_)
 
 import Elm
 import Elm.Annotation
@@ -6,9 +6,16 @@ import Elm.Arg
 import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
-import Generate.Utils exposing (yassify)
+import Generate.Utils exposing (valueFromTypes, yassify)
 import Parsers
 import String.Extra
+
+
+type alias ClassesModule =
+    { all : Elm.Expression
+    , classToColor : Elm.Expression -> Elm.Expression
+    , classDetails : Elm.Annotation.Annotation
+    }
 
 
 module_ : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module ClassesModule
@@ -37,13 +44,6 @@ classDetails =
         |> Elm.Declare.Extra.withField "color" .color Elm.Annotation.int
         |> Elm.Declare.Extra.withField "content" .content Elm.Annotation.string
         |> Elm.Declare.Extra.buildCustomRecord
-
-
-type alias ClassesModule =
-    { all : Elm.Expression
-    , classToColor : Elm.Expression -> Elm.Expression
-    , classDetails : Elm.Annotation.Annotation
-    }
 
 
 allClasses : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Value
@@ -76,7 +76,7 @@ dlcToClasses classes =
     List.map
         (\( dlcName, class ) ->
             classDetails.make
-                { name = fromTypes class.name
+                { name = valueFromTypes class.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , color = Elm.hex class.color
                 , content = Elm.string class.description
@@ -85,12 +85,3 @@ dlcToClasses classes =
                 |> Elm.expose
         )
         classes
-
-
-fromTypes : String -> Elm.Expression
-fromTypes name =
-    Elm.value
-        { importFrom = [ "Generated", "Types" ]
-        , name = yassify name
-        , annotation = Nothing
-        }
