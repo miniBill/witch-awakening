@@ -71,15 +71,6 @@ fromParsed { name, items } =
     List.foldr
         (\item dlc ->
             case item of
-                Parsers.DLCRace v ->
-                    { dlc | races = variant v.name :: dlc.races }
-
-                Parsers.DLCPerk v ->
-                    { dlc | perks = variant v.name :: dlc.perks }
-
-                Parsers.DLCMagic v ->
-                    { dlc | magics = variant v.name :: dlc.magics }
-
                 Parsers.DLCAffinity v ->
                     { dlc
                         | affinities =
@@ -91,8 +82,8 @@ fromParsed { name, items } =
                                 :: dlc.affinities
                     }
 
-                Parsers.DLCRelic v ->
-                    { dlc | relics = variant v.name :: dlc.relics }
+                Parsers.DLCClass v ->
+                    { dlc | classes = variant v.name :: dlc.classes }
 
                 Parsers.DLCCompanion v ->
                     { dlc
@@ -120,6 +111,18 @@ fromParsed { name, items } =
                                 Nothing ->
                                     dlc.complicationCategories
                     }
+
+                Parsers.DLCMagic v ->
+                    { dlc | magics = variant v.name :: dlc.magics }
+
+                Parsers.DLCPerk v ->
+                    { dlc | perks = variant v.name :: dlc.perks }
+
+                Parsers.DLCRace v ->
+                    { dlc | races = variant v.name :: dlc.races }
+
+                Parsers.DLCRelic v ->
+                    { dlc | relics = variant v.name :: dlc.relics }
         )
         emptyDLC
         items
@@ -216,22 +219,10 @@ emptyDLC =
 
 core : DLC
 core =
-    { classes = coreClasses
-    , races = coreRaces
-    , perks = corePerks
-    , affinities = []
-    , companions = []
-    , relics = []
-    , magics = []
-    , complications = []
-    , complicationCategories = []
+    { emptyDLC
+        | races = coreRaces
+        , perks = corePerks
     }
-
-
-coreClasses : List Variant
-coreClasses =
-    [ "Academic", "Sorceress", "Warlock" ]
-        |> buildVariants
 
 
 coreRaces : List Variant

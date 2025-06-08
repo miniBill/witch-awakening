@@ -7,6 +7,7 @@ import Elm.Arg
 import Elm.Case
 import Elm.Op
 import Gen.Data.Affinity
+import Gen.Data.Class
 import Gen.Data.Companion
 import Gen.Data.Complication
 import Gen.Data.Magic
@@ -24,12 +25,15 @@ import String.Extra
 files : List Parsers.DLC -> List Elm.File
 files dlcList =
     let
-        { dlcAffinities, dlcCompanions, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics } =
+        { dlcAffinities, dlcClasses, dlcCompanions, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
                         Parsers.DLCAffinity affinity ->
                             { acc | dlcAffinities = ( dlcName, affinity ) :: acc.dlcAffinities }
+
+                        Parsers.DLCClass class ->
+                            { acc | dlcClasses = ( dlcName, class ) :: acc.dlcClasses }
 
                         Parsers.DLCCompanion companion ->
                             { acc | dlcCompanions = ( dlcName, companion ) :: acc.dlcCompanions }
@@ -50,6 +54,7 @@ files dlcList =
                             { acc | dlcRelics = ( dlcName, relic ) :: acc.dlcRelics }
                 )
                 { dlcAffinities = []
+                , dlcClasses = []
                 , dlcCompanions = []
                 , dlcComplications = []
                 , dlcMagics = []
@@ -60,6 +65,7 @@ files dlcList =
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
     [ affinitiesFile dlcAffinities
+    , classesFile dlcClasses
     , companionsFile dlcCompanions
     , complicationsFile dlcComplications
     , magicsFile dlcMagics
@@ -613,3 +619,34 @@ dlcToComplications complications =
                 |> Elm.expose
         )
         complications
+
+
+classesFile : List ( Maybe String, Parsers.Class ) -> Elm.File
+classesFile dlcClasses =
+    Elm.file [ "Generated", "Classes" ]
+        (Elm.expose (Elm.declaration "all" (allClasses dlcClasses))
+            :: dlcToClasses dlcClasses
+        )
+
+
+allClasses : List ( Maybe String, Parsers.Class ) -> Elm.Expression
+allClasses dlcClasses =
+    dlcClasses
+        |> List.map (\( _, class ) -> Elm.val (String.Extra.decapitalize (yassify class.name)))
+        |> Elm.list
+        |> Elm.withType (Elm.Annotation.list Gen.Data.Class.annotation_.details)
+
+
+dlcToClasses : List ( Maybe String, Parsers.Class ) -> List Elm.Declaration
+dlcToClasses classes =
+    List.map
+        (\( dlcName, class ) ->
+            Gen.Data.Class.make_.details
+                { name = fromTypes class.name
+                , content = Elm.string class.description
+                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                }
+                |> Elm.declaration (yassify class.name)
+                |> Elm.expose
+        )
+        classes

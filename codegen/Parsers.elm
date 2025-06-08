@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Companion, Complication, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc)
+module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc)
 
 import Dict exposing (Dict)
 import Dict.Extra
@@ -18,6 +18,7 @@ type alias DLC =
 
 type DLCItem
     = DLCAffinity Affinity
+    | DLCClass Class
     | DLCRace Race
     | DLCCompanion Companion
     | DLCComplication Complication
@@ -46,6 +47,7 @@ dlc =
         |= many
             (oneOf
                 [ map DLCAffinity affinity
+                , map DLCClass class
                 , map DLCCompanion companion
                 , map DLCComplication complication
                 , map DLCMagic magic
@@ -402,7 +404,7 @@ relic =
             }
         )
         |> oneOfItems
-            [ requiredItem "Class" (\class -> Ok [ class ])
+            [ requiredItem "Class" (\c -> Ok [ c ])
             , requiredItem "Classes" stringListParser
             , optionalItem nonexistentKey [] (\_ -> Ok [])
             ]
@@ -520,6 +522,21 @@ complication =
                 |= many tierParser
                 |= paragraphs False
             ]
+
+
+type alias Class =
+    { name : String
+    , description : String
+    }
+
+
+class : Parser Class
+class =
+    (section "##" "Class" Class
+        |> parseSection
+    )
+        |= paragraphs True
+        |. spaces
 
 
 
