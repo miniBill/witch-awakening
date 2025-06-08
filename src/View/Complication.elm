@@ -76,15 +76,11 @@ complicationBox :
     -> List RankedComplication
     -> Complication.Details
     -> Maybe (Element ( RankedComplication, Bool ))
-complicationBox display selected ({ name, class, content, dlc } as complication) =
+complicationBox display selected ({ name, class, category, content, dlc } as complication) =
     let
         isSelected : Maybe RankedComplication
         isSelected =
             List.Extra.find (\sel -> sel.name == name) selected
-
-        category : Maybe ComplicationCategory
-        category =
-            Types.complicationToCategory name
 
         msg : Maybe ( RankedComplication, Bool )
         msg =

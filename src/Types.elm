@@ -1,4 +1,4 @@
-module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, complicationToCategory, factionToMagic, gainToSlot, nextDisplay)
+module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, factionToMagic, gainToSlot, nextDisplay)
 
 import Browser exposing (UrlRequest)
 import Generated.Types exposing (Affinity, Class, Companion, Complication(..), ComplicationCategory(..), Faction(..), GameMode, Magic, Perk, Race, Relic, Slot(..))
@@ -129,31 +129,6 @@ complicationKindToString kind =
 
         Nontiered ->
             ""
-
-
-complicationToCategory : Complication -> Maybe ComplicationCategory
-complicationToCategory name =
-    case name of
-        Brutality ->
-            Just WorldShift
-
-        Masquerade ->
-            Just WorldShift
-
-        TrueNames ->
-            Just WorldShift
-
-        Monsters ->
-            Just WorldShift
-
-        Population ->
-            Just WorldShift
-
-        Bonk ->
-            Just WorldShift
-
-        _ ->
-            Nothing
 
 
 gainToSlot : Int -> Slot
