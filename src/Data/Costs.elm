@@ -901,7 +901,12 @@ relicCost class pearl { name, cost } =
                 let
                     isClass : Bool
                     isClass =
-                        relic.class == class
+                        case class of
+                            Nothing ->
+                                False
+
+                            Just c ->
+                                List.member c relic.classes
 
                     baseCost : Int
                     baseCost =

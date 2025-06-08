@@ -337,7 +337,7 @@ dlcToRelics relics =
         (\( dlcName, relic ) ->
             Gen.Data.Relic.make_.details
                 { name = fromTypes relic.name
-                , class = Elm.maybe (Maybe.map fromTypes relic.class)
+                , classes = Elm.list (List.map fromTypes relic.classes)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , content =
                     case relic.content of

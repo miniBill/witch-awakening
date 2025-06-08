@@ -7,6 +7,8 @@ import Element.Font as Font
 import Generated.Relics
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
+import Html
+import Html.Attributes
 import List.Extra
 import String.Extra
 import Theme exposing (gradientText)
@@ -52,7 +54,7 @@ relicBox :
     -> List Race
     -> Relic.Details
     -> Maybe (Element Choice)
-relicBox mainRace display selected pearl races ({ name, class, content, dlc } as relic) =
+relicBox mainRace display selected pearl races ({ name, classes, content, dlc } as relic) =
     let
         isSelected : Maybe RankedRelic
         isSelected =
@@ -152,14 +154,55 @@ relicBox mainRace display selected pearl races ({ name, class, content, dlc } as
                         , moveDown 8
                         ]
                         (Theme.gradientText 4 Gradients.purpleGradient dlcName)
-            , case class of
-                Nothing ->
+            , case classes of
+                [] ->
                     Element.none
 
-                Just c ->
+                [ c ] ->
                     Theme.classToBadge c
                         |> Theme.image [ width <| px 40 ]
                         |> el [ alignBottom ]
+
+                _ ->
+                    let
+                        sector : Int
+                        sector =
+                            360 // List.length classes
+
+                        viewSlice : Int -> Types.Class -> Attribute msg
+                        viewSlice i class =
+                            let
+                                from =
+                                    String.fromInt (sector * i)
+
+                                to =
+                                    String.fromInt (sector * (i + 1))
+                            in
+                            Html.img
+                                [ Html.Attributes.src (Theme.classToBadge class).src
+                                , Html.Attributes.style "mask-image"
+                                    ("conic-gradient("
+                                        ++ String.join ", "
+                                            [ "transparent " ++ from ++ "deg"
+                                            , "black " ++ from ++ "deg"
+                                            , "black " ++ to ++ "deg"
+                                            , "transparent " ++ to ++ "deg"
+                                            ]
+                                        ++ ")"
+                                    )
+                                , Html.Attributes.style "width" "40px"
+                                ]
+                                []
+                                |> Element.html
+                                |> Element.inFront
+                    in
+                    Element.el
+                        (width (px 40)
+                            :: height (px 40)
+                            :: alignBottom
+                            :: List.indexedMap viewSlice classes
+                        )
+                        Element.none
             , case costs of
                 [] ->
                     Element.none

@@ -398,7 +398,7 @@ affinity =
 
 type alias Relic =
     { name : String
-    , class : Maybe String
+    , classes : List String
     , content : Content Never
     }
 
@@ -407,13 +407,17 @@ relic : Parser Relic
 relic =
     (section "##"
         "Relic"
-        (\name class toContent content ->
+        (\name classes toContent content ->
             { name = name
-            , class = class
+            , classes = classes
             , content = toContent content
             }
         )
-        |> maybeItem "Class" Ok
+        |> oneOfItems
+            [ requiredItem "Class" (\class -> Ok [ class ])
+            , requiredItem "Classes" stringListParser
+            , optionalItem nonexistentKey [] (\_ -> Ok [])
+            ]
         |> oneOfItems
             [ requiredItem "Cost" (intParser >> Result.map Single)
             , requiredItem "Costs" (intListParser >> Result.map WithCosts)
