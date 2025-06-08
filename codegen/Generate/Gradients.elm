@@ -33,37 +33,37 @@ gradient ( fileName, content ) =
             |> List.filter (\line -> not (List.isEmpty line))
     of
         [ 3 ] :: [ 1, _ {- height -} ] :: [ 255 ] :: rows ->
-            rows
-                |> Result.Extra.combineMap
-                    (\row ->
-                        case row of
-                            [ r, g, b ] ->
-                                Ok ( r, g, b )
-
-                            _ ->
-                                Err
-                                    [ { title = "Invalid row"
-                                      , description =
-                                            "Row \""
-                                                ++ String.join " " (List.map String.fromInt row)
-                                                ++ "\" is not valid"
-                                      }
-                                    ]
-                    )
+            rowsToExpression rows
                 |> Result.map
-                    (\triples ->
-                        triples
-                            |> List.map
-                                (\( r, g, b ) ->
-                                    Elm.triple
-                                        (Elm.int r)
-                                        (Elm.int g)
-                                        (Elm.int b)
-                                )
-                            |> Elm.list
+                    (\expr ->
+                        expr
                             |> Elm.declaration (name ++ "Gradient")
                             |> Elm.expose
                     )
 
         _ ->
             Err [ { title = "Invalid file", description = "Could not parse file" } ]
+
+
+rowsToExpression : List (List Int) -> Result (List Generate.Error) Elm.Expression
+rowsToExpression rows =
+    rows
+        |> Result.Extra.combineMap parseRow
+        |> Result.map Elm.list
+
+
+parseRow : List Int -> Result (List Generate.Error) Elm.Expression
+parseRow row =
+    case row of
+        [ r, g, b ] ->
+            Ok (Elm.triple (Elm.int r) (Elm.int g) (Elm.int b))
+
+        _ ->
+            Err
+                [ { title = "Invalid row"
+                  , description =
+                        "Row \""
+                            ++ String.join " " (List.map String.fromInt row)
+                            ++ "\" is not valid"
+                  }
+                ]
