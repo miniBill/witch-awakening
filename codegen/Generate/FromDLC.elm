@@ -15,10 +15,10 @@ import Gen.Data.Complication
 import Gen.Data.Magic
 import Gen.Data.Perk
 import Gen.Data.Race
-import Gen.Data.TypePerk
 import Gen.Types
 import Generate.Classes
 import Generate.Relics
+import Generate.TypePerks
 import Generate.Types
 import Generate.Utils exposing (valueFromTypes, yassify)
 import List.Extra
@@ -173,7 +173,7 @@ files_ dlcList =
     , perksFile dlcPerks
     , racesFile dlcRaces
     , Elm.Declare.toFile (Generate.Relics.relicsFile dlcRelics)
-    , typePerksFile dlcRaces
+    , Elm.Declare.toFile (Generate.TypePerks.typePerksFile dlcRaces)
     , Elm.Declare.toFile (Generate.Types.module_ dlcList)
     ]
 
@@ -278,52 +278,6 @@ dlcToPerks perks =
                 |> Elm.expose
         )
         perks
-
-
-typePerksFile : List ( Maybe String, Parsers.Race ) -> Elm.File
-typePerksFile dlcRaces =
-    Elm.file [ "Generated", "TypePerk" ]
-        (Elm.expose (Elm.declaration "all" (allTypePerks dlcRaces))
-            :: dlcToTypePerks dlcRaces
-        )
-
-
-allTypePerks : List ( Maybe String, Parsers.Race ) -> Elm.Expression
-allTypePerks dlcRaces =
-    Elm.Op.append
-        (dlcRaces
-            |> List.filterMap
-                (\( _, race ) ->
-                    if race.perk == Nothing then
-                        Nothing
-
-                    else
-                        Just (Elm.val (String.Extra.decapitalize race.name))
-                )
-            |> Elm.list
-        )
-        Gen.Data.TypePerk.all
-        |> Elm.withType (Elm.Annotation.list Gen.Data.TypePerk.annotation_.details)
-
-
-dlcToTypePerks : List ( Maybe String, Parsers.Race ) -> List Elm.Declaration
-dlcToTypePerks races =
-    List.filterMap
-        (\( dlcName, race ) ->
-            race.perk
-                |> Maybe.map
-                    (\perk ->
-                        Gen.Data.TypePerk.make_.details
-                            { race = valueFromTypes race.name
-                            , content = Elm.string perk.description
-                            , cost = Elm.int perk.cost
-                            , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                            }
-                            |> Elm.declaration (yassify race.name)
-                            |> Elm.expose
-                    )
-        )
-        races
 
 
 magicsFile : List ( Maybe String, Parsers.Magic ) -> Elm.File
