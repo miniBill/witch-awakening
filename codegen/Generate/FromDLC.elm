@@ -23,6 +23,7 @@ import Generate.Types
 import Generate.Utils exposing (valueFromTypes, yassify)
 import List.Extra
 import Parser
+import Parser.Error
 import Parsers exposing (DLCItem(..))
 import Result.Extra
 import String.Extra
@@ -60,67 +61,10 @@ parseDLC ( folder, filename, content ) =
             (\deadEnds ->
                 [ { title = "Error parsing DLC file"
                   , description =
-                        "Could not parse " ++ folder ++ "/" ++ filename ++ "\n" ++ errorToString deadEnds
+                        "Could not parse " ++ folder ++ "/" ++ filename ++ "\n" ++ Parser.Error.toString deadEnds
                   }
                 ]
             )
-
-
-errorToString : List Parser.DeadEnd -> String
-errorToString deadEnds =
-    String.join "\n" <|
-        List.map deadEndToString deadEnds
-
-
-deadEndToString : Parser.DeadEnd -> String
-deadEndToString deadEnd =
-    "At " ++ String.fromInt deadEnd.row ++ ":" ++ String.fromInt deadEnd.col ++ ": " ++ problemToString deadEnd.problem
-
-
-problemToString : Parser.Problem -> String
-problemToString problem =
-    case problem of
-        Parser.ExpectingInt ->
-            "Expecting int"
-
-        Parser.ExpectingHex ->
-            "Expecting hex"
-
-        Parser.ExpectingOctal ->
-            "Expecting octal"
-
-        Parser.ExpectingBinary ->
-            "Expecting binary"
-
-        Parser.ExpectingFloat ->
-            "Expecting float"
-
-        Parser.ExpectingNumber ->
-            "Expecting number"
-
-        Parser.ExpectingVariable ->
-            "Expecting variable"
-
-        Parser.ExpectingSymbol s ->
-            "Expecting symbol " ++ s
-
-        Parser.ExpectingKeyword k ->
-            "Expecting keyword " ++ k
-
-        Parser.Expecting e ->
-            "Expecting " ++ e
-
-        Parser.ExpectingEnd ->
-            "Expecting end"
-
-        Parser.UnexpectedChar ->
-            "Unexpected char"
-
-        Parser.Problem p ->
-            "Problem: " ++ p
-
-        Parser.BadRepeat ->
-            "Bad repetition"
 
 
 files_ : List Parsers.DLC -> List Elm.File
