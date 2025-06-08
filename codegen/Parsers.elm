@@ -77,13 +77,7 @@ type alias Race =
 race : Parser Race
 race =
     (section "##" "Race" Race
-        |> requiredItem "Elements"
-            (\raw ->
-                raw
-                    |> String.split ","
-                    |> List.map String.trim
-                    |> Ok
-            )
+        |> requiredItem "Elements" stringListParser
         |> requiredItem "Mana capacity" Ok
         |> requiredItem "Mana rate" Ok
         |> parseSection
@@ -526,8 +520,8 @@ companion =
         |> maybeItem "Class" Ok
         |> oneOfItems
             [ requiredItem "Race" (\r -> Ok [ r ])
-            , requiredItem "Races" (\r -> Ok (List.map String.trim (String.split "," r)))
-            , optionalItem "___" [] (\_ -> Ok [])
+            , requiredItem "Races" stringListParser
+            , optionalItem nonexistentKey [] (\_ -> Ok [])
             ]
         |> flag "Has Perk"
         |> maybeItem "Cost" intParser
@@ -547,6 +541,11 @@ companion =
 
 
 -- Generic parsers --
+
+
+nonexistentKey : String
+nonexistentKey =
+    "!@#$%^&*()"
 
 
 many : Parser a -> Parser (List a)
@@ -617,12 +616,29 @@ intParser raw =
 
 intListParser : String -> Result String (List Int)
 intListParser raw =
-    case raw |> String.split "," |> Maybe.Extra.combineMap (\piece -> piece |> String.trim |> String.toInt) of
+    case
+        raw
+            |> String.split ","
+            |> Maybe.Extra.combineMap
+                (\piece ->
+                    piece
+                        |> String.trim
+                        |> String.toInt
+                )
+    of
         Nothing ->
             Err (raw ++ " is not a valid list of numbers")
 
         Just n ->
             Ok n
+
+
+stringListParser : String -> Result String (List String)
+stringListParser raw =
+    raw
+        |> String.split ","
+        |> List.map String.trim
+        |> Ok
 
 
 listItem : String -> (String -> Result String a) -> Parser a
