@@ -66,7 +66,7 @@ update msg model =
 init : Model
 init =
     { dlc = Nothing
-    , category = Companion
+    , category = Complication
     }
 
 
@@ -471,29 +471,61 @@ dumpCompanion faction companion =
 dumpComplication : Data.Complication.Details -> Maybe (List (Maybe String))
 dumpComplication complication =
     let
-        maybeCostAndDescription : Maybe ( String, String )
-        maybeCostAndDescription =
+        ( maybeGain, tiered, maybeDescription ) =
             case complication.content of
                 Data.Complication.Single gain details ->
-                    Just ( "- Gain: " ++ String.fromInt gain, details )
+                    ( Just ("- Gain: " ++ String.fromInt gain)
+                    , False
+                    , Just (String.Multiline.here details)
+                    )
 
-                Data.Complication.WithChoices before costs after ->
-                    Nothing
+                Data.Complication.WithChoices before choices after ->
+                    ( Nothing
+                    , False
+                    , [ String.Multiline.here before
+                      , choices
+                            |> List.map (\( choice, cost ) -> "- [" ++ String.fromInt cost ++ "] " ++ choice)
+                            |> String.join "\n"
+                      , String.Multiline.here after
+                      ]
+                        |> List.Extra.removeWhen String.isEmpty
+                        |> String.join "\n\n"
+                        |> Just
+                    )
 
                 Data.Complication.WithTiers before tiers after ->
-                    Nothing
+                    ( Nothing
+                    , True
+                    , [ String.Multiline.here before
+                      , tiers
+                            |> List.map (\( choice, cost ) -> "- [" ++ String.fromInt cost ++ "] " ++ choice)
+                            |> String.join "\n"
+                      , String.Multiline.here after
+                      ]
+                        |> List.Extra.removeWhen String.isEmpty
+                        |> String.join "\n\n"
+                        |> Just
+                    )
 
                 Data.Complication.WithGains details gains ->
-                    Just ( "- Gains: " ++ String.join ", " (List.map String.fromInt gains), details )
+                    ( Just ("- Gains: " ++ String.join ", " (List.map String.fromInt gains))
+                    , False
+                    , Just (String.Multiline.here details)
+                    )
     in
-    maybeCostAndDescription
+    maybeDescription
         |> Maybe.map
-            (\( costString, details ) ->
+            (\description ->
                 [ Just <| "## Complication: " ++ complicationToString complication.name
+                , if tiered then
+                    Just "- Tiered: True"
+
+                  else
+                    Nothing
                 , Maybe.map (\class -> "- Class: " ++ classToString class) complication.class
-                , Just costString
+                , maybeGain
                 , Just ""
-                , Just (String.Multiline.here details)
+                , Just description
                 ]
             )
 
