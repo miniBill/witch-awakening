@@ -172,9 +172,11 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                         viewSlice : Int -> Types.Class -> Attribute msg
                         viewSlice i class =
                             let
+                                from : String
                                 from =
                                     String.fromInt (sector * i)
 
+                                to : String
                                 to =
                                     String.fromInt (sector * (i + 1))
                             in

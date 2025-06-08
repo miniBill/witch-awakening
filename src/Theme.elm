@@ -364,6 +364,7 @@ viewAffinityBadge affinity =
         opaque f =
             f * 256 + 0xFF
 
+        colorToCss : Int -> String
         colorToCss color =
             "#" ++ String.padLeft 8 '0' (Hex.toString color)
 

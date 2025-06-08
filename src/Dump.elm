@@ -383,6 +383,7 @@ dumpCompanion faction companion =
             in
             item label identity valueString
 
+        name : String
         name =
             case companionToString companion.name of
                 "Xiao Liena 肖列娜" ->
