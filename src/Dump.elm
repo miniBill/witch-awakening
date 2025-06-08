@@ -318,7 +318,15 @@ dumpRelic relic =
         |> Maybe.map
             (\( costString, details ) ->
                 [ Just <| "## Relic: " ++ relicToString relic.name
-                , Maybe.map (\class -> "- Class: " ++ classToString class) relic.class
+                , case relic.classes of
+                    [] ->
+                        Nothing
+
+                    [ class ] ->
+                        Just ("- Class: " ++ classToString class)
+
+                    classes ->
+                        Just ("- Classes: " ++ String.join ", " (List.map classToString classes))
                 , Just costString
                 , Just ""
                 , Just (String.Multiline.here details)
