@@ -1,20 +1,4 @@
-module Data.FactionalMagic exposing (Details, intro)
-
-import Data.Magic exposing (Affinities)
-import Generated.Types exposing (Class, Faction, Magic)
-
-
-type alias Details =
-    { name : Magic
-    , hasRankZero : Bool
-    , class : Maybe Class
-    , faction : Maybe Faction
-    , affinities : Affinities
-    , isElementalism : Bool
-    , description : String
-    , ranks : List String
-    , dlc : Maybe String
-    }
+module Data.FactionalMagic exposing (intro)
 
 
 intro : String

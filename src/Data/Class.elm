@@ -1,6 +1,6 @@
 module Data.Class exposing (Details, intro, title)
 
-import Generated.Types exposing (Class(..))
+import Generated.Types exposing (Class)
 
 
 type alias Details =
