@@ -27,6 +27,7 @@ import Simplify
 config : List Rule
 config =
     [ Docs.ReviewAtDocs.rule
+        |> Rule.ignoreErrorsForDirectories [ "generated" ]
     , NoConfusingPrefixOperator.rule
     , NoDebug.Log.rule
     , NoDebug.TodoOrToString.rule
