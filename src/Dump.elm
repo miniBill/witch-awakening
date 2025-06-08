@@ -11,12 +11,13 @@ import Data.TypePerk
 import Dict exposing (Dict)
 import Dict.Extra
 import Generated.Companions
+import Generated.Complications
 import Generated.Magics
 import Generated.Perks
 import Generated.Races
 import Generated.Relics
 import Generated.TypePerks
-import Generated.Types exposing (Faction, classToString, companionToString, complicationToString, factionToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
+import Generated.Types exposing (Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
@@ -109,9 +110,9 @@ dump model =
         go inner list =
             list
                 |> List.filterMap
-                    (\item ->
-                        if item.dlc == model.dlc then
-                            inner item
+                    (\element ->
+                        if element.dlc == model.dlc then
+                            inner element
                                 |> Maybe.map
                                     (\lines ->
                                         lines
@@ -144,7 +145,7 @@ dump model =
             go dumpRelic Generated.Relics.all
 
         Complication ->
-            go dumpComplication Data.Complication.all
+            go dumpComplication Generated.Complications.all
 
         Companion ->
             Generated.Companions.all
@@ -202,9 +203,9 @@ categoryButton selected ( name, category ) =
 dumpRace : Dict String Data.TypePerk.Details -> Data.Race.Details -> List (Maybe String)
 dumpRace typePerks details =
     [ Just <| "## Race: " ++ raceToString details.name
-    , Just <| "- Elements: " ++ String.join ", " (List.map affinityToString details.affinities)
-    , Just <| "- Mana capacity: " ++ sizeToString details.tank
-    , Just <| "- Mana rate: " ++ sizeToString details.charge
+    , listItem "Elements" affinityToString details.affinities
+    , item "Mana capacity" sizeToString details.tank
+    , item "Mana rate" sizeToString details.charge
     , Just ""
     , Just <| String.Multiline.here details.content
     ]
@@ -215,7 +216,7 @@ dumpRace typePerks details =
                 Just typePerk ->
                     [ Just <| ""
                     , Just <| "### Perk"
-                    , Just <| "- Cost: " ++ String.fromInt typePerk.cost
+                    , item "Cost" String.fromInt typePerk.cost
                     , Just <| ""
                     , Just <| String.Multiline.here typePerk.content
                     ]
@@ -234,7 +235,7 @@ dumpPerk details =
                     ( Nothing
                     , [ String.Multiline.here before
                       , choices
-                            |> List.map (\( choice, cost ) -> "- [" ++ String.fromInt cost ++ "] " ++ choice)
+                            |> List.map (\( choice, cost ) -> itemWithCost cost choice)
                             |> String.join "\n"
                       , String.Multiline.here after
                       ]
@@ -256,22 +257,18 @@ dumpPerk details =
         |> Maybe.map
             (\content ->
                 [ Just <| "## Perk: " ++ perkToString details.name
-                , Just <| "- Element: " ++ affinityToString details.affinity
-                , Just <| "- Class: " ++ classToString details.class
-                , if details.isMeta then
-                    Just "- Meta: True"
-
-                  else
-                    Nothing
+                , item "Element" affinityToString details.affinity
+                , item "Class" classToString details.class
+                , flagItem "Meta" details.isMeta
                 , maybeCost
-                    |> Maybe.map
+                    |> Maybe.andThen
                         (\costs ->
                             case costs of
                                 [ cost ] ->
-                                    "- Cost: " ++ String.fromInt cost
+                                    item "Cost" String.fromInt cost
 
                                 _ ->
-                                    "- Costs: " ++ String.join ", " (List.map String.fromInt costs)
+                                    intListItem "Costs" costs
                         )
                 , Just ""
                 , Just content
@@ -282,19 +279,10 @@ dumpPerk details =
 dumpMagic : Data.Magic.Details -> List (Maybe String)
 dumpMagic details =
     [ Just <| "## Magic: " ++ magicToString details.name
-    , details.class
-        |> Maybe.map (\class -> "- Class: " ++ classToString class)
-    , Just <| "- Elements: " ++ affinitiesToString details.affinities
-    , if details.hasRankZero then
-        Just "- Has rank zero: True"
-
-      else
-        Nothing
-    , if details.isElementalism then
-        Just "- Elementalism: True"
-
-      else
-        Nothing
+    , maybeItem "Class" classToString details.class
+    , item "Elements" affinitiesToString details.affinities
+    , flagItem "Has rank zero" details.hasRankZero
+    , flagItem "Elementalism" details.isElementalism
     , Just ""
     , Just <| String.Multiline.here details.description
     , Just ""
@@ -320,32 +308,31 @@ dumpMagic details =
 dumpRelic : Data.Relic.Details -> Maybe (List (Maybe String))
 dumpRelic relic =
     let
-        maybeCostAndDescription : Maybe ( String, String )
-        maybeCostAndDescription =
+        ( cost, maybeDescription ) =
             case relic.content of
                 Data.Relic.Single cost details ->
-                    Just ( "- Cost: " ++ String.fromInt cost, details )
+                    ( item "Cost" String.fromInt cost, Just details )
 
                 Data.Relic.WithChoices costs details ->
-                    Just ( "- Costs: " ++ String.join ", " (List.map String.fromInt costs), details )
+                    ( intListItem "Costs" costs, Just details )
 
                 Data.Relic.CosmicPearlContent _ _ ->
-                    Nothing
+                    ( Nothing, Nothing )
     in
-    maybeCostAndDescription
+    maybeDescription
         |> Maybe.map
-            (\( costString, details ) ->
+            (\details ->
                 [ Just <| "## Relic: " ++ relicToString relic.name
                 , case relic.classes of
                     [] ->
                         Nothing
 
                     [ class ] ->
-                        Just ("- Class: " ++ classToString class)
+                        item "Class" classToString class
 
                     classes ->
-                        Just ("- Classes: " ++ String.join ", " (List.map classToString classes))
-                , Just costString
+                        listItem "Classes" classToString classes
+                , cost
                 , Just ""
                 , Just (String.Multiline.here details)
                 ]
@@ -394,7 +381,7 @@ dumpCompanion faction companion =
                                 Just w ->
                                     String.fromInt w ++ "-" ++ String.fromInt better
             in
-            Just ("- " ++ label ++ ": " ++ valueString)
+            item label identity valueString
 
         name =
             case companionToString companion.name of
@@ -409,28 +396,20 @@ dumpCompanion faction companion =
         Nothing
 
       else
-        Just ("- Full name: " ++ companionToString companion.name)
-    , Maybe.map (\f -> "- Faction: " ++ factionToString f) faction
-    , Maybe.map (\c -> "- Class: " ++ c) class
+        item "Full name" companionToString companion.name
+    , maybeItem "Faction" factionToString faction
+    , maybeItem "Class" identity class
     , case List.map raceToString companion.races of
         [] ->
             Nothing
 
         [ race ] ->
-            Just <| "- Race: " ++ race
+            item "Race" identity race
 
         races ->
-            Just <| "- Races: " ++ String.join ", " races
-    , if companion.hasPerk then
-        Just "- Has Perk: True"
-
-      else
-        Nothing
-    , companion.cost
-        |> Maybe.map
-            (\cost ->
-                "- Cost: " ++ String.fromInt cost
-            )
+            stringListItem "Races" races
+    , flagItem "Has Perk" companion.hasPerk
+    , maybeItem "Cost" String.fromInt companion.cost
     , score "Power" companion.power
     , score "Teamwork" companion.teamwork
     , score "Sociability" companion.sociability
@@ -440,7 +419,7 @@ dumpCompanion faction companion =
 
       else
         companion.positives
-            |> List.map (\p -> "- Positive: " ++ p)
+            |> List.filterMap (\p -> item "Positive" identity p)
             |> String.join "\n"
             |> Just
     , if List.isEmpty companion.negatives then
@@ -448,7 +427,7 @@ dumpCompanion faction companion =
 
       else
         companion.negatives
-            |> List.map (\p -> "- Negative: " ++ p)
+            |> List.filterMap (\p -> item "Negative" identity p)
             |> String.join "\n"
             |> Just
     , if List.isEmpty companion.mixed then
@@ -456,11 +435,11 @@ dumpCompanion faction companion =
 
       else
         companion.mixed
-            |> List.map (\p -> "- Mixed: " ++ p)
+            |> List.filterMap (\p -> item "Mixed" identity p)
             |> String.join "\n"
             |> Just
-    , Just <| "- Has: " ++ companion.has
-    , Just <| "- Quote: " ++ companion.quote
+    , item "Has" identity companion.has
+    , item "Quote" identity companion.quote
     , Just ""
     , Just (String.Multiline.here companion.description)
     ]
@@ -474,7 +453,7 @@ dumpComplication complication =
         ( maybeGain, tiered, maybeDescription ) =
             case complication.content of
                 Data.Complication.Single gain details ->
-                    ( Just ("- Gain: " ++ String.fromInt gain)
+                    ( item "Gain" String.fromInt gain
                     , False
                     , Just (String.Multiline.here details)
                     )
@@ -484,7 +463,7 @@ dumpComplication complication =
                     , False
                     , [ String.Multiline.here before
                       , choices
-                            |> List.map (\( choice, cost ) -> "- [" ++ String.fromInt cost ++ "] " ++ choice)
+                            |> List.map (\( choice, cost ) -> itemWithCost cost choice)
                             |> String.join "\n"
                       , String.Multiline.here after
                       ]
@@ -498,7 +477,7 @@ dumpComplication complication =
                     , True
                     , [ String.Multiline.here before
                       , tiers
-                            |> List.map (\( choice, cost ) -> "- [" ++ String.fromInt cost ++ "] " ++ choice)
+                            |> List.map (\( choice, cost ) -> itemWithCost cost choice)
                             |> String.join "\n"
                       , String.Multiline.here after
                       ]
@@ -507,8 +486,8 @@ dumpComplication complication =
                         |> Just
                     )
 
-                Data.Complication.WithGains details gains ->
-                    ( Just ("- Gains: " ++ String.join ", " (List.map String.fromInt gains))
+                Data.Complication.WithGains gains details ->
+                    ( intListItem "Gains" gains
                     , False
                     , Just (String.Multiline.here details)
                     )
@@ -517,17 +496,53 @@ dumpComplication complication =
         |> Maybe.map
             (\description ->
                 [ Just <| "## Complication: " ++ complicationToString complication.name
-                , if tiered then
-                    Just "- Tiered: True"
-
-                  else
-                    Nothing
-                , Maybe.map (\class -> "- Class: " ++ classToString class) complication.class
+                , flagItem "Tiered" tiered
+                , maybeItem "Category" complicationCategoryToString complication.category
+                , maybeItem "Class" classToString complication.class
                 , maybeGain
                 , Just ""
                 , Just description
                 ]
             )
+
+
+item : String -> (a -> String) -> a -> Maybe String
+item key toString value =
+    Just ("- " ++ key ++ ": " ++ toString value)
+
+
+itemWithCost : Int -> String -> String
+itemWithCost cost choice =
+    "- [" ++ String.fromInt cost ++ "] " ++ choice
+
+
+flagItem : String -> Bool -> Maybe String
+flagItem key value =
+    if value then
+        item key identity "True"
+
+    else
+        Nothing
+
+
+maybeItem : String -> (a -> String) -> Maybe a -> Maybe String
+maybeItem key toString value =
+    Maybe.map (\v -> "- " ++ key ++ ": " ++ toString v) value
+
+
+listItem : String -> (a -> String) -> List a -> Maybe String
+listItem key toString value =
+    item key (\raw -> raw |> List.map toString |> String.join ", ") value
+
+
+intListItem : String -> List Int -> Maybe String
+intListItem key value =
+    listItem key String.fromInt value
+
+
+stringListItem : String -> List String -> Maybe String
+stringListItem key value =
+    listItem key identity value
 
 
 affinitiesToString : Data.Magic.Affinities -> String

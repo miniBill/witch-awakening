@@ -7,6 +7,7 @@ import Data.Costs.Monad as Monad exposing (Monad, andThen, combine, map, map2, m
 import Data.FactionalMagic as FactionalMagic
 import Data.Magic as Magic
 import Generated.Companions
+import Generated.Complications
 import Generated.Magics
 import Generated.Perks as Perk
 import Generated.Relics
@@ -304,7 +305,7 @@ complicationValue model complication =
                 Nothing ->
                     Monad.error <| "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name
     in
-    case List.Extra.find (\{ name } -> name == complication.name) Complication.all of
+    case List.Extra.find (\{ name } -> name == complication.name) Generated.Complications.all of
         Nothing ->
             Monad.error <| "Could not find complication " ++ Types.complicationToString complication.name
 
@@ -322,7 +323,7 @@ complicationValue model complication =
                         ( Complication.WithChoices _ choices _, Tiered tier ) ->
                             map Tuple.second <| get tier choices
 
-                        ( Complication.WithGains _ costs, Tiered tier ) ->
+                        ( Complication.WithGains costs _, Tiered tier ) ->
                             get tier costs
 
                         ( _, Nontiered ) ->

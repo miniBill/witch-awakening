@@ -4,7 +4,8 @@ import Data.Complication as Complication exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, px, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Types as Types exposing (ComplicationCategory, Slot(..))
+import Generated.Complications
+import Generated.Types as Types exposing (ComplicationCategory(..), Slot(..))
 import Gradients
 import List.Extra
 import Theme exposing (gradientText)
@@ -22,6 +23,15 @@ viewComplications display complications =
                     [ centerX
                     , spacing <| Theme.rythm * 3
                     ]
+
+        isWorldShift : Complication.Details -> Bool
+        isWorldShift complication =
+            case complication.category of
+                Just WorldShift ->
+                    True
+
+                Nothing ->
+                    False
     in
     View.collapsible []
         display
@@ -30,7 +40,8 @@ viewComplications display complications =
         Complication.title
         [ Theme.blocks [] Complication.intro
         , Theme.blocks [] "# World Shifts"
-        , ((Complication.worldShifts
+        , ((Generated.Complications.all
+                |> List.filter isWorldShift
                 |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.filterMap
                     (complicationBox display complications)
@@ -47,12 +58,13 @@ viewComplications display complications =
           )
             |> wrappedRow
         , Theme.blocks [] "# Generic Complications"
-        , Complication.generic
+        , Generated.Complications.all
+            |> List.filter (\complication -> not (isWorldShift complication))
             |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.filterMap (complicationBox display complications)
             |> wrappedRow
         ]
-        [ (Complication.worldShifts ++ Complication.generic)
+        [ Generated.Complications.all
             |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.filterMap (complicationBox display complications)
             |> wrappedRow
@@ -113,7 +125,7 @@ complicationBox display selected ({ name, class, content, dlc } as complication)
                 WithChoices _ choices _ ->
                     List.map Tuple.second choices
 
-                WithGains _ costs ->
+                WithGains costs _ ->
                     costs
 
                 Single gain _ ->
@@ -192,7 +204,18 @@ complicationBox display selected ({ name, class, content, dlc } as complication)
                         [ centerX
                         , Theme.captureIt
                         , Font.size 24
-                        , moveDown 8
+                        , case ( category, content ) of
+                            ( Just _, WithTiers _ _ _ ) ->
+                                moveDown 64
+
+                            ( Just _, _ ) ->
+                                moveDown 40
+
+                            ( Nothing, WithTiers _ _ _ ) ->
+                                moveDown 40
+
+                            ( Nothing, _ ) ->
+                                moveDown 18
                         ]
                         (Theme.gradientText 4 Gradients.purpleGradient dlcName)
             , el
@@ -321,6 +344,6 @@ viewContent selected { content, name } color =
                 :: choicesView
                 ++ [ Theme.blocks [] after ]
 
-        WithGains before costs ->
+        WithGains costs before ->
             View.costButtons "Gain" color selected before costs <|
                 \tier _ -> { name = name, kind = Tiered (tier + 1) }

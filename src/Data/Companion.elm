@@ -1,6 +1,6 @@
 module Data.Companion exposing (Details, MaybeClass(..), Score(..), all, factionNameToCompanionsName, intro)
 
-import Generated.Types exposing (Affinity(..), Class(..), Companion(..), Faction(..), Race(..))
+import Generated.Types exposing (Class, Companion, Faction(..), Race)
 
 
 type alias Details =

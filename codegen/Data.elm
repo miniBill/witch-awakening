@@ -43,12 +43,12 @@ enums parsedDLCs =
         |> withImages
     , buildEnum "Magic" combinedDLC.magics
         |> withImages
+    , buildEnum "Complication" combinedDLC.complications
+        |> withImages
 
     --
     , buildEnum "Size" (buildVariants coreSizes)
     , buildEnum "ComplicationCategory" (buildVariants coreComplicationCategories)
-    , buildEnum "Complication" (buildVariants coreComplications)
-        |> withImages
     , buildEnum "GameMode" (buildVariants coreGameModes)
         |> withImages
     , buildEnum "Slot" (buildVariants coreSlots)
@@ -104,6 +104,9 @@ fromParsed { name, items } =
                             }
                                 :: dlc.companions
                     }
+
+                Parsers.DLCComplication v ->
+                    { dlc | complications = variant v.name :: dlc.complications }
         )
         emptyDLC
         items
@@ -129,6 +132,7 @@ withDLC dlcName original additional =
     , companions = merge .companions
     , relics = merge .relics
     , magics = merge .magics
+    , complications = merge .complications
     }
 
 
@@ -177,6 +181,7 @@ type alias DLC =
     , companions : List Variant
     , relics : List Variant
     , magics : List Variant
+    , complications : List Variant
     }
 
 
@@ -189,6 +194,7 @@ emptyDLC =
     , companions = []
     , relics = []
     , magics = []
+    , complications = []
     }
 
 
@@ -201,6 +207,7 @@ core =
     , companions = []
     , relics = []
     , magics = coreMagics
+    , complications = []
     }
 
 
@@ -224,12 +231,7 @@ coreSizes =
 
 coreComplicationCategories : List String
 coreComplicationCategories =
-    [ "WorldShift" ]
-
-
-coreComplications : List String
-coreComplications =
-    [ "Brutality", "Masquerade", "True Names", "Monsters", "Population", "*Bonk*", "Dysfunction", "Vulnerability", "Rejection", "Crutch", "Restriction", "Hunted", "Dislikeable", "Monster Bait", "Black Swan", "Spell Sink", "Like a duck", "Like a rock", "Eye Catcher", "Silly Goose", "Hard Lessons", "Cold Heart", "Hideous", "Witch Mark", "Nemesis", "Addiction", "Sensory Disability", "Physical Disability", "Sensory Shock", "Adoring Fan", "Very Dere", "Requirement", "Unveiled", "Nightmares", "Kryptonite", "Fit Witch", "Branded", "No Privacy", "Blood Feud", "Marked", "Defeated", "Fixation", "All Natural", "Witchknight", "Inadequacy", "Dysphoria", "Betrayal", "Compulsion" ]
+    [ "World shift" ]
 
 
 coreGameModes : List String

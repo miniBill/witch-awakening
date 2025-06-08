@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Companion, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc)
+module Parsers exposing (Affinity, Companion, Complication, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc)
 
 import Dict exposing (Dict)
 import Dict.Extra
@@ -23,6 +23,7 @@ type DLCItem
     | DLCAffinity Affinity
     | DLCRelic Relic
     | DLCCompanion Companion
+    | DLCComplication Complication
 
 
 dlc : Parser DLC
@@ -50,6 +51,7 @@ dlc =
                 , map DLCAffinity affinity
                 , map DLCRelic relic
                 , map DLCCompanion companion
+                , map DLCComplication complication
                 ]
             )
         |. spaces
@@ -134,24 +136,7 @@ perk =
                 |= paragraphs True
             , succeed (WithChoices ())
                 |= paragraphs False
-                |= many
-                    (succeed (\c d -> ( String.trim d, c ))
-                        |. symbol "-"
-                        |. spaces
-                        |. symbol "["
-                        |. spaces
-                        |= oneOf
-                            [ succeed negate
-                                |. symbol "-"
-                                |. spaces
-                                |= int
-                            , int
-                            ]
-                        |. spaces
-                        |. symbol "]"
-                        |. spaces
-                        |= getChompedString (chompUntilAfter "\n")
-                    )
+                |= many tierParser
                 |= paragraphs False
             ]
 
@@ -427,46 +412,6 @@ relic =
         |= paragraphs True
 
 
-oneOfItems : List (Section a -> Section b) -> Section a -> Section b
-oneOfItems options (Section s) =
-    let
-        mapped =
-            options
-                |> List.map
-                    (\option ->
-                        let
-                            (Section r) =
-                                option (Section s)
-                        in
-                        r
-                    )
-    in
-    Section
-        { key = s.key
-        , name = s.name
-        , items = List.foldl (\e acc -> Set.union e.items acc) Set.empty mapped
-        , parser =
-            \n d ->
-                List.foldl
-                    (\e acc ->
-                        case acc of
-                            Ok v ->
-                                Ok v
-
-                            Err eacc ->
-                                case e.parser n d of
-                                    Ok v ->
-                                        Ok v
-
-                                    Err ee ->
-                                        Err (ee :: eacc)
-                    )
-                    (Err [])
-                    mapped
-                    |> Result.mapError (\es -> "Expected one of:" ++ String.join "\n" es)
-        }
-
-
 type alias Companion =
     { name : String
     , fullName : Maybe String
@@ -541,6 +486,37 @@ companion =
         |> parseSection
     )
         |= paragraphs True
+
+
+type alias Complication =
+    { name : String
+    , class : Maybe String
+    , isTiered : Bool
+    , category : Maybe String
+    , content : Content ()
+    }
+
+
+complication : Parser Complication
+complication =
+    (section "##" "Complication" Complication
+        |> maybeItem "Class" Ok
+        |> flag "Tiered"
+        |> maybeItem "Category" Ok
+        |> parseSection
+    )
+        |= oneOf
+            [ succeed Single
+                |= listItem "Gain" intParser
+                |= paragraphs True
+            , succeed WithCosts
+                |= listItem "Gains" intListParser
+                |= paragraphs True
+            , succeed (WithChoices ())
+                |= paragraphs False
+                |= many tierParser
+                |= paragraphs False
+            ]
 
 
 
@@ -662,3 +638,63 @@ listItem key continuation =
                 continuation raw
                     |> resultToParser
             )
+
+
+oneOfItems : List (Section a -> Section b) -> Section a -> Section b
+oneOfItems options (Section s) =
+    let
+        mapped =
+            options
+                |> List.map
+                    (\option ->
+                        let
+                            (Section r) =
+                                option (Section s)
+                        in
+                        r
+                    )
+    in
+    Section
+        { key = s.key
+        , name = s.name
+        , items = List.foldl (\e acc -> Set.union e.items acc) Set.empty mapped
+        , parser =
+            \n d ->
+                List.foldl
+                    (\e acc ->
+                        case acc of
+                            Ok v ->
+                                Ok v
+
+                            Err eacc ->
+                                case e.parser n d of
+                                    Ok v ->
+                                        Ok v
+
+                                    Err ee ->
+                                        Err (ee :: eacc)
+                    )
+                    (Err [])
+                    mapped
+                    |> Result.mapError (\es -> "Expected one of:" ++ String.join "\n" es)
+        }
+
+
+tierParser : Parser ( String, Int )
+tierParser =
+    succeed (\c d -> ( String.trim d, c ))
+        |. symbol "-"
+        |. spaces
+        |. symbol "["
+        |. spaces
+        |= oneOf
+            [ succeed negate
+                |. symbol "-"
+                |. spaces
+                |= int
+            , int
+            ]
+        |. spaces
+        |. symbol "]"
+        |. spaces
+        |= getChompedString (chompUntilAfter "\n")

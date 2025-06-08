@@ -7,6 +7,7 @@ import Elm.Arg
 import Elm.Case
 import Elm.Op
 import Gen.Data.Companion
+import Gen.Data.Complication
 import Gen.Data.Magic
 import Gen.Data.Perk
 import Gen.Data.Race
@@ -22,7 +23,7 @@ import String.Extra
 files : List Parsers.DLC -> List Elm.File
 files dlcList =
     let
-        { dlcRaces, dlcPerks, dlcMagics, dlcAffinities, dlcRelics, dlcCompanions } =
+        { dlcRaces, dlcPerks, dlcMagics, dlcAffinities, dlcRelics, dlcCompanions, dlcComplications } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
@@ -43,6 +44,9 @@ files dlcList =
 
                         Parsers.DLCCompanion companion ->
                             { acc | dlcCompanions = ( dlcName, companion ) :: acc.dlcCompanions }
+
+                        Parsers.DLCComplication complication ->
+                            { acc | dlcComplications = ( dlcName, complication ) :: acc.dlcComplications }
                 )
                 { dlcRaces = []
                 , dlcPerks = []
@@ -50,6 +54,7 @@ files dlcList =
                 , dlcAffinities = []
                 , dlcRelics = []
                 , dlcCompanions = []
+                , dlcComplications = []
                 }
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
@@ -60,6 +65,7 @@ files dlcList =
     , affinitiesFile dlcAffinities
     , relicsFile dlcRelics
     , companionsFile dlcCompanions
+    , complicationsFile dlcComplications
     ]
 
 
@@ -510,3 +516,63 @@ dlcToCompanions companions =
                 |> Elm.expose
         )
         companions
+
+
+complicationsFile : List ( Maybe String, Parsers.Complication ) -> Elm.File
+complicationsFile dlcComplications =
+    Elm.file [ "Generated", "Complications" ]
+        (Elm.expose (Elm.declaration "all" (allComplications dlcComplications))
+            :: dlcToComplications dlcComplications
+        )
+
+
+allComplications : List ( Maybe String, Parsers.Complication ) -> Elm.Expression
+allComplications dlcComplications =
+    dlcComplications
+        |> List.map (\( _, complication ) -> Elm.val (String.Extra.decapitalize (yassify complication.name)))
+        |> Elm.list
+        |> Elm.withType (Elm.Annotation.list Gen.Data.Complication.annotation_.details)
+
+
+dlcToComplications : List ( Maybe String, Parsers.Complication ) -> List Elm.Declaration
+dlcToComplications complications =
+    List.map
+        (\( dlcName, complication ) ->
+            Gen.Data.Complication.make_.details
+                { name = fromTypes complication.name
+                , class = Elm.maybe (Maybe.map fromTypes complication.class)
+                , category = Elm.maybe (Maybe.map fromTypes complication.category)
+                , content =
+                    case complication.content of
+                        Parsers.Single cost description ->
+                            Gen.Data.Complication.make_.single (Elm.int cost) (Elm.string description)
+
+                        Parsers.WithCosts costs description ->
+                            Gen.Data.Complication.make_.withGains (Elm.list (List.map Elm.int costs)) (Elm.string description)
+
+                        Parsers.WithChoices () before choices after ->
+                            if complication.isTiered then
+                                Gen.Data.Complication.make_.withTiers
+                                    (Elm.string before)
+                                    (choices
+                                        |> List.map
+                                            (\( choice, cost ) -> Elm.tuple (Elm.string choice) (Elm.int cost))
+                                        |> Elm.list
+                                    )
+                                    (Elm.string after)
+
+                            else
+                                Gen.Data.Complication.make_.withChoices
+                                    (Elm.string before)
+                                    (choices
+                                        |> List.map
+                                            (\( choice, cost ) -> Elm.tuple (Elm.string choice) (Elm.int cost))
+                                        |> Elm.list
+                                    )
+                                    (Elm.string after)
+                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                }
+                |> Elm.declaration (yassify complication.name)
+                |> Elm.expose
+        )
+        complications
