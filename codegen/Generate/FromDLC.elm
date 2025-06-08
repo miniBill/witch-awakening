@@ -23,49 +23,49 @@ import String.Extra
 files : List Parsers.DLC -> List Elm.File
 files dlcList =
     let
-        { dlcRaces, dlcPerks, dlcMagics, dlcAffinities, dlcRelics, dlcCompanions, dlcComplications } =
+        { dlcAffinities, dlcCompanions, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
-                        Parsers.DLCRace race ->
-                            { acc | dlcRaces = ( dlcName, race ) :: acc.dlcRaces }
-
-                        Parsers.DLCPerk perk ->
-                            { acc | dlcPerks = ( dlcName, perk ) :: acc.dlcPerks }
-
-                        Parsers.DLCMagic magic ->
-                            { acc | dlcMagics = ( dlcName, magic ) :: acc.dlcMagics }
-
                         Parsers.DLCAffinity affinity ->
                             { acc | dlcAffinities = ( dlcName, affinity ) :: acc.dlcAffinities }
-
-                        Parsers.DLCRelic relic ->
-                            { acc | dlcRelics = ( dlcName, relic ) :: acc.dlcRelics }
 
                         Parsers.DLCCompanion companion ->
                             { acc | dlcCompanions = ( dlcName, companion ) :: acc.dlcCompanions }
 
                         Parsers.DLCComplication complication ->
                             { acc | dlcComplications = ( dlcName, complication ) :: acc.dlcComplications }
+
+                        Parsers.DLCMagic magic ->
+                            { acc | dlcMagics = ( dlcName, magic ) :: acc.dlcMagics }
+
+                        Parsers.DLCPerk perk ->
+                            { acc | dlcPerks = ( dlcName, perk ) :: acc.dlcPerks }
+
+                        Parsers.DLCRace race ->
+                            { acc | dlcRaces = ( dlcName, race ) :: acc.dlcRaces }
+
+                        Parsers.DLCRelic relic ->
+                            { acc | dlcRelics = ( dlcName, relic ) :: acc.dlcRelics }
                 )
-                { dlcRaces = []
-                , dlcPerks = []
-                , dlcMagics = []
-                , dlcAffinities = []
-                , dlcRelics = []
+                { dlcAffinities = []
                 , dlcCompanions = []
                 , dlcComplications = []
+                , dlcMagics = []
+                , dlcPerks = []
+                , dlcRaces = []
+                , dlcRelics = []
                 }
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
-    [ racesFile dlcRaces
-    , typePerksFile dlcRaces
-    , perksFile dlcPerks
-    , magicsFile dlcMagics
-    , affinitiesFile dlcAffinities
-    , relicsFile dlcRelics
+    [ affinitiesFile dlcAffinities
     , companionsFile dlcCompanions
     , complicationsFile dlcComplications
+    , magicsFile dlcMagics
+    , perksFile dlcPerks
+    , racesFile dlcRaces
+    , relicsFile dlcRelics
+    , typePerksFile dlcRaces
     ]
 
 
