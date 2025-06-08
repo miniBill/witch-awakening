@@ -1,12 +1,15 @@
-module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc)
+module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc, parseFiles)
 
 import Dict exposing (Dict)
 import Dict.Extra
+import Gen.CodeGen.Generate as Generate
 import Hex
 import Maybe.Extra
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, sequence, spaces, succeed, symbol)
+import Parser.Error
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
 import Regex
+import Result.Extra
 import Set exposing (Set)
 
 
@@ -25,6 +28,43 @@ type DLCItem
     | DLCMagic Magic
     | DLCPerk Perk
     | DLCRelic Relic
+
+
+parseFiles : List ( String, String, String ) -> Result (List Generate.Error) (List DLC)
+parseFiles inputs =
+    inputs
+        |> Result.Extra.combineMap parseDLC
+        |> Result.map
+            (\dlcList ->
+                dlcList
+                    |> Dict.Extra.groupBy (\{ name } -> Maybe.withDefault "" name)
+                    |> Dict.foldl
+                        (\name grouped acc ->
+                            { name =
+                                if String.isEmpty name then
+                                    Nothing
+
+                                else
+                                    Just name
+                            , items = List.concatMap .items grouped
+                            }
+                                :: acc
+                        )
+                        []
+            )
+
+
+parseDLC : ( String, String, String ) -> Result (List Generate.Error) DLC
+parseDLC ( folder, filename, content ) =
+    Parser.run dlc content
+        |> Result.mapError
+            (\deadEnds ->
+                [ { title = "Error parsing DLC file"
+                  , description =
+                        "Could not parse " ++ folder ++ "/" ++ filename ++ "\n" ++ Parser.Error.toString deadEnds
+                  }
+                ]
+            )
 
 
 dlc : Parser DLC

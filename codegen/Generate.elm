@@ -6,10 +6,20 @@ import Dict
 import Elm
 import Elm.Declare
 import Gen.CodeGen.Generate as Generate exposing (Directory)
-import Generate.FromDLC
+import Generate.Affinities
+import Generate.Classes
+import Generate.Companions
+import Generate.Complications
 import Generate.Gradients
 import Generate.Images
+import Generate.Magics
+import Generate.Perks
+import Generate.Races
+import Generate.Relics
+import Generate.TypePerks
+import Generate.Types
 import Json.Decode exposing (Decoder, Value)
+import Parsers
 import Result.Extra
 import Triple.Extra
 
@@ -46,6 +56,39 @@ init flags =
                   }
                 ]
             )
+
+
+directoryDecoder : Decoder Generate.Directory
+directoryDecoder =
+    Json.Decode.lazy
+        (\_ ->
+            Json.Decode.oneOf
+                [ Json.Decode.map Ok Json.Decode.string
+                , Json.Decode.map Err directoryDecoder
+                ]
+                |> Json.Decode.dict
+                |> Json.Decode.map
+                    (\entries ->
+                        entries
+                            |> Dict.toList
+                            |> List.foldl
+                                (\( name, entry ) ( dirAcc, fileAcc ) ->
+                                    case entry of
+                                        Ok file ->
+                                            ( dirAcc, ( name, file ) :: fileAcc )
+
+                                        Err directory ->
+                                            ( ( name, directory ) :: dirAcc, fileAcc )
+                                )
+                                ( [], [] )
+                            |> (\( dirAcc, fileAcc ) ->
+                                    Generate.Directory
+                                        { directories = Dict.fromList dirAcc
+                                        , files = Dict.fromList fileAcc
+                                        }
+                               )
+                    )
+        )
 
 
 toFiles :
@@ -110,39 +153,62 @@ toFiles root =
                         |> Result.map Elm.Declare.toFile
                     )
                     (List.concatMap Triple.Extra.third list
-                        |> Generate.FromDLC.files
+                        |> Parsers.parseFiles
+                        |> Result.map dlcToFiles
                     )
             )
 
 
-directoryDecoder : Decoder Generate.Directory
-directoryDecoder =
-    Json.Decode.lazy
-        (\_ ->
-            Json.Decode.oneOf
-                [ Json.Decode.map Ok Json.Decode.string
-                , Json.Decode.map Err directoryDecoder
-                ]
-                |> Json.Decode.dict
-                |> Json.Decode.map
-                    (\entries ->
-                        entries
-                            |> Dict.toList
-                            |> List.foldl
-                                (\( name, entry ) ( dirAcc, fileAcc ) ->
-                                    case entry of
-                                        Ok file ->
-                                            ( dirAcc, ( name, file ) :: fileAcc )
+dlcToFiles : List Parsers.DLC -> List Elm.File
+dlcToFiles dlcList =
+    let
+        { dlcAffinities, dlcClasses, dlcCompanions, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics } =
+            List.foldr
+                (\( dlcName, item ) acc ->
+                    case item of
+                        Parsers.DLCAffinity affinity ->
+                            { acc | dlcAffinities = ( dlcName, affinity ) :: acc.dlcAffinities }
 
-                                        Err directory ->
-                                            ( ( name, directory ) :: dirAcc, fileAcc )
-                                )
-                                ( [], [] )
-                            |> (\( dirAcc, fileAcc ) ->
-                                    Generate.Directory
-                                        { directories = Dict.fromList dirAcc
-                                        , files = Dict.fromList fileAcc
-                                        }
-                               )
-                    )
-        )
+                        Parsers.DLCClass class ->
+                            { acc | dlcClasses = ( dlcName, class ) :: acc.dlcClasses }
+
+                        Parsers.DLCCompanion companion ->
+                            { acc | dlcCompanions = ( dlcName, companion ) :: acc.dlcCompanions }
+
+                        Parsers.DLCComplication complication ->
+                            { acc | dlcComplications = ( dlcName, complication ) :: acc.dlcComplications }
+
+                        Parsers.DLCMagic magic ->
+                            { acc | dlcMagics = ( dlcName, magic ) :: acc.dlcMagics }
+
+                        Parsers.DLCPerk perk ->
+                            { acc | dlcPerks = ( dlcName, perk ) :: acc.dlcPerks }
+
+                        Parsers.DLCRace race ->
+                            { acc | dlcRaces = ( dlcName, race ) :: acc.dlcRaces }
+
+                        Parsers.DLCRelic relic ->
+                            { acc | dlcRelics = ( dlcName, relic ) :: acc.dlcRelics }
+                )
+                { dlcAffinities = []
+                , dlcClasses = []
+                , dlcCompanions = []
+                , dlcComplications = []
+                , dlcMagics = []
+                , dlcPerks = []
+                , dlcRaces = []
+                , dlcRelics = []
+                }
+                (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
+    in
+    [ Generate.Affinities.file dlcAffinities
+    , Elm.Declare.toFile (Generate.Classes.file dlcClasses)
+    , Generate.Companions.file dlcCompanions
+    , Generate.Complications.file dlcComplications
+    , Elm.Declare.toFile (Generate.Magics.file dlcMagics)
+    , Elm.Declare.toFile (Generate.Perks.file dlcPerks)
+    , Elm.Declare.toFile (Generate.Races.file dlcRaces)
+    , Elm.Declare.toFile (Generate.Relics.file dlcRelics)
+    , Elm.Declare.toFile (Generate.TypePerks.file dlcRaces)
+    , Elm.Declare.toFile (Generate.Types.file dlcList)
+    ]
