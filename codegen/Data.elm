@@ -45,10 +45,10 @@ enums parsedDLCs =
         |> withImages
     , buildEnum "Complication" combinedDLC.complications
         |> withImages
+    , buildEnum "ComplicationCategory" combinedDLC.complicationCategories
 
     --
     , buildEnum "Size" (buildVariants coreSizes)
-    , buildEnum "ComplicationCategory" (buildVariants coreComplicationCategories)
     , buildEnum "GameMode" (buildVariants coreGameModes)
         |> withImages
     , buildEnum "Slot" (buildVariants coreSlots)
@@ -106,7 +106,20 @@ fromParsed { name, items } =
                     }
 
                 Parsers.DLCComplication v ->
-                    { dlc | complications = variant v.name :: dlc.complications }
+                    { dlc
+                        | complications = variant v.name :: dlc.complications
+                        , complicationCategories =
+                            case v.category of
+                                Just category ->
+                                    if List.member (variant category) dlc.complicationCategories then
+                                        dlc.complicationCategories
+
+                                    else
+                                        variant category :: dlc.complicationCategories
+
+                                Nothing ->
+                                    dlc.complicationCategories
+                    }
         )
         emptyDLC
         items
@@ -133,6 +146,7 @@ withDLC dlcName original additional =
     , relics = merge .relics
     , magics = merge .magics
     , complications = merge .complications
+    , complicationCategories = merge .complicationCategories
     }
 
 
@@ -182,6 +196,7 @@ type alias DLC =
     , relics : List Variant
     , magics : List Variant
     , complications : List Variant
+    , complicationCategories : List Variant
     }
 
 
@@ -195,6 +210,7 @@ emptyDLC =
     , relics = []
     , magics = []
     , complications = []
+    , complicationCategories = []
     }
 
 
@@ -208,6 +224,7 @@ core =
     , relics = []
     , magics = coreMagics
     , complications = []
+    , complicationCategories = []
     }
 
 
@@ -227,11 +244,6 @@ coreRaces =
 coreSizes : List String
 coreSizes =
     [ "Low", "Medium", "High" ]
-
-
-coreComplicationCategories : List String
-coreComplicationCategories =
-    [ "World shift" ]
 
 
 coreGameModes : List String
