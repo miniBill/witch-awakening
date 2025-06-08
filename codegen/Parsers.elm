@@ -17,13 +17,13 @@ type alias DLC =
 
 
 type DLCItem
-    = DLCRace Race
-    | DLCPerk Perk
-    | DLCMagic Magic
-    | DLCAffinity Affinity
-    | DLCRelic Relic
+    = DLCAffinity Affinity
+    | DLCRace Race
     | DLCCompanion Companion
     | DLCComplication Complication
+    | DLCMagic Magic
+    | DLCPerk Perk
+    | DLCRelic Relic
 
 
 dlc : Parser DLC
@@ -45,13 +45,13 @@ dlc =
         |. spaces
         |= many
             (oneOf
-                [ map DLCRace race
-                , map DLCPerk perk
-                , map DLCMagic magic
-                , map DLCAffinity affinity
-                , map DLCRelic relic
+                [ map DLCAffinity affinity
                 , map DLCCompanion companion
                 , map DLCComplication complication
+                , map DLCMagic magic
+                , map DLCPerk perk
+                , map DLCRace race
+                , map DLCRelic relic
                 ]
             )
         |. spaces
