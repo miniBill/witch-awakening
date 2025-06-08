@@ -6,10 +6,8 @@ import Dict
 import Dict.Extra
 import Elm
 import Elm.Annotation
-import Elm.Declare
 import Gen.CodeGen.Generate as Generate exposing (Directory)
 import Generate.FromDLC
-import Generate.Types
 import Json.Decode exposing (Decoder, Value)
 import Parser exposing ((|.), (|=), Parser)
 import Parsers
@@ -112,10 +110,6 @@ toFiles root =
                         Elm.file [ "Gradients" ]
                             (List.concatMap Triple.Extra.second list)
 
-                    enumsFile : Elm.File
-                    enumsFile =
-                        Elm.Declare.toFile (Generate.Types.module_ dlcList)
-
                     imagesFile : Elm.File
                     imagesFile =
                         Elm.file [ "Images" ]
@@ -142,7 +136,6 @@ toFiles root =
                 { info = []
                 , files =
                     gradientsFile
-                        :: enumsFile
                         :: imagesFile
                         :: Generate.FromDLC.files dlcList
                 }

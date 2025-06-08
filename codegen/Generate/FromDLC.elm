@@ -13,11 +13,11 @@ import Gen.Data.Complication
 import Gen.Data.Magic
 import Gen.Data.Perk
 import Gen.Data.Race
-import Gen.Data.Relic
 import Gen.Data.TypePerk
 import Gen.Types
 import Generate.Classes
 import Generate.Relics
+import Generate.Types
 import Generate.Utils exposing (valueFromTypes, yassify)
 import List.Extra
 import Parsers exposing (DLCItem(..))
@@ -73,8 +73,9 @@ files dlcList =
     , magicsFile dlcMagics
     , perksFile dlcPerks
     , racesFile dlcRaces
-    , Generate.Relics.relicsFile dlcRelics
+    , Elm.Declare.toFile (Generate.Relics.relicsFile dlcRelics)
     , typePerksFile dlcRaces
+    , Elm.Declare.toFile (Generate.Types.module_ dlcList)
     ]
 
 
