@@ -7,7 +7,7 @@
 
 An ancient lineage of witch descended from monstrous sun-and-moon devouring wolves. A Vargr has some degree of lupine traits along with the strength and endurance of a Daeva. They age like Jotun though if slain re-awaken the next full moon in a new mortal host. If killed via silver then it takes a full decade for them to return.
 
-__Vargr draw Mana__ from *Trophies* which are taken from entities that the Vargr has personally slain. The greater their strength then the more mana is gained from the trophy before needing to replace it. A Vargr gains medium charge from being in proximity to their trophies. This degrades to a low charge when at a distance. It can be circumvented by wearing a trophy, i.e. a bone necklace for example, to maintain a medium charge. Some Vargr get creative with Aberrant or Necromancy...
+__Vargr draw Mana__ from Trophies which are taken from entities that the Vargr has personally slain. The greater their strength then the more mana is gained from the trophy before needing to replace it. A Vargr gains medium charge from being in proximity to their trophies. This degrades to a low charge when at a distance. It can be circumvented by wearing a trophy, i.e. a bone necklace for example, to maintain a medium charge. Some Vargr get creative with Aberrant or Necromancy...
 
 ### Perk
 - Cost: 10
