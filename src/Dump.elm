@@ -140,9 +140,8 @@ dump model =
             go dumpPerk (Generated.Perks.all [])
 
         Magic ->
-            go (dumpMagic >> Just) Data.FactionalMagic.all
+            go (dumpMagic >> Just) Generated.Magics.all
 
-        -- Generated.Magics.all
         Relic ->
             go dumpRelic Generated.Relics.all
 
