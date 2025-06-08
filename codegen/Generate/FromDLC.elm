@@ -17,6 +17,7 @@ import Gen.Data.Perk
 import Gen.Data.Race
 import Gen.Types
 import Generate.Classes
+import Generate.Races
 import Generate.Relics
 import Generate.TypePerks
 import Generate.Types
@@ -110,59 +111,16 @@ files_ dlcList =
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
     in
     [ affinitiesFile dlcAffinities
-    , Elm.Declare.toFile (Generate.Classes.module_ dlcClasses)
+    , Elm.Declare.toFile (Generate.Classes.file dlcClasses)
     , companionsFile dlcCompanions
     , complicationsFile dlcComplications
     , magicsFile dlcMagics
     , perksFile dlcPerks
-    , racesFile dlcRaces
-    , Elm.Declare.toFile (Generate.Relics.relicsFile dlcRelics)
-    , Elm.Declare.toFile (Generate.TypePerks.typePerksFile dlcRaces)
-    , Elm.Declare.toFile (Generate.Types.module_ dlcList)
+    , Elm.Declare.toFile (Generate.Races.file dlcRaces)
+    , Elm.Declare.toFile (Generate.Relics.file dlcRelics)
+    , Elm.Declare.toFile (Generate.TypePerks.file dlcRaces)
+    , Elm.Declare.toFile (Generate.Types.file dlcList)
     ]
-
-
-racesFile : List ( Maybe String, Parsers.Race ) -> Elm.File
-racesFile dlcRaces =
-    Elm.file [ "Generated", "Race" ]
-        (Elm.expose (Elm.declaration "all" (allRaces dlcRaces))
-            :: dlcToRaces dlcRaces
-        )
-
-
-allRaces : List ( Maybe String, Parsers.Race ) -> Elm.Expression
-allRaces dlcRaces =
-    Elm.fn
-        (Elm.Arg.varWith "races"
-            (Elm.Annotation.list (Elm.Annotation.named [ "Generated", "Types" ] "Race"))
-        )
-    <|
-        \races ->
-            Elm.Op.append
-                (dlcRaces
-                    |> List.map (\( _, race ) -> Elm.val (String.Extra.decapitalize race.name))
-                    |> Elm.list
-                )
-                (Gen.Data.Race.call_.all races)
-                |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
-
-
-dlcToRaces : List ( Maybe String, Parsers.Race ) -> List Elm.Declaration
-dlcToRaces races =
-    List.map
-        (\( dlcName, race ) ->
-            Gen.Data.Race.make_.details
-                { name = valueFromTypes race.name
-                , content = Elm.string race.description
-                , tank = valueFromTypes race.manaCapacity
-                , affinities = Elm.list (List.map valueFromTypes race.elements)
-                , charge = valueFromTypes race.manaRate
-                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                }
-                |> Elm.declaration (yassify race.name)
-                |> Elm.expose
-        )
-        races
 
 
 perksFile : List ( Maybe String, Parsers.Perk ) -> Elm.File

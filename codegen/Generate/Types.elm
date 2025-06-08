@@ -1,4 +1,4 @@
-module Generate.Types exposing (module_)
+module Generate.Types exposing (file)
 
 import Data
 import Elm.Declare
@@ -7,8 +7,8 @@ import Generate.Enums
 import Parsers
 
 
-module_ : List Parsers.DLC -> Elm.Declare.Module TypesModule
-module_ dlcList =
+file : List Parsers.DLC -> Elm.Declare.Module TypesModule
+file dlcList =
     Elm.Declare.module_ [ "Generated", "Types" ] TypesModule
         |> Elm.Declare.Extra.withDeclarations (List.map Generate.Enums.enumToDeclarations (Data.enums dlcList))
 

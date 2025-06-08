@@ -1,4 +1,4 @@
-module Generate.TypePerks exposing (typePerksFile)
+module Generate.TypePerks exposing (file)
 
 import Elm
 import Elm.Annotation
@@ -16,8 +16,8 @@ type alias TypePerksModule =
     }
 
 
-typePerksFile : List ( Maybe String, Parsers.Race ) -> Elm.Declare.Module TypePerksModule
-typePerksFile dlcRaces =
+file : List ( Maybe String, Parsers.Race ) -> Elm.Declare.Module TypePerksModule
+file dlcRaces =
     Elm.Declare.module_ [ "Generated", "TypePerk" ] TypePerksModule
         |> Elm.Declare.with (all dlcRaces)
         |> Elm.Declare.Extra.withDeclarations (dlcToTypePerks dlcRaces)

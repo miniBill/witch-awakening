@@ -1,4 +1,4 @@
-module Generate.Relics exposing (relicsFile)
+module Generate.Relics exposing (file)
 
 import Elm
 import Elm.Annotation
@@ -16,8 +16,8 @@ type alias RelicsModule =
     }
 
 
-relicsFile : List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Module RelicsModule
-relicsFile dlcRelics =
+file : List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Module RelicsModule
+file dlcRelics =
     Elm.Declare.module_ [ "Generated", "Relic" ] RelicsModule
         |> Elm.Declare.with (all dlcRelics)
         |> Elm.Declare.with details.declaration

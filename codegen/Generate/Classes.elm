@@ -1,4 +1,4 @@
-module Generate.Classes exposing (module_)
+module Generate.Classes exposing (file)
 
 import Elm
 import Elm.Annotation
@@ -18,8 +18,8 @@ type alias ClassesModule =
     }
 
 
-module_ : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module ClassesModule
-module_ dlcClasses =
+file : List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module ClassesModule
+file dlcClasses =
     Elm.Declare.module_ [ "Generated", "Classes" ] ClassesModule
         |> Elm.Declare.with (all dlcClasses)
         |> Elm.Declare.with (classToColor dlcClasses)
