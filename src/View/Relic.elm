@@ -4,6 +4,7 @@ import Data.Affinity as Affinity
 import Data.Relic as Relic exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, paragraph, px, spacing, text, width)
 import Element.Font as Font
+import Generated.Affinities
 import Generated.Relics
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
@@ -338,7 +339,11 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                     , Theme.viewAffinity from
                     , Theme.blocks [] "with"
                     ]
-                , Theme.wrappedRow [] <| List.map viewSwap Affinity.all
+                , Generated.Affinities.all
+                    |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+                    |> List.Extra.remove Generated.Affinities.all_
+                    |> List.map (\affinity -> viewSwap affinity.name)
+                    |> Theme.wrappedRow []
                 ]
 
         addAffinityRow : Int -> Affinity -> Element Choice
@@ -374,7 +379,11 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
             in
             Theme.column [ width fill ]
                 [ Theme.blocks [ width fill ] "Add an affinity: "
-                , Theme.wrappedRow [] <| List.map viewAdd Affinity.all
+                , Generated.Affinities.all
+                    |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+                    |> List.Extra.remove Generated.Affinities.all_
+                    |> List.map (\affinity -> viewAdd affinity.name)
+                    |> Theme.wrappedRow []
                 ]
 
         swapBlock : Race -> List (Element Choice)

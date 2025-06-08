@@ -6,6 +6,7 @@ import Elm.Annotation
 import Elm.Arg
 import Elm.Case
 import Elm.Op
+import Gen.Data.Affinity
 import Gen.Data.Companion
 import Gen.Data.Complication
 import Gen.Data.Magic
@@ -302,7 +303,18 @@ affinitiesToExpression affinity =
 affinitiesFile : List ( Maybe String, Parsers.Affinity ) -> Elm.File
 affinitiesFile dlcAffinities =
     Elm.file [ "Generated", "Affinities" ]
-        [ Elm.expose (affinityToColor dlcAffinities) ]
+        (Elm.expose (Elm.declaration "all" (allAffinities dlcAffinities))
+            :: Elm.expose (affinityToColor dlcAffinities)
+            :: dlcToAffinities dlcAffinities
+        )
+
+
+allAffinities : List ( Maybe String, Parsers.Affinity ) -> Elm.Expression
+allAffinities dlcAffinities =
+    dlcAffinities
+        |> List.map (\( _, affinity ) -> Elm.val (affinityToVarName affinity.name))
+        |> Elm.list
+        |> Elm.withType (Elm.Annotation.list Gen.Data.Affinity.annotation_.details)
 
 
 affinityToColor : List ( Maybe String, Parsers.Affinity ) -> Elm.Declaration
@@ -319,6 +331,30 @@ affinityToColor dlcAffinities =
                 |> Elm.Case.custom affinity (Elm.Annotation.named [ "Generated", "Types" ] "Affinity")
         )
         |> Elm.declaration "affinityToColor"
+
+
+dlcToAffinities : List ( Maybe String, Parsers.Affinity ) -> List Elm.Declaration
+dlcToAffinities affinities =
+    List.map
+        (\( dlcName, affinity ) ->
+            Gen.Data.Affinity.make_.details
+                { name = fromTypes affinity.name
+                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                }
+                |> Elm.declaration (affinityToVarName affinity.name)
+                |> Elm.expose
+        )
+        affinities
+
+
+affinityToVarName : String -> String
+affinityToVarName affinity =
+    case affinity of
+        "All" ->
+            "all_"
+
+        _ ->
+            String.Extra.decapitalize (yassify affinity)
 
 
 relicsFile : List ( Maybe String, Parsers.Relic ) -> Elm.File

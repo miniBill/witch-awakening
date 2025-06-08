@@ -1,9 +1,15 @@
-module Data.Affinity exposing (all, baseAffinities, fromModel)
+module Data.Affinity exposing (Details, baseAffinities, fromModel)
 
 import Generated.Races
 import Generated.Types exposing (Affinity(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData)
+
+
+type alias Details =
+    { name : Affinity
+    , dlc : Maybe String
+    }
 
 
 fromModel :
@@ -62,8 +68,3 @@ baseAffinities race =
         |> List.Extra.find (\{ name } -> name == race)
         |> Maybe.map .affinities
         |> Maybe.withDefault []
-
-
-all : List Affinity
-all =
-    [ Beast, Blood, Body, Earth, Fire, Life, Metal, Mind, Nature, Necro, Soul, Water, Wind ]

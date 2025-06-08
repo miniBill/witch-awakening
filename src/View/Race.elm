@@ -6,6 +6,7 @@ import Element exposing (Attribute, Element, alignTop, centerX, el, fill, moveDo
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Affinities
 import Generated.Races
 import Generated.Types as Types exposing (Affinity(..), Race(..), Size)
 import Gradients
@@ -116,10 +117,13 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
 affinityPicker : Race -> List (Element ( Race, Bool ))
 affinityPicker race =
     let
-        picker : (Affinity -> Race) -> Affinity -> List Affinity -> List (Element ( Race, Bool ))
+        picker : (Affinity -> Race) -> Affinity -> List Affinity.Details -> List (Element ( Race, Bool ))
         picker ctor currentAffinity list =
             [ el [ Font.bold ] <| text "Pick an affinity:"
             , list
+                |> List.Extra.remove Generated.Affinities.all_
+                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+                |> List.map .name
                 |> List.map
                     (\affinity ->
                         let
@@ -138,13 +142,24 @@ affinityPicker race =
     in
     case race of
         Dravir currentAffinity ->
-            picker Dravir currentAffinity [ Fire, Wind, Water, Earth, Metal, Nature ]
+            picker Dravir
+                currentAffinity
+                [ Generated.Affinities.fire
+                , Generated.Affinities.wind
+                , Generated.Affinities.water
+                , Generated.Affinities.earth
+                , Generated.Affinities.metal
+                , Generated.Affinities.nature
+                ]
 
         Genie currentAffinity ->
-            picker Genie currentAffinity Affinity.all
+            Generated.Affinities.all
+                |> picker Genie currentAffinity
 
         Gemini currentAffinity ->
-            picker Gemini currentAffinity (List.Extra.remove Earth Affinity.all)
+            Generated.Affinities.all
+                |> List.Extra.remove Generated.Affinities.earth
+                |> picker Gemini currentAffinity
 
         _ ->
             []
