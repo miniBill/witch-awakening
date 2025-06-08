@@ -14,7 +14,6 @@ import Generated.Relics
 import Generated.TypePerks
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..), companionToString)
 import List.Extra
-import Maybe.Extra
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
 
 
@@ -422,7 +421,7 @@ magicValue :
     -> Monad Int
 magicValue affinities { faction, class, typePerks } { name, rank } =
     case
-        Generated.Magics.all
+        (Generated.Magics.all ++ FactionalMagic.all)
             |> List.Extra.find (\magic -> magic.name == name)
             |> Maybe.andThen
                 (\magic ->
@@ -430,46 +429,42 @@ magicValue affinities { faction, class, typePerks } { name, rank } =
                         cost : Maybe Int
                         cost =
                             magicCost affinities class rank magic
+
+                        doubleIfPositive : Int -> Int
+                        doubleIfPositive c =
+                            if c > 0 then
+                                c
+
+                            else
+                                c * 2
+
+                        hasFactionDiscount : Bool
+                        hasFactionDiscount =
+                            (List.member Spider typePerks && magic.name == Arachnescence)
+                                || (List.member Cyborg typePerks && magic.name == Gadgetry)
+                                || (List.member Cyborg typePerks && magic.name == Integration)
+                                || (case magic.faction of
+                                        Just magicFaction ->
+                                            Just ( magicFaction, True ) == faction
+
+                                        Nothing ->
+                                            False
+                                   )
                     in
-                    if magic.name == Arachnescence && List.member Spider typePerks then
+                    if hasFactionDiscount then
                         Maybe.map factionDiscount cost
 
                     else
-                        cost
-                )
-            |> Maybe.Extra.orElseLazy
-                (\_ ->
-                    FactionalMagic.all
-                        |> List.Extra.find (\magic -> magic.name == name)
-                        |> Maybe.andThen
-                            (\magic ->
-                                let
-                                    cost : Maybe Int
-                                    cost =
-                                        magicCost affinities class rank magic
-                                in
-                                if
-                                    (Just ( magic.faction, True ) == faction)
-                                        || (List.member Cyborg typePerks && List.member magic.name [ Gadgetry, Integration ])
-                                then
-                                    Maybe.map
-                                        factionDiscount
-                                        cost
-
-                                else if Just ( magic.faction, False ) == faction then
+                        case magic.faction of
+                            Just magicFaction ->
+                                if Just ( magicFaction, False ) == faction then
                                     cost
 
                                 else
-                                    Maybe.map
-                                        (\c ->
-                                            if c > 0 then
-                                                c
+                                    Maybe.map doubleIfPositive cost
 
-                                            else
-                                                c * 2
-                                        )
-                                        cost
-                            )
+                            Nothing ->
+                                cost
                 )
     of
         Just cost ->

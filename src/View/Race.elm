@@ -8,7 +8,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Affinities
 import Generated.Races
-import Generated.Types as Types exposing (Affinity(..), Race(..), Size)
+import Generated.Types as Types exposing (Affinity, Race(..), Size)
 import Gradients
 import Images exposing (Image)
 import List.Extra

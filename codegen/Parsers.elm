@@ -278,6 +278,7 @@ parseSection (Section i) =
 type alias Magic =
     { name : String
     , class : Maybe String
+    , faction : Maybe String
     , elements : MagicAffinity
     , hasRankZero : Bool
     , isElementalism : Bool
@@ -295,6 +296,7 @@ magic : Parser Magic
 magic =
     (section "##" "Magic" Magic
         |> maybeItem "Class" Ok
+        |> maybeItem "Faction" Ok
         |> requiredItem "Elements"
             (\raw ->
                 let

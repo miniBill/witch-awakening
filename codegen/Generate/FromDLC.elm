@@ -258,6 +258,7 @@ dlcToMagics magics =
             Gen.Data.Magic.make_.details
                 { name = fromTypes magic.name
                 , class = Elm.maybe (Maybe.map fromTypes magic.class)
+                , faction = Elm.maybe (Maybe.map fromTypes magic.faction)
                 , hasRankZero = Elm.bool magic.hasRankZero
                 , isElementalism = Elm.bool magic.isElementalism
                 , affinities = affinitiesToExpression magic.elements

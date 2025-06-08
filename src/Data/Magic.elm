@@ -1,12 +1,13 @@
 module Data.Magic exposing (Affinities(..), Details, elementalismIntro, intro, slotDescription, title)
 
-import Generated.Types exposing (Affinity, Class, Magic)
+import Generated.Types exposing (Affinity, Class, Faction, Magic)
 
 
 type alias Details =
     { name : Magic
     , hasRankZero : Bool
     , class : Maybe Class
+    , faction : Maybe Faction
     , affinities : Affinities
     , isElementalism : Bool
     , description : String
