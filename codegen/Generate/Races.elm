@@ -1,4 +1,4 @@
-module Generate.Races exposing (file)
+module Generate.Races exposing (RacesModule, file)
 
 import Elm
 import Elm.Annotation
@@ -7,7 +7,8 @@ import Elm.Declare
 import Elm.Declare.Extra
 import Elm.Op
 import Gen.Data.Race
-import Generate.Utils exposing (valueFromTypes, yassify)
+import Generate.Types
+import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
 
@@ -46,11 +47,11 @@ dlcToRaces races =
     List.map
         (\( dlcName, race ) ->
             Gen.Data.Race.make_.details
-                { name = valueFromTypes race.name
+                { name = Generate.Types.value race.name
                 , content = Elm.string race.description
-                , tank = valueFromTypes race.manaCapacity
-                , affinities = Elm.list (List.map valueFromTypes race.elements)
-                , charge = valueFromTypes race.manaRate
+                , tank = Generate.Types.value race.manaCapacity
+                , affinities = Elm.list (List.map Generate.Types.value race.elements)
+                , charge = Generate.Types.value race.manaRate
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (yassify race.name)

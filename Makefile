@@ -6,7 +6,7 @@ GRADIENT_OUT = $(patsubst public/gradients/%.png,build/elm-codegen-flags/%.ppm,$
 DLCS_SRC = $(wildcard DLCs/**/*.md)
 DLCS_OUT = $(patsubst DLCs/%.md,build/elm-codegen-flags/%.md,$(DLCS_SRC))
 
-generated/Images.elm: $(wildcard codegen/*.elm) $(wildcard codegen/Generate/**/*.elm) codegen/Gen/Basics.elm build/elm-codegen-flags/sizes $(GRADIENT_OUT) $(DLCS_OUT)
+generated/Images.elm: $(wildcard codegen/*.elm) $(wildcard codegen/Generate/*.elm) codegen/Gen/Basics.elm build/elm-codegen-flags/sizes $(GRADIENT_OUT) $(DLCS_OUT)
 	yarn elm-codegen run --flags-from build/elm-codegen-flags
 	elm-format --yes generated
 

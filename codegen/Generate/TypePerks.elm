@@ -1,4 +1,4 @@
-module Generate.TypePerks exposing (file)
+module Generate.TypePerks exposing (TypePerksModule, file)
 
 import Elm
 import Elm.Annotation
@@ -6,7 +6,8 @@ import Elm.Declare
 import Elm.Declare.Extra
 import Elm.Op
 import Gen.Data.TypePerk
-import Generate.Utils exposing (valueFromTypes, yassify)
+import Generate.Types
+import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
 
@@ -50,7 +51,7 @@ dlcToTypePerks races =
                 |> Maybe.map
                     (\perk ->
                         Gen.Data.TypePerk.make_.details
-                            { race = valueFromTypes race.name
+                            { race = Generate.Types.value race.name
                             , content = Elm.string perk.description
                             , cost = Elm.int perk.cost
                             , dlc = Elm.maybe (Maybe.map Elm.string dlcName)

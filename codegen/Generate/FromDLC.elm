@@ -12,16 +12,14 @@ import Gen.CodeGen.Generate as Generate
 import Gen.Data.Affinity
 import Gen.Data.Companion
 import Gen.Data.Complication
-import Gen.Data.Magic
-import Gen.Data.Perk
-import Gen.Data.Race
-import Gen.Types
 import Generate.Classes
+import Generate.Magics
+import Generate.Perks
 import Generate.Races
 import Generate.Relics
 import Generate.TypePerks
 import Generate.Types
-import Generate.Utils exposing (valueFromTypes, yassify)
+import Generate.Utils exposing (yassify)
 import List.Extra
 import Parser
 import Parser.Error
@@ -114,146 +112,13 @@ files_ dlcList =
     , Elm.Declare.toFile (Generate.Classes.file dlcClasses)
     , companionsFile dlcCompanions
     , complicationsFile dlcComplications
-    , magicsFile dlcMagics
-    , perksFile dlcPerks
+    , Elm.Declare.toFile (Generate.Magics.file dlcMagics)
+    , Elm.Declare.toFile (Generate.Perks.file dlcPerks)
     , Elm.Declare.toFile (Generate.Races.file dlcRaces)
     , Elm.Declare.toFile (Generate.Relics.file dlcRelics)
     , Elm.Declare.toFile (Generate.TypePerks.file dlcRaces)
     , Elm.Declare.toFile (Generate.Types.file dlcList)
     ]
-
-
-perksFile : List ( Maybe String, Parsers.Perk ) -> Elm.File
-perksFile dlcPerks =
-    Elm.file [ "Generated", "Perk" ]
-        (Elm.expose (Elm.declaration "all" (allPerks dlcPerks))
-            :: dlcToPerks dlcPerks
-        )
-
-
-allPerks : List ( Maybe String, Parsers.Perk ) -> Elm.Expression
-allPerks dlcPerks =
-    Elm.fn
-        (Elm.Arg.varWith "perks"
-            (Elm.Annotation.list Gen.Types.annotation_.rankedPerk)
-        )
-    <|
-        \perks ->
-            Elm.Op.append
-                (Gen.Data.Perk.call_.all perks)
-                (dlcPerks
-                    |> List.map (\( _, perk ) -> Elm.val (String.Extra.decapitalize (yassify perk.name)))
-                    |> Elm.list
-                )
-                |> Elm.withType (Elm.Annotation.list Gen.Data.Perk.annotation_.details)
-
-
-dlcToPerks : List ( Maybe String, Parsers.Perk ) -> List Elm.Declaration
-dlcToPerks perks =
-    List.map
-        (\( dlcName, perk ) ->
-            Gen.Data.Perk.make_.details
-                { name = valueFromTypes perk.name
-                , class = valueFromTypes perk.class
-                , affinity = valueFromTypes perk.element
-                , isMeta = Elm.bool perk.isMeta
-                , content =
-                    case perk.content of
-                        Parsers.Single cost description ->
-                            Gen.Data.Perk.make_.single (Elm.int cost) (Elm.string description)
-
-                        Parsers.WithCosts costs description ->
-                            Gen.Data.Perk.make_.withCosts (Elm.list (List.map Elm.int costs)) (Elm.string description)
-
-                        Parsers.WithChoices () before choices after ->
-                            Gen.Data.Perk.make_.withChoices
-                                (Elm.string before)
-                                (choices
-                                    |> List.map
-                                        (\( choice, cost ) -> Elm.tuple (Elm.string choice) (Elm.int cost))
-                                    |> Elm.list
-                                )
-                                (Elm.string after)
-                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                }
-                |> Elm.declaration (yassify perk.name)
-                |> Elm.expose
-        )
-        perks
-
-
-magicsFile : List ( Maybe String, Parsers.Magic ) -> Elm.File
-magicsFile dlcMagics =
-    Elm.file [ "Generated", "Magic" ]
-        (Elm.expose (Elm.declaration "all" (allMagics dlcMagics))
-            :: dlcToMagics dlcMagics
-        )
-
-
-allMagics : List ( Maybe String, Parsers.Magic ) -> Elm.Expression
-allMagics dlcMagics =
-    dlcMagics
-        |> List.map (\( _, magic ) -> Elm.val (String.Extra.decapitalize (yassify magic.name)))
-        |> Elm.list
-        |> Elm.withType (Elm.Annotation.list Gen.Data.Magic.annotation_.details)
-
-
-dlcToMagics : List ( Maybe String, Parsers.Magic ) -> List Elm.Declaration
-dlcToMagics magics =
-    List.map
-        (\( dlcName, magic ) ->
-            let
-                maxRank : Int
-                maxRank =
-                    magic.ranks
-                        |> Dict.keys
-                        |> List.maximum
-                        |> Maybe.withDefault 5
-            in
-            Gen.Data.Magic.make_.details
-                { name = valueFromTypes magic.name
-                , class = Elm.maybe (Maybe.map valueFromTypes magic.class)
-                , faction = Elm.maybe (Maybe.map valueFromTypes magic.faction)
-                , hasRankZero = Elm.bool magic.hasRankZero
-                , isElementalism = Elm.bool magic.isElementalism
-                , affinities = affinitiesToExpression magic.elements
-                , description = Elm.string magic.description
-                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                , ranks =
-                    List.range 1 maxRank
-                        |> List.map
-                            (\rank ->
-                                Dict.get rank magic.ranks
-                                    |> Maybe.withDefault ""
-                                    |> Elm.string
-                            )
-                        |> Elm.list
-                }
-                |> Elm.declaration (yassify magic.name)
-                |> Elm.expose
-        )
-        magics
-
-
-affinitiesToExpression : Parsers.MagicAffinity -> Elm.Expression
-affinitiesToExpression affinity =
-    case affinity of
-        Parsers.Regular alternatives ->
-            alternatives
-                |> List.map valueFromTypes
-                |> Elm.list
-                |> Gen.Data.Magic.make_.regular
-
-        Parsers.Alternative alternatives ->
-            alternatives
-                |> List.map
-                    (\alternative ->
-                        alternative
-                            |> List.map valueFromTypes
-                            |> Elm.list
-                    )
-                |> Elm.list
-                |> Gen.Data.Magic.make_.alternative
 
 
 affinitiesFile : List ( Maybe String, Parsers.Affinity ) -> Elm.File
@@ -294,7 +159,7 @@ dlcToAffinities affinities =
     List.map
         (\( dlcName, affinity ) ->
             Gen.Data.Affinity.make_.details
-                { name = valueFromTypes affinity.name
+                { name = Generate.Types.value affinity.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (affinityToVarName affinity.name)
@@ -366,7 +231,7 @@ allCompanions dlcCompanions =
             |> List.map
                 (\( ( _, { faction } ) as head, tail ) ->
                     Elm.tuple
-                        (Elm.maybe (Maybe.map valueFromTypes faction))
+                        (Elm.maybe (Maybe.map Generate.Types.value faction))
                         ((head :: tail)
                             |> List.map
                                 (\( _, companion ) ->
@@ -403,7 +268,7 @@ dlcToCompanions companions =
                             Gen.Data.Companion.make_.classSpecial
 
                         Just c ->
-                            Gen.Data.Companion.make_.classOne (valueFromTypes c)
+                            Gen.Data.Companion.make_.classOne (Generate.Types.value c)
 
                         Nothing ->
                             Gen.Data.Companion.make_.classNone
@@ -423,7 +288,7 @@ dlcToCompanions companions =
                                 )
             in
             Gen.Data.Companion.make_.details
-                { name = valueFromTypes companion.name
+                { name = Generate.Types.value companion.name
                 , class = class
                 , races =
                     Elm.list
@@ -432,7 +297,7 @@ dlcToCompanions companions =
                                 case
                                     race
                                         |> String.split "-"
-                                        |> List.map valueFromTypes
+                                        |> List.map Generate.Types.value
                                 of
                                     [ x ] ->
                                         x
@@ -441,7 +306,7 @@ dlcToCompanions companions =
                                         Elm.apply h t
 
                                     [] ->
-                                        valueFromTypes "Empty list?"
+                                        Generate.Types.value "Empty list?"
                             )
                             companion.races
                         )
@@ -486,9 +351,9 @@ dlcToComplications complications =
     List.map
         (\( dlcName, complication ) ->
             Gen.Data.Complication.make_.details
-                { name = valueFromTypes complication.name
-                , class = Elm.maybe (Maybe.map valueFromTypes complication.class)
-                , category = Elm.maybe (Maybe.map valueFromTypes complication.category)
+                { name = Generate.Types.value complication.name
+                , class = Elm.maybe (Maybe.map Generate.Types.value complication.class)
+                , category = Elm.maybe (Maybe.map Generate.Types.value complication.category)
                 , content =
                     case complication.content of
                         Parsers.Single cost description ->

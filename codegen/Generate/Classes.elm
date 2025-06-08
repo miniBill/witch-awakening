@@ -6,7 +6,8 @@ import Elm.Arg
 import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
-import Generate.Utils exposing (valueFromTypes, yassify)
+import Generate.Types
+import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
 
@@ -76,7 +77,7 @@ dlcToClasses classes =
     List.map
         (\( dlcName, class ) ->
             classDetails.make
-                { name = valueFromTypes class.name
+                { name = Generate.Types.value class.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , color = Elm.hex class.color
                 , content = Elm.string class.description

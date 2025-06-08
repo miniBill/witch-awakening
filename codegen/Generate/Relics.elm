@@ -1,11 +1,12 @@
-module Generate.Relics exposing (file)
+module Generate.Relics exposing (RelicsModule, file)
 
 import Elm
 import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.Data.Relic
-import Generate.Utils exposing (annotationFromTypes, valueFromTypes, yassify)
+import Generate.Types
+import Generate.Utils exposing (yassify)
 import Parsers exposing (Content(..))
 import String.Extra
 
@@ -45,8 +46,8 @@ details :
     }
 details =
     Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name (annotationFromTypes "Relic")
-        |> Elm.Declare.Extra.withField "classes" .classes (Elm.Annotation.list (annotationFromTypes "Class"))
+        |> Elm.Declare.Extra.withField "name" .name (Generate.Types.annotation "Relic")
+        |> Elm.Declare.Extra.withField "classes" .classes (Elm.Annotation.list (Generate.Types.annotation "Class"))
         |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
         |> Elm.Declare.Extra.withField "content" .content Gen.Data.Relic.annotation_.content
         |> Elm.Declare.Extra.buildCustomRecord
@@ -57,8 +58,8 @@ dlcToRelics relics =
     List.map
         (\( dlcName, relic ) ->
             details.make
-                { name = valueFromTypes relic.name
-                , classes = Elm.list (List.map valueFromTypes relic.classes)
+                { name = Generate.Types.value relic.name
+                , classes = Elm.list (List.map Generate.Types.value relic.classes)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , content =
                     case relic.content of
