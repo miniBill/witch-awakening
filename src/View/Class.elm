@@ -57,7 +57,7 @@ classBox :
     -> Maybe Class
     -> Class.Details
     -> Maybe (Element (Maybe Class))
-classBox display selected { name, dlc, content } =
+classBox display selected { name, dlc, color, content } =
     let
         isSelected : Bool
         isSelected =
@@ -79,11 +79,11 @@ classBox display selected { name, dlc, content } =
     Theme.card []
         { display = display
         , forceShow = selected == Nothing
-        , glow = Theme.classToColor name
+        , glow = color
         , isSelected = isSelected
         , imageAttrs =
             [ Border.width 8
-            , Theme.borderColor <| Theme.classToColor name
+            , Theme.borderColor color
             ]
         , imageHeight = 400
         , image = Types.classToImage name

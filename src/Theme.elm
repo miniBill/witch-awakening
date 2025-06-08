@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, classToColor, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -7,6 +7,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Generated.Affinities
+import Generated.Classes
 import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Slot(..))
 import Gradients
 import Hex
@@ -168,8 +169,7 @@ block toMsg display input =
 
 
 colors :
-    { academic : Int
-    , choice : Int
+    { choice : Int
     , companionBlack : ( Int, Int )
     , companionBlue : ( Int, Int )
     , companionGold : ( Int, Int )
@@ -180,15 +180,12 @@ colors :
     , gameMode : Int
     , heroic : Int
     , noble : Int
-    , sorceress : Int
     , speech : Int
-    , warlock : Int
     , white : Int
     , worldShift : Int
     }
 colors =
-    { academic = 0x001A77FF
-    , choice = 0x0004D4ED
+    { choice = 0x0004D4ED
     , companionBlack = ( 0x004B4A4A, 0x008A8A8A )
     , companionRed = ( 0x00CD4A48, 0x00D98A88 )
     , companionOrange = ( 0x00FF7E4A, 0x00FFA189 )
@@ -199,9 +196,7 @@ colors =
     , gameMode = 0x00AA08B9
     , heroic = 0x00F2D706
     , noble = 0x0014E602
-    , sorceress = 0x00FF0000
     , speech = 0x00F88000
-    , warlock = 0x0019AD00
     , white = 0x00FFFFFF
     , worldShift = 0x006ED32A
     }
@@ -210,19 +205,6 @@ colors =
 toCss : Int -> String
 toCss rgb =
     "#" ++ String.padLeft 6 '0' (Hex.toString rgb)
-
-
-classToColor : Class -> Int
-classToColor class =
-    case class of
-        Academic ->
-            colors.academic
-
-        Sorceress ->
-            colors.sorceress
-
-        Warlock ->
-            colors.warlock
 
 
 viewPiece : Piece -> Html msg
@@ -246,7 +228,7 @@ viewPiece piece =
                     colored colors.choice
 
                 ClassColor class ->
-                    colored <| classToColor class
+                    colored <| Generated.Classes.classToColor class
 
                 SlotColor slot ->
                     colored <| slotToColor slot

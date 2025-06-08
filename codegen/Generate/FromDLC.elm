@@ -625,6 +625,7 @@ classesFile : List ( Maybe String, Parsers.Class ) -> Elm.File
 classesFile dlcClasses =
     Elm.file [ "Generated", "Classes" ]
         (Elm.expose (Elm.declaration "all" (allClasses dlcClasses))
+            :: Elm.expose (classToColor dlcClasses)
             :: dlcToClasses dlcClasses
         )
 
@@ -637,6 +638,22 @@ allClasses dlcClasses =
         |> Elm.withType (Elm.Annotation.list Gen.Data.Class.annotation_.details)
 
 
+classToColor : List ( Maybe String, Parsers.Class ) -> Elm.Declaration
+classToColor dlcClasses =
+    Elm.fn (Elm.Arg.var "class")
+        (\class ->
+            dlcClasses
+                |> List.map
+                    (\( _, classData ) ->
+                        Elm.Case.branch
+                            (Elm.Arg.customType classData.name ())
+                            (\() -> Elm.hex classData.color)
+                    )
+                |> Elm.Case.custom class (Elm.Annotation.named [ "Generated", "Types" ] "Class")
+        )
+        |> Elm.declaration "classToColor"
+
+
 dlcToClasses : List ( Maybe String, Parsers.Class ) -> List Elm.Declaration
 dlcToClasses classes =
     List.map
@@ -644,6 +661,7 @@ dlcToClasses classes =
             Gen.Data.Class.make_.details
                 { name = fromTypes class.name
                 , content = Elm.string class.description
+                , color = Elm.hex class.color
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (yassify class.name)

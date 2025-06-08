@@ -526,6 +526,7 @@ complication =
 
 type alias Class =
     { name : String
+    , color : Int
     , description : String
     }
 
@@ -533,6 +534,7 @@ type alias Class =
 class : Parser Class
 class =
     (section "##" "Class" Class
+        |> requiredItem "Color" hexParser
         |> parseSection
     )
         |= paragraphs True

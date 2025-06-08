@@ -5,6 +5,7 @@ import Element exposing (Element, centerX, centerY, column, el, fill, fillPortio
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Classes
 import Generated.Magics
 import Generated.Types as Types exposing (Class, Magic, Slot(..))
 import Gradients
@@ -390,7 +391,7 @@ viewRank selected { name, class } rankIndex label =
                         color : Int
                         color =
                             class
-                                |> Maybe.map Theme.classToColor
+                                |> Maybe.map Generated.Classes.classToColor
                                 |> Maybe.withDefault Theme.colors.epic
                     in
                     [ Theme.backgroundColor color ]
