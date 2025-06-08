@@ -36,7 +36,8 @@ viewFaction display faction =
                 ]
                 (Faction.intro ++ String.repeat 4 "\n" ++ Faction.summaries)
             ]
-        , Faction.witchFactions
+        , Faction.all
+            |> List.Extra.removeWhen .isHuman
             |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill
@@ -66,14 +67,15 @@ viewFaction display faction =
                 ]
             , el [ height <| px 40 ] Element.none
             ]
-        , Faction.humanFactions
+        , Faction.all
+            |> List.filter .isHuman
             |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill
                 , spacing <| Theme.rythm * 3
                 ]
         ]
-        [ (Faction.witchFactions ++ Faction.humanFactions)
+        [ Faction.all
             |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill
