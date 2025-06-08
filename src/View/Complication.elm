@@ -30,9 +30,11 @@ viewComplications display complications =
         Complication.title
         [ Theme.blocks [] Complication.intro
         , Theme.blocks [] "# World Shifts"
-        , (List.filterMap
-            (complicationBox display complications)
-            Complication.worldShifts
+        , ((Complication.worldShifts
+                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
+                |> List.filterMap
+                    (complicationBox display complications)
+           )
             ++ [ Theme.blocks
                     [ width <| Element.maximum 400 fill
                     , alignTop
@@ -46,15 +48,14 @@ viewComplications display complications =
             |> wrappedRow
         , Theme.blocks [] "# Generic Complications"
         , Complication.generic
+            |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.filterMap (complicationBox display complications)
             |> wrappedRow
         ]
         [ (Complication.worldShifts ++ Complication.generic)
+            |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.filterMap (complicationBox display complications)
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rythm * 3
-                ]
+            |> wrappedRow
         ]
 
 
@@ -63,7 +64,7 @@ complicationBox :
     -> List RankedComplication
     -> Complication.Details
     -> Maybe (Element ( RankedComplication, Bool ))
-complicationBox display selected ({ name, class, content } as complication) =
+complicationBox display selected ({ name, class, content, dlc } as complication) =
     let
         isSelected : Maybe RankedComplication
         isSelected =
@@ -182,6 +183,18 @@ complicationBox display selected ({ name, class, content } as complication) =
                         , Theme.captureIt
                         ]
                         gainGradient
+            , case dlc of
+                Nothing ->
+                    Element.none
+
+                Just dlcName ->
+                    el
+                        [ centerX
+                        , Theme.captureIt
+                        , Font.size 24
+                        , moveDown 8
+                        ]
+                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
             , el
                 [ alignBottom
                 , Theme.celticHand

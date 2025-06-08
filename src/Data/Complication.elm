@@ -7,6 +7,7 @@ type alias Details =
     { name : Complication
     , class : Maybe Class
     , content : Content
+    , dlc : Maybe String
     }
 
 
@@ -36,6 +37,7 @@ brutality : Details
 brutality =
     { name = Brutality
     , class = Nothing
+    , dlc = Nothing
     , content =
         WithTiers
             "The world is shifted towards _brutality_ to a chosen tier:"
@@ -51,6 +53,7 @@ masquerade : Details
 masquerade =
     { name = Masquerade
     , class = Nothing
+    , dlc = Nothing
     , content =
         WithTiers
             "The _Masquerade_ is laced with Covenant and Curse-like effects."
@@ -66,6 +69,7 @@ trueNames : Details
 trueNames =
     { name = TrueNames
     , class = Nothing
+    , dlc = Nothing
     , content =
         WithTiers
             "_True Names_ become more important for any magical being. Your True Name is instinctually known to you once you Awaken. You can be coerced into providing your true name."
@@ -81,6 +85,7 @@ monsters : Details
 monsters =
     { name = Monsters
     , class = Nothing
+    , dlc = Nothing
     , content =
         WithTiers
             "_Monsters_ become more common and widespread, increasing rates. This does not mean that the monsters are terrorizing the place, and many might not even kill, but they cause problems in general. The Veil still hides them from humans and the humans from most monsters, usually."
@@ -96,6 +101,7 @@ population : Details
 population =
     { name = Population
     , class = Nothing
+    , dlc = Nothing
     , content =
         WithTiers
             "The _population_ of witches is decreased, increasing the burden on individual witches to maintain supernatural balances while increasing individual attention."
@@ -111,6 +117,7 @@ bonk : Details
 bonk =
     { name = Bonk
     , class = Nothing
+    , dlc = Nothing
     , content =
         WithTiers
             "The world is shifted towards a degree of _lewdity_, you can determine for yourself if this affects just Witchdom, or the mundane world as well."
@@ -126,6 +133,7 @@ dysfunction : Details
 dysfunction =
     { name = Dysfunction
     , class = Just Sorceress
+    , dlc = Nothing
     , content =
         Single 12 """
             "WHOA I was wrong, I’m so sorry. You ARE witch, you’ll get Witch Type as normal, you have lot of power... but... it looks like your maximum rank is 0... It’s not unheard of." You only benefit from Rank 0 effects of magic, and are otherwise incapable of putting any ranks into any magic specializations, or any perks with a cost greater than 4. (after counting affinity and type discounts). No impact on Relics, Gadgetry, Integration, Type perks, or Metamorphosis.
@@ -137,6 +145,7 @@ vulnerability : Details
 vulnerability =
     { name = Vulnerability
     , class = Just Academic
+    , dlc = Nothing
     , content =
         WithChoices
             "Choose one serious Weakness. Weakness bypasses Affinity resistances, negating it."
@@ -152,6 +161,7 @@ rejection : Details
 rejection =
     { name = Rejection
     , class = Just Warlock
+    , dlc = Nothing
     , content =
         Single 2 """
             Nature doesn’t like you. Non-feline animals will flee the area Domesticated animals like dogs get agitated and bark at you Predators may attack. Plants seem more sickly flowers close. Bugs bother or sting you more often.
@@ -165,6 +175,7 @@ crutch : Details
 crutch =
     { name = Crutch
     , class = Just Academic
+    , dlc = Nothing
     , content =
         Single 4 """
             You can’t use magic on your own, you have to rely on a specially prepared magical medium; Wands, Staves, Tomes, Crystal Balls, Decks of arcana cards, and so on. Without a medium, you cannot use magic.
@@ -176,6 +187,7 @@ restriction : Details
 restriction =
     { name = Restriction
     , class = Just Sorceress
+    , dlc = Nothing
     , content =
         WithGains """
             You are incapable of learning any magic from one chosen archetype. Potions, Hexes, ect. You can take this up to 3 times. This includes a magic’s rank 0 effect normally available to all witches. This cannot restrict you from Faction magic of factions you don’t belong to.
@@ -190,6 +202,7 @@ hunted : Details
 hunted =
     { name = Hunted
     , class = Just Warlock
+    , dlc = Nothing
     , content = Single 8 """
         You’re actively being hunted by a _revenant_ witch hunter. He has somehow bonded to you as his next target. He bonds to one witch at a time and relentlessly hunts that witch until their True Death. He’s killed many before. He’ll intelligently stalk and take notes until he thinks it’s time to strike and learn what he can. He “respawns” every full moon with his soulbound diviner’s map. He may cooperate with your enemy.
         """
@@ -200,6 +213,7 @@ dislikeable : Details
 dislikeable =
     { name = Dislikeable
     , class = Just Warlock
+    , dlc = Nothing
     , content = Single 2 """
         Something about you rubs people the wrong way, it’s harder to find wholesome true friends or lovers on a real personal level. Companions cost +2p to buy and will take longer to form serious relations.
         """
@@ -210,6 +224,7 @@ monsterBait : Details
 monsterBait =
     { name = MonsterBait
     , class = Just Academic
+    , dlc = Nothing
     , content = Single 4 """
         Something about your awakened soul is like a siren’s call to monstrous entities. Different monsters may be after you for and per witch type. Monster encounters greatly increased.
         """
@@ -220,6 +235,7 @@ blackSwan : Details
 blackSwan =
     { name = BlackSwan
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 4 """
         Things very often go wrong around you. It can feel like you’re very unlucky, yet also more lucky in avoiding death in the moment to moment, but will be taking that gamble a lot more often. You’re often in the wrong place at the wrong time and end up inserting yourself into situations by accident.
         """
@@ -230,6 +246,7 @@ spellSink : Details
 spellSink =
     { name = SpellSink
     , class = Just Warlock
+    , dlc = Nothing
     , content = Single 2 """
         You’re like a hole in the ether of magic, it just disappears within you. You’re immune to direct magics, beneficial and harmful No buffs, healing, neither mind control or paralysis. It takes more effort for you to use magic being twice as fatiguing and costly.
         """
@@ -240,6 +257,7 @@ likeADuck : Details
 likeADuck =
     { name = LikeADuck
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 2 """
         You’re lightweight, weighing as supernaturally buoyant in water. Difficult to dive, and you’re easier to manhandle or get knocked around by various effects, including a windy day
 
@@ -252,6 +270,7 @@ likeARock : Details
 likeARock =
     { name = LikeARock
     , class = Just Academic
+    , dlc = Nothing
     , content = Single 2 """
         You’re twice as heavy, and sink through water as though it were air, yet move through it twice as slow as though walking through jello. Not incompatible with duck. With both, you’ll be lightweight to enemies, heavy otherwise, and sink in water.
         """
@@ -262,6 +281,7 @@ eyeCatcher : Details
 eyeCatcher =
     { name = EyeCatcher
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 2 """
         You draw more attention in anything you do. Wherever you go, you turn heads. You’re physically more attractive than normal sure, but your presence itself is more magnetic in nature, presence.
 
@@ -274,6 +294,7 @@ sillyGoose : Details
 sillyGoose =
     { name = SillyGoose
     , class = Just Academic
+    , dlc = Nothing
     , content = Single 2 """
         Your true form is younger than normal, anywhere between 6 and 14, but on top of that it’s abnormally hard for people to take you seriously. You tend to melt hearts when they see you and it seems to dumb people down, similar to seeing a really adorable kitten and instinctively talking down, magnified a few times. They’re generally dismissive with presumption that you’re being imaginative, or mistaken about something. If it’s any consolation, they’ll likewise resist believing you did something wrong, depending, You are more excitable and do have an overactive imagination. For 1p instead of 2, you can only have the age curse. Persistent.
         """
@@ -284,6 +305,7 @@ hardLessons : Details
 hardLessons =
     { name = HardLessons
     , class = Just Academic
+    , dlc = Nothing
     , content = Single 8 """
         Magic just refuses to “click” fo you, struggling harder to learn or train your magic, or keep managing to do something to displease your patron, the effect is the same: You have half the rate of Power gain from your witch type, and once you cement the ability in question, you still take longer to get the hang of actually utilizing the magic properly, requiring more practical practice before at full efficiency.
         """
@@ -294,6 +316,7 @@ coldHeart : Details
 coldHeart =
     { name = ColdHeart
     , class = Just Warlock
+    , dlc = Nothing
     , content = Single 2 """
         Your empathy is muffled, it’s harder to see things from the perspective of others and to recognize the emotions in others that aren’t obvious, but things like mood changes and facial expressions. You’re quick to see people in black and white; Either allies, or enemies, and if people aren’t as skilled or powerful as you, you instinctively think less of them. This can manifest as a tyrant, or as mother knows best, elitist with a reflex of wanting control either way
         """
@@ -304,6 +327,7 @@ hideous : Details
 hideous =
     { name = Hideous
     , class = Just Warlock
+    , dlc = Nothing
     , content = Single 8 """
         Your appearance is seriously unfortunate. You look *very* old, plus choose at least 5: Hunched back. Large hooked nose. Warty. Crazy eyes. Ratty hair. Gnarled limbs. Crooked jaw. Jagged teeth. Snaggletooth. Fungal growths. Bone growths. Pustules. Bunion. Cankles. Leathery skin. Wookie hair. Yellowed woody nails. Persistent with shapechanging, you still look worn and ugly.
         """
@@ -314,6 +338,7 @@ witchMark : Details
 witchMark =
     { name = WitchMark
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 2 """
         A peculiar birthmark resembling a third nipple somewhere on your body. Those in the know can identify it as a mark of a witch. Their err of course being not all witches have one.
 
@@ -326,6 +351,7 @@ nemesis : Details
 nemesis =
     { name = Nemesis
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 8 """
             Oh no. It’s been a long time since I’ve seen anyone with this in their fate. Your awakening will provoke a paired awakening in another individual. It can be anyone in your life that you would hesitate to kill. If you have. nobody, or by chance, it can be an entirely new being retroactively woven into your life and you will have new memories of them that you can’t distinguish from your old life. You WILL care about them, and they will care about you to an extent, but they will resent you deep to their core. They don’t want you to die, but they will want you to fail or suffer. If you have something good, they want it for themselves. If you succeed at something, they want to be better at it than you. Expect to never have peace unless there is an equilibrium between you and them. They have any and every special ability you have, including drawbacks, perks, relics. They’ll have roughly equivalent companions. Turning their heart will take a LONG story arc, if at all.
             """
@@ -336,6 +362,7 @@ addiction : Details
 addiction =
     { name = Addiction
     , class = Just Warlock
+    , dlc = Nothing
     , content = WithGains """
             You have an addiction of some form. You cannot go more than a week without it willingly, and that’s a good week. It’s usually a daily habit and you won’t feel like yourself without having engaged with it, Whether it is a substance or stimuli. It can be a drug, or it could be coffee, or lewd actions. You have a 25% chance of being incapable of resisting your addiction whenever it crops up which increases by 5% with every repeat exposure until you give in. An addiction to lewd things for example, would count any attractive sight as an exposure. This doesn’t mean immediate gratification but when you have a reasonable moment to indulge, while going a little out of your way to have the opportunity. The addiction can’t be something generally seen as productive or healthy (Honestly). This can be taken up to 3 times.
             """ [ 2, 4, 6 ]
@@ -346,6 +373,7 @@ sensoryDisability : Details
 sensoryDisability =
     { name = SensoryDisability
     , class = Just Academic
+    , dlc = Nothing
     , content =
         WithGains """
             You have a sense that doesn’t function properly. Any of the 5 senses. Compared to sight; You’d be very nearsighted and have to squint to read normal sized text from around 1ft Hearing would mean you’d not notice someone whispering 5ft away, and their casual speaking volume would be muffled. With scent, you can only faintly smell something directly under your nose. With touch, you feel only about 10% the pleasure or pain someone else would and wouldn’t notice a squirrel climbing up your leg, and you’d only faintly feel a cat digging its claws into your back. Stepping on a Lego would be tolerable. With taste, you only taste extremes, So you might have to enjoy food in other ways like with heat or texture, or very oversaturated flavors. For 5p, you’re completely missing a sense instead.
@@ -368,6 +396,7 @@ physicalDisability : Details
 physicalDisability =
     { name = PhysicalDisability
     , class = Just Academic
+    , dlc = Nothing
     , content = WithGains """
             For some reason your true form is missing a limb as a core part of your identity, your true form is a manifestation of the reality of your being, so it’s a little more important than that.
 
@@ -382,6 +411,7 @@ sensoryShock : Details
 sensoryShock =
     { name = SensoryShock
     , class = Just Sorceress
+    , dlc = Nothing
     , content =
         WithGains """
             Opposite to sensory disability, one of your senses is acutely hyperaware. Can’t take with the same sense as you have a sensory disability. If vision, you see very sharply and at great distance but you get overwhelmed with complex colors and patterns and with too much movement to take in all at once, excellent low light vision but sudden bright light can blind you like daggers to the eyes. If scent, you can smell a campfire from miles away but strong unpleasant odours can completely overwhelm you, with some scents worse than others such as garlic. If touch, you might be perpetually uncomfortable by all but masterwork silk clothing and the finest cottons, and more sensitive to pain. Etc.
@@ -396,6 +426,7 @@ adoringFan : Details
 adoringFan =
     { name = AdoringFan
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 2 """
             You have a fan. A bit of a simpleton, he’s completely devoted to you. Or rather, the idea of you. He’s unattractive to you but really wants in your pants even if he has a girlfriend or wife already. He will consume any media that has you in it religiously, while also stalking you in his free time. Telescopic cameras from the tree or adjacent building level stalking, and will to the best of his not insignificant ability, break into properties or online accounts just to observe. maybe steal personal effects, not based on monetary value, but out of his obsession for you.
 
@@ -408,6 +439,7 @@ veryDere : Details
 veryDere =
     { name = VeryDere
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 2 """
             However you actually feel inside it’s very hard for you to express positive emotions directed at another person and you can’t take compliments well. You’re easily flustered, embarrassed, aroused, or cheered up by others, and your natural response is the appearance of being agitated and to reject and distance yourself from the scenario. You feel like you shouldn’t be feeling these things and like it’s a failure or open weakness if you give in to them or let others notice your true feelings.
 
@@ -422,6 +454,7 @@ requirement : Details
 requirement =
     { name = Requirement
     , class = Just Warlock
+    , dlc = Nothing
     , content =
         WithChoices """
             Above and beyond an addiction, you have a requirement necessary for your survival the way a human requires food, water, and air.
@@ -442,6 +475,7 @@ unveiled : Details
 unveiled =
     { name = Unveiled
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 4 """
             The veil doesn’t hide you. Humans will see you clearly as you are and any act of magic. If your appearance is changed, your mortal ID doesn’t change and anyone that knew you noticed the differences if any.
 
@@ -455,6 +489,7 @@ nightmares : Details
 nightmares =
     { name = Nightmares
     , class = Just Academic
+    , dlc = Nothing
     , content = Single 6 """
             You’ll have a split soul torn between our universe, and a mundane universe where magic doesn’t exist. When you sleep, which you’ll require at regular intervals regardless of magic or perks, (At least once a week) you’ll “Wake” in the other world, an alt-Earth where Soviet Russia conquered the world as the first to develop nukes. If you aren’t useful to society, you’re considered a parasite... and are suspicion for past ramblings about the other world and magic prior to you “waking up”. Try not to end up lobotomized and turned into an automata slave, which can happen for a variety of causes, including accusations of anti-Party conspiracy or an officer’s word Whenever you die, you relive it again from the point you originally entered it to do it all over.
             """
@@ -465,6 +500,7 @@ kryptonite : Details
 kryptonite =
     { name = Kryptonite
     , class = Just Warlock
+    , dlc = Nothing
     , content =
         WithGains """
             Some witches express magic on a wavelength that can be disrupted by some substance. You have a kryptonite. It can be rare but it’s not rare enough that your enemies can’t make use of it. Its rarity affects the power gain:
@@ -502,6 +538,7 @@ fitWitch : Details
 fitWitch =
     { name = FitWitch
     , class = Just Sorceress
+    , dlc = Nothing
     , content = WithGains """
             Your magic ability is more closely intertwined with your physical ability. In order to grow your magical ability, you have to maintain your physique the old fashioned way: Exercise. While magic can shape your body, this has no bearing on the magic. For every day you don’t exercise for 1 hour or more, you lose 10% overall magic effectiveness. (Damage, range, area, duration ect). For every 5 hours of overall exercise of minimum 30 minute intervals to count towards the total, you raise it by 10% up to 100%. Exercise counts if it’s sufficiently strenuous and makes you sweat (If you would be capable of sweating or not). This only stacks to a reduction of -50% at the worst, but can stack to -100% for an extra +2.
             """ [ 2, 4 ]
@@ -512,6 +549,7 @@ branded : Details
 branded =
     { name = Branded
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 8 """
         Sorry to burst your bubble, but you’re not a witch. I’ve removed the veil from you because I want to run a little experiment... To turn you into a witch that may or may not be more powerful than most witches, and I can only do it on a human that didn’t already have a witch spark.
 
@@ -524,6 +562,7 @@ noPrivacy : Details
 noPrivacy =
     { name = NoPrivacy
     , class = Just Academic
+    , dlc = Nothing
     , content = Single 8 """
         I’ve been under a lot of scrutiny lately, there’s a good chance that some bad actors are watching me right now and by performing this ritual, it will advertise your witch awakening across open channels. All your information about you will be leaked, they’ll know everything about you on quite the intimate level. They’ll see everything that you select in this process, from my perspective, a third person perspective, seeing your face and body. Knowing your weaknesses and strengths, your magic, what quests are in your future, and what factions you’re likely to interact with later. On the plus side, your allies will be closer, but so will your enemies, and they’ll know where you are for the first week.
         """
@@ -534,6 +573,7 @@ bloodFeud : Details
 bloodFeud =
     { name = BloodFeud
     , class = Just Warlock
+    , dlc = Nothing
     , content = Single 4 """
         You’ll be part of a magical lineage that has major deeply rooted beef with another magical lineage. This rival lineage will despise yours on an instinctual level with the whispering echos of their ancestors reinforcing their bias to highlight any little thing about you that might annoy them in some way, which applies to you about them as well. Resisting this will be akin to resisting an actual legitimate phobia, a deep visceral emotional response.
 
@@ -546,6 +586,7 @@ marked : Details
 marked =
     { name = Marked
     , class = Just Warlock
+    , dlc = Nothing
     , content = Single 2 """
         You’ll very soon find yourself with a bounty on your head, If you’re aligned more with law, the bounty will stem from _Hespatia Alphazon, and the Outsiders_. If you’re aligned more with chaos, then the bounty will stem from the _Watchers, ORC, and the Alliance_. _Independents_ and divisive elements of _Hawthorne_ and _Arcadia_ will also be involved on either side. _Lunabella_ is unlikely to be involved in either direction unless you’ve antagonized them.
 
@@ -558,6 +599,7 @@ defeated : Details
 defeated =
     { name = Defeated
     , class = Just Academic
+    , dlc = Nothing
     , content = Single 6 """
         You’re fate-bound to suffer a major defeat at some point and you’ll be at the mercy of your enemy for some amount of time, until they will decide to kill you in a predestined death. What is not predestined, is whether they interrupt your method of cheating death. Whatever your method they will at least ensure that you do die, so an Immortality Curse would be overcome for example. You’ll want to make preparations and plans such that your method of cheating death can be preserved or recovered from the scene and into safe hands, such as having Companions steal your body back, or intercepting your dryad’s seed or draviri egg for example. This could occur during a Quest, without failing the quest.
         """
@@ -568,6 +610,7 @@ fixation : Details
 fixation =
     { name = Fixation
     , class = Just Sorceress
+    , dlc = Nothing
     , content =
         WithChoices "You will have a particular fixation that influences your thoughts frequently, shaping how you view the world and others around you, influencing your opinions of people or places, and relations"
             [ ( "*Violence*. You’re fixated on at least the thought of violence. You often think about what it would be like to harm people, destroy things", 2 )
@@ -583,6 +626,7 @@ allNatural : Details
 allNatural =
     { name = AllNatural
     , class = Just Sorceress
+    , dlc = Nothing
     , content = Single 8 """
         Looks like we cannot trigger your awakening... I’m.. so sorry. Your witch identity is heavily buried within you, outside of our reach. You will require a natural awakening. Somewhat like childbirth, some people have it easy, most go through a lot of trauma... and then there are those who have especially traumatic ordeals that put them at the brink of death, assuming they survive. You are the latter. At some point in time after your meeting with Penelope, which you will forget about until you awaken, you’ll experience extreme hardships that push past your limits, which may also be a good excuse as the source of other complications, resulting in you naturally awakening before (or after) you would have died.
         """
@@ -593,6 +637,7 @@ witchknight : Details
 witchknight =
     { name = Witchknight
     , class = Just Warlock
+    , dlc = Nothing
     , content = Single 4 """
         You’re not actually a witch, you’re a _Witchknight_. A true witch who might not have even experienced an awakening yet, bonded to you by rejecting their witchdom on a subconscious level in accordance to what would be their true wishes, or it was orchestrated by a 3rd party such as gods, or themselves in a prior life that they wiped or sealed the memories of. You have all the benefits of being witch, but your source of power is a very mortal human boy or girl, either a child you’re guardian of, or a romantic interest, some manner of close relationship of the source. If your source dies, you lose your magic until they can be resurrected somehow, if ever. Since you aren’t actually a witch, you do not have to pay for _Elephant Trunk_ if you wish for it.
         """
@@ -603,6 +648,7 @@ inadequacy : Details
 inadequacy =
     { name = Inadequacy
     , class = Just Academic
+    , dlc = Nothing
     , content = Single 2 """
         No matter how objectively powerful or capable you may be, you will be plagued with imposter syndrome, feeling like you don’t belong, that you’re nothing special and that others would be better suited to any given situation you find yourself. You’ll always suggest others take the role you’d be best at and try to stick to the back or cheer another on, only stepping in if others insist but you’ll still doubt yourself all along the way. Won? A fluke.
 
@@ -615,6 +661,7 @@ dysphoria : Details
 dysphoria =
     { name = Dysphoria
     , class = Just Academic
+    , dlc = Nothing
     , content = Single 2 """
         The changes brought on by awakening click in your brain in the wrong way, cementing the idea in your head that this body is alien to you, that this isn’t right. Who is that in the mirror?
 
@@ -629,6 +676,7 @@ betrayal : Details
 betrayal =
     { name = Betrayal
     , class = Just Warlock
+    , dlc = Nothing
     , content = Single 4 """
         A bad omen, you have a major betrayal in your future. One figure you trust and will not expect will completely blindside you with a serious betrayal that will come at a heavy cost to you on many levels. They will be someone you cared about and trusted as well as you could trust anybody. It will be random among your closest relationships or most respected individuals. This does not necessarily mean they think ill of you, perhaps they were forced, perhaps they were talked into it with lies and framing. Perhaps they thought they were doing the right thing. Perhaps they ARE doing the right thing.
 
@@ -641,6 +689,7 @@ compulsion : Details
 compulsion =
     { name = Compulsion
     , class = Just Sorceress
+    , dlc = Nothing
     , content =
         WithChoices "Somewhat of an advanced case of Addiction, you will have a particular compulsion that you can only overcome with great need only once in a while. The more infrequent the more overwhelming the compulsion is. This is measured by frequency:"
             [ ( "*Rare*: 1p encountered an average of once each year", 1 )

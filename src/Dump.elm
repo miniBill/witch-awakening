@@ -2,6 +2,7 @@ module Dump exposing (main)
 
 import Browser
 import Data.Companion
+import Data.Complication
 import Data.Magic
 import Data.Perk
 import Data.Race
@@ -15,7 +16,7 @@ import Generated.Perks
 import Generated.Races
 import Generated.Relics
 import Generated.TypePerks
-import Generated.Types exposing (Faction, classToString, companionToString, factionToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
+import Generated.Types exposing (Faction, classToString, companionToString, complicationToString, factionToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
@@ -39,6 +40,7 @@ type Category
     | Perk
     | Magic
     | Relic
+    | Complication
     | Companion
 
 
@@ -79,16 +81,17 @@ view model =
             [ Html.Attributes.style "display" "flex"
             , Html.Attributes.style "gap" "8px"
             ]
-            (List.map dlcButton dlcs)
+            (List.map (dlcButton model.dlc) dlcs)
         , Html.div
             [ Html.Attributes.style "display" "flex"
             , Html.Attributes.style "gap" "8px"
             ]
-            (List.map categoryButton
+            (List.map (categoryButton model.category)
                 [ ( "Races", Race )
                 , ( "Perks", Perk )
                 , ( "Magic", Magic )
                 , ( "Relic", Relic )
+                , ( "Complication", Complication )
                 , ( "Companion", Companion )
                 ]
             )
@@ -140,6 +143,9 @@ dump model =
         Relic ->
             go dumpRelic Generated.Relics.all
 
+        Complication ->
+            go dumpComplication Data.Complication.all
+
         Companion ->
             Generated.Companions.all
                 |> List.filterMap
@@ -167,17 +173,29 @@ dlcs =
         |> List.Extra.unique
 
 
-dlcButton : Maybe String -> Html Msg
-dlcButton dlc =
+dlcButton : Maybe String -> Maybe String -> Html Msg
+dlcButton selected dlc =
     Html.button
-        [ Html.Events.onClick (DLC dlc) ]
+        [ Html.Events.onClick (DLC dlc)
+        , if dlc == selected then
+            Html.Attributes.style "background" "red"
+
+          else
+            Html.Attributes.style "background" "initial"
+        ]
         [ Html.text (Maybe.withDefault "Core" dlc) ]
 
 
-categoryButton : ( String, Category ) -> Html Msg
-categoryButton ( name, category ) =
+categoryButton : Category -> ( String, Category ) -> Html Msg
+categoryButton selected ( name, category ) =
     Html.button
-        [ Html.Events.onClick (Category category) ]
+        [ Html.Events.onClick (Category category)
+        , if category == selected then
+            Html.Attributes.style "background" "red"
+
+          else
+            Html.Attributes.style "background" "initial"
+        ]
         [ Html.text name ]
 
 
@@ -448,6 +466,36 @@ dumpCompanion faction companion =
     ]
         |> List.filterMap identity
         |> String.join "\n"
+
+
+dumpComplication : Data.Complication.Details -> Maybe (List (Maybe String))
+dumpComplication complication =
+    let
+        maybeCostAndDescription : Maybe ( String, String )
+        maybeCostAndDescription =
+            case complication.content of
+                Data.Complication.Single gain details ->
+                    Just ( "- Gain: " ++ String.fromInt gain, details )
+
+                Data.Complication.WithChoices before costs after ->
+                    Nothing
+
+                Data.Complication.WithTiers before tiers after ->
+                    Nothing
+
+                Data.Complication.WithGains details gains ->
+                    Just ( "- Gains: " ++ String.join ", " (List.map String.fromInt gains), details )
+    in
+    maybeCostAndDescription
+        |> Maybe.map
+            (\( costString, details ) ->
+                [ Just <| "## Complication: " ++ complicationToString complication.name
+                , Maybe.map (\class -> "- Class: " ++ classToString class) complication.class
+                , Just costString
+                , Just ""
+                , Just (String.Multiline.here details)
+                ]
+            )
 
 
 affinitiesToString : Data.Magic.Affinities -> String
