@@ -1,4 +1,4 @@
-module Generate.Images exposing (images)
+module Generate.Images exposing (ImagesModule, images, valueFrom)
 
 import Dict
 import Dict.Extra
@@ -15,6 +15,11 @@ import Triple.Extra
 
 type alias ImagesModule =
     { image : Elm.Annotation.Annotation }
+
+
+moduleName : List String
+moduleName =
+    [ "Images" ]
 
 
 images : List String -> Result (List Generate.Error) (Elm.Declare.Module ImagesModule)
@@ -46,8 +51,8 @@ images sizesList =
                 ]
             )
             (\declarations ->
-                Elm.Declare.module_ [ "Images" ] ImagesModule
-                    |> Elm.Declare.with imageType.declaration
+                Elm.Declare.module_ moduleName ImagesModule
+                    |> Elm.Declare.with imageType
                     |> Elm.Declare.Extra.withDeclarations declarations
             )
 
@@ -149,8 +154,7 @@ addGroups =
                         (\( name, _, index ) ->
                             ( "image" ++ String.fromInt index
                             , Elm.val name
-                                |> Elm.withType
-                                    (Elm.Annotation.named [] "Image")
+                                |> Elm.withType imageType.annotation
                             )
                         )
                     |> Elm.record
@@ -163,13 +167,10 @@ addGroups =
 
 
 imageType :
-    { declaration : Elm.Declare.Annotation
-    , make :
-        { src : Elm.Expression
-        , height : Elm.Expression
-        , width : Elm.Expression
-        }
-        -> Elm.Expression
+    { annotation : Elm.Annotation.Annotation
+    , declaration : Elm.Declaration
+    , internal : Elm.Declare.Internal Elm.Annotation.Annotation
+    , make : { src : Elm.Expression, height : Elm.Expression, width : Elm.Expression } -> Elm.Expression
     }
 imageType =
     Elm.Declare.Extra.customRecord "Image"
@@ -188,3 +189,12 @@ imageGroupParser =
             )
         |= Parser.int
         |. Parser.end
+
+
+valueFrom : String -> Elm.Expression
+valueFrom name =
+    Elm.value
+        { importFrom = moduleName
+        , name = name
+        , annotation = Nothing
+        }

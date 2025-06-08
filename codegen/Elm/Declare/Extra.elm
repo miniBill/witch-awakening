@@ -49,7 +49,9 @@ withField fieldName getter annotation record =
 buildCustomRecord :
     CustomRecord type_
     ->
-        { declaration : Elm.Declare.Annotation
+        { annotation : Elm.Annotation.Annotation
+        , declaration : Elm.Declaration
+        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
         , make : type_ -> Elm.Expression
         }
 buildCustomRecord record =
@@ -57,8 +59,14 @@ buildCustomRecord record =
         annotation : Elm.Annotation.Annotation
         annotation =
             Elm.Annotation.record record.fields
+
+        inner : Elm.Declare.Annotation
+        inner =
+            Elm.Declare.alias record.name annotation
     in
-    { declaration = Elm.Declare.alias record.name annotation
+    { annotation = inner.annotation
+    , declaration = inner.declaration
+    , internal = inner.internal
     , make = \v -> Elm.record (List.reverse (record.make v)) |> Elm.withType annotation
     }
 

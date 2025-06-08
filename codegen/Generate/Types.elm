@@ -11,6 +11,7 @@ import Elm.Op
 import Gen.Maybe
 import Gen.Parser
 import Gen.Result
+import Generate.Images exposing (ImagesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
@@ -33,20 +34,20 @@ valueFrom name =
     Elm.value { importFrom = moduleName, name = name, annotation = Nothing }
 
 
-file : List Parsers.DLC -> Elm.Declare.Module TypesModule
-file dlcList =
+file : ImagesModule -> List Parsers.DLC -> Elm.Declare.Module TypesModule
+file images dlcList =
     let
         enums : Data.Enums
         enums =
             Data.enums dlcList
     in
     Elm.Declare.module_ moduleName TypesModule
-        |> Elm.Declare.withSubmodule (enumToDeclarations enums.class)
-        |> Elm.Declare.withSubmodule (enumToDeclarations enums.race)
-        |> Elm.Declare.withSubmodule (enumToDeclarations enums.relic)
+        |> Elm.Declare.withSubmodule (enumToDeclarations images enums.class)
+        |> Elm.Declare.withSubmodule (enumToDeclarations images enums.race)
+        |> Elm.Declare.withSubmodule (enumToDeclarations images enums.relic)
         |> Elm.Declare.Extra.withDeclarations
             (List.concatMap
-                (\enum -> (enumToDeclarations enum).declarations)
+                (\enum -> (enumToDeclarations images enum).declarations)
                 enums.others
             )
 
@@ -59,8 +60,8 @@ type alias EnumModule =
     }
 
 
-enumToDeclarations : Enum -> Elm.Declare.Module EnumModule
-enumToDeclarations enum =
+enumToDeclarations : ImagesModule -> Enum -> Elm.Declare.Module EnumModule
+enumToDeclarations images enum =
     let
         type_ : Elm.Declare.Annotation
         type_ =
@@ -84,7 +85,7 @@ enumToDeclarations enum =
     if enum.toImage then
         common
             |> Elm.Declare.Extra.withDeclarations
-                [ (toImageDeclaration config enum).declaration
+                [ (toImageDeclaration images config enum).declaration
                     |> Elm.expose
                 ]
 
@@ -136,8 +137,8 @@ parserDeclaration { lowerName, type_ } { variants } =
         |> Elm.Declare.value (lowerName ++ "Parser")
 
 
-toImageDeclaration : Config -> Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
-toImageDeclaration { lowerName } { name, variants } =
+toImageDeclaration : ImagesModule -> Config -> Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+toImageDeclaration images { lowerName } { name, variants } =
     (\value ->
         variants
             |> List.map
@@ -149,11 +150,7 @@ toImageDeclaration { lowerName } { name, variants } =
 
                         image : Elm.Expression
                         image =
-                            Elm.value
-                                { importFrom = [ "Images" ]
-                                , name = lowerName ++ constructor
-                                , annotation = Nothing
-                                }
+                            Generate.Images.valueFrom (lowerName ++ constructor)
                     in
                     Elm.Case.branch
                         (Elm.Arg.customType constructor identity
@@ -163,7 +160,7 @@ toImageDeclaration { lowerName } { name, variants } =
                         \_ -> image
                 )
             |> Elm.Case.custom value (Elm.Annotation.named [] name)
-            |> Elm.withType (Elm.Annotation.named [ "Images" ] "Image")
+            |> Elm.withType images.image
     )
         |> Elm.Declare.fn (lowerName ++ "ToImage") (Elm.Arg.varWith lowerName <| Elm.Annotation.named [] name)
 

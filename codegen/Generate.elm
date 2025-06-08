@@ -11,7 +11,7 @@ import Generate.Classes
 import Generate.Companions
 import Generate.Complications
 import Generate.Gradients
-import Generate.Images
+import Generate.Images exposing (ImagesModule)
 import Generate.Magics
 import Generate.Perks
 import Generate.Races
@@ -139,28 +139,30 @@ toFiles root =
             )
         |> Result.andThen
             (\list ->
-                Result.map3
-                    (\gradientsFile imagesFile dlcFiles ->
-                        { info = []
-                        , files = gradientsFile :: imagesFile :: dlcFiles
-                        }
-                    )
-                    (List.concatMap Triple.Extra.second list
-                        |> Generate.Gradients.gradients
-                    )
-                    (List.concatMap Triple.Extra.first list
-                        |> Generate.Images.images
-                        |> Result.map Elm.Declare.toFile
-                    )
-                    (List.concatMap Triple.Extra.third list
-                        |> Parsers.parseFiles
-                        |> Result.map dlcToFiles
-                    )
+                (List.concatMap Triple.Extra.first list
+                    |> Generate.Images.images
+                )
+                    |> Result.andThen
+                        (\images ->
+                            Result.map2
+                                (\gradientsFile dlcFiles ->
+                                    { info = []
+                                    , files = gradientsFile :: Elm.Declare.toFile images :: dlcFiles
+                                    }
+                                )
+                                (List.concatMap Triple.Extra.second list
+                                    |> Generate.Gradients.gradients
+                                )
+                                (List.concatMap Triple.Extra.third list
+                                    |> Parsers.parseFiles
+                                    |> Result.map (dlcToFiles images.call)
+                                )
+                        )
             )
 
 
-dlcToFiles : List Parsers.DLC -> List Elm.File
-dlcToFiles dlcList =
+dlcToFiles : ImagesModule -> List Parsers.DLC -> List Elm.File
+dlcToFiles images dlcList =
     let
         { dlcAffinities, dlcClasses, dlcCompanions, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics } =
             List.foldr
@@ -203,7 +205,7 @@ dlcToFiles dlcList =
 
         types : Elm.Declare.Module Generate.Types.TypesModule
         types =
-            Generate.Types.file dlcList
+            Generate.Types.file images dlcList
     in
     [ Generate.Affinities.file dlcAffinities
     , Elm.Declare.toFile (Generate.Classes.file dlcClasses)
