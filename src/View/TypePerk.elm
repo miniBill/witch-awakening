@@ -70,7 +70,7 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
         slot =
             Types.gainToSlot cost
     in
-    Theme.card []
+    Theme.card [ Theme.id ("perk-" ++ Types.raceToString race) ]
         { display = display
         , forceShow = List.member race witchRaces
         , glow = 0x00F3EA6F

@@ -354,8 +354,9 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                             ("*" ++ has ++ ".*")
                     ]
         in
-        Theme.maybeButton
-            [ height fill
+        Theme.button
+            [ Theme.id (Types.companionToString name)
+            , height fill
             , if display == DisplayFull then
                 width <| Element.minimum 660 <| Element.maximum 760 fill
 

@@ -154,7 +154,7 @@ factionBox display selected { name, motto, description, location, relations, per
                     el [ centerX, Font.size 40, Theme.celticHand ] <|
                         Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
         in
-        Theme.column [ width fill ]
+        Theme.column [ width fill, Theme.id (Types.factionToString name) ]
             [ introRow
             , Theme.row [ width fill ]
                 [ Theme.maybeButton

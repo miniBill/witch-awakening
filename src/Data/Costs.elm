@@ -210,21 +210,27 @@ powerCap model =
 startingValue : Model key -> Monad Points
 startingValue model =
     let
+        withGameModeInfo : String -> Int -> Monad Int
+        withGameModeInfo label v =
+            succeed v
+                |> Monad.withInfo
+                    { label = label
+                    , anchor = Just "Game mode"
+                    , value = Monad.Power v
+                    }
+
         power : Monad Int
         power =
             case model.gameMode of
                 Just StoryArc ->
                     if model.capBuild then
-                        succeed 150
-                            |> Monad.withValueInfo "Story Arc (cap)" 150
+                        withGameModeInfo "Story Arc (cap)" 150
 
                     else
-                        succeed 10
-                            |> Monad.withValueInfo "Story Arc" 10
+                        withGameModeInfo "Story Arc" 10
 
                 Just EarlyBird ->
-                    succeed 75
-                        |> Monad.withValueInfo "Early Bird" 75
+                    withGameModeInfo "Early Bird" 75
 
                 Just SkillTree ->
                     slotUnsupported
@@ -234,12 +240,10 @@ startingValue model =
 
                 Nothing ->
                     if model.capBuild then
-                        succeed 100
-                            |> Monad.withValueInfo "Normal game mode (cap)" 100
+                        withGameModeInfo "Normal game mode (cap)" 100
 
                     else
-                        succeed 30
-                            |> Monad.withValueInfo "Normal game mode" 30
+                        withGameModeInfo "Normal game mode" 30
     in
     map powerToPoints power
 
@@ -328,7 +332,7 @@ complicationValue model complication =
                             Monad.error <| "Need a tier for complication " ++ Types.complicationToString complication.name
             in
             raw
-                |> map
+                |> Monad.andThen
                     (\r ->
                         let
                             bonus : Int
@@ -338,15 +342,15 @@ complicationValue model complication =
 
                                 else
                                     0
+
+                            value : Int
+                            value =
+                                r + bonus
                         in
-                        r + bonus
-                    )
-                |> Monad.andThen
-                    (\v ->
-                        succeed v
-                            |> Monad.withValueInfo
+                        succeed value
+                            |> Monad.withPowerInfo
                                 (Types.complicationToString details.name)
-                                v
+                                value
                     )
 
 
@@ -371,7 +375,11 @@ typePerkValue race =
                         -cost
                 in
                 Monad.succeed value
-                    |> Monad.withValueInfo (Types.raceToString race) value
+                    |> Monad.withInfo
+                        { label = Types.raceToString race
+                        , anchor = Just ("perk-" ++ Types.raceToString race)
+                        , value = Monad.Power value
+                        }
             )
 
 
@@ -473,7 +481,7 @@ magicValue affinities { faction, class, typePerks } { name, rank } =
     of
         Just cost ->
             succeed cost
-                |> Monad.withValueInfo (Types.magicToString name) cost
+                |> Monad.withPowerInfo (Types.magicToString name) cost
 
         Nothing ->
             Monad.error <| "Magic " ++ Types.magicToString name ++ " not found"
@@ -637,7 +645,7 @@ perkCost ({ class } as model) { name, cost } =
                 in
                 finalCost
                     |> succeed
-                    |> Monad.withValueInfo (Types.perkToString name) -finalCost
+                    |> Monad.withPowerInfo (Types.perkToString name) -finalCost
             )
 
 
@@ -783,12 +791,10 @@ companionsValue model =
                                     unique
                                         |> List.map
                                             (\( label, _, { name } ) ->
-                                                ( companionToString name
-                                                    ++ " is free ("
-                                                    ++ label
-                                                    ++ ")"
-                                                , 0
-                                                )
+                                                { label = companionToString name
+                                                , anchor = Just (companionToString name)
+                                                , value = Monad.FreeBecause label
+                                                }
                                             )
                                 }
                             )

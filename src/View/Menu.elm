@@ -312,11 +312,19 @@ row label showInfo result target =
 
         Ok value ->
             let
-                viewInfoBlock : ( String, Int ) -> List (Element msg)
-                viewInfoBlock ( key, lineValue ) =
-                    [ paragraph [ width fill ] [ text key ]
+                viewInfoBlock : CostsMonad.Info -> List (Element Msg)
+                viewInfoBlock info =
+                    [ paragraph [ width fill ]
+                        [ text "- "
+                        , linkLabel info.label info.anchor
+                        ]
                     , el [ alignRight ] <|
-                        rightPoints { rewardPoints = 0, power = lineValue }
+                        case info.value of
+                            CostsMonad.Power power ->
+                                rightPoints { rewardPoints = 0, power = power }
+
+                            CostsMonad.FreeBecause message ->
+                                text ("Free (" ++ message ++ ")")
                     ]
             in
             Theme.column [ width fill ]

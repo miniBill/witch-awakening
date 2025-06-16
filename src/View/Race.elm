@@ -61,7 +61,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                 |> List.take 1
                 |> String.concat
     in
-    Theme.card []
+    Theme.card [ Theme.id shortName ]
         { display = display
         , forceShow = List.isEmpty selected
         , glow = 0x00F3EA6F

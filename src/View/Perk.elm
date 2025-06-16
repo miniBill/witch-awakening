@@ -188,8 +188,19 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
         color : Int
         color =
             0x00F3EA6F
+
+        nameString : String
+        nameString =
+            if name == JackOfAll then
+                Types.perkToString name
+
+            else
+                Types.perkToString name
+                    |> String.split "-"
+                    |> List.take 1
+                    |> String.concat
     in
-    Theme.card []
+    Theme.card [ Theme.id nameString ]
         { display = display
         , forceShow = False
         , glow = color
@@ -252,13 +263,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
 
                 _ ->
                     viewSlot White
-            , Types.perkToString name
-                |> (if name == JackOfAll then
-                        identity
-
-                    else
-                        String.split "-" >> List.take 1 >> String.concat
-                   )
+            , nameString
                 |> String.Extra.softBreak 16
                 |> List.map (gradientText 4 Gradients.blueGradient)
                 |> paragraph

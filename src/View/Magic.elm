@@ -270,13 +270,13 @@ magicBox display factional selected index details =
         Element.none
 
     else if modBy 2 index == 0 || factional then
-        Theme.row []
+        Theme.row [ Theme.id (Types.magicToString details.name) ]
             [ magicImage details
             , viewContent display selected details
             ]
 
     else
-        Theme.row []
+        Theme.row [ Theme.id (Types.magicToString details.name) ]
             [ viewContent display selected details
             , magicImage details
             ]

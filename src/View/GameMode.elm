@@ -82,7 +82,7 @@ gameModeBox display selected { name, content } =
             ""
                 |> gradientText 4 Gradients.yellowGradient
     in
-    Theme.card []
+    Theme.card [ Theme.id (Types.gameModeToString name) ]
         { display = display
         , forceShow = False
         , glow = color

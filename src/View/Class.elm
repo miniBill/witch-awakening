@@ -75,7 +75,7 @@ classBox display selected { name, dlc, color, content } =
             else
                 Just name
     in
-    Theme.card []
+    Theme.card [ Theme.id (Types.classToString name) ]
         { display = display
         , forceShow = selected == Nothing
         , glow = color

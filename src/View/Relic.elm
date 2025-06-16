@@ -126,7 +126,7 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
         color =
             0x00F3EA6F
     in
-    Theme.card []
+    Theme.card [ Theme.id (Types.relicToString name) ]
         { display = display
         , forceShow = False
         , glow = color

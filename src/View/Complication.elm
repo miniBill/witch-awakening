@@ -226,7 +226,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 )
             ]
     in
-    Theme.card []
+    Theme.card [ Theme.id (Types.complicationToString name) ]
         { display = display
         , forceShow = False
         , glow = color
