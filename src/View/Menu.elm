@@ -228,7 +228,7 @@ viewCalculations model power warnings affinities =
         , keyedRow "Type perks" model.showInfo (Costs.typePerksValue model) Nothing
         , keyedRow "Magic" model.showInfo (Costs.magicsValue model) <| Just "The Magic"
         , keyedRow "Perks" model.showInfo (Costs.perksValue model) Nothing
-        , keyedRow "Faction" model.showInfo (CostsMonad.succeed (Costs.factionValue model)) <| Just "Factions"
+        , keyedRow "Faction" model.showInfo (Costs.factionValue model) <| Just "Factions"
         , keyedRow "Companions" model.showInfo (Costs.companionsValue model) Nothing
         , ( "RelicSlider", relicSlider model )
         , keyedRow "Relics" model.showInfo (Costs.relicsValue model) Nothing

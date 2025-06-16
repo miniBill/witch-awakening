@@ -82,18 +82,19 @@ normalInitialWarning =
 
 totalCost : Model key -> Monad Points
 totalCost model =
-    [ map negate <| classValue model
-    , map negate <| startingValue model
-    , map negate <| complicationsValue model
-    , map negate <| typePerksValue model
-    , map negate <| magicsValue model
-    , perksCost model
-    , factionValue model |> negate |> succeed
-    , map negate <| companionsValue model
-    , map negate <| relicsValue model
-    , map negate <| conversion model
+    [ classValue model
+    , startingValue model
+    , complicationsValue model
+    , typePerksValue model
+    , magicsValue model
+    , perksValue model
+    , factionValue model
+    , companionsValue model
+    , relicsValue model
+    , conversion model
     , map zeroOut <| powerCap model
     ]
+        |> List.map (map negate)
         |> combineAndSum
         |> andThen
             (\result ->
@@ -585,21 +586,6 @@ perksValue model =
         |> map negate
 
 
-perksCost :
-    { a
-        | races : List Race
-        , mainRace : Maybe Race
-        , cosmicPearl : CosmicPearlData
-        , typePerks : List Race
-        , perks : List RankedPerk
-        , class : Maybe Class
-    }
-    -> Monad Points
-perksCost model =
-    perksValue model
-        |> map negate
-
-
 perkCost :
     { a
         | class : Maybe Class
@@ -657,17 +643,17 @@ perkCost ({ class } as model) { name, cost } =
 -- Faction --
 
 
-factionValue : Model key -> Points
+factionValue : Model key -> Monad Points
 factionValue model =
     case model.faction of
         Nothing ->
-            { zero | power = 4 }
+            succeed { zero | power = 4 }
 
         Just ( _, False ) ->
-            { zero | power = 2 }
+            succeed { zero | power = 2 }
 
         Just ( _, True ) ->
-            zero
+            succeed zero
 
 
 
