@@ -438,13 +438,13 @@ magicValue affinities { faction, class, typePerks } { name, rank } =
             |> Maybe.andThen
                 (\magic ->
                     let
-                        cost : Maybe Int
-                        cost =
-                            magicCost affinities class rank magic
+                        value : Maybe Int
+                        value =
+                            basicMagicValue affinities class rank magic
 
-                        doubleIfPositive : Int -> Int
-                        doubleIfPositive c =
-                            if c > 0 then
+                        doubleIfNegative : Int -> Int
+                        doubleIfNegative c =
+                            if c < 0 then
                                 c
 
                             else
@@ -464,24 +464,28 @@ magicValue affinities { faction, class, typePerks } { name, rank } =
                                    )
                     in
                     if hasFactionDiscount then
-                        Maybe.map factionDiscount cost
+                        Maybe.map factionDiscount value
 
                     else
                         case magic.faction of
                             Just magicFaction ->
                                 if Just ( magicFaction, False ) == faction then
-                                    cost
+                                    value
 
                                 else
-                                    Maybe.map doubleIfPositive cost
+                                    Maybe.map doubleIfNegative value
 
                             Nothing ->
-                                cost
+                                value
                 )
     of
-        Just cost ->
-            succeed cost
-                |> Monad.withPowerInfo (Types.magicToString name) cost
+        Just value ->
+            succeed value
+                |> Monad.withInfo
+                    { label = Types.magicToString name ++ " " ++ String.fromInt rank
+                    , anchor = Just (Types.magicToString name)
+                    , value = Monad.Power value
+                    }
 
         Nothing ->
             Monad.error <| "Magic " ++ Types.magicToString name ++ " not found"
@@ -496,13 +500,13 @@ factionDiscount c =
         (c - 1) // 2
 
 
-magicCost :
+basicMagicValue :
     List Affinity
     -> Maybe Class
     -> Int
     -> { d | class : Maybe Class, affinities : Magic.Affinities }
     -> Maybe Int
-magicCost affinities class rank magic =
+basicMagicValue affinities class rank magic =
     let
         isClass : Bool
         isClass =
@@ -527,19 +531,19 @@ magicCost affinities class rank magic =
                             )
 
         cases : Int -> Int -> Int -> Int -> Int
-        cases basicCost inAffinityCost inClassCost inBothCost =
+        cases basicValue inAffinityValue inClassValue inBothValue =
             if isClass then
                 if isAffinity then
-                    inBothCost
+                    inBothValue
 
                 else
-                    inClassCost
+                    inClassValue
 
             else if isAffinity then
-                inAffinityCost
+                inAffinityValue
 
             else
-                basicCost
+                basicValue
     in
     case rank of
         1 ->
