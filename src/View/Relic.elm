@@ -388,7 +388,7 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
 
         swapBlock : Race -> List (Element Choice)
         swapBlock race =
-            List.map swapAffinityRow (Affinity.baseAffinities race)
+            List.map swapAffinityRow (Affinity.affinitiesForRace race)
 
         addBlock : List (Element Choice)
         addBlock =

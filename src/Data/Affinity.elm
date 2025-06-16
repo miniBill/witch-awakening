@@ -1,4 +1,4 @@
-module Data.Affinity exposing (Details, baseAffinities, fromModel)
+module Data.Affinity exposing (Details, affinitiesForRace, fromModel)
 
 import Generated.Race
 import Generated.Types exposing (Affinity(..), Race(..))
@@ -26,10 +26,10 @@ fromModel { races, mainRace, cosmicPearl, typePerks } =
         base =
             case ( mainRace, races ) of
                 ( Just race, _ ) ->
-                    baseAffinities race
+                    affinitiesForRace race
 
                 ( Nothing, [ race ] ) ->
-                    baseAffinities race
+                    affinitiesForRace race
 
                 _ ->
                     []
@@ -62,8 +62,8 @@ fromModel { races, mainRace, cosmicPearl, typePerks } =
         |> List.Extra.unique
 
 
-baseAffinities : Race -> List Affinity
-baseAffinities race =
+affinitiesForRace : Race -> List Affinity
+affinitiesForRace race =
     Generated.Race.all [ race ]
         |> List.Extra.find (\{ name } -> name == race)
         |> Maybe.map .affinities
