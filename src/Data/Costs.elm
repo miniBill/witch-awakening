@@ -3,7 +3,7 @@ module Data.Costs exposing (Points, classValue, companionsValue, complicationsRa
 import Data.Affinity as Affinity
 import Data.Companion as Companion
 import Data.Complication as Complication
-import Data.Costs.Monad as Monad exposing (Monad, andThen, combine, map, map2, mapAndSum, succeed, withWarning)
+import Data.Costs.Monad as Monad exposing (Monad, succeed)
 import Data.Magic as Magic
 import Generated.Companion
 import Generated.Complication
@@ -34,18 +34,20 @@ slotUnsupported =
     Monad.error "Slot modes not supported yet"
 
 
+{-| Cap a value to a maximum. Emit a warning if the maximum is exceeded by the input.
+-}
 capWithWarning : Int -> String -> Int -> Monad Points
 capWithWarning cap warning value =
     if value > cap then
         { zero
             | power = cap
         }
-            |> succeed
-            |> withWarning warning
+            |> Monad.succeed
+            |> Monad.withWarning warning
 
     else
         { zero | power = value }
-            |> succeed
+            |> Monad.succeed
 
 
 {-| "In Early Bird mode, complications can only increase the starting power/power cap by up to 30 points"
@@ -92,17 +94,19 @@ totalCost model =
     , companionsValue model
     , relicsValue model
     , conversion model
-    , map zeroOut <| powerCap model
+
+    -- Just grab info and warnings
+    , Monad.map zeroOut (powerCap model)
     ]
-        |> List.map (map negate)
         |> combineAndSum
-        |> andThen
+        |> Monad.map negate
+        |> Monad.andThen
             (\result ->
                 let
                     warningIf : Int -> String -> Monad q -> Monad q
                     warningIf b warning acc =
                         if b > 0 then
-                            acc |> withWarning warning
+                            acc |> Monad.withWarning warning
 
                         else
                             acc
@@ -185,17 +189,17 @@ powerCap model =
         Nothing ->
             model.towardsCap
                 |> capWithWarning 30 normalCapWarning
-                |> map (sum { zero | power = 100 })
+                |> Monad.map (sum { zero | power = 100 })
 
         Just StoryArc ->
             complicationsRawValue model
-                |> andThen (capWithWarning 60 storyArcWarning)
-                |> map (sum { zero | power = 150 })
+                |> Monad.andThen (capWithWarning 60 storyArcWarning)
+                |> Monad.map (sum { zero | power = 150 })
 
         Just EarlyBird ->
             complicationsRawValue model
-                |> andThen (capWithWarning 30 earlyBirdWarning)
-                |> map (sum { zero | power = 75 })
+                |> Monad.andThen (capWithWarning 30 earlyBirdWarning)
+                |> Monad.map (sum { zero | power = 75 })
 
         Just SkillTree ->
             slotUnsupported
@@ -246,7 +250,7 @@ startingValue model =
                     else
                         withGameModeInfo "Normal game mode" 30
     in
-    map powerToPoints power
+    Monad.map powerToPoints power
 
 
 
@@ -256,7 +260,7 @@ startingValue model =
 complicationsValue : Model key -> Monad Points
 complicationsValue model =
     complicationsRawValue model
-        |> andThen
+        |> Monad.andThen
             (\value ->
                 case model.gameMode of
                     Just StoryArc ->
@@ -290,10 +294,7 @@ complicationsValue model =
 
 complicationsRawValue : Model key -> Monad Int
 complicationsRawValue model =
-    model.complications
-        |> List.map (complicationValue model)
-        |> combine
-        |> map List.sum
+    Monad.mapAndSum (complicationValue model) model.complications
 
 
 complicationValue : Model key -> Types.RankedComplication -> Monad Int
@@ -318,13 +319,13 @@ complicationValue model complication =
                 raw =
                     case ( details.content, complication.kind ) of
                         ( Complication.Single value _, _ ) ->
-                            succeed value
+                            Monad.succeed value
 
                         ( Complication.WithTiers _ tiers _, Tiered tier ) ->
-                            map Tuple.second <| get tier tiers
+                            Monad.map Tuple.second <| get tier tiers
 
                         ( Complication.WithChoices _ choices _, Tiered tier ) ->
-                            map Tuple.second <| get tier choices
+                            Monad.map Tuple.second <| get tier choices
 
                         ( Complication.WithGains costs _, Tiered tier ) ->
                             get tier costs
@@ -361,8 +362,9 @@ complicationValue model complication =
 
 typePerksValue : Model key -> Monad Points
 typePerksValue model =
-    mapAndSum typePerkValue model.typePerks
-        |> map powerToPoints
+    model.typePerks
+        |> Monad.mapAndSum typePerkValue
+        |> Monad.map powerToPoints
 
 
 typePerkValue : Race -> Monad Int
@@ -416,10 +418,8 @@ magicsValue model =
             Affinity.fromModel model
     in
     model.magic
-        |> List.map (magicValue affinities model)
-        |> combine
-        |> map List.sum
-        |> map powerToPoints
+        |> Monad.mapAndSum (magicValue affinities model)
+        |> Monad.map powerToPoints
 
 
 magicValue :
@@ -581,9 +581,10 @@ perksValue :
     }
     -> Monad Points
 perksValue model =
-    mapAndSum (perkCost model) model.perks
-        |> map powerToPoints
-        |> map negate
+    model.perks
+        |> Monad.mapAndSum (perkCost model)
+        |> Monad.map powerToPoints
+        |> Monad.map negate
 
 
 perkCost :
@@ -599,7 +600,7 @@ perkCost :
     -> Monad Int
 perkCost ({ class } as model) { name, cost } =
     find "Perk" .name name (Generated.Perk.all model.perks) Types.perkToString
-        |> andThen
+        |> Monad.andThen
             (\perk ->
                 let
                     affinities : List Affinity
@@ -666,7 +667,7 @@ companionsValue model =
         totalCompanionCost : List ( Maybe Faction, Companion.Details ) -> Monad Points
         totalCompanionCost companions =
             companions
-                |> List.map
+                |> Monad.mapAndSum
                     (\( _, { name, cost } ) ->
                         case cost of
                             Just v ->
@@ -675,13 +676,7 @@ companionsValue model =
                             Nothing ->
                                 Monad.error <| "Companion " ++ Types.companionToString name ++ " does not have a fixed cost"
                     )
-                |> combine
-                |> map
-                    (\points ->
-                        points
-                            |> List.sum
-                            |> powerToPoints
-                    )
+                |> Monad.map powerToPoints
 
         forFree : List ( Maybe Faction, Companion.Details ) -> Monad Points
         forFree companions =
@@ -825,12 +820,12 @@ companionsValue model =
     in
     model.companions
         |> List.map getCompanion
-        |> combine
-        |> andThen
+        |> Monad.combine
+        |> Monad.andThen
             (\companions ->
-                map2
+                Monad.map2
                     sum
-                    (map negate (totalCompanionCost companions))
+                    (Monad.map negate (totalCompanionCost companions))
                     (forFree companions)
             )
 
@@ -887,14 +882,15 @@ getCompanion companion =
 
 relicsValue : Model key -> Monad Points
 relicsValue model =
-    mapAndSum (relicCost model.class model.cosmicPearl) model.relics
-        |> map (\cost -> { zero | rewardPoints = -cost })
+    model.relics
+        |> Monad.mapAndSum (relicCost model.class model.cosmicPearl)
+        |> Monad.map (\cost -> { zero | rewardPoints = -cost })
 
 
 relicCost : Maybe Class -> CosmicPearlData -> RankedRelic -> Monad Int
 relicCost class pearl { name, cost } =
     find "Relic" .name name Generated.Relic.all Types.relicToString
-        |> map
+        |> Monad.map
             (\relic ->
                 let
                     isClass : Bool
@@ -959,8 +955,8 @@ sumPoints =
 combineAndSum : List (Monad Points) -> Monad Points
 combineAndSum list =
     list
-        |> combine
-        |> map sumPoints
+        |> Monad.combine
+        |> Monad.map sumPoints
 
 
 powerToPoints : Int -> Points
