@@ -216,15 +216,15 @@ startingValue model =
                 Just StoryArc ->
                     if model.capBuild then
                         succeed 150
-                            |> Monad.withInfo "Story Arc (cap): 150"
+                            |> Monad.withValueInfo "Story Arc (cap)" 150
 
                     else
                         succeed 10
-                            |> Monad.withInfo "Story Arc: 10"
+                            |> Monad.withValueInfo "Story Arc" 10
 
                 Just EarlyBird ->
                     succeed 75
-                        |> Monad.withInfo "Early Bird: 75"
+                        |> Monad.withValueInfo "Early Bird" 75
 
                 Just SkillTree ->
                     slotUnsupported
@@ -235,11 +235,11 @@ startingValue model =
                 Nothing ->
                     if model.capBuild then
                         succeed 100
-                            |> Monad.withInfo "Normal game mode (cap): 100"
+                            |> Monad.withValueInfo "Normal game mode (cap)" 100
 
                     else
                         succeed 30
-                            |> Monad.withInfo "Normal game mode: 30"
+                            |> Monad.withValueInfo "Normal game mode" 30
     in
     map powerToPoints power
 
@@ -344,8 +344,9 @@ complicationValue model complication =
                 |> Monad.andThen
                     (\v ->
                         succeed v
-                            |> Monad.withInfo
-                                (Types.complicationToString details.name ++ ": " ++ String.fromInt v)
+                            |> Monad.withValueInfo
+                                (Types.complicationToString details.name)
+                                v
                     )
 
 
@@ -364,9 +365,13 @@ typePerkValue race =
     find "Type perk" .race race Generated.TypePerk.all Types.raceToString
         |> Monad.andThen
             (\{ cost } ->
-                Monad.succeed -cost
-                    |> Monad.withInfo
-                        (Types.raceToString race ++ ": " ++ String.fromInt -cost)
+                let
+                    value : Int
+                    value =
+                        -cost
+                in
+                Monad.succeed value
+                    |> Monad.withValueInfo (Types.raceToString race) value
             )
 
 
@@ -468,7 +473,7 @@ magicValue affinities { faction, class, typePerks } { name, rank } =
     of
         Just cost ->
             succeed cost
-                |> Monad.withInfo (Types.magicToString name ++ ": " ++ String.fromInt cost)
+                |> Monad.withValueInfo (Types.magicToString name) cost
 
         Nothing ->
             Monad.error <| "Magic " ++ Types.magicToString name ++ " not found"
@@ -632,7 +637,7 @@ perkCost ({ class } as model) { name, cost } =
                 in
                 finalCost
                     |> succeed
-                    |> Monad.withInfo (Types.perkToString name ++ ": " ++ String.fromInt -finalCost)
+                    |> Monad.withValueInfo (Types.perkToString name) -finalCost
             )
 
 
@@ -778,10 +783,12 @@ companionsValue model =
                                     unique
                                         |> List.map
                                             (\( label, _, { name } ) ->
-                                                companionToString name
+                                                ( companionToString name
                                                     ++ " is free ("
                                                     ++ label
                                                     ++ ")"
+                                                , 0
+                                                )
                                             )
                                 }
                             )

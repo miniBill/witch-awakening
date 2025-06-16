@@ -1,4 +1,4 @@
-module Data.Costs.Monad exposing (Monad, andThen, combine, error, map, map2, map3, mapAndSum, succeed, withInfo, withWarning)
+module Data.Costs.Monad exposing (Monad, andThen, combine, error, map, map2, map3, mapAndSum, succeed, withValueInfo, withWarning)
 
 import ResultME exposing (ResultME)
 
@@ -8,7 +8,7 @@ type alias Monad a =
         String
         { value : a
         , warnings : List String
-        , infos : List String
+        , infos : List ( String, Int )
         }
 
 
@@ -97,12 +97,12 @@ mapAndSum toValue list =
         |> map List.sum
 
 
-withInfo : String -> Monad a -> Monad a
-withInfo info r =
+withValueInfo : String -> Int -> Monad a -> Monad a
+withValueInfo info cost r =
     Result.map
         (\v ->
             { v
-                | infos = info :: v.infos
+                | infos = ( info, cost ) :: v.infos
             }
         )
         r

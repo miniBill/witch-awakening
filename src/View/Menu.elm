@@ -12,7 +12,6 @@ import Element.Keyed
 import Generated.Types as Types exposing (Affinity)
 import List.Extra
 import List.Nonempty
-import Parser exposing ((|.), (|=), Parser)
 import Set exposing (Set)
 import String.Extra
 import Theme
@@ -313,46 +312,12 @@ row label showInfo result target =
 
         Ok value ->
             let
-                lineParser : Parser ( String, Int )
-                lineParser =
-                    Parser.succeed Tuple.pair
-                        |= (Parser.chompWhile (\c -> c /= ':')
-                                |> Parser.getChompedString
-                                |> Parser.map String.trim
-                           )
-                        |. Parser.symbol ":"
-                        |. Parser.spaces
-                        |= (Parser.succeed identity
-                                |= Parser.oneOf
-                                    [ Parser.succeed negate |. Parser.symbol "-"
-                                    , Parser.succeed identity
-                                    ]
-                                |= (Parser.chompWhile Char.isDigit
-                                        |> Parser.getChompedString
-                                        |> Parser.andThen
-                                            (\raw ->
-                                                case String.toInt raw of
-                                                    Nothing ->
-                                                        Parser.problem (raw ++ " is not a valid number")
-
-                                                    Just n ->
-                                                        Parser.succeed n
-                                            )
-                                   )
-                           )
-                        |. Parser.end
-
-                viewInfoBlock : String -> List (Element msg)
-                viewInfoBlock line =
-                    case Parser.run lineParser line of
-                        Ok ( key, lineValue ) ->
-                            [ paragraph [ width fill ] [ text key ]
-                            , el [ alignRight ] <|
-                                rightPoints { rewardPoints = 0, power = lineValue }
-                            ]
-
-                        Err _ ->
-                            [ paragraph [ width fill ] [ text line ], Element.none ]
+                viewInfoBlock : ( String, Int ) -> List (Element msg)
+                viewInfoBlock ( key, lineValue ) =
+                    [ paragraph [ width fill ] [ text key ]
+                    , el [ alignRight ] <|
+                        rightPoints { rewardPoints = 0, power = lineValue }
+                    ]
             in
             Theme.column [ width fill ]
                 [ paragraph [ width fill ]
