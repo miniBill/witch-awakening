@@ -445,7 +445,7 @@ magicValue affinities { faction, class, typePerks } { name, rank } =
 
                         doubleIfNegative : Int -> Int
                         doubleIfNegative c =
-                            if c < 0 then
+                            if c > 0 then
                                 c
 
                             else
