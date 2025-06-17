@@ -8,6 +8,7 @@ import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
 import Elm.Op
+import Elm.Op.Extra
 import Gen.Maybe
 import Gen.Parser
 import Gen.Result
@@ -204,25 +205,6 @@ toStringDeclaration { lowerName, type_ } { variants } =
                         variant.toStringException
                             |> Maybe.withDefault variant.name
                             |> Elm.string
-
-                    toStrings : List ( String, Elm.Expression ) -> Elm.Expression
-                    toStrings =
-                        List.foldl
-                            (\( arg, val ) acc ->
-                                Elm.Op.append
-                                    (Elm.Op.append
-                                        acc
-                                        (Elm.string "-")
-                                    )
-                                    (Elm.apply
-                                        (Elm.val <|
-                                            String.Extra.decapitalize arg
-                                                ++ "ToString"
-                                        )
-                                        [ val ]
-                                    )
-                            )
-                            variantString
                 in
                 Elm.Case.branch
                     (Elm.Arg.customType (yassify variant.name) identity
@@ -230,7 +212,21 @@ toStringDeclaration { lowerName, type_ } { variants } =
                     )
                 <|
                     \vals ->
-                        toStrings (List.map2 Tuple.pair variant.arguments vals)
+                        (variantString
+                            :: List.map2
+                                (\arg val ->
+                                    Elm.apply
+                                        (Elm.val <|
+                                            String.Extra.decapitalize arg
+                                                ++ "ToString"
+                                        )
+                                        [ val ]
+                                )
+                                variant.arguments
+                                vals
+                        )
+                            |> List.intersperse (Elm.string "-")
+                            |> Elm.Op.Extra.appendsStrings
         in
         variants
             |> List.map variantToBranch
