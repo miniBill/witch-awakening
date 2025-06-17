@@ -28,6 +28,7 @@ file types dlcRelics =
 all : List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Value
 all dlcRelics =
     dlcRelics
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.map (\( _, relic ) -> Elm.val (String.Extra.decapitalize (yassify relic.name)))
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list Gen.Data.Relic.annotation_.details)

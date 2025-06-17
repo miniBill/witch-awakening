@@ -37,6 +37,7 @@ all dlcPerks =
             Elm.Op.append
                 (Gen.Data.Perk.call_.all perks)
                 (dlcPerks
+                    |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
                     |> List.map (\( _, perk ) -> Elm.val (String.Extra.decapitalize (yassify perk.name)))
                     |> Elm.list
                 )

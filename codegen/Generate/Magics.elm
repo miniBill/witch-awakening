@@ -27,6 +27,7 @@ file types dlcMagics =
 all : List ( Maybe String, Parsers.Magic ) -> Elm.Declare.Value
 all dlcMagics =
     dlcMagics
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.map (\( _, magic ) -> Elm.val (String.Extra.decapitalize (yassify magic.name)))
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list Gen.Data.Magic.annotation_.details)

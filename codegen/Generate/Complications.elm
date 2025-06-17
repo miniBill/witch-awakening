@@ -26,6 +26,7 @@ file types dlcComplications =
 all : List ( Maybe String, Parsers.Complication ) -> Elm.Declare.Value
 all dlcComplications =
     dlcComplications
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.map (\( _, complication ) -> Elm.val (String.Extra.decapitalize (yassify complication.name)))
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list Gen.Data.Complication.annotation_.details)

@@ -30,6 +30,7 @@ file types dlcAffinities =
 all : List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Value
 all dlcAffinities =
     dlcAffinities
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.map (\( _, affinity ) -> Elm.val (affinityToVarName affinity.name))
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list Gen.Data.Affinity.annotation_.details)

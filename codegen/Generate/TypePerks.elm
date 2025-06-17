@@ -28,6 +28,7 @@ all : List ( Maybe String, Parsers.Race ) -> Elm.Declare.Value
 all dlcRaces =
     Elm.Op.append
         (dlcRaces
+            |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
             |> List.filterMap
                 (\( _, race ) ->
                     if race.perk == Nothing then
