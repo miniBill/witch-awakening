@@ -24,7 +24,6 @@ viewPerks display mainRace races perks =
         sorted : List Perk.Details
         sorted =
             Generated.Perk.all perks
-                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
     in
     View.collapsible (Theme.topBackground Images.perkIntro)
         display
@@ -357,7 +356,6 @@ viewContent mainRace races color selected { content, name } =
                     color
                     swapRace
                     (Generated.Race.all races
-                        |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                         |> List.map .name
                     )
 

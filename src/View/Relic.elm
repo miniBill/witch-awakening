@@ -24,7 +24,6 @@ viewRelics display pearl mainRace races relics =
         sorted : List (Element Choice)
         sorted =
             Generated.Relic.all
-                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.filterMap (relicBox mainRace display relics pearl races)
     in
     View.collapsible []
@@ -340,7 +339,6 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                     , Theme.blocks [] "with"
                     ]
                 , Generated.Affinity.all
-                    |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                     |> List.Extra.remove Generated.Affinity.all_
                     |> List.map (\affinity -> viewSwap affinity.name)
                     |> Theme.wrappedRow []
@@ -380,7 +378,6 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
             Theme.column [ width fill ]
                 [ Theme.blocks [ width fill ] "Add an affinity: "
                 , Generated.Affinity.all
-                    |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                     |> List.Extra.remove Generated.Affinity.all_
                     |> List.map (\affinity -> viewAdd affinity.name)
                     |> Theme.wrappedRow []

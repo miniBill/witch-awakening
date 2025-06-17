@@ -42,7 +42,6 @@ viewComplications display complications =
         , Theme.blocks [] "# World Shifts"
         , ((Generated.Complication.all
                 |> List.filter isWorldShift
-                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.filterMap
                     (complicationBox display complications)
            )
@@ -60,12 +59,10 @@ viewComplications display complications =
         , Theme.blocks [] "# Generic Complications"
         , Generated.Complication.all
             |> List.filter (\complication -> not (isWorldShift complication))
-            |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.filterMap (complicationBox display complications)
             |> wrappedRow
         ]
         [ Generated.Complication.all
-            |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
             |> List.filterMap (complicationBox display complications)
             |> wrappedRow
         ]

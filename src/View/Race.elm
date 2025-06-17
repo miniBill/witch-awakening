@@ -24,7 +24,6 @@ viewRace display races =
         raceBoxes : Element ( Race, Bool )
         raceBoxes =
             Generated.Race.all races
-                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.filterMap (raceBox display races)
                 |> Theme.wrappedRow
                     [ width fill
@@ -122,7 +121,6 @@ affinityPicker race =
             [ el [ Font.bold ] <| text "Pick an affinity:"
             , list
                 |> List.Extra.remove Generated.Affinity.all_
-                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.map .name
                 |> List.map
                     (\affinity ->

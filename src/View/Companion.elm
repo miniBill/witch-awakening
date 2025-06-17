@@ -99,7 +99,6 @@ companionSection display companions ( faction, section ) =
         boxes : List (Element ( Companion, Bool ))
         boxes =
             section
-                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.map (companionBox display companions)
     in
     if display == DisplayFull then

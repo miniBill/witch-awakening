@@ -402,94 +402,93 @@ find label toKey value list toString =
 
 magicsValue :
     { a
-        | class : Maybe Class
-        , races : List Race
+        | cosmicPearl : CosmicPearlData
         , mainRace : Maybe Race
+        , races : List Race
+        , faction : Maybe ( Faction, Bool )
+        , class : Maybe Class
         , typePerks : List Race
         , magic : List RankedMagic
-        , faction : Maybe ( Faction, Bool )
-        , cosmicPearl : CosmicPearlData
     }
     -> Monad Points
-magicsValue model =
+magicsValue ({ faction, class, typePerks } as model) =
     let
         affinities : List Affinity
         affinities =
             Affinity.fromModel model
     in
-    model.magic
-        |> Monad.mapAndSum (magicValue affinities model)
-        |> Monad.map powerToPoints
-
-
-magicValue :
-    List Affinity
-    ->
-        { a
-            | faction : Maybe ( Faction, Bool )
-            , class : Maybe Class
-            , typePerks : List Race
-        }
-    -> RankedMagic
-    -> Monad Int
-magicValue affinities { faction, class, typePerks } { name, rank } =
-    case
-        Generated.Magic.all
-            |> List.Extra.find (\magic -> magic.name == name)
-            |> Maybe.andThen
-                (\magic ->
-                    let
-                        value : Maybe Int
-                        value =
-                            basicMagicValue affinities class rank magic
-
-                        doubleIfNegative : Int -> Int
-                        doubleIfNegative c =
-                            if c > 0 then
-                                c
-
-                            else
-                                c * 2
-
-                        hasFactionDiscount : Bool
-                        hasFactionDiscount =
-                            (List.member Spider typePerks && magic.name == Arachnescence)
-                                || (List.member Cyborg typePerks && magic.name == Gadgetry)
-                                || (List.member Cyborg typePerks && magic.name == Integration)
-                                || (case magic.faction of
-                                        Just magicFaction ->
-                                            Just ( magicFaction, True ) == faction
-
-                                        Nothing ->
-                                            False
-                                   )
-                    in
-                    if hasFactionDiscount then
-                        Maybe.map factionDiscount value
-
-                    else
-                        case magic.faction of
-                            Just magicFaction ->
-                                if Just ( magicFaction, False ) == faction then
-                                    value
+    Generated.Magic.all
+        |> Monad.mapAndSum
+            (\magicDetails ->
+                case
+                    model.magic
+                        |> List.Extra.findMap
+                            (\rankedMagic ->
+                                if magicDetails.name == rankedMagic.name then
+                                    basicMagicValue affinities class rankedMagic.rank magicDetails
+                                        |> Maybe.map
+                                            (\basicValue -> ( rankedMagic, basicValue ))
 
                                 else
-                                    Maybe.map doubleIfNegative value
+                                    Nothing
+                            )
+                of
+                    Nothing ->
+                        Monad.succeed 0
 
-                            Nothing ->
-                                value
-                )
-    of
-        Just value ->
-            succeed value
-                |> Monad.withInfo
-                    { label = Types.magicToString name ++ " " ++ String.fromInt rank
-                    , anchor = Just (Types.magicToString name)
-                    , value = Monad.Power value
-                    }
+                    Just ( rankedMagic, basicValue ) ->
+                        let
+                            doubleIfNegative : Int -> Int
+                            doubleIfNegative c =
+                                if c > 0 then
+                                    c
 
-        Nothing ->
-            Monad.error <| "Magic " ++ Types.magicToString name ++ " not found"
+                                else
+                                    c * 2
+
+                            hasFactionDiscount : Bool
+                            hasFactionDiscount =
+                                (List.member Spider typePerks && magicDetails.name == Arachnescence)
+                                    || (List.member Cyborg typePerks && magicDetails.name == Gadgetry)
+                                    || (List.member Cyborg typePerks && magicDetails.name == Integration)
+                                    || (case magicDetails.faction of
+                                            Just magicFaction ->
+                                                Just ( magicFaction, True ) == faction
+
+                                            Nothing ->
+                                                False
+                                       )
+
+                            finalValue : Int
+                            finalValue =
+                                if hasFactionDiscount then
+                                    factionDiscount basicValue
+
+                                else
+                                    case magicDetails.faction of
+                                        Just magicFaction ->
+                                            if Just ( magicFaction, False ) == faction then
+                                                basicValue
+
+                                            else
+                                                doubleIfNegative basicValue
+
+                                        Nothing ->
+                                            basicValue
+
+                            name : String
+                            name =
+                                Types.magicToString rankedMagic.name
+                        in
+                        finalValue
+                            |> succeed
+                            |> Monad.withInfo
+                                { label = name ++ " " ++ String.fromInt rankedMagic.rank
+                                , anchor = Just name
+                                , value = Monad.Power finalValue
+                                }
+            )
+        |> Monad.map powerToPoints
 
 
 factionDiscount : Int -> Int

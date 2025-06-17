@@ -1,4 +1,4 @@
-module Data.Costs.Monad exposing (Info, Monad, Value(..), andThen, combine, error, map, map2, map3, mapAndSum, succeed, withInfo, withPowerInfo, withWarning)
+module Data.Costs.Monad exposing (Info, Monad, Value(..), andThen, combine, combineMap, error, map, map2, map3, mapAndSum, succeed, withInfo, withPowerInfo, withWarning)
 
 import ResultME exposing (ResultME)
 
@@ -101,11 +101,16 @@ combine list =
         list
 
 
+combineMap : (a -> Monad b) -> List a -> Monad (List b)
+combineMap f list =
+    list
+        |> List.map f
+        |> combine
+
+
 mapAndSum : (item -> Monad Int) -> List item -> Monad Int
 mapAndSum toValue list =
-    list
-        |> List.map toValue
-        |> combine
+    combineMap toValue list
         |> map List.sum
 
 

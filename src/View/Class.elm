@@ -17,7 +17,6 @@ viewClass display class =
         classBoxes : List (Element (Maybe Class))
         classBoxes =
             Generated.Classes.all
-                |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> List.filterMap (classBox display class)
     in
     View.collapsible []
