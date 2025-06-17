@@ -2,10 +2,13 @@ module Generate.TypePerks exposing (TypePerksModule, file)
 
 import Elm
 import Elm.Annotation
+import Elm.Arg
 import Elm.Declare
 import Elm.Declare.Extra
 import Elm.Op
 import Gen.Data.TypePerk
+import Gen.List
+import Gen.Maybe
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
@@ -40,6 +43,13 @@ all dlcRaces =
             |> Elm.list
         )
         Gen.Data.TypePerk.all
+        |> Gen.List.call_.sortBy
+            (Elm.fn
+                (Elm.Arg.record identity
+                    |> Elm.Arg.field "dlc"
+                )
+                (\dlc -> Gen.Maybe.withDefault (Elm.string "") dlc)
+            )
         |> Elm.withType (Elm.Annotation.list Gen.Data.TypePerk.annotation_.details)
         |> Elm.Declare.value "all"
 

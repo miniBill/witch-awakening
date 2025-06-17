@@ -7,6 +7,8 @@ import Elm.Declare
 import Elm.Declare.Extra
 import Elm.Op
 import Gen.Data.Race
+import Gen.List
+import Gen.Maybe
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
@@ -35,10 +37,18 @@ all types dlcRaces =
         \races ->
             Elm.Op.append
                 (dlcRaces
+                    |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
                     |> List.map (\( _, race ) -> Elm.val (String.Extra.decapitalize race.name))
                     |> Elm.list
                 )
                 (Gen.Data.Race.call_.all races)
+                |> Gen.List.call_.sortBy
+                    (Elm.fn
+                        (Elm.Arg.record identity
+                            |> Elm.Arg.field "dlc"
+                        )
+                        (\dlc -> Gen.Maybe.withDefault (Elm.string "") dlc)
+                    )
                 |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
 
 
