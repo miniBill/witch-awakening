@@ -170,7 +170,7 @@ viewCalculations model power warnings affinities =
         resultRow =
             keyedRow
                 "Result"
-                model.showInfo
+                model.expandedMenuSections
                 (power
                     |> CostsMonad.map Costs.negate
                     |> Result.mapError (\_ -> List.Nonempty.singleton "There are errors in the computation")
@@ -221,17 +221,17 @@ viewCalculations model power warnings affinities =
           )
         , section [] "Build kind"
         , ( "Switch", capBuildSwitch model )
-        , keyedRow "Class" model.showInfo (Costs.classValue model) <| Just "True Form - Class"
+        , keyedRow "Class" model.expandedMenuSections (Costs.classValue model) <| Just "True Form - Class"
         , link "Race" <| Just "True Form - Race"
-        , keyedRow "Starting power" model.showInfo (Costs.startingValue model) <| Just "Game Mode"
-        , keyedRow "Complications" model.showInfo (Costs.complicationsValue model) Nothing
-        , keyedRow "Type perks" model.showInfo (Costs.typePerksValue model) Nothing
-        , keyedRow "Magic" model.showInfo (Costs.magicsValue model) <| Just "The Magic"
-        , keyedRow "Perks" model.showInfo (Costs.perksValue model) Nothing
-        , keyedRow "Faction" model.showInfo (Costs.factionValue model) <| Just "Factions"
-        , keyedRow "Companions" model.showInfo (Costs.companionsValue model) Nothing
+        , keyedRow "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
+        , keyedRow "Complications" model.expandedMenuSections (Costs.complicationsValue model) Nothing
+        , keyedRow "Type perks" model.expandedMenuSections (Costs.typePerksValue model) Nothing
+        , keyedRow "Magic" model.expandedMenuSections (Costs.magicsValue model) <| Just "The Magic"
+        , keyedRow "Perks" model.expandedMenuSections (Costs.perksValue model) Nothing
+        , keyedRow "Faction" model.expandedMenuSections (Costs.factionValue model) <| Just "Factions"
+        , keyedRow "Companions" model.expandedMenuSections (Costs.companionsValue model) Nothing
         , ( "RelicSlider", relicSlider model )
-        , keyedRow "Relics" model.showInfo (Costs.relicsValue model) Nothing
+        , keyedRow "Relics" model.expandedMenuSections (Costs.relicsValue model) Nothing
         , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
         , resultRow
         , if List.isEmpty warnings then
@@ -271,7 +271,7 @@ viewCalculations model power warnings affinities =
                     List.map Theme.viewAffinity affinities
           )
         , ( "Cap Slider", capSlider model )
-        , keyedRow "Power cap" model.showInfo (Costs.powerCap model) <| Just "Game Mode"
+        , keyedRow "Power cap" model.expandedMenuSections (Costs.powerCap model) <| Just "Game Mode"
         , button
             { onPress = CompactAll
             , label = "Compact all"
@@ -284,12 +284,12 @@ viewCalculations model power warnings affinities =
 
 
 keyedRow : String -> Set String -> CostsMonad.Monad Points -> Maybe String -> ( String, Element Msg )
-keyedRow label showInfo result target =
-    ( label, row label showInfo result target )
+keyedRow label expandedMenuSections result target =
+    ( label, row label expandedMenuSections result target )
 
 
 row : String -> Set String -> CostsMonad.Monad Points -> Maybe String -> Element Msg
-row label showInfo result target =
+row label expandedMenuSections result target =
     case result of
         Err es ->
             let
@@ -335,12 +335,12 @@ row label showInfo result target =
                       else
                         Input.button []
                             { label =
-                                if Set.member label showInfo then
+                                if Set.member label expandedMenuSections then
                                     text Theme.triangleDown
 
                                 else
                                     text Theme.triangleRight
-                            , onPress = ToggleInfo label |> Choice |> Just
+                            , onPress = ToggleMenuSectionExpansion label |> Choice |> Just
                             }
                     , linkLabel label target
                     , if List.isEmpty value.infos then
@@ -349,10 +349,10 @@ row label showInfo result target =
                       else
                         Input.button [ alignRight ]
                             { label = rightPoints value.value
-                            , onPress = ToggleInfo label |> Choice |> Just
+                            , onPress = ToggleMenuSectionExpansion label |> Choice |> Just
                             }
                     ]
-                , if Set.member label showInfo then
+                , if Set.member label expandedMenuSections then
                     Theme.doubleColumn
                         [ width fill ]
                         ( fill, shrink )
@@ -502,7 +502,7 @@ capSlider model =
         Just Types.StoryArc ->
             row
                 label
-                model.showInfo
+                model.expandedMenuSections
                 (Costs.complicationsRawValue model
                     |> CostsMonad.map Costs.powerToPoints
                 )

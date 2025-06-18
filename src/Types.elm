@@ -44,7 +44,7 @@ type Choice
     | TowardsCap Int
     | PowerToRewards Int
     | ChoiceCapBuild Bool
-    | ToggleInfo String
+    | ToggleMenuSectionExpansion String
 
 
 type alias CosmicPearlData =
@@ -82,7 +82,7 @@ type alias Model key =
     , relics : List RankedRelic
     , relicsDisplay : Display
     , cosmicPearl : CosmicPearlData
-    , showInfo : Set String
+    , expandedMenuSections : Set String
     }
 
 

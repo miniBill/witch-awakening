@@ -282,8 +282,8 @@ updateOnChoice choice model =
         PowerToRewards powerToRewards ->
             { model | powerToRewards = powerToRewards }
 
-        ToggleInfo label ->
-            { model | showInfo = Set.Extra.toggle label model.showInfo }
+        ToggleMenuSectionExpansion label ->
+            { model | expandedMenuSections = Set.Extra.toggle label model.expandedMenuSections }
 
 
 toUrl : Model key -> String
@@ -530,7 +530,7 @@ parseUrl navKey url =
                             Nothing
                 )
         }
-    , showInfo = Set.empty
+    , expandedMenuSections = Set.empty
     }
 
 
