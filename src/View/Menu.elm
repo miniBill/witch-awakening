@@ -16,6 +16,7 @@ import Set exposing (Set)
 import String.Extra
 import Theme
 import Types exposing (Choice(..), Model, Msg(..))
+import View.MagicPyramid
 
 
 viewMenu : Model key -> Element Msg
@@ -227,6 +228,13 @@ viewCalculations model power warnings affinities =
         , keyedRow "Complications" model.expandedMenuSections (Costs.complicationsValue model) Nothing
         , keyedRow "Type perks" model.expandedMenuSections (Costs.typePerksValue model) Nothing
         , keyedRow "Magic" model.expandedMenuSections (Costs.magicsValue model) <| Just "The Magic"
+        , ( "Magic pyramid"
+          , if Set.member "Magic" model.expandedMenuSections then
+                el [] (Element.html (View.MagicPyramid.view model.magic))
+
+            else
+                Element.none
+          )
         , keyedRow "Perks" model.expandedMenuSections (Costs.perksValue model) Nothing
         , keyedRow "Faction" model.expandedMenuSections (Costs.factionValue model) <| Just "Factions"
         , keyedRow "Companions" model.expandedMenuSections (Costs.companionsValue model) Nothing
