@@ -1,4 +1,4 @@
-module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, negate, perkCost, perksValue, powerCap, powerToPoints, relicsValue, startingValue, totalCost, totalRewards, typePerksValue, zero)
+module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, negate, perkValue, perksValue, powerCap, powerToPoints, relicsValue, startingValue, totalCost, totalRewards, typePerksValue, zero)
 
 import Data.Affinity as Affinity
 import Data.Companion as Companion
@@ -334,7 +334,7 @@ complicationValue model complication =
                             Monad.error <| "Need a tier for complication " ++ Types.complicationToString complication.name
             in
             raw
-                |> Monad.andThen
+                |> Monad.map
                     (\r ->
                         let
                             bonus : Int
@@ -344,16 +344,11 @@ complicationValue model complication =
 
                                 else
                                     0
-
-                            value : Int
-                            value =
-                                r + bonus
                         in
-                        succeed value
-                            |> Monad.withPowerInfo
-                                (Types.complicationToString details.name)
-                                value
+                        r + bonus
                     )
+                |> Monad.withPowerInfo
+                    (Types.complicationToString details.name)
 
 
 
@@ -581,12 +576,11 @@ perksValue :
     -> Monad Points
 perksValue model =
     model.perks
-        |> Monad.mapAndSum (perkCost model)
+        |> Monad.mapAndSum (perkValue model)
         |> Monad.map powerToPoints
-        |> Monad.map negate
 
 
-perkCost :
+perkValue :
     { a
         | class : Maybe Class
         , races : List Race
@@ -597,9 +591,9 @@ perkCost :
     }
     -> RankedPerk
     -> Monad Int
-perkCost ({ class } as model) { name, cost } =
+perkValue ({ class } as model) { name, cost } =
     find "Perk" .name name (Generated.Perk.all model.perks) Types.perkToString
-        |> Monad.andThen
+        |> Monad.map
             (\perk ->
                 let
                     affinities : List Affinity
@@ -633,10 +627,9 @@ perkCost ({ class } as model) { name, cost } =
                             |> applyClassBonusIf isClass
                             |> halveIfPositiveAnd isAffinity
                 in
-                finalCost
-                    |> succeed
-                    |> Monad.withPowerInfo (Types.perkToString name) -finalCost
+                -finalCost
             )
+        |> Monad.withPowerInfo (Types.perkToString name)
 
 
 
@@ -818,8 +811,7 @@ companionsValue model =
                     ]
     in
     model.companions
-        |> List.map getCompanion
-        |> Monad.combine
+        |> Monad.combineMap getCompanion
         |> Monad.andThen
             (\companions ->
                 Monad.map2

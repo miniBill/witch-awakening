@@ -121,9 +121,9 @@ testJack12 : String -> { a | class : Maybe Class, races : List Race, mainRace : 
 testJack12 label model expected =
     test label <|
         \_ ->
-            Data.Costs.perkCost model jack12
+            Data.Costs.perkValue model jack12
                 |> Result.map .value
-                |> Expect.equal (Ok -expected)
+                |> Expect.equal (Ok expected)
 
 
 magicCosts : Test

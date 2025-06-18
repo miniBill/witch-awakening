@@ -114,9 +114,15 @@ mapAndSum toValue list =
         |> map List.sum
 
 
-withPowerInfo : String -> Int -> Monad a -> Monad a
-withPowerInfo key value r =
-    withInfo { label = key, anchor = Just key, value = Power value } r
+withPowerInfo : String -> Monad Int -> Monad Int
+withPowerInfo key r =
+    Result.map
+        (\v ->
+            { v
+                | infos = { label = key, anchor = Just key, value = Power v.value } :: v.infos
+            }
+        )
+        r
 
 
 withInfo : Info -> Monad a -> Monad a
