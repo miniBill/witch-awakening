@@ -328,8 +328,21 @@ row label showInfo result target =
                     ]
             in
             Theme.column [ width fill ]
-                [ paragraph [ width fill ]
-                    [ linkLabel label target
+                [ Theme.row [ width fill ]
+                    [ if List.isEmpty value.infos then
+                        Element.none
+
+                      else
+                        Input.button []
+                            { label =
+                                if Set.member label showInfo then
+                                    text Theme.triangleDown
+
+                                else
+                                    text Theme.triangleRight
+                            , onPress = ToggleInfo label |> Choice |> Just
+                            }
+                    , linkLabel label target
                     , if List.isEmpty value.infos then
                         rightPoints value.value
 

@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, triangleDown, triangleLeft, triangleRight, viewAffinity, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -496,13 +496,13 @@ viewSectionTitle toMsg display label =
                             , label =
                                 case display of
                                     DisplayFull ->
-                                        gradient "▶"
+                                        gradient triangleRight
 
                                     DisplayCompact ->
-                                        gradient "▲"
+                                        gradient triangleUp
 
                                     DisplayCollapsed ->
-                                        gradient "▼"
+                                        gradient triangleDown
                             }
                 in
                 [ hr
@@ -517,6 +517,26 @@ viewSectionTitle toMsg display label =
                 , gradient label
                 , hr
                 ]
+
+
+triangleLeft : String
+triangleLeft =
+    "◀"
+
+
+triangleDown : String
+triangleDown =
+    "▼"
+
+
+triangleUp : String
+triangleUp =
+    "▲"
+
+
+triangleRight : String
+triangleRight =
+    "▶"
 
 
 id : String -> Attribute msg
