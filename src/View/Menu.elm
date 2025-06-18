@@ -228,13 +228,7 @@ viewCalculations model power warnings affinities =
         , keyedRow "Complications" model.expandedMenuSections (Costs.complicationsValue model) Nothing
         , keyedRow "Type perks" model.expandedMenuSections (Costs.typePerksValue model) Nothing
         , keyedRow "Magic" model.expandedMenuSections (Costs.magicsValue model) <| Just "The Magic"
-        , ( "Magic pyramid"
-          , if Set.member "Magic" model.expandedMenuSections then
-                el [] (Element.html (View.MagicPyramid.view model.magic))
-
-            else
-                Element.none
-          )
+        , magicPyramidRow model
         , keyedRow "Perks" model.expandedMenuSections (Costs.perksValue model) Nothing
         , keyedRow "Faction" model.expandedMenuSections (Costs.factionValue model) <| Just "Factions"
         , keyedRow "Companions" model.expandedMenuSections (Costs.companionsValue model) Nothing
@@ -291,6 +285,28 @@ viewCalculations model power warnings affinities =
         ]
 
 
+magicPyramidRow : Model key -> ( String, Element Msg )
+magicPyramidRow model =
+    let
+        label : String
+        label =
+            "Magic pyramid"
+    in
+    ( label
+    , Theme.column []
+        [ Theme.row []
+            [ chevronButton label model.expandedMenuSections
+            , text label
+            ]
+        , if Set.member label model.expandedMenuSections then
+            el [] (Element.html (View.MagicPyramid.view model.magic))
+
+          else
+            Element.none
+        ]
+    )
+
+
 keyedRow : String -> Set String -> CostsMonad.Monad Points -> Maybe String -> ( String, Element Msg )
 keyedRow label expandedMenuSections result target =
     ( label, row label expandedMenuSections result target )
@@ -341,15 +357,7 @@ row label expandedMenuSections result target =
                         Element.none
 
                       else
-                        Input.button []
-                            { label =
-                                if Set.member label expandedMenuSections then
-                                    text Theme.triangleDown
-
-                                else
-                                    text Theme.triangleRight
-                            , onPress = ToggleMenuSectionExpansion label |> Choice |> Just
-                            }
+                        chevronButton label expandedMenuSections
                     , linkLabel label target
                     , if List.isEmpty value.infos then
                         rightPoints value.value
@@ -369,6 +377,19 @@ row label expandedMenuSections result target =
                   else
                     Element.none
                 ]
+
+
+chevronButton : String -> Set String -> Element Msg
+chevronButton label expandedMenuSections =
+    Input.button []
+        { label =
+            if Set.member label expandedMenuSections then
+                text Theme.triangleDown
+
+            else
+                text Theme.triangleRight
+        , onPress = ToggleMenuSectionExpansion label |> Choice |> Just
+        }
 
 
 capBuildSwitch : Model key -> Element Msg
