@@ -296,7 +296,10 @@ magicPyramidRow model =
     , Theme.column []
         [ Theme.row []
             [ chevronButton label model.expandedMenuSections
-            , text label
+            , Input.button [ Font.bold ]
+                { label = text label
+                , onPress = ToggleMenuSectionExpansion label |> Choice |> Just
+                }
             ]
         , if Set.member label model.expandedMenuSections then
             el [] (Element.html (View.MagicPyramid.view model.magic))
