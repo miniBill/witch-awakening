@@ -11,23 +11,13 @@ import Html.Attributes
 import List.Extra
 import Svg exposing (Svg)
 import Svg.Attributes
-import Types exposing (RankedMagic)
+import Svg.Events
+import Types exposing (Msg(..), RankedMagic)
 
 
-view : List RankedMagic -> Svg msg
+view : List RankedMagic -> Svg Msg
 view magic =
     let
-        grouped =
-            magic
-                |> Dict.Extra.groupBy .rank
-
-        w : Int
-        w =
-            grouped
-                |> Dict.foldl
-                    (\_ r acc -> max acc (List.length r))
-                    1
-
         styleNode : Svg msg
         styleNode =
             Svg.node "style"
@@ -55,48 +45,44 @@ view magic =
                     , Svg.stop [ Svg.Attributes.offset "100%", Svg.Attributes.stopColor "#000f" ] []
                     ]
                 ]
+
+        ( lastY, nodes ) =
+            magic
+                |> Dict.Extra.groupBy .rank
+                |> Dict.toList
+                |> List.reverse
+                |> List.foldl viewMagicRank ( 0, [] )
     in
-    grouped
-        |> Dict.toList
-        |> List.map viewMagic
+    nodes
         |> (::) styleNode
         |> (::) defsNode
         |> Svg.svg
-            [ Svg.Attributes.viewBox ("0 0 " ++ String.fromInt (1 + (w + rowsPerRank - 1) // rowsPerRank) ++ " " ++ String.fromInt (5 * rowsPerRank))
+            [ Svg.Attributes.viewBox ("0 0 4 " ++ String.fromInt lastY)
             , Html.Attributes.style "width" "100%"
             , Svg.Attributes.fontSize "0.5"
             ]
 
 
-rowsPerRank : number
-rowsPerRank =
-    3
-
-
-viewMagic : ( Int, List RankedMagic ) -> Svg msg
-viewMagic ( rank, magics ) =
+viewMagicRank : ( Int, List RankedMagic ) -> ( Int, List (Svg Msg) ) -> ( Int, List (Svg Msg) )
+viewMagicRank ( rank, magics ) ( y, acc ) =
     let
-        y : Float
-        y =
-            rowsPerRank * (5 - toFloat rank)
-
         header : Svg msg
         header =
             [ Svg.path
                 [ Svg.Attributes.fill "black"
                 , Svg.Attributes.d
                     ("m1 "
-                        ++ String.fromFloat (y + rowsPerRank)
+                        ++ String.fromInt (y + height)
                         ++ "-1-"
-                        ++ String.fromFloat (rowsPerRank / 2)
+                        ++ String.fromFloat (toFloat height / 2)
                         ++ " 1-"
-                        ++ String.fromFloat (rowsPerRank / 2)
+                        ++ String.fromFloat (toFloat height / 2)
                     )
                 ]
                 []
             , Svg.text_
                 [ Svg.Attributes.x (String.fromFloat 0.6)
-                , Svg.Attributes.y (String.fromFloat (y + rowsPerRank / 2))
+                , Svg.Attributes.y (String.fromFloat (toFloat y + toFloat height / 2))
                 ]
                 [ Svg.text (String.fromInt rank)
                 , Svg.title []
@@ -105,86 +91,108 @@ viewMagic ( rank, magics ) =
                 ]
             ]
                 |> Svg.g [ Svg.Attributes.id ("Header-" ++ String.fromInt rank) ]
+
+        height : Int
+        height =
+            List.length groups
+
+        groups : List (List RankedMagic)
+        groups =
+            magics
+                |> List.Extra.greedyGroupsOf 3
+
+        rankView : Svg Msg
+        rankView =
+            groups
+                |> List.indexedMap
+                    (\i group ->
+                        let
+                            groupY : Float
+                            groupY =
+                                toFloat (y + i)
+                        in
+                        group
+                            |> List.indexedMap
+                                (\j magic ->
+                                    let
+                                        x : Float
+                                        x =
+                                            toFloat j + 1
+                                    in
+                                    viewMagic magic.name x groupY
+                                )
+                    )
+                |> List.concat
+                |> (::) header
+                |> Svg.g [ Svg.Attributes.id ("Rank " ++ String.fromInt rank) ]
     in
-    magics
-        |> List.Extra.greedyGroupsOf rowsPerRank
-        |> List.indexedMap
-            (\i group ->
-                let
-                    x : Float
-                    x =
-                        toFloat i + 1
-                in
-                group
-                    |> List.indexedMap
-                        (\j magic ->
-                            let
-                                magicY : Float
-                                magicY =
-                                    y + toFloat j
-                            in
-                            [ Svg.image
-                                [ Svg.Attributes.x (String.fromFloat x)
-                                , Svg.Attributes.y (String.fromFloat magicY)
-                                , Svg.Attributes.width "1"
-                                , Svg.Attributes.height "1"
-                                , Svg.Attributes.xlinkHref (Types.magicToImage magic.name).src
-                                , Svg.Attributes.preserveAspectRatio "xMidYMid slice"
-                                ]
-                                []
-                            , Svg.rect
-                                [ Svg.Attributes.x (String.fromFloat x)
-                                , Svg.Attributes.y (String.fromFloat magicY)
-                                , Svg.Attributes.width "1"
-                                , Svg.Attributes.height "1"
-                                , Svg.Attributes.fill "url(#black-gradient)"
-                                ]
-                                [ Svg.title []
-                                    [ Svg.text (Types.magicToString magic.name)
-                                    ]
-                                ]
-                            , Svg.circle
-                                [ Svg.Attributes.cx (String.fromFloat (x + 0.125))
-                                , Svg.Attributes.cy (String.fromFloat (magicY + 0.125))
-                                , Svg.Attributes.r "0.125"
-                                , Generated.Magic.all
-                                    |> List.Extra.find (\magicDetails -> magicDetails.name == magic.name)
-                                    |> Maybe.andThen (\{ class } -> Maybe.map Generated.Classes.classToColor class)
-                                    |> Maybe.withDefault 0x00FFFFFF
-                                    |> (\hex -> "#" ++ Hex.toString (darken hex))
-                                    |> Svg.Attributes.fill
-                                ]
-                                [ Svg.title []
-                                    [ Svg.text (Types.magicToString magic.name)
-                                    ]
-                                ]
-                            , Svg.text_
-                                [ Svg.Attributes.x (String.fromFloat (x + 0.5))
-                                , Svg.Attributes.y (String.fromFloat (magicY + 0.4))
-                                ]
-                                [ Svg.text (String.left 1 (Types.magicToString magic.name))
-                                , Svg.title []
-                                    [ Svg.text (Types.magicToString magic.name)
-                                    ]
-                                ]
-                            , Svg.text_
-                                [ Svg.Attributes.x (String.fromFloat (x + 0.5))
-                                , Svg.Attributes.y (String.fromFloat (magicY + 0.8))
-                                , Svg.Attributes.fontSize "0.2"
-                                , Svg.Attributes.letterSpacing "-0.007"
-                                ]
-                                [ Svg.text (Types.magicToString magic.name)
-                                , Svg.title []
-                                    [ Svg.text (Types.magicToString magic.name)
-                                    ]
-                                ]
-                            ]
-                                |> Svg.g [ Svg.Attributes.id (Types.magicToString magic.name) ]
-                        )
-            )
-        |> List.concat
-        |> (::) header
-        |> Svg.g [ Svg.Attributes.id ("Rank " ++ String.fromInt rank) ]
+    ( y + height
+    , rankView :: acc
+    )
+
+
+viewMagic : Types.Magic -> Float -> Float -> Svg Msg
+viewMagic name x y =
+    [ Svg.image
+        [ Svg.Attributes.x (String.fromFloat x)
+        , Svg.Attributes.y (String.fromFloat y)
+        , Svg.Attributes.width "1"
+        , Svg.Attributes.height "1"
+        , Svg.Attributes.xlinkHref (Types.magicToImage name).src
+        , Svg.Attributes.preserveAspectRatio "xMidYMid slice"
+        ]
+        []
+    , Svg.rect
+        [ Svg.Attributes.x (String.fromFloat x)
+        , Svg.Attributes.y (String.fromFloat y)
+        , Svg.Attributes.width "1"
+        , Svg.Attributes.height "1"
+        , Svg.Attributes.fill "url(#black-gradient)"
+        ]
+        [ Svg.title []
+            [ Svg.text (Types.magicToString name)
+            ]
+        ]
+    , Svg.circle
+        [ Svg.Attributes.cx (String.fromFloat (x + 0.125))
+        , Svg.Attributes.cy (String.fromFloat (y + 0.125))
+        , Svg.Attributes.r "0.125"
+        , Generated.Magic.all
+            |> List.Extra.find (\magicDetails -> magicDetails.name == name)
+            |> Maybe.andThen (\{ class } -> Maybe.map Generated.Classes.classToColor class)
+            |> Maybe.withDefault 0x00FFFFFF
+            |> (\hex -> "#" ++ Hex.toString (darken hex))
+            |> Svg.Attributes.fill
+        ]
+        [ Svg.title []
+            [ Svg.text (Types.magicToString name)
+            ]
+        ]
+    , Svg.text_
+        [ Svg.Attributes.x (String.fromFloat (x + 0.5))
+        , Svg.Attributes.y (String.fromFloat (y + 0.4))
+        ]
+        [ Svg.text (String.left 1 (Types.magicToString name))
+        , Svg.title []
+            [ Svg.text (Types.magicToString name)
+            ]
+        ]
+    , Svg.text_
+        [ Svg.Attributes.x (String.fromFloat (x + 0.5))
+        , Svg.Attributes.y (String.fromFloat (y + 0.8))
+        , Svg.Attributes.fontSize "0.2"
+        , Svg.Attributes.letterSpacing "-0.007"
+        ]
+        [ Svg.text (Types.magicToString name)
+        , Svg.title []
+            [ Svg.text (Types.magicToString name)
+            ]
+        ]
+    ]
+        |> Svg.g
+            [ Svg.Attributes.id (Types.magicToString name)
+            , Svg.Events.onClick (ScrollTo (Types.magicToString name))
+            ]
 
 
 darken : Int -> Int
