@@ -1,4 +1,4 @@
-module Data.Costs.Relics exposing (relicCost, value)
+module Data.Costs.Relics exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points, zero)
