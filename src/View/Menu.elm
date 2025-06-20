@@ -1,8 +1,9 @@
 module View.Menu exposing (viewMenu)
 
 import Data.Affinity as Affinity
-import Data.Costs as Costs exposing (Points)
+import Data.Costs as Costs
 import Data.Costs.Monad as CostsMonad
+import Data.Costs.Utils as Costs exposing (Points)
 import Dict exposing (Dict)
 import Dict.Extra
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
@@ -15,7 +16,6 @@ import Generated.Types as Types exposing (Affinity)
 import List.Extra
 import List.Nonempty
 import Set exposing (Set)
-import String.Extra
 import Theme
 import Types exposing (Choice(..), Model, Msg(..))
 import View.MagicPyramid

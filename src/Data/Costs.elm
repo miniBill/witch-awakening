@@ -1,9 +1,10 @@
-module Data.Costs exposing (Points, classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, negate, perkValue, perksValue, powerCap, powerToPoints, relicsValue, startingValue, totalCost, totalRewards, typePerksValue, zero)
+module Data.Costs exposing (classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, perkValue, perksValue, powerCap, relicsValue, startingValue, totalCost, totalRewards, typePerksValue)
 
 import Data.Affinity as Affinity
 import Data.Companion as Companion
 import Data.Complication as Complication
 import Data.Costs.Monad as Monad exposing (Monad, succeed)
+import Data.Costs.Utils as Utils exposing (Points, zero)
 import Data.Magic as Magic
 import Generated.Companion
 import Generated.Complication
@@ -14,19 +15,6 @@ import Generated.TypePerk
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..), companionToString)
 import List.Extra
 import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
-
-
-type alias Points =
-    { power : Int
-    , rewardPoints : Int
-    }
-
-
-zero : Points
-zero =
-    { power = 0
-    , rewardPoints = 0
-    }
 
 
 slotUnsupported : Monad value
@@ -96,10 +84,10 @@ totalCost model =
     , conversion model
 
     -- Just grab info and warnings
-    , Monad.map zeroOut (powerCap model)
+    , Monad.map Utils.zeroOut (powerCap model)
     ]
-        |> combineAndSum
-        |> Monad.map negate
+        |> Utils.combineAndSum
+        |> Monad.map Utils.negate
         |> Monad.andThen
             (\result ->
                 let
@@ -154,7 +142,7 @@ totalRewards model =
     [ classValue model
     , conversion model
     ]
-        |> combineAndSum
+        |> Utils.combineAndSum
 
 
 
@@ -189,17 +177,17 @@ powerCap model =
         Nothing ->
             model.towardsCap
                 |> capWithWarning 30 normalCapWarning
-                |> Monad.map (sum { zero | power = 100 })
+                |> Monad.map (Utils.sum { zero | power = 100 })
 
         Just StoryArc ->
             complicationsRawValue model
                 |> Monad.andThen (capWithWarning 60 storyArcWarning)
-                |> Monad.map (sum { zero | power = 150 })
+                |> Monad.map (Utils.sum { zero | power = 150 })
 
         Just EarlyBird ->
             complicationsRawValue model
                 |> Monad.andThen (capWithWarning 30 earlyBirdWarning)
-                |> Monad.map (sum { zero | power = 75 })
+                |> Monad.map (Utils.sum { zero | power = 75 })
 
         Just SkillTree ->
             slotUnsupported
@@ -250,7 +238,7 @@ startingValue model =
                     else
                         withGameModeInfo "Normal game mode" 30
     in
-    Monad.map powerToPoints power
+    Monad.map Utils.powerToPoints power
 
 
 
@@ -359,7 +347,7 @@ typePerksValue : Model key -> Monad Points
 typePerksValue model =
     model.typePerks
         |> Monad.mapAndSum typePerkValue
-        |> Monad.map powerToPoints
+        |> Monad.map Utils.powerToPoints
 
 
 typePerkValue : Race -> Monad Int
@@ -455,7 +443,7 @@ magicsValue model =
                             , value = Monad.Power value
                             }
             )
-        |> Monad.map powerToPoints
+        |> Monad.map Utils.powerToPoints
 
 
 magicValue :
@@ -630,7 +618,7 @@ perksValue :
 perksValue model =
     model.perks
         |> Monad.mapAndSum (perkValue model)
-        |> Monad.map powerToPoints
+        |> Monad.map Utils.powerToPoints
 
 
 perkValue :
@@ -677,8 +665,8 @@ perkValue ({ class } as model) { name, cost } =
                     finalCost : Int
                     finalCost =
                         (cost + changelingDiff)
-                            |> applyClassBonusIf isClass
-                            |> halveIfPositiveAnd isAffinity
+                            |> Utils.applyClassBonusIf isClass
+                            |> Utils.halveIfPositiveAnd isAffinity
                 in
                 -finalCost
             )
@@ -721,7 +709,7 @@ companionsValue model =
                             Nothing ->
                                 Monad.error <| "Companion " ++ Types.companionToString name ++ " does not have a fixed cost"
                     )
-                |> Monad.map powerToPoints
+                |> Monad.map Utils.powerToPoints
 
         forFree : List ( Maybe Faction, Companion.Details ) -> Monad Points
         forFree companions =
@@ -868,8 +856,8 @@ companionsValue model =
         |> Monad.andThen
             (\companions ->
                 Monad.map2
-                    sum
-                    (Monad.map negate (totalCompanionCost companions))
+                    Utils.sum
+                    (Monad.map Utils.negate (totalCompanionCost companions))
                     (forFree companions)
             )
 
@@ -973,59 +961,3 @@ conversion model =
         , rewardPoints = model.powerToRewards
     }
         |> succeed
-
-
-
--- Utils --
-
-
-negate : Points -> Points
-negate p =
-    { p | power = -p.power, rewardPoints = -p.rewardPoints }
-
-
-sum : Points -> Points -> Points
-sum l r =
-    { power = l.power + r.power
-    , rewardPoints = l.rewardPoints + r.rewardPoints
-    }
-
-
-sumPoints : List Points -> Points
-sumPoints =
-    List.foldl sum zero
-
-
-combineAndSum : List (Monad Points) -> Monad Points
-combineAndSum list =
-    list
-        |> Monad.combine
-        |> Monad.map sumPoints
-
-
-powerToPoints : Int -> Points
-powerToPoints value =
-    { zero | power = value }
-
-
-zeroOut : Points -> Points
-zeroOut points =
-    { points | power = 0, rewardPoints = 0 }
-
-
-applyClassBonusIf : Bool -> Int -> Int
-applyClassBonusIf isClass cost =
-    if isClass then
-        cost - 2
-
-    else
-        cost
-
-
-halveIfPositiveAnd : Bool -> Int -> Int
-halveIfPositiveAnd condition cost =
-    if condition && cost > 0 then
-        (cost + 1) // 2
-
-    else
-        cost
