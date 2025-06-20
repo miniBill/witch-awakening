@@ -2,12 +2,15 @@ module View.Menu exposing (viewMenu)
 
 import Data.Affinity as Affinity
 import Data.Costs as Costs
+import Data.Costs.Class
 import Data.Costs.Companions
 import Data.Costs.Complications
+import Data.Costs.Factions
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
 import Data.Costs.Perks
 import Data.Costs.Relics
+import Data.Costs.TypePerks
 import Data.Costs.Utils as Costs exposing (Points)
 import Dict exposing (Dict)
 import Dict.Extra
@@ -282,15 +285,15 @@ viewCalculations model power warnings affinities =
           )
         , section [] "Build kind"
         , ( "Switch", capBuildSwitch model )
-        , keyedRow "Class" model.expandedMenuSections (Costs.classValue model) <| Just "True Form - Class"
+        , keyedRow "Class" model.expandedMenuSections (Data.Costs.Class.value model) <| Just "True Form - Class"
         , link "Race" <| Just "True Form - Race"
         , keyedRow "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
         , keyedRow "Complications" model.expandedMenuSections (Data.Costs.Complications.value model) Nothing
-        , keyedRow "Type perks" model.expandedMenuSections (Costs.typePerksValue model) Nothing
+        , keyedRow "Type perks" model.expandedMenuSections (Data.Costs.TypePerks.value model) Nothing
         , keyedRow "Magic" model.expandedMenuSections (Data.Costs.Magic.value { ignoreSorceressBonus = False } model) <| Just "The Magic"
         , magicPyramidRow model
         , keyedRow "Perks" model.expandedMenuSections (Data.Costs.Perks.value model) Nothing
-        , keyedRow "Faction" model.expandedMenuSections (Costs.factionValue model) <| Just "Factions"
+        , keyedRow "Faction" model.expandedMenuSections (Data.Costs.Factions.value model) <| Just "Factions"
         , keyedRow "Companions" model.expandedMenuSections (Data.Costs.Companions.value model) Nothing
         , ( "RelicSlider", relicSlider model )
         , keyedRow "Relics" model.expandedMenuSections (Data.Costs.Relics.value model) Nothing
@@ -648,7 +651,7 @@ relicSlider model =
                         ]
                     ]
         , min =
-            Costs.classValue model
+            Data.Costs.Class.value model
                 |> Result.map (\{ value } -> value.rewardPoints)
                 |> Result.withDefault 0
                 |> toFloat

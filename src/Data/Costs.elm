@@ -1,14 +1,16 @@
-module Data.Costs exposing (classValue, factionValue, startingValue, totalCost, totalRewards, typePerksValue)
+module Data.Costs exposing (startingValue, totalCost, totalRewards)
 
+import Data.Costs.Class
 import Data.Costs.Companions
 import Data.Costs.Complications
+import Data.Costs.Factions
 import Data.Costs.Magic
 import Data.Costs.Monad as Monad exposing (Monad, succeed)
 import Data.Costs.Perks
 import Data.Costs.Relics
+import Data.Costs.TypePerks
 import Data.Costs.Utils as Utils exposing (Points, zero)
-import Generated.TypePerk
-import Generated.Types as Types exposing (Class(..), GameMode(..), Race(..))
+import Generated.Types exposing (GameMode(..), Race(..))
 import Types exposing (Model)
 
 
@@ -18,13 +20,13 @@ import Types exposing (Model)
 
 totalCost : Model key -> Monad Points
 totalCost model =
-    [ classValue model
+    [ Data.Costs.Class.value model
     , startingValue model
     , Data.Costs.Complications.value model
-    , typePerksValue model
+    , Data.Costs.TypePerks.value model
     , Data.Costs.Magic.value { ignoreSorceressBonus = False } model
     , Data.Costs.Perks.value model
-    , factionValue model
+    , Data.Costs.Factions.value model
     , Data.Costs.Companions.value model
     , Data.Costs.Relics.value model
     , conversion model
@@ -85,32 +87,10 @@ totalCost model =
 
 totalRewards : Model key -> Monad Points
 totalRewards model =
-    [ classValue model
+    [ Data.Costs.Class.value model
     , conversion model
     ]
         |> Utils.combineAndSum
-
-
-
--- Class --
-
-
-classValue : Model key -> Monad Points
-classValue model =
-    case model.class of
-        Just class ->
-            case class of
-                Warlock ->
-                    succeed { zero | rewardPoints = 20 }
-
-                Academic ->
-                    succeed zero
-
-                Sorceress ->
-                    succeed zero
-
-        Nothing ->
-            Monad.error "You need to select a class"
 
 
 
@@ -119,6 +99,12 @@ classValue model =
 
 startingValue : Model key -> Monad Points
 startingValue model =
+    startingPower model
+        |> Monad.map Utils.powerToPoints
+
+
+startingPower : Model key -> Monad Int
+startingPower model =
     let
         withGameModeInfo : String -> Int -> Monad Int
         withGameModeInfo label v =
@@ -128,81 +114,30 @@ startingValue model =
                     , anchor = Just "Game mode"
                     , value = Monad.Power v
                     }
-
-        power : Monad Int
-        power =
-            case model.gameMode of
-                Just StoryArc ->
-                    if model.capBuild then
-                        withGameModeInfo "Story Arc (cap)" 150
-
-                    else
-                        withGameModeInfo "Story Arc" 10
-
-                Just EarlyBird ->
-                    withGameModeInfo "Early Bird" 75
-
-                Just SkillTree ->
-                    Utils.slotUnsupported
-
-                Just Constellation ->
-                    Utils.slotUnsupported
-
-                Nothing ->
-                    if model.capBuild then
-                        withGameModeInfo "Normal game mode (cap)" 100
-
-                    else
-                        withGameModeInfo "Normal game mode" 30
     in
-    Monad.map Utils.powerToPoints power
+    case model.gameMode of
+        Just StoryArc ->
+            if model.capBuild then
+                withGameModeInfo "Story Arc (cap)" 150
 
+            else
+                withGameModeInfo "Story Arc" 10
 
+        Just EarlyBird ->
+            withGameModeInfo "Early Bird" 75
 
--- Type perks --
+        Just SkillTree ->
+            Utils.slotUnsupported
 
+        Just Constellation ->
+            Utils.slotUnsupported
 
-typePerksValue : Model key -> Monad Points
-typePerksValue model =
-    model.typePerks
-        |> Monad.mapAndSum typePerkValue
-        |> Monad.map Utils.powerToPoints
-
-
-typePerkValue : Race -> Monad Int
-typePerkValue race =
-    Utils.find "Type perk" .race race Generated.TypePerk.all Types.raceToString
-        |> Monad.andThen
-            (\{ cost } ->
-                let
-                    value : Int
-                    value =
-                        -cost
-                in
-                Monad.succeed value
-                    |> Monad.withInfo
-                        { label = Types.raceToString race
-                        , anchor = Just ("perk-" ++ Types.raceToString race)
-                        , value = Monad.Power value
-                        }
-            )
-
-
-
--- Faction --
-
-
-factionValue : Model key -> Monad Points
-factionValue model =
-    case model.faction of
         Nothing ->
-            succeed { zero | power = 4 }
+            if model.capBuild then
+                withGameModeInfo "Normal game mode (cap)" 100
 
-        Just ( _, False ) ->
-            succeed { zero | power = 2 }
-
-        Just ( _, True ) ->
-            succeed zero
+            else
+                withGameModeInfo "Normal game mode" 30
 
 
 conversion : Model key -> Monad Points
