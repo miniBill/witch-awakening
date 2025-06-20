@@ -1,7 +1,9 @@
 module CostTest exposing (magicCosts, perkCosts)
 
 import Data.Costs
+import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
+import Data.Costs.Utils
 import Expect
 import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
 import Test exposing (Test, describe, test)
@@ -54,7 +56,7 @@ sorceressSpider =
     sorceress Spider
 
 
-expectPower : Int -> CostsMonad.Monad Data.Costs.Points -> Expect.Expectation
+expectPower : Int -> CostsMonad.Monad Data.Costs.Utils.Points -> Expect.Expectation
 expectPower power value =
     Expect.equal
         ({ power = power
@@ -170,7 +172,8 @@ testRanks model label magic one two three four five =
             (\rank expected ->
                 test ("Rank " ++ String.fromInt (rank + 1)) <|
                     \_ ->
-                        Data.Costs.magicsValue
+                        Data.Costs.Magic.value
+                            { ignoreSorceressBonus = True }
                             { model
                                 | magic =
                                     [ { name = magic

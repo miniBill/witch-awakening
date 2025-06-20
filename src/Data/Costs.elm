@@ -74,7 +74,7 @@ totalCost model =
     , startingValue model
     , complicationsValue model
     , typePerksValue model
-    , Data.Costs.Magic.value model
+    , Data.Costs.Magic.value { ignoreSorceressBonus = False } model
     , perksValue model
     , factionValue model
     , Data.Costs.Companions.value model

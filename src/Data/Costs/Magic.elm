@@ -11,17 +11,19 @@ import Types exposing (CosmicPearlData, RankedMagic)
 
 
 value :
-    { a
-        | cosmicPearl : CosmicPearlData
-        , mainRace : Maybe Race
-        , races : List Race
-        , faction : Maybe ( Faction, Bool )
-        , class : Maybe Class
-        , typePerks : List Race
-        , magic : List RankedMagic
-    }
+    { ignoreSorceressBonus : Bool }
+    ->
+        { a
+            | cosmicPearl : CosmicPearlData
+            , mainRace : Maybe Race
+            , races : List Race
+            , faction : Maybe ( Faction, Bool )
+            , class : Maybe Class
+            , typePerks : List Race
+            , magic : List RankedMagic
+        }
     -> Monad Points
-value model =
+value { ignoreSorceressBonus } model =
     let
         affinities : List Affinity
         affinities =
@@ -41,7 +43,7 @@ value model =
 
         free : Maybe String
         free =
-            if model.class == Just Sorceress then
+            if model.class == Just Sorceress && not ignoreSorceressBonus then
                 pointsList
                     |> List.filter .isElementalism
                     |> List.Extra.minimumBy .points
