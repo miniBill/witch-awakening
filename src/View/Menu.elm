@@ -49,20 +49,11 @@ viewMenu model =
             else
                 list
 
-        warnMaybe : Maybe a -> List a -> List a
-        warnMaybe msg list =
-            case msg of
-                Nothing ->
-                    list
-
-                Just m ->
-                    m :: list
-
         warnings : List String
         warnings =
             rawWarnings
                 |> warnIf (List.isEmpty affinities) "No main race selected."
-                |> warnMaybe (badPyramid model.magic)
+                |> (++) (badPyramid model.magic)
     in
     Theme.column
         [ alignTop
@@ -110,7 +101,7 @@ viewMenu model =
         ]
 
 
-badPyramid : List Types.RankedMagic -> Maybe String
+badPyramid : List Types.RankedMagic -> List String
 badPyramid magics =
     let
         grouped : Dict Int Int
@@ -143,7 +134,7 @@ badPyramid magics =
                 Nothing
     in
     List.range 2 5
-        |> List.Extra.findMap bad
+        |> List.filterMap bad
 
 
 menuLabel : Model key -> CostsMonad.Monad Points -> List String -> String
