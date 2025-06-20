@@ -39,13 +39,18 @@ viewMenu model =
             Affinity.fromModel model
                 |> List.Extra.remove Types.All
 
-        warnings : List String
-        warnings =
-            if List.isEmpty affinities then
-                "No main race selected" :: rawWarnings
+        warnIf : Bool -> a -> List a -> List a
+        warnIf b msg list =
+            if b then
+                msg :: list
 
             else
-                rawWarnings
+                list
+
+        warnings : List String
+        warnings =
+            rawWarnings
+                |> warnIf (List.isEmpty affinities) "No main race selected"
     in
     Theme.column
         [ alignTop
