@@ -2,6 +2,7 @@ module View.Menu exposing (viewMenu)
 
 import Data.Affinity as Affinity
 import Data.Costs as Costs
+import Data.Costs.Companions
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
 import Data.Costs.Relics
@@ -288,7 +289,7 @@ viewCalculations model power warnings affinities =
         , magicPyramidRow model
         , keyedRow "Perks" model.expandedMenuSections (Costs.perksValue model) Nothing
         , keyedRow "Faction" model.expandedMenuSections (Costs.factionValue model) <| Just "Factions"
-        , keyedRow "Companions" model.expandedMenuSections (Costs.companionsValue model) Nothing
+        , keyedRow "Companions" model.expandedMenuSections (Data.Costs.Companions.value model) Nothing
         , ( "RelicSlider", relicSlider model )
         , keyedRow "Relics" model.expandedMenuSections (Data.Costs.Relics.value model) Nothing
         , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
