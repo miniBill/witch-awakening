@@ -33,4 +33,4 @@ __Start with [30] power__. Player warlocks eventually cap out at [100] _power_ b
 
 *Advantage*: Darker and external magics, Relic usage. Warlocks favor indirect power like Hexes and Curses. They have a personalized brand they can mark on any relic they own or willing creature. They always know the location of one of their marks and when anyone else touches it, and a stronger sensation like an alarm if any harm comes to it. Branded creatures can be affected by the warlock’s magic at any distance and the mark can be the target of things such as scrying even if the warlock doesn’t know where it is.
 
-Warlocks can immediately start with 20 Reward Points to purchase relics that are infused in their own soul, summoned the same way as Mothergifts. (See Witchery)
+Warlocks can immediately start with {20} Reward Points to purchase relics that are infused in their own soul, summoned the same way as Mothergifts. (See Witchery)
