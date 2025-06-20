@@ -1,6 +1,7 @@
 module MarkMini exposing (Block(..), Color(..), Piece(..), blockParser)
 
 import Generated.Types as Types exposing (Affinity, Class(..), Slot(..))
+import List.Extra
 import Parser exposing ((|.), (|=), Parser)
 import Result.Extra
 import Set exposing (Set)
@@ -212,49 +213,60 @@ slotParser =
 
 parseSquareBrackets : String -> Piece
 parseSquareBrackets str =
-    case String.toInt str of
-        Just _ ->
-            Power str
+    case
+        firstThatBuildsJust
+            [ \input ->
+                String.toInt input
+                    |> Maybe.map (\_ -> Power input)
+            , \input ->
+                Types.affinityFromString input
+                    |> Maybe.map Affinity
+            , \input ->
+                Types.classFromString input
+                    |> Maybe.map Class
+            , \input ->
+                if String.startsWith "http" input then
+                    Just (Link input)
+
+                else
+                    Nothing
+            ]
+            str
+    of
+        Just piece ->
+            piece
 
         Nothing ->
-            case Types.affinityFromString str of
-                Just affinity ->
-                    Affinity affinity
+            case ( str, String.toLower str ) of
+                ( "K", _ ) ->
+                    Kisses ""
 
-                Nothing ->
-                    case Types.classFromString str of
-                        Just class ->
-                            Class class
+                ( "W", _ ) ->
+                    Warning
 
-                        Nothing ->
-                            case ( str, String.toLower str ) of
-                                ( "K", _ ) ->
-                                    Kisses ""
+                ( "E", _ ) ->
+                    Error
 
-                                ( "W", _ ) ->
-                                    Warning
+                ( "-", _ ) ->
+                    Power str
 
-                                ( "E", _ ) ->
-                                    Error
+                ( "All", _ ) ->
+                    Affinity Types.All
 
-                                ( "-", _ ) ->
-                                    Power str
+                ( _, "star" ) ->
+                    Star
 
-                                ( "All", _ ) ->
-                                    Affinity Types.All
+                _ ->
+                    if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
+                        Power str
 
-                                ( _, "star" ) ->
-                                    Star
+                    else
+                        Text ("[" ++ str ++ "]")
 
-                                _ ->
-                                    if String.startsWith "http" str then
-                                        Link str
 
-                                    else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
-                                        Power str
-
-                                    else
-                                        Text ("[" ++ str ++ "]")
+firstThatBuildsJust : List (a -> Maybe b) -> a -> Maybe b
+firstThatBuildsJust list str =
+    List.Extra.findMap (\f -> f str) list
 
 
 innerParser : Char -> Parser (List Piece)
