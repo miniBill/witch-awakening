@@ -6,7 +6,6 @@
 - Two free schools for Academic
 - Check all faction perks implementations
 
-- Check non-Sorcs only select one off-affinity elementalism
 - Genie double discount for All
 
 - Doll type perk multicost: 1-4

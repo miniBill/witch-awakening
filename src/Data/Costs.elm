@@ -1,20 +1,19 @@
-module Data.Costs exposing (classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, magicsValue, perkValue, perksValue, powerCap, relicsValue, startingValue, totalCost, totalRewards, typePerksValue)
+module Data.Costs exposing (classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, perkValue, perksValue, powerCap, relicsValue, startingValue, totalCost, totalRewards, typePerksValue)
 
 import Data.Affinity as Affinity
 import Data.Companion as Companion
 import Data.Complication as Complication
+import Data.Costs.Magic
 import Data.Costs.Monad as Monad exposing (Monad, succeed)
 import Data.Costs.Utils as Utils exposing (Points, zero)
-import Data.Magic as Magic
 import Generated.Companion
 import Generated.Complication
-import Generated.Magic
 import Generated.Perk
 import Generated.Relic
 import Generated.TypePerk
-import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Magic(..), Perk(..), Race(..), Relic(..), companionToString)
+import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Perk(..), Race(..), Relic(..), companionToString)
 import List.Extra
-import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedMagic, RankedPerk, RankedRelic)
+import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedPerk, RankedRelic)
 
 
 slotUnsupported : Monad value
@@ -76,7 +75,7 @@ totalCost model =
     , startingValue model
     , complicationsValue model
     , typePerksValue model
-    , magicsValue model
+    , Data.Costs.Magic.value model
     , perksValue model
     , factionValue model
     , companionsValue model
@@ -380,228 +379,6 @@ find label toKey value list toString =
 
 
 
--- Magics --
-
-
-magicsValue :
-    { a
-        | cosmicPearl : CosmicPearlData
-        , mainRace : Maybe Race
-        , races : List Race
-        , faction : Maybe ( Faction, Bool )
-        , class : Maybe Class
-        , typePerks : List Race
-        , magic : List RankedMagic
-    }
-    -> Monad Points
-magicsValue model =
-    let
-        affinities : List Affinity
-        affinities =
-            Affinity.fromModel model
-
-        points :
-            List
-                { name : String
-                , rank : Int
-                , value : Int
-                , isElementalism : Bool
-                }
-        points =
-            Generated.Magic.all
-                |> List.filterMap (magicValue model affinities)
-
-        free : Maybe String
-        free =
-            if model.class == Just Sorceress then
-                points
-                    |> List.filter .isElementalism
-                    |> List.Extra.minimumBy .value
-                    |> Maybe.map .name
-
-            else
-                Nothing
-    in
-    points
-        |> Monad.mapAndSum
-            (\{ name, rank, value } ->
-                if Just name == free then
-                    0
-                        |> succeed
-                        |> Monad.withInfo
-                            { label = name ++ " " ++ String.fromInt rank
-                            , anchor = Just name
-                            , value = Monad.FreeBecause "[Sorceress]"
-                            }
-
-                else
-                    value
-                        |> succeed
-                        |> Monad.withInfo
-                            { label = name ++ " " ++ String.fromInt rank
-                            , anchor = Just name
-                            , value = Monad.Power value
-                            }
-            )
-        |> Monad.map Utils.powerToPoints
-
-
-magicValue :
-    { a
-        | faction : Maybe ( Faction, Bool )
-        , class : Maybe Class
-        , typePerks : List Race
-        , magic : List RankedMagic
-    }
-    -> List Affinity
-    -> Magic.Details
-    ->
-        Maybe
-            { name : String
-            , rank : Int
-            , value : Int
-            , isElementalism : Bool
-            }
-magicValue ({ faction, class, typePerks } as model) affinities magicDetails =
-    model.magic
-        |> List.Extra.findMap
-            (\rankedMagic ->
-                if magicDetails.name == rankedMagic.name then
-                    basicMagicValue affinities class rankedMagic.rank magicDetails
-                        |> Maybe.map
-                            (\basicValue -> ( rankedMagic, basicValue ))
-
-                else
-                    Nothing
-            )
-        |> Maybe.map
-            (\( rankedMagic, basicValue ) ->
-                let
-                    doubleIfNegative : Int -> Int
-                    doubleIfNegative c =
-                        if c > 0 then
-                            c
-
-                        else
-                            c * 2
-
-                    hasFactionDiscount : Bool
-                    hasFactionDiscount =
-                        (List.member Spider typePerks && magicDetails.name == Arachnescence)
-                            || (List.member Cyborg typePerks && magicDetails.name == Gadgetry)
-                            || (List.member Cyborg typePerks && magicDetails.name == Integration)
-                            || (case magicDetails.faction of
-                                    Just magicFaction ->
-                                        Just ( magicFaction, True ) == faction
-
-                                    Nothing ->
-                                        False
-                               )
-
-                    finalValue : Int
-                    finalValue =
-                        if hasFactionDiscount then
-                            factionDiscount basicValue
-
-                        else
-                            case magicDetails.faction of
-                                Just magicFaction ->
-                                    if Just ( magicFaction, False ) == faction then
-                                        basicValue
-
-                                    else
-                                        doubleIfNegative basicValue
-
-                                Nothing ->
-                                    basicValue
-
-                    name : String
-                    name =
-                        Types.magicToString rankedMagic.name
-                in
-                { name = name
-                , rank = rankedMagic.rank
-                , value = finalValue
-                , isElementalism = magicDetails.isElementalism
-                }
-            )
-
-
-factionDiscount : Int -> Int
-factionDiscount c =
-    if c > 0 then
-        c * 2
-
-    else
-        (c - 1) // 2
-
-
-basicMagicValue :
-    List Affinity
-    -> Maybe Class
-    -> Int
-    -> { d | class : Maybe Class, affinities : Magic.Affinities }
-    -> Maybe Int
-basicMagicValue affinities class rank magic =
-    let
-        isClass : Bool
-        isClass =
-            (magic.class == class)
-                && (class /= Nothing)
-
-        isAffinity : Bool
-        isAffinity =
-            case magic.affinities of
-                Magic.Regular regular ->
-                    List.any
-                        (\affinity -> List.member affinity affinities)
-                        regular
-
-                Magic.Alternative alternatives ->
-                    alternatives
-                        |> List.any
-                            (\alternative ->
-                                List.all
-                                    (\affinity -> List.member affinity affinities)
-                                    alternative
-                            )
-
-        cases : Int -> Int -> Int -> Int -> Int
-        cases basicValue inAffinityValue inClassValue inBothValue =
-            if isClass then
-                if isAffinity then
-                    inBothValue
-
-                else
-                    inClassValue
-
-            else if isAffinity then
-                inAffinityValue
-
-            else
-                basicValue
-    in
-    case rank of
-        1 ->
-            Just <| cases -1 -1 1 1
-
-        2 ->
-            Just <| cases -3 -2 -1 0
-
-        3 ->
-            Just <| cases -6 -4 -4 -2
-
-        4 ->
-            Just <| cases -10 -6 -8 -4
-
-        5 ->
-            Just <| cases -15 -9 -13 -7
-
-        _ ->
-            Nothing
-
-
-
 -- Perks --
 
 
@@ -645,8 +422,8 @@ perkValue ({ class } as model) { name, cost } =
                     isClass =
                         Just perk.class == class
 
-                    isAffinity : Bool
-                    isAffinity =
+                    isInAffinity : Bool
+                    isInAffinity =
                         List.member perk.affinity affinities
 
                     changelingDiff : Int
@@ -666,7 +443,7 @@ perkValue ({ class } as model) { name, cost } =
                     finalCost =
                         (cost + changelingDiff)
                             |> Utils.applyClassBonusIf isClass
-                            |> Utils.halveIfPositiveAnd isAffinity
+                            |> Utils.halveIfPositiveAnd isInAffinity
                 in
                 -finalCost
             )

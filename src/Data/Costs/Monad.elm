@@ -1,4 +1,4 @@
-module Data.Costs.Monad exposing (Info, Monad, Value(..), andThen, combine, combineMap, error, map, map2, map3, mapAndSum, succeed, withInfo, withPowerInfo, withWarning)
+module Data.Costs.Monad exposing (Info, Monad, Value(..), andThen, combine, combineMap, error, map, map2, map3, mapAndSum, succeed, withInfo, withPowerInfo, withWarning, withWarningMaybe)
 
 import ResultME exposing (ResultME)
 
@@ -145,3 +145,13 @@ withWarning warning r =
             }
         )
         r
+
+
+withWarningMaybe : Maybe String -> Monad a -> Monad a
+withWarningMaybe maybeWarning r =
+    case maybeWarning of
+        Nothing ->
+            r
+
+        Just warning ->
+            withWarning warning r
