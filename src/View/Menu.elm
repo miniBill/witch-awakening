@@ -3,6 +3,8 @@ module View.Menu exposing (viewMenu)
 import Data.Affinity as Affinity
 import Data.Costs as Costs exposing (Points)
 import Data.Costs.Monad as CostsMonad
+import Dict exposing (Dict)
+import Dict.Extra
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
 import Element.Background as Background
 import Element.Border as Border
@@ -47,10 +49,20 @@ viewMenu model =
             else
                 list
 
+        warnMaybe : Maybe a -> List a -> List a
+        warnMaybe msg list =
+            case msg of
+                Nothing ->
+                    list
+
+                Just m ->
+                    m :: list
+
         warnings : List String
         warnings =
             rawWarnings
-                |> warnIf (List.isEmpty affinities) "No main race selected"
+                |> warnIf (List.isEmpty affinities) "No main race selected."
+                |> warnMaybe (badPyramid model.magic)
     in
     Theme.column
         [ alignTop
@@ -96,6 +108,42 @@ viewMenu model =
           else
             Element.none
         ]
+
+
+badPyramid : List Types.RankedMagic -> Maybe String
+badPyramid magics =
+    let
+        grouped : Dict Int Int
+        grouped =
+            magics
+                |> Dict.Extra.groupBy .rank
+                |> Dict.map (\_ group -> List.length group)
+
+        get : Int -> Int
+        get r =
+            Dict.get r grouped
+                |> Maybe.withDefault 0
+
+        bad : Int -> Maybe String
+        bad r =
+            if get r > get (r - 1) then
+                Just
+                    ("Unbalanced pyramid: rank "
+                        ++ String.fromInt r
+                        ++ " has "
+                        ++ String.fromInt (get r)
+                        ++ " magics, while rank "
+                        ++ String.fromInt (r - 1)
+                        ++ " has "
+                        ++ String.fromInt (get (r - 1))
+                        ++ "."
+                    )
+
+            else
+                Nothing
+    in
+    List.range 2 5
+        |> List.Extra.findMap bad
 
 
 menuLabel : Model key -> CostsMonad.Monad Points -> List String -> String
