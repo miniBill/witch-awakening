@@ -1,19 +1,19 @@
-module Data.Costs exposing (classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, perkValue, perksValue, powerCap, relicsValue, startingValue, totalCost, totalRewards, typePerksValue)
+module Data.Costs exposing (classValue, companionsValue, complicationsRawValue, complicationsValue, factionValue, perkValue, perksValue, powerCap, startingValue, totalCost, totalRewards, typePerksValue)
 
 import Data.Affinity as Affinity
 import Data.Companion as Companion
 import Data.Complication as Complication
 import Data.Costs.Magic
 import Data.Costs.Monad as Monad exposing (Monad, succeed)
+import Data.Costs.Relics
 import Data.Costs.Utils as Utils exposing (Points, zero)
 import Generated.Companion
 import Generated.Complication
 import Generated.Perk
-import Generated.Relic
 import Generated.TypePerk
 import Generated.Types as Types exposing (Affinity, Class(..), Companion, Faction(..), GameMode(..), Perk(..), Race(..), Relic(..), companionToString)
 import List.Extra
-import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedPerk, RankedRelic)
+import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedPerk)
 
 
 slotUnsupported : Monad value
@@ -79,7 +79,7 @@ totalCost model =
     , perksValue model
     , factionValue model
     , companionsValue model
-    , relicsValue model
+    , Data.Costs.Relics.value model
     , conversion model
 
     -- Just grab info and warnings
@@ -351,7 +351,7 @@ typePerksValue model =
 
 typePerkValue : Race -> Monad Int
 typePerkValue race =
-    find "Type perk" .race race Generated.TypePerk.all Types.raceToString
+    Utils.find "Type perk" .race race Generated.TypePerk.all Types.raceToString
         |> Monad.andThen
             (\{ cost } ->
                 let
@@ -366,16 +366,6 @@ typePerkValue race =
                         , value = Monad.Power value
                         }
             )
-
-
-find : String -> (item -> key) -> key -> List item -> (key -> String) -> Monad item
-find label toKey value list toString =
-    case List.Extra.find (\candidate -> toKey candidate == value) list of
-        Nothing ->
-            Monad.error <| label ++ " " ++ toString value ++ " not found"
-
-        Just v ->
-            succeed v
 
 
 
@@ -410,7 +400,7 @@ perkValue :
     -> RankedPerk
     -> Monad Int
 perkValue ({ class } as model) { name, cost } =
-    find "Perk" .name name (Generated.Perk.all model.perks) Types.perkToString
+    Utils.find "Perk" .name name (Generated.Perk.all model.perks) Types.perkToString
         |> Monad.map
             (\perk ->
                 let
@@ -683,52 +673,6 @@ getCompanion companion =
 
         Nothing ->
             Monad.error <| "Companion " ++ Types.companionToString companion ++ " not found"
-
-
-
--- Relics --
-
-
-relicsValue : Model key -> Monad Points
-relicsValue model =
-    model.relics
-        |> Monad.mapAndSum (relicCost model.class model.cosmicPearl)
-        |> Monad.map (\cost -> { zero | rewardPoints = -cost })
-
-
-relicCost : Maybe Class -> CosmicPearlData -> RankedRelic -> Monad Int
-relicCost class pearl { name, cost } =
-    find "Relic" .name name Generated.Relic.all Types.relicToString
-        |> Monad.map
-            (\relic ->
-                let
-                    isClass : Bool
-                    isClass =
-                        case class of
-                            Nothing ->
-                                False
-
-                            Just c ->
-                                List.member c relic.classes
-
-                    baseCost : Int
-                    baseCost =
-                        if isClass then
-                            cost - 2
-
-                        else
-                            cost
-
-                    multiplier : Int
-                    multiplier =
-                        if name == CosmicPearl then
-                            max 1 <| List.length pearl.add + List.length pearl.change
-
-                        else
-                            1
-                in
-                baseCost * multiplier
-            )
 
 
 conversion : Model key -> Monad Points

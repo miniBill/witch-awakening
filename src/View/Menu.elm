@@ -4,6 +4,7 @@ import Data.Affinity as Affinity
 import Data.Costs as Costs
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
+import Data.Costs.Relics
 import Data.Costs.Utils as Costs exposing (Points)
 import Dict exposing (Dict)
 import Dict.Extra
@@ -289,7 +290,7 @@ viewCalculations model power warnings affinities =
         , keyedRow "Faction" model.expandedMenuSections (Costs.factionValue model) <| Just "Factions"
         , keyedRow "Companions" model.expandedMenuSections (Costs.companionsValue model) Nothing
         , ( "RelicSlider", relicSlider model )
-        , keyedRow "Relics" model.expandedMenuSections (Costs.relicsValue model) Nothing
+        , keyedRow "Relics" model.expandedMenuSections (Data.Costs.Relics.value model) Nothing
         , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
         , resultRow
         , if List.isEmpty warnings then
@@ -650,7 +651,7 @@ relicSlider model =
                 |> toFloat
                 |> negate
         , max =
-            Costs.relicsValue model
+            Data.Costs.Relics.value model
                 |> Result.map (\{ value } -> value.rewardPoints)
                 |> Result.withDefault 0
                 |> toFloat

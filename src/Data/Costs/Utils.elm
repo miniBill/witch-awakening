@@ -1,6 +1,7 @@
-module Data.Costs.Utils exposing (Points, applyClassBonusIf, combineAndSum, halveIfPositiveAnd, negate, powerToPoints, sum, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, applyClassBonusIf, combineAndSum, find, halveIfPositiveAnd, negate, powerToPoints, sum, zero, zeroOut)
 
 import Data.Costs.Monad as Monad exposing (Monad)
+import List.Extra
 
 
 type alias Points =
@@ -66,3 +67,13 @@ halveIfPositiveAnd condition cost =
 
     else
         cost
+
+
+find : String -> (item -> key) -> key -> List item -> (key -> String) -> Monad item
+find label toKey value list toString =
+    case List.Extra.find (\candidate -> toKey candidate == value) list of
+        Nothing ->
+            Monad.error <| label ++ " " ++ toString value ++ " not found"
+
+        Just v ->
+            Monad.succeed v
