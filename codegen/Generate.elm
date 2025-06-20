@@ -7,6 +7,7 @@ import Elm
 import Elm.Declare
 import Gen.CodeGen.Generate as Generate exposing (Directory)
 import Generate.Affinities
+import Generate.Attributions exposing (DLCAttribution)
 import Generate.Classes
 import Generate.Companions
 import Generate.Complications
@@ -203,6 +204,22 @@ dlcToFiles images dlcList =
                 }
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
 
+        dlcAttributions : List DLCAttribution
+        dlcAttributions =
+            dlcList
+                |> List.filterMap
+                    (\{ name, author, link } ->
+                        Maybe.map2
+                            (\n a ->
+                                { name = n
+                                , author = a
+                                , link = link
+                                }
+                            )
+                            name
+                            author
+                    )
+
         types : Elm.Declare.Module Generate.Types.TypesModule
         types =
             Generate.Types.file images dlcList
@@ -217,4 +234,5 @@ dlcToFiles images dlcList =
     , Elm.Declare.toFile (Generate.Relics.file types.call dlcRelics)
     , Elm.Declare.toFile (Generate.TypePerks.file types.call dlcRaces)
     , Elm.Declare.toFile types
+    , Elm.Declare.toFile (Generate.Attributions.file dlcAttributions)
     ]

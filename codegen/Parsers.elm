@@ -15,6 +15,8 @@ import Set exposing (Set)
 
 type alias DLC =
     { name : Maybe String
+    , author : Maybe String
+    , link : Maybe String
     , items : List DLCItem
     }
 
@@ -32,6 +34,16 @@ type DLCItem
 
 parseFiles : List ( String, String, String ) -> Result (List Generate.Error) (List DLC)
 parseFiles inputs =
+    let
+        join : (DLC -> Maybe String) -> List DLC -> Maybe String
+        join prop list =
+            case List.filterMap prop list of
+                [] ->
+                    Nothing
+
+                filtered ->
+                    Just (String.join ", " filtered)
+    in
     inputs
         |> Result.Extra.combineMap parseDLC
         |> Result.map
@@ -46,6 +58,8 @@ parseFiles inputs =
 
                                 else
                                     Just name
+                            , author = join .author grouped
+                            , link = join .link grouped
                             , items = List.concatMap .items grouped
                             }
                                 :: acc
@@ -84,6 +98,14 @@ dlc =
                     )
            )
         |. spaces
+        |= oneOf
+            [ map Just (listItem "Author" Ok)
+            , succeed Nothing
+            ]
+        |= oneOf
+            [ map Just (listItem "Link" Ok)
+            , succeed Nothing
+            ]
         |= many
             (oneOf
                 [ map DLCAffinity affinity
