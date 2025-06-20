@@ -17,6 +17,7 @@ import List.Extra
 import Maybe.Extra
 import Set
 import Set.Extra
+import String.Extra
 import Task
 import Theme
 import Types exposing (Choice(..), Display(..), Model, Msg(..))
@@ -97,7 +98,9 @@ update msg model =
 
         ScrollTo id ->
             ( model
-            , Browser.Dom.getElement id
+            , id
+                |> String.Extra.underscored
+                |> Browser.Dom.getElement
                 |> Task.andThen
                     (\{ element } ->
                         Browser.Dom.setViewport

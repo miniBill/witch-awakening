@@ -661,6 +661,6 @@ linkLabel label target =
 
     else
         Input.button [ Font.underline ]
-            { onPress = Just <| ScrollTo <| String.Extra.underscored <| Maybe.withDefault label target
+            { onPress = Just <| ScrollTo <| Maybe.withDefault label target
             , label = el [ Font.bold, width fill ] <| text label
             }

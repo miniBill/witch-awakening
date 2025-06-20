@@ -133,6 +133,15 @@ viewMagicRank ( rank, magics ) ( y, acc ) =
 
 viewMagic : Types.Magic -> Float -> Float -> Svg Msg
 viewMagic name x y =
+    let
+        nameString : String
+        nameString =
+            Types.magicToString name
+
+        title : Svg msg
+        title =
+            Svg.title [] [ Svg.text nameString ]
+    in
     [ Svg.image
         [ Svg.Attributes.x (String.fromFloat x)
         , Svg.Attributes.y (String.fromFloat y)
@@ -148,11 +157,9 @@ viewMagic name x y =
         , Svg.Attributes.width "1"
         , Svg.Attributes.height "1"
         , Svg.Attributes.fill "url(#black-gradient)"
+        , Svg.Attributes.style "cursor: pointer"
         ]
-        [ Svg.title []
-            [ Svg.text (Types.magicToString name)
-            ]
-        ]
+        [ title ]
     , Svg.circle
         [ Svg.Attributes.cx (String.fromFloat (x + 0.125))
         , Svg.Attributes.cy (String.fromFloat (y + 0.125))
@@ -163,35 +170,32 @@ viewMagic name x y =
             |> Maybe.withDefault 0x00FFFFFF
             |> (\hex -> "#" ++ Hex.toString (darken hex))
             |> Svg.Attributes.fill
+        , Svg.Attributes.style "cursor: pointer"
         ]
-        [ Svg.title []
-            [ Svg.text (Types.magicToString name)
-            ]
+        [ title
         ]
     , Svg.text_
         [ Svg.Attributes.x (String.fromFloat (x + 0.5))
         , Svg.Attributes.y (String.fromFloat (y + 0.4))
+        , Svg.Attributes.style "cursor: pointer"
         ]
-        [ Svg.text (String.left 1 (Types.magicToString name))
-        , Svg.title []
-            [ Svg.text (Types.magicToString name)
-            ]
+        [ Svg.text (String.left 1 nameString)
+        , title
         ]
     , Svg.text_
         [ Svg.Attributes.x (String.fromFloat (x + 0.5))
         , Svg.Attributes.y (String.fromFloat (y + 0.8))
         , Svg.Attributes.fontSize "0.2"
         , Svg.Attributes.letterSpacing "-0.007"
+        , Svg.Attributes.style "cursor: pointer"
         ]
-        [ Svg.text (Types.magicToString name)
-        , Svg.title []
-            [ Svg.text (Types.magicToString name)
-            ]
+        [ Svg.text nameString
+        , title
         ]
     ]
         |> Svg.g
-            [ Svg.Attributes.id (Types.magicToString name)
-            , Svg.Events.onClick (ScrollTo (Types.magicToString name))
+            [ Svg.Attributes.id ("pyramid-" ++ nameString)
+            , Svg.Events.onClick (ScrollTo nameString)
             ]
 
 
