@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Points, applyClassBonusIf, combineAndSum, find, halveIfPositiveAnd, negate, powerToPoints, sum, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, applyClassBonusIf, capWithWarning, combineAndSum, find, halveIfPositiveAnd, negate, powerToPoints, slotUnsupported, sum, zero, zeroOut)
 
 import Data.Costs.Monad as Monad exposing (Monad)
 import List.Extra
@@ -77,3 +77,24 @@ find label toKey value list toString =
 
         Just v ->
             Monad.succeed v
+
+
+slotUnsupported : Monad value
+slotUnsupported =
+    Monad.error "Slot modes not supported yet"
+
+
+{-| Cap a value to a maximum. Emit a warning if the maximum is exceeded by the input.
+-}
+capWithWarning : Int -> String -> Int -> Monad Points
+capWithWarning cap warning value =
+    if value > cap then
+        { zero
+            | power = cap
+        }
+            |> Monad.succeed
+            |> Monad.withWarning warning
+
+    else
+        { zero | power = value }
+            |> Monad.succeed

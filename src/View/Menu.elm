@@ -3,6 +3,7 @@ module View.Menu exposing (viewMenu)
 import Data.Affinity as Affinity
 import Data.Costs as Costs
 import Data.Costs.Companions
+import Data.Costs.Complications
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
 import Data.Costs.Perks
@@ -158,7 +159,7 @@ menuLabel model totalPointsResult warnings =
         availablePoints : CostsMonad.Monad Points
         availablePoints =
             if model.capBuild || model.gameMode == Just Types.EarlyBird then
-                Costs.powerCap model
+                Data.Costs.Complications.powerCap model
 
             else
                 Costs.startingValue model
@@ -284,7 +285,7 @@ viewCalculations model power warnings affinities =
         , keyedRow "Class" model.expandedMenuSections (Costs.classValue model) <| Just "True Form - Class"
         , link "Race" <| Just "True Form - Race"
         , keyedRow "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
-        , keyedRow "Complications" model.expandedMenuSections (Costs.complicationsValue model) Nothing
+        , keyedRow "Complications" model.expandedMenuSections (Data.Costs.Complications.value model) Nothing
         , keyedRow "Type perks" model.expandedMenuSections (Costs.typePerksValue model) Nothing
         , keyedRow "Magic" model.expandedMenuSections (Data.Costs.Magic.value { ignoreSorceressBonus = False } model) <| Just "The Magic"
         , magicPyramidRow model
@@ -332,7 +333,7 @@ viewCalculations model power warnings affinities =
                     List.map Theme.viewAffinity affinities
           )
         , ( "Cap Slider", capSlider model )
-        , keyedRow "Power cap" model.expandedMenuSections (Costs.powerCap model) <| Just "Game Mode"
+        , keyedRow "Power cap" model.expandedMenuSections (Data.Costs.Complications.powerCap model) <| Just "Game Mode"
         , button
             { onPress = CompactAll
             , label = "Compact all"
@@ -586,7 +587,7 @@ capSlider model =
                             ]
                 , min = 0
                 , max =
-                    Costs.complicationsRawValue model
+                    Data.Costs.Complications.complicationsRawValue model
                         |> Result.map .value
                         |> Result.withDefault 0
                         |> toFloat
@@ -602,7 +603,7 @@ capSlider model =
             row
                 label
                 model.expandedMenuSections
-                (Costs.complicationsRawValue model
+                (Data.Costs.Complications.complicationsRawValue model
                     |> CostsMonad.map Costs.powerToPoints
                 )
                 (Just "Game Mode")
