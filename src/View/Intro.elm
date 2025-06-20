@@ -1,9 +1,11 @@
 module View.Intro exposing (viewIntro, viewTitle)
 
-import Element exposing (Element, alignRight, centerX, fill, fillPortion, moveDown, newTabLink, paragraph, text, width)
+import Element exposing (Element, alignRight, centerX, el, fill, fillPortion, moveDown, newTabLink, paragraph, text, width)
 import Element.Font as Font
+import Generated.Attribution
 import Gradients
 import Images
+import List.Extra
 import Theme exposing (gradientText)
 
 
@@ -50,12 +52,24 @@ viewTitle allCompact =
                     , width fill
                     , Font.size 14
                     , Font.underline
+                    , Element.paddingEach { left = 0, top = 0, right = 0, bottom = 10 }
                     ]
                     [ newTabLink []
                         { label = Theme.choice "By OutrageousBears"
                         , url = "https://old.reddit.com/user/OutrageousBears"
                         }
                     ]
+                , paragraph
+                    [ Font.alignRight
+                    , width fill
+                    , Font.size 14
+                    ]
+                    (text "With DLCs: "
+                        :: (Generated.Attribution.all
+                                |> List.map viewDLCAttribution
+                                |> List.Extra.intercalate [ text ", " ]
+                           )
+                    )
                 , paragraph
                     [ alignRight
                     , Font.alignLeft
@@ -66,6 +80,35 @@ viewTitle allCompact =
                     ]
                 ]
             ]
+
+
+viewDLCAttribution :
+    { name : String
+    , author : String
+    , link : Maybe String
+    }
+    -> List (Element msg)
+viewDLCAttribution dlcAttribution =
+    let
+        by : Element msg
+        by =
+            Theme.choice (" By " ++ dlcAttribution.author)
+    in
+    [ el
+        [ Theme.captureIt
+        , Font.size 20
+        ]
+        (Theme.gradientText 4 Gradients.purpleGradient dlcAttribution.name)
+    , case dlcAttribution.link of
+        Just url ->
+            newTabLink [ Font.underline ]
+                { label = by
+                , url = url
+                }
+
+        Nothing ->
+            by
+    ]
 
 
 viewIntro : Element msg

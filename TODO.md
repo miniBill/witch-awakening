@@ -1,6 +1,4 @@
 # v2
-- Attribution for DLCs
-
 - Heirloom
 - Jack of All free perk
 - Mark which magic from Talisman

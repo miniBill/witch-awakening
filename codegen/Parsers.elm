@@ -4,6 +4,7 @@ import Dict exposing (Dict)
 import Dict.Extra
 import Gen.CodeGen.Generate as Generate
 import Hex
+import List.Extra
 import Maybe.Extra
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, sequence, spaces, succeed, symbol)
 import Parser.Error
@@ -37,7 +38,7 @@ parseFiles inputs =
     let
         join : (DLC -> Maybe String) -> List DLC -> Maybe String
         join prop list =
-            case List.filterMap prop list of
+            case List.filterMap prop list |> List.Extra.unique of
                 [] ->
                     Nothing
 
