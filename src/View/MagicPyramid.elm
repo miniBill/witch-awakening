@@ -11,6 +11,7 @@ import Html.Attributes
 import List.Extra
 import Svg exposing (Svg)
 import Svg.Attributes
+import Svg.Attributes.Extra
 import Svg.Events
 import Types exposing (Msg(..), RankedMagic)
 
@@ -81,8 +82,8 @@ viewMagicRank ( rank, magics ) ( y, acc ) =
                 ]
                 []
             , Svg.text_
-                [ Svg.Attributes.x (String.fromFloat 0.6)
-                , Svg.Attributes.y (String.fromFloat (toFloat y + toFloat height / 2))
+                [ Svg.Attributes.Extra.x 0.6
+                , Svg.Attributes.Extra.y (toFloat y + toFloat height / 2)
                 ]
                 [ Svg.text (String.fromInt rank)
                 , Svg.title []
@@ -143,8 +144,8 @@ viewMagic name x y =
             Svg.title [] [ Svg.text nameString ]
     in
     [ Svg.image
-        [ Svg.Attributes.x (String.fromFloat x)
-        , Svg.Attributes.y (String.fromFloat y)
+        [ Svg.Attributes.Extra.x x
+        , Svg.Attributes.Extra.y y
         , Svg.Attributes.width "1"
         , Svg.Attributes.height "1"
         , Svg.Attributes.xlinkHref (Types.magicToImage name).src
@@ -152,8 +153,8 @@ viewMagic name x y =
         ]
         []
     , Svg.rect
-        [ Svg.Attributes.x (String.fromFloat x)
-        , Svg.Attributes.y (String.fromFloat y)
+        [ Svg.Attributes.Extra.x x
+        , Svg.Attributes.Extra.y y
         , Svg.Attributes.width "1"
         , Svg.Attributes.height "1"
         , Svg.Attributes.fill "url(#black-gradient)"
@@ -161,8 +162,8 @@ viewMagic name x y =
         ]
         [ title ]
     , Svg.circle
-        [ Svg.Attributes.cx (String.fromFloat (x + 0.125))
-        , Svg.Attributes.cy (String.fromFloat (y + 0.125))
+        [ Svg.Attributes.Extra.cx (x + 0.125)
+        , Svg.Attributes.Extra.cy (y + 0.125)
         , Svg.Attributes.r "0.125"
         , Generated.Magic.all
             |> List.Extra.find (\magicDetails -> magicDetails.name == name)
@@ -175,16 +176,16 @@ viewMagic name x y =
         [ title
         ]
     , Svg.text_
-        [ Svg.Attributes.x (String.fromFloat (x + 0.5))
-        , Svg.Attributes.y (String.fromFloat (y + 0.4))
+        [ Svg.Attributes.Extra.x (x + 0.5)
+        , Svg.Attributes.Extra.y (y + 0.4)
         , Svg.Attributes.style "cursor: pointer"
         ]
         [ Svg.text (String.left 1 nameString)
         , title
         ]
     , Svg.text_
-        [ Svg.Attributes.x (String.fromFloat (x + 0.5))
-        , Svg.Attributes.y (String.fromFloat (y + 0.8))
+        [ Svg.Attributes.Extra.x (x + 0.5)
+        , Svg.Attributes.Extra.y (y + 0.8)
         , Svg.Attributes.fontSize "0.2"
         , Svg.Attributes.letterSpacing "-0.007"
         , Svg.Attributes.style "cursor: pointer"
