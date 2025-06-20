@@ -1,18 +1,17 @@
-module Data.Costs exposing (classValue, complicationsRawValue, complicationsValue, factionValue, perkValue, perksValue, powerCap, startingValue, totalCost, totalRewards, typePerksValue)
+module Data.Costs exposing (classValue, complicationsRawValue, complicationsValue, factionValue, powerCap, startingValue, totalCost, totalRewards, typePerksValue)
 
-import Data.Affinity as Affinity
 import Data.Complication as Complication
 import Data.Costs.Companions
 import Data.Costs.Magic
 import Data.Costs.Monad as Monad exposing (Monad, succeed)
+import Data.Costs.Perks
 import Data.Costs.Relics
 import Data.Costs.Utils as Utils exposing (Points, zero)
 import Generated.Complication
-import Generated.Perk
 import Generated.TypePerk
-import Generated.Types as Types exposing (Affinity, Class(..), GameMode(..), Perk(..), Race(..))
+import Generated.Types as Types exposing (Class(..), GameMode(..), Race(..))
 import List.Extra
-import Types exposing (ComplicationKind(..), CosmicPearlData, Model, RankedPerk)
+import Types exposing (ComplicationKind(..), Model)
 
 
 slotUnsupported : Monad value
@@ -75,7 +74,7 @@ totalCost model =
     , complicationsValue model
     , typePerksValue model
     , Data.Costs.Magic.value { ignoreSorceressBonus = False } model
-    , perksValue model
+    , Data.Costs.Perks.value model
     , factionValue model
     , Data.Costs.Companions.value model
     , Data.Costs.Relics.value model
@@ -365,78 +364,6 @@ typePerkValue race =
                         , value = Monad.Power value
                         }
             )
-
-
-
--- Perks --
-
-
-perksValue :
-    { a
-        | races : List Race
-        , mainRace : Maybe Race
-        , cosmicPearl : CosmicPearlData
-        , typePerks : List Race
-        , perks : List RankedPerk
-        , class : Maybe Class
-    }
-    -> Monad Points
-perksValue model =
-    model.perks
-        |> Monad.mapAndSum (perkValue model)
-        |> Monad.map Utils.powerToPoints
-
-
-perkValue :
-    { a
-        | class : Maybe Class
-        , races : List Race
-        , mainRace : Maybe Race
-        , cosmicPearl : CosmicPearlData
-        , typePerks : List Race
-        , perks : List RankedPerk
-    }
-    -> RankedPerk
-    -> Monad Int
-perkValue ({ class } as model) { name, cost } =
-    Utils.find "Perk" .name name (Generated.Perk.all model.perks) Types.perkToString
-        |> Monad.map
-            (\perk ->
-                let
-                    affinities : List Affinity
-                    affinities =
-                        Affinity.fromModel model
-
-                    isClass : Bool
-                    isClass =
-                        Just perk.class == class
-
-                    isInAffinity : Bool
-                    isInAffinity =
-                        List.member perk.affinity affinities
-
-                    changelingDiff : Int
-                    changelingDiff =
-                        case name of
-                            ChargeSwap _ ->
-                                if List.member Changeling model.races then
-                                    -3
-
-                                else
-                                    0
-
-                            _ ->
-                                0
-
-                    finalCost : Int
-                    finalCost =
-                        (cost + changelingDiff)
-                            |> Utils.applyClassBonusIf isClass
-                            |> Utils.halveIfPositiveAnd isInAffinity
-                in
-                -finalCost
-            )
-        |> Monad.withPowerInfo (Types.perkToString name)
 
 
 

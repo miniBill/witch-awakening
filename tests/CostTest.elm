@@ -1,8 +1,8 @@
 module CostTest exposing (magicCosts, perkCosts)
 
-import Data.Costs
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
+import Data.Costs.Perks
 import Data.Costs.Utils
 import Expect
 import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
@@ -123,7 +123,7 @@ testJack12 : String -> { a | class : Maybe Class, races : List Race, mainRace : 
 testJack12 label model expected =
     test label <|
         \_ ->
-            Data.Costs.perkValue model jack12
+            Data.Costs.Perks.perkValue model jack12
                 |> Result.map .value
                 |> Expect.equal (Ok expected)
 

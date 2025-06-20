@@ -5,6 +5,7 @@ import Data.Costs as Costs
 import Data.Costs.Companions
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
+import Data.Costs.Perks
 import Data.Costs.Relics
 import Data.Costs.Utils as Costs exposing (Points)
 import Dict exposing (Dict)
@@ -287,7 +288,7 @@ viewCalculations model power warnings affinities =
         , keyedRow "Type perks" model.expandedMenuSections (Costs.typePerksValue model) Nothing
         , keyedRow "Magic" model.expandedMenuSections (Data.Costs.Magic.value { ignoreSorceressBonus = False } model) <| Just "The Magic"
         , magicPyramidRow model
-        , keyedRow "Perks" model.expandedMenuSections (Costs.perksValue model) Nothing
+        , keyedRow "Perks" model.expandedMenuSections (Data.Costs.Perks.value model) Nothing
         , keyedRow "Faction" model.expandedMenuSections (Costs.factionValue model) <| Just "Factions"
         , keyedRow "Companions" model.expandedMenuSections (Data.Costs.Companions.value model) Nothing
         , ( "RelicSlider", relicSlider model )
