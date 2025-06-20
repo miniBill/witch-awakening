@@ -51,9 +51,10 @@ viewMenu model =
 
         warnings : List String
         warnings =
-            rawWarnings
+            (rawWarnings
                 |> warnIf (List.isEmpty affinities) "No main race selected."
-                |> (++) (badPyramid model.magic)
+            )
+                ++ badPyramid model.magic
     in
     Theme.column
         [ alignTop
@@ -115,26 +116,36 @@ badPyramid magics =
             Dict.get r grouped
                 |> Maybe.withDefault 0
 
-        bad : Int -> Maybe String
-        bad r =
-            if get r > get (r - 1) then
+        check5 : Maybe String
+        check5 =
+            if get 5 > get 4 then
                 Just
-                    ("Unbalanced pyramid: rank "
-                        ++ String.fromInt r
-                        ++ " has "
-                        ++ String.fromInt (get r)
-                        ++ " magics, while rank "
-                        ++ String.fromInt (r - 1)
-                        ++ " has "
-                        ++ String.fromInt (get (r - 1))
+                    ("Unbalanced magic pyramid: rank 5 has "
+                        ++ String.fromInt (get 5)
+                        ++ " magics, while rank 4 has "
+                        ++ String.fromInt (get 4)
+                        ++ "."
+                    )
+
+            else
+                Nothing
+
+        check4 : Maybe String
+        check4 =
+            if get 4 > get 1 + get 2 + get 3 then
+                Just
+                    ("Unbalanced magic pyramid: rank 4 has "
+                        ++ String.fromInt (get 4)
+                        ++ " magics, while rank 1, 2 and 3 have "
+                        ++ String.fromInt (get 1 + get 2 + get 3)
                         ++ "."
                     )
 
             else
                 Nothing
     in
-    List.range 2 5
-        |> List.filterMap bad
+    [ check5, check4 ]
+        |> List.filterMap identity
 
 
 menuLabel : Model key -> CostsMonad.Monad Points -> List String -> String
@@ -346,7 +357,9 @@ magicPyramidRow model =
                 }
             ]
         , if Set.member label model.expandedMenuSections then
-            el [] (Element.html (View.MagicPyramid.view model.magic))
+            View.MagicPyramid.view model.magic
+                |> Element.html
+                |> el []
 
           else
             Element.none
