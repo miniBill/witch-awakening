@@ -63,8 +63,8 @@ value model =
                     [ _ ] ->
                         Nothing
 
-                    _ ->
-                        Just "Multiple off-affinity elementalism magics are only allowed for Sorceresses."
+                    list ->
+                        Just ("Multiple off-affinity elementalism magics are only allowed for Sorceresses. Found: " ++ String.join ", " (List.map .name list))
     in
     pointsList
         |> Monad.mapAndSum
