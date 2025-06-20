@@ -21,6 +21,7 @@ type Piece
     | Bold (List Piece)
     | Slot Slot
     | Affinity Affinity
+    | Class Class
     | Star
     | Text String
     | Link String
@@ -221,34 +222,39 @@ parseSquareBrackets str =
                     Affinity affinity
 
                 Nothing ->
-                    case ( str, String.toLower str ) of
-                        ( "K", _ ) ->
-                            Kisses ""
+                    case Types.classFromString str of
+                        Just class ->
+                            Class class
 
-                        ( "W", _ ) ->
-                            Warning
+                        Nothing ->
+                            case ( str, String.toLower str ) of
+                                ( "K", _ ) ->
+                                    Kisses ""
 
-                        ( "E", _ ) ->
-                            Error
+                                ( "W", _ ) ->
+                                    Warning
 
-                        ( "-", _ ) ->
-                            Power str
+                                ( "E", _ ) ->
+                                    Error
 
-                        ( "All", _ ) ->
-                            Affinity Types.All
+                                ( "-", _ ) ->
+                                    Power str
 
-                        ( _, "star" ) ->
-                            Star
+                                ( "All", _ ) ->
+                                    Affinity Types.All
 
-                        _ ->
-                            if String.startsWith "http" str then
-                                Link str
+                                ( _, "star" ) ->
+                                    Star
 
-                            else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
-                                Power str
+                                _ ->
+                                    if String.startsWith "http" str then
+                                        Link str
 
-                            else
-                                Text ("[" ++ str ++ "]")
+                                    else if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then
+                                        Power str
+
+                                    else
+                                        Text ("[" ++ str ++ "]")
 
 
 innerParser : Char -> Parser (List Piece)

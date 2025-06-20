@@ -4,7 +4,6 @@
 - Mark which magic from Talisman
 
 - Two free schools for Academic
-- One free elemental school for Sorc
 - Check all faction perks implementations
 
 - Check non-Sorcs only select one off-affinity elementalism

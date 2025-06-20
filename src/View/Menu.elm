@@ -398,17 +398,23 @@ row label expandedMenuSections result target =
             let
                 viewInfoBlock : CostsMonad.Info -> List (Element Msg)
                 viewInfoBlock info =
-                    [ paragraph [ width fill ]
+                    [ paragraph [ width fill, centerY ]
                         [ text "- "
                         , linkLabel info.label info.anchor
                         ]
-                    , el [ alignRight ] <|
+                    , el [ alignRight, centerY ] <|
                         case info.value of
                             CostsMonad.Power power ->
                                 rightPoints { rewardPoints = 0, power = power }
 
                             CostsMonad.FreeBecause message ->
-                                text ("Free (" ++ message ++ ")")
+                                Theme.blocks []
+                                    (if String.startsWith "[" message then
+                                        message
+
+                                     else
+                                        "Free - " ++ message
+                                    )
                     ]
             in
             Theme.column [ width fill ]

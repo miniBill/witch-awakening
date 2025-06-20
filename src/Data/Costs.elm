@@ -406,84 +406,137 @@ magicsValue :
         , magic : List RankedMagic
     }
     -> Monad Points
-magicsValue ({ faction, class, typePerks } as model) =
+magicsValue model =
     let
         affinities : List Affinity
         affinities =
             Affinity.fromModel model
+
+        points :
+            List
+                { name : String
+                , rank : Int
+                , value : Int
+                , isElementalism : Bool
+                }
+        points =
+            Generated.Magic.all
+                |> List.filterMap (magicValue model affinities)
+
+        free : Maybe String
+        free =
+            if model.class == Just Sorceress then
+                points
+                    |> List.filter .isElementalism
+                    |> List.Extra.minimumBy .value
+                    |> Maybe.map .name
+
+            else
+                Nothing
     in
-    Generated.Magic.all
+    points
         |> Monad.mapAndSum
-            (\magicDetails ->
-                case
-                    model.magic
-                        |> List.Extra.findMap
-                            (\rankedMagic ->
-                                if magicDetails.name == rankedMagic.name then
-                                    basicMagicValue affinities class rankedMagic.rank magicDetails
-                                        |> Maybe.map
-                                            (\basicValue -> ( rankedMagic, basicValue ))
+            (\{ name, rank, value } ->
+                if Just name == free then
+                    0
+                        |> succeed
+                        |> Monad.withInfo
+                            { label = name ++ " " ++ String.fromInt rank
+                            , anchor = Just name
+                            , value = Monad.FreeBecause "[Sorceress]"
+                            }
 
-                                else
-                                    Nothing
-                            )
-                of
-                    Nothing ->
-                        Monad.succeed 0
-
-                    Just ( rankedMagic, basicValue ) ->
-                        let
-                            doubleIfNegative : Int -> Int
-                            doubleIfNegative c =
-                                if c > 0 then
-                                    c
-
-                                else
-                                    c * 2
-
-                            hasFactionDiscount : Bool
-                            hasFactionDiscount =
-                                (List.member Spider typePerks && magicDetails.name == Arachnescence)
-                                    || (List.member Cyborg typePerks && magicDetails.name == Gadgetry)
-                                    || (List.member Cyborg typePerks && magicDetails.name == Integration)
-                                    || (case magicDetails.faction of
-                                            Just magicFaction ->
-                                                Just ( magicFaction, True ) == faction
-
-                                            Nothing ->
-                                                False
-                                       )
-
-                            finalValue : Int
-                            finalValue =
-                                if hasFactionDiscount then
-                                    factionDiscount basicValue
-
-                                else
-                                    case magicDetails.faction of
-                                        Just magicFaction ->
-                                            if Just ( magicFaction, False ) == faction then
-                                                basicValue
-
-                                            else
-                                                doubleIfNegative basicValue
-
-                                        Nothing ->
-                                            basicValue
-
-                            name : String
-                            name =
-                                Types.magicToString rankedMagic.name
-                        in
-                        finalValue
-                            |> succeed
-                            |> Monad.withInfo
-                                { label = name ++ " " ++ String.fromInt rankedMagic.rank
-                                , anchor = Just name
-                                , value = Monad.Power finalValue
-                                }
+                else
+                    value
+                        |> succeed
+                        |> Monad.withInfo
+                            { label = name ++ " " ++ String.fromInt rank
+                            , anchor = Just name
+                            , value = Monad.Power value
+                            }
             )
         |> Monad.map powerToPoints
+
+
+magicValue :
+    { a
+        | faction : Maybe ( Faction, Bool )
+        , class : Maybe Class
+        , typePerks : List Race
+        , magic : List RankedMagic
+    }
+    -> List Affinity
+    -> Magic.Details
+    ->
+        Maybe
+            { name : String
+            , rank : Int
+            , value : Int
+            , isElementalism : Bool
+            }
+magicValue ({ faction, class, typePerks } as model) affinities magicDetails =
+    model.magic
+        |> List.Extra.findMap
+            (\rankedMagic ->
+                if magicDetails.name == rankedMagic.name then
+                    basicMagicValue affinities class rankedMagic.rank magicDetails
+                        |> Maybe.map
+                            (\basicValue -> ( rankedMagic, basicValue ))
+
+                else
+                    Nothing
+            )
+        |> Maybe.map
+            (\( rankedMagic, basicValue ) ->
+                let
+                    doubleIfNegative : Int -> Int
+                    doubleIfNegative c =
+                        if c > 0 then
+                            c
+
+                        else
+                            c * 2
+
+                    hasFactionDiscount : Bool
+                    hasFactionDiscount =
+                        (List.member Spider typePerks && magicDetails.name == Arachnescence)
+                            || (List.member Cyborg typePerks && magicDetails.name == Gadgetry)
+                            || (List.member Cyborg typePerks && magicDetails.name == Integration)
+                            || (case magicDetails.faction of
+                                    Just magicFaction ->
+                                        Just ( magicFaction, True ) == faction
+
+                                    Nothing ->
+                                        False
+                               )
+
+                    finalValue : Int
+                    finalValue =
+                        if hasFactionDiscount then
+                            factionDiscount basicValue
+
+                        else
+                            case magicDetails.faction of
+                                Just magicFaction ->
+                                    if Just ( magicFaction, False ) == faction then
+                                        basicValue
+
+                                    else
+                                        doubleIfNegative basicValue
+
+                                Nothing ->
+                                    basicValue
+
+                    name : String
+                    name =
+                        Types.magicToString rankedMagic.name
+                in
+                { name = name
+                , rank = rankedMagic.rank
+                , value = finalValue
+                , isElementalism = magicDetails.isElementalism
+                }
+            )
 
 
 factionDiscount : Int -> Int

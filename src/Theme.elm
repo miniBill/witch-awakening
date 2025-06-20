@@ -294,6 +294,9 @@ viewPiece piece =
         Affinity affinity ->
             viewAffinityBadge affinity
 
+        Class class ->
+            Html.img [ Html.Attributes.src (classToBadge class).src ] []
+
         Star ->
             Html.span
                 [ Html.Attributes.style "font-family" "\"Capture It\""
