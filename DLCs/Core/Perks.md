@@ -190,7 +190,7 @@ Whatever your familiar’s base form, your familiar gains the ability to shapech
 - Class: Sorceress
 - Cost: 12
 
-You are a supreme example of your species of witch, a paragon among your peers and a prime specimen. Every notable quality about your witch’s race is exaggerated above normal, and numerical aspects are tripled. Your height and mass may or may not be increased by 50% at your discretion. If your race didn’t already increase your physique, you are more physically attractive and have peak human prowess. This also applies to type perks of your race, and applies to all parts of a _Hybridize_. but cost +3p/each.
+You are a supreme example of your species of witch, a paragon among your peers and a prime specimen. Every notable quality about your witch’s race is exaggerated above normal, and numerical aspects are tripled. Your height and mass may or may not be increased by 50% at your discretion. If your race didn’t already increase your physique, you are more physically attractive and have peak human prowess. This also applies to type perks of your race, and applies to all parts of a _Hybridize_. but cost [+3]/each.
 
 
 ## Perk: Crystallize
@@ -278,9 +278,9 @@ When you awaken you’ll be reborn in my world. Your Earth will exist in its own
 - Class: Sorceress
 - Cost: 4
 
-Choose a relative. They are a witch as well, either not yet awakened or awakened long ago and have been waiting to see your awakening. If you have Isekai’d, it can be a late relative who was isekai’d themselves, or isekai any relative now or later. Sharing your lineage, they have a strong magic tier. Choose up to 50 power for them to have and design a build for them. You can also invest your own Power on their behalf. You can take them as a Companion for 4p undiscounted unless you invested 4+ already. This is redundant if you cooperate with a relative (or friend) to make independent coexisting builds.
+Choose a relative. They are a witch as well, either not yet awakened or awakened long ago and have been waiting to see your awakening. If you have Isekai’d, it can be a late relative who was isekai’d themselves, or isekai any relative now or later. Sharing your lineage, they have a strong magic tier. Choose up to 50 power for them to have and design a build for them. You can also invest your own Power on their behalf. You can take them as a Companion for [4] undiscounted unless you invested [4] or more already. This is redundant if you cooperate with a relative (or friend) to make independent coexisting builds.
 
-Alternatively, or additionally, If you have Isekai’d, you and another player can choose to be made related and both gain 4 Power.
+Alternatively, or additionally, If you have Isekai’d, you and another player can choose to be made related and both gain [4] Power.
 
 
 ## Perk: Magic Friendship
@@ -304,7 +304,7 @@ You gain the blessing of a wind spirit, or the wind spirit unlocks an aspect of 
 - Class: Academic
 - Costs: 1, 3, 5, 7, 9
 
-Your mastery over a broomstick is especially noteworthy. Your broom is like a proper extension of your will. For 1p, Whether or not you have ranks in Witchery, you can summon your Rod in the form of a Broomstick near instantaneously to your hand and you can telekinetically command its flight remotely. For another 2p, it has the speed of an arrow, up to 250 feet per second. This stacks with broom speed from other sources. You can maneuver it with similar agility to a sportsbike, so do watch out for sharp turns.
+Your mastery over a broomstick is especially noteworthy. Your broom is like a proper extension of your will. For [1], Whether or not you have ranks in Witchery, you can summon your Rod in the form of a Broomstick near instantaneously to your hand and you can telekinetically command its flight remotely. For another [2], it has the speed of an arrow, up to 250 feet per second. This stacks with broom speed from other sources. You can maneuver it with similar agility to a sportsbike, so do watch out for sharp turns.
 
 For every additional Power spent, you gain an additional 50fps speed and improve the maneuverability by 50% until it’s as agile as a hummingbird at 4 extra power spent.
 
@@ -315,8 +315,8 @@ For every additional Power spent, you gain an additional 50fps speed and improve
 
 Isekai yourself with all the benefits of this cyoa into any other setting of your choice. If that world has its own special abilities systems, you may learn from them if possible independently of this cyoa. You may require Isekai Heritage to benefit from or obtain special abilities only available to certain bloodlines, or simply random chance making it unlikely for most people to benefit from it. If it’s uncommon, Nobility can let you benefit. If it’s rare, then Royalty is required. Since you are being reborn, you don’t count as having visited this earth for the purpose of Portals.
 
-- [12] This is the basic version, and costs 12 power
-- [14] for an extra 2p, you can experience lucid aetheric dreams of this setting of _“Earth (Witch Awakening)”_, sufficient to allow Portal travel back here if you wish.
+- [12] This is the basic version, and costs [12] power
+- [14] for an extra [2], you can experience lucid aetheric dreams of this setting of _“Earth (Witch Awakening)”_, sufficient to allow Portal travel back here if you wish.
 
 
 ## Perk: Isekai Heritage
