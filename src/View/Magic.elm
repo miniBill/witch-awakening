@@ -61,6 +61,14 @@ viewMagics display selected =
             |> Theme.column []
         ]
         [ sorted
+            |> List.sortBy
+                (\{ isElementalism } ->
+                    if isElementalism then
+                        1
+
+                    else
+                        0
+                )
             |> List.indexedMap (magicBox display False selected)
             |> Theme.column []
         ]
