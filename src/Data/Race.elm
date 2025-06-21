@@ -1,4 +1,4 @@
-module Data.Race exposing (Details, all, intro, title)
+module Data.Race exposing (Details, all, dravir, gemini, genie, intro, title)
 
 import Generated.Types exposing (Affinity(..), Race(..), Size(..))
 import List.Extra
