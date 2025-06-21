@@ -8,7 +8,7 @@ DLCS_OUT = $(patsubst DLCs/%.md,build/elm-codegen-flags/%.md,$(DLCS_SRC))
 
 generated/Images.elm: $(wildcard codegen/*.elm) $(wildcard codegen/Generate/*.elm) codegen/Gen/Basics.elm build/elm-codegen-flags/sizes $(GRADIENT_OUT) $(DLCS_OUT)
 	yarn elm-codegen run --flags-from build/elm-codegen-flags
-	elm-format --yes generated
+	yarn elm-format --yes generated
 
 build/elm-codegen-flags/sizes: $(wildcard public/*.png) $(wildcard public/*.jpg) $(wildcard public/*.webp)
 	mkdir -p build/elm-codegen-flags
