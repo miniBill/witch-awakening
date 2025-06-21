@@ -81,6 +81,7 @@ a.link {
     background: none;
     content: attr(data-text);
     left: 0;
+    top: 0;
     position: absolute;
     z-index: 1;
     -webkit-text-stroke: var(--text-stroke);
@@ -93,6 +94,7 @@ a.link {
     background-image: var(--background);
     content: attr(data-text);
     left: 0;
+    top: 0;
     position: absolute;
     z-index: 2;
 }
