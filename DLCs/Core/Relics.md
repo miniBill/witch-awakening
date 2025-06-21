@@ -259,7 +259,7 @@ Long crude iron spikes that are infused with the immortality curse. A being pier
 - Class: Academic
 - Cost: 12
 
-A very illusive potion, the creation process known by Alphazon executives and Hespatian Crowns. You will come across one. Drinking the full bottle, tiny as it is, imbues you with the ability to craft the potion yourself if you have Potions 5. A single drop is an undetectable, untraceable poison that causes death in a completely random manner in a random time within 1 month. 2 drops will make a person tum inside out. 3 drops will sever a witch’s ability to use magic, or undo the effects... Or make a human a witch with a random witch type and 3d20 Power they’ll grow into. 12 drops per bottle.
+A very illusive potion, the creation process known by Alphazon executives and Hespatian Crowns. You will come across one. Drinking the full bottle, tiny as it is, imbues you with the ability to craft the potion yourself if you have Potions 5. A single drop is an undetectable, untraceable poison that causes death in a completely random manner in a random time within 1 month. 2 drops will make a person turn inside out. 3 drops will sever a witch’s ability to use magic, or undo the effects... Or make a human a witch with a random witch type and 3d20 Power they’ll grow into. 12 drops per bottle.
 
 Requires distilling 5 rank 5 potions in one, & activating the potion with your activated blood.
 

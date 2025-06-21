@@ -398,7 +398,7 @@ __Changelings draw Mana__ from Identity, any interactions had wherein another be
 
 While they can freely assume the appearance of any young humanoid, some changelings have an enhanced shapeshifting to assume the form of any object with volume like that of a ping pong ball, up to that of a fridge.
 
-These changelings can now also assume the form of mature humanoids. In either case, they have to have a visible reference to work off of and it only includes details the changeling knows about. Tum into specific person and you might not know about their mole by their nethers, for example, or the inner workings behind the fridge.
+These changelings can now also assume the form of mature humanoids. In either case, they have to have a visible reference to work off of and it only includes details the changeling knows about. Turn into specific person and you might not know about their mole by their nethers, for example, or the inner workings behind the fridge.
 
 
 ## Race: Elf
