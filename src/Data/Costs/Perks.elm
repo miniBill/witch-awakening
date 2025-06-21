@@ -5,6 +5,7 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Generated.Perk
 import Generated.Types as Types exposing (Affinity, Class, Perk(..), Race(..))
+import List.Extra
 import Types exposing (CosmicPearlData, RankedPerk)
 
 
@@ -65,9 +66,22 @@ perkValue ({ class } as model) { name, cost } =
                             _ ->
                                 0
 
+                    apexDiff : Int
+                    apexDiff =
+                        case name of
+                            Apex ->
+                                if List.any (\p -> p.name == Hybridize) model.perks then
+                                    3 * (List.length model.races - 1)
+
+                                else
+                                    0
+
+                            _ ->
+                                0
+
                     finalCost : Int
                     finalCost =
-                        (cost + changelingDiff)
+                        (cost + changelingDiff + apexDiff)
                             |> Utils.applyClassBonusIf isClass
                             |> Utils.halveIfPositiveAnd isInAffinity
                 in
