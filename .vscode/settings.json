@@ -173,5 +173,6 @@
         "Zahra",
         "Zooarch"
     ],
-    "cSpell.language": "en"
+    "cSpell.language": "en",
+    "makefile.configureOnOpen": false
 }
