@@ -342,8 +342,9 @@ Looks like there’s space available in a special class at Arcadia or Hawthorne.
 - Element: All
 - Class: Sorceress
 - Meta: True
+- Costs: 12, 16, 20
 
-So, “Magical Girls” are real, and it looks like you might be one. If you have Transformation Sequence, you can have an additional 3 point discount. Your witch form benefits from A New Magical Girl CYOA ([https://imgchest.com/p/o24aqqr37lj] or [https://imgchest.com/p/a846ageog7x]). Caution “Corrupted Heart” DLC & below it is unwholesome. You can ignore Age, and you individually buy your Well or Pit for 12p, and slots for 2p. You can buy up to 2 weapons/tools and outfits as an upgrade to your Mothergifts for 4p. Likewise you can improve your familiar for 4p, adding its traits to your own or replacing your familiar’s base animal. You can fake the missions as Quests using your own Quest slots, using the _Threat, Conflict, Reward_ of an existing quest of that slot rank. Everything otherwise functions as described.
+So, “Magical Girls” are real, and it looks like you might be one. If you have Transformation Sequence, you can have an additional 3 point discount. Your witch form benefits from either A New Magical Girl CYOA [https://imgchest.com/p/o24aqqr37lj] or its Dark counterpart [https://imgchest.com/p/a846ageog7x] (warning, Corrupted Heart and the Dark version are unwholesome). Ignore the Age section. For 12p, you get either a Well and Rites, or a Pit and Glamours. For an extra 4p, you can upgrade your Mothergifts using the Tool and Outfit options from the version you chose. For a separate extra 4p, choose a companion/familiar to upgrade or replace your own familiar.
 
 
 ## Perk: Miniaturization
