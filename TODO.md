@@ -10,6 +10,8 @@
 
 - Doll type perk multicost: 1-4
 
+- Separate section for elementalist magic
+
 # v3
 
 - an extra little box on that says how much that option will actually move your point total if you take it right now
