@@ -56,7 +56,7 @@ In skull form, you can only use [Fire] magic or magic that could reasonably be p
 - Mana capacity: High
 - Mana rate: High
 
-Sirens are beings of wind and music, melodies carried by the wind, and have a connection to birds. Their bodies grow leathers in a similar pattern as Nymphs grow scales, though some go further with leather plumage sufficient to be relatively modest without clothing, and are able to transfigure themselves into the form of a specific bird they’re associated with and hybrid states between the two. Whatever the bird type, Sirens are all well known for melodic voices that are deeply pleasant to outright hypnotically attractive. Sirens age at half human rates, and reverse their age through nesting in cocoons of feathers that reverses a year per day. A dead siren who is still intact enough can be nursed back to life by breathing into them a few times a day for 1-3 days depending on severity.
+Sirens are beings of wind and music, melodies carried by the wind, and have a connection to birds. Their bodies grow feathers in a similar pattern as Nymphs grow scales, though some go further with feather plumage sufficient to be relatively modest without clothing, and are able to transfigure themselves into the form of a specific bird they’re associated with and hybrid states between the two. Whatever the bird type, Sirens are all well known for melodic voices that are deeply pleasant to outright hypnotically attractive. Sirens age at half human rates, and reverse their age through nesting in cocoons of feathers that reverses a year per day. A dead siren who is still intact enough can be nursed back to life by breathing into them a few times a day for 1-3 days depending on severity.
 
 __Sirens draw Mana__ from Breath, whenever they take someone’s breath away, when someone forgets to take a breath, when otherwise unable to breathe, or when the Siren overtly draws the breath from their lungs, within a few inches of their lips.
 
@@ -345,7 +345,7 @@ __Wulong draw Mana__ from Artistry, charging in proximity to works of art. Any w
 ### Perk
 - Cost: 2
 
-Wulong are strongly associated with the arts, but some even more so, having an ability that digicasting is in part based on: Some wulong are able to physically enter any painting or written depiction that they or another wulong has created, to enter the space in the manner that it was envisioned. Within one of these spaces, they can see a tangible fourth wall somewhere within that acts like a window through the painting or page into the real world, but this can be shifted to show through any other painting or page with the same image or description, and then step through this fourth wall to return. They all share the same space and something can be left within it, while something taken tums to ink or paint outside.
+Wulong are strongly associated with the arts, but some even more so, having an ability that digicasting is in part based on: Some wulong are able to physically enter any painting or written depiction that they or another wulong has created, to enter the space in the manner that it was envisioned. Within one of these spaces, they can see a tangible fourth wall somewhere within that acts like a window through the painting or page into the real world, but this can be shifted to show through any other painting or page with the same image or description, and then step through this fourth wall to return. They all share the same space and something can be left within it, while something taken turns to ink or paint outside.
 
 
 ## Race: Doll
