@@ -259,8 +259,8 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                                     |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
 
                             ClassAny ->
-                                Images.badgeMixed
-                                    |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+                                Theme.viewClasses 32 [ Types.Sorceress, Types.Warlock, Types.Academic ]
+                                    |> el [ alignRight, moveLeft 24 ]
 
                             ClassNone ->
                                 Element.none

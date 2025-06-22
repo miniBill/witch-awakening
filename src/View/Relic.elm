@@ -154,57 +154,8 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                         , moveDown 8
                         ]
                         (Theme.gradientText 4 Gradients.purpleGradient dlcName)
-            , case classes of
-                [] ->
-                    Element.none
-
-                [ c ] ->
-                    Theme.classToBadge c
-                        |> Theme.image [ width <| px 40 ]
-                        |> el [ alignBottom ]
-
-                _ ->
-                    let
-                        sector : Int
-                        sector =
-                            360 // List.length classes
-
-                        viewSlice : Int -> Types.Class -> Attribute msg
-                        viewSlice i class =
-                            let
-                                from : String
-                                from =
-                                    String.fromInt (sector * i)
-
-                                to : String
-                                to =
-                                    String.fromInt (sector * (i + 1))
-                            in
-                            Html.img
-                                [ Html.Attributes.src (Theme.classToBadge class).src
-                                , Html.Attributes.style "mask-image"
-                                    ("conic-gradient("
-                                        ++ String.join ", "
-                                            [ "transparent " ++ from ++ "deg"
-                                            , "black " ++ from ++ "deg"
-                                            , "black " ++ to ++ "deg"
-                                            , "transparent " ++ to ++ "deg"
-                                            ]
-                                        ++ ")"
-                                    )
-                                , Html.Attributes.style "width" "40px"
-                                ]
-                                []
-                                |> Element.html
-                                |> Element.inFront
-                    in
-                    Element.el
-                        (width (px 40)
-                            :: height (px 40)
-                            :: alignBottom
-                            :: List.indexedMap viewSlice classes
-                        )
-                        Element.none
+            , Theme.viewClasses 40 classes
+                |> el [ Element.alignBottom ]
             , case costs of
                 [] ->
                     Element.none

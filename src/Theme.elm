@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -797,3 +797,56 @@ topBackground { src } =
 borderGlow : Int -> Attribute msg
 borderGlow color =
     Border.glow (intToColor color) 8
+
+
+viewClasses : Int -> List Types.Class -> Element msg
+viewClasses w classes =
+    case classes of
+        [] ->
+            Element.none
+
+        [ c ] ->
+            classToBadge c
+                |> image [ width <| px w ]
+
+        _ ->
+            let
+                sector : Int
+                sector =
+                    360 // List.length classes
+
+                viewSlice : Int -> Types.Class -> Attribute msg
+                viewSlice i class =
+                    let
+                        from : String
+                        from =
+                            String.fromInt (sector * i)
+
+                        to : String
+                        to =
+                            String.fromInt (sector * (i + 1))
+                    in
+                    Html.img
+                        [ Html.Attributes.src (classToBadge class).src
+                        , Html.Attributes.style "mask-image"
+                            ("conic-gradient("
+                                ++ String.join ", "
+                                    [ "transparent " ++ from ++ "deg"
+                                    , "black " ++ from ++ "deg"
+                                    , "black " ++ to ++ "deg"
+                                    , "transparent " ++ to ++ "deg"
+                                    ]
+                                ++ ")"
+                            )
+                        , Html.Attributes.style "width" (String.fromInt w ++ "px")
+                        ]
+                        []
+                        |> Element.html
+                        |> Element.inFront
+            in
+            Element.el
+                (width (px w)
+                    :: height (px w)
+                    :: List.indexedMap viewSlice classes
+                )
+                Element.none
