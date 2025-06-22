@@ -19,7 +19,6 @@ type Content
     = Single Int String
     | WithChoices String (List ( String, Int )) String
     | WithCosts (List Int) String
-    | WithChoicesHybridize String (List ( String, Int ))
     | WithChoicesChargeSwap String (List ( String, Int ))
 
 
@@ -32,26 +31,7 @@ intro =
 
 all : List RankedPerk -> List Details
 all perks =
-    [ hybridize, chargeSwap perks ]
-
-
-hybridize : Details
-hybridize =
-    { name = Hybridize
-    , class = Sorceress
-    , affinity = Beast
-    , isMeta = False
-    , dlc = Nothing
-    , content =
-        WithChoicesHybridize """
-        Choose a second racial type for your true form, and reasonably combine the physical look of both races, take the higher Mana capacity, and maintain both methods of charge (each of which charge as fast as they normally would) and any features mentioned in their description, such as the breath of the Draviri or the honey of the Sprite. You can take both type perks of either race. You do not gain affinity of the second type. See _Cosmic Pearl_. You can take this twice for up to 3 aspects.
-
-        *This is added/removed automatically when you select your race[s]*
-        """
-            [ ( "Taken once - 2 races (_hybrid_)", hybridizeCost )
-            , ( "Taken twice - 3 races (_chimera_)", hybridizeCost * 2 )
-            ]
-    }
+    [ chargeSwap perks ]
 
 
 hybridizeCost : number

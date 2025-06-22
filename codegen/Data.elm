@@ -256,7 +256,7 @@ coreSlots =
 
 corePerks : List Variant
 corePerks =
-    [ "Hybridize", "Charge Swap" ]
+    [ "Charge Swap" ]
         |> buildVariants
         |> withArguments "Charge Swap" [ "Race" ]
 

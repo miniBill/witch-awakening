@@ -61,9 +61,6 @@ isOverlong { content } =
         Perk.WithChoicesChargeSwap _ _ ->
             True
 
-        Perk.WithChoicesHybridize _ _ ->
-            False
-
         Perk.Single _ _ ->
             False
 
@@ -126,9 +123,6 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 ( WithChoices _ _ _, Nothing ) ->
                     Nothing
 
-                ( WithChoicesHybridize _ _, Nothing ) ->
-                    Nothing
-
                 ( WithChoicesChargeSwap _ _, Nothing ) ->
                     Nothing
 
@@ -139,9 +133,6 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
         costs =
             (case content of
                 WithChoices _ choices _ ->
-                    List.map Tuple.second choices
-
-                WithChoicesHybridize _ choices ->
                     List.map Tuple.second choices
 
                 WithChoicesChargeSwap _ choices ->
@@ -291,19 +282,16 @@ viewContent mainRace races color selected { content, name } =
                 choicesView =
                     List.map (viewChoice color selected name) choices
             in
-            Theme.blocks [] before
-                :: choicesView
-                ++ [ Theme.blocks [] after ]
+            if name == Hybridize then
+                Theme.blocks [] before
+                    :: choicesView
+                    ++ racePicker "Pick your main race:" ChoiceMainRace color mainRace races
+                    ++ [ Theme.blocks [] after ]
 
-        WithChoicesHybridize before choices ->
-            let
-                choicesView : List (Element Choice)
-                choicesView =
-                    List.map (viewChoice color selected name) choices
-            in
-            Theme.blocks [] before
-                :: choicesView
-                ++ racePicker "Pick your main race:" ChoiceMainRace color mainRace races
+            else
+                Theme.blocks [] before
+                    :: choicesView
+                    ++ [ Theme.blocks [] after ]
 
         WithChoicesChargeSwap before choices ->
             let

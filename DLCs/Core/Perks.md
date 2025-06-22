@@ -185,6 +185,18 @@ Whatever your familiar’s base form, your familiar gains the ability to shapech
 - *Chimeric*: An animal that is a combination of multiple animals. Examples: Griffin, Hippogriff, Pegasus, Manticore, Chimera, ect. Whatever your expectations of a beast, it’s balanced to the other options named here. So no outright dragons or wishgranters.
 
 
+## Perk: Hybridize
+- Element: Beast
+- Class: Sorceress
+
+Choose a second racial type for your true form, and reasonably combine the physical look of both races, take the higher Mana capacity, and maintain both methods of charge (each of which charge as fast as they normally would) and any features mentioned in their description, such as the breath of the Draviri or the honey of the Sprite. You can take both type perks of either race. You do not gain affinity of the second type. See _Cosmic Pearl_. You can take this twice for up to 3 aspects.
+
+*This is added/removed automatically when you select your race[s]*
+
+- [6] Taken once - 2 races (_hybrid_)
+- [12] Taken twice - 3 races (_chimera_)
+
+
 ## Perk: Apex
 - Element: Body
 - Class: Sorceress

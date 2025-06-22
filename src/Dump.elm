@@ -247,9 +247,6 @@ dumpPerk details =
                 Data.Perk.WithCosts costs c ->
                     ( Just costs, Just (String.Multiline.here c) )
 
-                Data.Perk.WithChoicesHybridize _ _ ->
-                    ( Nothing, Nothing )
-
                 Data.Perk.WithChoicesChargeSwap _ _ ->
                     ( Nothing, Nothing )
     in
