@@ -4,7 +4,7 @@ import Data.Affinity as Affinity
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Generated.Perk
-import Generated.Types as Types exposing (Affinity, Class, Perk(..), Race(..))
+import Generated.Types exposing (Affinity, Class, Perk(..), Race(..))
 import Types exposing (CosmicPearlData, RankedPerk)
 import View.Perk
 
@@ -37,7 +37,7 @@ perkValue :
     -> RankedPerk
     -> Monad Int
 perkValue ({ class } as model) { name, cost } =
-    Utils.find "Perk" .name name (Generated.Perk.all model.perks) Types.perkToString
+    Utils.find "Perk" .name name (Generated.Perk.all model.perks) View.Perk.perkToShortString
         |> Monad.map
             (\perk ->
                 let
