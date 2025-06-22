@@ -49,6 +49,14 @@ viewTitle allCompact =
                     , gradientText 4 Gradients.yellowGradient "Update"
                     ]
                 , paragraph
+                    [ alignRight
+                    , Font.alignLeft
+                    , Font.size 14
+                    , Element.paddingEach { left = 20, top = 10, right = 0, bottom = 0 }
+                    ]
+                    [ Theme.choice "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
+                    ]
+                , paragraph
                     [ Font.alignRight
                     , width fill
                     , Font.size 14
@@ -72,14 +80,6 @@ viewTitle allCompact =
                                 |> List.Extra.intercalate [ text ", " ]
                            )
                     )
-                , paragraph
-                    [ alignRight
-                    , Font.alignLeft
-                    , Font.size 14
-                    , Element.paddingEach { left = 20, top = 10, right = 0, bottom = 0 }
-                    ]
-                    [ Theme.choice "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
-                    ]
                 ]
             ]
 
