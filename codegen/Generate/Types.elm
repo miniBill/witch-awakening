@@ -115,16 +115,27 @@ enumToDeclarations moduleName images enum =
             , declarations = inner.declarations
             , call = inner.call argWith
             }
+
+        withToImage =
+            if enum.toImage then
+                common
+                    |> Elm.Declare.Extra.withDeclarations
+                        [ (toImageDeclaration images config enum).declaration
+                            |> Elm.expose
+                        ]
+
+            else
+                common
     in
-    if enum.toImage then
-        common
+    if enum.isSame then
+        withToImage
             |> Elm.Declare.Extra.withDeclarations
-                [ (toImageDeclaration images config enum).declaration
+                [ (isSameDeclaration config enum).declaration
                     |> Elm.expose
                 ]
 
     else
-        common
+        withToImage
 
 
 isEnum : List Variant -> Bool
@@ -172,7 +183,7 @@ parserDeclaration { lowerName, type_ } { variants } =
 
 
 toImageDeclaration : ImagesModule -> Config -> Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
-toImageDeclaration images { lowerName } { name, variants } =
+toImageDeclaration images { lowerName, type_ } { name, variants } =
     (\value ->
         variants
             |> List.map
@@ -193,10 +204,48 @@ toImageDeclaration images { lowerName } { name, variants } =
                     <|
                         \_ -> image
                 )
-            |> Elm.Case.custom value (Elm.Annotation.named [] name)
+            |> Elm.Case.custom value type_
             |> Elm.withType images.image
     )
-        |> Elm.Declare.fn (lowerName ++ "ToImage") (Elm.Arg.varWith lowerName <| Elm.Annotation.named [] name)
+        |> Elm.Declare.fn (lowerName ++ "ToImage") (Elm.Arg.varWith lowerName <| type_)
+
+
+isSameDeclaration : Config -> Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression -> Elm.Expression)
+isSameDeclaration { lowerName, type_ } { variants } =
+    (\var1 var2 ->
+        let
+            branchesForVariants : List Elm.Case.Branch
+            branchesForVariants =
+                List.map variantToBranch variants
+
+            variantToBranch : Variant -> Elm.Case.Branch
+            variantToBranch variant =
+                let
+                    constructor : String
+                    constructor =
+                        yassify variant.name
+                in
+                Elm.Case.branch
+                    (Elm.Arg.tuple
+                        (Elm.Arg.customType constructor identity
+                            |> Elm.Arg.items (List.map (always Elm.Arg.ignore) variant.arguments)
+                        )
+                        (Elm.Arg.customType constructor identity
+                            |> Elm.Arg.items (List.map (always Elm.Arg.ignore) variant.arguments)
+                        )
+                    )
+                <|
+                    \_ -> Elm.bool True
+        in
+        (branchesForVariants
+            ++ [ Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.bool False) ]
+        )
+            |> Elm.Case.custom (Elm.tuple var1 var2) type_
+            |> Elm.withType Elm.Annotation.bool
+    )
+        |> Elm.Declare.fn2 ("isSame" ++ String.Extra.toSentenceCase lowerName)
+            (Elm.Arg.varWith (lowerName ++ "1") type_)
+            (Elm.Arg.varWith (lowerName ++ "2") type_)
 
 
 typeDeclaration : Enum -> Elm.Declare.Annotation

@@ -195,10 +195,10 @@ fixupModel model =
     }
 
 
-toggle : Bool -> b -> List b -> List b
-toggle selected item list =
+toggle : (b -> b -> Bool) -> Bool -> b -> List b -> List b
+toggle isSame selected item list =
     if selected then
-        item :: list
+        item :: List.Extra.removeWhen (isSame item) list
 
     else
         List.Extra.remove item list
@@ -214,7 +214,7 @@ updateOnChoice choice model =
             { model | classDisplay = classDisplay }
 
         ChoiceRace ( race, selected ) ->
-            { model | races = toggle selected race model.races }
+            { model | races = toggle Types.isSameRace selected race model.races }
 
         ChoiceMainRace mainRace ->
             { model | mainRace = mainRace }
@@ -229,25 +229,25 @@ updateOnChoice choice model =
             { model | gameModeDisplay = gameModeDisplay }
 
         ChoiceComplication ( complication, selected ) ->
-            { model | complications = toggle selected complication model.complications }
+            { model | complications = toggle isSameName selected complication model.complications }
 
         DisplayComplications complicationsDisplay ->
             { model | complicationsDisplay = complicationsDisplay }
 
         ChoiceTypePerk ( race, selected ) ->
-            { model | typePerks = toggle selected race model.typePerks }
+            { model | typePerks = toggle Types.isSameRace selected race model.typePerks }
 
         DisplayTypePerks typePerksDisplay ->
             { model | typePerksDisplay = typePerksDisplay }
 
         ChoiceMagic ( magic, selected ) ->
-            { model | magic = toggle selected magic model.magic }
+            { model | magic = toggle isSameName selected magic model.magic }
 
         DisplayMagic magicDisplay ->
             { model | magicDisplay = magicDisplay }
 
         ChoicePerk ( perk, selected ) ->
-            { model | perks = toggle selected perk model.perks }
+            { model | perks = toggle isSameName selected perk model.perks }
 
         DisplayPerks perksDisplay ->
             { model | perksDisplay = perksDisplay }
@@ -262,13 +262,13 @@ updateOnChoice choice model =
             { model | factionalMagicDisplay = factionalMagicDisplay }
 
         ChoiceCompanion ( companion, selected ) ->
-            { model | companions = toggle selected companion model.companions }
+            { model | companions = toggle Types.isSameCompanion selected companion model.companions }
 
         DisplayCompanions companionsDisplay ->
             { model | companionsDisplay = companionsDisplay }
 
         ChoiceRelic ( relic, selected ) ->
-            { model | relics = toggle selected relic model.relics }
+            { model | relics = toggle isSameName selected relic model.relics }
 
         DisplayRelics relicsDisplay ->
             { model | relicsDisplay = relicsDisplay }
@@ -287,6 +287,11 @@ updateOnChoice choice model =
 
         ToggleMenuSectionExpansion label ->
             { model | expandedMenuSections = Set.Extra.toggle label model.expandedMenuSections }
+
+
+isSameName : { a | name : name } -> { a | name : name } -> Bool
+isSameName arg1 arg2 =
+    arg1.name == arg2.name
 
 
 toUrl : Model key -> String

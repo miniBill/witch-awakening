@@ -8,6 +8,7 @@ type alias Enum =
     { name : String
     , variants : List Variant
     , toImage : Bool
+    , isSame : Bool
     }
 
 
@@ -41,11 +42,16 @@ enums parsedDLCs =
     { affinity = buildEnum "Affinity" combinedDLC.affinities
     , class = buildEnum "Class" combinedDLC.classes |> withImages
     , faction = buildEnum "Faction" combinedDLC.factions
-    , race = buildEnum "Race" combinedDLC.races |> withImages
+    , race =
+        buildEnum "Race" combinedDLC.races
+            |> withImages
+            |> withIsSame
     , relic = buildEnum "Relic" combinedDLC.relics |> withImages
     , others =
         [ buildEnum "Perk" combinedDLC.perks |> withImages
-        , buildEnum "Companion" combinedDLC.companions |> withImages
+        , buildEnum "Companion" combinedDLC.companions
+            |> withImages
+            |> withIsSame
         , buildEnum "Magic" combinedDLC.magics |> withImages
         , buildEnum "Complication" combinedDLC.complications |> withImages
         , buildEnum "ComplicationCategory" combinedDLC.complicationCategories
@@ -56,6 +62,11 @@ enums parsedDLCs =
         , buildEnum "Slot" (buildVariants coreSlots) |> withImages
         ]
     }
+
+
+withIsSame : Enum -> Enum
+withIsSame enum =
+    { enum | isSame = True }
 
 
 fromParsed : Parsers.DLC -> DLC
@@ -172,6 +183,7 @@ buildEnum name variants =
     { name = name
     , variants = variants
     , toImage = False
+    , isSame = False
     }
 
 
