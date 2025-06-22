@@ -67,6 +67,7 @@ viewTitle allCompact =
                     ]
                     (text "With DLCs: "
                         :: (Generated.Attribution.all
+                                |> List.sortBy .name
                                 |> List.map viewDLCAttribution
                                 |> List.Extra.intercalate [ text ", " ]
                            )
