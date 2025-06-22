@@ -36,7 +36,8 @@ viewTitle allCompact =
                 , Element.paddingEach { left = 0, top = 0, right = 0, bottom = 10 }
                 ]
                 [ paragraph
-                    [ Theme.morpheus
+                    [ Font.center
+                    , Theme.morpheus
                     , Font.size 52
                     ]
                     [ gradientText 4 Gradients.grayGradient "Heavy Metal"
