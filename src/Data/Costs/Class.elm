@@ -21,4 +21,5 @@ value model =
                     Monad.succeed zero
 
         Nothing ->
-            Monad.error "You need to select a class"
+            Monad.succeed zero
+                |> Monad.withWarning "You need to select a class"
