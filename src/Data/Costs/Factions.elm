@@ -1,18 +1,28 @@
 module Data.Costs.Factions exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils exposing (Points, zero)
+import Data.Costs.Utils as Utils exposing (Points, zero)
+import Generated.Types as Types
 import Types exposing (Model)
 
 
 value : Model key -> Monad Points
 value model =
-    case model.faction of
+    (case model.faction of
         Nothing ->
-            Monad.succeed { zero | power = 4 }
+            Monad.succeed 4
+                |> Monad.withPowerInfo "Factionless"
 
-        Just ( _, False ) ->
-            Monad.succeed { zero | power = 2 }
+        Just ( name, False ) ->
+            [ Monad.succeed 0
+                |> Monad.withPowerInfo (Types.factionToString name)
+            , Monad.succeed 2
+                |> Monad.withPowerInfo "No faction magic"
+            ]
+                |> Monad.mapAndSum identity
 
-        Just ( _, True ) ->
-            Monad.succeed zero
+        Just ( name, True ) ->
+            Monad.succeed 0
+                |> Monad.withPowerInfo (Types.factionToString name)
+    )
+        |> Monad.map Utils.powerToPoints

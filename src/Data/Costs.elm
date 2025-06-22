@@ -7,6 +7,7 @@ import Data.Costs.Factions
 import Data.Costs.Magic
 import Data.Costs.Monad as Monad exposing (Monad, succeed)
 import Data.Costs.Perks
+import Data.Costs.Race
 import Data.Costs.Relics
 import Data.Costs.TypePerks
 import Data.Costs.Utils as Utils exposing (Points, zero)
@@ -22,6 +23,7 @@ totalCost : Model key -> Monad Points
 totalCost model =
     [ Data.Costs.Class.value model
     , startingValue model
+    , Data.Costs.Race.value model
     , Data.Costs.Complications.value model
     , Data.Costs.TypePerks.value model
     , Data.Costs.Magic.value { ignoreSorceressBonus = False } model

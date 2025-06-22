@@ -2,9 +2,10 @@ module Data.Costs.Companions exposing (value)
 
 import Data.Companion as Companion
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils as Utils exposing (Points, zero)
+import Data.Costs.Utils as Utils exposing (Points)
+import Dict exposing (Dict)
 import Generated.Companion
-import Generated.Types as Types exposing (Class, Companion, Faction(..), Race, companionToString)
+import Generated.Types as Types exposing (Class, Companion, Faction(..), Race)
 import List.Extra
 import Types exposing (Model)
 
@@ -12,29 +13,15 @@ import Types exposing (Model)
 value : Model key -> Monad Points
 value model =
     let
-        totalCompanionCost : List ( Maybe Faction, Companion.Details ) -> Monad Points
-        totalCompanionCost companions =
-            companions
-                |> Monad.mapAndSum
-                    (\( _, { name, cost } ) ->
-                        case cost of
-                            Just v ->
-                                Monad.succeed v
-
-                            Nothing ->
-                                Monad.error <| "Companion " ++ Types.companionToString name ++ " does not have a fixed cost"
-                    )
-                |> Monad.map Utils.powerToPoints
-
-        forFree : List ( Maybe Faction, Companion.Details ) -> Monad Points
-        forFree companions =
+        totalCompanionValue : List ( Maybe Faction, Companion.Details ) -> Monad Points
+        totalCompanionValue companions =
             let
                 treasure : Bool
                 treasure =
                     model.faction == Just ( TheCollegeOfArcadia, True )
 
-                byCost : List ( Maybe Faction, Int, Companion.Details )
-                byCost =
+                mostExpensiveFirst : List ( Maybe Faction, Int, Companion.Details )
+                mostExpensiveFirst =
                     companions
                         |> List.filterMap
                             (\( f, c ) ->
@@ -51,7 +38,7 @@ value model =
                             []
 
                         Just ( f, _ ) ->
-                            byCost
+                            mostExpensiveFirst
                                 |> List.filterMap
                                     (\( faction, cost, c ) ->
                                         if faction == Just f then
@@ -70,7 +57,7 @@ value model =
 
                 sameKind : List ( String, Int, Companion.Details )
                 sameKind =
-                    byCost
+                    mostExpensiveFirst
                         |> List.filterMap
                             (\( _, cost, companion ) ->
                                 if sameRace companion model.races then
@@ -99,7 +86,9 @@ value model =
                         (\( cost, details ) -> ( label, cost, details ))
                         group
 
-                tryPick : List (List ( String, Int, Companion.Details )) -> Monad Points
+                tryPick :
+                    List (List ( String, Int, Companion.Details ))
+                    -> Dict String String
                 tryPick lists =
                     lists
                         |> List.Extra.removeWhen List.isEmpty
@@ -113,68 +102,82 @@ value model =
                                             |> List.Extra.uniqueBy (\( _, _, { name } ) -> name)
                                 in
                                 { value =
-                                    { zero
-                                        | power =
-                                            unique
-                                                |> List.map (\( _, cost, _ ) -> cost)
-                                                |> List.sum
-                                    }
-                                , warnings = []
-                                , infos =
+                                    unique
+                                        |> List.map (\( _, cost, _ ) -> cost)
+                                        |> List.sum
+                                , freebies =
                                     unique
                                         |> List.map
                                             (\( label, _, { name } ) ->
-                                                { label = companionToString name
-                                                , anchor = Just (companionToString name)
-                                                , value = Monad.FreeBecause label
-                                                }
+                                                ( Types.companionToString name, label )
                                             )
+                                        |> Dict.fromList
                                 }
                             )
-                        |> List.Extra.maximumBy (\details -> details.value.power)
-                        |> Maybe.withDefault
-                            { value = zero
-                            , warnings = []
-                            , infos = []
-                            }
-                        |> Ok
+                        |> List.Extra.maximumBy .value
+                        |> Maybe.map .freebies
+                        |> Maybe.withDefault Dict.empty
+
+                forFree : Dict String String
+                forFree =
+                    if treasure then
+                        let
+                            possiblyFriendly : List ( Int, Companion.Details )
+                            possiblyFriendly =
+                                List.filterMap
+                                    (\( f, cost, c ) ->
+                                        if f == Just TheOutsiders || f == Just AlphazonIndustries || f == Just TheCollegeOfArcadia then
+                                            Nothing
+
+                                        else
+                                            Just ( cost, c )
+                                    )
+                                    mostExpensiveFirst
+                        in
+                        tryPick
+                            [ withReason "Same faction" sameFaction
+                            , withReason "Same faction - True Treasure" sameFaction
+                            , sameKind
+                            , withReason "Possibly friendly faction - True Treasure" possiblyFriendly
+                            ]
+
+                    else
+                        tryPick
+                            [ withReason "Same faction" sameFaction
+                            , sameKind
+                            ]
             in
-            if treasure then
-                let
-                    possiblyFriendly : List ( Int, Companion.Details )
-                    possiblyFriendly =
-                        List.filterMap
-                            (\( f, cost, c ) ->
-                                if f == Just TheOutsiders || f == Just AlphazonIndustries || f == Just TheCollegeOfArcadia then
-                                    Nothing
+            companions
+                |> Monad.mapAndSum
+                    (\( _, { name, cost } ) ->
+                        let
+                            nameString : String
+                            nameString =
+                                Types.companionToString name
+                        in
+                        case Dict.get nameString forFree of
+                            Just reason ->
+                                Monad.succeed 0
+                                    |> Monad.withInfo
+                                        { label = nameString
+                                        , anchor = Nothing
+                                        , value = Monad.FreeBecause reason
+                                        }
 
-                                else
-                                    Just ( cost, c )
-                            )
-                            byCost
-                in
-                tryPick
-                    [ withReason "Same faction" sameFaction
-                    , withReason "Same faction - True Treasure" sameFaction
-                    , sameKind
-                    , withReason "Possibly friendly faction - True Treasure" possiblyFriendly
-                    ]
+                            Nothing ->
+                                case cost of
+                                    Just v ->
+                                        Monad.succeed -v
+                                            |> Monad.withPowerInfo nameString
 
-            else
-                tryPick
-                    [ withReason "Same faction" sameFaction
-                    , sameKind
-                    ]
+                                    Nothing ->
+                                        Monad.error <| "Companion " ++ nameString ++ " does not have a fixed cost"
+                    )
+                |> Monad.map Utils.powerToPoints
     in
     model.companions
         |> Monad.combineMap getCompanion
-        |> Monad.andThen
-            (\companions ->
-                Monad.map2
-                    Utils.sum
-                    (Monad.map Utils.negate (totalCompanionCost companions))
-                    (forFree companions)
-            )
+        |> Monad.andThen totalCompanionValue
 
 
 sameClass : Companion.Details -> Maybe Class -> Bool

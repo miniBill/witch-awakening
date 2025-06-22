@@ -9,6 +9,7 @@ import Data.Costs.Factions
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
 import Data.Costs.Perks
+import Data.Costs.Race
 import Data.Costs.Relics
 import Data.Costs.TypePerks
 import Data.Costs.Utils as Costs exposing (Points)
@@ -241,15 +242,6 @@ viewCalculations model power warnings affinities =
                 )
                 Nothing
 
-        link : String -> Maybe String -> ( String, Element Msg )
-        link label target =
-            ( label
-            , Theme.row [ width fill ]
-                [ linkLabel label target
-                , rightText emptyRowContent
-                ]
-            )
-
         button : { onPress : msg, label : String } -> ( String, Element msg )
         button config =
             ( config.label
@@ -286,7 +278,7 @@ viewCalculations model power warnings affinities =
         , section [] "Build kind"
         , ( "Switch", capBuildSwitch model )
         , keyedRow "Class" model.expandedMenuSections (Data.Costs.Class.value model) <| Just "True Form - Class"
-        , link "Race" <| Just "True Form - Race"
+        , keyedRow "Race" model.expandedMenuSections (Data.Costs.Race.value model) <| Just "True Form - Race"
         , keyedRow "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
         , keyedRow "Complications" model.expandedMenuSections (Data.Costs.Complications.value model) Nothing
         , keyedRow "Type perks" model.expandedMenuSections (Data.Costs.TypePerks.value model) Nothing
@@ -416,13 +408,7 @@ row label expandedMenuSections result target =
                                 rightPoints { rewardPoints = 0, power = power }
 
                             CostsMonad.FreeBecause message ->
-                                Theme.blocks []
-                                    (if String.startsWith "[" message then
-                                        message
-
-                                     else
-                                        "Free - " ++ message
-                                    )
+                                Theme.blocks [] message
                     ]
             in
             Theme.column [ width fill ]
