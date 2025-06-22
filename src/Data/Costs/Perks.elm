@@ -5,7 +5,6 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Generated.Perk
 import Generated.Types as Types exposing (Affinity, Class, Perk(..), Race(..))
-import List.Extra
 import Types exposing (CosmicPearlData, RankedPerk)
 
 

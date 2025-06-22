@@ -8,8 +8,6 @@ import Generated.Affinity
 import Generated.Relic
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
-import Html
-import Html.Attributes
 import List.Extra
 import String.Extra
 import Theme exposing (gradientText)
