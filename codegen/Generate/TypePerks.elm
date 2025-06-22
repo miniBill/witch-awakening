@@ -60,6 +60,9 @@ dlcToTypePerks types races =
                         Gen.Data.TypePerk.make_.details
                             { race =
                                 case race.elements of
+                                    [] ->
+                                        Elm.apply (types.valueFrom race.name) [ types.valueFrom "All", types.valueFrom "All" ]
+
                                     [ _ ] ->
                                         Elm.apply (types.valueFrom race.name) [ types.valueFrom "All" ]
 

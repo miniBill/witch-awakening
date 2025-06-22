@@ -146,7 +146,7 @@ type alias Race =
 race : Parser Race
 race =
     (section "##" "Race" Race
-        |> requiredItem "Elements" stringListParser
+        |> requiredItem "Elements" (stringListParser >> Result.map (List.Extra.remove "!"))
         |> requiredItem "Mana capacity" Ok
         |> requiredItem "Mana rate" Ok
         |> parseSection

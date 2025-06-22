@@ -46,11 +46,11 @@ all types dlcRaces =
                 |> List.map
                     (\( _, race ) ->
                         case race.elements of
-                            [ _ ] ->
-                                Elm.apply (Elm.val (String.Extra.decapitalize race.name)) [ races ]
+                            [ _, _ ] ->
+                                Elm.val (String.Extra.decapitalize race.name)
 
                             _ ->
-                                Elm.val (String.Extra.decapitalize race.name)
+                                Elm.apply (Elm.val (String.Extra.decapitalize race.name)) [ races ]
                     )
                 |> Elm.list
                 |> Gen.List.call_.sortBy
@@ -67,61 +67,97 @@ dlcToRaces : TypesModule -> List ( Maybe String, Parsers.Race ) -> Result (List 
 dlcToRaces types races =
     Result.Extra.combineMap
         (\( dlcName, race ) ->
-            case race.elements of
-                [ _ ] ->
-                    Elm.fn (Elm.Arg.varWith "affinities" (Elm.Annotation.list types.race.annotation))
-                        (\affinities ->
-                            Gen.Data.Race.call_.withVariantAffinity
-                                (Elm.fn (Elm.Arg.var "r") <|
-                                    \r ->
-                                        Elm.Case.custom r
-                                            types.race.annotation
-                                            [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff" ])
-                                                (\affs ->
-                                                    case affs of
-                                                        [ aff ] ->
-                                                            Elm.maybe (Just aff)
-
-                                                        _ ->
-                                                            Elm.val "Broken assumption"
-                                                )
-                                            , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
-                                            ]
-                                )
-                                (Elm.record
-                                    [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.valueFrom race.name) [ aff ] )
-                                    , ( "content", Elm.string race.description )
-                                    , ( "tank", types.valueFrom race.manaCapacity )
-                                    , ( "affinities", Elm.list (List.map types.valueFrom race.elements) )
-                                    , ( "charge", types.valueFrom race.manaRate )
-                                    , ( "dlc", Elm.maybe (Maybe.map Elm.string dlcName) )
-                                    ]
-                                )
-                                affinities
-                                |> Elm.withType Gen.Data.Race.annotation_.details
-                        )
-                        |> Elm.declaration (yassify race.name)
-                        |> Elm.expose
-                        |> Ok
-
-                [ _, _ ] ->
-                    Gen.Data.Race.make_.details
-                        { name = types.valueFrom race.name
-                        , content = Elm.string race.description
-                        , tank = types.valueFrom race.manaCapacity
-                        , affinities = Elm.list (List.map types.valueFrom race.elements)
-                        , charge = types.valueFrom race.manaRate
-                        , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                        }
-                        |> Elm.declaration (yassify race.name)
-                        |> Elm.expose
-                        |> Ok
-
-                _ ->
-                    Err
-                        [ { title = "Error parsing races file"
-                          , description = "Unexpected elements list, expected one or two"
-                          }
-                        ]
+            raceToDeclaration types dlcName race
+                |> Result.map
+                    (\expr ->
+                        expr
+                            |> Elm.declaration (yassify race.name)
+                            |> Elm.expose
+                    )
         )
         races
+
+
+raceToDeclaration : TypesModule -> Maybe String -> Parsers.Race -> Result (List Generate.Error) Elm.Expression
+raceToDeclaration types dlcName race =
+    case race.elements of
+        [ _, _ ] ->
+            Gen.Data.Race.make_.details
+                { name = types.valueFrom race.name
+                , content = Elm.string race.description
+                , tank = types.valueFrom race.manaCapacity
+                , affinities = Elm.list (List.map types.valueFrom race.elements)
+                , charge = types.valueFrom race.manaRate
+                , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                }
+                |> Ok
+
+        [ _ ] ->
+            Elm.fn (Elm.Arg.varWith "affinities" (Elm.Annotation.list types.race.annotation))
+                (\affinities ->
+                    Gen.Data.Race.call_.withVariantAffinity1
+                        (Elm.fn (Elm.Arg.var "r") <|
+                            \r ->
+                                Elm.Case.custom r
+                                    types.race.annotation
+                                    [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff" ])
+                                        (\affs ->
+                                            Elm.maybe (List.head affs)
+                                        )
+                                    , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
+                                    ]
+                        )
+                        (Elm.record
+                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.valueFrom race.name) [ aff ] )
+                            , ( "content", Elm.string race.description )
+                            , ( "tank", types.valueFrom race.manaCapacity )
+                            , ( "affinities", Elm.list (List.map types.valueFrom race.elements) )
+                            , ( "charge", types.valueFrom race.manaRate )
+                            , ( "dlc", Elm.maybe (Maybe.map Elm.string dlcName) )
+                            ]
+                        )
+                        affinities
+                        |> Elm.withType Gen.Data.Race.annotation_.details
+                )
+                |> Ok
+
+        [] ->
+            Elm.fn (Elm.Arg.varWith "affinities" (Elm.Annotation.list types.race.annotation))
+                (\affinities ->
+                    Gen.Data.Race.call_.withVariantAffinity2
+                        (Elm.fn (Elm.Arg.var "r") <|
+                            \r ->
+                                Elm.Case.custom r
+                                    types.race.annotation
+                                    [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff1", Elm.Arg.var "aff2" ])
+                                        (\affs ->
+                                            case affs of
+                                                [ aff1, aff2 ] ->
+                                                    Elm.maybe (Just (Elm.tuple aff1 aff2))
+
+                                                _ ->
+                                                    Elm.maybe Nothing
+                                        )
+                                    , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
+                                    ]
+                        )
+                        (Elm.record
+                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.valueFrom race.name) [ aff ] )
+                            , ( "content", Elm.string race.description )
+                            , ( "tank", types.valueFrom race.manaCapacity )
+                            , ( "affinities", Elm.list (List.map types.valueFrom race.elements) )
+                            , ( "charge", types.valueFrom race.manaRate )
+                            , ( "dlc", Elm.maybe (Maybe.map Elm.string dlcName) )
+                            ]
+                        )
+                        affinities
+                        |> Elm.withType Gen.Data.Race.annotation_.details
+                )
+                |> Ok
+
+        _ ->
+            Err
+                [ { title = "Error parsing races file"
+                  , description = "Unexpected elements list, expected one or two"
+                  }
+                ]

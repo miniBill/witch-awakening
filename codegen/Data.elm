@@ -123,16 +123,11 @@ fromParsed { name, items } =
                     let
                         race : Variant
                         race =
-                            case v.elements of
-                                [ _ ] ->
-                                    { name = v.name
-                                    , arguments = [ "Affinity" ]
-                                    , toStringException = Nothing
-                                    , dlc = name
-                                    }
-
-                                _ ->
-                                    variant v.name
+                            { name = v.name
+                            , arguments = List.repeat (2 - List.length v.elements) "Affinity"
+                            , toStringException = Nothing
+                            , dlc = name
+                            }
                     in
                     { dlc | races = race :: dlc.races }
 

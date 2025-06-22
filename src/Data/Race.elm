@@ -1,4 +1,4 @@
-module Data.Race exposing (Details, intro, title, withVariantAffinity)
+module Data.Race exposing (Details, intro, title, withVariantAffinity1, withVariantAffinity2)
 
 import Generated.Types exposing (Affinity(..), Race, Size)
 import List.Extra
@@ -14,7 +14,7 @@ type alias Details =
     }
 
 
-withVariantAffinity :
+withVariantAffinity1 :
     (Race -> Maybe Affinity)
     ->
         { name : Affinity -> Race
@@ -26,7 +26,7 @@ withVariantAffinity :
         }
     -> List Race
     -> Details
-withVariantAffinity match details races =
+withVariantAffinity1 match details races =
     let
         affinity : Affinity
         affinity =
@@ -36,6 +36,33 @@ withVariantAffinity match details races =
     { name = details.name affinity
     , tank = details.tank
     , affinities = details.affinities ++ [ affinity ]
+    , charge = details.charge
+    , dlc = details.dlc
+    , content = details.content
+    }
+
+
+withVariantAffinity2 :
+    (Race -> Maybe ( Affinity, Affinity ))
+    ->
+        { name : Affinity -> Affinity -> Race
+        , tank : Size
+        , affinities : List Affinity
+        , charge : Size
+        , dlc : Maybe String
+        , content : String
+        }
+    -> List Race
+    -> Details
+withVariantAffinity2 match details races =
+    let
+        ( aff1, aff2 ) =
+            List.Extra.findMap match races
+                |> Maybe.withDefault ( All, All )
+    in
+    { name = details.name aff1 aff2
+    , tank = details.tank
+    , affinities = [ aff1, aff2 ]
     , charge = details.charge
     , dlc = details.dlc
     , content = details.content
