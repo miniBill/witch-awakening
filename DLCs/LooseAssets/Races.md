@@ -108,3 +108,39 @@ __Fairies draw Mana__ from revelry, whenever a creature of human intelligence or
 - Cost: 10
 
 Especially potent fairies that tend to manage local groups of fairies, or rise to become fairy princesses or fairy queens. These fairies are able to grow Fairy Rings, rings of mushrooms or flowers, that establish a domain-like space that those outside cannot see into, which may also be a gate through time to a unique timespace similar to time what a pocket dimension is to space. In this timespace, the fairy can dictate how much time passes relative to outside but only to slow it, so 1 day inside was as much as a year outside of it, or speed it so 1 hour inside was half an hour outside. The fairy can reverse time within the timespace, but it’s only physical, and time is still flowing forward normally, minds are unchanged. The timespace is only the size of the fairy ring created, leaving the fairy ring leaves the timespace. If the fairy has Portals, their fairy rings can act as gateways to any other fairy ring known to the one who enters.
+
+
+## Race: Genie
+- Elements: All
+- Mana capacity: High
+- Mana rate: Low
+
+Genies are avatars of raw magic. They have the [???] type, meaning [???] types are double discounted and rounded down. All Genies then can pick any one affinity as their secondary type which heavily influences their appearance in spirit form. Their spirit form looking like a humanoid elemental of their chosen type from 1 inch to 30f tall. All genies then have a physical form based on any other witch race, as though using Hybridize to acquire it, but they can’t gain the type perks or their form of cheating death. Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free, used personally, not via Mammon, & costs nothing if used to satisfy a Master’s wish Genies do not age. A slain genie returns to her Vessel, see type perk.
+
+__Genies draw Mana__ from Wishes, whenever any person says "I wish", and the genie is capable of satisfying that wish with her available abilities, the genie gains a low mana charge for the next hour. If her master is the one to wish, she gains her full mana capacity for meeting the wish.
+
+### Perk
+- Cost: -5
+
+All genies require this type perk. Genies have a Vessel, an invulnerable artifact between the size of a baseball, up to the size of an urn, it can change its appearance. It must appear opulent and valuable. If the Genie has Witchery, the pocketspace exists within this Vessel and with or without Witchery, the pocketspace is where she appears when banished to or simply returning to her lamp with a visible effect. As the vessel IS the pocket space, it cannot be stored within itself or in any other form of extradimensional space.
+
+A Genie cannot be more than 300m away from their vessel The last non-witch to touch the vessel becomes the Genie’s Master, who cannot be disobeyed (But can be argued with for a few seconds), the genie cannot cause the master harm. The master can choose the genie’s appearance and race type, when outside her vessel.
+
+
+## Race: Gemini
+- Elements: Earth
+- Mana capacity: High
+- Mana rate: Low
+
+Gemini are split soul beings that inhabit two bodies as one synchronous whole. The bodies are always nearly identical. Geminai have bodies composed of an associated gem associated with an Affinity, ruby fire affinity for example. Each of the pair have a different gem. This gem influences the coloration of parts of their body besides their skin, though they can have gem protrusions through their skin, which is still soft like flesh on the surface. Each half of the Gemini spends Power separately on its own effects, evenly splitting their power total between them. Gemini are born looking around 8 and age 1 year per 10 for around 80-120 years before they stop aging entirely.
+
+A dead Gemini half will fade into stardust, but will reappear when the surviving half sleeps, waking in the other half’s arms.
+
+__Geminai draw Mana__ from Pairing, the more in synch the two halves are in mind, intent, and appearance, the more mana they generate proportional to distance to each other. They feel this charge rate and are uncomfortable when it is weakened.
+
+### Perk
+- Cost: 4
+
+Geminai with this type perk have even stronger bonds, capable of trading their consciousness and their half of their soul to trade places between their Egos (however minimal or great they may be divergent), or they can swap entirely as though teleporting. Gemini share a mental bond to feel the other’s emotional state, senses, & intention such that they can act as a whole, or they can fully communicate telepathically, each hearing the mental dialogue of the other if they “raise their voice”, or both parties can tighten the connection to hear their passive internal dialogue entirely as though speaking out loud to oneself near the other.
+
+Nothing can sever this connection, short of death.

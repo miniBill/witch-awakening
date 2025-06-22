@@ -35,9 +35,7 @@ enums parsedDLCs =
         combinedDLC : DLC
         combinedDLC =
             List.foldl (\e acc -> acc |> withDLC e.name (fromParsed e))
-                (core
-                    |> withDLC (Just "Loose Assets") looseAssets
-                )
+                core
                 parsedDLCs
     in
     { affinity = buildEnum "Affinity" combinedDLC.affinities
@@ -271,18 +269,3 @@ coreFactions : List Variant
 coreFactions =
     [ "The College of Arcadia", "Hawthorne Academia", "The Watchers", "The Hespatian Coven", "Lunabella", "Alfheimr Alliance", "The Outsiders", "The O.R.C.", "Alphazon Industries" ]
         |> buildVariants
-
-
-looseAssets : DLC
-looseAssets =
-    { emptyDLC
-        | races = looseAssetsRaces
-    }
-
-
-looseAssetsRaces : List Variant
-looseAssetsRaces =
-    [ "Genie", "Gemini" ]
-        |> buildVariants
-        |> withArguments "Genie" [ "Affinity" ]
-        |> withArguments "Gemini" [ "Affinity" ]

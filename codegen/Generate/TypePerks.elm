@@ -5,7 +5,6 @@ import Elm.Annotation
 import Elm.Arg
 import Elm.Declare
 import Elm.Declare.Extra
-import Elm.Op
 import Gen.Data.TypePerk
 import Gen.List
 import Gen.Maybe
@@ -29,20 +28,17 @@ file types dlcRaces =
 
 all : List ( Maybe String, Parsers.Race ) -> Elm.Declare.Value
 all dlcRaces =
-    Elm.Op.append
-        (dlcRaces
-            |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-            |> List.filterMap
-                (\( _, race ) ->
-                    if race.perk == Nothing then
-                        Nothing
+    dlcRaces
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
+        |> List.filterMap
+            (\( _, race ) ->
+                if race.perk == Nothing then
+                    Nothing
 
-                    else
-                        Just (Elm.val (String.Extra.decapitalize race.name))
-                )
-            |> Elm.list
-        )
-        Gen.Data.TypePerk.all
+                else
+                    Just (Elm.val (String.Extra.decapitalize race.name))
+            )
+        |> Elm.list
         |> Gen.List.call_.sortBy
             (Elm.fn
                 (Elm.Arg.record identity

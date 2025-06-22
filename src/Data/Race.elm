@@ -1,6 +1,6 @@
-module Data.Race exposing (Details, all, gemini, genie, intro, title, withVariantAffinity)
+module Data.Race exposing (Details, intro, title, withVariantAffinity)
 
-import Generated.Types exposing (Affinity(..), Race(..), Size(..))
+import Generated.Types exposing (Affinity(..), Race, Size)
 import List.Extra
 
 
@@ -12,11 +12,6 @@ type alias Details =
     , content : String
     , dlc : Maybe String
     }
-
-
-all : List Race -> List Details
-all races =
-    [ genie races, gemini races ]
 
 
 withVariantAffinity :
@@ -45,56 +40,6 @@ withVariantAffinity match details races =
     , dlc = details.dlc
     , content = details.content
     }
-
-
-genie : List Race -> Details
-genie =
-    { name = Genie
-    , tank = High
-    , affinities = [ All ]
-    , charge = Low
-    , dlc = Just "Loose Assets"
-    , content = """
-        Genies are avatars of raw magic. They have the [???] type, meaning [???] types are double discounted and rounded down. All Genies then can pick any one affinity as their secondary type which heavily influences their appearance in spirit form. Their spirit form looking like a humanoid elemental of their chosen type from 1 inch to 30f tall. All genies then have a physical form based on any other witch race, as though using Hybridize to acquire it, but they can’t gain the type perks or their form of cheating death. Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free, used personally, not via Mammon, & costs nothing if used to satisfy a Master’s wish Genies do not age. A slain genie returns to her Vessel, see type perk.
-
-        __Genies draw Mana__ from Wishes, whenever any person says "I wish", and the genie is capable of satisfying that wish with her available abilities, the genie gains a low mana charge for the next hour. If her master is the one to wish, she gains her full mana capacity for meeting the wish.
-        """
-    }
-        |> withVariantAffinity
-            (\r ->
-                case r of
-                    Genie aff ->
-                        Just aff
-
-                    _ ->
-                        Nothing
-            )
-
-
-gemini : List Race -> Details
-gemini =
-    { name = Gemini
-    , tank = High
-    , affinities = [ Earth ]
-    , charge = Low
-    , dlc = Just "Loose Assets"
-    , content = """
-        Gemini are split soul beings that inhabit two bodies as one synchronous whole. The bodies are always nearly identical. Geminai have bodies composed of an associated gem associated with an Affinity, ruby fire affinity for example. Each of the pair have a different gem. This gem influences the coloration of parts of their body besides their skin, though they can have gem protrusions through their skin, which is still soft like flesh on the surface. Each half of the Gemini spends Power separately on its own effects, evenly splitting their power total between them. Gemini are born looking around 8 and age 1 year per 10 for around 80-120 years before they stop aging entirely.
-
-        A dead Gemini half will fade into stardust, but will reappear when the surviving half sleeps, waking in the other half’s arms.
-
-        __Geminai draw Mana__ from Pairing, the more in synch the two halves are in mind, intent, and appearance, the more mana they generate proportional to distance to each other. They feel this charge rate and are uncomfortable when it is weakened.
-        """
-    }
-        |> withVariantAffinity
-            (\r ->
-                case r of
-                    Gemini aff ->
-                        Just aff
-
-                    _ ->
-                        Nothing
-            )
 
 
 title : String

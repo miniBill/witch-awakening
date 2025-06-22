@@ -6,7 +6,6 @@ import Elm.Arg
 import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
-import Elm.Op
 import Gen.CodeGen.Generate as Generate
 import Gen.Data.Race
 import Gen.List
@@ -42,21 +41,18 @@ all types dlcRaces =
         )
     <|
         \races ->
-            Elm.Op.append
-                (dlcRaces
-                    |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-                    |> List.map
-                        (\( _, race ) ->
-                            case race.elements of
-                                [ _ ] ->
-                                    Elm.apply (Elm.val (String.Extra.decapitalize race.name)) [ races ]
+            dlcRaces
+                |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
+                |> List.map
+                    (\( _, race ) ->
+                        case race.elements of
+                            [ _ ] ->
+                                Elm.apply (Elm.val (String.Extra.decapitalize race.name)) [ races ]
 
-                                _ ->
-                                    Elm.val (String.Extra.decapitalize race.name)
-                        )
-                    |> Elm.list
-                )
-                (Gen.Data.Race.call_.all races)
+                            _ ->
+                                Elm.val (String.Extra.decapitalize race.name)
+                    )
+                |> Elm.list
                 |> Gen.List.call_.sortBy
                     (Elm.fn
                         (Elm.Arg.record identity
