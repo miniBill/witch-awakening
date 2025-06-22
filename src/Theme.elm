@@ -324,6 +324,9 @@ viewPiece piece =
                 , Html.text value
                 ]
 
+        LineBreak ->
+            Html.br [] []
+
 
 viewAffinityBadge : Affinity -> Html msg
 viewAffinityBadge affinity =

@@ -31,6 +31,7 @@ type Piece
     | Warning
     | Error
     | RewardPoints String
+    | LineBreak
 
 
 type Color
@@ -255,6 +256,9 @@ parseSquareBrackets str =
 
                 ( _, "star" ) ->
                     Star
+
+                ( _, "br" ) ->
+                    LineBreak
 
                 _ ->
                     if List.member str [ "OR", "/", "DESCRIPTION:", "LOCATION:", "RELATIONS:" ] then

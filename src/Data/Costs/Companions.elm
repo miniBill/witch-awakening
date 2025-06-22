@@ -136,9 +136,9 @@ value model =
                         in
                         tryPick
                             [ withReason "Same faction" sameFaction
-                            , withReason "Same faction - True Treasure" sameFaction
+                            , withReason "True Treasure [br] same faction" sameFaction
                             , sameKind
-                            , withReason "Possibly friendly faction - True Treasure" possiblyFriendly
+                            , withReason "True Treasure [br] friendly faction" possiblyFriendly
                             ]
 
                     else
