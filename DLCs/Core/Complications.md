@@ -170,9 +170,9 @@ In short, anything you do to draw attention to yourself draws significantly more
 
 ## Complication: Silly Goose
 - Class: Academic
-- Gain: 2
+- Gains: 1, 2
 
-Your true form is younger than normal, anywhere between 6 and 14, but on top of that it’s abnormally hard for people to take you seriously. You tend to melt hearts when they see you and it seems to dumb people down, similar to seeing a really adorable kitten and instinctively talking down, magnified a few times. They’re generally dismissive with presumption that you’re being imaginative, or mistaken about something. If it’s any consolation, they’ll likewise resist believing you did something wrong, depending, You are more excitable and do have an overactive imagination. For 1p instead of 2, you can only have the age curse. Persistent.
+Your true form is younger than normal, anywhere between 6 and 14, but on top of that it’s abnormally hard for people to take you seriously. You tend to melt hearts when they see you and it seems to dumb people down, similar to seeing a really adorable kitten and instinctively talking down, magnified a few times. They’re generally dismissive with presumption that you’re being imaginative, or mistaken about something. If it’s any consolation, they’ll likewise resist believing you did something wrong, depending, You are more excitable and do have an overactive imagination. For [1] instead of [2], you can have the age curse only. Persistent.
 
 
 ## Complication: Hard Lessons
