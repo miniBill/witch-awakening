@@ -1,4 +1,4 @@
-module View.Perk exposing (viewPerks)
+module View.Perk exposing (perkToShortString, viewPerks)
 
 import Data.Perk as Perk exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paragraph, px, rgba, spacing, text, width)
@@ -16,6 +16,7 @@ import String.Extra
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display, RankedPerk)
 import View
+import View.Race
 
 
 viewPerks : Display -> Maybe Race -> List Race -> List RankedPerk -> Element Choice
@@ -181,14 +182,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
 
         nameString : String
         nameString =
-            if name == JackOfAll then
-                Types.perkToString name
-
-            else
-                Types.perkToString name
-                    |> String.split "-"
-                    |> List.take 1
-                    |> String.concat
+            perkToShortString name
     in
     Theme.card [ Theme.id nameString ]
         { display = display
@@ -267,6 +261,18 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
         , content = viewContent mainRace races color selected perk
         , onPress = msg
         }
+
+
+perkToShortString : Perk -> String
+perkToShortString name =
+    if name == JackOfAll then
+        Types.perkToString name
+
+    else
+        Types.perkToString name
+            |> String.split "-"
+            |> List.take 1
+            |> String.concat
 
 
 viewContent : Maybe Race -> List Race -> Int -> List RankedPerk -> Perk.Details -> List (Element Choice)
@@ -368,10 +374,7 @@ racePicker label toMsg color mainRace races =
             in
             Theme.button (width fill :: Font.center :: attrs)
                 { label =
-                    Types.raceToString race
-                        |> String.split "-"
-                        |> List.take 1
-                        |> String.concat
+                    View.Race.raceToShortString race
                         |> text
                 , onPress = Just <| toMsg newValue
                 }

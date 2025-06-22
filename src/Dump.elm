@@ -19,12 +19,13 @@ import Generated.Perk
 import Generated.Race
 import Generated.Relic
 import Generated.TypePerk
-import Generated.Types exposing (Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, raceToString, relicToString, sizeToString)
+import Generated.Types exposing (Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, relicToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
 import List.Extra
 import String.Multiline
+import View.Race
 
 
 type alias Model =
@@ -134,7 +135,7 @@ dump model =
                 typePerks : Dict String Data.TypePerk.Details
                 typePerks =
                     Generated.TypePerk.all
-                        |> Dict.Extra.fromListBy (\typePerk -> raceToString typePerk.race)
+                        |> Dict.Extra.fromListBy (\typePerk -> View.Race.raceToShortString typePerk.race)
             in
             go (dumpRace typePerks >> Just) (Generated.Race.all [])
 
@@ -208,14 +209,14 @@ categoryButton selected ( name, category ) =
 
 dumpRace : Dict String Data.TypePerk.Details -> Data.Race.Details -> List (Maybe String)
 dumpRace typePerks details =
-    [ Just <| "## Race: " ++ raceToString details.name
+    [ Just <| "## Race: " ++ View.Race.raceToShortString details.name
     , listItem "Elements" affinityToString details.affinities
     , item "Mana capacity" sizeToString details.tank
     , item "Mana rate" sizeToString details.charge
     , Just ""
     , Just <| String.Multiline.here details.content
     ]
-        ++ (case Dict.get (raceToString details.name) typePerks of
+        ++ (case Dict.get (View.Race.raceToShortString details.name) typePerks of
                 Nothing ->
                     []
 
@@ -423,7 +424,7 @@ dumpCompanion faction companion =
         item "Full name" companionToString companion.name
     , maybeItem "Faction" factionToString faction
     , maybeItem "Class" identity class
-    , case List.map raceToString companion.races of
+    , case List.map View.Race.raceToShortString companion.races of
         [] ->
             Nothing
 

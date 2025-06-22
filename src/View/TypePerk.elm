@@ -10,6 +10,7 @@ import Images
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display)
 import View
+import View.Race
 
 
 viewTypePerks : List Race -> Display -> List Race -> Element Choice
@@ -69,7 +70,7 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
         slot =
             Types.gainToSlot cost
     in
-    Theme.card [ Theme.id ("perk-" ++ Types.raceToString race) ]
+    Theme.card [ Theme.id ("perk-" ++ View.Race.raceToShortString race) ]
         { display = display
         , forceShow = List.member race witchRaces
         , glow = 0x00F3EA6F
@@ -102,10 +103,7 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
                 _ ->
                     Types.raceToImage race
         , inFront =
-            [ Types.raceToString race
-                |> String.split "-"
-                |> List.take 1
-                |> String.concat
+            [ View.Race.raceToShortString race
                 |> gradientText 6 Gradients.yellowGradient
                 |> el
                     [ Theme.captureIt

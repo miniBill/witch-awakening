@@ -1,7 +1,7 @@
 module Data.Costs.Factions exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils as Utils exposing (Points, zero)
+import Data.Costs.Utils as Utils exposing (Points)
 import Generated.Types as Types
 import Types exposing (Model)
 

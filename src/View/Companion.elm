@@ -15,6 +15,7 @@ import Svg.Attributes
 import Theme
 import Types exposing (Choice(..), Display(..))
 import View
+import View.Race
 
 
 viewCompanions : Display -> List Companion -> Element Choice
@@ -203,7 +204,7 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                                 joined : String
                                 joined =
                                     races
-                                        |> List.map Types.raceToString
+                                        |> List.map View.Race.raceToShortString
                                         |> String.join " - "
 
                                 normal : String

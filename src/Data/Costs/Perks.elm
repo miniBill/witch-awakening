@@ -6,6 +6,7 @@ import Data.Costs.Utils as Utils exposing (Points)
 import Generated.Perk
 import Generated.Types as Types exposing (Affinity, Class, Perk(..), Race(..))
 import Types exposing (CosmicPearlData, RankedPerk)
+import View.Perk
 
 
 value :
@@ -86,4 +87,4 @@ perkValue ({ class } as model) { name, cost } =
                 in
                 -finalCost
             )
-        |> Monad.withPowerInfo (Types.perkToString name)
+        |> Monad.withPowerInfo (View.Perk.perkToShortString name)

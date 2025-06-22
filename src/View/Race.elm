@@ -1,4 +1,4 @@
-module View.Race exposing (viewRace)
+module View.Race exposing (raceToShortString, viewRace)
 
 import Data.Affinity as Affinity
 import Data.Race as Race
@@ -55,10 +55,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
 
         shortName : String
         shortName =
-            Types.raceToString name
-                |> String.split "-"
-                |> List.take 1
-                |> String.concat
+            raceToShortString name
     in
     Theme.card [ Theme.id shortName ]
         { display = display
@@ -111,6 +108,14 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                 _ ->
                     Just ( name, not isSelected )
         }
+
+
+raceToShortString : Race -> String
+raceToShortString name =
+    Types.raceToString name
+        |> String.split "-"
+        |> List.take 1
+        |> String.concat
 
 
 affinityPicker : List Race -> Race -> List (Element ( Race, Bool ))
