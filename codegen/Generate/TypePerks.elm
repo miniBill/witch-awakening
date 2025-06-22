@@ -62,7 +62,13 @@ dlcToTypePerks types races =
                 |> Maybe.map
                     (\perk ->
                         Gen.Data.TypePerk.make_.details
-                            { race = types.valueFrom race.name
+                            { race =
+                                case race.elements of
+                                    [ _ ] ->
+                                        Elm.apply (types.valueFrom race.name) [ types.valueFrom "All" ]
+
+                                    _ ->
+                                        types.valueFrom race.name
                             , content = Elm.string perk.description
                             , cost = Elm.int perk.cost
                             , dlc = Elm.maybe (Maybe.map Elm.string dlcName)

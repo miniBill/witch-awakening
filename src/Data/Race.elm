@@ -1,4 +1,4 @@
-module Data.Race exposing (Details, all, dravir, gemini, genie, intro, title)
+module Data.Race exposing (Details, all, gemini, genie, intro, title, withVariantAffinity)
 
 import Generated.Types exposing (Affinity(..), Race(..), Size(..))
 import List.Extra
@@ -16,7 +16,7 @@ type alias Details =
 
 all : List Race -> List Details
 all races =
-    [ dravir races, genie races, gemini races ]
+    [ genie races, gemini races ]
 
 
 withVariantAffinity :
@@ -35,9 +35,7 @@ withVariantAffinity match details races =
     let
         affinity : Affinity
         affinity =
-            List.Extra.findMap
-                match
-                races
+            List.Extra.findMap match races
                 |> Maybe.withDefault All
     in
     { name = details.name affinity
@@ -47,30 +45,6 @@ withVariantAffinity match details races =
     , dlc = details.dlc
     , content = details.content
     }
-
-
-dravir : List Race -> Details
-dravir =
-    { name = Dravir
-    , tank = Low
-    , affinities = [ Beast ]
-    , charge = Medium
-    , dlc = Nothing
-    , content = """
-        Draviri are what happens when those princesses end up sacrificed to the dragon with no hero(ine) to save the day. Leaving the details aside, Draviri have the horns, tail, and scales of a dragon, typically having full claws on their hands and feet. Draviri pick their secondary elemental affinity, which is manifest in a breath weapon that affects a 15ft cone or 30ft line of flame [Fire], lightning [Wind], cold and ice [Water], stone/metal shrapnel [Earth] [Metal], or poison gas / thorns [Nature] For every 10 years of life, this area increases by 5ft. Their dense draconic muscle gives them strength and stamina like a Daeva Draviri age like Elves, and if slain an egg can be found within their body that will hatch the reborn dravir within a year in the right conditions, until hatched or destroyed.
-
-        __Dravir draw Mana__ from Destruction, when they undo the work and labor that went into producing something of value based on its value and purpose to someone else. This includes the taking of life, particularly human or witch life, which briefly provides a High charge rate.
-        """
-    }
-        |> withVariantAffinity
-            (\r ->
-                case r of
-                    Dravir aff ->
-                        Just aff
-
-                    _ ->
-                        Nothing
-            )
 
 
 genie : List Race -> Details

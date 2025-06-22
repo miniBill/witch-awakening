@@ -348,6 +348,21 @@ __Wulong draw Mana__ from Artistry, charging in proximity to works of art. Any w
 Wulong are strongly associated with the arts, but some even more so, having an ability that digicasting is in part based on: Some wulong are able to physically enter any painting or written depiction that they or another wulong has created, to enter the space in the manner that it was envisioned. Within one of these spaces, they can see a tangible fourth wall somewhere within that acts like a window through the painting or page into the real world, but this can be shifted to show through any other painting or page with the same image or description, and then step through this fourth wall to return. They all share the same space and something can be left within it, while something taken turns to ink or paint outside.
 
 
+## Race: Dravir
+- Elements: Beast
+- Mana capacity: Low
+- Mana rate: Medium
+
+Draviri are what happens when those princesses end up sacrificed to the dragon with no hero(ine) to save the day. Leaving the details aside, Draviri have the horns, tail, and scales of a dragon, typically having full claws on their hands and feet. Draviri pick their secondary elemental affinity, which is manifest in a breath weapon that affects a 15ft cone or 30ft line of flame [Fire], lightning [Wind], cold and ice [Water], stone/metal shrapnel [Earth] [Metal], or poison gas / thorns [Nature] For every 10 years of life, this area increases by 5ft. Their dense draconic muscle gives them strength and stamina like a Daeva Draviri age like Elves, and if slain an egg can be found within their body that will hatch the reborn dravir within a year in the right conditions, until hatched or destroyed.
+
+__Dravir draw Mana__ from Destruction, when they undo the work and labor that went into producing something of value based on its value and purpose to someone else. This includes the taking of life, particularly human or witch life, which briefly provides a High charge rate.
+
+### Perk
+- Cost: 5
+
+Unlike most type perks, it’s rare to see a Dravir without this: The ability to assume the form of a dragonbeast, a form of humanoid dragon-type monster, being a bipedal dragonoid with 5 digit hands with full functionality of normal human arms, tipped with retractile razor claws, and they gain wings that can fly. May or may not have drastic sexual dimorphism depending on your lineage. Which is to say, female dragonbeasts may still look far more human with changes centered mostly around the back and limbs. This form empowers the Draviri’s physical attributes by 150%, and empowers their breath weapon by 300%. Dravir with this perk do not age past prime. Can partially transform, such as just growing wings.
+
+
 ## Race: Doll
 - Elements: Soul, Necro
 - Mana capacity: Low

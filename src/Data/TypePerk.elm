@@ -14,18 +14,7 @@ type alias Details =
 
 all : List Details
 all =
-    [ dravir, genie, gemini ]
-
-
-dravir : Details
-dravir =
-    { race = Dravir All
-    , cost = 5
-    , dlc = (Data.Race.dravir []).dlc
-    , content = """
-        Unlike most type perks, it’s rare to see a Dravir without this: The ability to assume the form of a dragonbeast, a form of humanoid dragon-type monster, being a bipedal dragonoid with 5 digit hands with full functionality of normal human arms, tipped with retractile razor claws, and they gain wings that can fly. May or may not have drastic sexual dimorphism depending on your lineage. Which is to say, female dragonbeasts may still look far more human with changes centered mostly around the back and limbs. This form empowers the Draviri’s physical attributes by 150%, and empowers their breath weapon by 300%. Dravir with this perk do not age past prime. Can partially transform, such as just growing wings.
-        """
-    }
+    [ genie, gemini ]
 
 
 genie : Details

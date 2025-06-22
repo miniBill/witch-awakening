@@ -122,7 +122,21 @@ fromParsed { name, items } =
                     { dlc | perks = variant v.name :: dlc.perks }
 
                 Parsers.DLCRace v ->
-                    { dlc | races = variant v.name :: dlc.races }
+                    let
+                        race : Variant
+                        race =
+                            case v.elements of
+                                [ _ ] ->
+                                    { name = v.name
+                                    , arguments = [ "Affinity" ]
+                                    , toStringException = Nothing
+                                    , dlc = name
+                                    }
+
+                                _ ->
+                                    variant v.name
+                    in
+                    { dlc | races = race :: dlc.races }
 
                 Parsers.DLCRelic v ->
                     { dlc | relics = variant v.name :: dlc.relics }
@@ -227,16 +241,8 @@ core : DLC
 core =
     { emptyDLC
         | factions = coreFactions
-        , races = coreRaces
         , perks = corePerks
     }
-
-
-coreRaces : List Variant
-coreRaces =
-    [ "Dravir" ]
-        |> buildVariants
-        |> withArguments "Dravir" [ "Affinity" ]
 
 
 coreSizes : List String

@@ -72,6 +72,7 @@ type alias EnumModule =
     , toString : Elm.Expression -> Elm.Expression
     , parser : Elm.Expression
     , fromString : Elm.Expression -> Elm.Expression
+    , argWith : String -> List (Elm.Arg Elm.Expression) -> Elm.Arg (List Elm.Expression)
     }
 
 
@@ -88,14 +89,32 @@ enumToDeclarations moduleName images enum =
             , type_ = type_.annotation
             }
 
+        argWith : String -> List (Elm.Arg a) -> Elm.Arg (List a)
+        argWith variantName args =
+            Elm.Arg.customTypeWith
+                { importFrom = moduleName
+                , typeName = enum.name
+                , variantName = variantName
+                }
+                identity
+                |> Elm.Arg.items args
+
         common : Elm.Declare.Module EnumModule
         common =
-            Elm.Declare.module_ moduleName EnumModule
-                |> Elm.Declare.Extra.withDeclarations [ Elm.docs ("# " ++ enum.name) ]
-                |> Elm.Declare.with type_
-                |> Elm.Declare.with (toStringDeclaration config enum)
-                |> Elm.Declare.with (parserDeclaration config enum)
-                |> Elm.Declare.with (fromStringDeclaration config enum)
+            let
+                inner : Elm.Declare.Module ((String -> List (Elm.Arg Elm.Expression) -> Elm.Arg (List Elm.Expression)) -> EnumModule)
+                inner =
+                    Elm.Declare.module_ moduleName EnumModule
+                        |> Elm.Declare.Extra.withDeclarations [ Elm.docs ("# " ++ enum.name) ]
+                        |> Elm.Declare.with type_
+                        |> Elm.Declare.with (toStringDeclaration config enum)
+                        |> Elm.Declare.with (parserDeclaration config enum)
+                        |> Elm.Declare.with (fromStringDeclaration config enum)
+            in
+            { name = inner.name
+            , declarations = inner.declarations
+            , call = inner.call argWith
+            }
     in
     if enum.toImage then
         common
