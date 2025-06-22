@@ -499,13 +499,13 @@ viewSectionTitle toMsg display label =
                             , label =
                                 case display of
                                     DisplayFull ->
-                                        gradient triangleRight
+                                        gradient triangleDown
 
                                     DisplayCompact ->
-                                        gradient triangleUp
+                                        gradient triangleRight
 
                                     DisplayCollapsed ->
-                                        gradient triangleDown
+                                        gradient triangleUp
                             }
                 in
                 [ hr
