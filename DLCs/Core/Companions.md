@@ -1099,7 +1099,7 @@ Sam is a high level Alphazon agent known for cooperation with the ORC. She has a
 - Has: Jen has Divination 3, Integration 4 & a _Gold Card_
 - Quote: _*“Lucky bastard in O5 was assigned to monitor Asset f9E21’s observer, and cohost.”* \*Sigh\* *“Could have been me...” - an Operator.*_
 
-Jen... is not a typical agent or employee of Alphazon. She’s a daughter of a high level executive that grew up never knowing the feeling of being unable to get something she wanted and was a designer baby derived from daeva genetics. This didn’t make her a witch, but the results do speak for themselves. She’s somewhat naive and spoiled, but in a minimally toxic way, understanding her position and being   grateful for it, though actively indulges in vices.
+Jen... is not a typical agent or employee of Alphazon. She’s a daughter of a high level executive that grew up never knowing the feeling of being unable to get something she wanted and was a designer baby derived from daeva genetics. This didn’t make her a witch, but the results do speak for themselves. She’s somewhat naive and spoiled, but in a minimally toxic way, understanding her position and being grateful for it, though actively indulges in vices.
 
 
 ## Companion: Agent 7Y
