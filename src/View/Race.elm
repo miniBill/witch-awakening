@@ -141,32 +141,39 @@ affinityPicker selected race =
             ]
     in
     case race of
-        -- Amalgam currentAffinity1 currentAffinity2 ->
-        --     let
-        --         otherRaces =
-        --             selected
-        --                 |> List.Extra.removeWhen
-        --                     (\r ->
-        --                         case r of
-        --                             Amalgam _ _ ->
-        --                                 True
-        --                             _ ->
-        --                                 False
-        --                     )
-        --         firstRaceAffinities =
-        --             List.head otherRaces
-        --                 |> Maybe.map Affinity.affinitiesForRace
-        --                 |> Maybe.withDefault [ Types.All ]
-        --         secondRaceAffinities =
-        --             List.head (List.drop 1 otherRaces)
-        --                 |> Maybe.map Affinity.affinitiesForRace
-        --                 |> Maybe.withDefault [ Types.All ]
-        --     in
-        --     [ el [ Font.bold ] <| text "Pick an affinity from the first race:"
-        --     , innerPicker (\newAffinity -> Amalgam newAffinity currentAffinity2) currentAffinity1 firstRaceAffinities
-        --     , el [ Font.bold ] <| text "Pick an affinity from the second race:"
-        --     , innerPicker (\newAffinity -> Amalgam currentAffinity1 newAffinity) currentAffinity2 secondRaceAffinities
-        --     ]
+        Amalgam currentAffinity1 currentAffinity2 ->
+            let
+                otherRaces : List Race
+                otherRaces =
+                    selected
+                        |> List.Extra.removeWhen
+                            (\r ->
+                                case r of
+                                    Amalgam _ _ ->
+                                        True
+
+                                    _ ->
+                                        False
+                            )
+
+                firstRaceAffinities : List Affinity
+                firstRaceAffinities =
+                    List.head otherRaces
+                        |> Maybe.map Affinity.affinitiesForRace
+                        |> Maybe.withDefault [ Types.All ]
+
+                secondRaceAffinities : List Affinity
+                secondRaceAffinities =
+                    List.head (List.drop 1 otherRaces)
+                        |> Maybe.map Affinity.affinitiesForRace
+                        |> Maybe.withDefault [ Types.All ]
+            in
+            [ el [ Font.bold ] <| text "Pick an affinity from the first race:"
+            , innerPicker (\newAffinity -> Amalgam newAffinity currentAffinity2) currentAffinity1 firstRaceAffinities
+            , el [ Font.bold ] <| text "Pick an affinity from the second race:"
+            , innerPicker (\newAffinity -> Amalgam currentAffinity1 newAffinity) currentAffinity2 secondRaceAffinities
+            ]
+
         Dravir currentAffinity ->
             picker Dravir
                 currentAffinity
