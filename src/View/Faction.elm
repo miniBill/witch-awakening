@@ -5,6 +5,7 @@ import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fi
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Faction
 import Generated.Magic
 import Generated.Types as Types exposing (Faction)
 import Gradients
@@ -36,7 +37,7 @@ viewFaction display faction =
                 ]
                 (Faction.intro ++ String.repeat 4 "\n" ++ Faction.summaries)
             ]
-        , Faction.all
+        , Generated.Faction.all
             |> List.Extra.removeWhen .isHuman
             |> List.filterMap (factionBox display faction)
             |> Theme.column
@@ -67,7 +68,7 @@ viewFaction display faction =
                 ]
             , el [ height <| px 40 ] Element.none
             ]
-        , Faction.all
+        , Generated.Faction.all
             |> List.filter .isHuman
             |> List.filterMap (factionBox display faction)
             |> Theme.column
@@ -75,7 +76,7 @@ viewFaction display faction =
                 , spacing <| Theme.rythm * 3
                 ]
         ]
-        [ Faction.all
+        [ Generated.Faction.all
             |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill

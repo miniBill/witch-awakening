@@ -138,6 +138,9 @@ fromParsed { name, items } =
 
                 Parsers.DLCRelic v ->
                     { dlc | relics = variant v.name :: dlc.relics }
+
+                Parsers.DLCFaction v ->
+                    { dlc | factions = variant v.name :: dlc.factions }
         )
         emptyDLC
         items
@@ -238,8 +241,7 @@ emptyDLC =
 core : DLC
 core =
     { emptyDLC
-        | factions = coreFactions
-        , perks = corePerks
+        | perks = corePerks
     }
 
 
@@ -263,9 +265,3 @@ corePerks =
     [ "Charge Swap" ]
         |> buildVariants
         |> withArguments "Charge Swap" [ "Race" ]
-
-
-coreFactions : List Variant
-coreFactions =
-    [ "The College of Arcadia", "Hawthorne Academia", "The Watchers", "The Hespatian Coven", "Lunabella", "Alfheimr Alliance", "The Outsiders", "The O.R.C.", "Alphazon Industries" ]
-        |> buildVariants

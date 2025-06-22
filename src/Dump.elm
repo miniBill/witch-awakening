@@ -3,6 +3,7 @@ module Dump exposing (main)
 import Browser
 import Data.Companion
 import Data.Complication
+import Data.Faction
 import Data.Magic
 import Data.Perk
 import Data.Race
@@ -12,6 +13,7 @@ import Dict exposing (Dict)
 import Dict.Extra
 import Generated.Companion
 import Generated.Complication
+import Generated.Faction
 import Generated.Magic
 import Generated.Perk
 import Generated.Race
@@ -43,6 +45,7 @@ type Category
     | Relic
     | Complication
     | Companion
+    | Faction
 
 
 main : Program () Model Msg
@@ -67,7 +70,7 @@ update msg model =
 init : Model
 init =
     { dlc = Nothing
-    , category = Complication
+    , category = Faction
     }
 
 
@@ -146,6 +149,9 @@ dump model =
 
         Complication ->
             go dumpComplication Generated.Complication.all
+
+        Faction ->
+            go (dumpFaction >> Just) Generated.Faction.all
 
         Companion ->
             Generated.Companion.all
@@ -335,6 +341,25 @@ dumpRelic relic =
                 , Just (String.Multiline.here details)
                 ]
             )
+
+
+dumpFaction : Data.Faction.Details -> List (Maybe String)
+dumpFaction faction =
+    [ Just <| "## Faction: " ++ factionToString faction.name
+    , item "Motto" identity faction.motto
+    , flagItem "Human" faction.isHuman
+    , Just ""
+    , Just <| String.Multiline.here faction.description
+    , Just ""
+    , Just "### Location"
+    , Just <| String.Multiline.here faction.location
+    , Just ""
+    , Just "### Relations"
+    , Just <| String.Multiline.here faction.relations
+    , Just ""
+    , Just ("### Perk: " ++ faction.perk)
+    , Just <| String.Multiline.here faction.perkContent
+    ]
 
 
 dumpCompanions : Maybe Faction -> List Data.Companion.Details -> String

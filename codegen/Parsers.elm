@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc, parseFiles)
+module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Faction, Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc, parseFiles)
 
 import Dict exposing (Dict)
 import Dict.Extra
@@ -31,6 +31,7 @@ type DLCItem
     | DLCMagic Magic
     | DLCPerk Perk
     | DLCRelic Relic
+    | DLCFaction Faction
 
 
 parseFiles : List ( String, String, String ) -> Result (List Generate.Error) (List DLC)
@@ -117,6 +118,7 @@ dlc =
                 , map DLCPerk perk
                 , map DLCRace race
                 , map DLCRelic relic
+                , map DLCFaction faction
                 ]
             )
         |. spaces
@@ -158,10 +160,7 @@ race =
                         , description = description
                         }
                 )
-                |. symbol "###"
-                |. spaces
-                |. keyword "Perk"
-                |. spaces
+                |. sectionHeader "###" "Perk"
                 |= listItem "Cost" intParser
                 |= paragraphs True
             , succeed Nothing
@@ -480,6 +479,62 @@ relic =
         |= paragraphs True
 
 
+type alias Faction =
+    { name : String
+    , motto : String
+    , isHuman : Bool
+    , description : String
+    , location : String
+    , relations : String
+    , perk : String
+    , perkContent : String
+    }
+
+
+faction : Parser Faction
+faction =
+    Parser.succeed
+        (\head description location relations factionPerk ->
+            { name = head.name
+            , motto = head.motto
+            , isHuman = head.isHuman
+            , description = description
+            , location = location
+            , relations = relations
+            , perk = factionPerk.name
+            , perkContent = factionPerk.description
+            }
+        )
+        |= (section "##"
+                "Faction"
+                (\name motto isHuman ->
+                    { name = name
+                    , motto = motto
+                    , isHuman = isHuman
+                    }
+                )
+                |> requiredItem "Motto" Ok
+                |> optionalItem "Human" False boolParser
+                |> parseSection
+           )
+        |= paragraphs True
+        |. sectionHeader "###" "Location"
+        |= paragraphs True
+        |. sectionHeader "###" "Relations"
+        |= paragraphs True
+        |= ((section "###"
+                "Perk"
+                (\name description ->
+                    { name = name
+                    , description = description
+                    }
+                )
+                |> parseSection
+            )
+                |= paragraphs True
+           )
+
+
 type alias Companion =
     { name : String
     , fullName : Maybe String
@@ -606,6 +661,14 @@ class =
 
 
 -- Generic parsers --
+
+
+sectionHeader : String -> String -> Parser ()
+sectionHeader level name =
+    symbol level
+        |. spaces
+        |. keyword name
+        |. spaces
 
 
 nonexistentKey : String

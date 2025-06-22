@@ -11,6 +11,7 @@ import Generate.Attributions exposing (DLCAttribution)
 import Generate.Classes
 import Generate.Companions
 import Generate.Complications
+import Generate.Factions
 import Generate.Gradients
 import Generate.Images exposing (ImagesModule)
 import Generate.Magics
@@ -165,7 +166,7 @@ toFiles root =
 dlcToFiles : ImagesModule -> List Parsers.DLC -> Result (List Generate.Error) (List Elm.File)
 dlcToFiles images dlcList =
     let
-        { dlcAffinities, dlcClasses, dlcCompanions, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics } =
+        { dlcAffinities, dlcClasses, dlcCompanions, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics, dlcFactions } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
@@ -192,6 +193,9 @@ dlcToFiles images dlcList =
 
                         Parsers.DLCRelic relic ->
                             { acc | dlcRelics = ( dlcName, relic ) :: acc.dlcRelics }
+
+                        Parsers.DLCFaction faction ->
+                            { acc | dlcFactions = ( dlcName, faction ) :: acc.dlcFactions }
                 )
                 { dlcAffinities = []
                 , dlcClasses = []
@@ -201,6 +205,7 @@ dlcToFiles images dlcList =
                 , dlcPerks = []
                 , dlcRaces = []
                 , dlcRelics = []
+                , dlcFactions = []
                 }
                 (List.concatMap (\dlc -> List.map (Tuple.pair dlc.name) dlc.items) dlcList)
 
@@ -238,5 +243,6 @@ dlcToFiles images dlcList =
                 , Elm.Declare.toFile (Generate.TypePerks.file types.call dlcRaces)
                 , Elm.Declare.toFile types
                 , Elm.Declare.toFile (Generate.Attributions.file dlcAttributions)
+                , Elm.Declare.toFile (Generate.Factions.file types.call dlcFactions)
                 ]
             )
