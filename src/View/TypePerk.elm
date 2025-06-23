@@ -54,6 +54,12 @@ viewTypePerks witchRaces display typePerks =
         ]
 
 
+type Length
+    = Short
+    | Average
+    | Long
+
+
 typePerkBox :
     List Race
     -> Display
@@ -69,8 +75,23 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
         slot : Slot
         slot =
             Types.gainToSlot cost
+
+        raceString : String
+        raceString =
+            View.Race.raceToShortString race
+
+        nameLength : Length
+        nameLength =
+            if stringWidth raceString < 10 then
+                Short
+
+            else if stringWidth raceString < 12 then
+                Average
+
+            else
+                Long
     in
-    Theme.card [ Theme.id ("perk-" ++ View.Race.raceToShortString race) ]
+    Theme.card [ Theme.id ("perk-" ++ raceString) ]
         { display = display
         , forceShow = List.member race witchRaces
         , glow = 0x00F3EA6F
@@ -103,11 +124,37 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
                 _ ->
                     Types.raceToImage race
         , inFront =
-            [ View.Race.raceToShortString race
+            [ raceString
                 |> gradientText 6 Gradients.yellowGradient
                 |> el
                     [ Theme.captureIt
-                    , Font.size 56
+                    , case nameLength of
+                        Short ->
+                            Font.size 56
+
+                        Average ->
+                            Font.size 46
+
+                        Long ->
+                            Font.size 40
+                    , case nameLength of
+                        Short ->
+                            moveLeft 0
+
+                        Average ->
+                            moveLeft 18
+
+                        Long ->
+                            moveLeft 30
+                    , case nameLength of
+                        Short ->
+                            moveDown 0
+
+                        Average ->
+                            moveDown 8
+
+                        Long ->
+                            moveDown 11
                     , centerX
                     ]
             , String.fromInt -cost
@@ -138,3 +185,17 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
         , content = [ Theme.blocks [] content ]
         , onPress = Just ( race, not isSelected )
         }
+
+
+stringWidth : String -> Float
+stringWidth s =
+    String.foldl
+        (\c acc ->
+            if c == 'I' || c == 'i' then
+                acc + 0.5
+
+            else
+                acc + 1
+        )
+        0
+        s
