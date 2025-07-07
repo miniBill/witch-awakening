@@ -99,16 +99,12 @@ Notes:
 + Dire Wolves, while aggressive and violent, aren't usually this malicious, and can't weave a curse like this itself.
 
 
---- BOBBY TABLE ---
+## Quest: Just Desserts
+- Slot: Noble
+- Threat: 6
+- Conflict: 4
+- Reward: 6
 
-
-JUST DESSERTS
-Noble
-
-Theat 6
-Conflict 4
-Reward 6
-    
 For any number of reasons, you've found yourself at an elaborate dinner party celebrating the wedding between a local princess and a merchant prince known for making his wealth through the cheap mass production of medicines sold at just enough to make a profit, thanks to his usage of Golemwork for automation. They're both beloved by everyone. And yet, in the middle of the dance, they are both struck with a gruesome death. The large estate is sealed off from outside magics and the borders immediately slam shut on lockdown, thick layers of antimagic wards fully enclose the estate.
 
 Until the murderer is caught, every day 1-3 deaths will turn up.
@@ -116,35 +112,47 @@ Until the murderer is caught, every day 1-3 deaths will turn up.
 Notes:
 + Each body appears to have a stab wound among other injuries, could it relate to why the souls are missing?
 + The killer must be an Outsider that didn't expect the lockdown, and are trying to cause as much suffering and terror as they can in order to invoke Far Gods to break themselves free.
-+ The Murderer seems to resist the antimagic fields, and whatever is allowing it, is affecting you too -- but you both effectively have the Dysfunction complication for the quest
- 
-GHOST STORIES
-Noble
 
-Threat 6
-Conflict 3
-Reward 5
+### Sidebar
+The Murderer seems to resist the antimagic fields, and whatever is allowing it, is affecting you too -- but you both effectively have the Dysfunction complication for the quest
+
+
+## Quest: Ghost Stories
+- Slot: Noble
+- Threat: 6
+- Conflict: 3
+- Reward: 5
 
 In a rural town you by some means overhear the hushed terrified whispers that a group of teenagers went searching for two of their missing friend who they claim have fallen victim to the "Witch of the Woods" who cursed the town long ago, every 20 years kids go missing, for the past 200 years. If you check with the factions, nobody has heard of the case. Pulling on the thread yourself however, you'll unravel a town full of supernatural occurrences and come to learn the inhabitants are under some subtle compulsion preventing them from leaving and making outsiders less aware of the town, even from Reapers who'd ferry spirits to safety.
 
 Notes:
 + An isolated ecosystem that's been cut off from Reapers, the inhabitants denied afterlives, left to wander the region until they go insane or fall victim to predatory spirits, evolving into spirit beasts and monsters such as Poltergeists, Banshees, & other dangers that are well fed enough to affect the material world.
-+ The avoidance compulsion seems strong, however you ended up there, outside help is unlikely. What's going on here?
 
-ON SILVER WINGS
-Noble - Evil Route
+### Sidebar
+The avoidance compulsion seems strong, however you ended up there, outside help is unlikely. What's going on here?
 
-Threat 5
-Conflict 3
-Reward 3
+
+## Quest: On Silver Wings
+- Slot: Noble
+- Evil Route: True
+- Threat: 5
+- Conflict: 3
+- Reward: 3
 
 A close friend or family member... or at least a wealthy patron, has been afflicted by a horrific curse causing agony and soulburn. If they succumb to this curse, they face True Death, urgently requiring a specific potion before the next New Moon. The problem is, the potion requires silver blood of a feathered unicorn, creatures of divine grace, light, and purity -- and extraordinarily rare, unlikely to even appear on Earth. You must enter the Faewilds and seek out the unicorn and obtain its blood. The intelligent creature cannot tolerate evil or corruption and is equivalent to a Rank 5 class Witch in raw magic potential utilizing light based magics.
 
 Notes:
-+ If you can be considered "Good" aligned and unselfish, the unicorn can be bargained with to willingly give a vial of silverblood
++ If you can be considered \"Good\" aligned and unselfish, the unicorn can be bargained with to willingly give a vial of silverblood
 + If you also have a female form without male aspects, the unicorn may be more friendly, even loving, and give silverblood in exchange for your time, and becomes an ally.
-+ If you kill the unicorn, you obtain a treasure trove of very rare potion / ritual ingredients, and the horn can improve any Rod or wand to increase magical potency by 10%.
-+ As an ally, the unicorn can provide silverblood in the future, feathers, and come to your aid in times of great need. Otherwise is good company when you visit.
+
+### Sidebar
+If you kill the unicorn, you obtain a treasure trove of very rare potion / ritual ingredients, and the horn can improve any Rod or wand to increase magical potency by 10%.
+
+### Sidebar
+As an ally, the unicorn can provide silverblood in the future, feathers, and come to your aid in times of great need. Otherwise is good company when you visit.
+
+
+--- BOBBY TABLE ---
 
 ON MY MARK
 Noble
