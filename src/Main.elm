@@ -33,6 +33,7 @@ import View.Intro as Intro
 import View.Magic as Magic
 import View.Menu as Menu
 import View.Perk as Perk
+import View.Quest as Quest
 import View.Race as Race
 import View.Relic as Relic
 import View.TypePerk as TypePerk
@@ -267,6 +268,12 @@ updateOnChoice choice model =
         DisplayCompanions companionsDisplay ->
             { model | companionsDisplay = companionsDisplay }
 
+        ChoiceQuest ( quest, selected ) ->
+            { model | quests = toggle (==) selected quest model.quests }
+
+        DisplayQuests questsDisplay ->
+            { model | questsDisplay = questsDisplay }
+
         ChoiceRelic ( relic, selected ) ->
             { model | relics = toggle isSameName selected relic model.relics }
 
@@ -350,6 +357,7 @@ toUrl model =
     , one "faction" (\( name, _ ) -> Types.factionToString name) model.faction
     , one "factionPerk" (\( _, perk ) -> boolToString perk) model.faction
     , list "companion" Types.companionToString model.companions
+    , list "quest" Types.questToString model.quests
     , list "relic"
         (\{ name, cost } ->
             Types.relicToString name ++ String.fromInt cost
@@ -523,6 +531,8 @@ parseUrl navKey url =
     , companionsDisplay = DisplayFull
     , relics = parseMany "relic" parseRelic
     , relicsDisplay = DisplayFull
+    , quests = parseMany "quest" Types.questFromString
+    , questsDisplay = DisplayFull
     , cosmicPearl =
         { add = parseMany "addAffinity" Types.affinityFromString
         , change =
@@ -579,7 +589,7 @@ innerView model =
     let
         allCompact : Bool
         allCompact =
-            model.classDisplay /= DisplayFull && model.raceDisplay /= DisplayFull && model.gameModeDisplay /= DisplayFull && model.complicationsDisplay /= DisplayFull && model.typePerksDisplay /= DisplayFull && model.magicDisplay /= DisplayFull && model.perksDisplay /= DisplayFull && model.factionDisplay /= DisplayFull && model.factionalMagicDisplay /= DisplayFull && model.companionsDisplay /= DisplayFull && model.relicsDisplay /= DisplayFull
+            model.classDisplay /= DisplayFull && model.raceDisplay /= DisplayFull && model.gameModeDisplay /= DisplayFull && model.complicationsDisplay /= DisplayFull && model.typePerksDisplay /= DisplayFull && model.magicDisplay /= DisplayFull && model.perksDisplay /= DisplayFull && model.factionDisplay /= DisplayFull && model.factionalMagicDisplay /= DisplayFull && model.companionsDisplay /= DisplayFull && model.questsDisplay /= DisplayFull && model.relicsDisplay /= DisplayFull
     in
     Theme.column
         [ width fill
@@ -603,6 +613,7 @@ innerView model =
         , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
         , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
         , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions
+        , Element.Lazy.lazy2 Quest.viewQuests model.questsDisplay model.quests
         , Element.Lazy.lazy5 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.mainRace model.races model.relics
         ]
         |> Element.map Choice

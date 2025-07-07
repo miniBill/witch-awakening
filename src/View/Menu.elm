@@ -9,6 +9,7 @@ import Data.Costs.Factions
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
 import Data.Costs.Perks
+import Data.Costs.Quests
 import Data.Costs.Race
 import Data.Costs.Relics
 import Data.Costs.TypePerks
@@ -287,6 +288,7 @@ viewCalculations model power warnings affinities =
         , keyedRow "Perks" model.expandedMenuSections (Data.Costs.Perks.value model) Nothing
         , keyedRow "Faction" model.expandedMenuSections (Data.Costs.Factions.value model) <| Just "Factions"
         , keyedRow "Companions" model.expandedMenuSections (Data.Costs.Companions.value model) Nothing
+        , keyedRow "Quests" model.expandedMenuSections (Data.Costs.Quests.value model) Nothing
         , ( "RelicSlider", relicSlider model )
         , keyedRow "Relics" model.expandedMenuSections (Data.Costs.Relics.value model) Nothing
         , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
@@ -406,6 +408,9 @@ row label expandedMenuSections result target =
                         case info.value of
                             CostsMonad.Power power ->
                                 rightPoints { rewardPoints = 0, power = power }
+
+                            CostsMonad.RewardPoints rewardPoints ->
+                                rightPoints { rewardPoints = rewardPoints, power = 0 }
 
                             CostsMonad.FreeBecause message ->
                                 Theme.blocks [] message

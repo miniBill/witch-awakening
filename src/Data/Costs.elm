@@ -7,6 +7,7 @@ import Data.Costs.Factions
 import Data.Costs.Magic
 import Data.Costs.Monad as Monad exposing (Monad, succeed)
 import Data.Costs.Perks
+import Data.Costs.Quests
 import Data.Costs.Race
 import Data.Costs.Relics
 import Data.Costs.TypePerks
@@ -30,6 +31,7 @@ totalCost model =
     , Data.Costs.Perks.value model
     , Data.Costs.Factions.value model
     , Data.Costs.Companions.value model
+    , Data.Costs.Quests.value model
     , Data.Costs.Relics.value model
     , conversion model
 

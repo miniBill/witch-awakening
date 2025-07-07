@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Faction, Magic, MagicAffinity(..), Perk, Race, Relic, Score(..), dlc, parseFiles)
+module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Faction, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), dlc, parseFiles)
 
 import Dict exposing (Dict)
 import Dict.Extra
@@ -27,6 +27,7 @@ type DLCItem
     | DLCClass Class
     | DLCRace Race
     | DLCCompanion Companion
+    | DLCQuest Quest
     | DLCComplication Complication
     | DLCMagic Magic
     | DLCPerk Perk
@@ -72,7 +73,17 @@ parseFiles inputs =
 
 parseDLC : ( String, String, String ) -> Result (List Generate.Error) DLC
 parseDLC ( folder, filename, content ) =
-    Parser.run dlc content
+    let
+        cut : String
+        cut =
+            case String.indexes "--- BOBBY TABLE ---" content of
+                [] ->
+                    content
+
+                index :: _ ->
+                    String.left index content
+    in
+    Parser.run dlc cut
         |> Result.mapError
             (\deadEnds ->
                 [ { title = "Error parsing DLC file"
@@ -113,6 +124,7 @@ dlc =
                 [ map DLCAffinity affinity
                 , map DLCClass class
                 , map DLCCompanion companion
+                , map DLCQuest quest
                 , map DLCComplication complication
                 , map DLCMagic magic
                 , map DLCPerk perk
@@ -188,7 +200,7 @@ perk =
     (section "##" "Perk" Perk
         |> requiredItem "Element" Ok
         |> requiredItem "Class" Ok
-        |> flag "Meta"
+        |> flagItem "Meta"
         |> parseSection
     )
         |= oneOf
@@ -298,8 +310,8 @@ maybeItem key parser s =
     optionalItem key Nothing (\raw -> raw |> parser |> Result.map Just) s
 
 
-flag : String -> Section (Bool -> b) -> Section b
-flag key s =
+flagItem : String -> Section (Bool -> b) -> Section b
+flagItem key s =
     optionalItem key False boolParser s
 
 
@@ -393,8 +405,8 @@ magic =
                     Nothing ->
                         Ok (Alternative splat)
             )
-        |> flag "Has rank zero"
-        |> flag "Elementalism"
+        |> flagItem "Has rank zero"
+        |> flagItem "Elementalism"
         |> parseSection
     )
         |= paragraphs True
@@ -443,7 +455,7 @@ affinity : Parser Affinity
 affinity =
     section "##" "Affinity" Affinity
         |> requiredItem "Color" hexParser
-        |> flag "Rainbow"
+        |> flagItem "Rainbow"
         |> maybeItem "Symbol" Ok
         |> parseSection
 
@@ -595,7 +607,7 @@ companion =
             , requiredItem "Races" stringListParser
             , optionalItem nonexistentKey [] (\_ -> Ok [])
             ]
-        |> flag "Has Perk"
+        |> flagItem "Has Perk"
         |> maybeItem "Cost" intParser
         |> score "Power"
         |> score "Teamwork"
@@ -611,6 +623,77 @@ companion =
         |= paragraphs True
 
 
+type alias Quest =
+    { name : String
+    , slot : String
+    , evil : Maybe Bool
+    , threat : Int
+    , conflict : Int
+    , reward : Int
+    , faction : Maybe String
+    , description : String
+    , notes : List String
+    , sidebars : List String
+    }
+
+
+quest : Parser Quest
+quest =
+    let
+        evilFlagParser : Bool -> String -> Result String (Maybe Bool)
+        evilFlagParser evil input =
+            input
+                |> boolParser
+                |> Result.map
+                    (\f ->
+                        if f then
+                            Just evil
+
+                        else
+                            Nothing
+                    )
+    in
+    succeed
+        (\ctor description sidebars ->
+            case String.split "Notes:" description of
+                [ before, after ] ->
+                    ctor before
+                        (after
+                            |> String.split "\n"
+                            |> List.map
+                                (\s ->
+                                    s
+                                        |> String.trim
+                                        |> String.dropLeft 1
+                                )
+                            |> List.Extra.removeWhen String.isEmpty
+                        )
+                        sidebars
+
+                _ ->
+                    ctor description [] sidebars
+        )
+        |= (section "##" "Quest" Quest
+                |> requiredItem "Slot" Ok
+                |> oneOfItems
+                    [ optionalItem "Evil Route" Nothing (evilFlagParser False)
+                    , optionalItem "Evil" Nothing (evilFlagParser True)
+                    , optionalItem nonexistentKey Nothing (\_ -> Ok Nothing)
+                    ]
+                |> requiredItem "Threat" intParser
+                |> requiredItem "Conflict" intParser
+                |> requiredItem "Reward" intParser
+                |> maybeItem "Faction" Ok
+                |> parseSection
+           )
+        |= paragraphs True
+        |= many
+            (Parser.succeed identity
+                |. sectionHeader "###" "Sidebar"
+                |= paragraphs True
+            )
+
+
 type alias Complication =
     { name : String
     , class : Maybe String
@@ -624,7 +707,7 @@ complication : Parser Complication
 complication =
     (section "##" "Complication" Complication
         |> maybeItem "Class" Ok
-        |> flag "Tiered"
+        |> flagItem "Tiered"
         |> maybeItem "Category" Ok
         |> parseSection
     )

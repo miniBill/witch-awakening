@@ -16,6 +16,7 @@ import Generate.Gradients
 import Generate.Images exposing (ImagesModule)
 import Generate.Magics
 import Generate.Perks
+import Generate.Quests
 import Generate.Races
 import Generate.Relics
 import Generate.TypePerks
@@ -166,7 +167,7 @@ toFiles root =
 dlcToFiles : ImagesModule -> List Parsers.DLC -> Result (List Generate.Error) (List Elm.File)
 dlcToFiles images dlcList =
     let
-        { dlcAffinities, dlcClasses, dlcCompanions, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics, dlcFactions } =
+        { dlcAffinities, dlcClasses, dlcCompanions, dlcQuests, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics, dlcFactions } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
@@ -178,6 +179,9 @@ dlcToFiles images dlcList =
 
                         Parsers.DLCCompanion companion ->
                             { acc | dlcCompanions = ( dlcName, companion ) :: acc.dlcCompanions }
+
+                        Parsers.DLCQuest quest ->
+                            { acc | dlcQuests = ( dlcName, quest ) :: acc.dlcQuests }
 
                         Parsers.DLCComplication complication ->
                             { acc | dlcComplications = ( dlcName, complication ) :: acc.dlcComplications }
@@ -200,6 +204,7 @@ dlcToFiles images dlcList =
                 { dlcAffinities = []
                 , dlcClasses = []
                 , dlcCompanions = []
+                , dlcQuests = []
                 , dlcComplications = []
                 , dlcMagics = []
                 , dlcPerks = []
@@ -235,6 +240,7 @@ dlcToFiles images dlcList =
                 [ Elm.Declare.toFile (Generate.Affinities.file types.call dlcAffinities)
                 , Elm.Declare.toFile (Generate.Classes.file types.call dlcClasses)
                 , Elm.Declare.toFile (Generate.Companions.file types.call dlcCompanions)
+                , Elm.Declare.toFile (Generate.Quests.file types.call dlcQuests)
                 , Elm.Declare.toFile (Generate.Complications.file types.call dlcComplications)
                 , Elm.Declare.toFile (Generate.Magics.file types.call dlcMagics)
                 , Elm.Declare.toFile (Generate.Perks.file types.call dlcPerks)

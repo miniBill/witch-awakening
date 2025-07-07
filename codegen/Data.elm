@@ -53,6 +53,7 @@ enums parsedDLCs =
             |> withImages
             |> withIsSame
         , buildEnum "Magic" combinedDLC.magics |> withImages
+        , buildEnum "Quest" combinedDLC.quests |> withImages
         , buildEnum "Complication" combinedDLC.complications |> withImages
         , buildEnum "ComplicationCategory" combinedDLC.complicationCategories
 
@@ -107,6 +108,9 @@ fromParsed { name, items } =
                             }
                                 :: dlc.companions
                     }
+
+                Parsers.DLCQuest v ->
+                    { dlc | quests = variant v.name :: dlc.quests }
 
                 Parsers.DLCComplication v ->
                     { dlc
@@ -168,6 +172,7 @@ withDLC dlcName original additional =
     { affinities = merge .affinities
     , classes = merge .classes
     , companions = merge .companions
+    , quests = merge .quests
     , complicationCategories = merge .complicationCategories
     , complications = merge .complications
     , factions = merge .factions
@@ -220,6 +225,7 @@ type alias DLC =
     { affinities : List Variant
     , classes : List Variant
     , companions : List Variant
+    , quests : List Variant
     , complicationCategories : List Variant
     , complications : List Variant
     , factions : List Variant
@@ -235,6 +241,7 @@ emptyDLC =
     { affinities = []
     , classes = []
     , companions = []
+    , quests = []
     , complicationCategories = []
     , complications = []
     , factions = []
