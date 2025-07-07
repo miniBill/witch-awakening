@@ -33,13 +33,13 @@ viewRelics display pearl mainRace races relics =
         , sorted
             |> Theme.wrappedRow
                 [ centerX
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
         [ sorted
             |> Theme.wrappedRow
                 [ centerX
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
 

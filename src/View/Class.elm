@@ -28,13 +28,13 @@ viewClass display class =
         , classBoxes
             |> Theme.wrappedRow
                 [ width fill
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
         [ classBoxes
             |> Theme.column
                 [ width fill
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
 

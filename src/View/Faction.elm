@@ -42,7 +42,7 @@ viewFaction display faction =
             |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         , Theme.column
             [ Background.image Images.factionHumansIntro1.src
@@ -62,7 +62,7 @@ viewFaction display faction =
                     Faction.humansIntro
                 , Theme.image
                     [ width fill
-                    , moveDown <| 40 + Theme.rythm * 3.5
+                    , moveDown <| 40 + Theme.rhythm * 3.5
                     ]
                     Images.factionHumansIntro2
                 ]
@@ -73,14 +73,14 @@ viewFaction display faction =
             |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
         [ Generated.Faction.all
             |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
 

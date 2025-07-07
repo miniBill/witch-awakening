@@ -35,13 +35,13 @@ viewCompanions display companions =
         , blocks
             |> Theme.column
                 [ width fill
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
         [ blocks
             |> Theme.wrappedRow
                 [ width fill
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
 
@@ -50,7 +50,7 @@ introBlock : Element msg
 introBlock =
     Theme.column
         [ width fill
-        , spacing <| Theme.rythm * 2
+        , spacing <| Theme.rhythm * 2
         ]
         [ let
             color : Element.Color
@@ -60,7 +60,7 @@ introBlock =
           Theme.wrappedRow
             [ width <| Element.maximum 800 fill
             , centerX
-            , spacing <| 2 * Theme.rythm
+            , spacing <| 2 * Theme.rhythm
             ]
             [ Theme.blocks
                 [ width fill
@@ -109,7 +109,7 @@ companionSection display companions ( faction, section ) =
         , boxes
             |> Theme.wrappedRow
                 [ width fill
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
 
@@ -306,10 +306,10 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                                 column
                                     [ width fill
                                     , alignTop
-                                    , spacing <| Theme.rythm // 2
+                                    , spacing <| Theme.rhythm // 2
                                     ]
                                     [ el [ Font.bold ] <| text <| label ++ ":"
-                                    , table [ width fill, spacing <| Theme.rythm // 2 ]
+                                    , table [ width fill, spacing <| Theme.rhythm // 2 ]
                                         { data =
                                             List.map
                                                 (\line ->
@@ -343,7 +343,7 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                       in
                       column
                         [ width fill
-                        , spacing <| Theme.rythm // 2
+                        , spacing <| Theme.rhythm // 2
                         ]
                         (beforeBlock :: toBlocks mixed)
                     , if String.isEmpty has then
@@ -448,7 +448,7 @@ scoreToColor p =
 cellWithLeftBorder : List (Attribute msg) -> String -> Int -> Element msg -> Element msg
 cellWithLeftBorder attrs label leftBorder content =
     el
-        ([ padding <| Theme.rythm // 2
+        ([ padding <| Theme.rhythm // 2
          , width fill
          , height fill
          , Border.widthEach

@@ -27,7 +27,7 @@ viewRace display races =
                 |> List.filterMap (raceBox display races)
                 |> Theme.wrappedRow
                     [ width fill
-                    , spacing <| Theme.rythm * 3
+                    , spacing <| Theme.rhythm * 3
                     ]
     in
     View.collapsible []

@@ -39,13 +39,13 @@ viewGameMode display gameMode =
         , (boxes ++ [ slotsBox ])
             |> Theme.wrappedRow
                 [ centerX
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
         [ boxes
             |> Theme.wrappedRow
                 [ width fill
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
 

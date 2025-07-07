@@ -36,7 +36,7 @@ viewPerks display mainRace races perks =
             |> List.filterMap (perkBox display perks mainRace races)
             |> Theme.wrappedRow
                 [ centerX
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
         [ sorted
@@ -44,14 +44,14 @@ viewPerks display mainRace races perks =
             |> List.filterMap (perkBox display perks mainRace races)
             |> Theme.wrappedRow
                 [ centerX
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         , sorted
             |> List.Extra.removeWhen isOverlong
             |> List.filterMap (perkBox display perks mainRace races)
             |> Theme.wrappedRow
                 [ centerX
-                , spacing <| Theme.rythm * 3
+                , spacing <| Theme.rhythm * 3
                 ]
         ]
 
@@ -76,7 +76,7 @@ introBlock : Element msg
 introBlock =
     Theme.column
         [ width fill
-        , spacing <| Theme.rythm * 2
+        , spacing <| Theme.rhythm * 2
         ]
         [ let
             blackish : Element.Color

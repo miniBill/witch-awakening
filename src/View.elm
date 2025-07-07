@@ -21,7 +21,7 @@ collapsible attrs display displayMsg choiceMsg title full compact =
         DisplayFull ->
             Theme.column
                 ([ width fill
-                 , spacing <| Theme.rythm * 2
+                 , spacing <| Theme.rhythm * 2
                  ]
                     ++ attrs
                 )
@@ -32,7 +32,7 @@ collapsible attrs display displayMsg choiceMsg title full compact =
         DisplayCompact ->
             Theme.column
                 [ width fill
-                , spacing <| Theme.rythm * 2
+                , spacing <| Theme.rhythm * 2
                 ]
             <|
                 Theme.collapsibleBlocks displayMsg display [] title

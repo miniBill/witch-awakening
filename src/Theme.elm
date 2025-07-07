@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rounded, row, rythm, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -22,24 +22,24 @@ import String.Multiline
 import Types exposing (Display(..))
 
 
-rythm : number
-rythm =
+rhythm : number
+rhythm =
     8
 
 
 padding : Attribute msg
 padding =
-    Element.padding rythm
+    Element.padding rhythm
 
 
 spacing : Attribute msg
 spacing =
-    Element.spacing rythm
+    Element.spacing rhythm
 
 
 rounded : Attribute msg
 rounded =
-    Border.rounded rythm
+    Border.rounded rhythm
 
 
 image : List (Attribute msg) -> Image -> Element msg

@@ -458,7 +458,7 @@ capBuildSwitch { capBuild } =
         roundIf : Bool -> number
         roundIf b =
             if b then
-                Theme.rythm
+                Theme.rhythm
 
             else
                 0

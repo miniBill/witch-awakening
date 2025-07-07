@@ -105,7 +105,7 @@ update msg model =
                     (\{ element } ->
                         Browser.Dom.setViewport
                             0
-                            (element.y - Theme.rythm)
+                            (element.y - Theme.rhythm)
                     )
                 |> Task.attempt (\_ -> Nop)
             )

@@ -21,7 +21,7 @@ viewComplications display complications =
             items
                 |> Theme.wrappedRow
                     [ centerX
-                    , spacing <| Theme.rythm * 3
+                    , spacing <| Theme.rhythm * 3
                     ]
 
         isWorldShift : Complication.Details -> Bool
