@@ -152,14 +152,11 @@ If you kill the unicorn, you obtain a treasure trove of very rare potion / ritua
 As an ally, the unicorn can provide silverblood in the future, feathers, and come to your aid in times of great need. Otherwise is good company when you visit.
 
 
---- BOBBY TABLE ---
-
-ON MY MARK
-Noble
-
-Threat 4
-Conflict 6
-Reward 4
+## Quest: On my Mark
+- Slot: Noble
+- Threat: 4
+- Conflict: 6
+- Reward: 4
 
 You've received either a bounty tip or an assassination mark for a wanted rogue witch, or a nosy witch who stuck their nose in the wrong person's business or were in the wrong place at the wrong time. They're wanted dead or alive either way. If you take them alive, the Threat and Reward both increase by 2 points as they resist. They'll have at least two tier 4 magics, plus a random assortment of 1-3 rank magics, making them an either an experienced and capable witch, or a naturally gifted witch in over their head. They have allies of similar standard to your own, being a member of a major faction with a companion from that faction.
 
@@ -167,26 +164,30 @@ Notes:
 + If evil, the client prefers them alive and roughed up a little.
 + If good, the ORC or Watchers hosting the bounty don't have a preference for alive or dead, but will find any prisoner abuse distasteful or potentially criminal, but they're wanted for some serious reason, such as burning an orphanage.
 
-THE MATHEMATICIAN
-Heroic
 
-Threat 7
-Conflict 4
-Reward 7
+## Quest: The Mathematician
+- Slot: Heroic
+- Threat: 7
+- Conflict: 4
+- Reward: 7
 
 A form of magic that pops up from time to time. By nature it's hard to describe, but to be brief; High Order Mathematics is a very raw form of magic that unfailingly renders the practitioner insane, not from unnatural memetic hazards, but the raw understanding and changes in perspective utilizing numerals and characters of the First Language used in Runes, The Mathematician is an insane witch, but a glimpse in their mind is like looking upon a Far God -- chaotic, esoteric, unpredictable. The Mathematician is capable of replicating any magic effect, and many unknown magic effects, but is thoroughly insane- And for some reason, they've fixated on you.
 
 Notes:
 + They aren't malicious, but in their fixation they're experimenting on you with any number of parameters. They want -- need -- to know everything about you, remaining distant but engineering scenarios that test some quality or attribute of yours, even as simple as "How do they react to becoming a cat" -- or much worse.
-+ The Mathematician is an insane stalker, who is one of the most powerful non-deities in the setting, & highly paranoid, almost never in-person.
-+ They aren't an ally, and observe you remotely. They make your life more interesting and hazardous, but might intervene to save you from True Death, but not hardships, until bored.
 
-PACK TACTICS
-Heroic
+### Sidebar
+To be clear, the Mathematician is an insane stalker, who is one of the most powerful non-deities in the setting, & highly paranoid, almost never in-person.
 
-Threat 8
-Conflict 3
-Reward 7
+### Sidebar
+They aren't an ally, and observe you remotely. They make your life more interesting and hazardous, but might intervene to save you from True Death, but not hardships, until bored.
+
+
+## Quest: Pack Tactics
+- Slot: Heroic
+- Threat: 8
+- Conflict: 3
+- Reward: 7
 
 Requires *Gone Feral*. You track down the source of the soulstealing curse within the dire wolves, leading you to discover that the pack of dire wolves are just an offshoot from the greater Lycanthrope packs that are currently embroiled in a blood feud. Werewolves Hulking hominid beasts between 8 and 12ft in height full of tense muscle. Immune to damage except from silver weapons, or Golden Relics, with strength sufficient to crush through concrete walls and shred steel plating like paper, or hurling an elephant across a football field. They are all overwhelmed by bloodlust currently, with the Soulstealer curse, as feral as though it were a full moon.
 
@@ -195,30 +196,37 @@ Notes:
 + Their movements in straight lines are a blur.
 + Luckily for you, their violence is primarily concentrated on each other -- A war of succession seems to be going on.
 + 8+ werewolves, 2 alphas, dozens of direwolves.
-+ If you survive a werewolf bite, you become a werewolf yourself. Werewolves do not have conscious thought in werewolf form, and are forced to transform on full moons.
-+ It takes decades to gain self-mastery sufficient to force a conscious change, starting out at a few minutes at a time before changing back or losing control.
 
-DEATH RACER
-Heroic
+### Sidebar
+If you survive a werewolf bite, you become a werewolf yourself. Werewolves do not have conscious thought in werewolf form, and are forced to transform on full moons.
 
-Threat 7
-Conflict 5
-Reward 8
+### Sidebar
+It takes decades to gain self-mastery sufficient to force a conscious change, starting out at a few minutes at a time before changing back or losing control.
+
+
+## Quest: Death Racer
+- Slot: Heroic
+- Threat: 7
+- Conflict: 5
+- Reward: 8
 
 Requires *Street Racer*. You're in the big leagues now. Once every 5 years the Death Race is hosted in a random location anywhere off Earth and there are no limits placed on magic usage, barring only soulstealing or curses that lasts beyond the duration of the race. The caveat is that all participants are hooked up into limiters that regulate mana capacity and mana flow. Instead, you have a series of pellets honed to allow the usage of one magic effect of a given rank. You have 1 Ruby pellet (r5), 3 Sapphire pellets (r4), 9 Emerald pellets (r3), and 20 Citrine pellets (r2), r1 magic is unlimited. Any augmentations to your vehicle is separate & functions normally.
 
 Notes:
 + Tactics vary from witches that put everything they've got into speed, while some focus on making sure nothing else is alive to cross the finish line before them.
 + Races are designed to require an average time of 2+ hours before the 1st place gets claimed.
-+ If you are not a racer, racers can have "support crew” they can call in for service or support up to 3 times per day for up to an hour per stay, having only 1 of each pellet per visit.
-+ The racer can lend support crew their own pellets for use, if needed. Support crew can bring items with them, even leaving relics behind. Also, food and water.
 
-BROKEN POINT
-Heroic
+### Sidebar
+If you are not a racer, racers can have "support crew” they can call in for service or support up to 3 times per day for up to an hour per stay, having only 1 of each pellet per visit.
 
-Threat 7
-Conflict 4
-Reward 7
+### Sidebar
+The racer can lend support crew their own pellets for use, if needed. Support crew can bring items with them, even leaving relics behind. Also, food and water.
+
+## Quest: Broken Point
+- Slot: Heroic
+- Threat: 7
+- Conflict: 4
+- Reward: 7
 
 A clan of intelligent giant albino elks are calling in favors to seek help, a wild rift has ripped open in their territory and alien creatures roam through to hunt the elk down and drag them back through the rift. While fairly strong with some innate magic of their own, they prove no match for the creatures. They need to put an end to it. Next time the rift opens, fight the creatures back and enter to find an exotic plane consisting entirely of biomatter with fleshy earth, boney spires arching through the sky, teeming with fleshy equivalents to plantlife forming jungles, as far as you know this plane is unknown to witchdom and unexplored.
 
@@ -226,12 +234,11 @@ Notes:
 + How are these creatures (of your description) opening rifts? Spontaneous evolution, their own intelligent pursuit of magical knowledge? or random chance opening a natural wild rift?
 + Perhaps there are survivors that were taken for some other reason, or simply not yet killed / eaten.
 
-NECROPOLIS
-Heroic
-
-Threat 9
-Conflict 3
-Reward 8
+## Quest: Necropolis
+- Slot: Heroic
+- Threat: 9
+- Conflict: 3
+- Reward: 8
 
 An ancient lich thought to be defeated with the destruction of their phylactery has been busy for 600 years. Stray rumors over the years occasionally being investigated with no evidence. Beneath Himalayas the lich founded a new lair and has employed spatial distortion and Domain magics to convert the bottom of a deep cave system into a veritable hollow earth greater in size than Hawthorne's metropolis- Populated entirely of countless undead. Evidently keeping "livestock" including humans in their main palace sustained by magic to keep creating new life to utilize their skeletons in death. A city carved of stone and built up in bone.
 
@@ -239,8 +246,14 @@ Notes:
 + A Rank 6 tier necromancer skilled in potions, runes, earthmoving, dominion, witchery, and familiarity with a bone dragon familiar.
 + Very stealthily abducts new creatures & humans sometimes.
 + Intends to initiate full scale war on humanity once built up enough to risk breaking the Masquerade.
-+ The situation could easily devolve to be worth an Epic quest if you make a mistake, but the number of possible outcomes keep this as a Heroic quest instead. 
-+ Bear in mind the dangers of necromancers' ability to trap souls.
+
+### Sidebar
+The situation could easily devolve to be worth an Epic quest if you make a mistake, but the number of possible outcomes keep this as a Heroic quest instead.
+
+### Sidebar
+Bear in mind the dangers of necromancers' ability to trap souls.
+
+--- BOBBY TABLE ---
 
 TAINTED GRAIL
 Epic - Evil Route
