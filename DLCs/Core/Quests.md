@@ -217,7 +217,7 @@ Notes:
 + Races are designed to require an average time of 2+ hours before the 1st place gets claimed.
 
 ### Sidebar
-If you are not a racer, racers can have "support crew” they can call in for service or support up to 3 times per day for up to an hour per stay, having only 1 of each pellet per visit.
+If you are not a racer, racers can have \"support crew\" they can call in for service or support up to 3 times per day for up to an hour per stay, having only 1 of each pellet per visit.
 
 ### Sidebar
 The racer can lend support crew their own pellets for use, if needed. Support crew can bring items with them, even leaving relics behind. Also, food and water.
