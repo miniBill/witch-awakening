@@ -71,15 +71,21 @@ questBox display selected number quest =
                 , Border.width 3
                 , Border.color colorRgb
                 , Border.rounded Theme.cardRoundness
-                , if display == DisplayFull then
-                    width <| Element.minimum 500 fill
-
-                  else
-                    width <| Element.minimum 320 <| Element.maximum 400 fill
+                , width <| Element.minimum 460 fill
                 , Background.color (rgb 0 0 0)
                 , Font.color (rgb 1 1 1)
                 ]
-                { display = display
+                { display =
+                    case display of
+                        DisplayFull ->
+                            DisplayFull
+
+                        DisplayCompact ->
+                            -- This looks awful in "compact" mode
+                            DisplayFull
+
+                        DisplayCollapsed ->
+                            DisplayCollapsed
                 , forceShow = False
                 , glow = color
                 , isSelected = isSelected
@@ -187,29 +193,7 @@ questBox display selected number quest =
                 (c
                     :: List.map viewSidebar quest.sidebars
                     ++ (if number == 0 then
-                            [ Theme.row
-                                [ alignBottom
-                                , moveRight 16
-                                , moveDown 16
-                                , width (Element.maximum 100 fill)
-                                , Images.questEvilPath
-                                    |> Theme.image
-                                        [ moveUp 16
-                                        , moveLeft 16
-                                        ]
-                                    |> inFront
-                                , width fill
-                                , Border.width 1
-                                , Font.size 14
-                                , padding (Theme.rhythm // 2)
-                                ]
-                                [ el [ width <| px 60 ] Element.none
-                                , Theme.blocks
-                                    [ Element.htmlAttribute (Html.Attributes.class "compact")
-                                    ]
-                                    sidebar
-                                ]
-                            ]
+                            [ evilSidebar ]
 
                         else
                             []
@@ -217,6 +201,32 @@ questBox display selected number quest =
                 )
         )
         card
+
+
+evilSidebar : Element ( Quest, Bool )
+evilSidebar =
+    Theme.row
+        [ alignBottom
+        , moveRight 16
+        , moveDown 16
+        , width (Element.maximum 100 fill)
+        , Images.questEvilPath
+            |> Theme.image
+                [ moveUp 16
+                , moveLeft 16
+                ]
+            |> inFront
+        , width (Element.maximum 400 fill)
+        , Border.width 1
+        , Font.size 14
+        , padding (Theme.rhythm // 2)
+        ]
+        [ el [ width <| px 60 ] Element.none
+        , Theme.blocks
+            [ Element.htmlAttribute (Html.Attributes.class "compact")
+            ]
+            sidebar
+        ]
 
 
 statsTable : Quest.Details -> Element msg
@@ -355,7 +365,7 @@ colorRgb =
 viewSidebar : String -> Element ( Quest, Bool )
 viewSidebar content =
     Theme.blocks
-        [ width <| Element.maximum 400 fill
+        [ width <| Element.maximum 360 fill
         , Theme.padding
         , centerX
         , Border.width 1
