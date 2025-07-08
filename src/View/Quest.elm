@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Quest
-import Generated.Types as Types exposing (Quest)
+import Generated.Types as Types exposing (Quest, Slot(..))
 import Gradients
 import Html.Attributes
 import Images
@@ -97,7 +97,20 @@ questBox display selected number quest =
                             ]
                     , quest.slot
                         |> Types.slotToString
-                        |> Theme.gradientText 4 Gradients.blueGradient
+                        |> Theme.gradientText 4
+                            (case quest.slot of
+                                Epic ->
+                                    Gradients.epicGradient
+
+                                Heroic ->
+                                    Gradients.heroicGradient
+
+                                Noble ->
+                                    Gradients.nobleGradient
+
+                                _ ->
+                                    Gradients.blueGradient
+                            )
                         |> el
                             [ alignBottom
                             , alignRight
