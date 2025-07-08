@@ -123,7 +123,7 @@ The Murderer seems to resist the antimagic fields, and whatever is allowing it, 
 - Conflict: 3
 - Reward: 5
 
-In a rural town you by some means overhear the hushed terrified whispers that a group of teenagers went searching for two of their missing friend who they claim have fallen victim to the "Witch of the Woods" who cursed the town long ago, every 20 years kids go missing, for the past 200 years. If you check with the factions, nobody has heard of the case. Pulling on the thread yourself however, you'll unravel a town full of supernatural occurrences and come to learn the inhabitants are under some subtle compulsion preventing them from leaving and making outsiders less aware of the town, even from Reapers who'd ferry spirits to safety.
+In a rural town you by some means overhear the hushed terrified whispers that a group of teenagers went searching for two of their missing friend who they claim have fallen victim to the “Witch of the Woods” who cursed the town long ago, every 20 years kids go missing, for the past 200 years. If you check with the factions, nobody has heard of the case. Pulling on the thread yourself however, you'll unravel a town full of supernatural occurrences and come to learn the inhabitants are under some subtle compulsion preventing them from leaving and making outsiders less aware of the town, even from Reapers who'd ferry spirits to safety.
 
 Notes:
 + An isolated ecosystem that's been cut off from Reapers, the inhabitants denied afterlives, left to wander the region until they go insane or fall victim to predatory spirits, evolving into spirit beasts and monsters such as Poltergeists, Banshees, & other dangers that are well fed enough to affect the material world.
@@ -142,7 +142,7 @@ The avoidance compulsion seems strong, however you ended up there, outside help 
 A close friend or family member... or at least a wealthy patron, has been afflicted by a horrific curse causing agony and soulburn. If they succumb to this curse, they face True Death, urgently requiring a specific potion before the next New Moon. The problem is, the potion requires silver blood of a feathered unicorn, creatures of divine grace, light, and purity -- and extraordinarily rare, unlikely to even appear on Earth. You must enter the Faewilds and seek out the unicorn and obtain its blood. The intelligent creature cannot tolerate evil or corruption and is equivalent to a Rank 5 class Witch in raw magic potential utilizing light based magics.
 
 Notes:
-+ If you can be considered \"Good\" aligned and unselfish, the unicorn can be bargained with to willingly give a vial of silverblood
++ If you can be considered “Good” aligned and unselfish, the unicorn can be bargained with to willingly give a vial of silverblood
 + If you also have a female form without male aspects, the unicorn may be more friendly, even loving, and give silverblood in exchange for your time, and becomes an ally.
 
 ### Sidebar
@@ -174,7 +174,7 @@ Notes:
 A form of magic that pops up from time to time. By nature it's hard to describe, but to be brief; High Order Mathematics is a very raw form of magic that unfailingly renders the practitioner insane, not from unnatural memetic hazards, but the raw understanding and changes in perspective utilizing numerals and characters of the First Language used in Runes, The Mathematician is an insane witch, but a glimpse in their mind is like looking upon a Far God -- chaotic, esoteric, unpredictable. The Mathematician is capable of replicating any magic effect, and many unknown magic effects, but is thoroughly insane- And for some reason, they've fixated on you.
 
 Notes:
-+ They aren't malicious, but in their fixation they're experimenting on you with any number of parameters. They want -- need -- to know everything about you, remaining distant but engineering scenarios that test some quality or attribute of yours, even as simple as "How do they react to becoming a cat" -- or much worse.
++ They aren't malicious, but in their fixation they're experimenting on you with any number of parameters. They want -- need -- to know everything about you, remaining distant but engineering scenarios that test some quality or attribute of yours, even as simple as “How do they react to becoming a cat” -- or much worse.
 
 ### Sidebar
 To be clear, the Mathematician is an insane stalker, who is one of the most powerful non-deities in the setting, & highly paranoid, almost never in-person.
@@ -217,7 +217,7 @@ Notes:
 + Races are designed to require an average time of 2+ hours before the 1st place gets claimed.
 
 ### Sidebar
-If you are not a racer, racers can have \"support crew\" they can call in for service or support up to 3 times per day for up to an hour per stay, having only 1 of each pellet per visit.
+If you are not a racer, racers can have “support crew” they can call in for service or support up to 3 times per day for up to an hour per stay, having only 1 of each pellet per visit.
 
 ### Sidebar
 The racer can lend support crew their own pellets for use, if needed. Support crew can bring items with them, even leaving relics behind. Also, food and water.
@@ -240,7 +240,7 @@ Notes:
 - Conflict: 3
 - Reward: 8
 
-An ancient lich thought to be defeated with the destruction of their phylactery has been busy for 600 years. Stray rumors over the years occasionally being investigated with no evidence. Beneath Himalayas the lich founded a new lair and has employed spatial distortion and Domain magics to convert the bottom of a deep cave system into a veritable hollow earth greater in size than Hawthorne's metropolis- Populated entirely of countless undead. Evidently keeping "livestock" including humans in their main palace sustained by magic to keep creating new life to utilize their skeletons in death. A city carved of stone and built up in bone.
+An ancient lich thought to be defeated with the destruction of their phylactery has been busy for 600 years. Stray rumors over the years occasionally being investigated with no evidence. Beneath Himalayas the lich founded a new lair and has employed spatial distortion and Domain magics to convert the bottom of a deep cave system into a veritable hollow earth greater in size than Hawthorne's metropolis- Populated entirely of countless undead. Evidently keeping “livestock” including humans in their main palace sustained by magic to keep creating new life to utilize their skeletons in death. A city carved of stone and built up in bone.
 
 Notes:
 + A Rank 6 tier necromancer skilled in potions, runes, earthmoving, dominion, witchery, and familiarity with a bone dragon familiar.
@@ -304,7 +304,7 @@ Threat 7
 Conflict 10
 Reward 6
 
-A crazed explosion witch initiated a terrorist plot and severely violated the Masquerade. With careful planning and skillfully avoiding divination and probability engines, was able to simultaneously bomb 27 cities. On Earth, and seemed to deliberately make sure that each "bomb" destroyed assets of powerful magical beings and witches of each major faction, popular Gateway networks, and so on. And they did so under your name, wearing your face (or your most used face). With a severe Masquerade violation, the gods are involved, with Rank 10 equivalent magics, time is completely stopped, a world in stasis.
+A crazed explosion witch initiated a terrorist plot and severely violated the Masquerade. With careful planning and skillfully avoiding divination and probability engines, was able to simultaneously bomb 27 cities. On Earth, and seemed to deliberately make sure that each “bomb” destroyed assets of powerful magical beings and witches of each major faction, popular Gateway networks, and so on. And they did so under your name, wearing your face (or your most used face). With a severe Masquerade violation, the gods are involved, with Rank 10 equivalent magics, time is completely stopped, a world in stasis.
 
 Notes:
 + Celestial and Infernal agents of gods and high level Faction leaders are combing the streets and employing a form of domain bubble capable of rewinding local time to peer into the past and live, as though present, to seek answers. You are freed from stasis for questioning and to contribute to the investigation.
@@ -324,7 +324,7 @@ Note
 + The Factions are at high tension and conflict is escalating between all witches, some may be in all out war with another.
 + The sanest minds are coming to realize something is wrong and cooperate to form joint research operations to discover what is causing this, and to search and destroy.
 + You could form teams and talk with factions you would normally be enemies with. Some are more actively hostile, others see the problem and reach out.
-+ This is certainly not a solo operation, but you'll want to cooperate with as many others as you can. The Avatar is functionally a "world boss” type threat where the Elder Dragon would be a "Raid boss". One named Companion from every faction can join you, plus unnamed.
++ This is certainly not a solo operation, but you'll want to cooperate with as many others as you can. The Avatar is functionally a “world boss” type threat where the Elder Dragon would be a “Raid boss”. One named Companion from every faction can join you, plus unnamed.
 
 HOT SPRINGS
 Folk (Arcadia)
@@ -354,7 +354,7 @@ Notes:
 + Soulcatchers allow full lethality, the slain will respawn.
 + The precise ethics and rules depend on the House hosting.
 + The specific tournament may involve witches of any faction.
-+/- Soulcatchers just "respawn" you, you still experience death. Any condition or status effect is temporary to the arena.
++/- Soulcatchers just “respawn” you, you still experience death. Any condition or status effect is temporary to the arena.
 
 INQUISITION
 Epic (Watchers)
@@ -378,7 +378,7 @@ Threat 7
 Conflict 9
 Reward 6
 
-You've received a contract by someone aliased as "The Collector", you're skilled enough to track down that they have a last name that ends in "-Stein" and that says enough. Powerful figure with hands throughout elite pockets. They're paying up to 3x the reward value directly in Kisses (20 million K) and with 5 billion USD. This is a bonus on top of 6 Reward Points. Their request..? They want one attractive female witch for each Elementalist magic, to least rank 5. They will pay K100,000 and $1mil for each individual captive delivered as you go along, gaining the rest on completion of the set. You can keep any spares you might get along the way.
+You've received a contract by someone aliased as “The Collector”, you're skilled enough to track down that they have a last name that ends in “-Stein” and that says enough. Powerful figure with hands throughout elite pockets. They're paying up to 3x the reward value directly in Kisses (20 million K) and with 5 billion USD. This is a bonus on top of 6 Reward Points. Their request..? They want one attractive female witch for each Elementalist magic, to least rank 5. They will pay K100,000 and $1mil for each individual captive delivered as you go along, gaining the rest on completion of the set. You can keep any spares you might get along the way.
 
 Notes:
 + Obviously, this causes serious faction conflict if you're caught.
@@ -422,7 +422,7 @@ Threat 10
 Conflict 1
 Reward 10
 
-Must have the Aberration perk. Far Gods aren't exactly known for their care of this human thing "Consent". One day you suddenly find yourself in front of a yawning chasm with the symbol of the Far God faction you associate with, a tendril of some manner (Chain, tentacle, wires, etc) pulls you through. You'll find yourself in a windowless labyrinthine dungeon-laboratory with no apparent authority figures but automatic systems (magic, technological, or in between) and jam packed full of abominations and horrors. There are a dozen duplicates of yourself and none of you know who is the original. Every day there is a new esoteric task required of you.
+Must have the Aberration perk. Far Gods aren't exactly known for their care of this human thing “Consent”. One day you suddenly find yourself in front of a yawning chasm with the symbol of the Far God faction you associate with, a tendril of some manner (Chain, tentacle, wires, etc) pulls you through. You'll find yourself in a windowless labyrinthine dungeon-laboratory with no apparent authority figures but automatic systems (magic, technological, or in between) and jam packed full of abominations and horrors. There are a dozen duplicates of yourself and none of you know who is the original. Every day there is a new esoteric task required of you.
 
 Notes:
 + Tasks range from simple group games, to dangerous trials.
@@ -639,7 +639,7 @@ Threat 2
 Conflict 1
 Reward 1
 
-Anyone can just go to the beach or the pool, but with this quest you're ensured for an extra special trip to some manner of swimsuit event, or you could integrate this quest with another to transform that quest into a swimsuit episode by some means, where events are orchestrated such that the other quest occurs with everyone still in their swimsuits. Taken on its own however, it means it won't just be a normal day in the water but will incorporate any and all the tropes you think make up the ideal swimsuit episode in how it affects others as well as yourself, in light hearted ways. Functionally distinct from "Hot Springs" as hot springs focus on relaxing.
+Anyone can just go to the beach or the pool, but with this quest you're ensured for an extra special trip to some manner of swimsuit event, or you could integrate this quest with another to transform that quest into a swimsuit episode by some means, where events are orchestrated such that the other quest occurs with everyone still in their swimsuits. Taken on its own however, it means it won't just be a normal day in the water but will incorporate any and all the tropes you think make up the ideal swimsuit episode in how it affects others as well as yourself, in light hearted ways. Functionally distinct from “Hot Springs” as hot springs focus on relaxing.
 
 Notes:
 + Everyone involved will permanently gain their ideal swimsuit as a form their Garment can take when summoned.
@@ -961,6 +961,6 @@ Some chain of events leads to you confronting an assassin after a peculiar artif
 - A Gilded Collar. Which turns you or one of your willing companions into a GENIE
 
 Notes:
-+ If you instead keep the artifact, you will run into a stranger who will sell you a key for 20 power, unlocking the artifact, Granting: "Jin" [Choose a Name]
++ If you instead keep the artifact, you will run into a stranger who will sell you a key for 20 power, unlocking the artifact, Granting: “Jin” [Choose a Name]
 + Jin is an exception to the racial clause against witch masters. However, that does mean you may need to be prepared to fight other witches over her if they find out! 
 + Companions made into Gemini twins will need to split their magics and perks as evenly as possible, try to balance them. Feel free to start as one of these races yourself if you wish.
