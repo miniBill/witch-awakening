@@ -18,7 +18,8 @@
 The girl you helped gives her name as Xiao Liena, and in giving her one of the Flowers of Life, her body will be healed and she’ll gain the ability to use Lifeweaving. She used to be a member of the Chinese ORC, but retired from the job to pursue her grandmother’s stories of the Flower.
 
 
-## Companion: "Jin" [Choose a Name]
+## Companion: Jin
+- “Jin” [Choose a Name]
 - Class: Special
 - Race: Genie-Life
 - Cost: 20

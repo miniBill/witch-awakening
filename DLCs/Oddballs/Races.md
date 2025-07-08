@@ -24,7 +24,7 @@ An Amalgam begins as a seamless synergistic synthesis of two other races. Their 
 
 If an Amalgam dies and none of their component races have an immortality method that is able to revive them, they can revive using the immortality method of any other race, gaining that race in the process (but not its charge method). Rumour has it that new races can be created this way, but it's hard to be sure.
 
-__Amalgams draw Mana__ from Conjunction: when using both component races' charge methods at once, they charge much faster. An Amalgam using two Medium or faster charge methods can "overflow" and begin to regenerate other things like wakefulness, nutrition, youth, and even potentially lost limbs.
+__Amalgams draw Mana__ from Conjunction: when using both component races' charge methods at once, they charge much faster. An Amalgam using two Medium or faster charge methods can “overflow” and begin to regenerate other things like wakefulness, nutrition, youth, and even potentially lost limbs.
 
 ### Perk
 - Cost: 6

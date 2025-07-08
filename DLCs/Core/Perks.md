@@ -274,7 +274,7 @@ Originated by a male witch, _John Moses Browning_, you can ritually bond with a 
 - Class: Academic
 - Cost: 6
 
-Your relationship with space is pretty relative. You can move yourself omnidirectionally through space as though moving reality relative to you rather than moving your body itself. You’d appear to levitate as you wish and never need to touch the ground again You can disconnect any object you touch to be severed from the effects of gravity and it would remain as you last left it unless acted upon by another force, though acting as though it had notable friction to slow itself or resist wind. You "fly" at up to 25mph, as casual to you as a light jog. If you have Witchery, you add your potential speed if you were to use your broomstick, though you need not actually use it to gain speed.
+Your relationship with space is pretty relative. You can move yourself omnidirectionally through space as though moving reality relative to you rather than moving your body itself. You’d appear to levitate as you wish and never need to touch the ground again You can disconnect any object you touch to be severed from the effects of gravity and it would remain as you last left it unless acted upon by another force, though acting as though it had notable friction to slow itself or resist wind. You “fly” at up to 25mph, as casual to you as a light jog. If you have Witchery, you add your potential speed if you were to use your broomstick, though you need not actually use it to gain speed.
 
 
 ## Perk: Isekaid
@@ -461,7 +461,7 @@ Instead of locations presented by those cyoas, you can if you wish, choose any l
 
 Sometime within the next few years tops, you’ll meet my great-times-8 grandmother who has an. offer for you. She knows some unique ancient magics and can teach you a thing or two. Take the _Keeper of Magic by TroyXPage_ [https://imgur.com/a/yoKPeub], [https://imgur.com/a/BoACmQp], [https://imgur.com/a/4GHVEQa].
 
-Ignore the 3 categories: Pick one category per 15 Power spent on this perk. Otherwise adapt any given lore appropriately. You can take "No Magic" as though buying a companion, at 20p.
+Ignore the 3 categories: Pick one category per 15 Power spent on this perk. Otherwise adapt any given lore appropriately. You can take “No Magic” as though buying a companion, at 20p.
 
 Any potential interactions may reasonably be extrapolated to magic and perks from here. ie; Eromancy may buff witch Alchemy similarly to it buffing keeper Alchemy, ect. Wishmagic cannot break the masquerade or grant power or alter game mechanics.
 
