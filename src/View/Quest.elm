@@ -121,7 +121,7 @@ questBox display selected number quest =
                             [ alignBottom
                             , alignRight
                             , Font.size 28
-                            , Theme.morpheus
+                            , Theme.celticHand
                             , moveLeft 16
                             , moveUp 64
                             ]
