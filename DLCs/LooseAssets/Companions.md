@@ -19,7 +19,7 @@ The girl you helped gives her name as Xiao Liena, and in giving her one of the F
 
 
 ## Companion: Jin
-- “Jin” [Choose a Name]
+- Full name: “Jin” [Choose a Name]
 - Class: Special
 - Race: Genie-Life
 - Cost: 20
