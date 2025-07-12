@@ -303,36 +303,45 @@ Notes:
 ### Sidebar
 Holy Symbols just make them uncomfortable. A Vampire is a self-animated corpse that feeds on spirit traces in living blood to sustain their own amalgam spirit. It is not the same person as it was in life - unless an Empusa, or Necromancy is employed to rebind the spirit back to the same body to bypass the change, allowing a true conversion. If bitten and die, you become a normal vampire (See Immortal Blood Vol.), unless you slay and drink a Lord's blood to become one yourself.
 
---- BOBBY TABLE ---
 
-MAD BOMBER
-Epic
-
-Threat 7
-Conflict 10
-Reward 6
+## Quest: Mad Bomber
+- Slot: Epic
+- Threat: 7
+- Conflict: 10
+- Reward: 6
 
 A crazed explosion witch initiated a terrorist plot and severely violated the Masquerade. With careful planning and skillfully avoiding divination and probability engines, was able to simultaneously bomb 27 cities. On Earth, and seemed to deliberately make sure that each “bomb” destroyed assets of powerful magical beings and witches of each major faction, popular Gateway networks, and so on. And they did so under your name, wearing your face (or your most used face). With a severe Masquerade violation, the gods are involved, with Rank 10 equivalent magics, time is completely stopped, a world in stasis.
 
 Notes:
 + Celestial and Infernal agents of gods and high level Faction leaders are combing the streets and employing a form of domain bubble capable of rewinding local time to peer into the past and live, as though present, to seek answers. You are freed from stasis for questioning and to contribute to the investigation.
-+ Explore a world frozen in time and use the temporary power granted to you to walk the past to uncover what happened, why, and who did this, as you work with angels, demons, and faction leaders to resolve the situation and rebuild before humanity wakes.
-+ Tensions will remain high and you'll remain under observation the entire time, after an intense period of questioning and initial detainment. It can be dangerous if you play your cards poorly, you can only imagine what it'd be like if you actually broke the Masquerade... I mean, you didn't do it... right? You believe so...
 
-DEEP WHISPERS
-Epic
+### Sidebar
+Explore a world frozen in time and use the temporary power granted to you to walk the past to uncover what happened, why, and who did this, as you work with angels, demons, and faction leaders to resolve the situation and rebuild before humanity wakes.
 
-Threat 10
-Conflict 10
-Reward 10
+### Sidebar
+Tensions will remain high and you'll remain under observation the entire time, after an intense period of questioning and initial detainment. It can be dangerous if you play your cards poorly, you can only imagine what it'd be like if you actually broke the Masquerade... I mean, you didn't do it... right? You believe so...
+
+
+## Quest: Deep Whispers
+- Slot: Epic
+- Threat: 10
+- Conflict: 10
+- Reward: 10
 
 A cult of Outsiders to a particular Far God have succeeded in creating a corrupted Domain around an entire city of your choice outside of Europe, China, America, or Japan. They've filled that city with waking nightmares and unspeakable crimes for a 1 month period shielded from the eyes of the divine and Godsight Array satellites.. They have managed to tear rifts in the aether sufficient to have invoked the Avatar of a Far God. It is not a full Far God, or Earth would already be a lost cause, but this Avatar has been casting psychic whispers throughout Witchdom greatly increasing violent tendencies and paranoia turning people against each other.
 
 Note
 + The Factions are at high tension and conflict is escalating between all witches, some may be in all out war with another.
 + The sanest minds are coming to realize something is wrong and cooperate to form joint research operations to discover what is causing this, and to search and destroy.
-+ You could form teams and talk with factions you would normally be enemies with. Some are more actively hostile, others see the problem and reach out.
-+ This is certainly not a solo operation, but you'll want to cooperate with as many others as you can. The Avatar is functionally a “world boss” type threat where the Elder Dragon would be a “Raid boss”. One named Companion from every faction can join you, plus unnamed.
+
+### Sidebar
+You could form teams and talk with factions you would normally be enemies with. Some are more actively hostile, others see the problem and reach out.
+
+### Sidebar
+This is certainly not a solo operation, but you'll want to cooperate with as many others as you can. The Avatar is functionally a “world boss” type threat where the Elder Dragon would be a “Raid boss”. One named Companion from every faction can join you, plus unnamed.
+
+
+--- BOBBY TABLE ---
 
 HOT SPRINGS
 Folk (Arcadia)
