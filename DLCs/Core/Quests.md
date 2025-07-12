@@ -222,6 +222,7 @@ If you are not a racer, racers can have “support crew” they can call in for 
 ### Sidebar
 The racer can lend support crew their own pellets for use, if needed. Support crew can bring items with them, even leaving relics behind. Also, food and water.
 
+
 ## Quest: Broken Point
 - Slot: Heroic
 - Threat: 7
@@ -233,6 +234,7 @@ A clan of intelligent giant albino elks are calling in favors to seek help, a wi
 Notes:
 + How are these creatures (of your description) opening rifts? Spontaneous evolution, their own intelligent pursuit of magical knowledge? or random chance opening a natural wild rift?
 + Perhaps there are survivors that were taken for some other reason, or simply not yet killed / eaten.
+
 
 ## Quest: Necropolis
 - Slot: Heroic
@@ -253,30 +255,32 @@ The situation could easily devolve to be worth an Epic quest if you make a mista
 ### Sidebar
 Bear in mind the dangers of necromancers' ability to trap souls.
 
---- BOBBY TABLE ---
 
-TAINTED GRAIL
-Epic - Evil Route
-
-Threat 9
-Conflict 6
-Reward 8
+## Quest: Tainted Grail
+- Slot: Epic
+- Evil Route: True
+- Threat: 9
+- Conflict: 6
+- Reward: 8
 
 If you have the Nymph's Vessel, you'll notice its waters running red one day: Something terrible has happened at the Baths of the Nymphs. A Hespatian family has broken through their wards and massacred the nymphs, butchering the women in their waters, staining them red and have stolen the Holy Grail, the golden relic 29, and used this act of bloodshed to corrupt it into a twisted opposite of itself. Contact with its waters is an absolute poison and causes an instant transition to undeath moving in a wave over the still living victim's body. Living flesh within a mile of the grail sickens and begins to turn black.
 
 Notes:
 + You must hunt down the invaders and find a way to restore the grail and restore its place in the Central Fountain, bringing the Baths back to life, and the bodies of the nymphs within.
 + The Nymphs are the primary distributor of the components for healing potions, there will be a major shortage.
-+ The nymphs will be very thankful and give you free access to the baths. 
-+ A villain may instead claim the tainted grail for themselves, damning the Nymphs and forever creating a major disruption to the availability of healing potions.
-+ Be careful with what you do with the grail... If you lost it in the ocean it could slowly poison all waters on Earth causing rampant undead outbreaks, and all the gods will stand in judgment of you with fates worse than death.
 
-DRAGON HUNT
-Epic
+### Sidebar
+The nymphs will be very thankful and give you free access to the baths. A villain may instead claim the tainted grail for themselves, damning the Nymphs and forever creating a major disruption to the availability of healing potions.
 
-Threat 10
-Conflict 4
-Reward 10
+### Sidebar
+Be careful with what you do with the grail... If you lost it in the ocean it could slowly poison all waters on Earth causing rampant undead outbreaks, and all the gods will stand in judgment of you with fates worse than death.
+
+
+## Quest: Dragon Hunt
+- Slot: Epic
+- Threat: 10
+- Conflict: 4
+- Reward: 10
 
 Elder Dragons are apocalyptic beasts. They are to dragons what dragons are to riding drakes. The size of a literal mountain, Elder Dragons were banished from Earth by the gods and archangels, early on before the Great Flood. There's 5 in the solar system currently, one on Mercury, Venus, Titan, Europa, and Pluto. 1+ others are known to have left the solar system, and there are a few dozen known to be scattered through the realms and elemental planes. They share the statistics of a dragon as seen in Metamorphosis, but are scaled up by a thousand and are intelligent, utilizing Relics from their hoard to work magic effects.
 
@@ -284,18 +288,22 @@ Notes:
 + Pick a location of your choice, for some reason the Elder Dragon of choice has become agitated and active, lashing out and if it's in the solar system, its roars are being picked up on human scientific equipment. It needs to be silenced one way or another.
 + Nothing escapes and Elder Dragon bite, not even spirits.
 
-SANGUINE LIGHT
-Epic
 
-Threat 9
-Conflict 5
-Reward 6
+## Quest: Sanguine Light
+- Slot: Epic
+- Threat: 9
+- Conflict: 5
+- Reward: 6
 
 You've run afoul of an ancient Vampire Lord through some means, from insult or challenge, or your actions against their clan. They are a high level Hespatian with a family that oversees other families, and is the same vampire that turned the Red Mother. A Vampire Lord is almost as strong as a Werewolf and half as fast, but with more agility, keeping speed with fine movements or focusing to execute preplanned movements that seem like teleportation. They are powerful magic users capable of Necromancy without being a witch, and effectively have the Blood Witch perk. They regenerate from harm so long as one undying cell is intact.
 
 Notes:
 + This Vampire Lord IS in fact a witch as well. Their magics are boosted by 100% so long as they're well-fed (1 cup a day, decays over 3 days to 0%). Sunlight reduces all magic potency by -75%, along with strength, speed, and regeneration. Garlic is just pungent. Running water burns as a nuisance.
-+ Holy Symbols just make them uncomfortable. A Vampire is a self-animated corpse that feeds on spirit traces in living blood to sustain their own amalgam spirit. It is not the same person as it was in life -- unless an Empusa, or Necromancy is employed to rebind the spirit back to the same body to bypass the change, allowing a true conversion. If bitten and die, you become a normal vampire (See Immortal Blood Vol.), unless you slay and drink a Lord's blood to become one yourself.
+
+### Sidebar
+Holy Symbols just make them uncomfortable. A Vampire is a self-animated corpse that feeds on spirit traces in living blood to sustain their own amalgam spirit. It is not the same person as it was in life - unless an Empusa, or Necromancy is employed to rebind the spirit back to the same body to bypass the change, allowing a true conversion. If bitten and die, you become a normal vampire (See Immortal Blood Vol.), unless you slay and drink a Lord's blood to become one yourself.
+
+--- BOBBY TABLE ---
 
 MAD BOMBER
 Epic
