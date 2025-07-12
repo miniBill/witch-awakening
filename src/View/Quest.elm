@@ -1,7 +1,7 @@
 module View.Quest exposing (viewQuests)
 
 import Data.Quest as Quest
-import Element exposing (Attribute, Color, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, inFront, moveDown, moveLeft, moveRight, moveUp, padding, px, rgb, rgb255, rgba, shrink, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, inFront, moveDown, moveLeft, moveRight, moveUp, padding, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -60,16 +60,12 @@ questBox display selected number quest =
         nameString =
             Types.questToString quest.name
 
-        color : Int
-        color =
-            0xE5E5
-
         card : Maybe (Element ( Quest, Bool ))
         card =
             Theme.card
                 [ Theme.id nameString
                 , Border.width 3
-                , Border.color colorRgb
+                , Theme.borderColor (slotToColor quest.slot)
                 , Border.rounded Theme.cardRoundness
                 , width <| Element.minimum 460 fill
                 , Background.color (rgb 0 0 0)
@@ -87,7 +83,7 @@ questBox display selected number quest =
                         DisplayCollapsed ->
                             DisplayCollapsed
                 , forceShow = False
-                , glow = color
+                , glow = slotToColor quest.slot
                 , isSelected = isSelected
                 , imageAttrs = []
                 , imageHeight = 400
@@ -191,7 +187,7 @@ questBox display selected number quest =
         (\c ->
             Theme.column [ alignTop ]
                 (c
-                    :: List.map viewSidebar quest.sidebars
+                    :: List.map (viewSidebar quest.slot) quest.sidebars
                     ++ (if number == 0 then
                             [ evilSidebar ]
 
@@ -357,19 +353,33 @@ statColumn ranking =
     }
 
 
-colorRgb : Color
-colorRgb =
-    rgb255 0 0xE5 0xE5
+slotToColor : Slot -> Int
+slotToColor slot =
+    case slot of
+        White ->
+            0x00FFFFFF
+
+        Folk ->
+            0xE5E5
+
+        Noble ->
+            0x007CC534
+
+        Heroic ->
+            0x00C5AA3E
+
+        Epic ->
+            0x00FF60A3
 
 
-viewSidebar : String -> Element ( Quest, Bool )
-viewSidebar content =
+viewSidebar : Slot -> String -> Element ( Quest, Bool )
+viewSidebar slot content =
     Theme.blocks
         [ width <| Element.maximum 360 fill
         , Theme.padding
         , centerX
         , Border.width 1
-        , Border.color colorRgb
+        , Theme.borderColor (slotToColor slot)
         , Font.size 14
         , Element.htmlAttribute (Html.Attributes.class "compact")
         ]
