@@ -341,29 +341,28 @@ You could form teams and talk with factions you would normally be enemies with. 
 This is certainly not a solo operation, but you'll want to cooperate with as many others as you can. The Avatar is functionally a “world boss” type threat where the Elder Dragon would be a “Raid boss”. One named Companion from every faction can join you, plus unnamed.
 
 
---- BOBBY TABLE ---
-
-HOT SPRINGS
-Folk (Arcadia)
-
-Threat 1
-Conflict 1
-Reward 2
+## Quest: Hot Springs
+- Slot: Folk
+- Faction: Arcadia
+- Threat: 1
+- Conflict: 1
+- Reward: 2
 
 The Parks and Recreation club has generated the current cycle of Arcadia with the theme that won the poll... Hot Spring theme! All throughout the generated landscape surrounding the population centers is generated with the intention to produce a high quantity of natural springs and water features. You can find any variety of spring feature, hot or otherwise, somewhere in the landscape, and throughout the cycle exploration teams are mapping it out and planning a whole cycle full of organized outings to host parties and spa experiences all throughout. Sign up with your friends and enjoy any kind of hot spring or natural pool setting you desire!
 
 Notes:
 + Any given spring can have co-ed or sex segregated planning.
 + All expected accessories like towels, soaps, oils, provided by staff.
-+Got any skills? Volunteer to help set up or provide services!
++ Got any skills? Volunteer to help set up or provide services!
 +/- Springs CAN have any manner of minor magical effect, including minor inconveniences for drama.
 
-TOURNAMENT ARC
-Heroic (Hawthorne)
 
-Threat 7
-Conflict 6
-Reward 7
+## Quest: Tournament Arc
+- Slot: Heroic
+- Faction: Hawthorne
+- Threat: 7
+- Conflict: 6
+- Reward: 7
 
 What magically inclined academy experience would be complete without the Tournament Arc? Looks like you're predestined to participate in one in your future. It can take the form of an organized tiered structure, or it could be a Battle Royale, in either case you'll run into contestants ranging from considerably weaker than yourself to equal matches, to some who may be outright stronger than you requiring tactics or cooperation to take down. The arena is a specially harmonized Domain bubble allowing exterior observers while preventing magic and effects from escaping it, keeping viewers safe and recording every moment at any angle!
 
@@ -373,12 +372,13 @@ Notes:
 + The specific tournament may involve witches of any faction.
 +/- Soulcatchers just “respawn” you, you still experience death. Any condition or status effect is temporary to the arena.
 
-INQUISITION
-Epic (Watchers)
 
-Threat 8
-Conflict 9
-Reward 10
+## Quest: Inquisition
+- Slot: Epic
+- Faction: Watchers
+- Threat: 8
+- Conflict: 9
+- Reward: 10
 
 Only available to dedicated Watchers and very close allies. The Followers of the Apocalypse have called upon you for a serious and somber task; To take up the banner as an Inquisitor agent to hunt down Outsiders with extreme prejudice with full moral license to search and destroy, and obtain further leads by any means necessary. The full weight of Watcher influence and authority is granted on you, providing extraordinarily high levels of political and legal cover second only to Alphazon. You're given starting information of suspects and a newly printed Outsider text heralding a Dark Night planning a magical terror attack on Earth.
 
@@ -388,12 +388,14 @@ Notes:
 + Worse than death, your mind and soul are at risk, ego death.
 +/- Your license grants you leeway, and you're expected to use it, and may make other enemies in the process.
 
-PRETTY LITTLE THINGS
-Epic (Hespatia) - Evil
 
-Threat 7
-Conflict 9
-Reward 6
+## Quest: Pretty Little Things
+- Slot: Epic
+- Evil: True
+- Faction: Hespatia
+- Threat: 7
+- Conflict: 9
+- Reward: 6
 
 You've received a contract by someone aliased as “The Collector”, you're skilled enough to track down that they have a last name that ends in “-Stein” and that says enough. Powerful figure with hands throughout elite pockets. They're paying up to 3x the reward value directly in Kisses (20 million K) and with 5 billion USD. This is a bonus on top of 6 Reward Points. Their request..? They want one attractive female witch for each Elementalist magic, to least rank 5. They will pay K100,000 and $1mil for each individual captive delivered as you go along, gaining the rest on completion of the set. You can keep any spares you might get along the way.
 
@@ -403,12 +405,13 @@ Notes:
 + ...The Collector doesn't care what condition you bring them in.
 +/- The Collector isn't new to the game, and can't be tracked down. If you cross them, don't expect to live long.
 
-DARKSIDE CRATER
-Epic (Lunabella)
 
-Threat 10
-Conflict 3
-Reward 10
+## Quest: Darkside Crater
+- Slot: Epic
+- Faction: Lunabella
+- Threat: 10
+- Conflict: 3
+- Reward: 10
 
 Space suit optional. Culicarius is forming a task force to explore the perfectly smooth and spherical crater left by the condemned domain that was overtaken by Outsider abominations. He suspects something has gone wrong and is personally (with one of his clones) leading a strike team to explore the phenomenon. Something is blocking his divination, giving him concern, but the one thing he can see like a trapped lure; An old Lunabellan artifact thought to have been lost, calling him like a siren. It must be retrieved, but something clearly waiting at the bottom of that pit... A corrupted Domain where realspace should be, twisted with aberrant magic.
 
@@ -416,12 +419,13 @@ Notes:
 + You'll have a team of 3 other powerful witches not including you and Culicarius. Choose companions or make them up.
 + You risk egodeath, or fates worse than death, if you fall to the abominations, as you run into twisted victims of Outsider corruption, both the pitiful, and the overpowering.
 
-COURTSHIP
-Noble (Alliance)
 
-Threat 5
-Conflict 4
-Reward 6
+## Quest: Courtship
+- Slot: Noble
+- Faction: Alliance
+- Threat: 5
+- Conflict: 4
+- Reward: 6
 
 Throughout the Alliance, great families of powerful archfae houses form clans, tribes, and sovereign nations interwoven with millennia of generational contracts, pacts, feuds, and rivalries. The most notable being the twin coalitions of the Summer Court and the Winter Court as the two primary factions of the Alliance. Some key treaties between two high level houses within the twin courts are wearing thin and nearing the end of their duration. Tensions are rising as the future of the two rival houses wonder if they can even come to a resolution. A proposal has been made: A new contract be made, cemented through a marriage.
 
@@ -429,15 +433,17 @@ Notes:
 + Represent the family you most closely align with, or be neutral.
 + As an Alliance member yourself, you yourself might be the candidate for marriage on behalf of one of the families, this could be great opportunity to raise your standing among the courts.
 + Beware of social missteps and courtly insults
-+ If you are the marriage candidate, you can customize the other by making a second build for them, and link a picture for them.
+
+### Sidebar
+If you are the marriage candidate, you can customize the other by making a second build for them, and link a picture for them.
 
 
-FRAGMENTS OF SELF
-Epic (Outsiders)
-
-Threat 10
-Conflict 1
-Reward 10
+## Quest: Fragments Of Self
+- Slot: Epic
+- Faction: Outsiders
+- Threat: 10
+- Conflict: 1
+- Reward: 10
 
 Must have the Aberration perk. Far Gods aren't exactly known for their care of this human thing “Consent”. One day you suddenly find yourself in front of a yawning chasm with the symbol of the Far God faction you associate with, a tendril of some manner (Chain, tentacle, wires, etc) pulls you through. You'll find yourself in a windowless labyrinthine dungeon-laboratory with no apparent authority figures but automatic systems (magic, technological, or in between) and jam packed full of abominations and horrors. There are a dozen duplicates of yourself and none of you know who is the original. Every day there is a new esoteric task required of you.
 
@@ -445,14 +451,18 @@ Notes:
 + Tasks range from simple group games, to dangerous trials.
 + You can encounter any manner of occult, thriller, or horror trope.
 + While here, you & all clones have the Dysfunction complication.
-+/- If you survive, you subjectively experienced 100 years, however when you return, only 1 week has passed. The 100 years counts for Power progression.
++/- If you survive, you subjectively experienced 100 years, however when you return, only 1 week has passed.
 
-RIP AND TEAR
-Epic (ORC)
+### Sidebar
+The 100 years counts for Power progression.
 
-Threat 9
-Conflict 3
-Reward 9
+
+## Quest: Rip And Tear
+- Slot: Epic
+- Faction: ORC
+- Threat: 9
+- Conflict: 3
+- Reward: 9
 
 One of Alphazon's facilities on Mars has experienced an Outsider incursion as an artifact went haywire opening Far Rifts. The facility should be subject to nuclear bombardment, but the daughter of an Alphazon executive is on site, along with a number of ordinary employees and a few non-Outsider artifacts that would survive the blasts and can't be left unaccounted for. So the ORC has been requisitioned to cooperate in a joint mission with Alphazon operators guiding a squad of power armored (xORC-09 Powered Armor and Tesla Arms free for this quest) witches and elite soldiers. Save who you can for quarantine, and secure the artifacts.
 
@@ -462,12 +472,13 @@ Notes:
 + Kill as much as you can, you want a clear path for survivors.
 +/- You'll be dropped from orbit and crash through into the main lobby prior to the elevator down to the deep.
 
-STAR CRYPT
-Heroic (Alphazon)
 
-Threat 7
-Conflict 4
-Reward 7
+## Quest: Star Crypt
+- Slot: Heroic
+- Faction: Alphazon
+- Threat: 7
+- Conflict: 4
+- Reward: 7
 
 Requires Gold Card, ORC Licence, or Cornucopia, and field experience working for or closely with Alphazon. A Secondary Tier Executive has personally requested your assistance as a bodyguard and detective. Their Forecasters have become very uneasy with the unveiling of the Heavenly Palace luxury space station they have constructed in orbit at the Le Lagrange point. Suspected interference suggests an impending Outsider event, provoking a quiet evacuation of non-essential personnel until the situation is cleared. 3 weeks of luxury in, expect the station to resemble Talos 1, from Prey, becoming overrun by increasing aberrations & mimics.
 
@@ -475,20 +486,26 @@ Notes:
 + The station employs stealth fields rendering it invisible outside of a 10 mile sphere.
 + Most your enemies won't require life support systems.
 +/- If the station remains intact and you do good, expect to receive your own penthouse suite onboard.
-+ The Outsiders mess with the stealth field, causing it to block transportation magics, from broomsticks to portals.
 
-DUNGEONEERING
-Any/Heroic (Independent) - Repeatable
+### Sidebar
+The Outsiders mess with the stealth field, causing it to block transportation magics, from broomsticks to portals.
 
-Threat ?
-Conflict ?
-Reward 10
+
+## Quest: Dungeoneering
+- Slot: Heroic
+- Faction: Independent
+- Repeatable: True
+- Threat: ?
+- Conflict: ?
+- Reward: 10
 
 Throughout the world there are Dungeons, one for each major Deity who creates the dungeon and sponsors its inhabitants and rewards. Physics and logic completely distinct from reality, per floor. Each floor having its own trials, puzzles, and threats. Size is inconsistent with no continuity between floors. A floor can be anywhere from a broom closet to an entire landscape and the gates to the next floor are hidden behind terms of completion that you may not even know, having to figure it out yourself with or without hints. Dungeons are frequented by witches hoping to reach the top. Few ever do, but you can find witches from any faction competing.
 
 Notes:
 +/- Each floor is harder than the last. Receive 1 Reward point every 2nd floor you complete. Take this repeatedly using different quest slots to go further. Up to Floor 50. Folk = 1 floor. Noble = 5, Heroic = 10 floors, Epic = 25 floors. On completing floor 69, get a Wish, as per Consortation.
 
+
+--- BOBBY TABLE ---
 
 ### Sidebar
 Folk Expansion, featuring 12 more FoIk quests, 6 new Nobles, two new Heroics, and a set of new faction quests.

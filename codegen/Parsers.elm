@@ -627,8 +627,9 @@ type alias Quest =
     { name : String
     , slot : String
     , evil : String
-    , threat : Int
-    , conflict : Int
+    , repeatable : Bool
+    , threat : Maybe Int
+    , conflict : Maybe Int
     , reward : Int
     , faction : Maybe String
     , description : String
@@ -652,6 +653,15 @@ quest =
                         else
                             Err "Unexpected value: False"
                     )
+
+        maybeIntParser : String -> Result String (Maybe Int)
+        maybeIntParser s =
+            if s == "?" then
+                Ok Nothing
+
+            else
+                intParser s
+                    |> Result.map Just
     in
     succeed
         (\ctor description sidebars ->
@@ -680,8 +690,9 @@ quest =
                     , requiredItem "Evil" (evilFlagParser "EvilYes")
                     , optionalItem nonexistentKey "EvilNo" (\_ -> Ok "EvilNo")
                     ]
-                |> requiredItem "Threat" intParser
-                |> requiredItem "Conflict" intParser
+                |> optionalItem "Repeatable" False boolParser
+                |> requiredItem "Threat" maybeIntParser
+                |> requiredItem "Conflict" maybeIntParser
                 |> requiredItem "Reward" intParser
                 |> maybeItem "Faction" factionParser
                 |> parseSection

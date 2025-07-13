@@ -46,8 +46,9 @@ dlcToQuests types quests =
                         , annotation = Nothing
                         }
                 , slot = types.valueFrom quest.slot
-                , threat = Elm.int quest.threat
-                , conflict = Elm.int quest.conflict
+                , threat = Elm.maybe (Maybe.map Elm.int quest.threat)
+                , conflict = Elm.maybe (Maybe.map Elm.int quest.conflict)
+                , repeatable = Elm.bool quest.repeatable
                 , reward = Elm.int quest.reward
                 , faction = Elm.maybe (Maybe.map types.valueFrom quest.faction)
                 , description = Elm.string quest.description

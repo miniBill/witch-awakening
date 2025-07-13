@@ -113,29 +113,49 @@ questBox display selected number quest =
                                     , moveRight 16
                                     , moveUp 92
                                     ]
-                    , quest.slot
-                        |> Types.slotToString
-                        |> Theme.gradientText 4
-                            (case quest.slot of
-                                Epic ->
-                                    Gradients.epicGradient
+                    , [ if quest.name == Types.Dungeoneering then
+                            "Any"
+                                |> Theme.gradientText 4 Gradients.yellowGradient
+                                |> el [ alignBottom ]
 
-                                Heroic ->
-                                    Gradients.heroicGradient
+                        else
+                            Element.none
+                      , if quest.name == Types.Dungeoneering then
+                            "/"
+                                |> Theme.gradientText 4 Gradients.yellowGradient
+                                |> el
+                                    [ Font.size 40
+                                    , Font.bold
+                                    ]
 
-                                Noble ->
-                                    Gradients.nobleGradient
+                        else
+                            Element.none
+                      , quest.slot
+                            |> Types.slotToString
+                            |> Theme.gradientText 4
+                                (case quest.slot of
+                                    Epic ->
+                                        Gradients.epicGradient
 
-                                _ ->
-                                    Gradients.blueGradient
-                            )
-                        |> el
+                                    Heroic ->
+                                        Gradients.heroicGradient
+
+                                    Noble ->
+                                        Gradients.nobleGradient
+
+                                    _ ->
+                                        Gradients.blueGradient
+                                )
+                            |> el [ alignBottom ]
+                      ]
+                        |> Element.row
                             [ alignBottom
                             , alignRight
                             , Font.size 28
                             , Theme.celticHand
                             , moveLeft 16
                             , moveUp 64
+                            , spacing 4
                             ]
                     , (case quest.evil of
                         Quest.EvilNo ->
@@ -178,6 +198,18 @@ questBox display selected number quest =
                             [ Font.size 28
                             , Theme.captureIt
                             ]
+                    , if quest.repeatable then
+                        "♻️"
+                            |> Theme.gradientText 4 Gradients.yellowGradient
+                            |> el
+                                [ Font.size 32
+                                , Theme.captureIt
+                                , moveDown 24
+                                , moveRight 24
+                                ]
+
+                      else
+                        Element.none
                     ]
                 , content =
                     [ el [ height (px 40) ] Element.none
@@ -271,40 +303,45 @@ statsTable details =
         , data =
             [ Just ( "THREAT", details.threat, dangerToColor details.threat )
             , Just ( "CONFLICT", details.conflict, dangerToColor details.conflict )
-            , Just ( "REWARD", details.reward, scoreToColor details.reward )
+            , Just ( "REWARD", Just details.reward, scoreToColor details.reward )
             , Nothing
             ]
         }
 
 
-dangerToColor : Int -> ( Int, Int )
-dangerToColor p =
-    if p == 10 then
-        Theme.colors.companionGold
+dangerToColor : Maybe Int -> Int
+dangerToColor maybeP =
+    case maybeP of
+        Nothing ->
+            0x00909090
 
-    else if p >= 7 then
-        Theme.colors.companionRed
+        Just p ->
+            if p == 10 then
+                Tuple.first Theme.colors.companionGold
 
-    else if p >= 4 then
-        Theme.colors.companionOrange
+            else if p >= 7 then
+                Tuple.first Theme.colors.companionRed
 
-    else
-        Theme.colors.companionBlue
+            else if p >= 4 then
+                Tuple.first Theme.colors.companionOrange
+
+            else
+                Tuple.first Theme.colors.companionBlue
 
 
-scoreToColor : Int -> ( Int, Int )
+scoreToColor : Int -> Int
 scoreToColor p =
     if p == 10 then
-        Theme.colors.companionGold
+        Tuple.first Theme.colors.companionGold
 
     else if p >= 7 then
-        Theme.colors.companionBlue
+        Tuple.first Theme.colors.companionBlue
 
     else if p >= 4 then
-        Theme.colors.companionOrange
+        Tuple.first Theme.colors.companionOrange
 
     else
-        Theme.colors.companionRed
+        Tuple.first Theme.colors.companionRed
 
 
 cellWithLeftBorder : List (Attribute msg) -> String -> Int -> Element msg -> Element msg
@@ -330,17 +367,17 @@ cellWithLeftBorder attrs label leftBorder content =
         content
 
 
-statColumn : Int -> Element.Column (Maybe ( String, Int, ( Int, Int ) )) msg
+statColumn : Int -> Element.Column (Maybe ( String, Maybe Int, Int )) msg
 statColumn ranking =
     let
-        view : Maybe ( String, Int, ( Int, Int ) ) -> Element msg
+        view : Maybe ( String, Maybe Int, Int ) -> Element msg
         view v =
             case v of
-                Just ( label, score, ( mainColor, _ ) ) ->
+                Just ( label, maybeScore, mainColor ) ->
                     let
                         backgroundColor : Int
                         backgroundColor =
-                            if score >= ranking then
+                            if Maybe.withDefault 10 maybeScore >= ranking then
                                 mainColor
 
                             else
