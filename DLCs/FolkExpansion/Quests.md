@@ -17,15 +17,11 @@ Notes:
 + All life appears to actively try to help other lifeforms, even the plants will bend to shelter you from the rain, vines may creep up to stem your bleeding, fluffy critters will bring you help.
 + You'll find a way out after 3y, unless you have Portals.
 
-
---- BOBBY TABLE ---
-
-SPECIAL DELIVERY
-Folk
-
-Threat 1
-Conflict 1
-Reward 1
+## Quest: Special Delivery
+- Slot: Folk
+- Threat: 1
+- Conflict: 1
+- Reward: 1
 
 You've received a job by some means, where you're given a shipment of deliveries that need to be made before the big night on Halloween, delivering packages and parcels of items that are important to the would-be recipients. Perhaps even the good Stork got one of his bundles mixed up into your delivery basket. Otherwise all the items are low tier magical items with strange enchantments that are not beneficial to combat in any way, mostly being novelties related to Halloween from candy snakes to mood setting jack-o-lanterns or candles, and abnormal candies with exotic flavors special to the supernatural world of Witchdom.
 
@@ -34,18 +30,20 @@ Notes:
 + Each delivery target may be a fun eccentric character to interact with, and may have good tips or become useful contacts.
 + In your reward is an oddly shaped and worded invitation to Halloween Town.
 
-SIGHTSEEING
-Folk
-
-Threat 1
-Conflict 1
-Reward 1
+## Quest: Sightseeing
+- Slot: Folk
+- Threat: 1
+- Conflict: 1
+- Reward: 1
 
 You're new in town, likely fresh off of your witch awakening and now being shown the ropes in the area your primary faction sets up shop, or perhaps you're just taking a tourist stop at some other new location on or off earth. After all, you can probably now go anywhere you want on Earth now with little effort through the gates of other witches’ established travel networks, an ally that can take you somewhere, or just venturing off on your own by broomstick or ride. Whatever the case, you have some time to kill absorbing the sights of the world with new eyes, and maybe you'll meet some friends along the way.
 
 Notes:
 + Not inherently dangerous, but by your own choices you might run into trouble, from visiting shady back alley streets or getting caught up in the affairs of a supernatural entity.
 + You can explore on your own of course, but this quest guarantees the opportunity for up to 2/y in total.
+
+
+--- BOBBY TABLE ---
 
 DREAM TRIAL
 Folk
