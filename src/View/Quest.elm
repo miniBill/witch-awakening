@@ -110,7 +110,7 @@ questBox display selected number quest =
                                     [ alignBottom
                                     , Font.size 28
                                     , Theme.celticHand
-                                    , moveRight 8
+                                    , moveRight 16
                                     , moveUp 92
                                     ]
                     , quest.slot
