@@ -2,6 +2,8 @@ module View.Quest exposing (viewQuests)
 
 import Data.Faction as Faction
 import Data.Quest as Quest
+import Dict
+import Dict.Extra
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, inFront, moveDown, moveLeft, moveRight, moveUp, padding, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
@@ -22,7 +24,9 @@ viewQuests display quests =
         blocks : List (Element ( Quest, Bool ))
         blocks =
             Generated.Quest.all
-                |> List.indexedMap (questBox display quests)
+                |> Dict.Extra.groupBy (\{ dlc } -> Maybe.withDefault "" dlc)
+                |> Dict.values
+                |> List.concatMap (List.indexedMap (questBox display quests))
                 |> List.filterMap identity
     in
     View.collapsible (Theme.topBackground Images.questIntro)
@@ -236,7 +240,7 @@ questBox display selected number quest =
             Theme.column [ alignTop ]
                 (c
                     :: List.map (viewSidebar quest.slot) quest.sidebars
-                    ++ (if number == 0 then
+                    ++ (if number == 0 && quest.dlc == Nothing then
                             [ evilSidebar ]
 
                         else

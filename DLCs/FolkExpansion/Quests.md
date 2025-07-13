@@ -1,13 +1,10 @@
 # Folk Expansion
 
---- BOBBY TABLE ---
-
-ADVENTURE TIME
-Folk
-
-Threat 1
-Conflict 1
-Reward 1
+## Quest: Adventure Time
+- Slot: Folk
+- Threat: 1
+- Conflict: 1
+- Reward: 1
 
 What are the chances. One moment you're at home or some equivalent, perfectly content sipping your favorite drink and in a sudden instance of abrupt chaos you're thrown like a car crash and twisted through a Wild Rift to some unknown land where three moons streak across the sky illuminated by binary stars.
 
@@ -16,10 +13,12 @@ There is no sign of civilization, just rich nature and crisp air.
 As for life, it appears that predation was never evolved in this world, neither are there harmful bacteria, parasites, fungus, or viruses. All creatures found in this place are friendly with complex social evolution and methods of nonverbal communication
 
 Notes:
-+A very safe world with no natural threats other than accidents.
++ A very safe world with no natural threats other than accidents.
 + All life appears to actively try to help other lifeforms, even the plants will bend to shelter you from the rain, vines may creep up to stem your bleeding, fluffy critters will bring you help.
 + You'll find a way out after 3y, unless you have Portals.
 
+
+--- BOBBY TABLE ---
 
 SPECIAL DELIVERY
 Folk
