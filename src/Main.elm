@@ -612,7 +612,13 @@ innerView model =
             , Theme.style "border-image-repeat" "space round"
             , Theme.style "border-width" "0 30px"
             ]
-            [ Theme.column [ Element.paddingXY 16 0 ]
+            [ Theme.column
+                [ if allCompact then
+                    Element.paddingEach { top = 0, left = 16, right = 16, bottom = 16 }
+
+                  else
+                    Element.paddingXY 16 0
+                ]
                 [ Element.Lazy.lazy2 Class.viewClass model.classDisplay model.class
                 , Element.Lazy.lazy2 Race.viewRace model.raceDisplay model.races
                 , Element.Lazy.lazy2 GameMode.viewGameMode model.gameModeDisplay model.gameMode
