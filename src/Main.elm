@@ -611,20 +611,30 @@ innerView model =
             , Theme.style "border-image-width" "60px 30px 0"
             , Theme.style "border-image-repeat" "space round"
             , Theme.style "border-width" "0 30px"
-            , Element.paddingEach { top = 0, bottom = 16, left = 16, right = 16 }
             ]
-            [ Element.Lazy.lazy2 Class.viewClass model.classDisplay model.class
-            , Element.Lazy.lazy2 Race.viewRace model.raceDisplay model.races
-            , Element.Lazy.lazy2 GameMode.viewGameMode model.gameModeDisplay model.gameMode
-            , Element.Lazy.lazy2 Complications.viewComplications model.complicationsDisplay model.complications
-            , Element.Lazy.lazy3 TypePerk.viewTypePerks model.races model.typePerksDisplay model.typePerks
-            , Element.Lazy.lazy2 Magic.viewMagics model.magicDisplay model.magic
-            , Element.Lazy.lazy4 Perk.viewPerks model.perksDisplay model.mainRace model.races model.perks
-            , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
-            , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
-            , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions
-            , Element.Lazy.lazy2 Quest.viewQuests model.questsDisplay model.quests
-            , Element.Lazy.lazy5 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.mainRace model.races model.relics
+            [ Theme.column [ Element.paddingXY 16 0 ]
+                [ Element.Lazy.lazy2 Class.viewClass model.classDisplay model.class
+                , Element.Lazy.lazy2 Race.viewRace model.raceDisplay model.races
+                , Element.Lazy.lazy2 GameMode.viewGameMode model.gameModeDisplay model.gameMode
+                , Element.Lazy.lazy2 Complications.viewComplications model.complicationsDisplay model.complications
+                , Element.Lazy.lazy3 TypePerk.viewTypePerks model.races model.typePerksDisplay model.typePerks
+                , Element.Lazy.lazy2 Magic.viewMagics model.magicDisplay model.magic
+                , Element.Lazy.lazy4 Perk.viewPerks model.perksDisplay model.mainRace model.races model.perks
+                , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
+                , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
+                , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions
+                , Element.Lazy.lazy2 Quest.viewQuests model.questsDisplay model.quests
+                , Element.Lazy.lazy5 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.mainRace model.races model.relics
+                ]
+            , if allCompact then
+                Element.none
+
+              else
+                Theme.image
+                    [ width fill
+                    , Theme.style "mask-image" "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 50%)"
+                    ]
+                    Images.footer
             ]
         ]
         |> Element.map Choice
