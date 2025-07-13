@@ -1,7 +1,7 @@
 module View.Faction exposing (viewFaction)
 
 import Data.Faction as Faction
-import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, moveDown, px, rgb, rgba, shrink, spacing, width)
+import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, rgb, rgba, shrink, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -44,14 +44,13 @@ viewFaction display faction =
                 [ width fill
                 , spacing <| Theme.rhythm * 3
                 ]
-        , Theme.column
-            [ Background.image Images.factionHumansIntro1.src
+        , Element.row
+            [ width fill
+            , Background.image Images.factionHumansIntro1.src
             , width fill
-            , Theme.padding
             ]
-            [ el [ height <| px 200 ] Element.none
-            , Theme.row [ width fill ]
-                [ Theme.blocks
+            [ el [ width fill, Element.paddingEach { left = 32, bottom = 64, top = 200, right = 32 } ] <|
+                Theme.blocks
                     [ width fill
                     , Background.color <| rgba 1 1 1 0.75
                     , Font.color <| rgb 0 0 0
@@ -60,13 +59,13 @@ viewFaction display faction =
                     , Theme.rounded
                     ]
                     Faction.humansIntro
-                , Theme.image
-                    [ width fill
-                    , moveDown <| 40 + Theme.rhythm * 3.5
-                    ]
-                    Images.factionHumansIntro2
+            , Theme.image
+                [ width fill
+                , alignBottom
+
+                -- , moveDown <| 40 + Theme.rhythm * 3.5
                 ]
-            , el [ height <| px 40 ] Element.none
+                Images.factionHumansIntro2
             ]
         , Generated.Faction.all
             |> List.filter .isHuman
