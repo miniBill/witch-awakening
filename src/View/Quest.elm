@@ -73,7 +73,7 @@ questBox display selected number quest =
                 , Theme.borderColor (slotToColor quest.slot)
                 , Border.rounded Theme.cardRoundness
                 , width <| Element.minimum 460 fill
-                , Background.color (rgb 0 0 0)
+                , Background.color (rgba 0.1 0.1 0.1 0.8)
                 , Font.color (rgb 1 1 1)
                 ]
                 { display =

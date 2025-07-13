@@ -312,7 +312,11 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
     in
     Theme.maybeButton [ width fill ]
         { label =
-            Theme.column [ width fill ]
+            Theme.column
+                [ width fill
+                , Background.color (rgba 0.1 0.1 0.1 0.8)
+                , Theme.rounded
+                ]
                 [ magicTitle display details
                 , case dlc of
                     Nothing ->
