@@ -8,10 +8,10 @@ import Browser.Navigation as Nav
 import Data.Perk
 import Dict
 import Element exposing (Element, fill, rgb, width)
-import Element.Background as Background
 import Element.Font as Font
 import Element.Lazy
 import Generated.Types as Types exposing (Perk(..), Relic(..))
+import Images
 import Json.Decode as JD
 import List.Extra
 import Maybe.Extra
@@ -578,7 +578,9 @@ view model =
                     }
                 ]
             }
-            [ Font.size 16, Element.inFront (Menu.viewMenu model) ]
+            [ Font.size 16
+            , Element.inFront (Menu.viewMenu model)
+            ]
             (innerView model)
         ]
     }
@@ -594,7 +596,7 @@ innerView model =
     Theme.column
         [ width fill
         , Font.color <| rgb 1 1 1
-        , Background.color <| rgb 0 0 0
+        , Theme.style "background" ("url(" ++ Images.pattern.src ++ ")")
         , Element.padding 16
         ]
         [ Intro.viewTitle allCompact
