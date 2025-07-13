@@ -626,7 +626,7 @@ companion =
 type alias Quest =
     { name : String
     , slot : String
-    , evil : Maybe Bool
+    , evil : String
     , threat : Int
     , conflict : Int
     , reward : Int
@@ -640,17 +640,17 @@ type alias Quest =
 quest : Parser Quest
 quest =
     let
-        evilFlagParser : Bool -> String -> Result String (Maybe Bool)
+        evilFlagParser : String -> String -> Result String String
         evilFlagParser evil input =
             input
                 |> boolParser
-                |> Result.map
+                |> Result.andThen
                     (\f ->
                         if f then
-                            Just evil
+                            Ok evil
 
                         else
-                            Nothing
+                            Err "Unexpected value: False"
                     )
     in
     succeed
@@ -676,9 +676,9 @@ quest =
         |= (section "##" "Quest" Quest
                 |> requiredItem "Slot" Ok
                 |> oneOfItems
-                    [ optionalItem "Evil Route" Nothing (evilFlagParser False)
-                    , optionalItem "Evil" Nothing (evilFlagParser True)
-                    , optionalItem nonexistentKey Nothing (\_ -> Ok Nothing)
+                    [ requiredItem "Evil Route" (evilFlagParser "EvilMaybe")
+                    , requiredItem "Evil" (evilFlagParser "EvilYes")
+                    , optionalItem nonexistentKey "EvilNo" (\_ -> Ok "EvilNo")
                     ]
                 |> requiredItem "Threat" intParser
                 |> requiredItem "Conflict" intParser
@@ -895,9 +895,9 @@ listItem key continuation =
         |. backtrackable
             (symbol "-"
                 |. spaces
+                |. keyword key
+                |. symbol ":"
             )
-        |. keyword key
-        |. symbol ":"
         |. spaces
         |= getChompedString (chompUntilAfter "\n")
         |. spaces
@@ -911,6 +911,13 @@ listItem key continuation =
 oneOfItems : List (Section a -> Section b) -> Section a -> Section b
 oneOfItems options (Section s) =
     let
+        mapped :
+            List
+                { key : String
+                , name : String
+                , parser : String -> Dict String (List String) -> Result String b
+                , items : Set String
+                }
         mapped =
             options
                 |> List.map

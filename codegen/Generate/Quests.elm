@@ -40,15 +40,11 @@ dlcToQuests types quests =
             Gen.Data.Quest.make_.details
                 { name = types.valueFrom quest.name
                 , evil =
-                    case quest.evil of
-                        Just True ->
-                            Gen.Data.Quest.make_.evilYes
-
-                        Just False ->
-                            Gen.Data.Quest.make_.evilMaybe
-
-                        Nothing ->
-                            Gen.Data.Quest.make_.evilNo
+                    Elm.value
+                        { importFrom = [ "Data", "Quest" ]
+                        , name = quest.evil
+                        , annotation = Nothing
+                        }
                 , slot = types.valueFrom quest.slot
                 , threat = Elm.int quest.threat
                 , conflict = Elm.int quest.conflict
