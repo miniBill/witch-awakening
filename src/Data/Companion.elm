@@ -1,4 +1,4 @@
-module Data.Companion exposing (Details, MaybeClass(..), Score(..), factionNameToCompanionsName, intro)
+module Data.Companion exposing (Details, MaybeClass(..), Score(..), factionToCollectiveName, intro)
 
 import Generated.Types exposing (Class, Companion, Faction(..), Race)
 
@@ -48,8 +48,8 @@ intro =
     """
 
 
-factionNameToCompanionsName : Maybe Faction -> String
-factionNameToCompanionsName faction =
+factionToCollectiveName : Maybe Faction -> String
+factionToCollectiveName faction =
     case faction of
         Just TheCollegeOfArcadia ->
             "The Arcadians"
@@ -77,6 +77,9 @@ factionNameToCompanionsName faction =
 
         Just AlphazonIndustries ->
             "The Alphazonians / Suits"
+
+        Just Independents ->
+            "Independents / Other"
 
         Nothing ->
             "Independents / Other"

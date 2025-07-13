@@ -1,6 +1,6 @@
-module Data.Faction exposing (Details, humansIntro, intro, summaries)
+module Data.Faction exposing (Details, humansIntro, intro, summaries, toShortString)
 
-import Generated.Types exposing (Faction)
+import Generated.Types exposing (Faction(..))
 import Images exposing (Image)
 
 
@@ -16,6 +16,40 @@ type alias Details =
     , dlc : Maybe String
     , images : { image1 : Image, image2 : Image, image3 : Image, image4 : Image, image5 : Image }
     }
+
+
+toShortString : Faction -> String
+toShortString raw =
+    case raw of
+        TheCollegeOfArcadia ->
+            "Arcadia"
+
+        HawthorneAcademia ->
+            "Hawthorne"
+
+        TheWatchers ->
+            "Watchers"
+
+        TheHespatianCoven ->
+            "Hespatia"
+
+        Lunabella ->
+            "Lunabella"
+
+        AlfheimrAlliance ->
+            "Alliance"
+
+        TheOutsiders ->
+            "Outsiders"
+
+        TheORC ->
+            "ORC"
+
+        AlphazonIndustries ->
+            "Alphazon"
+
+        Independents ->
+            "Independent"
 
 
 intro : String

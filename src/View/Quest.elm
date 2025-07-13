@@ -1,5 +1,6 @@
 module View.Quest exposing (viewQuests)
 
+import Data.Faction as Faction
 import Data.Quest as Quest
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, inFront, moveDown, moveLeft, moveRight, moveUp, padding, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
@@ -97,6 +98,21 @@ questBox display selected number quest =
                             , moveRight 16
                             , moveUp 60
                             ]
+                    , case quest.faction of
+                        Nothing ->
+                            Element.none
+
+                        Just faction ->
+                            faction
+                                |> Faction.toShortString
+                                |> Theme.gradientText 4 Gradients.blueGradient
+                                |> el
+                                    [ alignBottom
+                                    , Font.size 28
+                                    , Theme.celticHand
+                                    , moveRight 8
+                                    , moveUp 92
+                                    ]
                     , quest.slot
                         |> Types.slotToString
                         |> Theme.gradientText 4

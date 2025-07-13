@@ -256,6 +256,7 @@ core : DLC
 core =
     { emptyDLC
         | perks = corePerks
+        , factions = [ "Independents" ] |> buildVariants
     }
 
 

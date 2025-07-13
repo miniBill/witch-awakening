@@ -103,7 +103,7 @@ companionSection display companions ( faction, section ) =
                 |> List.map (companionBox display companions)
     in
     if display == DisplayFull then
-        [ (Companion.factionNameToCompanionsName faction ++ ":")
+        [ (Companion.factionToCollectiveName faction ++ ":")
             |> Theme.gradientText 2 Gradients.yellowGradient
             |> el [ Theme.celticHand, Font.size 48 ]
         , boxes

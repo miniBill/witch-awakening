@@ -6,7 +6,7 @@ import Data.Quest as Quest
 import Dict
 import Dict.Extra
 import Generated.Quest
-import Generated.Types as Types exposing (Quest)
+import Generated.Types as Types exposing (Faction(..), Quest)
 import List.Extra
 import Types exposing (Model)
 
@@ -26,7 +26,7 @@ value model =
                         questsDetails
                             |> (case model.faction of
                                     Nothing ->
-                                        identity
+                                        List.Extra.removeWhen (\details -> details.faction == Just Independents)
 
                                     Just ( faction, _ ) ->
                                         List.Extra.removeWhen (\details -> details.faction == Just faction)
