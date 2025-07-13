@@ -17,12 +17,16 @@ viewTitle allCompact =
             , Font.size 180
             , Font.center
             , moveDown 24
+            , Element.paddingEach { top = 16, bottom = 0, left = 16, right = 16 }
             ]
             [ gradientText 8 Gradients.titleGradient "Witch Awakening"
             ]
 
     else
-        Element.column [ width fill ]
+        Element.column
+            [ width fill
+            , Element.paddingEach { top = 16, bottom = 0, left = 16, right = 16 }
+            ]
             [ paragraph
                 [ Theme.bebasNeue
                 , Font.size 180
@@ -115,7 +119,7 @@ viewDLCAttribution dlcAttribution =
 
 viewIntro : Element msg
 viewIntro =
-    Theme.row []
+    Theme.row [ Element.paddingXY 16 0 ]
         [ Theme.image [ width fill ] Images.penelope
         , Theme.blocks [ width <| fillPortion 2 ] mainIntro
         ]
