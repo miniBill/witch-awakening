@@ -289,8 +289,8 @@ viewCalculations model power warnings affinities =
         , keyedRow "Faction" model.expandedMenuSections (Data.Costs.Factions.value model) <| Just "Factions"
         , keyedRow "Companions" model.expandedMenuSections (Data.Costs.Companions.value model) Nothing
         , keyedRow "Quests" model.expandedMenuSections (Data.Costs.Quests.value model) Nothing
-        , ( "RelicSlider", relicSlider model )
         , keyedRow "Relics" model.expandedMenuSections (Data.Costs.Relics.value model) Nothing
+        , ( "RelicSlider", relicSlider model )
         , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
         , resultRow
         , if List.isEmpty warnings then
