@@ -150,17 +150,17 @@ magicCosts =
             , testRanks { academicDryad | faction = Just ( HawthorneAcademia, False ) } "In affinity, in class" Wands -1 0 2 4 7
             ]
         , describe "In faction, with perk"
-            [ testRanks { sorceressDryad | faction = Just ( TheHespatianCoven, True ) } "Off affinity, off class" Occultism 1 2 3 5 8
-            , testRanks { sorceressDryad | faction = Just ( Lunabella, True ) } "In affinity, off class" Dominion 1 1 2 3 5
-            , testRanks { academicDryad | faction = Just ( TheCollegeOfArcadia, True ) } "Off affinity, in class" Digicasting -2 1 2 4 7
-            , testRanks { academicDryad | faction = Just ( HawthorneAcademia, True ) } "In affinity, in class" Wands -2 0 1 2 4
+            [ testRanks { sorceressDryad | faction = Just ( TheHespatianCoven, True ) } "Off affinity, off class" Occultism 1 2 4 6 9
+            , testRanks { sorceressDryad | faction = Just ( Lunabella, True ) } "In affinity, off class" Dominion 1 2 3 4 6
+            , testRanks { academicDryad | faction = Just ( TheCollegeOfArcadia, True ) } "Off affinity, in class" Digicasting -1 0 2 4 7
+            , testRanks { academicDryad | faction = Just ( HawthorneAcademia, True ) } "In affinity, in class" Wands -1 0 1 2 4
             ]
         , describe "Cyborgs with perk"
-            [ testRanks { sorceressCyborg | typePerks = [ Cyborg ] } "Gadgetry is in affinity" Gadgetry 1 2 3 5 8
-            , testRanks { sorceressCyborg | typePerks = [ Cyborg ] } "Integration is in affinity" Integration 1 2 3 5 8
+            [ testRanks { sorceressCyborg | typePerks = [ Cyborg ] } "Gadgetry is in affinity" Gadgetry 1 2 4 6 9
+            , testRanks { sorceressCyborg | typePerks = [ Cyborg ] } "Integration is in affinity" Integration 1 2 4 6 9
             ]
         , describe "Spiders with perk"
-            [ testRanks { sorceressSpider | typePerks = [ Spider ] } "Arachnescence is in affinity" Arachnescence 1 1 2 3 5
+            [ testRanks { sorceressSpider | typePerks = [ Spider ] } "Arachnescence is in affinity" Arachnescence 1 2 3 4 6
             ]
         ]
 

@@ -7,6 +7,7 @@ import Data.Magic as Magic
 import Generated.Magic
 import Generated.Types as Types exposing (Affinity, Class(..), Faction, Magic(..), Race(..))
 import List.Extra
+import Maybe.Extra
 import Types exposing (CosmicPearlData, RankedMagic)
 
 
@@ -160,13 +161,13 @@ magicValue ({ faction, class, typePerks } as model) affinities magicDetails =
                             case magicDetails.faction of
                                 Just magicFaction ->
                                     if Just ( magicFaction, False ) == faction then
-                                        basicValue
+                                        List.sum basicValue
 
                                     else
-                                        doubleIfNegative basicValue
+                                        doubleIfNegative (List.sum basicValue)
 
                                 Nothing ->
-                                    basicValue
+                                    List.sum basicValue
 
                     name : String
                     name =
@@ -181,13 +182,18 @@ magicValue ({ faction, class, typePerks } as model) affinities magicDetails =
             )
 
 
-factionDiscount : Int -> Int
-factionDiscount c =
-    if c > 0 then
-        c * 2
+factionDiscount : List Int -> Int
+factionDiscount l =
+    l
+        |> List.map
+            (\c ->
+                if c > 0 then
+                    c
 
-    else
-        (c - 1) // 2
+                else
+                    (c - 1) // 2
+            )
+        |> List.sum
 
 
 isInAffinity : Magic.Details -> List Affinity -> Bool
@@ -213,7 +219,7 @@ basicMagicValue :
     -> Maybe Class
     -> Int
     -> Magic.Details
-    -> Maybe Int
+    -> Maybe (List Int)
 basicMagicValue affinities class rank magic =
     let
         isClass : Bool
@@ -221,36 +227,42 @@ basicMagicValue affinities class rank magic =
             (magic.class == class)
                 && (class /= Nothing)
 
-        cases : Int -> Int -> Int -> Int -> Int
-        cases basicValue inAffinityValue inClassValue inBothValue =
-            if isClass then
-                if isInAffinity magic affinities then
-                    inBothValue
-
-                else
-                    inClassValue
-
-            else if isInAffinity magic affinities then
+        cases : Int -> Int -> Int
+        cases basicValue inAffinityValue =
+            if isInAffinity magic affinities then
                 inAffinityValue
 
             else
                 basicValue
+
+        rank1 : number
+        rank1 =
+            if isClass then
+                1
+
+            else
+                -1
+
+        inner : Int -> Maybe Int
+        inner r =
+            case r of
+                1 ->
+                    Just rank1
+
+                2 ->
+                    Just <| cases -2 -1
+
+                3 ->
+                    Just <| cases -3 -2
+
+                4 ->
+                    Just <| cases -4 -2
+
+                5 ->
+                    Just <| cases -5 -3
+
+                _ ->
+                    Nothing
     in
-    case rank of
-        1 ->
-            Just <| cases -1 -1 1 1
-
-        2 ->
-            Just <| cases -3 -2 -1 0
-
-        3 ->
-            Just <| cases -6 -4 -4 -2
-
-        4 ->
-            Just <| cases -10 -6 -8 -4
-
-        5 ->
-            Just <| cases -15 -9 -13 -7
-
-        _ ->
-            Nothing
+    List.range 1 rank
+        |> Maybe.Extra.combineMap inner
