@@ -45,7 +45,7 @@ value { ignoreSorceressBonus } model =
         free =
             if model.class == Just Sorceress && not ignoreSorceressBonus then
                 pointsList
-                    |> List.filter .isElementalism
+                    |> List.filter (\{ isElementalism, isOffAffinity } -> isElementalism && not isOffAffinity)
                     |> List.Extra.minimumBy .points
                     |> Maybe.map .name
 
