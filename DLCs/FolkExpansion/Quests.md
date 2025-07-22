@@ -143,14 +143,11 @@ Notes:
 + She possesses Ritual Inks, and can use them to tattoo you with runes without buying the Ritual Ink relic yourself.
 + Good candidate for a Custom companion?
 
---- BOBBY TABLE ---
-
-FREE MEDICAL
-Folk
-
-Threat 1
-Conflict 2
-Reward 1
+## Quest: Free Medical
+- Slot: Folk
+- Threat: 1
+- Conflict: 2
+- Reward: 1
 
 This quest is a little bit of job security. At some point in the future you'll be severely injured as the result of something, likely some higher ranked quest, but this quest ensures you'll have an encounter where your medical needs will be provided for you free of charge, perhaps with an associated service or favor that might chain to another quest later, or perhaps they simply have ulterior motives. For example: This could be the classic scenario where someone is defeated only to be rescued by a stranger and then treated in a strange environment or safehouse, tended to until back in shape enough to go challenge the boss or monster again.
 
@@ -159,15 +156,14 @@ Notes:
 
 ### Sidebar
 Interaction: You can use this to claim the rewards of a quest early, and use this recovery period as the opportunity to spend it, and return with advantage
---
 
-## THE SWIMSUIT EPISODE
+
+## Quest: The Swimsuit Episode
 - Slot: Folk
 - Evil Route: True
-
-Threat 2
-Conflict 1
-Reward 1
+- Threat: 2
+- Conflict: 1
+- Reward: 1
 
 Anyone can just go to the beach or the pool, but with this quest you're ensured for an extra special trip to some manner of swimsuit event, or you could integrate this quest with another to transform that quest into a swimsuit episode by some means, where events are orchestrated such that the other quest occurs with everyone still in their swimsuits. Taken on its own however, it means it won't just be a normal day in the water but will incorporate any and all the tropes you think make up the ideal swimsuit episode in how it affects others as well as yourself, in light hearted ways. Functionally distinct from “Hot Springs” as hot springs focus on relaxing.
 
@@ -177,25 +173,23 @@ Notes:
 + You control the ESRB rating, so to speak.
 
 
-## TEA PARTY
+## Quest: Tea Party
 - Slot: Folk
 - Evil Route: True
-
-Threat 2
-Conflict 2
-Reward 1
+- Threat: 2
+- Conflict: 2
+- Reward: 1
 
 By some means you'll be invited to a particular tea party, a private affair or a part of a larger event. It could be serious, like a precursor to Courtship, Just Desserts, or meeting the mark of On My Mark, or perhaps it's just a light hearted novelty and moment of reprieve. The tea party is one that makes good use of the fact that the attendants are witches. Every dish will in some way be magical, though only the main course will have lasting effects that extend beyond the next morning. The Main Course will be a single use consumable that you eat or drink there at the party that can carry the benefits of any one Potion from Alchemy.
 
 Notes:
 + This includes rank 5 potions. Drink or consume an Arch-Curative in the form of a cake that fully rejuvenates your body, grant you agelessness if you lacked it, or perhaps you were roofied with a Love Potion? Did a True-shape potion replace your race with that of another? Wake up a Mimi? A Doll?
 
-MOONLIT SERENADE
-Noble
-
-Threat 3
-Conflict 4
-Reward 3
+## Quest: Moonlit Serenade
+- Slot: Noble
+- Threat: 3
+- Conflict: 4
+- Reward: 3
 
 A fated chance encounter or a moment that makes you and one other see each other in a new light, and you will feel the spark of love, mutual, leading to a romantic night. How far exactly that goes is up to your discretion, but it won't be a casual choice not to pursue it further as you will feel actual love and a connection, so make sure there's some actual reason why the relationship won't advance further, if you intend to try to keep it to a one-night stand. It won't be all fun and games, there may be some minor quarreling with past rivals, exes, or some the event experiences an interruption at some point at any spot in the timeline, perhaps it's how you meet.
 
@@ -204,12 +198,11 @@ Notes:
 + Can pair well with Courtship to ensure a meeting goes well, if you're one of the parties involved in the proposition.
 + Grants 3 more RP if it leads into Domesticated.
 
-YES TEACHER!
-Noble
-
-Threat 4
-Conflict 5
-Reward 3
+## Quest: Yes Teacher!
+- Slot: Noble
+- Threat: 4
+- Conflict: 5
+- Reward: 3
 
 Requires Summer School perk. One of your teachers at summer school proved to be an exceptional teacher and a master of both the subject, and teaching. Or maybe you were just enthralled by them, you found yourself respecting them or possibly looking up to them. Whatever the case, you valued their teachings more, as well as them as a person, and they were able to teach you more. It's not without its consequences however, for you face a rival in monopolizing the teacher's time: The Teacher's Pet, The Class Rep, The Delinquent, and The Bully will all compete in a social and/or literal free-for-all, and Teacher's lessons will be extra rough!
 
@@ -217,12 +210,11 @@ Notes:
 + You can select the teacher for any options that would allow you to select a friend, and choose a second School Trip.
 + The subject they taught instead increases to 4, rather than 3, and you can buy the remaining rank as though it had the faction discount applied. (Stacking 50% off).
 
-LATE FEES
-Noble
-
-Threat 3
-Conflict 5
-Reward 2
+## Quest: Late Fees
+- Slot: Noble
+- Threat: 3
+- Conflict: 5
+- Reward: 2
 
 A librarian, perhaps one from the companion's section, has requested some help in tracking down 6 particular books that are well past overdue. You will have to track down the culprits in everyone's favorite fetch quest, where each culprit has some tangental problem that conveniently needs to be solved before they're able to hand over the book and the late fee before you're off to the next Perhaps one book was swiped away by a thieving gremlin, while another fell out of their bookbag in the middle of a broomflight across Arcadia. Perhaps one was lost in the cargo of a sunken ship.
 
@@ -230,20 +222,25 @@ Notes:
 + If you write at least a sentence in your build for each book's own particular predicament, you can gain an extra 3rp.
 + Either way, you can also gain increased library privileges that help you study, train, or learn insights to gain more more favor, increasing your Focus/Might/Favor progress 2x for 1y.
 
-VITAL LOTUS
-Noble - Evil Route
-
-Threat 6
-Conflict 4
-Reward 3
+## Quest: Vital Lotus
+- Slot: Noble
+- Evil Route: True
+- Threat: 6
+- Conflict: 4
+- Reward: 3
 
 In your travels or maybe simply your daily routine, you cross paths with a traveling witch. Circumstance will be such that she'll let slip that she's searching for the Flower of Life. Typical witchdom antics, not much to dwell on. You'll happen to see her 3 months later with a missing arm and a half mask covering her scarred left side and significantly less spirit in her remaining eye. Compelled to inquire, you'd learn that she's the only surviving member of a band of adventurers that found the flower, but were intercepted by a cult of hespatian necromancers that burned the field and fled with the last 6 that may ever exist. Are you up to tracking them down?
 
 Notes:
-+ There will be a large force of undead and Necromancers of ranks 2-+ among various tricks and other magics of your adding.
-+ If you give her a flower, she'll become a Lifeweaver with the following card if taken as a companion: Xiao Liena | [TODO]
-+ Use one to learn Lifeweaving with rp: LIFEWEAVING
-+ You could instead opt to join the Necromancers, who sought to burn the Flowers of Life to prevent the spread of Lifeweaving. Lifeweaving will be barred from your timeline with few practitioners in the world, and in her failure and having lead to the destruction of the grove of flowers, Liena will take her own life. Actual reward for this path? Well, if you're a Hespatian you might dominate the necromancers, and take control of their Family, becoming your grunts.
++ There will be a large force of undead and Necromancers of ranks 2-4 among various tricks and other magics of your adding.
++ If you give her a flower, she'll become a companion with Lifeweaver: Xiao Liena
++ Use one to learn Lifeweaving
+
+### Sidebar
+You could instead opt to join the Necromancers, who sought to burn the Flowers of Life to prevent the spread of Lifeweaving. Lifeweaving will be barred from your timeline with few practitioners in the world, and in her failure and having lead to the destruction of the grove of flowers, Liena will take her own life. Actual reward for this path? Well, if you're a Hespatian you might dominate the necromancers, and take control of their Family, becoming your grunts.
+
+
+--- BOBBY TABLE ---
 
 DISTRESS BEACON
 Noble
