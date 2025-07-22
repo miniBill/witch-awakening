@@ -41,6 +41,7 @@ fromModel { races, mainRace, cosmicPearl, typePerks } =
             , ( Doll, Mind )
             , ( Firebird, Life )
             , ( Mummy, Water )
+            , ( Nyctimene, Life )
             ]
                 |> List.filterMap
                     (\( type_, affinity ) ->
