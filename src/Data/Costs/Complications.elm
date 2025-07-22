@@ -89,7 +89,8 @@ value model =
                     Nothing ->
                         if model.capBuild then
                             model.towardsCap
-                                |> Utils.capWithWarning 30 normalInitialWarning
+                                |> Utils.capWithWarning 30 normalCapWarning
+                                |> Monad.map (\p -> { p | power = raw })
 
                         else
                             (raw - model.towardsCap)

@@ -26,7 +26,11 @@ totalCost model =
     , startingValue model
     , Data.Costs.Race.value model
     , Data.Costs.Complications.value model
-    , -model.towardsCap |> Utils.powerToPoints |> Monad.succeed
+    , if model.capBuild then
+        Monad.succeed zero
+
+      else
+        -model.towardsCap |> Utils.powerToPoints |> Monad.succeed
     , Data.Costs.TypePerks.value model
     , Data.Costs.Magic.value { ignoreSorceressBonus = False } model
     , Data.Costs.Perks.value model
