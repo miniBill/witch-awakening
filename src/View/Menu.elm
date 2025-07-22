@@ -560,6 +560,13 @@ capSlider model =
     in
     case model.gameMode of
         Nothing ->
+            let
+                rawComplicationsValue : Int
+                rawComplicationsValue =
+                    Data.Costs.Complications.complicationsRawValue model
+                        |> Result.map .value
+                        |> Result.withDefault 0
+            in
             Input.slider
                 [ width fill
                 , Element.behindContent <|
@@ -579,11 +586,13 @@ capSlider model =
                             [ text label
                             , rightPoints <| Costs.powerToPoints model.towardsCap
                             ]
-                , min = 0
+                , min =
+                    (rawComplicationsValue - 30)
+                        |> max 0
+                        |> toFloat
                 , max =
-                    Data.Costs.Complications.complicationsRawValue model
-                        |> Result.map .value
-                        |> Result.withDefault 0
+                    rawComplicationsValue
+                        |> min 30
                         |> toFloat
                 , value = toFloat model.towardsCap
                 , step = Just 1
