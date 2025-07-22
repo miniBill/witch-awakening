@@ -47,3 +47,4 @@ relicCost class pearl details =
                 in
                 baseCost * multiplier
             )
+        |> Monad.withRewardInfo (Types.relicToString details.name)
