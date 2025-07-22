@@ -17,6 +17,7 @@ Notes:
 + All life appears to actively try to help other lifeforms, even the plants will bend to shelter you from the rain, vines may creep up to stem your bleeding, fluffy critters will bring you help.
 + You'll find a way out after 3y, unless you have Portals.
 
+
 ## Quest: Special Delivery
 - Slot: Folk
 - Threat: 1
@@ -29,6 +30,7 @@ Notes:
 + Pays your body weight in fantastical mystery candies.
 + Each delivery target may be a fun eccentric character to interact with, and may have good tips or become useful contacts.
 + In your reward is an oddly shaped and worded invitation to Halloween Town.
+
 
 ## Quest: Sightseeing
 - Slot: Folk
@@ -43,14 +45,11 @@ Notes:
 + You can explore on your own of course, but this quest guarantees the opportunity for up to 2/y in total.
 
 
---- BOBBY TABLE ---
-
-DREAM TRIAL
-Folk
-
-Threat 2
-Conflict 3
-Reward 1
+## Quest: Dream Trial
+- Slot: Folk
+- Threat: 2
+- Conflict: 3
+- Reward: 1
 
 At some point you'll catch the attention of someone or something that takes an interest in you, benevolent or malevolent, but nonetheless somewhat intrusive -- They'll render you unconscious via a spiritual or physical means of inducing sleep. Whatever they wanted with you, you'll experience an exotic surreal dream wherein you will confront a series of trials or one greater trial, trials that reveal various character flaws about yourself. Things you on some level know could be better, or that you shouldn't do, or secret desires you avoid facing. The perpetrator may or may not be involved with the dream, or it may be a side effect of something else.
 
@@ -58,12 +57,12 @@ Notes:
 + Whatever the perpetrators intentions, this quest is guaranteed to cause no lasting harm or endanger your life. Whatever they wanted would be satisfied or interrupted without escalation unless you chain this quest into a more serious quest.
 + The trials can help overcome mental hangups.
 
-PINCH OF STARDUST
-Folk
 
-Threat 1
-Conflict 1
-Reward 1
+## Quest: Pinch of Stardust
+- Slot: Folk
+- Threat: 1
+- Conflict: 1
+- Reward: 1
 
 You've come into possession of an interesting recipe book of alchemical cooking, giving recipes for various potions in food forms. One recipe in particular catches your eye that appears to describe a process by which to distill starlight into usable stardust.
 
@@ -75,60 +74,67 @@ Notes:
 + Stardust is beautiful, like powdered gemstones that always sparkle just right.
 + Stardust can be used as an alchemical ingredient sufficient for potions up to rank 3, or a minor ingredient in others.
 + Can be converted into 50 Kisses or sold for 1-200.
-+ Starlight refining is now a skill you have to make use of any morning you wish.
+
+### Sidebar
+To be clear, starlight refining is now a skill you can make use of any morning you wish.
 
 
-## INTRODUCTIONS
+## Quest: Introductions
 - Slot: Folk
 - Evil Route: True
-
-Threat 1
-Conflict 1
-Reward 1
+- Threat: 1
+- Conflict: 1
+- Reward: 1
 
 It's only natural for a new witch to attract the attention of other witches in the area. Wherever you end up settling down for some length of time or visit an area after having made some name for yourself already, you'll receive an invite or by chance get include in on a meeting between a handful of regional witches either to just have a conversation to get a feel for you, to introduce themselves, or perhaps it was for some minor event they already had planned anyway and will bring you in on. Perhaps this is where you'll meet one or more of your future Companions, or maybe you'll never see these people again after a potentially rambunctious night.
 
 Notes:
 + If used towards companions, the Reward for this quest amounts 4RP instead of 1. If you use this opportunity on a free companion instead, you can raise their Sociability or Teamwork +1
 + What the gathering entails is up to you so long as it makes sense for those involved, and the low threat /conflict.
-+ You might use this opportunity to get into mischief.
 
-## SPOOKY STORIES
+### Sidebar
+? because you might use this opportunity to get into mischief.
+
+
+## Quest: Spooky Stories
 - Slot: Folk
 - Evil Route: True
-
-Threat 1
-Conflict 1
-Reward 1
+- Threat: 1
+- Conflict: 1
+- Reward: 1
 
 You, alone or with friends, decided it was a great idea to spend a particular rainy night listening to, telling, or watching spooky stories. As you part ways for the night to go off to your own rooms or your own homes, or otherwise wind down for the night, everyone finds themselves on edge with goosebumps and thoughts of the stories shared or movies watched earlier that night. The night will be beset by a host of spooky phenomenon made more spooky by your understanding as a witch that things like ghosts and other monsters ARE in fact, very real and you might see one now where you wouldn't have been able to before!
 
 Notes:
 + No matter how terrifying it can get, no harm will come to anyone.
 + How the spooks occur is entirely up to you, perhaps there really is a monster under the bed! Perhaps a poltergeist watched the movie with you and decided to pull pranks, or just one of the friends did. Perhaps it was all mundane tricks?
-+ Perhaps YOU are the one pranking others! Your companions or associates might have words for you later though.
 
-## LAUNDRY DAY
+### Sidebar
+Perhaps YOU are the one pranking others! Your companions or associates might have words for you later though.
+
+
+## Quest: Laundry Day
 - Slot: Folk
 - Evil Route: True
-
-Threat 1
-Conflict 1
-Reward 1
+- Threat: 1
+- Conflict: 1
+- Reward: 1
 
 Well then. That stain isn't coming off any time soon You somehow ran afoul of a gang of gremlins and leprechauns, who pulled a prank(s) on you that culminated in every article of clothing you own, including your own witch garments no less, stained with a curse of distress leading to any number of potential mishaps where they end up stained torn or outright disappearing right off your back The curse requires a specialist you're referred to who runs a laundromat for mortals and witches a like with a special Kiss coin slot normally hidden by the veil that activates the curse cleansing cycle, with that fresh newly blessed scent.
 
 Notes:
 + You might think of other means to remove curses, but whatever the scenario this will end up the most practical option easy at hand.
 + Side quest: Leprechauns are lecherous bastards and may have taken inappropriate photos of you or others you become aware and have to track down for an extra 2rp
-+ Maybe you instead cut a deal with the leprechaun and instead sell more pictures as the means to get that 2 extra rp, etc.
 
-DISCOUNT GOODS
-Folk
+### Sidebar
+Maybe you instead cut a deal with the leprechaun and instead sell more pictures as the means to get that 2 extra rp, etc.
 
-Threat 2
-Conflict 2
-Reward 1
+
+## Quest: Discount Goods
+- Slot: Folk
+- Threat: 2
+- Conflict: 2
+- Reward: 1
 
 On the lookout for a place to buy some goods, you find a bit of a run down establishment with a veiled sign out front displaying a different message for witches, and an internal domain means you enter a separate space than what a human would. The witch running the store is having some money troubles and needs to push sales quick, so she’s offering everything at half off and may add in a favor or two in the process. You can use this shop this one time to buy any Ingredients, Potions, Runes, or Relics priced at less than 6p, all at half price up to a total discount of no more than 25,000 Kiss equivalent, or no more than 3rp off arelic. Can do both K and rp.
 
@@ -136,6 +142,8 @@ Notes:
 + Note that potion sales are typically 50-200% more expensive than the listed base price shown in the magics, as that's the creation cost.
 + She possesses Ritual Inks, and can use them to tattoo you with runes without buying the Ritual Ink relic yourself.
 + Good candidate for a Custom companion?
+
+--- BOBBY TABLE ---
 
 FREE MEDICAL
 Folk
@@ -167,6 +175,7 @@ Notes:
 + Everyone involved will permanently gain their ideal swimsuit as a form their Garment can take when summoned.
 + Can take you to any water park or beach location you can think of, provided there are no lasting supernatural benefits.
 + You control the ESRB rating, so to speak.
+
 
 ## TEA PARTY
 - Slot: Folk
