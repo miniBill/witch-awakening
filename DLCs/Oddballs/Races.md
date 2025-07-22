@@ -31,3 +31,19 @@ __Amalgams draw Mana__ from Conjunction: when using both component races' charge
 You gain the charge methods of races you revive with. Overflow is virtually guaranteed if you use three or more at once, regardless of how slow they are. 
 
 Also, if you have Apex, it applies to race features gained through revival, which it otherwise would not.
+
+
+## Race: Nyctimene
+- Elements: Beast, Shadows
+- Mana capacity: Medium
+- Mana rate: Medium
+
+Nyctimenes are winged batlike humanoids, usually shorter and slighter than humans. Their hearing is supernaturally sensitive and discerning, allowing them to use both passive and active echolocation to sense their environment with precision and detail, but their sight is weak and they find bright light painful and disorienting.
+
+A dead Nyctimene whose body is kept unobserved in darkness for seven days will resurrect with the seventh sunset. Any light, and any direct perception of the body including by touch or sound, will interrupt the process and restart the clock. If more than one-seventh of the skeleton is missing, the resurrection will fail.
+
+__Nyctimenes draw Mana__ from Darkness. A lightless environment is best, but even a dim twilight will give them a trickle.
+
+### Perk
+- Cost: 2
+You are one of the rare “sun-eyed” Nyctimenes: your sight is as powerful as your hearing, and your eyes resist damage even from lights that would blind an ordinary person. Gain the Life affinity. 
