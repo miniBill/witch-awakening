@@ -282,6 +282,7 @@ viewCalculations model power warnings affinities =
         , keyedRow "Race" model.expandedMenuSections (Data.Costs.Race.value model) <| Just "True Form - Race"
         , keyedRow "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
         , keyedRow "Complications" model.expandedMenuSections (Data.Costs.Complications.value model) Nothing
+        , ( "Cap Slider", capSlider model )
         , keyedRow "Type perks" model.expandedMenuSections (Data.Costs.TypePerks.value model) Nothing
         , keyedRow "Magic" model.expandedMenuSections (Data.Costs.Magic.value { ignoreSorceressBonus = False } model) <| Just "The Magic"
         , magicPyramidRow model
@@ -329,7 +330,6 @@ viewCalculations model power warnings affinities =
                 Theme.wrappedRow [] <|
                     List.map Theme.viewAffinity affinities
           )
-        , ( "Cap Slider", capSlider model )
         , keyedRow "Power cap" model.expandedMenuSections (Data.Costs.Complications.powerCap model) <| Just "Game Mode"
         , button
             { onPress = CompactAll
@@ -584,7 +584,7 @@ capSlider model =
                     Input.labelAbove [] <|
                         paragraph [ Font.bold ]
                             [ text label
-                            , rightPoints <| Costs.powerToPoints model.towardsCap
+                            , rightPoints <| Costs.powerToPoints -model.towardsCap
                             ]
                 , min =
                     (rawComplicationsValue - 30)

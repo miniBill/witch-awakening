@@ -94,6 +94,7 @@ value model =
                         else
                             (raw - model.towardsCap)
                                 |> Utils.capWithWarning 30 normalInitialWarning
+                                |> Monad.map (\p -> { p | power = raw })
             )
 
 
