@@ -1,4 +1,5 @@
 # v2
+- Fix factional magic pictures [faction name overlay]
 - Heirloom
 - Mark which magic from Talisman
 
