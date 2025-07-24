@@ -1,4 +1,4 @@
-module Data.Costs exposing (startingValue, totalCost, totalRewards)
+module Data.Costs exposing (startingValue, totalCost)
 
 import Data.Costs.Class
 import Data.Costs.Companions
@@ -92,14 +92,6 @@ totalCost model =
                             "Not enough power! Try adding complications."
                         )
             )
-
-
-totalRewards : Model key -> Monad Points
-totalRewards model =
-    [ Data.Costs.Class.value model
-    , conversion model
-    ]
-        |> Utils.combineAndSum
 
 
 

@@ -44,6 +44,7 @@ config =
     , NoUnused.Dependencies.rule
     , NoUnused.Exports.rule
         |> Rule.ignoreErrorsForDirectories [ "generated" ]
+        |> Rule.ignoreErrorsForFiles [ "src/Data/Costs/Monad.elm" ]
     , NoUnused.Parameters.rule
         |> Rule.ignoreErrorsForDirectories [ "generated" ]
     , NoUnused.Patterns.rule
