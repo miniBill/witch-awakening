@@ -165,10 +165,10 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                     viewSlot White
             , Types.relicToString name
                 |> String.Extra.softBreak 16
-                |> List.map (gradientText 4 Gradients.blueGradient)
+                |> List.map (gradientText 4 Gradients.yellowGradient)
                 |> paragraph
                     [ alignBottom
-                    , Theme.celticHand
+                    , Theme.captureIt
                     , Font.size 36
                     , centerX
                     , Font.center
