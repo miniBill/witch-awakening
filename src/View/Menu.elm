@@ -171,20 +171,29 @@ menuLabel result warnings =
 
                         powerString : String
                         powerString =
-                            "[" ++ String.fromInt -value.power ++ "]"
+                            if value.power == 0 then
+                                "[C]"
+
+                            else
+                                "[" ++ String.fromInt -value.power ++ "]"
+
+                        center : String -> String
+                        center s =
+                            "{center} " ++ s
                     in
                     if value.rewardPoints == 0 then
                         [ warningsIcon
-                        , powerString
+                        , center powerString
                         ]
 
                     else
+                        let
+                            rewardString : String
+                            rewardString =
+                                "{" ++ String.fromInt -value.rewardPoints ++ "}"
+                        in
                         [ warningsIcon
-                        , "{center} "
-                            ++ powerString
-                            ++ "\n\n{center} {"
-                            ++ String.fromInt -value.rewardPoints
-                            ++ "}"
+                        , center powerString ++ "\n\n" ++ center rewardString
                         ]
 
                 Err _ ->

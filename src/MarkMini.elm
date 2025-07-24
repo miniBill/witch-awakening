@@ -30,6 +30,7 @@ type Piece
     | Kisses String
     | Warning
     | Error
+    | Checkmark
     | RewardPoints String
     | LineBreak
 
@@ -247,6 +248,9 @@ parseSquareBrackets str =
 
                 ( "E", _ ) ->
                     Error
+
+                ( "C", _ ) ->
+                    Checkmark
 
                 ( "-", _ ) ->
                     Power str

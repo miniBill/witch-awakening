@@ -291,6 +291,12 @@ viewPiece piece =
                 ]
                 [ Html.text "⛔" ]
 
+        Checkmark ->
+            Html.span
+                [ Html.Attributes.style "font-size" "1.2em"
+                ]
+                [ Html.text "✅" ]
+
         Affinity affinity ->
             viewAffinityBadge affinity
 
