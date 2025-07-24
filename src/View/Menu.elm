@@ -167,19 +167,27 @@ menuLabel result warnings =
                                 ""
 
                             else
-                                "[W] "
+                                "[W]"
 
                         powerString : String
                         powerString =
                             if value.power == 0 then
-                                "[C]"
+                                if List.isEmpty warnings then
+                                    "[C]"
+
+                                else
+                                    ""
 
                             else
                                 "[" ++ String.fromInt -value.power ++ "]"
 
                         center : String -> String
                         center s =
-                            "{center} " ++ s
+                            if String.isEmpty s then
+                                ""
+
+                            else
+                                "{center} " ++ s
                     in
                     if value.rewardPoints == 0 then
                         [ warningsIcon
