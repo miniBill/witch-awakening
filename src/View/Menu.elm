@@ -88,7 +88,7 @@ viewMenu model =
               else
                 Background.color <| rgb 1 0.8 0.8
             , Border.rounded 999
-            , Theme.padding
+            , Element.padding (Theme.rhythm * 3 // 2)
             , alignRight
             ]
             { onPress =
@@ -97,12 +97,7 @@ viewMenu model =
 
                 else
                     Just OpenMenu
-            , label =
-                Theme.blocks
-                    [ centerX
-                    , centerY
-                    ]
-                    (menuLabel model totalPoints warnings)
+            , label = menuLabel totalPoints warnings
             }
         , if model.menuOpen then
             viewCalculations model totalPoints warnings affinities
@@ -158,75 +153,53 @@ badPyramid magics =
         |> List.filterMap identity
 
 
-menuLabel : Model key -> CostsMonad.Monad Points -> List String -> String
-menuLabel model totalPointsResult warnings =
+menuLabel : CostsMonad.Monad Points -> List String -> Element msg
+menuLabel result warnings =
     let
-        availablePoints : CostsMonad.Monad Points
-        availablePoints =
-            if model.capBuild || model.gameMode == Just Types.EarlyBird then
-                Data.Costs.Complications.powerCap model
+        children : List String
+        children =
+            case result of
+                Ok { value } ->
+                    let
+                        warningsIcon : String
+                        warningsIcon =
+                            if List.isEmpty warnings then
+                                ""
 
-            else
-                Costs.startingValue model
-    in
-    case
-        CostsMonad.map3 (\t a r -> ( t, a, r ))
-            totalPointsResult
-            availablePoints
-            (Costs.totalRewards model)
-    of
-        Ok { value } ->
-            let
-                ( totalPoints, available, rewards ) =
-                    value
+                            else
+                                "[W] "
 
-                warningsIcon : String
-                warningsIcon =
-                    if List.isEmpty warnings then
-                        ""
+                        powerString : String
+                        powerString =
+                            "[" ++ String.fromInt -value.power ++ "]"
+                    in
+                    if value.rewardPoints == 0 then
+                        [ warningsIcon
+                        , powerString
+                        ]
 
                     else
-                        "[W] "
+                        [ warningsIcon
+                        , "{center} "
+                            ++ powerString
+                            ++ "\n\n{center} {"
+                            ++ String.fromInt -value.rewardPoints
+                            ++ "}"
+                        ]
 
-                pointDisplay : String -> Int -> Int -> String -> String
-                pointDisplay before used total after =
-                    [ wrapInt before (used + total) after
-                    , before ++ "/" ++ after
-                    , wrapInt before total after
-                    ]
-                        |> String.join " "
+                Err _ ->
+                    [ "[E]" ]
+    in
+    children
+        |> List.map
+            (\s ->
+                if String.isEmpty s then
+                    Element.none
 
-                powerString : String
-                powerString =
-                    warningsIcon
-                        ++ pointDisplay
-                            "["
-                            totalPoints.power
-                            available.power
-                            "]"
-            in
-            if totalPoints.rewardPoints == 0 && rewards.rewardPoints == 0 then
-                powerString
-
-            else
-                let
-                    rewardString : String
-                    rewardString =
-                        pointDisplay
-                            "{"
-                            totalPoints.rewardPoints
-                            rewards.rewardPoints
-                            "}"
-                in
-                "{center} " ++ powerString ++ "\n\n{center} " ++ rewardString
-
-        Err _ ->
-            "[E]"
-
-
-wrapInt : String -> Int -> String -> String
-wrapInt before value after =
-    before ++ String.fromInt value ++ after
+                else
+                    Theme.blocks [ centerX, centerY ] s
+            )
+        |> Theme.row [ centerX, centerY ]
 
 
 viewCalculations : Model key -> CostsMonad.Monad Points -> List String -> List Affinity -> Element Msg
