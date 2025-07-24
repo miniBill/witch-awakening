@@ -340,13 +340,14 @@ For each companion you possess, you'll enter an entirely new timeline that can b
 ### Sidebar
 Increase the reward by 2 RP for each Companion you have. When finished with the quest and you return to your time, each companion will be waiting for you, only having 1 minute intervals between when each reappeared, less than 30 min since you all vanished.
 
---- BOBBY TABLE ---
-WITCHES 'N INQUISITION
-Epic (Hawthorne)
 
-Threat 10
-Conflict 9
-Reward 6
+## Quest: Witches 'N Inquisition
+- Slot: Epic
+- Faction: Hawthorne
+
+- Threat: 10
+- Conflict: 9
+- Reward: 6
 
 Hawthorne is running a special event established by the First Witch founder of the academy. Only the top 5 best students are allowed to participate, each will undergo a ritual that sends them to a different aetheric sphere- the same that the First Witch came from at the founding of Hawthorne. This is an alternate reality where the rules are different. You will keep only your racial abilities and 1 magic at rank 3, otherwise: Play Witches 'n Inquisition as normal. During which time you'll go through 10 years of conflict and hardships. If you have Laura or Hannah as companions, they might qualify as well, and join you as allies within. https://imgur.com/a/nC89lbq
 
@@ -354,15 +355,21 @@ Notes:
 + If you survive, you can use 2rp per token to purchase anything you purchased in your Witches 'n Inquisition build
 + You can bring back companions from there by buying them for 3rp per token.
 + If you die, you return to Hawthorne with no gains.
-+ If you return with mana generation, it is not infinite here, but instead you'll permanently have a 1% mana capacity per second charge rate.
-+ To further merit the gold bar Threat ranking despite death not being a serious threat only resulting in failure: Enemies are likely to avoid killing you, prefering torture & abuses. You can recover, or you may eventually be killed.
 
-MAIDEN TRAIN
-Noble (Watchers) - Evil Route
+### Sidebar
+If you return with mana generation, it is not infinite here, but instead you'll permanently have a 1% mana capacity per second charge rate.
 
-Threat 5
-Conflict 4
-Reward 6
+### Sidebar
+To further merit the gold bar Threat ranking despite death not being a serious threat only resulting in failure: Enemies are likely to avoid killing you, preferring torture & abuses. You can recover, or you may eventually be killed.
+
+
+## Quest: Maiden Train
+- Slot: Noble
+- Faction: Watchers
+- Evil Route: True
+- Threat: 5
+- Conflict: 4
+- Reward: 6
 
 There is a special train that runs across either North America, Europe, Siberia, or the left coast of South America through Chile and Argentina. It's a scenic route taken by the train once every 4 years for blocks of youth from one All Girls christian jewish, or islamic school to another as part of a coming of age ceremony. The train and its tracks are hidden by the veil, but these precessions are often the target of terroristic (at best) acts, considered a high prize job in disreputable circles. You are tasked as a Watcher or hired along with Watchers if you've earned their trust, to chaperone the train and ensure it's safe travels. In the meantime, enjoy the views.
 
@@ -370,39 +377,56 @@ Notes:
 + The train takes a highly scenic route full of great views.
 + Most the girls are witches themselves, though of limited effect.
 + The train will be attacked at one point by Hespatians or Outsiders, acting on their own with a few allies to make a name for themselves & enjoy the would-be spoils of the job.
-+ If not a watcher, you can take this quest with a normal quest slot wherein you hear about the maiden train, and join the heist. In doing so condemning the girls you capture to Bad Ends, potentially as many as almost a thousand girls, and becoming target of Inquisition.
 
-BLOODSTONE CHALICE
-Noble (Hespatia) - Evil
- 
-Threat 3
-Conflict 7
-Reward 3
+### Sidebar
+If not a watcher, you can take this quest with a normal quest slot wherein you hear about the maiden train, and join the heist.
+
+### Sidebar
+In doing so condemning the girls you capture to Bad Ends, potentially as many as almost a thousand girls, and becoming target of Inquisition.
+
+
+## Quest: Bloodstone Chalice
+- Slot: Noble
+- Faction: Hespatia
+- Evil: True
+- Threat: 3
+- Conflict: 7
+- Reward: 3
 
 The Family of Red Mother and the Family of Whisper are known to collaborate on a ritual where they meet at a heretical site containing the bloodstone chalice, a unique relic, where they hold a ritual orgy and mass sacrifice, the resulting fluids being channeled through blood grooves throughout the chamber and concentrated into the chalice. 200 lives will participate in the event, 100 being sacrificed at the end. All participants will feel a sense of euphoria that lasts a week, while the 5 designated to take a drink will permanently unlock the potential to learn Visceramancy and in the moment of drinking choose to replace their witch race with another.
 
 Notes:
 + Very little threat, the site is secret and warded, but many of the sacrificed will be weak witches, including from other factions that got lost away from their herds, as well as human cultists.
-+ You spend rp to use Visceramancy. VISCERAMANCY
-+ You will, naturally, be chosen to drink. You may also do this quest and drink if you have Whisper or Red Mother as a companion.
- 
-## STARGAZING
++ You spend rp to use _Visceramancy_.
+
+### Sidebar
+You will, naturally, be chosen to drink. You may also do this quest and drink if you have Whisper or Red Mother as a companion.
+
+
+## Quest: Stargazing
 - Slot: Folk
 - Evil Route: True
-
-Threat 1
-Conflict 1
-Reward 3
+- Threat: 1
+- Conflict: 1
+- Reward: 3
 
 You're in space, on the moon, here in Lunabella. Why didn't you think of it sooner? Time to go stargazing, which on Lunabella can include looking up at the Earth through a telescope. Go outside of a Domain bubble if you want to view the sky without any atmosphere in the way. Maybe it's a romantic idea to try to get closer to one of your companions and you'll enjoy some candle light with your picnic basket somewhere in the Sea of Tranquility or maybe you just want to soak in the silence of the airless landscape beyond the domains. Bringing back a moon rock is fine too.
 
 Notes:
 + You can add a high power magic enhanced telescope to your inventory if you wish, capable of looking at the Earth with enough zoom to make out city streets or get a good eye full of Saturn's rings. No I didn't actually check the math on that.
 + You can enchant your clothes with moondust repellant.
-+ Or you can take that telescope and go be a voyeur. You do you. Probably less romantic if you still want to get closer to a companion with this quest.
 
-FAERIE KING'S COURT
-Epic (Alliance) - Evil Route
+### Sidebar
+I mean, or you can take that telescope and go be a voyeur. You do you. Probably less romantic if you still want to get closer to a companion with this quest.
+
+
+## Quest: Faerie King's Court
+- Slot: Epic
+- Faction: Alliance
+- Evil Route: True
+- Threat: 8
+- Conflict: 8
+- Reward: 5
 
 It's been many hundreds of years since the current order of Alfheimr was established, with the ousting of the majority of the Archfae who ruled the faewilds in the times past, the surviving Archfae being those to have established the contract where they'll support the transition of power to see their old rivals downed. An Archfae rivals a Greater Demon in might and potential, and one has just returned from oblivion. Spontaneous regenesis of its own existence. Once one of the nicer lords of the realm known as the Prince of Petals, he's come back as the Lord of Thorns, with a score to settle.
 
@@ -410,29 +434,34 @@ Notes:
 + He has Nature 6, Curse 5, Necro 5, Psycho 5, Covenant 5, Suggestion, Entrance, the effects of Violet Lenses as a perk, Fae Step & Apex.
 + He can replicate the effects of T4 Core magics with raw mana.
 + He'll attempt to add you to his harem, and he doesn't exactly require consent but at least he's not out to kill you, yet.
+
+### Sidebar
 + If you do join his harem, willingly or otherwise, for more than 24 hours you'll find you've gained Fae Step, and if you had it all advantages are doubled.
-+ In either case, you can also take Consortation rewritten to utilize equivalent fae spirits, with a feytouch instead of the helltouch to r5, r5 contacting another archfae, or Thorn.
+
+### Sidebar
+In either case, you can also take Consortation rewritten to utilize equivalent fae spirits, with a feytouch instead of the helltouch to r5, r5 contacting another archfae, or Thorn.
 
 
-TENTACLE PARTY
-Noble
-
-Threat 4
-Conflict 5
-Reward 7
+## Quest: Tentacle Party
+- Slot: Noble
+- Faction: Outsiders
+- Threat: 4
+- Conflict: 5
+- Reward: 7
 
 Look, you know, I know, they know, we all know it had to happen. Enjoy the tentacle faction to its fullest with an organized tentacle party where different Outsiders with various different flavors & aesthetics of Monstrosity and/or Visceramancy will entertain each other and the guests using tentacles. What exactly that entails is up to your imagination and the rating of wherever you post your build or story. All are invited! You know, provided you and those you bring with you are cool with outsiders. And tentacles. Lots. of. tentacles, served with a side of tentacles. Some tendrils thrown in just to spice it up a bit, and in more varieties than you can dream up.
 
 Notes:
-+ Just for tonight, this particular tentacle party is hosted by the gn'th’bthntor lloig mgn’ghft ot syhah na'ahehne, or the Sanguine Mindlight, who is interceding to prevent Far Corruption for now.
++ Just for tonight, this particular tentacle party is hosted by the gn'th’bthntor lloig mgn’ghft ot syhah na'ahehne, or the _Sanguine Mindlight_, who is interceding to prevent Far Corruption for now.
 + May or may not involve refreshments, that may or may not offend the sensibilities of some non-Outsiders.
 
-PUBLIC SERVICE
-Folk (ORC) - Repeatable
-
-Threat 2
-Conflict 2
-Reward 2
+## Quest: Public Service
+- Slot: Folk
+- Faction: ORC
+- Repeatable: True
+- Threat: 2
+- Conflict: 2
+- Reward: 2
 
 A very simple and straightforward matter. A district in Deco City, ORC's city, or some other supernatural aware civilized community, is currently short on staff to manage some necessities and basic community care. So, the ORC has issued a request for available agents and general staff to volunteer for various public service roles, temporarily of course. Could last a few days, or it could last over a month, in one place or bouncing around to different locations where you're needed. Perhaps you have the same daily job you're filling in for like a crossing guard, or perhaps you're going from place to place filling in odd jobs for service projects like rescuing cats.
 
@@ -440,27 +469,34 @@ Notes:
 + Public Service jobs can be anything that improves the happiness of multiple people over the course of at least a few hours.
 + Or improves the safety of an area once the job is completed, such as clearing debris from the road, or allocating shelter for residents of a disaster area.
 
-DIGITAL DEATH
-Epic (Alphazon)
 
-Threat 10
-Conflict 7
-Reward 10
+## Quest: Digital Death
+- Slot: Epic
+- Faction: Alphazon
+- Threat: 10
+- Conflict: 7
+- Reward: 10
 
 Chief of Alphazon innovations is the Observer matrix and their link to the Data Crypts, providing even their human employees with immortality or safe storage in a digital afterlife of the company's devising. But something is going wrong: Reapers have taken notice and are causing disturbances and errors in our Data Crypts, killing the digitally immortal & ferrying them away to limbo or elsewhere, including an Exec's own daughter. This won't be tolerated, Alphazon is greenlighting a counter offense. A task force called the Helldivers with spectrotrace equipment to see and follow Reaper activity. Teach Death not to mess with Alphazon, retrieve the VIP.
 
 Notes:
 + The security breach is identified and a patch is ready to go live as soon as you complete your mission as to not alert the Reapers that we're onto their BS.
 + Your Helldiver gear will allow you to force entry into godly domains to retrieve targets -- Do. Not. Get. Caught.
-+ You can't keep the Helldiver gear on your person when done, but you can request access to-your gear for monitored excursions. This is because nobody unauthorized can learn of it, or they'll be silenced.
-+ Being known for confronting the Reapers isn't a great rep to have, but it's reasonably fine. Getting caught intruding in a divine realm? Instant suicide.
 
-JOB BOARD
-Any/Heroic (Independent) - Repeatable
+### Sidebar
+You can't keep the Helldiver gear on your person when done, but you can request access to-your gear for monitored excursions. This is because nobody unauthorized can learn of it, or they'll be silenced.
 
-Threat ?
-Conflict ?
-Reward ?
+### Sidebar
+Being known for confronting the Reapers isn't a great rep to have, but it's reasonably fine. Getting caught intruding in a divine realm? Instant suicide.
+
+
+## Quest: Job Board
+- Slot: Heroic
+- Faction: Independent
+- Repeatable: True
+- Threat: 5
+- Conflict: 5
+- Reward: 5
 
 A staple of many taverns and guild halls: The Job Board, upon which any random person of interest can post a bulletin with the job in question registered with the owner of the board with the payment handed to the establishment ahead of time. Some boards allow any riff raff to post with or without registration, others require fees to register. Depends on where you go. Use this to customize any quest you wish with rewards based on the threat and conflict rating. The Threat and Conflict can be between 1-3 for Folk tier quests, taking a Folk slot, while Nobles can be between 3-6, 6-8 for Heroic, 8-10 for Epic. Reward is 1/2 Threat + 1/2 Conflict.
 
@@ -469,6 +505,8 @@ Notes:
 + Threat and Conflict needs to be at least somewhat warranted by the objects faced by the quest.
 + Indies faction freebie is to make 1 Heroic quest for free, the way they get Heroic's 10 floors for free in Dungeoneering.
 
+
+--- BOBBY TABLE ---
 
 SAVE CHRISTMAS
 Epic
