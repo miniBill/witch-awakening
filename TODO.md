@@ -2,7 +2,6 @@
 - Heirloom
 - Mark which magic from Talisman
 
-- Two free schools for Academic
 - Check all faction perks implementations
 
 - Genie double discount for All

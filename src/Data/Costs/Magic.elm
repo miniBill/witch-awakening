@@ -4,6 +4,7 @@ import Data.Affinity as Affinity
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Data.Magic as Magic
+import Dict exposing (Dict)
 import Generated.Magic
 import Generated.Types as Types exposing (Affinity, Class(..), Faction, Magic(..), Race(..))
 import List.Extra
@@ -43,16 +44,30 @@ value { ignoreSorceressBonus } model =
             Generated.Magic.all
                 |> List.filterMap (magicValue model affinities)
 
-        free : Maybe String
+        free : Dict String String
         free =
-            if model.class == Just Sorceress && not ignoreSorceressBonus then
-                pointsList
-                    |> List.filter (\{ isElementalism, isOffAffinity } -> isElementalism && not isOffAffinity)
-                    |> List.Extra.minimumBy .points
-                    |> Maybe.map .name
+            case ( model.class, ignoreSorceressBonus ) of
+                ( Just Sorceress, False ) ->
+                    case
+                        pointsList
+                            |> List.filter (\{ isElementalism, isOffAffinity } -> isElementalism && not isOffAffinity)
+                            |> List.Extra.minimumBy .points
+                    of
+                        Just magic ->
+                            Dict.singleton magic.name "[Sorceress]"
 
-            else
-                Nothing
+                        Nothing ->
+                            Dict.empty
+
+                ( Just Academic, _ ) ->
+                    pointsList
+                        |> List.sortBy .points
+                        |> List.take 2
+                        |> List.map (\magic -> ( magic.name, "[Academic]" ))
+                        |> Dict.fromList
+
+                _ ->
+                    Dict.empty
 
         jackOfAllWarning : Maybe String
         jackOfAllWarning =
@@ -101,23 +116,24 @@ value { ignoreSorceressBonus } model =
                     label =
                         name ++ " " ++ String.fromInt rank
                 in
-                if Just name == free then
-                    0
-                        |> Monad.succeed
-                        |> Monad.withInfo
-                            { label = label
-                            , anchor = Just name
-                            , value = Monad.FreeBecause "[Sorceress]"
-                            }
+                case Dict.get name free of
+                    Just reason ->
+                        0
+                            |> Monad.succeed
+                            |> Monad.withInfo
+                                { label = label
+                                , anchor = Just name
+                                , value = Monad.FreeBecause reason
+                                }
 
-                else
-                    points
-                        |> Monad.succeed
-                        |> Monad.withInfo
-                            { label = label
-                            , anchor = Just name
-                            , value = Monad.Power points
-                            }
+                    Nothing ->
+                        points
+                            |> Monad.succeed
+                            |> Monad.withInfo
+                                { label = label
+                                , anchor = Just name
+                                , value = Monad.Power points
+                                }
             )
         |> Monad.map Utils.powerToPoints
         |> Monad.withWarningMaybe offAffinityWarning
