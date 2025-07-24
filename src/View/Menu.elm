@@ -161,48 +161,39 @@ menuLabel result warnings =
             case result of
                 Ok { value } ->
                     let
-                        warningsIcon : String
-                        warningsIcon =
-                            if List.isEmpty warnings then
-                                ""
-
-                            else
-                                "[W]"
-
                         powerString : String
                         powerString =
-                            if value.power == 0 then
-                                if List.isEmpty warnings then
-                                    "[C]"
-
-                                else
-                                    ""
-
-                            else
-                                "[" ++ String.fromInt -value.power ++ "]"
-
-                        center : String -> String
-                        center s =
-                            if String.isEmpty s then
-                                ""
-
-                            else
-                                "{center} " ++ s
+                            "[" ++ String.fromInt -value.power ++ "]"
                     in
                     if value.rewardPoints == 0 then
-                        [ warningsIcon
-                        , center powerString
-                        ]
+                        if value.power == 0 then
+                            if List.isEmpty warnings then
+                                [ "[C]" ]
+
+                            else
+                                [ "[W]" ]
+
+                        else if List.isEmpty warnings then
+                            [ powerString ]
+
+                        else
+                            [ "[W]", powerString ]
 
                     else
                         let
                             rewardString : String
                             rewardString =
                                 "{" ++ String.fromInt -value.rewardPoints ++ "}"
+
+                            bothString : String
+                            bothString =
+                                powerString ++ "\n\n{center} " ++ rewardString
                         in
-                        [ warningsIcon
-                        , center powerString ++ "\n\n" ++ center rewardString
-                        ]
+                        if List.isEmpty warnings then
+                            [ bothString ]
+
+                        else
+                            [ "[W]", bothString ]
 
                 Err _ ->
                     [ "[E]" ]
@@ -214,7 +205,7 @@ menuLabel result warnings =
                     Element.none
 
                 else
-                    Theme.blocks [ centerX, centerY ] s
+                    Theme.blocks [ centerX, centerY ] ("{center} " ++ s)
             )
         |> Theme.row [ centerX, centerY ]
 
