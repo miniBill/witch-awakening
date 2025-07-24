@@ -24,6 +24,7 @@ value :
             , class : Maybe Class
             , typePerks : List Race
             , magic : List RankedMagic
+            , capBuild : Bool
         }
     -> Monad Points
 value { ignoreSorceressBonus } model =
@@ -46,8 +47,8 @@ value { ignoreSorceressBonus } model =
 
         free : Dict String String
         free =
-            case ( model.class, ignoreSorceressBonus ) of
-                ( Just Sorceress, False ) ->
+            case ( model.class, ignoreSorceressBonus, model.capBuild ) of
+                ( Just Sorceress, False, _ ) ->
                     case
                         pointsList
                             |> List.filter (\{ isElementalism, isOffAffinity } -> isElementalism && not isOffAffinity)
@@ -59,7 +60,7 @@ value { ignoreSorceressBonus } model =
                         Nothing ->
                             Dict.empty
 
-                ( Just Academic, _ ) ->
+                ( Just Academic, _, True ) ->
                     pointsList
                         |> List.sortBy .points
                         |> List.take 2
