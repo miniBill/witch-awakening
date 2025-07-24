@@ -240,14 +240,11 @@ Notes:
 You could instead opt to join the Necromancers, who sought to burn the Flowers of Life to prevent the spread of Lifeweaving. Lifeweaving will be barred from your timeline with few practitioners in the world, and in her failure and having lead to the destruction of the grove of flowers, Liena will take her own life. Actual reward for this path? Well, if you're a Hespatian you might dominate the necromancers, and take control of their Family, becoming your grunts.
 
 
---- BOBBY TABLE ---
-
-DISTRESS BEACON
-Noble
-
-Threat 6
-Conflict 4
-Reward 4
+## Quest: Distress Beacon
+- Slot: Noble
+- Threat: 6
+- Conflict: 4
+- Reward: 4
 
 Requires Lunabella, Alphazon, ORC, HexVPN, OR Battleship. In short, some means to receive space coms personally or as a mission from a higher up who received it. At some point in time sensors, tech or magical, pick up on an unknown object streaking through the solar system from beyond the oort cloud heading through on a trajectory straight to the sun. A Ghost or HexNet (or both) broadcast is repeating a distress signal on repeat requesting help in a quickly deciphered strange language spoken in a feminine voice To the point, a space ship is on collision course with the sun and being pursued by a space kraken, naturally you'll need to step in.
 
@@ -256,57 +253,77 @@ Notes:
 + Space Kraken is accompanied by a swarm of attack babies ranging from face huggers to large octopi, and a few colossal squids in sizes.
 + Space Kraken itself, is comparable to a battleship.
 + The person is a witch - from outside the solar system.
-+ The space witch has been on a 60y journey from her home star on a vessel built with early space age equivalent tech improved upon with magic. The interiors are however, quite spacious due to spatial warping and dominion class magic providing gravity. It's more like a yacht inside.
 
-FAMILIAR TROUBLE
-Noble - Evil Route
+### Sidebar
+The space witch has been on a 60y journey from her home star on a vessel built with early space age equivalent tech improved upon with magic. 
 
-Threat 5
-Conflict 4
-Reward 6
+### Sidebar
+The interiors are however, quite spacious due to spatial warping and dominion class magic providing gravity. It's more like a yacht inside.
+
+
+## Quest: Familiar Trouble
+- Slot: Noble
+- Evil Route: True
+- Threat: 5
+- Conflict: 4
+- Reward: 6
 
 For whatever reason, business or interests have taken you to Alfheimr, the faewild. While there you run into a chance encounter with an abnormally fluffy corgi-inu that tries to get your attention with a particular spark of intellect in its eyes. Occasionally growling in the direction it tries to lead you before returning to being adorable. It will lead you through a series of minor trials, nothing for a witch such as yourself, and end with an encounter with a large beast. In the vicinity of the beast you'll find the dead body of a witch of a type that has a death cheat that requires a bit of care to make sure it works successfully, such as a draviri egg.
 
 Notes:
 + The corgi-inu is familiar to the dead witch.
 + Once the dust settles, the corgi-inu whines next to their witch's remains or the cheat death focal item, and stares at you with huge begging eyes. The corgi-inu will slowly vanish over time, or instantly if the cheat death object is destroyed.
-+ There's an obvious bad route where you do not save the dead witch, leaving the corgi-inu to fade, or destroying the witch's means of cheating death or making it implausible, in which case the corgi-inu dies. Or a worse path may involve abducting the vulnerable witch.
 
-HALLOWEEN TOWN
-Heroic - Evil Route
+### Sidebar
+There's an obvious bad route where you do not save the dead witch, leaving the corgi-inu to fade, or destroying the witch's means of cheating death or making it implausible, in which case the corgi-inu dies. Or a worse path may involve abducting the vulnerable witch.
 
-Threat 8
-Conflict 4
-Reward 4
+
+## Quest: Halloween Town
+- Slot: Heroic
+- Evil Route: True
+- Threat: 8
+- Conflict: 4
+- Reward: 4
 
 Requires Special Delivery. Halloween Town is a semi-secret location in its own realm, where it is halloween every day with a Novelty enchantment ensuring that anything you see for the first time here, will always feel as novel as that first time. Everyone is always in some manner of costume and everyone lives openly to celebrate their different races of witch, and non-witch supernaturals. However, your visit comes at an inopportune moment, as Halloween Town is under threat from the Skeleton King who recently usurped the Pumpkin King as owner of the private realm, and is subjecting the citizens to tyrannical laws via Covenant and Dominion magics.
 
 Notes:
 + The Skeleton King may mind control citizens to use against you.
 + Succeed, and the Pumpkin King will bless you with an encounter with the Pumpkin Moon: Pumpkin Boons. https://imgur.com/a/R8aMfTp taking only MARKED boons. The Deal wish is the same Consortation 5 but service as an Entity instead.
-+ You could instead back the Skeleton King against the Pumpkin King. The Pumpkin King will have an 2 of pumpkin related magics comparable in power to a 15p companion. With, if you don't mind the meta elements, a selection of six Pumpkin Boons for himself, tweaked in various ways as to not technically be the same boons, as the entities he pacted with in the past have finished their terms. As a reward. Skeleton will enslave Pumpkin to you with a slave crest, which may also change his sex if you prefer.
 
-SPACE TENTACLES
-Heroic - Evil Route
+### Sidebar
+You could instead back the Skeleton King against the Pumpkin King. The Pumpkin King will have an 2 of pumpkin related magics comparable in power to a 15p companion.
 
-Threat 9
-Conflict 4
-Reward 7
+### Sidebar
+With, if you don't mind the meta elements, a selection of six Pumpkin Boons for himself, tweaked in various ways as to not technically be the same boons, as the entities he pacted with in the past have finished their terms. As a reward. Skeleton will enslave Pumpkin to you with a slave crest, which may also change his sex if you prefer.
+
+
+## Quest: Space Tentacles
+- Slot: Heroic
+- Evil Route: True
+- Threat: 9
+- Conflict: 4
+- Reward: 7
 
 Requires Distress Beacon. So you killed the space kraken and saved the strange witch. The dust was starting to settle and maybe you've had one or a few conversations with the witch calling herself Sara Star through her translator. She's often seen working on repairing her ship, Red Betty, but no more than 1 week later you get the call. Those in the know have been watching the direction Sara came from, and it just paid off as we've noticed a fleet of entities entering the system from the same spot as Sara & her space tentacle friends. Sara's ship might be done in time to help towards the end, but for now a team of witches including yourself will intercept.
 
 Notes:
 + Invaders will be composed of 1 mothership (Space Leviathan), 4 space krakens, and a dozen swarms of space squid, with countless face hugging octopi that are more like projectiles than fighters.
-+ If you succeed and she survives, gain Sara Star as a possible companion. Sara Star
-+ You can take this as an Epic quest, in which case Outsiders will interfere & join the Tentacle faction. In return, gain Sara as a free companion mid quest to join as you'll get close quicker than in the other timeline
-+ The Outsiders will double the effective forces of the threat with an assortment of Monstrosity minions one Outsider will have Monstrosity 5. OR if an Outsider, you can join them yourself. gaining Sara by less nice means so to speak.
++ If you succeed and she survives, gain Sara Star as a possible companion.
 
-TIME SLIP
-Epic (Arcadia)
+### Sidebar
+You can take this as an Epic quest, in which case Outsiders will interfere & join the Tentacle faction. In return, gain Sara as a free companion mid quest to join as you'll get close quicker than in the other timeline
 
-Threat 9
-Conflict 2
-Reward 4
+### Sidebar
+The Outsiders will double the effective forces of the threat with an assortment of Monstrosity minions one Outsider will have Monstrosity 5. OR if an Outsider, you can join them yourself. gaining Sara by less nice means so to speak.
+
+
+## Quest: Time Slip
+- Slot: Epic
+- Faction: Arcadia
+- Threat: 9
+- Conflict: 2
+- Reward: 4
 
 The Arcadian Parks & Recreation board were toying with temporal distribution to figure out ways to adjust local time dilation within their environmental changes to the system which could have huge benefits to social and practical life in Arcadia. Problem is, a bit of code from those experiments somehow slipped into the live update and the result sent you and all your companions flying through spacetime. You were the closest to the proper timeline, so the P&R. team was able to make contact with you and attribute you with an anchor pin allowing you to dive deeper to find each of your companions, stuck in various points in time.
 
@@ -314,9 +331,16 @@ Notes:
 + You and each companion will only keep 1 magic at a max of rank 3
 + Every time you find a companion, you'll need to find Extraction, sending that companion home and you to the next timeline.
 + You might be in each timeline for years or decades before finding either the companion or extraction.
-+ For each companion you possess, you'll enter an entirely new timeline that can be dramatically divergent from this one, even ones where magic may not exist at all.
-+ Increase the reward by 2 RP for each Companion you have. When finished with the quest and you return to your time, each companion will be waiting for you, only having 1 minute intervals between when each reappeared, less than 30 min since you all vanished.
 
+
+### Sidebar
+For each companion you possess, you'll enter an entirely new timeline that can be dramatically divergent from this one, even ones where magic may not exist at all.
+
+
+### Sidebar
+Increase the reward by 2 RP for each Companion you have. When finished with the quest and you return to your time, each companion will be waiting for you, only having 1 minute intervals between when each reappeared, less than 30 min since you all vanished.
+
+--- BOBBY TABLE ---
 WITCHES 'N INQUISITION
 Epic (Hawthorne)
 
