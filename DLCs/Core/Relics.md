@@ -213,7 +213,7 @@ Alternatively, you can keep the cube itself as a companion. It’s a good listen
 - Class: Sorceress
 - Cost: 4
 
-It’s pretty rare, but it seems your mothergifts aren’t new. You’ve inherited heirloom gifts from a witch ancestor in your family line. Choose one magic specialization have been their focus that they are known for, and halve the cost of buying that magic for yourself. You can use this on a magic you don’t have the affinity for, or halve again the cost of a magic you do, but you cannot use that magic specialization when not wearing your mothergifts, your garment and hat almost all witches get from RO Witchery, and using your rod. Downside is your mothergifts have a preferred shape, the shape most identified with that ancestor, and any alterations will only last about 1 hour before they start to revert unless you reapply the change. Doesn’t affect rod forms: i.e. broom.
+It’s pretty rare, but it seems your mothergifts aren’t new. You’ve inherited heirloom gifts from a witch ancestor in your family line. Choose one magic specialization that has been their focus that they are known for, and halve the cost of buying that magic for yourself. You can use this on a magic you don’t have the affinity for, or halve again the cost of a magic you do, but you cannot use that magic specialization when not wearing your mothergifts, your garment and hat almost all witches get from R0 Witchery, and using your rod. Downside is your mothergifts have a preferred shape, the shape most identified with that ancestor, and any alterations will only last about 1 hour before they start to revert unless you reapply the change. Doesn’t affect rod forms: i.e. broom.
 
 
 ## Relic: Riftblade
