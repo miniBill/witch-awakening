@@ -323,7 +323,7 @@ dangerToColor maybeP =
             if p == 10 then
                 Tuple.first Theme.colors.companionGold
 
-            else if p >= 7 then
+            else if p >= 8 then
                 Tuple.first Theme.colors.companionRed
 
             else if p >= 4 then
