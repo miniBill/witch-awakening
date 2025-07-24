@@ -18,7 +18,7 @@ At rank 1 the range and sensitivity of your magic sense is heightened to the poi
 At rank 2 your magic sense is further heightened to the point that you can reliably tell how much power is being put into a nearby spell. Your __Dispell__ now works on magic up to rank 1.
 
 ### Rank 3
-At rank 3 your magic sense is refined further still, you can pinpoint exactly where magic is being cast from. __Dispell__ will now works on magic up to rank 2. You gain the ability to __Suppress__ magic you're able to sense up to rank 1, preventing spells of that rank from being cast (without requiring line-of-sight), this requires a constant low expendature of mana.
+At rank 3 your magic sense is refined further still, you can pinpoint exactly where magic is being cast from. __Dispell__ will now works on magic up to rank 2. You gain the ability to __Suppress__ magic you're able to sense up to rank 1, preventing spells of that rank from being cast (without requiring line-of-sight), this requires a constant low expenditure of mana.
 
 ### Rank 4
 At rank 4 your magic sense is now good enough to recognize the magical signature of a caster who's magic you've sensed before. __Dispell__ will now works on magic up to rank 3, and __Suppress__ now works on magic up to rank 2.

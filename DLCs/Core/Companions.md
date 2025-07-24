@@ -42,7 +42,7 @@ Rachel is very introverted and socially awkward, she grew up largely alone witho
 - Has: Anne has Familiar 1, Aether 2, Portal 3, Psycho 3, Digicasting 4, as well as _Beauty Sleep_
 - Quote: _*“Is..Is that Anne? How on earth can she sleep like that. Is that safe? feel like I should help her out” - An Arcadian student.*_
 
-Anne is a bit of an oddball. Rather than simply being introverted, she’s pretty much outright antisocial seeing no need or reason to bother and actively prefers keeping a smaller friendgroup, but she tries to do right by those that do make that cut. She’s known for sleeping most her days away and not just in her bed, but anywhere she goes, some think she has narcolepsy; but she just enjoys dreams a ton.
+Anne is a bit of an oddball. Rather than simply being introverted, she’s pretty much outright antisocial seeing no need or reason to bother and actively prefers keeping a smaller friend group, but she tries to do right by those that do make that cut. She’s known for sleeping most her days away and not just in her bed, but anywhere she goes, some think she has narcolepsy; but she just enjoys dreams a ton.
 
 
 ## Companion: Canday Wesbank
@@ -59,7 +59,7 @@ Anne is a bit of an oddball. Rather than simply being introverted, she’s prett
 - Positive: + MMA background.
 - Negative: - She keeps it in check, but she’s very paranoid.
 - Negative: - Struggles to sleep.
-- Mixed: +/- Celebate until marriage. {smol (Though not a virgin).}
+- Mixed: +/- Celibate until marriage. {smol (Though not a virgin).}
 - Has: Wess has Runes 5 and an Improved Familiar
 - Quote: _*“Wess has been out there all day long helping clean up the river after that necroshark attack.” - An Arcadian student.*_
 
@@ -224,7 +224,7 @@ Mai comes from a family of seers with a strong magical bloodline. She’s known 
 - Has: Azure has Necromancy 1, Wands 2, Witchery 3, Waterworking 5 & Consortation 5. Wished for Power & Life (4 & 19)
 - Quote: _*“Look, if you really want to improve for that tournament in time, you could try to get Azure to tutor you? Think about it.” - A Student*_
 
-A Dwarf-Lilin girl who’s strive for power took her across the aether and to hell and back as a _Dalililah_. She now takes comfort in teaching in Arcadia as a private tutor as some soul healing. Remote friends with Bethadonna Rossbaum and tutors Evelyn in Waterworking. She’s lived comfortably for a while now but may easily be driven back to adventure, especially for someone they care about
+A Dwarf-Lilin girl who’s strive for power took her across the aether and to hell and back as a _Dalihlah_. She now takes comfort in teaching in Arcadia as a private tutor as some soul healing. Remote friends with Bethadonna Rossbaum and tutors Evelyn in Waterworking. She’s lived comfortably for a while now but may easily be driven back to adventure, especially for someone they care about
 
 
 ## Companion: Melissa Vincimvitch
@@ -244,7 +244,7 @@ A Dwarf-Lilin girl who’s strive for power took her across the aether and to he
 - Has: Liz has Portals 1, Witchery 3, Divination 4, Alchemy 5, Runes 5, Windkeeping 5, _Energized, Third Eye, Windsong_. + Keeper x2 _Alchemy & Eromancy_* _{smol Don’t get the wrong idea perv}_*
 - Quote: _*“I can’t believe that damn big tiddy witch tazed me, how was I supposed to know that cheap ass book couldn’t float” - A rude student*_
 
-Melissa, “Liz” or Lisa to some, is a librarian of the *Vincimvitch* family’s private library which was given a static reference plot in Arcadia, meaning out of the city but static throughout cycles. The library is a growing Death Ward of her grandmother’s who likes to give her grandaughters jobs around the Ward for excuses to keep her darlings near, and this personality rubbed off on Liz, who acts quite motherly.
+Melissa, “Liz” or Lisa to some, is a librarian of the *Vincimvitch* family’s private library which was given a static reference plot in Arcadia, meaning out of the city but static throughout cycles. The library is a growing Death Ward of her grandmother’s who likes to give her granddaughters jobs around the Ward for excuses to keep her darlings near, and this personality rubbed off on Liz, who acts quite motherly.
 
 
 ## Companion: Hannah Grangely
@@ -614,7 +614,7 @@ Lucille is an eternal rebel and unquenchable contrarian that strains against all
 - Negative: - Works late a lot
 - Negative: - Really strict though
 - Mixed: +/- Great guy to know if you need to get rid of a body
-- Has: Kain has Familiarity 3, Firecalling 4, Curses 5, Consortation 5, Metamorphize 5 (Dragon) _Secret Magic & Family Line_
+- Has: Kain has Familiarity 3, Firecalling 4, Curses 5, Consortation 5, Metamorphosis 5 (Dragon) _Secret Magic & Family Line_
 - Quote: _*“Son, it’s not every day a young man turns 18, time to start helping out with the family business. For now enjoy some catgirl slaves” - Kain*_
 
 When most witches who know their history think of a male sorcerer, Kain likely crosses their mind as an antediluvian warlord that ruled over ancient Siberia as a witch-king with his striking crown-halo of flame and his drake mount familiar, his own skin hardened with scales in places, and his breath like a dragon’s own. Now? a single dad with 3 kids and a blue collar job... while head of 4 Hespatian families
@@ -636,7 +636,7 @@ When most witches who know their history think of a male sorcerer, Kain likely c
 - Negative: - Habit of vanishing,
 - Negative: - Might flay you if bored.
 - Mixed: +/- Wont trust you if you don’t join in her “parties”.
-- Has: Whisper has Witchery 3, Familiarity 5, Occultism 5, Psychotics 5, _Visceramancy 5, Toximancy, Blood Witch & Shroud_
+- Has: Whisper has Witchery 3, Familiarity 5, Occultism 5, Psychotics 5, _Visceramancy 5, Poisoner, Blood Witch & Shroud_
 - Quote: _\*Shadows slither of their own volition as you lay atop a mountain of bodies slick with blood, a red glow illuminating a woman\* *- A Vision.*_
 
 Whisper is a high ranking Wraith of Hespatia and a prolific serial killer and ritual coordinator leading-a particular network of hespatian families as a pleasure-death cult indulging in the most egregious sins more than can be spoken here that make the murder, rape, and necrophilia seem tame. Every passing month marks between 6 and 60+ new victims between her rituals and her assassinations
@@ -697,7 +697,7 @@ An evil twin that absorbed life force from her twin sister in the womb and throu
 - Positive: + Secretly very analytical.
 - Negative: - Impressionable and easily convinced to do things.
 - Mixed: +/- A little duplicitous, she’ll do what’s required of her but undermines evil actions subtly within bounds of orders
-- Has: Scarlet has Witchery 3, Runes 4, Portals 4, Firecalling 5, Metamorphize (Red Dragon), _Windsong, Blood Witch_
+- Has: Scarlet has Witchery 3, Runes 4, Portals 4, Firecalling 5, Metamorphosis (Red Dragon), _Windsong, Blood Witch_
 - Quote: _*“A valued cultist of the Dragon, but she saved my little sister’s life from the razing of Port Charlotte. That she caused.” - Alliance Merchant*_
 
 Scarlet was once a simple village girl known for her red hood, until a werewolf stalked her and murdered her grandmother. In the terror of the situation, her awakening triggered naturally as a Dravir, a red dragon. She ate the wolf the way it ate her only relative but it left a human body Scarlet would go on a downward spiral and end up in Hespatia under King Damien Kain’s favored family.
@@ -885,7 +885,7 @@ Betty is a doll that at first glance might be mistaken for a dwarf or changeling
 - Has: Nichte has Psychotics 3, Firecalling 3, Aethernautics 3, Domain 4, Necromancy 5, Monstrosity 5, _Memorize, Sun Shard, Cornucopia_
 - Quote: _*“Nichte scares the children, well, everybody, but she works hard to go out of her way help anyone as best she can.” - an ORC Agent.*_
 
-Nichte was alifelong slave in an old Hespatian family that likes to play with fire. She was used as a sacrificial test for controlling Outsider corruption. It didn’t go as planned but they still gained a potent slave, until a Lunabellan raid stormed the compound lead by a Culicarius, who subdued and offered her a choice, and control over herself.
+Nichte was a lifelong slave in an old Hespatian family that likes to play with fire. She was used as a sacrificial test for controlling Outsider corruption. It didn’t go as planned but they still gained a potent slave, until a Lunabellan raid stormed the compound lead by a Culicarius, who subdued and offered her a choice, and control over herself.
 
 
 ## Companion: Ælfflæd (now Daphne)
@@ -939,7 +939,7 @@ V is not a witch, but is nonetheless a top ranking ORC Agent and a master of her
 - Negative: - Horny bastard (with self control)
 - Mixed: + Can produce gadgets from a box of scraps & bubblegum
 - Has: Max has Gadgetry 5, _ORC License_, and a metric Freedom load of firearms and ammo
-- Quote: _*“He came back from a mission one time with a chainsaw tied to the stump of a missing hand, and a shotgun pegleg” - Doc Ginger.*_
+- Quote: _*“He came back from a mission one time with a chainsaw tied to the stump of a missing hand, and a shotgun peg leg” - Doc Ginger.*_
 
 The quintessential male action hero made flesh, Max is the love child between Indiana Jones, Clint Eastwood, and MacGyver with a splash of Geralt of Rivia. He gets the job done one way or another and doesn’t shy away from risk or pain, Doesn’t drink because he hates anything that dulls his perception, and alcoholism cost him is first marriage, Avoids showing emotion in front of anyone, including anger (within reason, outside of combat), Has many safehouses memorized.
 
@@ -962,7 +962,7 @@ The quintessential male action hero made flesh, Max is the love child between In
 - Has: Beth has Familiarity 5, Consortation 5, Necromancy Portals 5, Occultism 5, and _ORC License, Golden Fish, Third Eye, and Pantomime_. _Wished for Power_.
 - Quote: _*“I... I heard Bethadonna was a cultist for a long time before joining up... The things she must have seen...and done..” - An ORC Agent.*_
 
-Bethadonna is a domestic goddess that radiates warmth and a motherly presence in contrast to the devilish horns you might miss at a glance from the front, nevermind if your eyes didn’t have somewhere else drawing their attention. She acts as a detective utilizing spirits and communion to work scenes, while being a heavy hitter for when SHTF. She cultivates a private pond of Golden Fish for her rituals.
+Bethadonna is a domestic goddess that radiates warmth and a motherly presence in contrast to the devilish horns you might miss at a glance from the front, never mind if your eyes didn’t have somewhere else drawing their attention. She acts as a detective utilizing spirits and communion to work scenes, while being a heavy hitter for when SHTF. She cultivates a private pond of Golden Fish for her rituals.
 
 
 ## Companion: Miranda Quincy
@@ -1137,7 +1137,7 @@ Jen... is not a typical agent or employee of Alphazon. She’s a daughter of a h
 - Has: Nines has Integration 2, Witchery 3, Potions 3, Occultism 4, Psychotics 4, Familiarity 5 & _Gold Card_
 - Quote: _*“I reviewed the Observer case logs of A-98. Twelve vampire ninjas. Twelve. With a hairpin and two missing limbs.” - An Operator.*_
 
-“Nines” was a common human employee before awakening and finding a niche with potions and ritualcasting for some time before coming into her greater potential; As a corporate hitman with her spider familiar. She has a legitimate business front as a dayjob with Alphazon that sees her traveling a lot “for business”, does love to relax though.
+“Nines” was a common human employee before awakening and finding a niche with potions and ritual casting for some time before coming into her greater potential; As a corporate hitman with her spider familiar. She has a legitimate business front as a day job with Alphazon that sees her traveling a lot “for business”, does love to relax though.
 
 
 ## Companion: Twins Sara & Kara
@@ -1177,7 +1177,7 @@ The Sara and Kara are dwarven twins who have been together through unbearable ci
 - Negative: - As a fallen goddess, she has powerful enemies
 - Mixed: +/- Used to be worshipped, some sects remain
 - Has: Suvi has Potions 3, Runes 4, Familiarity 5, Earthmoving 5, Firecalling 5, _Soul Warrior (Gladius), Soul Graft (Jackalope)_
-- Quote: _*“Vesuviannelle was one of the goddesses to resist the masquerade and was struck down from her realm by the victors.” - An ORC scholar*_
+- Quote: _*“Vesuvianelle was one of the goddesses to resist the masquerade and was struck down from her realm by the victors.” - An ORC scholar*_
 
 Suvi is an Amazonian mimi (Rabbit) well known in some parts for her extensive use of volcanic magics utilizing Earth-Fire elementalism. There’s a myth that she created an island chain by hopping across the sea with volcanos erupting from her footsteps. Fact or fiction? She just laughs it off. She makes appearances when her islands are threatened by major events, otherwise being elusive.
 
@@ -1330,7 +1330,7 @@ Mandy is a human Medium, she can see through the veil to see spirits, monsters, 
 - Positive: + Deferential but confident
 - Negative: - _Might_ eat your face if you provoke him.
 - Mixed: +/- Understands the wider world he woke up to is different than what he knew, and is patient in learning new norms.
-- Has: Khan has Runes 2, Earthmoving 3, Witchery 5, Familiarity 5, Metamorphize 5 (Zooarch), _Transform Sequence, and Menagerie_
+- Has: Khan has Runes 2, Earthmoving 3, Witchery 5, Familiarity 5, Metamorphosis 5 (Zooarch), _Transform Sequence, and Menagerie_
 - Quote: _*“Eskhander Mahabadi... That’s the awakened Tiger right? Strange that, never heard of non-humanoids awakening.” - An ORC Scholar*_
 
 No, not the girl -- The tiger. Eskhander is a literal tiger that received a witch awakening when poisoned by a Witchblood Elixir. Like a human witch becoming a non-human, Khan awakened as an Oread, but has Transformation Sequence, retaining his natural male tiger body and a separate witch form. He has a familiar cat that spends most her time in human form and learned to do a lot of the talking.
@@ -1364,7 +1364,7 @@ No, not the girl -- The tiger. Eskhander is a literal tiger that received a witc
 - Morality: 0
 - Quote: _*“I haven’t seen this happen before, are you seeing the same thing? This vision is just static to me.” - Penelope.*_
 
-Rose is a quiet witch, speaking seems to fatigue her, but shelll reply or say things when important. The Veil hides her from everyone else, as a monster would be hidden from a mortal, she is hidden from even witches. Even physically moving things to try to convey a message is obscured or dismissed in some way: If you select her as a Companion you will be the only one who can sense her, and can be seen in the background of casual daily life as though she’s just watching the life go by of everyone else, vanishing and appearing suddenly. She’ll write in a small notebook, the pages look like static to you. Sometimes she’ll help you with single written words or pointing. She’s very passive and not very helpful, but your life seems to become more interesting. *You can take any 1 extra Quest.*
+Rose is a quiet witch, speaking seems to fatigue her, but she'll reply or say things when important. The Veil hides her from everyone else, as a monster would be hidden from a mortal, she is hidden from even witches. Even physically moving things to try to convey a message is obscured or dismissed in some way: If you select her as a Companion you will be the only one who can sense her, and can be seen in the background of casual daily life as though she’s just watching the life go by of everyone else, vanishing and appearing suddenly. She’ll write in a small notebook, the pages look like static to you. Sometimes she’ll help you with single written words or pointing. She’s very passive and not very helpful, but your life seems to become more interesting. *You can take any 1 extra Quest.*
 
 
 ## Companion: Ophelia Reisha
@@ -1442,7 +1442,7 @@ Custom companions cannot have more than 8 magics/features, and cannot be Sword t
 - Has: Eris has Potions 3, Witchery 3, Occultism 3, Waterworking 3, Familiarity 5 (*_black unicorn_*), _Shroud, Gold Card_
 - Quote: _*“All I can say is that any agent from ANY faction that gets too close is never seen again, leave it be for now.” - An ORC Agent.*_
 
-Eris grew up isolated yet in the spotlight, attending only the best schools her entire life never even looking upon culture that was less than upper middle class. This isn’t for lack of intent on her part, but her mysterious father she hasn’t even met sets her life up for her from a distance. Anywhere she goes, unseeable guardians shield her every movement equivalent to 6 undetectable Solarchs that operate subtly.
+Eris grew up isolated yet in the spotlight, attending only the best schools her entire life never even looking upon culture that was less than upper middle class. This isn’t for lack of intent on her part, but her mysterious father she hasn’t even met sets her life up for her from a distance. Anywhere she goes, invisible guardians shield her every movement equivalent to 6 undetectable Solarchs that operate subtly.
 
 
 ## Companion: The Caretaker
@@ -1533,7 +1533,7 @@ The original body of 9s. During a mission, Nines infiltrated an unexpected Outsi
 - Negative: - Constant need to prove herself
 - Mixed: +/- Somewhat lofty and larger than life, everything around her feels more serious and important.
 - Has: Ezra has Witchery 2, Necromancy 2, Portals 3, Wands 3, Ministration 4, Divination 4, Covenants 5 _& Fae Step_
-- Quote: _*““What’s Daeal’ezra deal? I don’t get why she works so hard for the court instead of just marrying in. I know she has suitors” - A courtier.*_
+- Quote: _*““What’s Dael’ezra deal? I don’t get why she works so hard for the court instead of just marrying in. I know she has suitors” - A courtier.*_
 
 The second oldest of 12 daughters of an Alfheimr queendom the size of Poland, her mother holds a position at the high table of the Summer Court as the local queen but her father is a duke of the Winter Court, a scandal that almost cost her her crown, but with political maneuvering, the illegitimate Dael’ezra is simply not permitted to inherit titles and must earn a position in either court the hard way.
 

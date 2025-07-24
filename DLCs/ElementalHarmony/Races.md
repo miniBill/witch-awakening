@@ -307,7 +307,7 @@ Certain Hitodama are natural necromancers, but they bind ectoplasm and loose spi
 - Mana rate: High
 
 Mummies have an ancient connection to the earth, both the caverns that once served as gates to the underworld and afterlives and the bogs and sands in which bodies were placed as sacrifices and held in suffocating stasis. To the present day, they are shepherds of the recently dead, meditating to travel with their spirits to their afterlives. They have a sense for recently-made corpses and can find their way to their sides.
-If a Mummy accompanies a dying soul to the afterlife, they can return with another Mummy and bring them back to the living world. Families often pay diviners to let them know which afterlifes they are bound for, so they can more swiftly return their kin if lost.
+If a Mummy accompanies a dying soul to the afterlife, they can return with another Mummy and bring them back to the living world. Families often pay diviners to let them know which afterlives they are bound for, so they can more swiftly return their kin if lost.
 __Mummies draw Mana__ from Suffocation. Being stuck unable to breathe gives Mummy a High charge, imposing it on another gives a Medium charge as long as they last, and a death by suffocation (including their own if they return soon enough) makes the Medium charge last one month.
 
 ### Perk
@@ -323,7 +323,7 @@ Some mummies are particularly tied to the marshy airless waters of the bogs. In 
 
 Gulabaa are spirits of wildfires and the plants which rely on them, principally eucalyptus. They can travel though the upper branches of a forest nearly as fast as the wildfires they love, leaving the trees lightly scorched in their wake, and when in an actual wildfire, they are immune to the heat and easily run faster than a car.
 Gulabaa can plant any part of themselves in a tree of any kind, though it is usually one vulnerable to fire. If she dies, she will sprout from one of these tree's roots when one burns down in a wildfire.
-__Gulabaa draw Mana__ from cyles of Growth. Gulabaa charge both from destroying what they have nurtured and nurturing what they have destroyed. Hours of one spread over weeks are necessary before it will count for the other. Need not be physical destruction or nurturing.
+__Gulabaa draw Mana__ from cycles of Growth. Gulabaa charge both from destroying what they have nurtured and nurturing what they have destroyed. Hours of one spread over weeks are necessary before it will count for the other. Need not be physical destruction or nurturing.
 
 ### Perk
 - Cost: 4

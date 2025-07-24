@@ -377,7 +377,7 @@ __Dolls draw Mana__ from Service, obeying a request or command from a sapient be
 ### Perk
 - Cost: 4
 
-Some dolls are known for the ability to occupy multiple frames at once. With this perk, you gain the [Mind] affinity, and the ability to remotely operate a second doll form that looks similar or identical to your original body. For every additional power point invested in this perk, you can control an additional body + 1 per point, ie; [1] - 1, [2] - 3, [3] - 6, [4] - 10. Any body can be repaired as normal to resume function, but even when a body would be incapable of moving on its own, it can be remotely puppeted by force from a still functioning body. Every doll body can then also have a secondary form between 6 inches and 2ft tall that is a reduced quality depiction of the full appearance, like a literal child’s doll of themselves.
+Some dolls are known for the ability to occupy multiple frames at once. With this perk, you gain the [Mind] affinity, and the ability to remotely operate a second doll form that looks similar or identical to your original body. For every additional power point invested in this perk, you can control an additional body + 1 per point, ie; [1] - 1, [2] - 3, [3] - 6, [4] - 10. Any body can be repaired as normal to resume function, but even when a body would be incapable of moving on its own, it can be remotely puppeteered by force from a still functioning body. Every doll body can then also have a secondary form between 6 inches and 2ft tall that is a reduced quality depiction of the full appearance, like a literal child’s doll of themselves.
 
 
 ## Race: Vanir

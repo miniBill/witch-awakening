@@ -195,7 +195,7 @@ Notes:
 + They can leap hundreds of meters in height and distance
 + Their movements in straight lines are a blur.
 + Luckily for you, their violence is primarily concentrated on each other -- A war of succession seems to be going on.
-+ 8+ werewolves, 2 alphas, dozens of direwolves.
++ 8+ werewolves, 2 alphas, dozens of dire wolves.
 
 ### Sidebar
 If you survive a werewolf bite, you become a werewolf yourself. Werewolves do not have conscious thought in werewolf form, and are forced to transform on full moons.
@@ -229,7 +229,7 @@ The racer can lend support crew their own pellets for use, if needed. Support cr
 - Conflict: 4
 - Reward: 7
 
-A clan of intelligent giant albino elks are calling in favors to seek help, a wild rift has ripped open in their territory and alien creatures roam through to hunt the elk down and drag them back through the rift. While fairly strong with some innate magic of their own, they prove no match for the creatures. They need to put an end to it. Next time the rift opens, fight the creatures back and enter to find an exotic plane consisting entirely of biomatter with fleshy earth, boney spires arching through the sky, teeming with fleshy equivalents to plantlife forming jungles, as far as you know this plane is unknown to witchdom and unexplored.
+A clan of intelligent giant albino elks are calling in favors to seek help, a wild rift has ripped open in their territory and alien creatures roam through to hunt the elk down and drag them back through the rift. While fairly strong with some innate magic of their own, they prove no match for the creatures. They need to put an end to it. Next time the rift opens, fight the creatures back and enter to find an exotic plane consisting entirely of biomatter with fleshy earth, boney spires arching through the sky, teeming with fleshy equivalents to plant life forming jungles, as far as you know this plane is unknown to witchdom and unexplored.
 
 Notes:
 + How are these creatures (of your description) opening rifts? Spontaneous evolution, their own intelligent pursuit of magical knowledge? or random chance opening a natural wild rift?
@@ -417,7 +417,7 @@ Space suit optional. Culicarius is forming a task force to explore the perfectly
 
 Notes:
 + You'll have a team of 3 other powerful witches not including you and Culicarius. Choose companions or make them up.
-+ You risk egodeath, or fates worse than death, if you fall to the abominations, as you run into twisted victims of Outsider corruption, both the pitiful, and the overpowering.
++ You risk ego death, or fates worse than death, if you fall to the abominations, as you run into twisted victims of Outsider corruption, both the pitiful, and the overpowering.
 
 
 ## Quest: Courtship
@@ -480,7 +480,7 @@ Notes:
 - Conflict: 4
 - Reward: 7
 
-Requires Gold Card, ORC Licence, or Cornucopia, and field experience working for or closely with Alphazon. A Secondary Tier Executive has personally requested your assistance as a bodyguard and detective. Their Forecasters have become very uneasy with the unveiling of the Heavenly Palace luxury space station they have constructed in orbit at the Le Lagrange point. Suspected interference suggests an impending Outsider event, provoking a quiet evacuation of non-essential personnel until the situation is cleared. 3 weeks of luxury in, expect the station to resemble Talos 1, from Prey, becoming overrun by increasing aberrations & mimics.
+Requires Gold Card, ORC License, or Cornucopia, and field experience working for or closely with Alphazon. A Secondary Tier Executive has personally requested your assistance as a bodyguard and detective. Their Forecasters have become very uneasy with the unveiling of the Heavenly Palace luxury space station they have constructed in orbit at the Le Lagrange point. Suspected interference suggests an impending Outsider event, provoking a quiet evacuation of non-essential personnel until the situation is cleared. 3 weeks of luxury in, expect the station to resemble Talos 1, from Prey, becoming overrun by increasing aberrations & mimics.
 
 Notes:
 + The station employs stealth fields rendering it invisible outside of a 10 mile sphere.

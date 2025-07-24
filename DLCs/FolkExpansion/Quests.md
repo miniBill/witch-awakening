@@ -136,7 +136,7 @@ Maybe you instead cut a deal with the leprechaun and instead sell more pictures 
 - Conflict: 2
 - Reward: 1
 
-On the lookout for a place to buy some goods, you find a bit of a run down establishment with a veiled sign out front displaying a different message for witches, and an internal domain means you enter a separate space than what a human would. The witch running the store is having some money troubles and needs to push sales quick, so she’s offering everything at half off and may add in a favor or two in the process. You can use this shop this one time to buy any Ingredients, Potions, Runes, or Relics priced at less than 6p, all at half price up to a total discount of no more than 25,000 Kiss equivalent, or no more than 3rp off arelic. Can do both K and rp.
+On the lookout for a place to buy some goods, you find a bit of a run down establishment with a veiled sign out front displaying a different message for witches, and an internal domain means you enter a separate space than what a human would. The witch running the store is having some money troubles and needs to push sales quick, so she’s offering everything at half off and may add in a favor or two in the process. You can use this shop this one time to buy any Ingredients, Potions, Runes, or Relics priced at less than 6p, all at half price up to a total discount of no more than 25,000 Kiss equivalent, or no more than 3rp off a relic. Can do both K and rp.
 
 Notes:
 + Note that potion sales are typically 50-200% more expensive than the listed base price shown in the magics, as that's the creation cost.
@@ -216,7 +216,7 @@ Notes:
 - Conflict: 5
 - Reward: 2
 
-A librarian, perhaps one from the companion's section, has requested some help in tracking down 6 particular books that are well past overdue. You will have to track down the culprits in everyone's favorite fetch quest, where each culprit has some tangental problem that conveniently needs to be solved before they're able to hand over the book and the late fee before you're off to the next Perhaps one book was swiped away by a thieving gremlin, while another fell out of their bookbag in the middle of a broomflight across Arcadia. Perhaps one was lost in the cargo of a sunken ship.
+A librarian, perhaps one from the companion's section, has requested some help in tracking down 6 particular books that are well past overdue. You will have to track down the culprits in everyone's favorite fetch quest, where each culprit has some tangential problem that conveniently needs to be solved before they're able to hand over the book and the late fee before you're off to the next Perhaps one book was swiped away by a thieving gremlin, while another fell out of their book bag in the middle of a broom flight across Arcadia. Perhaps one was lost in the cargo of a sunken ship.
 
 Notes:
 + If you write at least a sentence in your build for each book's own particular predicament, you can gain an extra 3rp.
@@ -246,7 +246,7 @@ You could instead opt to join the Necromancers, who sought to burn the Flowers o
 - Conflict: 4
 - Reward: 4
 
-Requires Lunabella, Alphazon, ORC, HexVPN, OR Battleship. In short, some means to receive space coms personally or as a mission from a higher up who received it. At some point in time sensors, tech or magical, pick up on an unknown object streaking through the solar system from beyond the oort cloud heading through on a trajectory straight to the sun. A Ghost or HexNet (or both) broadcast is repeating a distress signal on repeat requesting help in a quickly deciphered strange language spoken in a feminine voice To the point, a space ship is on collision course with the sun and being pursued by a space kraken, naturally you'll need to step in.
+Requires Lunabella, Alphazon, ORC, HexVPN, OR Battleship. In short, some means to receive space comms personally or as a mission from a higher up who received it. At some point in time sensors, tech or magical, pick up on an unknown object streaking through the solar system from beyond the oort cloud heading through on a trajectory straight to the sun. A Ghost or HexNet (or both) broadcast is repeating a distress signal on repeat requesting help in a quickly deciphered strange language spoken in a feminine voice To the point, a space ship is on collision course with the sun and being pursued by a space kraken, naturally you'll need to step in.
 
 Notes:
 + The Space Kraken behaves like a Hydra, with its tentacles.

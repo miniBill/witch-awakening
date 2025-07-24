@@ -4,7 +4,7 @@
 - Class: Academic
 - Cost: 2
 
-The ultimate in secure internet access. HexVPN routes your internet traffic through a literal blackbox. The ominous hovering black cube with fractal engravings completely masks your connection in ways mortal VPNs can’t; Your traffic won’t even be seen or register as a request, and it allows you to access any public website that would otherwise have a paywall. No more sharing netflix accounts, and no region locks, rocking 666 Tbps up and down.
+The ultimate in secure internet access. HexVPN routes your internet traffic through a literal blackbox. The ominous hovering black cube with fractal engravings completely masks your connection in ways mortal VPNs can’t; Your traffic won’t even be seen or register as a request, and it allows you to access any public website that would otherwise have a paywall. No more sharing netflix accounts, and no region locks, rocking 666 TB/s up and down.
 
 
 ## Relic: Storm Brew

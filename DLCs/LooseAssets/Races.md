@@ -73,7 +73,7 @@ The mastery of a Gnome genius, an inventor’s spirit comparable to fictional ma
 
 You use engineering to replicate in a limited capacity, the effects of any magic effect of any Magic Specialization. Rank 1 takes 1 hour of work, 8 for R2, 24 for R3, 1 week for R4, and 1 month for R5, involving components of comparable rarity to a Potion of its rank. Instantaneous / non durational effects have a 25% failure chance, and each failure has a 50% chance to destroy the device. You can repair a destroyed device in 1/10th the time. Duration / continuous based magics have this fail chance at every 24 hours of total activity. Gadgetry can be replicated without fail chance. Can have a tiny cockpit to operate Power Armor.
 
-(Or a Golem made with Hexes, or Franken body made with Necromancy.)
+(Or a Golem made with Hexes, or Franken-body made with Necromancy.)
 
 
 ## Race: Pixie
