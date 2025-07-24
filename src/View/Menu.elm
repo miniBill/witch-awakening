@@ -567,7 +567,7 @@ capSlider model =
                         |> Result.map .value
                         |> Result.withDefault 0
             in
-            Input.slider
+            Theme.slider
                 [ width fill
                 , Element.behindContent <|
                     el
@@ -620,7 +620,7 @@ capSlider model =
 
 relicSlider : Model key -> Element Msg
 relicSlider model =
-    Input.slider
+    Theme.slider
         [ width fill
         , Element.behindContent <|
             el

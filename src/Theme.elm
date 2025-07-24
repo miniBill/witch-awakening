@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -853,3 +853,27 @@ viewClasses w classes =
                     :: List.indexedMap viewSlice classes
                 )
                 Element.none
+
+
+slider :
+    List (Attribute msg)
+    ->
+        { onChange : Float -> msg
+        , label : Input.Label msg
+        , min : Float
+        , max : Float
+        , value : Float
+        , thumb : Input.Thumb
+        , step : Maybe Float
+        }
+    -> Element msg
+slider attrs config =
+    Input.slider attrs
+        { onChange = config.onChange
+        , label = config.label
+        , min = min config.min (min config.max config.value)
+        , max = max config.max (max config.min config.value)
+        , value = config.value
+        , thumb = config.thumb
+        , step = config.step
+        }
