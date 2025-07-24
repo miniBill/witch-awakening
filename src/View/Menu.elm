@@ -567,18 +567,7 @@ capSlider model =
                         |> Result.map .value
                         |> Result.withDefault 0
             in
-            Theme.slider
-                [ width fill
-                , Element.behindContent <|
-                    el
-                        [ width fill
-                        , height (px 2)
-                        , centerY
-                        , Background.color <| rgb 0.7 0.7 0.7
-                        , Border.rounded 2
-                        ]
-                        Element.none
-                ]
+            Theme.slider [ width fill ]
                 { onChange = \newValue -> Choice <| TowardsCap <| round newValue
                 , label =
                     Input.labelAbove [] <|
@@ -596,7 +585,7 @@ capSlider model =
                         |> toFloat
                 , value = toFloat model.towardsCap
                 , step = Just 1
-                , thumb = Input.defaultThumb
+                , thumb = Nothing
                 }
 
         Just Types.EarlyBird ->
@@ -620,18 +609,7 @@ capSlider model =
 
 relicSlider : Model key -> Element Msg
 relicSlider model =
-    Theme.slider
-        [ width fill
-        , Element.behindContent <|
-            el
-                [ width fill
-                , height (px 2)
-                , centerY
-                , Background.color <| rgb 0.7 0.7 0.7
-                , Border.rounded 2
-                ]
-                Element.none
-        ]
+    Theme.slider [ width fill ]
         { onChange = \newValue -> Choice <| PowerToRewards <| round newValue
         , label =
             Input.labelAbove [] <|
@@ -664,7 +642,7 @@ relicSlider model =
                 |> negate
         , value = toFloat model.powerToRewards
         , step = Just 1
-        , thumb = Input.defaultThumb
+        , thumb = Nothing
         }
 
 

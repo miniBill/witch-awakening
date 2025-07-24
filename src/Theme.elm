@@ -863,17 +863,30 @@ slider :
         , min : Float
         , max : Float
         , value : Float
-        , thumb : Input.Thumb
+        , thumb : Maybe Input.Thumb
         , step : Maybe Float
         }
     -> Element msg
 slider attrs config =
-    Input.slider attrs
+    let
+        backgroundLine : Element msg
+        backgroundLine =
+            el
+                [ width fill
+                , height (px 2)
+                , centerY
+                , Background.color <| rgb 0.7 0.7 0.7
+                , Border.rounded 2
+                ]
+                Element.none
+    in
+    Input.slider
+        (Element.behindContent backgroundLine :: attrs)
         { onChange = config.onChange
         , label = config.label
         , min = min config.min (min config.max config.value)
         , max = max config.max (max config.min config.value)
         , value = config.value
-        , thumb = config.thumb
+        , thumb = Maybe.withDefault Input.defaultThumb config.thumb
         , step = config.step
         }
