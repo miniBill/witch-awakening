@@ -43,6 +43,17 @@ value { ignoreSorceressBonus } model =
                 }
         pointsList =
             Generated.Magic.all
+                |> List.sortBy
+                    (\magic ->
+                        if magic.faction /= Nothing then
+                            2
+
+                        else if magic.isElementalism then
+                            1
+
+                        else
+                            0
+                    )
                 |> List.filterMap (magicValue model affinities)
 
         free : Dict String String
