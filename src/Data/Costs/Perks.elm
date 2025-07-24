@@ -3,8 +3,10 @@ module Data.Costs.Perks exposing (perkValue, value)
 import Data.Affinity as Affinity
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
+import Data.Perk as Perk
 import Generated.Perk
-import Generated.Types exposing (Affinity, Class, Perk(..), Race(..))
+import Generated.Types as Types exposing (Affinity, Class, Perk(..), Race(..))
+import List.Extra
 import Types exposing (CosmicPearlData, RankedPerk)
 import View.Perk
 
@@ -21,7 +23,39 @@ value :
     -> Monad Points
 value model =
     model.perks
-        |> Monad.mapAndSum (perkValue model)
+        |> Monad.combineMap (perkValue model)
+        |> Monad.andThen
+            (\pointsList ->
+                let
+                    free : Maybe String
+                    free =
+                        if List.any (\p -> p.name == JackOfAll) model.perks then
+                            pointsList
+                                |> List.filter (\{ staticCost } -> staticCost)
+                                |> List.Extra.minimumBy .points
+                                |> Maybe.map .name
+
+                        else
+                            Nothing
+                in
+                pointsList
+                    |> Monad.mapAndSum
+                        (\{ name, points } ->
+                            if Just name == free then
+                                0
+                                    |> Monad.succeed
+                                    |> Monad.withInfo
+                                        { label = name
+                                        , anchor = Just name
+                                        , value = Monad.FreeBecause "[Jack-of-All]"
+                                        }
+
+                            else
+                                points
+                                    |> Monad.succeed
+                                    |> Monad.withPowerInfo name
+                        )
+            )
         |> Monad.map Utils.powerToPoints
 
 
@@ -35,7 +69,7 @@ perkValue :
         , perks : List RankedPerk
     }
     -> RankedPerk
-    -> Monad Int
+    -> Monad { name : String, points : Int, staticCost : Bool }
 perkValue ({ class } as model) { name, cost } =
     Utils.find "Perk" .name name (Generated.Perk.all model.perks) View.Perk.perkToShortString
         |> Monad.map
@@ -85,6 +119,14 @@ perkValue ({ class } as model) { name, cost } =
                             |> Utils.applyClassBonusIf isClass
                             |> Utils.halveIfPositiveAnd isInAffinity
                 in
-                -finalCost
+                { name = Types.perkToString name
+                , points = -finalCost
+                , staticCost =
+                    case perk.content of
+                        Perk.Single _ _ ->
+                            True
+
+                        _ ->
+                            False
+                }
             )
-        |> Monad.withPowerInfo (View.Perk.perkToShortString name)

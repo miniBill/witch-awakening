@@ -23,6 +23,7 @@ type Piece
     | Slot Slot
     | Affinity Affinity
     | Class Class
+    | JackOfAll
     | Star
     | Text String
     | Link String
@@ -257,6 +258,9 @@ parseSquareBrackets str =
 
                 ( "All", _ ) ->
                     Affinity Types.All
+
+                ( "Jack-of-All", _ ) ->
+                    JackOfAll
 
                 ( _, "star" ) ->
                     Star

@@ -1,6 +1,5 @@
 # v2
 - Heirloom
-- Jack of All free perk
 - Mark which magic from Talisman
 
 - Two free schools for Academic
