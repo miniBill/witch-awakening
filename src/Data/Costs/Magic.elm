@@ -8,7 +8,7 @@ import Generated.Magic
 import Generated.Types as Types exposing (Affinity, Class(..), Faction, Magic(..), Race(..))
 import List.Extra
 import Maybe.Extra
-import Types exposing (CosmicPearlData, RankedMagic)
+import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
 
 value :
@@ -18,6 +18,7 @@ value :
             | cosmicPearl : CosmicPearlData
             , mainRace : Maybe Race
             , races : List Race
+            , perks : List RankedPerk
             , faction : Maybe ( Faction, Bool )
             , class : Maybe Class
             , typePerks : List Race
@@ -49,6 +50,29 @@ value { ignoreSorceressBonus } model =
                     |> List.filter (\{ isElementalism, isOffAffinity } -> isElementalism && not isOffAffinity)
                     |> List.Extra.minimumBy .points
                     |> Maybe.map .name
+
+            else
+                Nothing
+
+        jackOfAllWarning : Maybe String
+        jackOfAllWarning =
+            if List.any (\p -> p.name == Types.JackOfAll) model.perks then
+                case
+                    List.filterMap
+                        (\m ->
+                            if m.rank == 5 then
+                                Just (Types.magicToString m.name)
+
+                            else
+                                Nothing
+                        )
+                        model.magic
+                of
+                    [] ->
+                        Nothing
+
+                    forbidden ->
+                        Just ("If you have Jack-of-All you can't have rank 5 magic - you have selected " ++ String.join ", " forbidden)
 
             else
                 Nothing
@@ -97,6 +121,7 @@ value { ignoreSorceressBonus } model =
             )
         |> Monad.map Utils.powerToPoints
         |> Monad.withWarningMaybe offAffinityWarning
+        |> Monad.withWarningMaybe jackOfAllWarning
 
 
 magicValue :
