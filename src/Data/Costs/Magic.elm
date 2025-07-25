@@ -8,7 +8,6 @@ import Dict exposing (Dict)
 import Generated.Magic
 import Generated.Types as Types exposing (Affinity, Class(..), Faction, Magic(..), Race(..))
 import List.Extra
-import Maybe.Extra
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
 
@@ -169,58 +168,36 @@ magicValue :
             , isElementalism : Bool
             , isOffAffinity : Bool
             }
-magicValue ({ faction, class, typePerks } as model) affinities magicDetails =
+magicValue model affinities magicDetails =
     model.magic
-        |> List.Extra.findMap
-            (\rankedMagic ->
-                if magicDetails.name == rankedMagic.name then
-                    basicMagicValue affinities class rankedMagic.rank magicDetails
-                        |> Maybe.map
-                            (\basicValue -> ( rankedMagic, basicValue ))
-
-                else
-                    Nothing
-            )
+        |> List.Extra.find (\rankedMagic -> magicDetails.name == rankedMagic.name)
         |> Maybe.map
-            (\( rankedMagic, basicValue ) ->
+            (\rankedMagic ->
                 let
-                    doubleIfNegative : Int -> Int
-                    doubleIfNegative c =
-                        if c > 0 then
-                            c
+                    inAffinity : Bool
+                    inAffinity =
+                        isInAffinity magicDetails affinities
 
-                        else
-                            c * 2
+                    inFaction : InFaction
+                    inFaction =
+                        isInFaction model magicDetails
 
-                    hasFactionDiscount : Bool
-                    hasFactionDiscount =
-                        (List.member Spider typePerks && magicDetails.name == Arachnescence)
-                            || (List.member Cyborg typePerks && magicDetails.name == Gadgetry)
-                            || (List.member Cyborg typePerks && magicDetails.name == Integration)
-                            || (case magicDetails.faction of
-                                    Just magicFaction ->
-                                        Just ( magicFaction, True ) == faction
+                    inClass : Bool
+                    inClass =
+                        (magicDetails.class == model.class)
+                            && (model.class /= Nothing)
 
-                                    Nothing ->
-                                        False
-                               )
-
-                    finalValue : Int
-                    finalValue =
-                        if hasFactionDiscount then
-                            factionDiscount basicValue
-
-                        else
-                            case magicDetails.faction of
-                                Just magicFaction ->
-                                    if Just ( magicFaction, False ) == faction then
-                                        List.sum basicValue
-
-                                    else
-                                        doubleIfNegative (List.sum basicValue)
-
-                                Nothing ->
-                                    List.sum basicValue
+                    finalCost : Int
+                    finalCost =
+                        List.range 1 rankedMagic.rank
+                            |> List.map
+                                (\rank ->
+                                    rank
+                                        |> factionDiscountIf inFaction
+                                        |> affinityDiscountIf inAffinity
+                                )
+                            |> List.sum
+                            |> classDiscountIf inClass
 
                     name : String
                     name =
@@ -228,25 +205,91 @@ magicValue ({ faction, class, typePerks } as model) affinities magicDetails =
                 in
                 { name = name
                 , rank = rankedMagic.rank
-                , points = finalValue
+                , points = -finalCost
                 , isElementalism = magicDetails.isElementalism
                 , isOffAffinity = not (isInAffinity magicDetails affinities)
                 }
             )
 
 
-factionDiscount : List Int -> Int
-factionDiscount l =
-    l
-        |> List.map
-            (\c ->
-                if c > 0 then
-                    c
+type InFaction
+    = InFactionPerk
+    | InFactionNoPerk
+    | OutOfFaction
+    | Nonfactional
+
+
+isInFaction :
+    { a
+        | faction : Maybe ( Faction, Bool )
+        , typePerks : List Race
+    }
+    -> Magic.Details
+    -> InFaction
+isInFaction { faction, typePerks } magicDetails =
+    if
+        (List.member Spider typePerks && magicDetails.name == Arachnescence)
+            || (List.member Cyborg typePerks && magicDetails.name == Gadgetry)
+            || (List.member Cyborg typePerks && magicDetails.name == Integration)
+    then
+        InFactionPerk
+
+    else
+        case magicDetails.faction of
+            Just magicFaction ->
+                if Just ( magicFaction, True ) == faction then
+                    InFactionPerk
+
+                else if Just ( magicFaction, False ) == faction then
+                    InFactionNoPerk
 
                 else
-                    (c - 1) // 2
-            )
-        |> List.sum
+                    OutOfFaction
+
+            Nothing ->
+                Nonfactional
+
+
+classDiscountIf : Bool -> Int -> Int
+classDiscountIf inClass cost =
+    if inClass && cost > 0 then
+        cost - 2
+
+    else
+        cost
+
+
+affinityDiscountIf : Bool -> Int -> Int
+affinityDiscountIf inAffinity cost =
+    if inAffinity && cost > 0 then
+        (cost + 1) // 2
+
+    else
+        cost
+
+
+factionDiscountIf : InFaction -> Int -> Int
+factionDiscountIf factionality cost =
+    case factionality of
+        OutOfFaction ->
+            if cost > 0 then
+                cost * 2
+
+            else
+                cost
+
+        Nonfactional ->
+            cost
+
+        InFactionNoPerk ->
+            cost
+
+        InFactionPerk ->
+            if cost > 0 then
+                (cost + 1) // 2
+
+            else
+                cost
 
 
 isInAffinity : Magic.Details -> List Affinity -> Bool
@@ -265,57 +308,3 @@ isInAffinity magic affinities =
                             (\affinity -> List.member affinity affinities)
                             alternative
                     )
-
-
-basicMagicValue :
-    List Affinity
-    -> Maybe Class
-    -> Int
-    -> Magic.Details
-    -> Maybe (List Int)
-basicMagicValue affinities class rank magic =
-    let
-        isClass : Bool
-        isClass =
-            (magic.class == class)
-                && (class /= Nothing)
-
-        cases : Int -> Int -> Int
-        cases basicValue inAffinityValue =
-            if isInAffinity magic affinities then
-                inAffinityValue
-
-            else
-                basicValue
-
-        rank1 : number
-        rank1 =
-            if isClass then
-                1
-
-            else
-                -1
-
-        inner : Int -> Maybe Int
-        inner r =
-            case r of
-                1 ->
-                    Just rank1
-
-                2 ->
-                    Just <| cases -2 -1
-
-                3 ->
-                    Just <| cases -3 -2
-
-                4 ->
-                    Just <| cases -4 -2
-
-                5 ->
-                    Just <| cases -5 -3
-
-                _ ->
-                    Nothing
-    in
-    List.range 1 rank
-        |> Maybe.Extra.combineMap inner

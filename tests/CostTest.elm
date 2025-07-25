@@ -11,23 +11,27 @@ import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
 
 type alias MagicModel =
-    { class : Maybe Class
+    { capBuild : Bool
+    , class : Maybe Class
     , races : List Race
     , mainRace : Maybe Race
     , typePerks : List Race
     , magic : List RankedMagic
     , faction : Maybe ( Faction, Bool )
     , cosmicPearl : CosmicPearlData
+    , perks : List RankedPerk
     }
 
 
 sorceress : Race -> MagicModel
 sorceress race =
-    { class = Just Sorceress
+    { capBuild = False
+    , class = Just Sorceress
     , races = [ race ]
     , mainRace = Just race
     , typePerks = []
     , magic = []
+    , perks = []
     , faction = Nothing
     , cosmicPearl = { change = [], add = [] }
     }
@@ -124,7 +128,7 @@ testJack12 label model expected =
     test label <|
         \_ ->
             Data.Costs.Perks.perkValue model jack12
-                |> Result.map .value
+                |> Result.map (.value >> .points)
                 |> Expect.equal (Ok expected)
 
 
@@ -139,9 +143,9 @@ magicCosts =
             ]
         , describe "Off faction"
             [ testRanks sorceressDryad "Off affinity, off class" Digicasting 2 6 12 20 30
-            , testRanks sorceressDryad "In affinity, off class" Wands 2 4 8 12 18
-            , testRanks academicDryad "Off affinity, in class" Digicasting -1 2 8 16 26
-            , testRanks academicDryad "In affinity, in class" Wands -1 0 4 8 14
+            , testRanks sorceressDryad "In affinity, off class" Wands 1 3 6 10 15
+            , testRanks academicDryad "Off affinity, in class" Digicasting 0 4 10 18 28
+            , testRanks academicDryad "In affinity, in class" Wands -1 1 4 8 13
             ]
         , describe "In faction, no perk"
             [ testRanks { sorceressDryad | faction = Just ( TheHespatianCoven, False ) } "Off affinity, off class" Occultism 1 3 6 10 15
