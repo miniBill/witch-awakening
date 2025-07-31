@@ -28,6 +28,7 @@ __Amalgams draw Mana__ from Conjunction: when using both component races' charge
 
 ### Perk
 - Cost: 6
+
 You gain the charge methods of races you revive with. Overflow is virtually guaranteed if you use three or more at once, regardless of how slow they are. 
 
 Also, if you have Apex, it applies to race features gained through revival, which it otherwise would not.
@@ -46,4 +47,5 @@ __Nyctimenes draw Mana__ from Darkness. A lightless environment is best, but eve
 
 ### Perk
 - Cost: 2
+
 You are one of the rare “sun-eyed” Nyctimenes: your sight is as powerful as your hearing, and your eyes resist damage even from lights that would blind an ordinary person. Gain the Life affinity. 
