@@ -567,7 +567,7 @@ stringToBool bool =
 
 view : Model key -> Browser.Document Msg
 view model =
-    { title = ""
+    { title = "Witch Awakening"
     , body =
         [ Element.layoutWith
             { options =
