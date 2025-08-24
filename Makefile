@@ -25,7 +25,7 @@ build/elm-codegen-flags/%.ppm: public/gradients/%.png
 	mkdir -p build/elm-codegen-flags
 	magick $^ -compress none $@
 
-out/build/main.js: generated/Images.elm $(wildcard src/**/*.elm)
+out/build/main.js: generated/Images.elm $(wildcard src/**/*.elm) $(wildcard src/*.elm)
 	rm -rf out
 	mkdir -p out
 	mkdir -p out/public
