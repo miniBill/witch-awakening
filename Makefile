@@ -31,7 +31,7 @@ out/build/main.js: generated/Images.elm $(wildcard src/**/*.elm)
 	mkdir -p out/public
 	mkdir -p out/build
 	yarn elm-watch make --optimize
-	cp index.html favicon.ico out
+	cp -r index.html favicon.ico favicon out
 	cp public/*.* out/public
 	cp build/main.js out/build
 
