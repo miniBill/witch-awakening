@@ -632,15 +632,6 @@ innerView model =
                 , Element.Lazy.lazy2 Quest.viewQuests model.questsDisplay model.quests
                 , Element.Lazy.lazy5 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.mainRace model.races model.relics
                 ]
-            , if allCompact then
-                Element.none
-
-              else
-                Theme.image
-                    [ width fill
-                    , Theme.style "mask-image" "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 50%)"
-                    ]
-                    Images.footer
             ]
         ]
         |> Element.map Choice

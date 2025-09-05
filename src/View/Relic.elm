@@ -8,6 +8,7 @@ import Generated.Affinity
 import Generated.Relic
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
+import Images
 import List.Extra
 import String.Extra
 import Theme exposing (gradientText)
@@ -35,6 +36,11 @@ viewRelics display pearl mainRace races relics =
                 [ centerX
                 , spacing <| Theme.rhythm * 3
                 ]
+        , Theme.image
+            [ width fill
+            , Theme.style "mask-image" "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 50%)"
+            ]
+            Images.relicFooter
         ]
         [ sorted
             |> Theme.wrappedRow
