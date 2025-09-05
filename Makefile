@@ -33,6 +33,7 @@ out/build/main.js: generated/Images.elm $(wildcard src/**/*.elm) $(wildcard src/
 	bunx elm-watch make --optimize
 	cp -r index.html favicon.ico favicon out
 	cp public/*.* out/public
+	cp -r public/[A-Z]* out/public
 	cp build/main.js out/build
 
 # Utils
