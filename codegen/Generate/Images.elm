@@ -33,9 +33,6 @@ images sizesList =
                     filePath :: "PNG" :: size :: _ ->
                         fromLine filePath size
 
-                    filePath :: "JPEG" :: size :: _ ->
-                        fromLine filePath size
-
                     filePath :: "WEBP" :: size :: _ ->
                         fromLine filePath size
 
