@@ -7,6 +7,9 @@ public/*.jpg
 public/*.otf
 public/*.ttf
 public/*.webp
+public/*/*.webp
+public/Slot/*.png
+public/Badge/*.png
 public/raw
 public/originals
 generated
