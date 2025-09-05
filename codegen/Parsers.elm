@@ -73,17 +73,7 @@ parseFiles inputs =
 
 parseDLC : ( String, String, String ) -> Result (List Generate.Error) DLC
 parseDLC ( folder, filename, content ) =
-    let
-        cut : String
-        cut =
-            case String.indexes "--- BOBBY TABLE ---" content of
-                [] ->
-                    content
-
-                index :: _ ->
-                    String.left index content
-    in
-    Parser.run dlc cut
+    Parser.run dlc content
         |> Result.mapError
             (\deadEnds ->
                 [ { title = "Error parsing DLC file"
