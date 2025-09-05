@@ -82,8 +82,12 @@ questBox display selected number quest =
                             DisplayFull
 
                         DisplayCompact ->
-                            -- This looks awful in "compact" mode
-                            DisplayFull
+                            if isSelected then
+                                -- This looks awful in "compact" mode
+                                DisplayFull
+
+                            else
+                                DisplayCollapsed
 
                         DisplayCollapsed ->
                             DisplayCollapsed
