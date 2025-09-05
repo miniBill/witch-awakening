@@ -22,7 +22,7 @@ viewTypePerks witchRaces display typePerks =
                 |> List.filterMap (typePerkBox witchRaces display typePerks)
     in
     View.collapsible
-        [ Theme.style "background-image" <| "url(\"" ++ Images.typePerksBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
+        [ Theme.style "background-image" <| "url(\"" ++ Images.typePerkBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
         , Theme.style "background-repeat" "no-repeat, no-repeat"
         , Theme.style "background-position" "top, bottom"
         , Theme.style "background-size" "100%, 100%"
