@@ -70,7 +70,9 @@ fromLine filePath size =
             filePath
                 |> String.split "/"
                 |> List.drop 1
-                |> List.concatMap (String.split ".")
+                |> List.take 2
+                |> String.concat
+                |> String.split "."
                 |> List.head
     in
     case
@@ -118,49 +120,48 @@ fromLine filePath size =
 
 
 addGroups : List ImageData -> List Elm.Declaration
-addGroups =
-    \declarations ->
-        let
-            groupedDeclarations : List Elm.Declaration
-            groupedDeclarations =
-                declarations
-                    |> Dict.Extra.groupBy .section
-                    |> Dict.map
-                        (\section decls ->
-                            Elm.group (Elm.docs ("## " ++ section) :: List.map .declaration decls)
-                        )
-                    |> Dict.values
+addGroups declarations =
+    let
+        groupedDeclarations : List Elm.Declaration
+        groupedDeclarations =
+            declarations
+                |> Dict.Extra.groupBy .section
+                |> Dict.map
+                    (\section decls ->
+                        Elm.group (Elm.docs ("## " ++ section) :: List.map .declaration decls)
+                    )
+                |> Dict.values
 
-            declarationsForGroups : Elm.Declaration
-            declarationsForGroups =
-                declarations
-                    |> List.filterMap
-                        (\{ name, group } ->
-                            Maybe.map (\g -> ( name, g.name, g.index )) group
-                        )
-                    |> Dict.Extra.groupBy Triple.Extra.second
-                    |> Dict.map groupDeclaration
-                    |> Dict.values
-                    |> (::) (Elm.docs "## Groups")
-                    |> Elm.group
+        declarationsForGroups : Elm.Declaration
+        declarationsForGroups =
+            declarations
+                |> List.filterMap
+                    (\{ name, group } ->
+                        Maybe.map (\g -> ( name, g.name, g.index )) group
+                    )
+                |> Dict.Extra.groupBy Triple.Extra.second
+                |> Dict.map groupDeclaration
+                |> Dict.values
+                |> (::) (Elm.docs "## Groups")
+                |> Elm.group
 
-            groupDeclaration : String -> List ( String, String, Int ) -> Elm.Declaration
-            groupDeclaration groupName decls =
-                decls
-                    |> List.map
-                        (\( name, _, index ) ->
-                            ( "image" ++ String.fromInt index
-                            , Elm.val name
-                                |> Elm.withType imageType.annotation
-                            )
+        groupDeclaration : String -> List ( String, String, Int ) -> Elm.Declaration
+        groupDeclaration groupName decls =
+            decls
+                |> List.map
+                    (\( name, _, index ) ->
+                        ( "image" ++ String.fromInt index
+                        , Elm.val (String.Extra.decapitalize name)
+                            |> Elm.withType imageType.annotation
                         )
-                    |> Elm.record
-                    |> Elm.declaration groupName
-        in
-        (groupedDeclarations
-            ++ [ declarationsForGroups ]
-        )
-            |> List.map Elm.expose
+                    )
+                |> Elm.record
+                |> Elm.declaration groupName
+    in
+    (groupedDeclarations
+        ++ [ declarationsForGroups ]
+    )
+        |> List.map Elm.expose
 
 
 imageType :
@@ -186,6 +187,14 @@ imageGroupParser =
             )
         |= Parser.int
         |. Parser.end
+        |> Parser.andThen
+            (\( k, i ) ->
+                if i > 100 then
+                    Parser.problem "Not a grouped images"
+
+                else
+                    Parser.succeed ( String.Extra.decapitalize k, i )
+            )
 
 
 valueFrom : String -> Elm.Expression
