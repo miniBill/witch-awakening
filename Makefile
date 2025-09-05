@@ -10,7 +10,7 @@ generated/Images.elm: $(wildcard codegen/*.elm) $(wildcard codegen/Generate/*.el
 	yarn elm-codegen run --flags-from build/elm-codegen-flags
 	yarn elm-format --yes generated
 
-build/elm-codegen-flags/sizes: $(wildcard public/*.png) $(wildcard public/*.webp) $(wildcard public/*/*.webp) $(wildcard public/*/*.png)
+build/elm-codegen-flags/sizes: $(wildcard public/*.png) $(wildcard public/*.webp) $(wildcard public/[A-Z]*/*.webp) $(wildcard public/[A-Z]*/*.png)
 	mkdir -p build/elm-codegen-flags
 	identify $^ > $@
 
