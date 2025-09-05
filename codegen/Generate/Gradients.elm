@@ -2,6 +2,7 @@ module Generate.Gradients exposing (gradients)
 
 import Elm
 import Gen.CodeGen.Generate as Generate
+import List.Extra
 import Result.Extra
 
 
@@ -48,6 +49,8 @@ gradient ( fileName, content ) =
 rowsToExpression : List (List Int) -> Result (List Generate.Error) Elm.Expression
 rowsToExpression rows =
     rows
+        |> List.concat
+        |> List.Extra.greedyGroupsOf 3
         |> Result.Extra.combineMap parseRow
         |> Result.map Elm.list
 
