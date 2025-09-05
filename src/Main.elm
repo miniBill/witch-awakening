@@ -123,6 +123,7 @@ update msg model =
                 , factionDisplay = DisplayCompact
                 , factionalMagicDisplay = DisplayCompact
                 , companionsDisplay = DisplayCompact
+                , questsDisplay = DisplayCompact
                 , relicsDisplay = DisplayCompact
               }
             , Cmd.none
@@ -140,6 +141,7 @@ update msg model =
                 , factionDisplay = DisplayFull
                 , factionalMagicDisplay = DisplayFull
                 , companionsDisplay = DisplayFull
+                , questsDisplay = DisplayFull
                 , relicsDisplay = DisplayFull
               }
             , Cmd.none
