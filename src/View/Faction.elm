@@ -25,70 +25,74 @@ viewFaction hideDLC display faction =
             Generated.Faction.all
                 |> View.filterDLC hideDLC
     in
-    View.collapsible (Theme.topBackground Images.factionIntro)
-        display
-        DisplayFaction
-        ChoiceFaction
-        "# Factions"
-        [ Theme.column
-            [ Theme.padding
-            , spacing 32
-            , width fill
-            ]
-            [ Theme.blocks
-                [ Background.color <| rgba 0 0 0 0.75
-                , Theme.rounded
-                , Theme.padding
-                , width <| Element.maximum 800 fill
-                , centerX
-                ]
-                (Faction.intro ++ String.repeat 4 "\n" ++ Faction.summaries)
-            ]
-        , filtered
-            |> List.Extra.removeWhen .isHuman
-            |> List.filterMap (factionBox display faction)
-            |> Theme.column
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        , Element.row
-            [ width fill
-            , Background.image Images.factionHumansIntro1.src
-            , width fill
-            ]
-            [ el [ width fill, Element.paddingEach { left = 32, bottom = 64, top = 200, right = 32 } ] <|
-                Theme.blocks
-                    [ width fill
-                    , Background.color <| rgba 1 1 1 0.75
-                    , Font.color <| rgb 0 0 0
-                    , Font.center
-                    , Theme.padding
-                    , Theme.rounded
-                    ]
-                    Faction.humansIntro
-            , Theme.image
-                [ width fill
-                , alignBottom
+    if List.isEmpty filtered then
+        Element.none
 
-                -- , moveDown <| 40 + Theme.rhythm * 3.5
+    else
+        View.collapsible (Theme.topBackground Images.factionIntro)
+            display
+            DisplayFaction
+            ChoiceFaction
+            "# Factions"
+            [ Theme.column
+                [ Theme.padding
+                , spacing 32
+                , width fill
                 ]
-                Images.factionHumansIntro2
+                [ Theme.blocks
+                    [ Background.color <| rgba 0 0 0 0.75
+                    , Theme.rounded
+                    , Theme.padding
+                    , width <| Element.maximum 800 fill
+                    , centerX
+                    ]
+                    (Faction.intro ++ String.repeat 4 "\n" ++ Faction.summaries)
+                ]
+            , filtered
+                |> List.Extra.removeWhen .isHuman
+                |> List.filterMap (factionBox display faction)
+                |> Theme.column
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            , Element.row
+                [ width fill
+                , Background.image Images.factionHumansIntro1.src
+                , width fill
+                ]
+                [ el [ width fill, Element.paddingEach { left = 32, bottom = 64, top = 200, right = 32 } ] <|
+                    Theme.blocks
+                        [ width fill
+                        , Background.color <| rgba 1 1 1 0.75
+                        , Font.color <| rgb 0 0 0
+                        , Font.center
+                        , Theme.padding
+                        , Theme.rounded
+                        ]
+                        Faction.humansIntro
+                , Theme.image
+                    [ width fill
+                    , alignBottom
+
+                    -- , moveDown <| 40 + Theme.rhythm * 3.5
+                    ]
+                    Images.factionHumansIntro2
+                ]
+            , filtered
+                |> List.filter .isHuman
+                |> List.filterMap (factionBox display faction)
+                |> Theme.column
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
             ]
-        , filtered
-            |> List.filter .isHuman
-            |> List.filterMap (factionBox display faction)
-            |> Theme.column
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
-        [ filtered
-            |> List.filterMap (factionBox display faction)
-            |> Theme.column
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
+            [ filtered
+                |> List.filterMap (factionBox display faction)
+                |> Theme.column
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
 
 
 factionBox :

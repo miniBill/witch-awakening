@@ -3,7 +3,7 @@ module View.Class exposing (viewClass)
 import Element exposing (Element, alignBottom, centerX, el, fill, moveDown, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Classes
+import Generated.Classes as Classes
 import Generated.Types as Types exposing (Class)
 import Gradients
 import Set exposing (Set)
@@ -15,16 +15,21 @@ import View
 viewClass : Set String -> Display -> Maybe Class -> Element Choice
 viewClass hideDLC display class =
     let
-        classBoxes : List (Element (Maybe Class))
-        classBoxes =
-            Generated.Classes.all
+        filtered : List Classes.Details
+        filtered =
+            Classes.all
                 |> View.filterDLC hideDLC
-                |> List.filterMap (classBox display class)
     in
-    if List.isEmpty classBoxes then
+    if List.isEmpty filtered then
         Element.none
 
     else
+        let
+            classBoxes : List (Element (Maybe Class))
+            classBoxes =
+                filtered
+                    |> List.filterMap (classBox display class)
+        in
         View.collapsible []
             display
             DisplayClass
@@ -59,7 +64,7 @@ intro =
 classBox :
     Display
     -> Maybe Class
-    -> Generated.Classes.Details
+    -> Classes.Details
     -> Maybe (Element (Maybe Class))
 classBox display selected { name, dlc, color, content } =
     let

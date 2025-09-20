@@ -22,33 +22,42 @@ import View
 viewQuests : Set String -> Display -> List Quest -> Element Choice
 viewQuests hideDLC display quests =
     let
-        blocks : List (Element ( Quest, Bool ))
-        blocks =
+        filtered : List Quest.Details
+        filtered =
             Generated.Quest.all
                 |> View.filterDLC hideDLC
-                |> Dict.Extra.groupBy (\{ dlc } -> Maybe.withDefault "" dlc)
-                |> Dict.values
-                |> List.concatMap (List.indexedMap (questBox display quests))
-                |> List.filterMap identity
     in
-    View.collapsible (Theme.topBackground Images.questIntro)
-        display
-        DisplayQuests
-        ChoiceQuest
-        "# Quests"
-        [ introBlock
-        , blocks
-            |> Theme.wrappedRow
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
-        [ blocks
-            |> Theme.wrappedRow
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
+    if List.isEmpty filtered then
+        Element.none
+
+    else
+        let
+            blocks : List (Element ( Quest, Bool ))
+            blocks =
+                filtered
+                    |> Dict.Extra.groupBy (\{ dlc } -> Maybe.withDefault "" dlc)
+                    |> Dict.values
+                    |> List.concatMap (List.indexedMap (questBox display quests))
+                    |> List.filterMap identity
+        in
+        View.collapsible (Theme.topBackground Images.questIntro)
+            display
+            DisplayQuests
+            ChoiceQuest
+            "# Quests"
+            [ introBlock
+            , blocks
+                |> Theme.wrappedRow
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
+            [ blocks
+                |> Theme.wrappedRow
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
 
 
 questBox :

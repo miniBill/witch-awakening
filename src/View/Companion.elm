@@ -22,8 +22,8 @@ import View.Race
 viewCompanions : Set String -> Display -> List Companion -> Element Choice
 viewCompanions hideDLC display companions =
     let
-        blocks : List (Element ( Companion, Bool ))
-        blocks =
+        filtered : List ( Maybe Faction, List Companion.Details )
+        filtered =
             Generated.Companion.all
                 |> List.filterMap
                     (\( faction, factionCompanions ) ->
@@ -38,12 +38,17 @@ viewCompanions hideDLC display companions =
                         else
                             Just ( faction, filteredCompanions )
                     )
-                |> List.concatMap (companionSection display companions)
     in
-    if List.isEmpty blocks then
+    if List.isEmpty filtered then
         Element.none
 
     else
+        let
+            blocks : List (Element ( Companion, Bool ))
+            blocks =
+                filtered
+                    |> List.concatMap (companionSection display companions)
+        in
         View.collapsible (Theme.topBackground Images.companionIntro)
             display
             DisplayCompanions

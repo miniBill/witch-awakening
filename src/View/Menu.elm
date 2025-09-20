@@ -318,6 +318,7 @@ viewCalculations model power warnings affinities =
             , ( "DLC"
               , ({ name = "Core", author = "OutrageousBears", link = Nothing }
                     :: { name = "Loose Assets", author = "OutrageousBears", link = Nothing }
+                    :: { name = "Folk Expansion", author = "OutrageousBears", link = Nothing }
                     :: Generated.Attribution.all
                 )
                     |> List.map

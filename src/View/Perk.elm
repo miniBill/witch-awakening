@@ -23,39 +23,43 @@ import View.Race
 viewPerks : Set String -> Display -> Maybe Race -> List Race -> List RankedPerk -> Element Choice
 viewPerks hideDLC display mainRace races perks =
     let
-        sorted : List Perk.Details
-        sorted =
+        filtered : List Perk.Details
+        filtered =
             Generated.Perk.all perks
                 |> View.filterDLC hideDLC
     in
-    View.collapsible (Theme.topBackground Images.perkIntro)
-        display
-        DisplayPerks
-        identity
-        "# Perks"
-        [ introBlock
-        , sorted
-            |> List.filterMap (perkBox display perks mainRace races)
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
-        [ sorted
-            |> List.filter isOverlong
-            |> List.filterMap (perkBox display perks mainRace races)
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rhythm * 3
-                ]
-        , sorted
-            |> List.Extra.removeWhen isOverlong
-            |> List.filterMap (perkBox display perks mainRace races)
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
+    if List.isEmpty filtered then
+        Element.none
+
+    else
+        View.collapsible (Theme.topBackground Images.perkIntro)
+            display
+            DisplayPerks
+            identity
+            "# Perks"
+            [ introBlock
+            , filtered
+                |> List.filterMap (perkBox display perks mainRace races)
+                |> Theme.wrappedRow
+                    [ centerX
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
+            [ filtered
+                |> List.filter isOverlong
+                |> List.filterMap (perkBox display perks mainRace races)
+                |> Theme.wrappedRow
+                    [ centerX
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            , filtered
+                |> List.Extra.removeWhen isOverlong
+                |> List.filterMap (perkBox display perks mainRace races)
+                |> Theme.wrappedRow
+                    [ centerX
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
 
 
 isOverlong : Perk.Details -> Bool

@@ -21,57 +21,62 @@ viewComplications hideDLC display complications =
         filtered =
             Generated.Complication.all
                 |> View.filterDLC hideDLC
-
-        wrappedRow : List (Element msg) -> Element msg
-        wrappedRow items =
-            items
-                |> Theme.wrappedRow
-                    [ centerX
-                    , spacing <| Theme.rhythm * 3
-                    ]
-
-        isWorldShift : Complication.Details -> Bool
-        isWorldShift complication =
-            case complication.category of
-                Just WorldShift ->
-                    True
-
-                Nothing ->
-                    False
     in
-    View.collapsible []
-        display
-        DisplayComplications
-        ChoiceComplication
-        Complication.title
-        [ Theme.blocks [] Complication.intro
-        , Theme.blocks [] "# World Shifts"
-        , ((filtered
-                |> List.filter isWorldShift
-                |> List.filterMap
-                    (complicationBox display complications)
-           )
-            ++ [ Theme.blocks
-                    [ width <| Element.maximum 400 fill
-                    , alignTop
-                    , Border.width 1
-                    , Theme.padding
-                    , Theme.borderColor Theme.colors.worldShift
-                    ]
-                    Complication.worldShiftsDescription
-               ]
-          )
-            |> wrappedRow
-        , Theme.blocks [] "# Generic Complications"
-        , filtered
-            |> List.filter (\complication -> not (isWorldShift complication))
-            |> List.filterMap (complicationBox display complications)
-            |> wrappedRow
-        ]
-        [ filtered
-            |> List.filterMap (complicationBox display complications)
-            |> wrappedRow
-        ]
+    if List.isEmpty filtered then
+        Element.none
+
+    else
+        let
+            wrappedRow : List (Element msg) -> Element msg
+            wrappedRow items =
+                items
+                    |> Theme.wrappedRow
+                        [ centerX
+                        , spacing <| Theme.rhythm * 3
+                        ]
+
+            isWorldShift : Complication.Details -> Bool
+            isWorldShift complication =
+                case complication.category of
+                    Just WorldShift ->
+                        True
+
+                    Nothing ->
+                        False
+        in
+        View.collapsible []
+            display
+            DisplayComplications
+            ChoiceComplication
+            Complication.title
+            [ Theme.blocks [] Complication.intro
+            , Theme.blocks [] "# World Shifts"
+            , ((filtered
+                    |> List.filter isWorldShift
+                    |> List.filterMap
+                        (complicationBox display complications)
+               )
+                ++ [ Theme.blocks
+                        [ width <| Element.maximum 400 fill
+                        , alignTop
+                        , Border.width 1
+                        , Theme.padding
+                        , Theme.borderColor Theme.colors.worldShift
+                        ]
+                        Complication.worldShiftsDescription
+                   ]
+              )
+                |> wrappedRow
+            , Theme.blocks [] "# Generic Complications"
+            , filtered
+                |> List.filter (\complication -> not (isWorldShift complication))
+                |> List.filterMap (complicationBox display complications)
+                |> wrappedRow
+            ]
+            [ filtered
+                |> List.filterMap (complicationBox display complications)
+                |> wrappedRow
+            ]
 
 
 complicationBox :

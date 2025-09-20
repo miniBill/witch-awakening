@@ -22,58 +22,62 @@ import View
 viewMagics : Set String -> Display -> List RankedMagic -> Element Choice
 viewMagics hideDLC display selected =
     let
-        sorted : List Magic.Details
-        sorted =
+        filtered : List Magic.Details
+        filtered =
             Generated.Magic.all
                 |> View.filterDLC hideDLC
                 |> List.filter (\{ faction } -> faction == Nothing)
     in
-    View.collapsible []
-        display
-        DisplayMagic
-        ChoiceMagic
-        "# The Magic"
-        [ Theme.blocks [] intro
-        , Theme.wrappedRow [ width fill ]
-            [ costTable
-                |> Element.html
-                |> el
-                    [ centerX
-                    , Background.color <| rgb 1 1 1
-                    , Font.color <| rgb 0 0 0
-                    ]
-            ]
-        , Theme.blocks
-            [ width <| Element.maximum 600 fill
-            , centerX
-            , Border.width 1
-            , Theme.padding
-            , Theme.borderColor Theme.colors.gameMode
-            , Font.color <| rgb 1 1 1
-            ]
-            slotDescription
-        , sorted
-            |> List.Extra.removeWhen .isElementalism
-            |> List.indexedMap (magicBox display False selected)
-            |> Theme.column []
-        , elementalIntro
-        , sorted
-            |> List.filter .isElementalism
-            |> List.indexedMap (magicBox display False selected)
-            |> Theme.column []
-        ]
-        [ sorted
-            |> List.sortBy
-                (\{ isElementalism } ->
-                    if isElementalism then
-                        1
+    if List.isEmpty filtered then
+        Element.none
 
-                    else
-                        0
-                )
-            |> List.indexedMap (magicBox display False selected)
-            |> Theme.column []
-        ]
+    else
+        View.collapsible []
+            display
+            DisplayMagic
+            ChoiceMagic
+            "# The Magic"
+            [ Theme.blocks [] intro
+            , Theme.wrappedRow [ width fill ]
+                [ costTable
+                    |> Element.html
+                    |> el
+                        [ centerX
+                        , Background.color <| rgb 1 1 1
+                        , Font.color <| rgb 0 0 0
+                        ]
+                ]
+            , Theme.blocks
+                [ width <| Element.maximum 600 fill
+                , centerX
+                , Border.width 1
+                , Theme.padding
+                , Theme.borderColor Theme.colors.gameMode
+                , Font.color <| rgb 1 1 1
+                ]
+                slotDescription
+            , filtered
+                |> List.Extra.removeWhen .isElementalism
+                |> List.indexedMap (magicBox display False selected)
+                |> Theme.column []
+            , elementalIntro
+            , filtered
+                |> List.filter .isElementalism
+                |> List.indexedMap (magicBox display False selected)
+                |> Theme.column []
+            ]
+            [ filtered
+                |> List.sortBy
+                    (\{ isElementalism } ->
+                        if isElementalism then
+                            1
+
+                        else
+                            0
+                    )
+                |> List.indexedMap (magicBox display False selected)
+                |> Theme.column []
+            ]
 
 
 intro : String
