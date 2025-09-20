@@ -55,17 +55,17 @@ config =
     , ReviewPipelineStyles.rule pipelineConfig
         |> Rule.ignoreErrorsForDirectories [ "generated" ]
     ]
+        |> List.map (Rule.ignoreErrorsForDirectories [ "vendored" ])
 
 
 pipelineConfig : List (ReviewPipelineStyles.PipelineRule ())
 pipelineConfig =
     List.concat
-        [-- ReviewPipelineStyles.Premade.noSingleLineRightPizza
-
-        -- , ReviewPipelineStyles.Premade.noMultilineLeftPizza
-        -- , ReviewPipelineStyles.Premade.noPipelinesWithSimpleInputs
-        --,
-         ReviewPipelineStyles.Premade.noRepeatedParentheticalApplication
+        [ -- ReviewPipelineStyles.Premade.noSingleLineRightPizza
+          -- , ReviewPipelineStyles.Premade.noMultilineLeftPizza
+          -- , ReviewPipelineStyles.Premade.noPipelinesWithSimpleInputs
+          --,
+          ReviewPipelineStyles.Premade.noRepeatedParentheticalApplication
         , ReviewPipelineStyles.Premade.noPipelinesWithConfusingNonCommutativeFunctions
         , ReviewPipelineStyles.Premade.noSemanticallyInfixFunctionsInLeftPipelines
         ]
