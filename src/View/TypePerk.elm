@@ -227,6 +227,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                                         line
                                             |> String.join " "
                                             |> Theme.gradientText 4 Gradients.yellowGradient
+                                            |> el [ centerX ]
                                     )
 
                          else

@@ -6,6 +6,7 @@
 - Check all faction perks implementations
 
 - Genie double discount for All
+- Marid double discount for All
 
 - Doll type perk multicost: 1-4
 

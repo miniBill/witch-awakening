@@ -102,3 +102,92 @@ __Ornians draw Mana__ from Regularity. When an Ornian sticks to routines and pat
 - Cost: 5
 
 Not a literal divine blessing, the Blessed of Athena are Ornians who possess a set of magically retractile wings which gives them the ability to fly (50MPH, benefits from and contributes to other flight-speed bonuses). In addition, these Ornians are capable of having up to 5 rebirth eggs at once, allowing them to have backups in case one is damaged or destroyed.
+
+
+## Race: Jackalope
+- Elements: Shadows, Body
+- Mana capacity: High
+- Mana rate: Medium
+
+Jackalopes are among the most reclusive and furtive of all magical species, and the same tends to go for Witches who awaken as Jackalopes. All Jackalopes possess antlers, as well as a handful of lagomorph (rabbit/hare) features including but not limited to: floppy ears, fluffy tails, patches of fur, rabbit legs, or paws (not all Jackalopes have every such feature, but all will have at least one). A Jackalope's antlers are a potent R5 alchemical reagent, painting a huge target on their backs. Luckily for them, they possess a supernatural talent for escape, having endless stamina for as long as they are being pursued and becoming increasingly swift (both physically and in terms of reflex) the longer a chase goes on. It is very difficult to trap a Jackalope, as they will magically slip free from any non-magical bonds, and are able to sense magical traps near them. Jackalopes age slowly, roughly one third the rate at which humans age. They do not possess any inherent methods for cheating death (there's a reason why they're so good at escaping danger). A Jackalope draws mana from: Camouflage. Being near enough to observe someone without being spotted themselves gives a Jackalope a continuous medium charge of mana (Note: they don't actually need to be observing someone for this to work, they just need to be near enough that they're able to observe them if they choose to. For example, if a Jackalope were hidden up in a tree with their eyes closed then someone walking by under the tree would trigger their charge method).
+
+### Perk: Survival of the best adapted
+- Cost: 3
+
+A Jackalope with this perk is capable of swiftly adapting to any environment they enter. Stuck in a snowy land? Get a thick coat of fur, and have all your hair/fur turn white to match the snow. Walking through a forest? Have your hair/fur turn a mottled brown to blend in better. In an area with a great deal of vertical terrain? Get sharper, tougher nails to help you climb. The precise nature of the changes will be somewhat random, but they will always be useful for whatever environment you find yourself in.
+
+
+## Race: Shadeglass
+- Elements: Shadows, Earth
+- Mana capacity: Low
+- Mana rate: High
+
+A Shadeglass is easily distinguished by the outcroppings of razor-sharp obsidian that grow from their head/hair, and the fact that their limbs are likewise made of solid obsidian. Luckily for the Shadeglass (and their partners, pets, and pillows) they are capable of dulling or re-sharpening the obsidian portions of their body at will. Shadeglasses have a well earned reputation for being bloodthirsty, and the fact that any wound inflicted by an obsidian will take 3 times longer to heal (or 9 times as much magic) only serves to reinforce this reputation. Shadeglasses age similarly to humans. By shedding blood a Shadeglass will age in reverse by one week for every pint of blood spilled (though this won't un-age them tpast their age of maturity). Should an obsidian die it is possible to revive them so long as you have their body (which will turn to solid obsidian on death, it wont decay but be careful you don't cut yourself). By sacrificing a sapient being and pouring their life-blood over the Shadeglass's body all wounds will be undone and they will resurrect. For every 20% of the Shadeglass's body missing an additional sacrifice will be required.
+
+__Shadeglasses draw Mana__ from Bloodletting. Whenever they inflict a wound that bleeds on another sapient being they gain a high charge of mana for as long as the wound is still bleeding (this is a all-or-nothing on/off sort of charge method, inflicting more than one wound would not increase the amount of mana generated).
+
+### Perk: Volcanic
+- Cost: 6
+
+Shadeglasses with this perk embody the volcanic fury of obsidian's origin. These witches gain the [Fire] affinity, extreme heat resistance, and the ability to super-heat any of the obsidian on their body at will. This allows them to cut through most materials and inflict grievous harm, though it comes with the trade-off of cauterizing wounds and thereby preventing bloodletting.
+
+
+## Race: Draugr
+- Elements: Necro, Shadows
+- Mana capacity: High
+- Mana rate: High
+
+Also sometimes called revenants, Draugr typically forms when the soul of a lifelong warrior is murdered outside of battle while having deep regrets of one form or another, rising up to complete their unfinished business. This type of undead appear for the most part to be average humans, with the exception of them all having ice-blue eyes and silver-white hair. A Draugr possesses five times the strength they'd have had in life (or for a witch, 5 times as much strength as they should otherwise be expected to have) and so long as they live will rapidly regenerate and heal their wounds. Their healing can be stopped if they're burned by fire, and incineration or decapitation will put them down for good. A Draugr does not age, forever frozen at the age they died (or awakened) at. They can, however, still improve their body through exercise as an average human might.
+
+__Draugr draw Mana__ from Avoided Harm. Whenever incoming harm is avoided (whether that be be by blocking, dodging, deflecting, reflecting etc...) they gain a short lasting but potent burst of mana.
+
+### Perk: Like mist
+- Cost: 10
+
+Some Draugr take “difficult to hit” to a whole new level, gaining the ability to turn intangible at will. This tires them out around as much as jogging would, and takes about as much concentration. While they are intangible they will appear to be made of an ethereal mist, with physical attacks passing straight through them. Magic and magically charged items can still harm an intangible Draugr, albeit at around 50% reduced effect. While intangible, a Draugr cannot phase through solid objects, but is capable of passing through obstructions like bars and grates, or of slipping through cracks as small as their head. 
+
+
+## Race: Celestial
+- Elements: Shadows, Fire
+- Mana capacity: Medium
+- Mana rate: Medium
+
+Beings who draw their power from the firmament of the heavens (the heavens of the physical world, not a divine realm), the Celestials are beings of stunning, almost hypnotic beauty. Possessing hair like the strands of a solar flair, eyes like trapped stars, and flowing twinkling lights that dance just over their skin whenever they use magic, these beings are frequently the inspiration of cults and stalkers alike. While under starlight (any time an average human could see the stars with their naked eye) a Celestial benefits from a drastic improvement to healing, both natural and magical, as well as a rejuvenation effect. Starlight will cause a Celestial to age in reverse at twice their normal rate of aging (this will not reverse them past their age of maturity).
+
+__Celestials draw Mana__ from Starlight. When the stars shine upon them they gain a continuous medium charge. As such, Celestials living on earth have a strong preference for living in the countryside away from light pollution. As you might imagine, Celestials tend to love anything that might get them to space, from working as an astronaut, to living in Lunabella, to working aboard an Alphazon space-station.
+
+
+### Perk: Technically a star
+- Cost: 6
+
+Celestials with this perk are specifically attuned to our own star, Sol. Trading the night for the day, Celestials with this perk now benefit from the light of our own sun, sunlight counting for all their abilities and mana generation, but in exchange they no longer benefit from the light of any other star. For purposes of mana generation, they charge their mana when in direct sunlight, and only receive a Low charge when it's overcast.
+
+
+## Race: Marid
+- Elements: Shadows, Wind
+- Mana capacity: Medium
+- Mana rate: Low
+
+The result of crossbreeding a Genie and a Powerful Demon, Marids are beings who gain power by making deals and fulfilling agreements. Marids posses monochromatic skin anywhere from alabaster white to ebony black, as well as irises that glow the same colour as their aura, but their physical form can otherwise be based on any other species (without gaining any of their powers). A Marid can bind themselves and others through Oaths. Should a Marid ever break an Oath they will suffer from a crippling headache, and be unable to generate mana or use magic for a week. A Marid may create vassals through these Oaths: a vassal is a servant who is compelled to serve and obey the Marid, and the Marid is in turn compelled to care for and protect their vassals. Only a fully willing being who understands what they are agreeing to may become a vassal. If any being breaks an Oath with a Marid they become a debtor, compelled to obey the Marid in the same way as a vassal, while benefiting from none of the protection a vassal enjoys.
+
+__Marids drawn Mana__ from Oaths. When a Marid is acting in accordance to an Oath they have made they receive a constant low charge of mana, and whenever they fulfill all terms of an Oath they get a burst of mana equivalent to 25% of their total mana-pool.  Should a Marid die their debtors and vassals will gain knowledge of a ritual requiring many runic patterns and chants, and will feel compelled to complete this ritual. Each individual who contributes to this ritual shortens the amount of time it will take, a single dedicated individual would take one year, two would require 6 months etc. Whichever vassal or debtor finished the final chant of the ritual will be freed from their bonds to the Marid.
+
+### Perk: Wishes and bargains
+- Cost: 12
+
+Drawing upon their ancestry, Marids with this perk gain the [???] affinity (meaning [???] types are double discounted and rounded down), as well as access to wish-casting.
+
+
+## Race: Abyssal
+- Elements: Shadows, Water
+- Mana capacity: High
+- Mana rate: Low
+
+Abyssals are the residents of the deep sea, and can take a bewildering variety of forms (though they are always based in some way on deep-sea predatory wildlife). These witches are adapted to the pressure and cold of the deep sea without the vulnerability to lower pressures and higher temperatures that would normally result in, and are also able to breath underwater. Abyssals do not age past reaching physical maturity, but will continue to grow over time. The most ancient Abyssals have truly colossal forms, rivalling the Leviathans. An Abyssal may, at will, temporarily shrink themselves down to human proportions in order to interact with human-sized society.
+
+__Abyssals draw Mana__ from The Hunt. When an Abyssal engages in predatory actions of some form (hunting, pursuing prey, luring prey, trapping) they receive a constant low charge. This increases to a High charge upon catching the object of their hunt (the more powerful the being they hunted was, the longer the High charge rate will remain). 
+
+### Perk: Light in the dark
+- Cost: 5
+
+Abyssals with this perk are capable of emitting a psychic lure that will draw their prey to them, being closer to their target and being more specific with who/what is their current prey will make this lure more effective (for example, luring “anything nearby that's edible” would have a moderate effect on non-sentient beings, whereas luring “John Smith who is guilty of gross violation of the masquerade and is currently holed-up in the next building over” would have a powerful hypnotic effect). As an Abyssal gets older, this lure will become more powerful.
