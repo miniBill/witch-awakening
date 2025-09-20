@@ -2,7 +2,8 @@
     "type": "application",
     "source-directories": [
         "src",
-        "generated"
+        "generated",
+        "vendored/mdgriffith/elm-ui/1.1.8/src"
     ],
     "elm-version": "0.19.1",
     "dependencies": {
@@ -16,9 +17,9 @@
             "elm/parser": "1.1.0",
             "elm/svg": "1.0.1",
             "elm/url": "1.0.0",
+            "elm/virtual-dom": "1.0.3",
             "elmcraft/core-extra": "2.0.0",
             "lydell/elm-app-url": "1.0.4",
-            "mdgriffith/elm-ui": "1.1.8",
             "mgold/elm-nonempty-list": "4.2.0",
             "rtfeldman/elm-hex": "1.0.0",
             "the-sett/elm-error-handling": "2.2.1"
@@ -26,8 +27,7 @@
         "indirect": {
             "elm/random": "1.0.0",
             "elm/regex": "1.0.0",
-            "elm/time": "1.0.0",
-            "elm/virtual-dom": "1.0.3"
+            "elm/time": "1.0.0"
         }
     },
     "test-dependencies": {
