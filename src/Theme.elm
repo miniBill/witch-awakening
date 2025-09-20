@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, text, width)
@@ -479,6 +479,12 @@ doubleColumn attrs ( leftLength, rightLength ) children =
 row : List (Attribute msg) -> List (Element msg) -> Element msg
 row attrs children =
     Element.row (spacing :: attrs) children
+
+
+centerWrap : Attribute msg
+centerWrap =
+    Html.Attributes.class "centerWrap"
+        |> Element.htmlAttribute
 
 
 wrappedRow : List (Attribute msg) -> List (Element msg) -> Element msg

@@ -106,3 +106,7 @@ a.link {
     position: absolute;
     z-index: 2;
 }
+
+.centerWrap > div.wrp {
+    justify-content: center !important;
+}

@@ -1,7 +1,7 @@
 module View.Magic exposing (magicBox, viewMagics)
 
 import Data.Magic as Magic exposing (Affinities(..))
-import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveRight, moveUp, px, rgb, rgba, width)
+import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveRight, moveUp, px, rgb, rgba, shrink, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -352,22 +352,26 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
 
 magicTitle : Display -> { a | name : Magic, hasRankZero : Bool, class : Maybe Class, affinities : Affinities } -> Element msg
 magicTitle display { name, hasRankZero, class, affinities } =
-    Theme.wrappedRow
-        [ Theme.morpheus
-        , Font.size 40
-        , centerX
-        ]
-        [ Theme.row [ centerX ]
+    let
+        common : List (Element msg)
+        common =
             [ case class of
                 Nothing ->
                     Element.none
 
                 Just c ->
                     Theme.image
-                        [ width <| px 32, centerY ]
+                        [ width <| px 32
+                        , centerY
+                        ]
                         (Theme.classToBadge c)
             , if hasRankZero then
-                el [ Font.size 48, moveUp 8, centerY ] <|
+                el
+                    [ Font.size 48
+                    , moveUp 8
+                    , centerY
+                    ]
+                <|
                     Theme.gradientText 1 Gradients.yellowGradient "★"
 
               else
@@ -376,42 +380,66 @@ magicTitle display { name, hasRankZero, class, affinities } =
                 |> Theme.gradientText 4 Gradients.yellowGradient
                 |> el []
             ]
-        , if display == DisplayFull then
-            Theme.row
-                [ moveRight 8
-                , moveDown 4
-                , centerY
-                , centerX
-                ]
-                (viewAffinities affinities)
 
-          else
-            Element.none
+        affinitiesViews : List (Element msg)
+        affinitiesViews =
+            if display == DisplayFull then
+                [ viewAffinities affinities ]
+
+            else
+                []
+    in
+    Theme.wrappedRow
+        [ Theme.morpheus
+        , Font.size 40
+        , Font.center
+        , width fill
+        , Theme.centerWrap
         ]
+        (common ++ affinitiesViews)
 
 
-viewAffinities : Affinities -> List (Element msg)
+viewAffinities : Affinities -> Element msg
 viewAffinities affinities =
     case affinities of
         Regular afs ->
-            List.map Theme.viewAffinity afs
+            afs
+                |> List.map
+                    (\aff ->
+                        el
+                            [ moveDown 4
+                            ]
+                            (Theme.viewAffinity aff)
+                    )
+                |> Theme.row [ Theme.centerWrap ]
 
         Alternative alternatives ->
             alternatives
                 |> List.map
                     (\afs ->
                         afs
-                            |> List.map Theme.viewAffinity
+                            |> List.map
+                                (\aff ->
+                                    el [ moveDown 4 ]
+                                        (Theme.viewAffinity aff)
+                                )
                             |> List.intersperse
                                 (Theme.gradientText 2 Gradients.yellowGradient " + "
-                                    |> el [ Font.size 24, moveUp 8 ]
+                                    |> el
+                                        [ Font.size 24
+                                        , moveUp 4
+                                        ]
                                 )
+                            |> Theme.row []
                     )
                 |> List.intersperse
-                    [ Theme.gradientText 2 Gradients.yellowGradient " OR "
-                        |> el [ Font.size 24 ]
-                    ]
-                |> List.concat
+                    (Theme.gradientText 2 Gradients.yellowGradient " OR "
+                        |> el
+                            [ Font.size 24
+                            , moveDown 4
+                            ]
+                    )
+                |> Theme.row [ Theme.centerWrap ]
 
 
 viewRank :
