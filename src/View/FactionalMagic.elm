@@ -1,5 +1,6 @@
 module View.FactionalMagic exposing (viewFactionalMagics)
 
+import Data.Magic as Magic
 import Element exposing (Element, centerX, fill, width)
 import Generated.Magic
 import Set exposing (Set)
@@ -12,23 +13,32 @@ import View.Magic as Magic
 viewFactionalMagics : Set String -> Display -> List RankedMagic -> Element Choice
 viewFactionalMagics hideDLC display selected =
     let
-        boxes : Element ( RankedMagic, Bool )
-        boxes =
+        filtered : List Magic.Details
+        filtered =
             Generated.Magic.all
                 |> View.filterDLC hideDLC
                 |> List.filter (\{ faction } -> faction /= Nothing)
-                |> List.indexedMap (Magic.magicBox display True selected)
-                |> Theme.column []
     in
-    View.collapsible []
-        display
-        DisplayFactionalMagic
-        ChoiceMagic
-        "# Factional Magic"
-        [ Theme.blocks [ centerX, width <| Element.maximum 800 fill ] intro
-        , boxes
-        ]
-        [ boxes ]
+    if List.isEmpty filtered then
+        Element.none
+
+    else
+        let
+            boxes : Element ( RankedMagic, Bool )
+            boxes =
+                filtered
+                    |> List.indexedMap (Magic.magicBox display True selected)
+                    |> Theme.column []
+        in
+        View.collapsible []
+            display
+            DisplayFactionalMagic
+            ChoiceMagic
+            "# Factional Magic"
+            [ Theme.blocks [ centerX, width <| Element.maximum 800 fill ] intro
+            , boxes
+            ]
+            [ boxes ]
 
 
 intro : String
