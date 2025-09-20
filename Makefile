@@ -49,5 +49,5 @@ test: generated/Images.elm
 	bunx elm-test-rs --watch --compiler $(which lamdera)
 
 .PHONY: deploy
-deploy:
-	bunx netlify deploy --prod
+deploy: build
+	rsync -avi out/ witch-awakening.taglialegne.it:/var/www/witch-awakening.taglialegne.it
