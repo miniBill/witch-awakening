@@ -11,7 +11,7 @@ publish = "out"
 #  status = 200
 
 [[redirects]]
-from = "https://witch-awakening.netlify.app/*"
-to = "https://witch-awakening.taglialegne.it/:splat"
+from = "https://witch-awakening.netlify.app"
+to = "https://witch-awakening.taglialegne.it"
 status = 301
 force = true
