@@ -47,10 +47,10 @@ all types dlcRaces =
                     (\( _, race ) ->
                         case race.elements of
                             [ _, _ ] ->
-                                Elm.val (String.Extra.decapitalize race.name)
+                                Elm.val (String.Extra.decapitalize (yassify race.name))
 
                             _ ->
-                                Elm.apply (Elm.val (String.Extra.decapitalize race.name)) [ races ]
+                                Elm.apply (Elm.val (String.Extra.decapitalize (yassify race.name))) [ races ]
                     )
                 |> Elm.list
                 |> Gen.List.call_.sortBy
@@ -83,7 +83,7 @@ raceToDeclaration types dlcName race =
     case race.elements of
         [ _, _ ] ->
             Gen.Data.Race.make_.details
-                { name = types.valueFrom race.name
+                { name = types.valueFrom (yassify race.name)
                 , content = Elm.string race.description
                 , tank = types.valueFrom race.manaCapacity
                 , affinities = Elm.list (List.map types.valueFrom race.elements)
@@ -100,7 +100,7 @@ raceToDeclaration types dlcName race =
                             \r ->
                                 Elm.Case.custom r
                                     types.race.annotation
-                                    [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff" ])
+                                    [ Elm.Case.branch (types.race.argWith (yassify race.name) [ Elm.Arg.var "aff" ])
                                         (\affs ->
                                             Elm.maybe (List.head affs)
                                         )
@@ -108,7 +108,7 @@ raceToDeclaration types dlcName race =
                                     ]
                         )
                         (Elm.record
-                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.valueFrom race.name) [ aff ] )
+                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.valueFrom (yassify race.name)) [ aff ] )
                             , ( "content", Elm.string race.description )
                             , ( "tank", types.valueFrom race.manaCapacity )
                             , ( "affinities", Elm.list (List.map types.valueFrom race.elements) )
@@ -129,7 +129,7 @@ raceToDeclaration types dlcName race =
                             \r ->
                                 Elm.Case.custom r
                                     types.race.annotation
-                                    [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff1", Elm.Arg.var "aff2" ])
+                                    [ Elm.Case.branch (types.race.argWith (yassify race.name) [ Elm.Arg.var "aff1", Elm.Arg.var "aff2" ])
                                         (\affs ->
                                             case affs of
                                                 [ aff1, aff2 ] ->
@@ -142,7 +142,7 @@ raceToDeclaration types dlcName race =
                                     ]
                         )
                         (Elm.record
-                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.valueFrom race.name) [ aff ] )
+                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.valueFrom (yassify race.name)) [ aff ] )
                             , ( "content", Elm.string race.description )
                             , ( "tank", types.valueFrom race.manaCapacity )
                             , ( "affinities", Elm.list (List.map types.valueFrom race.elements) )
@@ -158,6 +158,6 @@ raceToDeclaration types dlcName race =
         _ ->
             Err
                 [ { title = "Error parsing races file"
-                  , description = "Unexpected elements list, expected one or two"
+                  , description = "Unexpected elements list, expected at most two"
                   }
                 ]

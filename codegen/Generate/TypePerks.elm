@@ -36,7 +36,7 @@ all dlcRaces =
                     Nothing
 
                 else
-                    Just (Elm.val (String.Extra.decapitalize race.name))
+                    Just (Elm.val (String.Extra.decapitalize (yassify race.name)))
             )
         |> Elm.list
         |> Gen.List.call_.sortBy
@@ -61,13 +61,13 @@ dlcToTypePerks types races =
                             { race =
                                 case race.elements of
                                     [] ->
-                                        Elm.apply (types.valueFrom race.name) [ types.valueFrom "All", types.valueFrom "All" ]
+                                        Elm.apply (types.valueFrom (yassify race.name)) [ types.valueFrom "All", types.valueFrom "All" ]
 
                                     [ _ ] ->
-                                        Elm.apply (types.valueFrom race.name) [ types.valueFrom "All" ]
+                                        Elm.apply (types.valueFrom (yassify race.name)) [ types.valueFrom "All" ]
 
                                     _ ->
-                                        types.valueFrom race.name
+                                        types.valueFrom (yassify race.name)
                             , content = Elm.string perk.description
                             , cost = Elm.int perk.cost
                             , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
