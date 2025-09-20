@@ -14,6 +14,7 @@ type Msg
     | ScrollTo String
     | CompactAll
     | ExpandAll
+    | ShowDLC String Bool
     | Nop
 
 

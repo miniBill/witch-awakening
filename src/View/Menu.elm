@@ -22,6 +22,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed
+import Generated.Attribution
 import Generated.Types as Types exposing (Affinity)
 import List.Extra
 import List.Nonempty
@@ -239,6 +240,98 @@ viewCalculations model power warnings affinities =
         section : List (Attribute msg) -> String -> ( String, Element msg )
         section attrs content =
             ( content, el (Font.bold :: attrs) <| text content )
+
+        children : List ( String, Element Msg )
+        children =
+            [ ( "Header"
+              , paragraph
+                    [ Font.bold
+                    , Font.center
+                    , Font.size 24
+                    ]
+                    [ text "🐱culations" ]
+              )
+            , section [] "Build kind"
+            , ( "Switch", capBuildSwitch model )
+            , keyedRow "Class" model.expandedMenuSections (Data.Costs.Class.value model) <| Just "True Form - Class"
+            , keyedRow "Race" model.expandedMenuSections (Data.Costs.Race.value model) <| Just "True Form - Race"
+            , keyedRow "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
+            , keyedRow "Complications" model.expandedMenuSections (Data.Costs.Complications.value model) Nothing
+            , ( "Cap Slider", capSlider model )
+            , keyedRow "Type perks" model.expandedMenuSections (Data.Costs.TypePerks.value model) Nothing
+            , keyedRow "Magic" model.expandedMenuSections (Data.Costs.Magic.value { ignoreSorceressBonus = False } model) <| Just "The Magic"
+            , magicPyramidRow model
+            , keyedRow "Perks" model.expandedMenuSections (Data.Costs.Perks.value model) Nothing
+            , keyedRow "Faction" model.expandedMenuSections (Data.Costs.Factions.value model) <| Just "Factions"
+            , keyedRow "Companions" model.expandedMenuSections (Data.Costs.Companions.value model) Nothing
+            , keyedRow "Quests" model.expandedMenuSections (Data.Costs.Quests.value model) Nothing
+            , keyedRow "Relics" model.expandedMenuSections (Data.Costs.Relics.value model) Nothing
+            , ( "RelicSlider", relicSlider model )
+            , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
+            , resultRow
+            , if List.isEmpty warnings then
+                ( "Warnings", Element.none )
+
+              else
+                section [ alignBottom ] "Warnings"
+            , ( "WarningsColumn"
+              , if List.isEmpty warnings then
+                    Element.none
+
+                else
+                    Theme.column []
+                        (List.map
+                            (\warning ->
+                                paragraph
+                                    [ Background.color <| rgb 0.9 0.9 0.5
+                                    , Theme.padding
+                                    , Theme.rounded
+                                    ]
+                                    [ text warning ]
+                            )
+                            warnings
+                        )
+              )
+            , if List.isEmpty affinities then
+                ( "Affinities", Element.none )
+
+              else
+                section [ alignBottom ] "Affinities"
+            , ( "AffinitiesColumn"
+              , if List.isEmpty affinities then
+                    Element.none
+
+                else
+                    Theme.wrappedRow [] <|
+                        List.map Theme.viewAffinity affinities
+              )
+            , keyedRow "Power cap" model.expandedMenuSections (Data.Costs.Complications.powerCap model) <| Just "Game Mode"
+            , button
+                { onPress = CompactAll
+                , label = "Compact all"
+                }
+            , button
+                { onPress = ExpandAll
+                , label = "Expand all"
+                }
+            , section [ alignBottom ] "View DLCs"
+            , ( "DLC"
+              , ({ name = "Core", author = "OutrageousBears", link = Nothing }
+                    :: { name = "Loose Assets", author = "OutrageousBears", link = Nothing }
+                    :: Generated.Attribution.all
+                )
+                    |> List.map
+                        (\{ name } ->
+                            Input.checkbox []
+                                { onChange = ShowDLC name
+                                , icon = Input.defaultCheckbox
+                                , label = Input.labelRight [] (text name)
+                                , checked = not (Set.member name model.hideDLCs)
+                                }
+                        )
+                    |> Theme.column []
+              )
+            ]
     in
     Element.Keyed.column
         [ Theme.spacing
@@ -249,78 +342,7 @@ viewCalculations model power warnings affinities =
         , Theme.rounded
         , width <| Element.maximum 200 shrink
         ]
-        [ ( "Header"
-          , paragraph
-                [ Font.bold
-                , Font.center
-                , Font.size 24
-                ]
-                [ text "🐱culations" ]
-          )
-        , section [] "Build kind"
-        , ( "Switch", capBuildSwitch model )
-        , keyedRow "Class" model.expandedMenuSections (Data.Costs.Class.value model) <| Just "True Form - Class"
-        , keyedRow "Race" model.expandedMenuSections (Data.Costs.Race.value model) <| Just "True Form - Race"
-        , keyedRow "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
-        , keyedRow "Complications" model.expandedMenuSections (Data.Costs.Complications.value model) Nothing
-        , ( "Cap Slider", capSlider model )
-        , keyedRow "Type perks" model.expandedMenuSections (Data.Costs.TypePerks.value model) Nothing
-        , keyedRow "Magic" model.expandedMenuSections (Data.Costs.Magic.value { ignoreSorceressBonus = False } model) <| Just "The Magic"
-        , magicPyramidRow model
-        , keyedRow "Perks" model.expandedMenuSections (Data.Costs.Perks.value model) Nothing
-        , keyedRow "Faction" model.expandedMenuSections (Data.Costs.Factions.value model) <| Just "Factions"
-        , keyedRow "Companions" model.expandedMenuSections (Data.Costs.Companions.value model) Nothing
-        , keyedRow "Quests" model.expandedMenuSections (Data.Costs.Quests.value model) Nothing
-        , keyedRow "Relics" model.expandedMenuSections (Data.Costs.Relics.value model) Nothing
-        , ( "RelicSlider", relicSlider model )
-        , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
-        , resultRow
-        , if List.isEmpty warnings then
-            ( "Warnings", Element.none )
-
-          else
-            section [ alignBottom ] "Warnings"
-        , ( "WarningsColumn"
-          , if List.isEmpty warnings then
-                Element.none
-
-            else
-                Theme.column []
-                    (List.map
-                        (\warning ->
-                            paragraph
-                                [ Background.color <| rgb 0.9 0.9 0.5
-                                , Theme.padding
-                                , Theme.rounded
-                                ]
-                                [ text warning ]
-                        )
-                        warnings
-                    )
-          )
-        , if List.isEmpty affinities then
-            ( "Affinities", Element.none )
-
-          else
-            section [ alignBottom ] "Affinities"
-        , ( "AffinitiesColumn"
-          , if List.isEmpty affinities then
-                Element.none
-
-            else
-                Theme.wrappedRow [] <|
-                    List.map Theme.viewAffinity affinities
-          )
-        , keyedRow "Power cap" model.expandedMenuSections (Data.Costs.Complications.powerCap model) <| Just "Game Mode"
-        , button
-            { onPress = CompactAll
-            , label = "Compact all"
-            }
-        , button
-            { onPress = ExpandAll
-            , label = "Expand all"
-            }
-        ]
+        children
 
 
 magicPyramidRow : Model key -> ( String, Element Msg )

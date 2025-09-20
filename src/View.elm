@@ -3,6 +3,7 @@ module View exposing (collapsible, costButtons, filterDLC)
 import Element exposing (Attribute, Element, centerX, centerY, el, fill, px, spacing, text, width)
 import Element.Font as Font
 import Gradients
+import List.Extra
 import Set exposing (Set)
 import Theme
 import Types exposing (Display(..))
@@ -99,13 +100,13 @@ costButton color selected item label =
 
 filterDLC : Set String -> List { a | dlc : Maybe String } -> List { a | dlc : Maybe String }
 filterDLC hideDLC list =
-    List.filter
+    List.Extra.removeWhen
         (\item ->
             case item.dlc of
                 Just dlc ->
-                    not (Set.member dlc hideDLC)
+                    Set.member dlc hideDLC
 
                 Nothing ->
-                    True
+                    Set.member "Core" hideDLC
         )
         list

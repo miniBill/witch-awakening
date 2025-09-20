@@ -147,6 +147,13 @@ update msg model =
             , Cmd.none
             )
 
+        ShowDLC name show ->
+            if show then
+                ( { model | hideDLCs = Set.remove name model.hideDLCs }, Cmd.none )
+
+            else
+                ( { model | hideDLCs = Set.insert name model.hideDLCs }, Cmd.none )
+
         Nop ->
             ( model, Cmd.none )
 
