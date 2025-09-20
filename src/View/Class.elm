@@ -21,24 +21,28 @@ viewClass hideDLC display class =
                 |> View.filterDLC hideDLC
                 |> List.filterMap (classBox display class)
     in
-    View.collapsible []
-        display
-        DisplayClass
-        ChoiceClass
-        "# True Form - Class"
-        [ Theme.blocks [] intro
-        , classBoxes
-            |> Theme.wrappedRow
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
-        [ classBoxes
-            |> Theme.column
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
+    if List.isEmpty classBoxes then
+        Element.none
+
+    else
+        View.collapsible []
+            display
+            DisplayClass
+            ChoiceClass
+            "# True Form - Class"
+            [ Theme.blocks [] intro
+            , classBoxes
+                |> Theme.wrappedRow
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
+            [ classBoxes
+                |> Theme.column
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
 
 
 intro : String
