@@ -38,7 +38,7 @@ viewComplications hideDLC display complications =
             isWorldShift : Complication.Details -> Bool
             isWorldShift complication =
                 case complication.category of
-                    Just WorldShift ->
+                    Just ComplicationCategoryWorldShift ->
                         True
 
                     Nothing ->
@@ -176,7 +176,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                     viewSlot (Types.gainToSlot g)
 
                 _ ->
-                    viewSlot White
+                    viewSlot SlotWhite
             , case category of
                 Just c ->
                     Element.column

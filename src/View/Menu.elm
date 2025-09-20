@@ -23,7 +23,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed
 import Generated.Attribution
-import Generated.Types as Types exposing (Affinity)
+import Generated.Types as Types exposing (Affinity(..), GameMode(..))
 import List.Extra
 import List.Nonempty
 import Set exposing (Set)
@@ -50,7 +50,7 @@ viewMenu model =
         affinities : List Affinity
         affinities =
             Affinity.fromModel model
-                |> List.Extra.remove Types.All
+                |> List.Extra.remove AffinityAll
 
         warnIf : Bool -> a -> List a -> List a
         warnIf b msg list =
@@ -592,10 +592,10 @@ capSlider model =
                 , thumb = Nothing
                 }
 
-        Just Types.EarlyBird ->
+        Just GameModeEarlyBird ->
             Element.none
 
-        Just Types.StoryArc ->
+        Just GameModeStoryArc ->
             row
                 label
                 model.expandedMenuSections
@@ -604,10 +604,10 @@ capSlider model =
                 )
                 (Just "Game Mode")
 
-        Just Types.SkillTree ->
+        Just GameModeSkillTree ->
             Element.none
 
-        Just Types.Constellation ->
+        Just GameModeConstellation ->
             Element.none
 
 

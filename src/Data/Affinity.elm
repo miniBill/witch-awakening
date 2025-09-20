@@ -36,12 +36,12 @@ fromModel { races, mainRace, cosmicPearl, typePerks } =
 
         fromTypePerk : List Affinity
         fromTypePerk =
-            [ ( Nymph, Mind )
-            , ( Empusa, Wind )
-            , ( Doll, Mind )
-            , ( Firebird, Life )
-            , ( Mummy, Water )
-            , ( Nyctimene, Life )
+            [ ( RaceNymph, AffinityMind )
+            , ( RaceEmpusa, AffinityWind )
+            , ( RaceDoll, AffinityMind )
+            , ( RaceFirebird, AffinityLife )
+            , ( RaceMummy, AffinityWater )
+            , ( RaceNyctimene, AffinityLife )
             ]
                 |> List.filterMap
                     (\( type_, affinity ) ->
@@ -60,7 +60,7 @@ fromModel { races, mainRace, cosmicPearl, typePerks } =
                 cosmicPearl.change
     in
     (afterChange ++ cosmicPearl.add ++ fromTypePerk)
-        |> (::) All
+        |> (::) AffinityAll
         |> List.Extra.unique
 
 

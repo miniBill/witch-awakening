@@ -32,7 +32,7 @@ all types dlcCompanions =
         |> List.map
             (\( ( _, { faction } ) as head, tail ) ->
                 Elm.tuple
-                    (Elm.maybe (Maybe.map types.valueFrom faction))
+                    (Elm.maybe (Maybe.map types.faction.value faction))
                     ((head :: tail)
                         |> List.map
                             (\( _, companion ) ->
@@ -105,7 +105,7 @@ dlcToCompanions types companions =
                             Gen.Data.Companion.make_.classSpecial
 
                         Just c ->
-                            Gen.Data.Companion.make_.classOne (types.valueFrom c)
+                            Gen.Data.Companion.make_.classOne (types.class.value c)
 
                         Nothing ->
                             Gen.Data.Companion.make_.classNone
@@ -125,7 +125,7 @@ dlcToCompanions types companions =
                                 )
             in
             Gen.Data.Companion.make_.details
-                { name = types.valueFrom companion.name
+                { name = types.companion.value companion.name
                 , class = class
                 , races =
                     Elm.list
@@ -134,16 +134,16 @@ dlcToCompanions types companions =
                                 case
                                     race
                                         |> String.split "-"
-                                        |> List.map types.valueFrom
                                 of
                                     [ x ] ->
-                                        x
+                                        types.race.value x
 
                                     h :: t ->
-                                        Elm.apply h t
+                                        Elm.apply (types.race.value h) (List.map types.affinity.value t)
 
                                     [] ->
-                                        types.valueFrom "Empty list?"
+                                        -- Impossible case
+                                        types.race.value "Empty list?"
                             )
                             companion.races
                         )

@@ -58,9 +58,9 @@ dlcToPerks types perks =
     List.map
         (\( dlcName, perk ) ->
             Gen.Data.Perk.make_.details
-                { name = types.valueFrom perk.name
-                , class = types.valueFrom perk.class
-                , affinity = types.valueFrom perk.element
+                { name = types.perk.value perk.name
+                , class = types.class.value perk.class
+                , affinity = types.affinity.value perk.element
                 , isMeta = Elm.bool perk.isMeta
                 , content =
                     case perk.content of

@@ -9,7 +9,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Quest
-import Generated.Types as Types exposing (Quest, Slot(..))
+import Generated.Types as Types exposing (Quest(..), Slot(..))
 import Gradients
 import Html.Attributes
 import Images
@@ -132,14 +132,14 @@ questBox display selected number quest =
                                     , moveRight 16
                                     , moveUp 92
                                     ]
-                    , [ if quest.name == Types.Dungeoneering then
+                    , [ if quest.name == QuestDungeoneering then
                             "Any"
                                 |> Theme.gradientText 4 Gradients.yellowGradient
                                 |> el [ alignBottom ]
 
                         else
                             Element.none
-                      , if quest.name == Types.Dungeoneering then
+                      , if quest.name == QuestDungeoneering then
                             "/"
                                 |> Theme.gradientText 4 Gradients.yellowGradient
                                 |> el
@@ -153,13 +153,13 @@ questBox display selected number quest =
                             |> Types.slotToString
                             |> Theme.gradientText 4
                                 (case quest.slot of
-                                    Epic ->
+                                    SlotEpic ->
                                         Gradients.epicGradient
 
-                                    Heroic ->
+                                    SlotHeroic ->
                                         Gradients.heroicGradient
 
-                                    Noble ->
+                                    SlotNoble ->
                                         Gradients.nobleGradient
 
                                     _ ->
@@ -428,19 +428,19 @@ statColumn ranking =
 slotToColor : Slot -> Int
 slotToColor slot =
     case slot of
-        White ->
+        SlotWhite ->
             0x00FFFFFF
 
-        Folk ->
+        SlotFolk ->
             0xE5E5
 
-        Noble ->
+        SlotNoble ->
             0x007CC534
 
-        Heroic ->
+        SlotHeroic ->
             0x00C5AA3E
 
-        Epic ->
+        SlotEpic ->
             0x00FF60A3
 
 

@@ -16,7 +16,7 @@ all =
 
 storyArc : Details
 storyArc =
-    { name = StoryArc
+    { name = GameModeStoryArc
     , content =
         """
         Your Starting Power is reduced to 10 points, which cannot be increased with complications. Instead, your Power Cap is increased to [150], and Complications can increase your Power Cap by up to +60.
@@ -33,7 +33,7 @@ storyArc =
 
 earlyBird : Details
 earlyBird =
-    { name = EarlyBird
+    { name = GameModeEarlyBird
     , content =
         """
         Incompatible with _Story Arc_. Rather than start less and end more, you get it all over with from the get go.
@@ -47,7 +47,7 @@ earlyBird =
 
 skillTree : Details
 skillTree =
-    { name = SkillTree
+    { name = GameModeSkillTree
     , content =
         """
         You abandon your Power all together. You instead rely on SLOTS: _*Mode-Arc*_.
@@ -59,7 +59,7 @@ skillTree =
 
 constellation : Details
 constellation =
-    { name = Constellation
+    { name = GameModeConstellation
     , content =
         """
         You abandon your Power all together. You instead rely on SLOTS: _*Mode-Early*_.

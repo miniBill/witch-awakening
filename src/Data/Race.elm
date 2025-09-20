@@ -31,7 +31,7 @@ withVariantAffinity1 match details races =
         affinity : Affinity
         affinity =
             List.Extra.findMap match races
-                |> Maybe.withDefault All
+                |> Maybe.withDefault AffinityAll
     in
     { name = details.name affinity
     , tank = details.tank
@@ -58,7 +58,7 @@ withVariantAffinity2 match details races =
     let
         ( aff1, aff2 ) =
             List.Extra.findMap match races
-                |> Maybe.withDefault ( All, All )
+                |> Maybe.withDefault ( AffinityAll, AffinityAll )
     in
     { name = details.name aff1 aff2
     , tank = details.tank

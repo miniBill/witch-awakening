@@ -47,18 +47,18 @@ chargeSwap perks =
             List.Extra.findMap
                 (\{ name } ->
                     case name of
-                        ChargeSwap r ->
+                        PerkChargeSwap r ->
                             Just r
 
                         _ ->
                             Nothing
                 )
                 perks
-                |> Maybe.withDefault Neutral
+                |> Maybe.withDefault RaceNeutral
     in
-    { name = ChargeSwap race
-    , class = Warlock
-    , affinity = Soul
+    { name = PerkChargeSwap race
+    , class = ClassWarlock
+    , affinity = AffinitySoul
     , isMeta = False
     , dlc = Nothing
     , content =

@@ -170,7 +170,7 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                     viewSlot (Types.gainToSlot g)
 
                 _ ->
-                    viewSlot White
+                    viewSlot SlotWhite
             , Types.relicToString name
                 |> String.Extra.softBreak 16
                 |> List.map (gradientText 4 Gradients.yellowGradient)
@@ -351,7 +351,7 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                     pearl.add
 
                  else
-                    pearl.add ++ [ All ]
+                    pearl.add ++ [ AffinityAll ]
                 )
     in
     [ Theme.blocks [ height fill ] block

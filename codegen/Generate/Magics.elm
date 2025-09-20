@@ -47,9 +47,9 @@ dlcToMagics types magics =
                         |> Maybe.withDefault 5
             in
             Gen.Data.Magic.make_.details
-                { name = types.valueFrom magic.name
-                , class = Elm.maybe (Maybe.map types.valueFrom magic.class)
-                , faction = Elm.maybe (Maybe.map types.valueFrom magic.faction)
+                { name = types.magic.value magic.name
+                , class = Elm.maybe (Maybe.map types.class.value magic.class)
+                , faction = Elm.maybe (Maybe.map types.faction.value magic.faction)
                 , hasRankZero = Elm.bool magic.hasRankZero
                 , isElementalism = Elm.bool magic.isElementalism
                 , affinities = affinitiesToExpression types magic.elements
@@ -76,7 +76,7 @@ affinitiesToExpression types affinity =
     case affinity of
         Parsers.Regular alternatives ->
             alternatives
-                |> List.map types.valueFrom
+                |> List.map types.affinity.value
                 |> Elm.list
                 |> Gen.Data.Magic.make_.regular
 
@@ -85,7 +85,7 @@ affinitiesToExpression types affinity =
                 |> List.map
                     (\alternative ->
                         alternative
-                            |> List.map types.valueFrom
+                            |> List.map types.affinity.value
                             |> Elm.list
                     )
                 |> Elm.list

@@ -11,13 +11,13 @@ value model =
     case model.class of
         Just class ->
             case class of
-                Warlock ->
+                ClassWarlock ->
                     Monad.succeed { zero | rewardPoints = 20 }
 
-                Academic ->
+                ClassAcademic ->
                     Monad.succeed zero
 
-                Sorceress ->
+                ClassSorceress ->
                     Monad.succeed zero
 
         Nothing ->

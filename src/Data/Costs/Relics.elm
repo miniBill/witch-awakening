@@ -39,7 +39,7 @@ relicCost class pearl details =
 
                     multiplier : Int
                     multiplier =
-                        if details.name == CosmicPearl then
+                        if details.name == RelicCosmicPearl then
                             max 1 <| List.length pearl.add + List.length pearl.change
 
                         else

@@ -8,7 +8,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Affinity
 import Generated.Race
-import Generated.Types as Types exposing (Affinity, Race(..), Size)
+import Generated.Types as Types exposing (Affinity(..), Race(..), Size)
 import Gradients
 import Images exposing (Image)
 import List.Extra
@@ -98,13 +98,13 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                 :: affinityPicker selected name
         , onPress =
             case ( name, isSelected ) of
-                ( Dravir _, False ) ->
+                ( RaceDravir _, False ) ->
                     Nothing
 
-                ( Genie _, False ) ->
+                ( RaceGenie _, False ) ->
                     Nothing
 
-                ( Gemini _, False ) ->
+                ( RaceGemini _, False ) ->
                     Nothing
 
                 _ ->
@@ -148,7 +148,7 @@ affinityPicker selected race =
             ]
     in
     case race of
-        Amalgam currentAffinity1 currentAffinity2 ->
+        RaceAmalgam currentAffinity1 currentAffinity2 ->
             let
                 otherRaces : List Race
                 otherRaces =
@@ -156,7 +156,7 @@ affinityPicker selected race =
                         |> List.Extra.removeWhen
                             (\r ->
                                 case r of
-                                    Amalgam _ _ ->
+                                    RaceAmalgam _ _ ->
                                         True
 
                                     _ ->
@@ -167,43 +167,43 @@ affinityPicker selected race =
                 firstRaceAffinities =
                     List.head otherRaces
                         |> Maybe.map Affinity.affinitiesForRace
-                        |> Maybe.withDefault [ Types.All ]
+                        |> Maybe.withDefault [ AffinityAll ]
 
                 secondRaceAffinities : List Affinity
                 secondRaceAffinities =
                     List.head (List.drop 1 otherRaces)
                         |> Maybe.map Affinity.affinitiesForRace
-                        |> Maybe.withDefault [ Types.All ]
+                        |> Maybe.withDefault [ AffinityAll ]
             in
             [ el [ Font.bold ] <| text "Pick an affinity from the first race:"
-            , innerPicker (\newAffinity -> Amalgam newAffinity currentAffinity2) currentAffinity1 firstRaceAffinities
+            , innerPicker (\newAffinity -> RaceAmalgam newAffinity currentAffinity2) currentAffinity1 firstRaceAffinities
             , el [ Font.bold ] <| text "Pick an affinity from the second race:"
-            , innerPicker (\newAffinity -> Amalgam currentAffinity1 newAffinity) currentAffinity2 secondRaceAffinities
+            , innerPicker (\newAffinity -> RaceAmalgam currentAffinity1 newAffinity) currentAffinity2 secondRaceAffinities
             ]
 
-        Dravir currentAffinity ->
-            picker Dravir
+        RaceDravir currentAffinity ->
+            picker RaceDravir
                 currentAffinity
-                [ Types.Fire
-                , Types.Wind
-                , Types.Water
-                , Types.Earth
-                , Types.Metal
-                , Types.Nature
+                [ AffinityFire
+                , AffinityWind
+                , AffinityWater
+                , AffinityEarth
+                , AffinityMetal
+                , AffinityNature
                 ]
 
-        Genie currentAffinity ->
+        RaceGenie currentAffinity ->
             Generated.Affinity.all
                 |> List.map .name
-                |> List.Extra.remove Types.All
-                |> picker Genie currentAffinity
+                |> List.Extra.remove AffinityAll
+                |> picker RaceGenie currentAffinity
 
-        Gemini currentAffinity ->
+        RaceGemini currentAffinity ->
             Generated.Affinity.all
                 |> List.map .name
-                |> List.Extra.remove Types.All
-                |> List.Extra.remove Types.Earth
-                |> picker Gemini currentAffinity
+                |> List.Extra.remove AffinityAll
+                |> List.Extra.remove AffinityEarth
+                |> picker RaceGemini currentAffinity
 
         _ ->
             []

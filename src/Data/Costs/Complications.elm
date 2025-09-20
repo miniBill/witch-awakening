@@ -45,20 +45,20 @@ powerCap model =
                 |> Utils.capWithWarning 30 normalCapWarning
                 |> Monad.map (Utils.sum { zero | power = 100 })
 
-        Just StoryArc ->
+        Just GameModeStoryArc ->
             complicationsRawValue model
                 |> Monad.andThen (Utils.capWithWarning 60 storyArcWarning)
                 |> Monad.map (Utils.sum { zero | power = 150 })
 
-        Just EarlyBird ->
+        Just GameModeEarlyBird ->
             complicationsRawValue model
                 |> Monad.andThen (Utils.capWithWarning 30 earlyBirdWarning)
                 |> Monad.map (Utils.sum { zero | power = 75 })
 
-        Just SkillTree ->
+        Just GameModeSkillTree ->
             Utils.slotUnsupported
 
-        Just Constellation ->
+        Just GameModeConstellation ->
             Utils.slotUnsupported
 
 
@@ -68,7 +68,7 @@ value model =
         |> Monad.andThen
             (\raw ->
                 case model.gameMode of
-                    Just StoryArc ->
+                    Just GameModeStoryArc ->
                         if model.capBuild then
                             raw
                                 |> Utils.capWithWarning 60 storyArcWarning
@@ -76,14 +76,14 @@ value model =
                         else
                             Monad.succeed zero
 
-                    Just EarlyBird ->
+                    Just GameModeEarlyBird ->
                         raw
                             |> Utils.capWithWarning 30 earlyBirdWarning
 
-                    Just SkillTree ->
+                    Just GameModeSkillTree ->
                         Utils.slotUnsupported
 
-                    Just Constellation ->
+                    Just GameModeConstellation ->
                         Utils.slotUnsupported
 
                     Nothing ->

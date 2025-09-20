@@ -6,7 +6,7 @@ import Data.Costs.Utils as Utils exposing (Points)
 import Data.Magic as Magic
 import Dict exposing (Dict)
 import Generated.Magic
-import Generated.Types as Types exposing (Affinity, Class(..), Faction, Magic(..), Race(..))
+import Generated.Types as Types exposing (Affinity, Class(..), Faction, Magic(..), Perk(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
@@ -58,7 +58,7 @@ value { ignoreSorceressBonus } model =
         free : Dict String String
         free =
             case ( model.class, ignoreSorceressBonus, model.capBuild ) of
-                ( Just Sorceress, False, _ ) ->
+                ( Just ClassSorceress, False, _ ) ->
                     case
                         pointsList
                             |> List.filter (\{ isElementalism, isOffAffinity } -> isElementalism && not isOffAffinity)
@@ -70,7 +70,7 @@ value { ignoreSorceressBonus } model =
                         Nothing ->
                             Dict.empty
 
-                ( Just Academic, _, True ) ->
+                ( Just ClassAcademic, _, True ) ->
                     pointsList
                         |> List.sortBy .points
                         |> List.take 2
@@ -82,7 +82,7 @@ value { ignoreSorceressBonus } model =
 
         jackOfAllWarning : Maybe String
         jackOfAllWarning =
-            if List.any (\p -> p.name == Types.JackOfAll) model.perks then
+            if List.any (\p -> p.name == PerkJackOfAll) model.perks then
                 case
                     List.filterMap
                         (\m ->
@@ -105,7 +105,7 @@ value { ignoreSorceressBonus } model =
 
         offAffinityWarning : Maybe String
         offAffinityWarning =
-            if model.class == Just Sorceress then
+            if model.class == Just ClassSorceress then
                 Nothing
 
             else
@@ -228,9 +228,9 @@ isInFaction :
     -> InFaction
 isInFaction { faction, typePerks } magicDetails =
     if
-        (List.member Spider typePerks && magicDetails.name == Arachnescence)
-            || (List.member Cyborg typePerks && magicDetails.name == Gadgetry)
-            || (List.member Cyborg typePerks && magicDetails.name == Integration)
+        (List.member RaceSpider typePerks && magicDetails.name == MagicArachnescence)
+            || (List.member RaceCyborg typePerks && magicDetails.name == MagicGadgetry)
+            || (List.member RaceCyborg typePerks && magicDetails.name == MagicIntegration)
     then
         InFactionPerk
 

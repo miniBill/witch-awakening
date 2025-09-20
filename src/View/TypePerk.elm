@@ -102,25 +102,25 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
         , imageHeight = 360
         , image =
             case race of
-                Jotun ->
+                RaceJotun ->
                     Images.typePerkJotun
 
-                Xeno ->
+                RaceXeno ->
                     Images.typePerkXeno
 
-                Spider ->
+                RaceSpider ->
                     Images.typePerkSpider
 
-                Pixie ->
+                RacePixie ->
                     Images.typePerkPixie
 
-                Fairy ->
+                RaceFairy ->
                     Images.typePerkFairy
 
-                Genie _ ->
+                RaceGenie _ ->
                     Images.typePerkGenie
 
-                Gemini _ ->
+                RaceGemini _ ->
                     Images.typePerkGemini
 
                 _ ->

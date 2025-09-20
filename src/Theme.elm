@@ -381,7 +381,7 @@ viewAffinityBadge affinity =
 
         perColor : List (Html.Attribute msg)
         perColor =
-            if affinity == All then
+            if affinity == AffinityAll then
                 let
                     rainbowGradient : String
                     rainbowGradient =
@@ -438,19 +438,19 @@ viewAffinityBadge affinity =
 slotToColor : Slot -> Int
 slotToColor slot =
     case slot of
-        Folk ->
+        SlotFolk ->
             colors.folk
 
-        Noble ->
+        SlotNoble ->
             colors.noble
 
-        Heroic ->
+        SlotHeroic ->
             colors.heroic
 
-        Epic ->
+        SlotEpic ->
             colors.epic
 
-        White ->
+        SlotWhite ->
             colors.white
 
 
@@ -776,27 +776,27 @@ button attrs =
 complicationCategoryToColor : ComplicationCategory -> Int
 complicationCategoryToColor category =
     case category of
-        WorldShift ->
+        ComplicationCategoryWorldShift ->
             colors.worldShift
 
 
 complicationCategoryToGradient : ComplicationCategory -> List ( Int, Int, Int )
 complicationCategoryToGradient category =
     case category of
-        WorldShift ->
+        ComplicationCategoryWorldShift ->
             Gradients.greenGradient
 
 
 classToBadge : Class -> Image
 classToBadge class =
     case class of
-        Academic ->
+        ClassAcademic ->
             Images.badgeAcademic
 
-        Sorceress ->
+        ClassSorceress ->
             Images.badgeSorceress
 
-        Warlock ->
+        ClassWarlock ->
             Images.badgeWarlock
 
 

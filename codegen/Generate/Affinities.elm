@@ -46,8 +46,8 @@ affinityToColor types dlcAffinities =
                 |> List.map
                     (\( _, affinityData ) ->
                         Elm.Case.branch
-                            (Elm.Arg.customType affinityData.name ())
-                            (\() -> Elm.hex affinityData.color)
+                            (types.affinity.argWith affinityData.name [])
+                            (\_ -> Elm.hex affinityData.color)
                     )
                 |> Elm.Case.custom affinity types.affinity.annotation
         )
@@ -58,7 +58,7 @@ dlcToAffinities types affinities =
     List.map
         (\( dlcName, affinity ) ->
             Gen.Data.Affinity.make_.details
-                { name = types.valueFrom affinity.name
+                { name = types.affinity.value affinity.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Elm.declaration (affinityToVarName affinity.name)

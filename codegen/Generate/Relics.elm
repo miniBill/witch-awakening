@@ -63,8 +63,8 @@ dlcToRelics types relics =
     List.map
         (\( dlcName, relic ) ->
             (details types).make
-                { name = types.valueFrom relic.name
-                , classes = Elm.list (List.map types.valueFrom relic.classes)
+                { name = types.relic.value relic.name
+                , classes = Elm.list (List.map types.class.value relic.classes)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , content =
                     case relic.content of

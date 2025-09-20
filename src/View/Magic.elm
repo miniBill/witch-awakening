@@ -235,7 +235,7 @@ costTable =
                 ]
                 (Html.td [ textAlign "center" ]
                     [ Theme.gradientTextHtml 1 Gradients.yellowGradient "Slot costs" ]
-                    :: List.map viewSlot [ White, Folk, Noble, Heroic, Epic ]
+                    :: List.map viewSlot [ SlotWhite, SlotFolk, SlotNoble, SlotHeroic, SlotEpic ]
                 )
 
         row : String -> List Int -> Html.Html msg

@@ -23,10 +23,18 @@ type alias Variant =
 type alias Enums =
     { affinity : Enum
     , class : Enum
+    , companion : Enum
+    , complication : Enum
+    , complicationCategory : Enum
     , faction : Enum
+    , gameMode : Enum
+    , magic : Enum
+    , perk : Enum
+    , quest : Enum
     , race : Enum
     , relic : Enum
-    , others : List Enum
+    , size : Enum
+    , slot : Enum
     }
 
 
@@ -40,28 +48,43 @@ enums parsedDLCs =
                 parsedDLCs
     in
     { affinity = buildEnum "Affinity" combinedDLC.affinities
-    , class = buildEnum "Class" combinedDLC.classes |> withImages
-    , faction = buildEnum "Faction" combinedDLC.factions
+    , class =
+        buildEnum "Class" combinedDLC.classes
+            |> withImages
+    , companion =
+        buildEnum "Companion" combinedDLC.companions
+            |> withImages
+            |> withIsSame
+    , complication =
+        buildEnum "Complication" combinedDLC.complications
+            |> withImages
+    , complicationCategory =
+        buildEnum "ComplicationCategory" combinedDLC.complicationCategories
+    , faction =
+        buildEnum "Faction" combinedDLC.factions
+    , gameMode =
+        buildEnum "GameMode" (buildVariants coreGameModes)
+            |> withImages
+    , magic =
+        buildEnum "Magic" combinedDLC.magics
+            |> withImages
+    , perk =
+        buildEnum "Perk" combinedDLC.perks
+            |> withImages
+    , quest =
+        buildEnum "Quest" combinedDLC.quests
+            |> withImages
     , race =
         buildEnum "Race" combinedDLC.races
             |> withImages
             |> withIsSame
-    , relic = buildEnum "Relic" combinedDLC.relics |> withImages
-    , others =
-        [ buildEnum "Perk" combinedDLC.perks |> withImages
-        , buildEnum "Companion" combinedDLC.companions
+    , relic =
+        buildEnum "Relic" combinedDLC.relics
             |> withImages
-            |> withIsSame
-        , buildEnum "Magic" combinedDLC.magics |> withImages
-        , buildEnum "Quest" combinedDLC.quests |> withImages
-        , buildEnum "Complication" combinedDLC.complications |> withImages
-        , buildEnum "ComplicationCategory" combinedDLC.complicationCategories
-
-        --
-        , buildEnum "Size" (buildVariants coreSizes)
-        , buildEnum "GameMode" (buildVariants coreGameModes) |> withImages
-        , buildEnum "Slot" (buildVariants coreSlots) |> withImages
-        ]
+    , size = buildEnum "Size" (buildVariants coreSizes)
+    , slot =
+        buildEnum "Slot" (buildVariants coreSlots)
+            |> withImages
     }
 
 

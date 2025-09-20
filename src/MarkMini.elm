@@ -164,21 +164,21 @@ mainParser =
                     |= Parser.oneOf
                         [ Parser.succeed ChoiceColor
                             |. Parser.symbol "choice"
-                        , Parser.succeed (ClassColor Academic)
+                        , Parser.succeed (ClassColor ClassAcademic)
                             |. Parser.symbol "academic"
-                        , Parser.succeed (ClassColor Sorceress)
+                        , Parser.succeed (ClassColor ClassSorceress)
                             |. Parser.symbol "sorceress"
-                        , Parser.succeed (ClassColor Warlock)
+                        , Parser.succeed (ClassColor ClassWarlock)
                             |. Parser.symbol "warlock"
-                        , Parser.succeed (SlotColor Folk)
+                        , Parser.succeed (SlotColor SlotFolk)
                             |. Parser.symbol "folk"
-                        , Parser.succeed (SlotColor Noble)
+                        , Parser.succeed (SlotColor SlotNoble)
                             |. Parser.symbol "noble"
-                        , Parser.succeed (SlotColor Heroic)
+                        , Parser.succeed (SlotColor SlotHeroic)
                             |. Parser.symbol "heroic"
-                        , Parser.succeed (SlotColor Epic)
+                        , Parser.succeed (SlotColor SlotEpic)
                             |. Parser.symbol "epic"
-                        , Parser.succeed (SlotColor White)
+                        , Parser.succeed (SlotColor SlotWhite)
                             |. Parser.symbol "white"
                         ]
                     |. Parser.symbol " "
@@ -206,11 +206,11 @@ mainParser =
 slotParser : Parser Slot
 slotParser =
     Parser.oneOf
-        [ Parser.succeed Folk |. Parser.symbol "folk"
-        , Parser.succeed Noble |. Parser.symbol "noble"
-        , Parser.succeed Heroic |. Parser.symbol "heroic"
-        , Parser.succeed Epic |. Parser.symbol "epic"
-        , Parser.succeed White |. Parser.symbol "white"
+        [ Parser.succeed SlotFolk |. Parser.symbol "folk"
+        , Parser.succeed SlotNoble |. Parser.symbol "noble"
+        , Parser.succeed SlotHeroic |. Parser.symbol "heroic"
+        , Parser.succeed SlotEpic |. Parser.symbol "epic"
+        , Parser.succeed SlotWhite |. Parser.symbol "white"
         ]
 
 
@@ -257,7 +257,7 @@ parseSquareBrackets str =
                     Power str
 
                 ( "All", _ ) ->
-                    Affinity Types.All
+                    Affinity Types.AffinityAll
 
                 ( "Jack-of-All", _ ) ->
                     JackOfAll

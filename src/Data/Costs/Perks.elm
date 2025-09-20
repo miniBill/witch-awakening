@@ -29,7 +29,7 @@ value model =
                 let
                     free : Maybe String
                     free =
-                        if List.any (\p -> p.name == JackOfAll) model.perks then
+                        if List.any (\p -> p.name == PerkJackOfAll) model.perks then
                             pointsList
                                 |> List.filter (\{ staticCost } -> staticCost)
                                 |> List.Extra.minimumBy .points
@@ -90,8 +90,8 @@ perkValue ({ class } as model) { name, cost } =
                     changelingDiff : Int
                     changelingDiff =
                         case name of
-                            ChargeSwap _ ->
-                                if List.member Changeling model.races then
+                            PerkChargeSwap _ ->
+                                if List.member RaceChangeling model.races then
                                     -3
 
                                 else
@@ -103,8 +103,8 @@ perkValue ({ class } as model) { name, cost } =
                     apexDiff : Int
                     apexDiff =
                         case name of
-                            Apex ->
-                                if List.any (\p -> p.name == Hybridize) model.perks then
+                            PerkApex ->
+                                if List.any (\p -> p.name == PerkHybridize) model.perks then
                                     3 * (List.length model.races - 1)
 
                                 else

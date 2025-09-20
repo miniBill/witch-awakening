@@ -181,7 +181,7 @@ fixupModel model =
                             else
                                 Nothing
         , cosmicPearl =
-            if List.any (\{ name } -> name == CosmicPearl) model.relics then
+            if List.any (\{ name } -> name == RelicCosmicPearl) model.relics then
                 model.cosmicPearl
 
             else
@@ -192,10 +192,10 @@ fixupModel model =
             let
                 removed : List { cost : Int, name : Perk }
                 removed =
-                    List.filter (\{ name } -> name /= Hybridize) model.perks
+                    List.filter (\{ name } -> name /= PerkHybridize) model.perks
             in
             if List.length model.races > 1 then
-                { name = Hybridize
+                { name = PerkHybridize
                 , cost = Data.Perk.hybridizeCost * (List.length model.races - 1)
                 }
                     :: removed

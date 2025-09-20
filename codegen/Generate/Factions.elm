@@ -51,7 +51,7 @@ dlcToFactions types factions =
     List.map
         (\( dlcName, faction ) ->
             Gen.Data.Faction.make_.details
-                { name = types.valueFrom (yassify faction.name)
+                { name = types.faction.value faction.name
                 , motto = Elm.string faction.motto
                 , description = Elm.string faction.description
                 , location = Elm.string faction.location

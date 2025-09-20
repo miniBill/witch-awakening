@@ -140,16 +140,16 @@ complicationKindToString kind =
 gainToSlot : Int -> Slot
 gainToSlot gain =
     if gain <= 4 then
-        Folk
+        SlotFolk
 
     else if gain <= 8 then
-        Noble
+        SlotNoble
 
     else if gain <= 12 then
-        Heroic
+        SlotHeroic
 
     else
-        Epic
+        SlotEpic
 
 
 nextDisplay : Display -> Display

@@ -18,7 +18,7 @@ value model =
             let
                 treasure : Bool
                 treasure =
-                    model.faction == Just ( TheCollegeOfArcadia, True )
+                    model.faction == Just ( FactionTheCollegeOfArcadia, True )
 
                 mostExpensiveFirst : List ( Maybe Faction, Int, Companion.Details )
                 mostExpensiveFirst =
@@ -126,7 +126,7 @@ value model =
                             possiblyFriendly =
                                 List.filterMap
                                     (\( f, cost, c ) ->
-                                        if f == Just TheOutsiders || f == Just AlphazonIndustries || f == Just TheCollegeOfArcadia then
+                                        if f == Just FactionTheOutsiders || f == Just FactionAlphazonIndustries || f == Just FactionTheCollegeOfArcadia then
                                             Nothing
 
                                         else

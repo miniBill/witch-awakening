@@ -51,34 +51,34 @@ intro =
 factionToCollectiveName : Maybe Faction -> String
 factionToCollectiveName faction =
     case faction of
-        Just TheCollegeOfArcadia ->
+        Just FactionTheCollegeOfArcadia ->
             "The Arcadians"
 
-        Just HawthorneAcademia ->
+        Just FactionHawthorneAcademia ->
             "Hawthorne"
 
-        Just TheWatchers ->
+        Just FactionTheWatchers ->
             "The Watchers"
 
-        Just TheHespatianCoven ->
+        Just FactionTheHespatianCoven ->
             "The Hespatians"
 
-        Just Lunabella ->
+        Just FactionLunabella ->
             "The Lunabellans"
 
-        Just AlfheimrAlliance ->
+        Just FactionAlfheimrAlliance ->
             "Alliance"
 
-        Just TheOutsiders ->
+        Just FactionTheOutsiders ->
             "Outsiders"
 
-        Just TheORC ->
+        Just FactionTheORC ->
             "The ORCs / Badges"
 
-        Just AlphazonIndustries ->
+        Just FactionAlphazonIndustries ->
             "The Alphazonians / Suits"
 
-        Just Independents ->
+        Just FactionIndependents ->
             "Independents / Other"
 
         Nothing ->

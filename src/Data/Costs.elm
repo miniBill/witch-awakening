@@ -61,7 +61,7 @@ totalCost model =
                         List.any
                             (\race ->
                                 case race of
-                                    Gemini _ ->
+                                    RaceGemini _ ->
                                         True
 
                                     _ ->
@@ -85,7 +85,7 @@ totalCost model =
                     |> succeed
                     |> warningIf result.rewardPoints "Not enough reward points! Try converting some power."
                     |> warningIf result.power
-                        (if model.gameMode == Just StoryArc && not model.capBuild then
+                        (if model.gameMode == Just GameModeStoryArc && not model.capBuild then
                             "Not enough power!"
 
                          else
@@ -117,20 +117,20 @@ startingPower model =
                     }
     in
     case model.gameMode of
-        Just StoryArc ->
+        Just GameModeStoryArc ->
             if model.capBuild then
                 withGameModeInfo "Story Arc (cap)" 150
 
             else
                 withGameModeInfo "Story Arc" 10
 
-        Just EarlyBird ->
+        Just GameModeEarlyBird ->
             withGameModeInfo "Early Bird" 75
 
-        Just SkillTree ->
+        Just GameModeSkillTree ->
             Utils.slotUnsupported
 
-        Just Constellation ->
+        Just GameModeConstellation ->
             Utils.slotUnsupported
 
         Nothing ->

@@ -61,13 +61,13 @@ dlcToTypePerks types races =
                             { race =
                                 case race.elements of
                                     [] ->
-                                        Elm.apply (types.valueFrom (yassify race.name)) [ types.valueFrom "All", types.valueFrom "All" ]
+                                        Elm.apply (types.race.value race.name) [ types.affinity.value "All", types.affinity.value "All" ]
 
                                     [ _ ] ->
-                                        Elm.apply (types.valueFrom (yassify race.name)) [ types.valueFrom "All" ]
+                                        Elm.apply (types.race.value race.name) [ types.affinity.value "All" ]
 
                                     _ ->
-                                        types.valueFrom (yassify race.name)
+                                        types.race.value race.name
                             , content = Elm.string perk.description
                             , cost = Elm.int perk.cost
                             , dlc = Elm.maybe (Maybe.map Elm.string dlcName)

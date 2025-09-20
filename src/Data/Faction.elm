@@ -21,34 +21,34 @@ type alias Details =
 toShortString : Faction -> String
 toShortString raw =
     case raw of
-        TheCollegeOfArcadia ->
+        FactionTheCollegeOfArcadia ->
             "Arcadia"
 
-        HawthorneAcademia ->
+        FactionHawthorneAcademia ->
             "Hawthorne"
 
-        TheWatchers ->
+        FactionTheWatchers ->
             "Watchers"
 
-        TheHespatianCoven ->
+        FactionTheHespatianCoven ->
             "Hespatia"
 
-        Lunabella ->
+        FactionLunabella ->
             "Lunabella"
 
-        AlfheimrAlliance ->
+        FactionAlfheimrAlliance ->
             "Alliance"
 
-        TheOutsiders ->
+        FactionTheOutsiders ->
             "Outsiders"
 
-        TheORC ->
+        FactionTheORC ->
             "ORC"
 
-        AlphazonIndustries ->
+        FactionAlphazonIndustries ->
             "Alphazon"
 
-        Independents ->
+        FactionIndependents ->
             "Independent"
 
 

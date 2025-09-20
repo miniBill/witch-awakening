@@ -26,7 +26,7 @@ value model =
                         questsDetails
                             |> (case model.faction of
                                     Nothing ->
-                                        List.Extra.removeWhen (\details -> details.faction == Just Independents)
+                                        List.Extra.removeWhen (\details -> details.faction == Just FactionIndependents)
 
                                     Just ( faction, _ ) ->
                                         List.Extra.removeWhen (\details -> details.faction == Just faction)

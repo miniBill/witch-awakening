@@ -38,19 +38,19 @@ dlcToQuests types quests =
     List.map
         (\( dlcName, quest ) ->
             Gen.Data.Quest.make_.details
-                { name = types.valueFrom quest.name
+                { name = types.quest.value quest.name
                 , evil =
                     Elm.value
                         { importFrom = [ "Data", "Quest" ]
                         , name = quest.evil
                         , annotation = Nothing
                         }
-                , slot = types.valueFrom quest.slot
+                , slot = types.slot.value quest.slot
                 , threat = Elm.maybe (Maybe.map Elm.int quest.threat)
                 , conflict = Elm.maybe (Maybe.map Elm.int quest.conflict)
                 , repeatable = Elm.bool quest.repeatable
                 , reward = Elm.int quest.reward
-                , faction = Elm.maybe (Maybe.map types.valueFrom quest.faction)
+                , faction = Elm.maybe (Maybe.map types.faction.value quest.faction)
                 , description = Elm.string quest.description
                 , sidebars = Elm.list (List.map Elm.string quest.sidebars)
                 , notes = Elm.list (List.map Elm.string quest.notes)

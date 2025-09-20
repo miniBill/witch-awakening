@@ -69,8 +69,8 @@ classToColor types dlcClasses =
                 |> List.map
                     (\( _, classData ) ->
                         Elm.Case.branch
-                            (Elm.Arg.customType classData.name ())
-                            (\() -> Elm.hex classData.color)
+                            (types.class.argWith classData.name [])
+                            (\_ -> Elm.hex classData.color)
                     )
                 |> Elm.Case.custom class types.class.annotation
         )
@@ -81,7 +81,7 @@ dlcToClasses types classes =
     List.map
         (\( dlcName, class ) ->
             (classDetails types).make
-                { name = types.valueFrom class.name
+                { name = types.class.value class.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , color = Elm.hex class.color
                 , content = Elm.string class.description

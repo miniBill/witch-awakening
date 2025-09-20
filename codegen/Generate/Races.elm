@@ -83,11 +83,11 @@ raceToDeclaration types dlcName race =
     case race.elements of
         [ _, _ ] ->
             Gen.Data.Race.make_.details
-                { name = types.valueFrom (yassify race.name)
+                { name = types.race.value race.name
                 , content = Elm.string race.description
-                , tank = types.valueFrom race.manaCapacity
-                , affinities = Elm.list (List.map types.valueFrom race.elements)
-                , charge = types.valueFrom race.manaRate
+                , tank = types.size.value race.manaCapacity
+                , affinities = Elm.list (List.map types.affinity.value race.elements)
+                , charge = types.size.value race.manaRate
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
                 |> Ok
@@ -108,11 +108,11 @@ raceToDeclaration types dlcName race =
                                     ]
                         )
                         (Elm.record
-                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.valueFrom (yassify race.name)) [ aff ] )
+                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.race.value race.name) [ aff ] )
                             , ( "content", Elm.string race.description )
-                            , ( "tank", types.valueFrom race.manaCapacity )
-                            , ( "affinities", Elm.list (List.map types.valueFrom race.elements) )
-                            , ( "charge", types.valueFrom race.manaRate )
+                            , ( "tank", types.size.value race.manaCapacity )
+                            , ( "affinities", Elm.list (List.map types.affinity.value race.elements) )
+                            , ( "charge", types.size.value race.manaRate )
                             , ( "dlc", Elm.maybe (Maybe.map Elm.string dlcName) )
                             ]
                         )
@@ -142,11 +142,11 @@ raceToDeclaration types dlcName race =
                                     ]
                         )
                         (Elm.record
-                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.valueFrom (yassify race.name)) [ aff ] )
+                            [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.race.value race.name) [ aff ] )
                             , ( "content", Elm.string race.description )
-                            , ( "tank", types.valueFrom race.manaCapacity )
-                            , ( "affinities", Elm.list (List.map types.valueFrom race.elements) )
-                            , ( "charge", types.valueFrom race.manaRate )
+                            , ( "tank", types.size.value race.manaCapacity )
+                            , ( "affinities", Elm.list (List.map types.affinity.value race.elements) )
+                            , ( "charge", types.size.value race.manaRate )
                             , ( "dlc", Elm.maybe (Maybe.map Elm.string dlcName) )
                             ]
                         )

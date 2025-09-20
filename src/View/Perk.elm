@@ -7,7 +7,7 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Perk
 import Generated.Race
-import Generated.Types as Types exposing (Perk(..), Race, Slot(..))
+import Generated.Types as Types exposing (Perk(..), Race(..), Slot(..))
 import Gradients
 import Images
 import List.Extra
@@ -252,7 +252,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                     viewSlot (Types.gainToSlot g)
 
                 _ ->
-                    viewSlot White
+                    viewSlot SlotWhite
             , nameString
                 |> String.Extra.softBreak 16
                 |> List.map (gradientText 4 Gradients.blueGradient)
@@ -271,7 +271,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
 
 perkToShortString : Perk -> String
 perkToShortString name =
-    if name == JackOfAll then
+    if name == PerkJackOfAll then
         Types.perkToString name
 
     else
@@ -294,7 +294,7 @@ viewContent mainRace races color selected { content, name } =
                 choicesView =
                     List.map (viewChoice color selected name) choices
             in
-            if name == Hybridize then
+            if name == PerkHybridize then
                 Theme.blocks [] before
                     :: choicesView
                     ++ racePicker "Pick your main race:" ChoiceMainRace color mainRace races
@@ -315,7 +315,7 @@ viewContent mainRace races color selected { content, name } =
                     List.Extra.findMap
                         (\perk ->
                             case perk.name of
-                                ChargeSwap r ->
+                                PerkChargeSwap r ->
                                     Just ( perk.cost, Just r )
 
                                 _ ->
@@ -339,7 +339,7 @@ viewContent mainRace races color selected { content, name } =
                         case newRace of
                             Just r ->
                                 ChoicePerk
-                                    ( { name = ChargeSwap r
+                                    ( { name = PerkChargeSwap r
                                       , cost = cost
                                       }
                                     , True
@@ -347,7 +347,7 @@ viewContent mainRace races color selected { content, name } =
 
                             Nothing ->
                                 ChoicePerk
-                                    ( { name = ChargeSwap <| Maybe.withDefault Types.Neutral swapRace
+                                    ( { name = PerkChargeSwap <| Maybe.withDefault RaceNeutral swapRace
                                       , cost = cost
                                       }
                                     , False

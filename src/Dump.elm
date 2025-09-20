@@ -19,7 +19,7 @@ import Generated.Perk
 import Generated.Race
 import Generated.Relic
 import Generated.TypePerk
-import Generated.Types exposing (Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, relicToString, sizeToString)
+import Generated.Types exposing (Affinity(..), Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, relicToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
@@ -589,7 +589,7 @@ affinitiesToString magicAffinities =
 
 affinityToString : Generated.Types.Affinity -> String
 affinityToString affinity =
-    if affinity == Generated.Types.All then
+    if affinity == AffinityAll then
         "All"
 
     else

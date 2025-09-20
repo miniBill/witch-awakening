@@ -257,7 +257,7 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                                     ]
                             , cost
                                 |> Maybe.map Types.gainToSlot
-                                |> Maybe.withDefault Types.White
+                                |> Maybe.withDefault Types.SlotWhite
                                 |> Types.slotToImage
                                 |> Theme.image [ width <| px 40 ]
                                 |> el [ moveRight 4 ]
@@ -283,7 +283,7 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                                     |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
 
                             ClassAny ->
-                                Theme.viewClasses 32 [ Types.Sorceress, Types.Warlock, Types.Academic ]
+                                Theme.viewClasses 32 [ Types.ClassSorceress, Types.ClassWarlock, Types.ClassAcademic ]
                                     |> el [ alignRight, moveLeft 24 ]
 
                             ClassNone ->
