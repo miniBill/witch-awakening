@@ -7,18 +7,20 @@ import Generated.TypePerk
 import Generated.Types as Types exposing (Race(..), Slot)
 import Gradients
 import Images
+import Set exposing (Set)
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display)
 import View
 import View.Race
 
 
-viewTypePerks : List Race -> Display -> List Race -> Element Choice
-viewTypePerks witchRaces display typePerks =
+viewTypePerks : Set String -> List Race -> Display -> List Race -> Element Choice
+viewTypePerks hideDLC witchRaces display typePerks =
     let
         boxes : List (Element ( Race, Bool ))
         boxes =
             Generated.TypePerk.all
+                |> View.filterDLC hideDLC
                 |> List.filterMap (typePerkBox witchRaces display typePerks)
     in
     View.collapsible

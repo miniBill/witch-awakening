@@ -6,17 +6,19 @@ import Element.Font as Font
 import Generated.Classes
 import Generated.Types as Types exposing (Class)
 import Gradients
+import Set exposing (Set)
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display)
 import View
 
 
-viewClass : Display -> Maybe Class -> Element Choice
-viewClass display class =
+viewClass : Set String -> Display -> Maybe Class -> Element Choice
+viewClass hideDLC display class =
     let
         classBoxes : List (Element (Maybe Class))
         classBoxes =
             Generated.Classes.all
+                |> View.filterDLC hideDLC
                 |> List.filterMap (classBox display class)
     in
     View.collapsible []

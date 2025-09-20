@@ -10,6 +10,7 @@ import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
 import Images
 import List.Extra
+import Set exposing (Set)
 import String.Extra
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), CosmicPearlData, Display, RankedRelic)
@@ -17,12 +18,13 @@ import View
 import View.Affinity as Affinity
 
 
-viewRelics : Display -> CosmicPearlData -> Maybe Race -> List Race -> List RankedRelic -> Element Choice
-viewRelics display pearl mainRace races relics =
+viewRelics : Set String -> Display -> CosmicPearlData -> Maybe Race -> List Race -> List RankedRelic -> Element Choice
+viewRelics hideDLC display pearl mainRace races relics =
     let
         sorted : List (Element Choice)
         sorted =
             Generated.Relic.all
+                |> View.filterDLC hideDLC
                 |> List.filterMap (relicBox mainRace display relics pearl races)
     in
     View.collapsible []

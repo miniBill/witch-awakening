@@ -87,6 +87,7 @@ type alias Model key =
     , relicsDisplay : Display
     , cosmicPearl : CosmicPearlData
     , expandedMenuSections : Set String
+    , hideDLCs : Set String
     }
 
 

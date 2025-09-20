@@ -2,18 +2,20 @@ module View.FactionalMagic exposing (viewFactionalMagics)
 
 import Element exposing (Element, centerX, fill, width)
 import Generated.Magic
+import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display, RankedMagic)
 import View
 import View.Magic as Magic
 
 
-viewFactionalMagics : Display -> List RankedMagic -> Element Choice
-viewFactionalMagics display selected =
+viewFactionalMagics : Set String -> Display -> List RankedMagic -> Element Choice
+viewFactionalMagics hideDLC display selected =
     let
         boxes : Element ( RankedMagic, Bool )
         boxes =
             Generated.Magic.all
+                |> View.filterDLC hideDLC
                 |> List.filter (\{ faction } -> faction /= Nothing)
                 |> List.indexedMap (Magic.magicBox display True selected)
                 |> Theme.column []

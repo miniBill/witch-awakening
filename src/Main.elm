@@ -551,6 +551,7 @@ parseUrl navKey url =
                 )
         }
     , expandedMenuSections = Set.empty
+    , hideDLCs = Set.empty
     }
 
 
@@ -621,18 +622,18 @@ innerView model =
                   else
                     Element.paddingXY 16 0
                 ]
-                [ Element.Lazy.lazy2 Class.viewClass model.classDisplay model.class
-                , Element.Lazy.lazy2 Race.viewRace model.raceDisplay model.races
+                [ Element.Lazy.lazy3 Class.viewClass model.hideDLCs model.classDisplay model.class
+                , Element.Lazy.lazy3 Race.viewRace model.hideDLCs model.raceDisplay model.races
                 , Element.Lazy.lazy2 GameMode.viewGameMode model.gameModeDisplay model.gameMode
-                , Element.Lazy.lazy2 Complications.viewComplications model.complicationsDisplay model.complications
-                , Element.Lazy.lazy3 TypePerk.viewTypePerks model.races model.typePerksDisplay model.typePerks
-                , Element.Lazy.lazy2 Magic.viewMagics model.magicDisplay model.magic
-                , Element.Lazy.lazy4 Perk.viewPerks model.perksDisplay model.mainRace model.races model.perks
-                , Element.Lazy.lazy2 Faction.viewFaction model.factionDisplay model.faction
-                , Element.Lazy.lazy2 FactionalMagic.viewFactionalMagics model.factionalMagicDisplay model.magic
-                , Element.Lazy.lazy2 Companion.viewCompanions model.companionsDisplay model.companions
-                , Element.Lazy.lazy2 Quest.viewQuests model.questsDisplay model.quests
-                , Element.Lazy.lazy5 Relic.viewRelics model.relicsDisplay model.cosmicPearl model.mainRace model.races model.relics
+                , Element.Lazy.lazy3 Complications.viewComplications model.hideDLCs model.complicationsDisplay model.complications
+                , Element.Lazy.lazy4 TypePerk.viewTypePerks model.hideDLCs model.races model.typePerksDisplay model.typePerks
+                , Element.Lazy.lazy3 Magic.viewMagics model.hideDLCs model.magicDisplay model.magic
+                , Element.Lazy.lazy5 Perk.viewPerks model.hideDLCs model.perksDisplay model.mainRace model.races model.perks
+                , Element.Lazy.lazy3 Faction.viewFaction model.hideDLCs model.factionDisplay model.faction
+                , Element.Lazy.lazy3 FactionalMagic.viewFactionalMagics model.hideDLCs model.factionalMagicDisplay model.magic
+                , Element.Lazy.lazy3 Companion.viewCompanions model.hideDLCs model.companionsDisplay model.companions
+                , Element.Lazy.lazy3 Quest.viewQuests model.hideDLCs model.questsDisplay model.quests
+                , Element.Lazy.lazy6 Relic.viewRelics model.hideDLCs model.relicsDisplay model.cosmicPearl model.mainRace model.races model.relics
                 ]
             ]
         ]

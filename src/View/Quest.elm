@@ -13,17 +13,19 @@ import Generated.Types as Types exposing (Quest, Slot(..))
 import Gradients
 import Html.Attributes
 import Images
+import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display(..))
 import View
 
 
-viewQuests : Display -> List Quest -> Element Choice
-viewQuests display quests =
+viewQuests : Set String -> Display -> List Quest -> Element Choice
+viewQuests hideDLC display quests =
     let
         blocks : List (Element ( Quest, Bool ))
         blocks =
             Generated.Quest.all
+                |> View.filterDLC hideDLC
                 |> Dict.Extra.groupBy (\{ dlc } -> Maybe.withDefault "" dlc)
                 |> Dict.values
                 |> List.concatMap (List.indexedMap (questBox display quests))

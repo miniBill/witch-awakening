@@ -10,6 +10,7 @@ import Generated.Types as Types exposing (Companion, Faction)
 import Gradients
 import Html.Attributes
 import Images
+import Set exposing (Set)
 import Svg
 import Svg.Attributes
 import Theme
@@ -18,12 +19,13 @@ import View
 import View.Race
 
 
-viewCompanions : Display -> List Companion -> Element Choice
-viewCompanions display companions =
+viewCompanions : Set String -> Display -> List Companion -> Element Choice
+viewCompanions hideDLC display companions =
     let
         blocks : List (Element ( Companion, Bool ))
         blocks =
             Generated.Companion.all
+                |> List.map (Tuple.mapSecond (View.filterDLC hideDLC))
                 |> List.concatMap (companionSection display companions)
     in
     View.collapsible (Theme.topBackground Images.companionIntro)

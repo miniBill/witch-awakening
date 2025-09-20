@@ -12,6 +12,7 @@ import Gradients
 import Images
 import List.Extra
 import Maybe.Extra
+import Set exposing (Set)
 import String.Extra
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display, RankedPerk)
@@ -19,12 +20,13 @@ import View
 import View.Race
 
 
-viewPerks : Display -> Maybe Race -> List Race -> List RankedPerk -> Element Choice
-viewPerks display mainRace races perks =
+viewPerks : Set String -> Display -> Maybe Race -> List Race -> List RankedPerk -> Element Choice
+viewPerks hideDLC display mainRace races perks =
     let
         sorted : List Perk.Details
         sorted =
             Generated.Perk.all perks
+                |> View.filterDLC hideDLC
     in
     View.collapsible (Theme.topBackground Images.perkIntro)
         display

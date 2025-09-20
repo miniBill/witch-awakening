@@ -11,13 +11,20 @@ import Generated.Types as Types exposing (Faction)
 import Gradients
 import Images exposing (Image)
 import List.Extra
+import Set exposing (Set)
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display(..))
 import View
 
 
-viewFaction : Display -> Maybe ( Faction, Bool ) -> Element Choice
-viewFaction display faction =
+viewFaction : Set String -> Display -> Maybe ( Faction, Bool ) -> Element Choice
+viewFaction hideDLC display faction =
+    let
+        filtered : List Faction.Details
+        filtered =
+            Generated.Faction.all
+                |> View.filterDLC hideDLC
+    in
     View.collapsible (Theme.topBackground Images.factionIntro)
         display
         DisplayFaction
@@ -37,7 +44,7 @@ viewFaction display faction =
                 ]
                 (Faction.intro ++ String.repeat 4 "\n" ++ Faction.summaries)
             ]
-        , Generated.Faction.all
+        , filtered
             |> List.Extra.removeWhen .isHuman
             |> List.filterMap (factionBox display faction)
             |> Theme.column
@@ -67,7 +74,7 @@ viewFaction display faction =
                 ]
                 Images.factionHumansIntro2
             ]
-        , Generated.Faction.all
+        , filtered
             |> List.filter .isHuman
             |> List.filterMap (factionBox display faction)
             |> Theme.column
@@ -75,7 +82,7 @@ viewFaction display faction =
                 , spacing <| Theme.rhythm * 3
                 ]
         ]
-        [ Generated.Faction.all
+        [ filtered
             |> List.filterMap (factionBox display faction)
             |> Theme.column
                 [ width fill

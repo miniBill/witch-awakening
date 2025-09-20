@@ -8,14 +8,20 @@ import Generated.Complication
 import Generated.Types as Types exposing (ComplicationCategory(..), Slot(..))
 import Gradients
 import List.Extra
+import Set exposing (Set)
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), ComplicationKind(..), Display, RankedComplication)
 import View
 
 
-viewComplications : Display -> List RankedComplication -> Element Choice
-viewComplications display complications =
+viewComplications : Set String -> Display -> List RankedComplication -> Element Choice
+viewComplications hideDLC display complications =
     let
+        filtered : List Complication.Details
+        filtered =
+            Generated.Complication.all
+                |> View.filterDLC hideDLC
+
         wrappedRow : List (Element msg) -> Element msg
         wrappedRow items =
             items
@@ -40,7 +46,7 @@ viewComplications display complications =
         Complication.title
         [ Theme.blocks [] Complication.intro
         , Theme.blocks [] "# World Shifts"
-        , ((Generated.Complication.all
+        , ((filtered
                 |> List.filter isWorldShift
                 |> List.filterMap
                     (complicationBox display complications)
@@ -57,12 +63,12 @@ viewComplications display complications =
           )
             |> wrappedRow
         , Theme.blocks [] "# Generic Complications"
-        , Generated.Complication.all
+        , filtered
             |> List.filter (\complication -> not (isWorldShift complication))
             |> List.filterMap (complicationBox display complications)
             |> wrappedRow
         ]
-        [ Generated.Complication.all
+        [ filtered
             |> List.filterMap (complicationBox display complications)
             |> wrappedRow
         ]

@@ -12,18 +12,20 @@ import Generated.Types as Types exposing (Affinity, Race(..), Size)
 import Gradients
 import Images exposing (Image)
 import List.Extra
+import Set exposing (Set)
 import Theme exposing (gradientText, viewAffinity)
 import Types exposing (Choice(..), Display)
 import View
 import View.Affinity as Affinity
 
 
-viewRace : Display -> List Race -> Element Choice
-viewRace display races =
+viewRace : Set String -> Display -> List Race -> Element Choice
+viewRace hideDLC display races =
     let
         raceBoxes : Element ( Race, Bool )
         raceBoxes =
             Generated.Race.all races
+                |> View.filterDLC hideDLC
                 |> List.filterMap (raceBox display races)
                 |> Theme.wrappedRow
                     [ width fill

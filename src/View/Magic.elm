@@ -13,17 +13,19 @@ import Html
 import Html.Attributes
 import Images
 import List.Extra
+import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display(..), RankedMagic)
 import View
 
 
-viewMagics : Display -> List RankedMagic -> Element Choice
-viewMagics display selected =
+viewMagics : Set String -> Display -> List RankedMagic -> Element Choice
+viewMagics hideDLC display selected =
     let
         sorted : List Magic.Details
         sorted =
             Generated.Magic.all
+                |> View.filterDLC hideDLC
                 |> List.filter (\{ faction } -> faction == Nothing)
     in
     View.collapsible []
