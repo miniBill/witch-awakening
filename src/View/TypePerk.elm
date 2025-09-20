@@ -1,7 +1,7 @@
 module View.TypePerk exposing (viewTypePerks)
 
 import Data.TypePerk as TypePerk
-import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, px, rgb, spacing, width)
+import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, moveUp, px, rgb, spacing, width)
 import Element.Font as Font
 import Generated.TypePerk
 import Generated.Types as Types exposing (Race(..), Slot)
@@ -68,7 +68,7 @@ typePerkBox :
     -> List Race
     -> TypePerk.Details
     -> Maybe (Element ( Race, Bool ))
-typePerkBox witchRaces display selected { race, cost, content, dlc } =
+typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
     let
         isSelected : Bool
         isSelected =
@@ -84,7 +84,7 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
 
         nameLength : Length
         nameLength =
-            if stringWidth raceString < 10 then
+            if stringWidth raceString < 9 then
                 Short
 
             else if stringWidth raceString < 12 then
@@ -180,6 +180,58 @@ typePerkBox witchRaces display selected { race, cost, content, dlc } =
                         , moveDown 60
                         ]
                         (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+            , case name of
+                Nothing ->
+                    Element.none
+
+                Just n ->
+                    let
+                        len : Float
+                        len =
+                            stringWidth n
+                    in
+                    Theme.column
+                        [ centerX
+                        , Theme.captureIt
+                        , if len > 20 then
+                            Font.size 20
+
+                          else
+                            Font.size 24
+                        , if len > 20 then
+                            moveUp 2
+
+                          else
+                            moveUp 8
+                        , alignBottom
+                        ]
+                        (if len > 20 then
+                            let
+                                words : List String
+                                words =
+                                    String.words n
+
+                                wordCount : Int
+                                wordCount =
+                                    List.length words
+
+                                halfCount : Int
+                                halfCount =
+                                    (wordCount + 1) // 2
+                            in
+                            [ List.take halfCount words
+                            , List.drop halfCount words
+                            ]
+                                |> List.map
+                                    (\line ->
+                                        line
+                                            |> String.join " "
+                                            |> Theme.gradientText 4 Gradients.yellowGradient
+                                    )
+
+                         else
+                            [ Theme.gradientText 4 Gradients.yellowGradient n ]
+                        )
             , Types.slotToImage slot
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom ]

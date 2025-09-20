@@ -155,7 +155,8 @@ type alias Race =
     , description : String
     , perk :
         Maybe
-            { cost : Int
+            { name : Maybe String
+            , cost : Int
             , description : String
             }
     }
@@ -171,10 +172,25 @@ race =
     )
         |= paragraphs True
         |= oneOf
-            [ succeed
+            [ backtrackable
+                (section "###"
+                    "Perk"
+                    (\name cost description ->
+                        Just
+                            { name = Just name
+                            , cost = cost
+                            , description = description
+                            }
+                    )
+                    |> requiredItem "Cost" intParser
+                    |> parseSection
+                )
+                |= paragraphs True
+            , succeed
                 (\cost description ->
                     Just
-                        { cost = cost
+                        { name = Nothing
+                        , cost = cost
                         , description = description
                         }
                 )

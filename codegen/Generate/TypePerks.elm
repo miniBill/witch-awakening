@@ -55,25 +55,37 @@ dlcToTypePerks types races =
     List.filterMap
         (\( dlcName, race ) ->
             race.perk
-                |> Maybe.map
-                    (\perk ->
-                        Gen.Data.TypePerk.make_.details
-                            { race =
-                                case race.elements of
-                                    [] ->
-                                        Elm.apply (types.race.value race.name) [ types.affinity.value "All", types.affinity.value "All" ]
-
-                                    [ _ ] ->
-                                        Elm.apply (types.race.value race.name) [ types.affinity.value "All" ]
-
-                                    _ ->
-                                        types.race.value race.name
-                            , content = Elm.string perk.description
-                            , cost = Elm.int perk.cost
-                            , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                            }
-                            |> Elm.declaration (yassify race.name)
-                            |> Elm.expose
-                    )
+                |> Maybe.map (perkToDeclaration types dlcName race)
         )
         races
+
+
+perkToDeclaration :
+    TypesModule
+    -> Maybe String
+    -> Parsers.Race
+    ->
+        { name : Maybe String
+        , description : String
+        , cost : Int
+        }
+    -> Elm.Declaration
+perkToDeclaration types dlcName race perk =
+    Gen.Data.TypePerk.make_.details
+        { race =
+            case race.elements of
+                [] ->
+                    Elm.apply (types.race.value race.name) [ types.affinity.value "All", types.affinity.value "All" ]
+
+                [ _ ] ->
+                    Elm.apply (types.race.value race.name) [ types.affinity.value "All" ]
+
+                _ ->
+                    types.race.value race.name
+        , name = Elm.maybe (Maybe.map Elm.string perk.name)
+        , content = Elm.string perk.description
+        , cost = Elm.int perk.cost
+        , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+        }
+        |> Elm.declaration (yassify race.name)
+        |> Elm.expose
