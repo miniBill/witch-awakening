@@ -9,3 +9,9 @@ publish = "out"
 #  from = "/*"
 #  to = "/index.html"
 #  status = 200
+
+[[redirects]]
+from = "https://witch-awakening.netlify.app"
+to = "https://witch-awakening.taglialegne.it"
+status = 301
+force = true
