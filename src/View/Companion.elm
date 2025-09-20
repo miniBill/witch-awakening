@@ -25,27 +25,43 @@ viewCompanions hideDLC display companions =
         blocks : List (Element ( Companion, Bool ))
         blocks =
             Generated.Companion.all
-                |> List.map (Tuple.mapSecond (View.filterDLC hideDLC))
+                |> List.filterMap
+                    (\( faction, factionCompanions ) ->
+                        let
+                            filteredCompanions : List Companion.Details
+                            filteredCompanions =
+                                View.filterDLC hideDLC factionCompanions
+                        in
+                        if List.isEmpty filteredCompanions then
+                            Nothing
+
+                        else
+                            Just ( faction, filteredCompanions )
+                    )
                 |> List.concatMap (companionSection display companions)
     in
-    View.collapsible (Theme.topBackground Images.companionIntro)
-        display
-        DisplayCompanions
-        ChoiceCompanion
-        "# Companions"
-        [ introBlock
-        , blocks
-            |> Theme.column
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
-        [ blocks
-            |> Theme.wrappedRow
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
+    if List.isEmpty blocks then
+        Element.none
+
+    else
+        View.collapsible (Theme.topBackground Images.companionIntro)
+            display
+            DisplayCompanions
+            ChoiceCompanion
+            "# Companions"
+            [ introBlock
+            , blocks
+                |> Theme.column
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
+            [ blocks
+                |> Theme.wrappedRow
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
 
 
 introBlock : Element msg
