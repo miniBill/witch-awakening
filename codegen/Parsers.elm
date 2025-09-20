@@ -1,5 +1,6 @@
 module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Faction, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), dlc, parseFiles)
 
+import Ansi.Color
 import Dict exposing (Dict)
 import Dict.Extra
 import Gen.CodeGen.Generate as Generate
@@ -7,7 +8,7 @@ import Hex
 import List.Extra
 import Maybe.Extra
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, sequence, spaces, succeed, symbol)
-import Parser.Error
+import Parser.Error exposing (DeadEnd)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
 import Regex
 import Result.Extra
@@ -78,10 +79,25 @@ parseDLC ( folder, filename, content ) =
             (\deadEnds ->
                 [ { title = "Error parsing DLC file"
                   , description =
-                        "Could not parse " ++ folder ++ "/" ++ filename ++ "\n" ++ Parser.Error.toString deadEnds
+                        "Could not parse " ++ folder ++ "/" ++ filename ++ "\n\n" ++ errorToString content deadEnds
                   }
                 ]
             )
+
+
+errorToString : String -> List (DeadEnd {} Parser.Problem) -> String
+errorToString src deadEnds =
+    Parser.Error.renderError
+        { text = identity
+        , formatContext = Ansi.Color.fontColor Ansi.Color.cyan
+        , formatCaret = Ansi.Color.fontColor Ansi.Color.red
+        , newline = "\n"
+        , linesOfExtraContext = 3
+        }
+        Parser.Error.forParser
+        src
+        deadEnds
+        |> String.concat
 
 
 dlc : Parser DLC

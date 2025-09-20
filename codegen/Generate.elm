@@ -142,9 +142,8 @@ toFiles root =
             )
         |> Result.andThen
             (\list ->
-                (List.concatMap Triple.Extra.first list
+                List.concatMap Triple.Extra.first list
                     |> Generate.Images.images
-                )
                     |> Result.andThen
                         (\images ->
                             Result.map2
