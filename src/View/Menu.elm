@@ -23,7 +23,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed
 import Generated.Attribution
-import Generated.Types as Types exposing (Affinity(..), GameMode(..))
+import Generated.Types exposing (Affinity(..), GameMode(..))
 import List.Extra
 import List.Nonempty
 import Set exposing (Set)
@@ -323,14 +323,14 @@ viewCalculations model power warnings affinities =
                 )
                     |> List.map
                         (\{ name } ->
-                            Input.checkbox []
+                            Input.checkbox [ width fill ]
                                 { onChange = ShowDLC name
                                 , icon = Input.defaultCheckbox
-                                , label = Input.labelRight [] (text name)
+                                , label = Input.labelRight [ width fill ] (paragraph [ width fill ] [ text name ])
                                 , checked = not (Set.member name model.hideDLCs)
                                 }
                         )
-                    |> Theme.column []
+                    |> Theme.column [ width fill ]
               )
             ]
     in
