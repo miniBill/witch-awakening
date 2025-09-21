@@ -14,6 +14,7 @@
 - Separate section for elementalist magic
 
 - Screenshot
+- Mobile mode
 
 - An extra little box on that says how much that option will actually move your point total if you take it right now
 
