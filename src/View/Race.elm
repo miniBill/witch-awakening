@@ -167,13 +167,15 @@ affinityPicker selected race =
                 firstRaceAffinities =
                     List.head otherRaces
                         |> Maybe.map Affinity.affinitiesForRace
-                        |> Maybe.withDefault [ AffinityAll ]
+                        |> Maybe.withDefault Affinity.defaultList
+                        |> Affinity.toList
 
                 secondRaceAffinities : List Affinity
                 secondRaceAffinities =
                     List.head (List.drop 1 otherRaces)
                         |> Maybe.map Affinity.affinitiesForRace
-                        |> Maybe.withDefault [ AffinityAll ]
+                        |> Maybe.withDefault Affinity.defaultList
+                        |> Affinity.toList
             in
             [ el [ Font.bold ] <| text "Pick an affinity from the first race:"
             , innerPicker (\newAffinity -> RaceAmalgam newAffinity currentAffinity2) currentAffinity1 firstRaceAffinities

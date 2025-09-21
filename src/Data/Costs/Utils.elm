@@ -1,5 +1,6 @@
-module Data.Costs.Utils exposing (Points, applyClassBonusIf, capWithWarning, combineAndSum, find, halveIfPositiveAnd, negate, powerToPoints, rewardPointsToPoints, slotUnsupported, sum, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, affinityDiscountIf, applyClassBonusIf, capWithWarning, combineAndSum, find, negate, powerToPoints, rewardPointsToPoints, slotUnsupported, sum, zero, zeroOut)
 
+import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
 import List.Extra
 
@@ -65,15 +66,6 @@ applyClassBonusIf isClass cost =
         cost
 
 
-halveIfPositiveAnd : Bool -> Int -> Int
-halveIfPositiveAnd condition cost =
-    if condition && cost > 0 then
-        (cost + 1) // 2
-
-    else
-        cost
-
-
 find : String -> (item -> key) -> key -> List item -> (key -> String) -> Monad item
 find label toKey value list toString =
     case List.Extra.find (\candidate -> toKey candidate == value) list of
@@ -103,3 +95,21 @@ capWithWarning cap warning value =
     else
         { zero | power = value }
             |> Monad.succeed
+
+
+affinityDiscountIf : InAffinity -> Int -> Int
+affinityDiscountIf inAffinity cost =
+    if cost <= 0 then
+        cost
+
+    else
+        case inAffinity of
+            DoubleAffinity ->
+                -- We're rounding down the _second_ halving but not the first
+                (cost + 1) // 4
+
+            InAffinity ->
+                (cost + 1) // 2
+
+            OffAffinity ->
+                cost

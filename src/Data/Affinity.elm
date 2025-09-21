@@ -1,5 +1,6 @@
-module Data.Affinity exposing (Details, affinitiesForRace, fromModel)
+module Data.Affinity exposing (AffinityList, Details, InAffinity(..), affinitiesForRace, defaultList, fromModel, isInAffinity, toList)
 
+import Data.Magic as Magic
 import Generated.Race
 import Generated.Types exposing (Affinity(..), Race(..))
 import List.Extra
@@ -19,11 +20,10 @@ fromModel :
         , cosmicPearl : CosmicPearlData
         , typePerks : List Race
     }
-    -> List Affinity
+    -> AffinityList
 fromModel { races, mainRace, cosmicPearl, typePerks } =
     let
-        base : List Affinity
-        base =
+        (AffinityList base) =
             case ( mainRace, races ) of
                 ( Just race, _ ) ->
                     affinitiesForRace race
@@ -32,7 +32,7 @@ fromModel { races, mainRace, cosmicPearl, typePerks } =
                     affinitiesForRace race
 
                 _ ->
-                    []
+                    defaultList
 
         fromTypePerk : List Affinity
         fromTypePerk =
@@ -62,13 +62,88 @@ fromModel { races, mainRace, cosmicPearl, typePerks } =
                 cosmicPearl.change
     in
     (afterChange ++ cosmicPearl.add ++ fromTypePerk)
-        |> (::) AffinityAll
+        |> fromList
+
+
+fromList : List Affinity -> AffinityList
+fromList list =
+    list
         |> List.Extra.unique
+        |> AffinityList
 
 
-affinitiesForRace : Race -> List Affinity
+affinitiesForRace : Race -> AffinityList
 affinitiesForRace race =
     Generated.Race.all [ race ]
         |> List.Extra.find (\{ name } -> name == race)
-        |> Maybe.map .affinities
-        |> Maybe.withDefault []
+        |> Maybe.map (\{ affinities } -> fromList affinities)
+        |> Maybe.withDefault defaultList
+
+
+type AffinityList
+    = AffinityList (List Affinity)
+
+
+type InAffinity
+    = OffAffinity
+    | InAffinity
+    | DoubleAffinity
+
+
+isInAffinity : Magic.Affinities -> AffinityList -> InAffinity
+isInAffinity magicAffinities affinities =
+    case magicAffinities of
+        Magic.Regular regular ->
+            isInAffinityRegular regular affinities
+
+        Magic.Alternative alternatives ->
+            List.foldl
+                (\alternative acc ->
+                    case ( acc, isInAffinityRegular alternative affinities ) of
+                        ( DoubleAffinity, _ ) ->
+                            DoubleAffinity
+
+                        ( _, DoubleAffinity ) ->
+                            DoubleAffinity
+
+                        ( InAffinity, _ ) ->
+                            InAffinity
+
+                        ( _, InAffinity ) ->
+                            InAffinity
+
+                        _ ->
+                            OffAffinity
+                )
+                OffAffinity
+                alternatives
+
+
+isInAffinityRegular : List Affinity -> AffinityList -> InAffinity
+isInAffinityRegular regular (AffinityList affinities) =
+    let
+        inList : Bool
+        inList =
+            List.any
+                (\affinity -> List.member affinity affinities)
+                regular
+    in
+    case ( List.member AffinityAll regular, inList ) of
+        ( True, True ) ->
+            DoubleAffinity
+
+        ( False, False ) ->
+            OffAffinity
+
+        _ ->
+            InAffinity
+
+
+toList : AffinityList -> List Affinity
+toList (AffinityList list) =
+    list
+
+
+defaultList : AffinityList
+defaultList =
+    AffinityList []

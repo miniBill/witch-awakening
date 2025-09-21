@@ -1,6 +1,6 @@
 module View.Menu exposing (viewMenu)
 
-import Data.Affinity as Affinity
+import Data.Affinity as Affinity exposing (AffinityList)
 import Data.Costs as Costs
 import Data.Costs.Class
 import Data.Costs.Companions
@@ -23,7 +23,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Element.Keyed
 import Generated.Attribution
-import Generated.Types exposing (Affinity(..), GameMode(..))
+import Generated.Types exposing (GameMode(..))
 import List.Extra
 import List.Nonempty
 import Set exposing (Set)
@@ -47,10 +47,9 @@ viewMenu model =
                 Err es ->
                     ( [], List.Extra.unique <| List.Nonempty.toList es )
 
-        affinities : List Affinity
+        affinities : AffinityList
         affinities =
             Affinity.fromModel model
-                |> List.Extra.remove AffinityAll
 
         warnIf : Bool -> a -> List a -> List a
         warnIf b msg list =
@@ -63,7 +62,7 @@ viewMenu model =
         warnings : List String
         warnings =
             (rawWarnings
-                |> warnIf (List.isEmpty affinities) "No main race selected."
+                |> warnIf (List.isEmpty (Affinity.toList affinities)) "No main race selected."
             )
                 ++ badPyramid model.magic
     in
@@ -211,7 +210,7 @@ menuLabel result warnings =
         |> Theme.row [ centerX, centerY ]
 
 
-viewCalculations : Model key -> CostsMonad.Monad Points -> List String -> List Affinity -> Element Msg
+viewCalculations : Model key -> CostsMonad.Monad Points -> List String -> AffinityList -> Element Msg
 viewCalculations model power warnings affinities =
     let
         resultRow : ( String, Element Msg )
@@ -292,18 +291,18 @@ viewCalculations model power warnings affinities =
                             warnings
                         )
               )
-            , if List.isEmpty affinities then
+            , if List.isEmpty (Affinity.toList affinities) then
                 ( "Affinities", Element.none )
 
               else
                 section [ alignBottom ] "Affinities"
             , ( "AffinitiesColumn"
-              , if List.isEmpty affinities then
+              , if List.isEmpty (Affinity.toList affinities) then
                     Element.none
 
                 else
                     Theme.wrappedRow [] <|
-                        List.map Theme.viewAffinity affinities
+                        List.map Theme.viewAffinity (Affinity.toList affinities)
               )
             , keyedRow "Power cap" model.expandedMenuSections (Data.Costs.Complications.powerCap model) <| Just "Game Mode"
             , button

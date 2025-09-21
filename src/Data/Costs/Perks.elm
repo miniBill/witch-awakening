@@ -1,11 +1,12 @@
 module Data.Costs.Perks exposing (perkValue, value)
 
-import Data.Affinity as Affinity
+import Data.Affinity as Affinity exposing (AffinityList, InAffinity)
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
+import Data.Magic as Magic
 import Data.Perk as Perk
 import Generated.Perk
-import Generated.Types as Types exposing (Affinity, Class, Perk(..), Race(..))
+import Generated.Types as Types exposing (Class, Perk(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData, RankedPerk)
 import View.Perk
@@ -75,7 +76,7 @@ perkValue ({ class } as model) { name, cost } =
         |> Monad.map
             (\perk ->
                 let
-                    affinities : List Affinity
+                    affinities : AffinityList
                     affinities =
                         Affinity.fromModel model
 
@@ -83,9 +84,9 @@ perkValue ({ class } as model) { name, cost } =
                     isClass =
                         Just perk.class == class
 
-                    isInAffinity : Bool
+                    isInAffinity : InAffinity
                     isInAffinity =
-                        List.member perk.affinity affinities
+                        Affinity.isInAffinity (Magic.Regular [ perk.affinity ]) affinities
 
                     changelingDiff : Int
                     changelingDiff =
@@ -117,7 +118,7 @@ perkValue ({ class } as model) { name, cost } =
                     finalCost =
                         (cost + changelingDiff + apexDiff)
                             |> Utils.applyClassBonusIf isClass
-                            |> Utils.halveIfPositiveAnd isInAffinity
+                            |> Utils.affinityDiscountIf isInAffinity
                 in
                 { name = Types.perkToString name
                 , points = -finalCost

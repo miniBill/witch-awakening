@@ -1,12 +1,12 @@
 module Data.Costs.Magic exposing (value)
 
-import Data.Affinity as Affinity
+import Data.Affinity as Affinity exposing (AffinityList, InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils as Utils exposing (Points)
+import Data.Costs.Utils as Utils exposing (Points, affinityDiscountIf)
 import Data.Magic as Magic
 import Dict exposing (Dict)
 import Generated.Magic
-import Generated.Types as Types exposing (Affinity, Class(..), Faction, Magic(..), Perk(..), Race(..))
+import Generated.Types as Types exposing (Class(..), Faction, Magic(..), Perk(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
@@ -28,7 +28,7 @@ value :
     -> Monad Points
 value { ignoreSorceressBonus } model =
     let
-        affinities : List Affinity
+        affinities : AffinityList
         affinities =
             Affinity.fromModel model
 
@@ -38,7 +38,7 @@ value { ignoreSorceressBonus } model =
                 , rank : Int
                 , points : Int
                 , isElementalism : Bool
-                , isOffAffinity : Bool
+                , inAffinity : InAffinity
                 }
         pointsList =
             Generated.Magic.all
@@ -61,7 +61,7 @@ value { ignoreSorceressBonus } model =
                 ( Just ClassSorceress, False, _ ) ->
                     case
                         pointsList
-                            |> List.filter (\{ isElementalism, isOffAffinity } -> isElementalism && not isOffAffinity)
+                            |> List.filter (\{ isElementalism, inAffinity } -> isElementalism && inAffinity /= OffAffinity)
                             |> List.Extra.minimumBy .points
                     of
                         Just magic ->
@@ -109,7 +109,7 @@ value { ignoreSorceressBonus } model =
                 Nothing
 
             else
-                case List.filter (\magic -> magic.isElementalism && magic.isOffAffinity) pointsList of
+                case List.filter (\magic -> magic.isElementalism && magic.inAffinity == OffAffinity) pointsList of
                     [] ->
                         Nothing
 
@@ -158,7 +158,7 @@ magicValue :
         , typePerks : List Race
         , magic : List RankedMagic
     }
-    -> List Affinity
+    -> Affinity.AffinityList
     -> Magic.Details
     ->
         Maybe
@@ -166,7 +166,7 @@ magicValue :
             , rank : Int
             , points : Int
             , isElementalism : Bool
-            , isOffAffinity : Bool
+            , inAffinity : InAffinity
             }
 magicValue model affinities magicDetails =
     model.magic
@@ -174,9 +174,9 @@ magicValue model affinities magicDetails =
         |> Maybe.map
             (\rankedMagic ->
                 let
-                    inAffinity : Bool
+                    inAffinity : Affinity.InAffinity
                     inAffinity =
-                        isInAffinity magicDetails affinities
+                        Affinity.isInAffinity magicDetails.affinities affinities
 
                     inFaction : InFaction
                     inFaction =
@@ -207,7 +207,7 @@ magicValue model affinities magicDetails =
                 , rank = rankedMagic.rank
                 , points = -finalCost
                 , isElementalism = magicDetails.isElementalism
-                , isOffAffinity = not (isInAffinity magicDetails affinities)
+                , inAffinity = inAffinity
                 }
             )
 
@@ -259,15 +259,6 @@ classDiscountIf inClass cost =
         cost
 
 
-affinityDiscountIf : Bool -> Int -> Int
-affinityDiscountIf inAffinity cost =
-    if inAffinity && cost > 0 then
-        (cost + 1) // 2
-
-    else
-        cost
-
-
 factionDiscountIf : InFaction -> Int -> Int
 factionDiscountIf factionality cost =
     case factionality of
@@ -290,21 +281,3 @@ factionDiscountIf factionality cost =
 
             else
                 cost
-
-
-isInAffinity : Magic.Details -> List Affinity -> Bool
-isInAffinity magic affinities =
-    case magic.affinities of
-        Magic.Regular regular ->
-            List.any
-                (\affinity -> List.member affinity affinities)
-                regular
-
-        Magic.Alternative alternatives ->
-            alternatives
-                |> List.any
-                    (\alternative ->
-                        List.all
-                            (\affinity -> List.member affinity affinities)
-                            alternative
-                    )
