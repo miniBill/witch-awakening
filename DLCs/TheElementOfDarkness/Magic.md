@@ -135,3 +135,27 @@ At rank 4 you can __Bind__ someone to a character from a story, and for as long 
 
 ### Rank 5
 At rank 5 you can now Conjure __Ink-Phantoms__ from stories you know by heart, which take on the form of one of the characters and act out their role (this requires you to narrate their actions to some degree, as a way of guiding them). If the powers of these characters exceed R4 magic they scale down to R4. These characters cannot do anything that would not be possible through magic available to witches, and cannot grant wishes. Need a crime scene examined? _“There was no clue that could be devised, not by the poor witch so unfamiliar with the forensic profession, it was lucky then that she had the aid of the great detective: Sherlock Holmes”_. Need someone to accomplish an incredible feat of strength? _“The door was firmly locked and bolted, and the witch knew there was no way he could budge it, but for the mighty Herakles it was a trivial effort to tear the obstruction from its' hinges”_.
+
+
+## Magic: Shape-Shifting
+- Elements: Shadows, Water, Beast
+- Class: Warlock
+- Elementalism: False
+- Faction: The Lodge
+
+The signature magic of the Lodge, Shape-Shifting allows one to mould their body to their whim, or even to take on features and traits from other species. Shape-Shifting is not permanent, and even should you not choose to shape-shift back into your regular form, your Witch's true form will reassert itself over time. This also means that if a witch get shape-shifted against their will they will eventually return to normal.
+
+### Rank 1
+At rank 1 you can use shape-shifting to make purely cosmetic __Changes__, for example: changing skin/hair/eye colour, adding or removing freckles or birthmarks.
+
+### Rank 2
+At rank 2 you can make minor physical __Changes__, for example: changing your hair length, causing facial features to shift around, change the general build of your body, grow a bit shorter or taller. You can now temporarily increase or decrease your body-mass by up to 10%.
+
+### Rank 3
+At rank 3 __Changes__ to your body can be anything within the limitations of your species. You can now increase or decrease body-mass by up to 25%. You also learn how to craft __Shape-Talismans__, which allow your __Changes__ ability to grant you traits from animals. A __Shape-Talisman__ must be at least as large as a ring, must contain a part of the animal you wish to get traits from, and cannot contain parts from more than one animal (else your magic will be confused and things will get messy). At this rank your __Shape-Talisman__ will enable you may take on a variety of helpful traits, such as the eyes of a hawk for improved vision, the nose of a dog for better sense of smell, or an octopus's suckers to help cling to a wall. These traits can make up a maximum of 10% of your body-mass. You may carry any number of __Shape-talismans__, though you must make them yourself as each talisman will only function for their creator. 
+
+### Rank 4
+At rank 4 you become capable of __Shift-Healing__, using __Changes__ to mend yourself. __Shift Healing__ works by moving your body-mass around to fix wounds, and can mend such things as broken bones, lacerations, puncture wounds etc, but cannot heal cell-damage (for example, it wouldn't work on: a sunburn, blood-loss, liver damage from poison etc). Your __Shape-Talismans__ will now enable you to manifest the natural weapons of their animals, and you could, for example: grow a vipers fangs, a werewolf's claws, or a scorpions sting. Animal traits can now make up a maximum of 25% of your body-mass at any one time, and you can now increase or decrease your body-mass by up to 50%.
+
+### Rank 5
+At rank 5 you learn __Mimicry__, and become able to shape-shift into a perfect replica of someone you've touched within the past 48 hours. Your __Shape-Talismans__ now enable you to manifest any magical abilities their animal might have possessed so long as they're in some way connected to a trait you've manifested from that creature (a manticor's venom, a unicorn's healing blood, a werewolf's resistance to non-silvered weapons etc. Things like: a phoenix's ability to resurrect, a vampire's ability to turn to mist, or whatever magic that creature may have happened to learn do not count). If any of these abilities surpass rank 4 magic, they are scaled down to rank 4 (no giving yourself limitless power because you got your hands on an Elder-Dragon scale). Animal traits can now make up a maximum of 50% of your body-mass, and you may now increase or decrease your body-mass by up to 95%.
