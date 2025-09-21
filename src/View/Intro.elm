@@ -1,9 +1,10 @@
 module View.Intro exposing (viewIntro, viewTitle)
 
-import Element exposing (Element, alignRight, centerX, el, fill, fillPortion, moveDown, newTabLink, paragraph, text, width)
+import Element exposing (Attribute, Element, alignRight, centerX, el, fill, fillPortion, moveDown, newTabLink, paragraph, text, width)
 import Element.Font as Font
 import Generated.Attribution
 import Gradients
+import Html.Attributes
 import Images
 import List.Extra
 import Theme exposing (gradientText)
@@ -11,30 +12,31 @@ import Theme exposing (gradientText)
 
 viewTitle : Bool -> Element msg
 viewTitle allCompact =
+    let
+        mainLogo : List (Attribute msg) -> Element msg
+        mainLogo attrs =
+            paragraph
+                ([ Theme.bebasNeue
+                 , Font.size 180
+                 , Font.center
+                 , Element.paddingEach { top = 16, bottom = 0, left = 16, right = 16 }
+                 , Element.htmlAttribute (Html.Attributes.style "max-width" "90vw")
+                 , Element.htmlAttribute (Html.Attributes.style "max-height" "50vh")
+                 , Element.htmlAttribute (Html.Attributes.style "overflow" "clip")
+                 ]
+                    ++ attrs
+                )
+                [ gradientText 8 Gradients.titleGradient "Witch Awakening"
+                ]
+    in
     if allCompact then
-        paragraph
-            [ Theme.bebasNeue
-            , Font.size 180
-            , Font.center
-            , moveDown 24
-            , Element.paddingEach { top = 16, bottom = 0, left = 16, right = 16 }
-            ]
-            [ gradientText 8 Gradients.titleGradient "Witch Awakening"
-            ]
+        mainLogo [ moveDown 24 ]
 
     else
         Element.column
             [ width fill
-            , Element.paddingEach { top = 16, bottom = 0, left = 16, right = 16 }
             ]
-            [ paragraph
-                [ Theme.bebasNeue
-                , Font.size 180
-                , Font.center
-                , moveDown 16
-                ]
-                [ gradientText 8 Gradients.titleGradient "Witch Awakening"
-                ]
+            [ mainLogo [ moveDown 16 ]
             , Element.column
                 [ centerX
                 , Element.paddingEach { left = 0, top = 0, right = 0, bottom = 10 }
