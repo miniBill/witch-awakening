@@ -51,6 +51,9 @@ toShortString raw =
         FactionIndependents ->
             "Independent"
 
+        FactionTheLodge ->
+            "Lodge"
+
 
 intro : String
 intro =

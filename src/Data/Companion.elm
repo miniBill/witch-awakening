@@ -81,5 +81,8 @@ factionToCollectiveName faction =
         Just FactionIndependents ->
             "Independents / Other"
 
+        Just FactionTheLodge ->
+            "Lodge"
+
         Nothing ->
             "Independents / Other"
