@@ -71,56 +71,34 @@ perkValue :
     }
     -> RankedPerk
     -> Monad { name : String, points : Int, staticCost : Bool }
-perkValue ({ class } as model) { name, cost } =
-    Utils.find "Perk" .name name (Generated.Perk.all model.perks) View.Perk.perkToShortString
+perkValue model ranked =
+    let
+        isGenie : Bool
+        isGenie =
+            List.any
+                (\race ->
+                    case race of
+                        RaceGenie _ ->
+                            True
+
+                        _ ->
+                            False
+                )
+                model.races
+    in
+    Utils.find "Perk" .name ranked.name (Generated.Perk.all model.perks) View.Perk.perkToShortString
         |> Monad.map
             (\perk ->
                 let
-                    affinities : AffinityList
-                    affinities =
-                        Affinity.fromModel model
-
-                    isClass : Bool
-                    isClass =
-                        Just perk.class == class
-
-                    isInAffinity : InAffinity
-                    isInAffinity =
-                        Affinity.isInAffinity (Magic.Regular [ perk.affinity ]) affinities
-
-                    changelingDiff : Int
-                    changelingDiff =
-                        case name of
-                            PerkChargeSwap _ ->
-                                if List.member RaceChangeling model.races then
-                                    -3
-
-                                else
-                                    0
-
-                            _ ->
-                                0
-
-                    apexDiff : Int
-                    apexDiff =
-                        case name of
-                            PerkApex ->
-                                if List.any (\p -> p.name == PerkHybridize) model.perks then
-                                    3 * (List.length model.races - 1)
-
-                                else
-                                    0
-
-                            _ ->
-                                0
-
                     finalCost : Int
                     finalCost =
-                        (cost + changelingDiff + apexDiff)
-                            |> Utils.applyClassBonusIf isClass
-                            |> Utils.affinityDiscountIf isInAffinity
+                        if isGenie && (ranked.name == PerkPrestidigitation || ranked.name == PerkConjuration) then
+                            0
+
+                        else
+                            innerPerkValue model ranked perk
                 in
-                { name = Types.perkToString name
+                { name = Types.perkToString ranked.name
                 , points = -finalCost
                 , staticCost =
                     case perk.content of
@@ -131,3 +109,60 @@ perkValue ({ class } as model) { name, cost } =
                             False
                 }
             )
+
+
+innerPerkValue :
+    { a
+        | class : Maybe Class
+        , races : List Race
+        , mainRace : Maybe Race
+        , cosmicPearl : CosmicPearlData
+        , typePerks : List Race
+        , perks : List RankedPerk
+    }
+    -> { name : Perk, cost : Int }
+    -> Perk.Details
+    -> Int
+innerPerkValue ({ class } as model) { name, cost } perk =
+    let
+        apexDiff : Int
+        apexDiff =
+            case name of
+                PerkApex ->
+                    if List.any (\p -> p.name == PerkHybridize) model.perks then
+                        3 * (List.length model.races - 1)
+
+                    else
+                        0
+
+                _ ->
+                    0
+
+        affinities : AffinityList
+        affinities =
+            Affinity.fromModel model
+
+        isClass : Bool
+        isClass =
+            Just perk.class == class
+
+        isInAffinity : InAffinity
+        isInAffinity =
+            Affinity.isInAffinity (Magic.Regular [ perk.affinity ]) affinities
+
+        changelingDiff : Int
+        changelingDiff =
+            case name of
+                PerkChargeSwap _ ->
+                    if List.member RaceChangeling model.races then
+                        -3
+
+                    else
+                        0
+
+                _ ->
+                    0
+    in
+    (cost + changelingDiff + apexDiff)
+        |> Utils.applyClassBonusIf isClass
+        |> Utils.affinityDiscountIf isInAffinity

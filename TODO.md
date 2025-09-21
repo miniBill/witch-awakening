@@ -1,4 +1,5 @@
 # v2
+- Free rank 2 magic for genies
 - Don't trigger Hybridize for Amalgams
 - Fix factional magic pictures [faction name overlay]
 - Heirloom
@@ -6,8 +7,6 @@
 
 - Check all faction perks implementations
 
-- Genie double discount for All
-- Marid double discount for All
 - The Lodge perk
 
 - Doll type perk multicost: 1-4
