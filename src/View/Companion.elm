@@ -215,7 +215,7 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                             [ cost
                                 |> Maybe.map String.fromInt
                                 |> Maybe.withDefault "X"
-                                |> Theme.gradientText 4 Gradients.yellowGradient
+                                |> Theme.gradientText 4 Gradients.blueGradient
                                 |> el
                                     [ alignRight
                                     , Font.size 32

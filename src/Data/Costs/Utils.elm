@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Points, applyClassBonusIf, capWithWarning, combineAndSum, find, halveIfPositiveAnd, negate, powerToPoints, slotUnsupported, sum, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, applyClassBonusIf, capWithWarning, combineAndSum, find, halveIfPositiveAnd, negate, powerToPoints, rewardPointsToPoints, slotUnsupported, sum, zero, zeroOut)
 
 import Data.Costs.Monad as Monad exposing (Monad)
 import List.Extra
@@ -39,6 +39,11 @@ combineAndSum list =
     list
         |> Monad.combine
         |> Monad.map sumPoints
+
+
+rewardPointsToPoints : Int -> Points
+rewardPointsToPoints value =
+    { zero | rewardPoints = value }
 
 
 powerToPoints : Int -> Points

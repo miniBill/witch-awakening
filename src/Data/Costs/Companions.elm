@@ -173,7 +173,7 @@ value model =
                                     Nothing ->
                                         Monad.error <| "Companion " ++ nameString ++ " does not have a fixed cost"
                     )
-                |> Monad.map Utils.powerToPoints
+                |> Monad.map Utils.rewardPointsToPoints
     in
     model.companions
         |> Monad.combineMap getCompanion
