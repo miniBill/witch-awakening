@@ -1,7 +1,7 @@
 module View.Faction exposing (viewFaction)
 
 import Data.Faction as Faction
-import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, rgb, rgba, shrink, spacing, width)
+import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, inFront, moveDown, rgb, rgba, shrink, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -100,7 +100,7 @@ factionBox :
     -> Maybe ( Faction, Bool )
     -> Faction.Details
     -> Maybe (Element (Maybe ( Faction, Bool )))
-factionBox display selected { name, motto, description, location, relations, perk, perkContent, images } =
+factionBox display selected { name, dlc, motto, description, location, relations, perk, perkContent, images } =
     if display /= DisplayFull && Maybe.map Tuple.first selected /= Just name then
         Nothing
 
@@ -146,7 +146,23 @@ factionBox display selected { name, motto, description, location, relations, per
             introRow : Element msg
             introRow =
                 if display == DisplayFull then
-                    Theme.row [ width fill ]
+                    Theme.row
+                        [ width fill
+                        , inFront
+                            (case dlc of
+                                Nothing ->
+                                    Element.none
+
+                                Just dlcName ->
+                                    el
+                                        [ centerX
+                                        , Theme.captureIt
+                                        , Font.size 24
+                                        , moveDown 4
+                                        ]
+                                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                            )
+                        ]
                         [ img images.image1
                         , Theme.column [ width <| fillPortion 4 ]
                             [ img images.image2
@@ -251,7 +267,7 @@ factionBox display selected { name, motto, description, location, relations, per
                         , content =
                             case List.Extra.find (\magic -> magic.faction == Just name) Generated.Magic.all of
                                 Nothing ->
-                                    []
+                                    [ Theme.blocks [] perkContent ]
 
                                 Just magic ->
                                     [ Theme.blocks []
