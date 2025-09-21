@@ -65,7 +65,7 @@ viewTitle allCompact =
                     , width fill
                     , Font.size 14
                     , Font.underline
-                    , Element.paddingEach { left = 0, top = 0, right = 0, bottom = 10 }
+                    , Element.paddingEach { left = 0, top = 0, right = Theme.rhythm, bottom = 10 }
                     ]
                     [ newTabLink []
                         { label = Theme.choice "By OutrageousBears"
@@ -76,6 +76,7 @@ viewTitle allCompact =
                     [ Font.alignRight
                     , width fill
                     , Font.size 14
+                    , Element.paddingEach { left = 0, top = 0, bottom = 0, right = Theme.rhythm }
                     ]
                     (text "With DLCs: "
                         :: (Generated.Attribution.all
