@@ -1,11 +1,11 @@
-module CostTest exposing (magicCosts, perkCosts)
+module CostTest exposing (genieMagicalHeart, magicCosts, perkCosts)
 
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
 import Data.Costs.Perks
 import Data.Costs.Utils
 import Expect
-import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
+import Generated.Types exposing (Affinity(..), Class(..), Faction(..), Magic(..), Perk(..), Race(..))
 import Test exposing (Test, describe, test)
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
@@ -130,6 +130,19 @@ testJack12 label model expected =
             Data.Costs.Perks.perkValue model jack12
                 |> Result.map (.value >> .points)
                 |> Expect.equal (Ok expected)
+
+
+genieMagicalHeart : Test
+genieMagicalHeart =
+    test "Genie - Magical Heart" <|
+        \_ ->
+            Data.Costs.Perks.perkValue
+                (sorceress (RaceGenie AffinityFire))
+                { name = PerkMagicalHeart
+                , cost = 20
+                }
+                |> Result.map (.value >> .points)
+                |> Expect.equal (Ok -4)
 
 
 magicCosts : Test
