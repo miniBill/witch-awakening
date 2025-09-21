@@ -496,8 +496,12 @@ viewSectionTitle : Maybe (Display -> msg) -> Display -> String -> Element msg
 viewSectionTitle toMsg display label =
     let
         gradient : String -> Element msg
-        gradient =
-            gradientText 4 Gradients.blueGradient
+        gradient t =
+            t
+                |> String.split " - "
+                |> List.intersperse " - "
+                |> List.map (\w -> gradientText 4 Gradients.blueGradient w)
+                |> wrappedRow [ centerWrap ]
     in
     row
         [ celticHand
