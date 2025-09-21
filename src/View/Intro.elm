@@ -101,21 +101,29 @@ viewDLCAttribution dlcAttribution =
         by =
             Theme.choice (" By " ++ dlcAttribution.author)
     in
-    [ el
-        [ Theme.captureIt
-        , Font.size 20
-        ]
-        (Theme.gradientText 4 Gradients.purpleGradient dlcAttribution.name)
-    , case dlcAttribution.link of
-        Just url ->
-            newTabLink [ Font.underline ]
-                { label = by
-                , url = url
-                }
+    (dlcAttribution.name
+        |> String.split " "
+        |> List.map
+            (\word ->
+                word
+                    |> Theme.gradientText 4 Gradients.purpleGradient
+                    |> el
+                        [ Theme.captureIt
+                        , Font.size 20
+                        ]
+            )
+        |> List.intersperse (text " ")
+    )
+        ++ [ case dlcAttribution.link of
+                Just url ->
+                    newTabLink [ Font.underline ]
+                        { label = by
+                        , url = url
+                        }
 
-        Nothing ->
-            by
-    ]
+                Nothing ->
+                    by
+           ]
 
 
 viewIntro : Element msg
