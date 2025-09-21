@@ -271,7 +271,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
 
 perkToShortString : Perk -> String
 perkToShortString name =
-    if name == PerkJackOfAll then
+    if Generated.Perk.containsDash name then
         Types.perkToString name
 
     else
