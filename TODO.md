@@ -1,4 +1,5 @@
 # v2
+- Don't trigger Hybridize for Amalgams
 - Fix factional magic pictures [faction name overlay]
 - Heirloom
 - Mark which magic from Talisman
