@@ -13,9 +13,9 @@
 
 - Separate section for elementalist magic
 
-# v3
+- Screenshot
 
-- an extra little box on that says how much that option will actually move your point total if you take it right now
+- An extra little box on that says how much that option will actually move your point total if you take it right now
 
 - Multiple classes.
 - Cap vs initial build on the ~same page
