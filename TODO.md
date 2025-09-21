@@ -13,6 +13,7 @@
 
 - Separate section for elementalist magic
 
+- Write explanation for Hybridize
 - Screenshot
 - Mobile mode
 
