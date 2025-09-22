@@ -1533,7 +1533,7 @@ The original body of 9s. During a mission, Nines infiltrated an unexpected Outsi
 - Negative: - Constant need to prove herself
 - Mixed: +/- Somewhat lofty and larger than life, everything around her feels more serious and important.
 - Has: Ezra has Witchery 2, Necromancy 2, Portals 3, Wands 3, Ministration 4, Divination 4, Covenants 5 _& Fae Step_
-- Quote: _*““What’s Dael’ezra deal? I don’t get why she works so hard for the court instead of just marrying in. I know she has suitors” - A courtier.*_
+- Quote: _*“What’s Dael’ezra deal? I don’t get why she works so hard for the court instead of just marrying in. I know she has suitors” - A courtier.*_
 
 The second oldest of 12 daughters of an Alfheimr queendom the size of Poland, her mother holds a position at the high table of the Summer Court as the local queen but her father is a duke of the Winter Court, a scandal that almost cost her her crown, but with political maneuvering, the illegitimate Dael’ezra is simply not permitted to inherit titles and must earn a position in either court the hard way.
 
