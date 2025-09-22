@@ -179,7 +179,7 @@ companionBox :
     -> List Companion
     -> Companion.Details
     -> Element ( Companion, Bool )
-companionBox display selected ({ name, races, hasPerk, quote, cost, class, description, positives, mixed, negatives, has, dlc } as companion) =
+companionBox display selected ({ name } as companion) =
     let
         isSelected : Bool
         isSelected =
@@ -197,185 +197,6 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
 
                 else
                     Nothing
-
-            image : Element msg
-            image =
-                el
-                    (width fill
-                        :: height fill
-                        :: Border.roundEach
-                            { topLeft = Theme.cardRoundness
-                            , bottomLeft = Theme.cardRoundness
-                            , topRight = 0
-                            , bottomRight = 0
-                            }
-                        :: Background.image
-                            (Types.companionToImage name).src
-                        :: List.map Element.inFront
-                            [ cost
-                                |> Maybe.map String.fromInt
-                                |> Maybe.withDefault "X"
-                                |> Theme.gradientText 4 Gradients.blueGradient
-                                |> el
-                                    [ alignRight
-                                    , Font.size 32
-                                    , Theme.captureIt
-                                    , moveLeft 8
-                                    , moveDown 4
-                                    ]
-                            , let
-                                joined : String
-                                joined =
-                                    races
-                                        |> List.map View.Race.raceToShortString
-                                        |> String.join " - "
-
-                                normal : String
-                                normal =
-                                    if hasPerk then
-                                        joined ++ "+"
-
-                                    else
-                                        joined
-                              in
-                              (case normal of
-                                "Neutral" ->
-                                    ""
-
-                                "" ->
-                                    "Any"
-
-                                _ ->
-                                    normal
-                              )
-                                |> Theme.gradientText 4 Gradients.yellowGradient
-                                |> el
-                                    [ alignBottom
-                                    , centerX
-                                    , Font.size 32
-                                    , Theme.captureIt
-                                    ]
-                            , cost
-                                |> Maybe.map Types.gainToSlot
-                                |> Maybe.withDefault Types.SlotWhite
-                                |> Types.slotToImage
-                                |> Theme.image [ width <| px 40 ]
-                                |> el [ moveRight 4 ]
-                            ]
-                    )
-                    Element.none
-
-            content : Element msg
-            content =
-                Theme.column
-                    [ Theme.padding
-                    , height fill
-                    , width <| fillPortion 2
-                    ]
-                    [ Theme.row [ width fill ]
-                        [ Types.companionToString name
-                            |> Theme.gradientText 4 Gradients.yellowGradient
-                            |> el [ Font.size 36 ]
-                        , case class of
-                            ClassOne c ->
-                                c
-                                    |> Theme.classToBadge
-                                    |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
-
-                            ClassAny ->
-                                Theme.viewClasses 32 [ Types.ClassSorceress, Types.ClassWarlock, Types.ClassAcademic ]
-                                    |> el [ alignRight, moveLeft 24 ]
-
-                            ClassNone ->
-                                Element.none
-
-                            ClassSpecial ->
-                                Images.badgeSpecial
-                                    |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
-                        ]
-                    , case dlc of
-                        Nothing ->
-                            Element.none
-
-                        Just dlcName ->
-                            el
-                                [ centerX
-                                , Theme.captureIt
-                                , Font.size 24
-                                ]
-                                (Theme.gradientText 4 Gradients.purpleGradient dlcName)
-                    , statsTable companion
-                    , Theme.blocks [ Font.size 14 ] quote
-                    , Theme.blocks [] description
-                    , let
-                        toBlocks : List String -> List (Element msg)
-                        toBlocks lines =
-                            List.map
-                                (\line ->
-                                    if String.startsWith "-" line then
-                                        Theme.blocks [] <| "\\" ++ line
-
-                                    else
-                                        Theme.blocks [] line
-                                )
-                                lines
-
-                        toColumn : String -> List String -> Element msg
-                        toColumn label items =
-                            if List.isEmpty items then
-                                Element.none
-
-                            else
-                                column
-                                    [ width fill
-                                    , alignTop
-                                    , spacing <| Theme.rhythm // 2
-                                    ]
-                                    [ el [ Font.bold ] <| text <| label ++ ":"
-                                    , table [ width fill, spacing <| Theme.rhythm // 2 ]
-                                        { data =
-                                            List.map
-                                                (\line ->
-                                                    case String.split " " line of
-                                                        [] ->
-                                                            ( "", "" )
-
-                                                        head :: tail ->
-                                                            ( head, String.join " " tail )
-                                                )
-                                                items
-                                        , columns =
-                                            [ { header = Element.none
-                                              , width = shrink
-                                              , view = \( sign, _ ) -> text sign
-                                              }
-                                            , { header = Element.none
-                                              , width = fill
-                                              , view = \( _, tail ) -> Theme.blocks [] tail
-                                              }
-                                            ]
-                                        }
-                                    ]
-
-                        beforeBlock : Element msg
-                        beforeBlock =
-                            [ toColumn "Positives" positives
-                            , toColumn "Negatives" negatives
-                            ]
-                                |> Theme.row [ width fill ]
-                      in
-                      column
-                        [ width fill
-                        , spacing <| Theme.rhythm // 2
-                        ]
-                        (beforeBlock :: toBlocks mixed)
-                    , if String.isEmpty has then
-                        Element.none
-
-                      else
-                        Theme.blocks []
-                            ("*" ++ has ++ ".*")
-                    ]
         in
         Theme.button
             [ Theme.id (Types.companionToString name)
@@ -405,11 +226,192 @@ companionBox display selected ({ name, races, hasPerk, quote, cost, class, descr
                     [ height fill
                     , width fill
                     ]
-                    [ image
-                    , content
+                    [ image companion
+                    , content companion
                     ]
             , onPress = Just ( name, not isSelected )
             }
+
+
+image : Companion.Details -> Element msg
+image { name, races, hasPerk, cost } =
+    el
+        (width fill
+            :: height fill
+            :: Border.roundEach
+                { topLeft = Theme.cardRoundness
+                , bottomLeft = Theme.cardRoundness
+                , topRight = 0
+                , bottomRight = 0
+                }
+            :: Background.image
+                (Types.companionToImage name).src
+            :: List.map Element.inFront
+                [ cost
+                    |> Maybe.map String.fromInt
+                    |> Maybe.withDefault "X"
+                    |> Theme.gradientText 4 Gradients.blueGradient
+                    |> el
+                        [ alignRight
+                        , Font.size 32
+                        , Theme.captureIt
+                        , moveLeft 8
+                        , moveDown 4
+                        ]
+                , let
+                    joined : String
+                    joined =
+                        races
+                            |> List.map View.Race.raceToShortString
+                            |> String.join " - "
+
+                    normal : String
+                    normal =
+                        if hasPerk then
+                            joined ++ "+"
+
+                        else
+                            joined
+                  in
+                  (case normal of
+                    "Neutral" ->
+                        ""
+
+                    "" ->
+                        "Any"
+
+                    _ ->
+                        normal
+                  )
+                    |> Theme.gradientText 4 Gradients.yellowGradient
+                    |> el
+                        [ alignBottom
+                        , centerX
+                        , Font.size 32
+                        , Theme.captureIt
+                        ]
+                , cost
+                    |> Maybe.map Types.gainToSlot
+                    |> Maybe.withDefault Types.SlotWhite
+                    |> Types.slotToImage
+                    |> Theme.image [ width <| px 40 ]
+                    |> el [ moveRight 4 ]
+                ]
+        )
+        Element.none
+
+
+content : Companion.Details -> Element msg
+content ({ name, quote, class, description, positives, mixed, negatives, has, dlc } as companion) =
+    Theme.column
+        [ Theme.padding
+        , height fill
+        , width <| fillPortion 2
+        ]
+        [ Theme.row [ width fill ]
+            [ Types.companionToString name
+                |> Theme.gradientText 4 Gradients.yellowGradient
+                |> el [ Font.size 36 ]
+            , case class of
+                ClassOne c ->
+                    c
+                        |> Theme.classToBadge
+                        |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+
+                ClassAny ->
+                    Theme.viewClasses 32 [ Types.ClassSorceress, Types.ClassWarlock, Types.ClassAcademic ]
+                        |> el [ alignRight, moveLeft 24 ]
+
+                ClassNone ->
+                    Element.none
+
+                ClassSpecial ->
+                    Images.badgeSpecial
+                        |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+            ]
+        , case dlc of
+            Nothing ->
+                Element.none
+
+            Just dlcName ->
+                el
+                    [ centerX
+                    , Theme.captureIt
+                    , Font.size 24
+                    ]
+                    (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+        , statsTable companion
+        , Theme.blocks [ Font.size 14 ] quote
+        , Theme.blocks [] description
+        , let
+            toBlocks : List String -> List (Element msg)
+            toBlocks lines =
+                List.map
+                    (\line ->
+                        if String.startsWith "-" line then
+                            Theme.blocks [] <| "\\" ++ line
+
+                        else
+                            Theme.blocks [] line
+                    )
+                    lines
+
+            toColumn : String -> List String -> Element msg
+            toColumn label items =
+                if List.isEmpty items then
+                    Element.none
+
+                else
+                    column
+                        [ width fill
+                        , alignTop
+                        , spacing <| Theme.rhythm // 2
+                        ]
+                        [ el [ Font.bold ] <| text <| label ++ ":"
+                        , table [ width fill, spacing <| Theme.rhythm // 2 ]
+                            { data =
+                                List.map
+                                    (\line ->
+                                        case String.split " " line of
+                                            [] ->
+                                                ( "", "" )
+
+                                            head :: tail ->
+                                                ( head, String.join " " tail )
+                                    )
+                                    items
+                            , columns =
+                                [ { header = Element.none
+                                  , width = shrink
+                                  , view = \( sign, _ ) -> text sign
+                                  }
+                                , { header = Element.none
+                                  , width = fill
+                                  , view = \( _, tail ) -> Theme.blocks [] tail
+                                  }
+                                ]
+                            }
+                        ]
+
+            beforeBlock : Element msg
+            beforeBlock =
+                [ toColumn "Positives" positives
+                , toColumn "Negatives" negatives
+                ]
+                    |> Theme.row [ width fill ]
+          in
+          column
+            [ width fill
+            , spacing <| Theme.rhythm // 2
+            ]
+            (beforeBlock :: toBlocks mixed)
+        , if String.isEmpty has then
+            Element.none
+
+          else
+            Theme.blocks []
+                ("*" ++ has ++ ".*")
+        ]
 
 
 statsTable : Companion.Details -> Element msg
