@@ -236,32 +236,39 @@ companionBox display selected ({ name } as companion) =
 image : Companion.Details -> Element msg
 image { name, races, hasPerk, cost } =
     let
-        raceLabel : String
-        raceLabel =
-            let
-                joined : String
-                joined =
-                    races
-                        |> List.map View.Race.raceToShortString
-                        |> String.join " - "
-
-                normal : String
-                normal =
+        raceNames : List String
+        raceNames =
+            List.map
+                (\r ->
                     if hasPerk then
-                        joined ++ "+"
+                        View.Race.raceToShortString r ++ "+"
 
                     else
-                        joined
-            in
-            case normal of
-                "Neutral" ->
-                    ""
+                        View.Race.raceToShortString r
+                )
+                races
 
-                "" ->
-                    "Any"
+        raceLabel : List String
+        raceLabel =
+            if
+                (raceNames
+                    |> List.map String.length
+                    |> List.sum
+                )
+                    > 12
+            then
+                raceNames
 
-                _ ->
-                    normal
+            else
+                case String.join " - " raceNames of
+                    "Neutral" ->
+                        []
+
+                    "" ->
+                        [ "Any" ]
+
+                    joined ->
+                        [ joined ]
 
         inFront : List (Element msg)
         inFront =
@@ -277,8 +284,8 @@ image { name, races, hasPerk, cost } =
                     , moveDown 4
                     ]
             , raceLabel
-                |> Theme.gradientText 4 Gradients.yellowGradient
-                |> el
+                |> List.map (\race -> el [ centerX ] (Theme.gradientText 4 Gradients.yellowGradient race))
+                |> Theme.column
                     [ alignBottom
                     , centerX
                     , Font.size 32
