@@ -100,31 +100,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
         , isSelected = isSelected
         , imageAttrs = [ Theme.style "background-position" "top" ]
         , imageHeight = 360
-        , image =
-            case race of
-                RaceJotun ->
-                    Images.typePerkJotun
-
-                RaceXeno ->
-                    Images.typePerkXeno
-
-                RaceSpider ->
-                    Images.typePerkSpider
-
-                RacePixie ->
-                    Images.typePerkPixie
-
-                RaceFairy ->
-                    Images.typePerkFairy
-
-                RaceGenie _ ->
-                    Images.typePerkGenie
-
-                RaceGemini _ ->
-                    Images.typePerkGemini
-
-                _ ->
-                    Types.raceToImage race
+        , image = raceToTypePerkImage race
         , inFront =
             [ raceString
                 |> gradientText 6 Gradients.yellowGradient
@@ -240,6 +216,34 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
         , content = [ Theme.blocks [] content ]
         , onPress = Just ( race, not isSelected )
         }
+
+
+raceToTypePerkImage : Race -> Images.Image
+raceToTypePerkImage race =
+    case race of
+        RaceJotun ->
+            Images.typePerkJotun
+
+        RaceXeno ->
+            Images.typePerkXeno
+
+        RaceSpider ->
+            Images.typePerkSpider
+
+        RacePixie ->
+            Images.typePerkPixie
+
+        RaceFairy ->
+            Images.typePerkFairy
+
+        RaceGenie _ ->
+            Images.typePerkGenie
+
+        RaceGemini _ ->
+            Images.typePerkGemini
+
+        _ ->
+            Types.raceToImage race
 
 
 stringWidth : String -> Float
