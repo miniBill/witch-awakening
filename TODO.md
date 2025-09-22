@@ -1,4 +1,5 @@
 # v2
+- Menu overflow
 - Free rank 2 magic for genies
 - Don't trigger Hybridize for Amalgams
 - Fix factional magic pictures [faction name overlay]
