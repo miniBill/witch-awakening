@@ -235,6 +235,63 @@ companionBox display selected ({ name } as companion) =
 
 image : Companion.Details -> Element msg
 image { name, races, hasPerk, cost } =
+    let
+        raceLabel : String
+        raceLabel =
+            let
+                joined : String
+                joined =
+                    races
+                        |> List.map View.Race.raceToShortString
+                        |> String.join " - "
+
+                normal : String
+                normal =
+                    if hasPerk then
+                        joined ++ "+"
+
+                    else
+                        joined
+            in
+            case normal of
+                "Neutral" ->
+                    ""
+
+                "" ->
+                    "Any"
+
+                _ ->
+                    normal
+
+        inFront : List (Element msg)
+        inFront =
+            [ cost
+                |> Maybe.map String.fromInt
+                |> Maybe.withDefault "X"
+                |> Theme.gradientText 4 Gradients.blueGradient
+                |> el
+                    [ alignRight
+                    , Font.size 32
+                    , Theme.captureIt
+                    , moveLeft 8
+                    , moveDown 4
+                    ]
+            , raceLabel
+                |> Theme.gradientText 4 Gradients.yellowGradient
+                |> el
+                    [ alignBottom
+                    , centerX
+                    , Font.size 32
+                    , Theme.captureIt
+                    ]
+            , cost
+                |> Maybe.map Types.gainToSlot
+                |> Maybe.withDefault Types.SlotWhite
+                |> Types.slotToImage
+                |> Theme.image [ width <| px 40 ]
+                |> el [ moveRight 4 ]
+            ]
+    in
     el
         (width fill
             :: height fill
@@ -246,57 +303,7 @@ image { name, races, hasPerk, cost } =
                 }
             :: Background.image
                 (Types.companionToImage name).src
-            :: List.map Element.inFront
-                [ cost
-                    |> Maybe.map String.fromInt
-                    |> Maybe.withDefault "X"
-                    |> Theme.gradientText 4 Gradients.blueGradient
-                    |> el
-                        [ alignRight
-                        , Font.size 32
-                        , Theme.captureIt
-                        , moveLeft 8
-                        , moveDown 4
-                        ]
-                , let
-                    joined : String
-                    joined =
-                        races
-                            |> List.map View.Race.raceToShortString
-                            |> String.join " - "
-
-                    normal : String
-                    normal =
-                        if hasPerk then
-                            joined ++ "+"
-
-                        else
-                            joined
-                  in
-                  (case normal of
-                    "Neutral" ->
-                        ""
-
-                    "" ->
-                        "Any"
-
-                    _ ->
-                        normal
-                  )
-                    |> Theme.gradientText 4 Gradients.yellowGradient
-                    |> el
-                        [ alignBottom
-                        , centerX
-                        , Font.size 32
-                        , Theme.captureIt
-                        ]
-                , cost
-                    |> Maybe.map Types.gainToSlot
-                    |> Maybe.withDefault Types.SlotWhite
-                    |> Types.slotToImage
-                    |> Theme.image [ width <| px 40 ]
-                    |> el [ moveRight 4 ]
-                ]
+            :: List.map Element.inFront inFront
         )
         Element.none
 
