@@ -405,6 +405,7 @@ You will, naturally, be chosen to drink. You may also do this quest and drink if
 
 ## Quest: Stargazing
 - Slot: Folk
+- Faction: Lunabella
 - Evil Route: True
 - Threat: 1
 - Conflict: 1
