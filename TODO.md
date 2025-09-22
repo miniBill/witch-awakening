@@ -1,29 +1,24 @@
 # v2
-- Menu overflow
-- Free rank 2 magic for genies
+- Add ??? affinity with Cosmic Pearl?
+- An extra little box on that says how much that option will actually move your point total if you take it right now
+- Art credit (include typefaces)
+- Cap vs initial build on the ~same page
+- Check all faction perks implementations
+- Deduplicate ALL the things
+- Doll type perk multicost: 1-4
 - Don't trigger Hybridize for Amalgams
 - Fix factional magic pictures [faction name overlay]
+- Free rank 2 magic for genies
 - Heirloom
 - Mark which magic from Talisman
-
-- Check all faction perks implementations
-
-- The Lodge perk
-
-- Doll type perk multicost: 1-4
-
-- Separate section for elementalist magic
-
-- Write explanation for Hybridize
-- Screenshot
+- Menu overflow
 - Mobile mode
-
-- some quests come with multiple levels of reward points under certain circumstances. (in particular discount goods is supposed to give you a discount on up to three reward points worth of relics, introductions should count for 4 RP if you're buying a companion with them, late fees should give more points "if you write at least a sentence in your build for each book's own particular predicament", and some should give more points if you have other quests selected.)
-- you can select the following quests without meeting their requirements: death racer (you need street racer), pack tactics (you need gone feral), and halloween town (you need special delivery).
-- An extra little box on that says how much that option will actually move your point total if you take it right now
-
 - Multiple classes.
-- Cap vs initial build on the ~same page
-- Deduplicate ALL the things
+- Screenshot
+- Separate section for elementalist magic
 - Slot game modes
-- Art credit (include typefaces)
+- some quests come with multiple levels of reward points under certain circumstances. (in particular discount goods is supposed to give you a discount on up to three reward points worth of relics, introductions should count for 4 RP if you're buying a companion with them, late fees should give more points "if you write at least a sentence in your build for each book's own particular predicament", and some should give more points if you have other quests selected.)
+- The Lodge perk
+- The Relic: Tome of Restore from the Familiar DLC has a prerequisite of Enchantment (a Magic Discipline for the same DLC), which you did not add to your Interactive yet.
+- Write explanation for Hybridize
+- you can select the following quests without meeting their requirements: death racer (you need street racer), pack tactics (you need gone feral), and halloween town (you need special delivery).
