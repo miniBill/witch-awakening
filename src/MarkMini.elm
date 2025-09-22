@@ -20,6 +20,7 @@ type Piece
     | Italic (List Piece)
     | Underlined (List Piece)
     | Bold (List Piece)
+    | Strikethrough (List Piece)
     | Slot Slot
     | Affinity Affinity
     | Class Class
@@ -135,6 +136,10 @@ mainParser =
             |. Parser.symbol "*"
             |= innerParser '*'
             |. Parser.symbol "*"
+        , Parser.succeed Strikethrough
+            |. Parser.symbol "~~"
+            |= innerParser '~'
+            |. Parser.symbol "~~"
         , Parser.succeed parseSquareBrackets
             |. Parser.symbol "["
             |= Parser.getChompedString (Parser.chompWhile <| \c -> c /= ']')
@@ -301,6 +306,7 @@ special =
     [ '_'
     , '"'
     , '*'
+    , '~'
     , '{'
     , '['
     , '\\'

@@ -246,6 +246,10 @@ viewPiece piece =
             Html.u []
                 (List.map viewPiece children)
 
+        Strikethrough children ->
+            Html.s []
+                (List.map viewPiece children)
+
         Bold children ->
             Html.b []
                 (List.map viewPiece children)
