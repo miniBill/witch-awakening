@@ -55,34 +55,8 @@ totalCost model =
 
                         else
                             acc
-
-                    isGemini : Bool
-                    isGemini =
-                        List.any
-                            (\race ->
-                                case race of
-                                    RaceGemini _ ->
-                                        True
-
-                                    _ ->
-                                        False
-                            )
-                            model.races
                 in
-                { power =
-                    if isGemini then
-                        result.power // 2
-
-                    else
-                        result.power
-                , rewardPoints =
-                    if isGemini then
-                        result.rewardPoints // 2
-
-                    else
-                        result.rewardPoints
-                }
-                    |> succeed
+                succeed result
                     |> warningIf result.rewardPoints "Not enough reward points! Try converting some power."
                     |> warningIf result.power
                         (if model.gameMode == Just GameModeStoryArc && not model.capBuild then
