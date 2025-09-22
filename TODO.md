@@ -11,7 +11,7 @@
 - Free rank 2 magic for genies
 - Heirloom
 - Mark which magic from Talisman
-- Menu overflow
+- Menu overflow (on Chrome, no scroll)
 - Mobile mode
 - Multiple classes.
 - Screenshot
