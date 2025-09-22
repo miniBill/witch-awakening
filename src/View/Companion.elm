@@ -478,7 +478,7 @@ scoreToColor p =
 
 
 cellWithLeftBorder : List (Attribute msg) -> String -> Int -> Element msg -> Element msg
-cellWithLeftBorder attrs label leftBorder content =
+cellWithLeftBorder attrs label leftBorder cellContent =
     el
         ([ padding <| Theme.rhythm // 2
          , width fill
@@ -497,7 +497,7 @@ cellWithLeftBorder attrs label leftBorder content =
          ]
             ++ attrs
         )
-        content
+        cellContent
 
 
 statColumn : Int -> Element.Column ( String, Companion.Score, ( Int, Int ) ) msg
@@ -506,7 +506,7 @@ statColumn ranking =
         view : ( String, Companion.Score, ( Int, Int ) ) -> Element msg
         view ( label, rawScore, ( mainColor, otherColor ) ) =
             let
-                ( backgroundColor, attrs, content ) =
+                ( backgroundColor, attrs, cellContent ) =
                     case rawScore of
                         Companion.SpecialEffect { better, worse } ->
                             ( case worse of
@@ -591,7 +591,7 @@ statColumn ranking =
                 )
                 label
                 0
-                content
+                cellContent
     in
     { header = Element.none
     , width = fill
