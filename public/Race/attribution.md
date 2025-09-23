@@ -1,0 +1,3 @@
+- Ifrit: https://www.newgrounds.com/art/view/darevous/anne-bonnie-ghost-rider
+- Siren: https://www.artstation.com/artwork/48exO8
+- Kekubi: https://www.zerochan.net/3346296
