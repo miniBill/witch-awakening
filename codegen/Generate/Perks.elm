@@ -85,6 +85,7 @@ dlcToPerks types perks =
                 , class = types.class.value perk.class
                 , affinity = types.affinity.value perk.element
                 , isMeta = Elm.bool perk.isMeta
+                , requires = Elm.maybe (Maybe.map Elm.string perk.requires)
                 , content =
                     case perk.content of
                         Parsers.Single cost description ->

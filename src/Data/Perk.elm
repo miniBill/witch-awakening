@@ -8,6 +8,7 @@ import Types exposing (RankedPerk)
 type alias Details =
     { name : Perk
     , class : Class
+    , requires : Maybe String
     , affinity : Affinity
     , isMeta : Bool
     , content : Content
@@ -58,6 +59,7 @@ chargeSwap perks =
     in
     { name = PerkChargeSwap race
     , class = ClassWarlock
+    , requires = Nothing
     , affinity = AffinitySoul
     , isMeta = False
     , dlc = Nothing

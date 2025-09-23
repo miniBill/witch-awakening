@@ -206,6 +206,7 @@ type alias Perk =
     { name : String
     , element : String
     , class : String
+    , requires : Maybe String
     , isMeta : Bool
     , content : Content ()
     }
@@ -222,6 +223,7 @@ perk =
     (section "##" "Perk" Perk
         |> requiredItem "Element" Ok
         |> requiredItem "Class" Ok
+        |> maybeItem "Requires" Ok
         |> flagItem "Meta"
         |> parseSection
     )

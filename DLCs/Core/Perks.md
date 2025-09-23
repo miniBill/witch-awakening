@@ -3,9 +3,8 @@
 ## Perk: Oracle
 - Element: Mind
 - Class: Warlock
+- Requires: Divination 4+
 - Cost: 4
-
-_Requires Divination 4+._
 
 You have a greater grasp on your Augury and Foresight spells
 
@@ -66,9 +65,8 @@ You passively emanate an electric aura that fills the air with a harmless sense 
 ## Perk: Conjuration
 - Element: All
 - Class: Academic
+- Requires: Consortation 1+
 - Cost: 6
-
-_Requires Consortation 1+._
 
 You acquire the ability to summon the infernal shopkeeper, Mammon, whose genie-like visage appears as a proxy through which you can order any product that is available for purchase anywhere else on Earth or in Witchdom. He will set an asking price 7x what it would normally be worth (-1x per rank in Consortation). So long as you know that something is sold for human currency somewhere, you can buy it. He accepts cash or barter for objects of monetary value, or Kisses at K1 = $100.
 
@@ -244,9 +242,8 @@ Your witchery is capable of adapting itself to any weapon (rod) and armor or hel
 ## Perk: Menagerie
 - Element: Beast
 - Class: Warlock
+- Requires: Witchery 5
 - Cost: 6
-
-_Requires Witchery 5._
 
 In your pocketspace you gain 75 golden camels, 53 purple peacocks, 95 persian monkeys, 429 homunculi (synthetic humans) slaves, servants, and flunkies. 60 elephants, 231 llamas galore, 9 bears and lions. 40 holy sages (Real human spirits bound to your pocketspace that dedicated their lives to witches past) as scholars and philosophers though their information is a few millennia out of date. 1,000 birds of exotic varieties. You house them all in an elaborate palace complex the size of a small city that appears in your pocketspace, in a design of your choosing. Objects and wealth are false matter, but the creatures are real and can survive on false matter creations.
 
@@ -387,9 +384,8 @@ Rod improvements stack with Improved Rod. If you have _Mythril Armor_, its prote
 - Element: Soul
 - Class: Sorceress
 - Meta: True
+- Requires: Witchery 5
 - Cost: 6
-
-_Requires Witchery 5_.
 
 Improves your pocketspace. Take _Time Stop Chill Zone_ by Rosanon [https://imgchest.com/p/9p4nlwj57nq] or _Solitude_ by Acheld [https://moreinteractivecyoas.neocities.org/cyoas/solitude/], or _The Village_ [https://imgchest.com/p/qb4zk9mg4jm], and apply your choices to your pocketspace. Can add one of the others as well for +3p/each, melding relevant options together as appropriate. Time stopping likewise stops your power growth rate, though you could increase your skilled usage of what you already have. Ignore Solitude’s limit. Entrance Methods work independently of how you normally enter pocketspace. ZoneBook applies as normal to other witches with this perk. Some options may be redundant. Options remain limited to within the pocketspace. Can take Village repeatedly, creating new regions Make up your own job(s).
 
@@ -422,9 +418,8 @@ Options that grant or could grant power, such as Armory or Lab Sigma, cannot exc
 - Element: Soul
 - Class: Warlock
 - Meta: True
+- Requires: Familiarity 5
 - Costs: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
-
-_Requires Familiarity 5._
 
 Your familiar evolves an extraordinarily rare and unique new form it can transform into. Design your familiar’s new form using _Familiars Company by McPuffins88_. [https://imgur.com/a/MhcGxMk]. Ignore the starting points, and instead gain 2 points per Power point you spend on this perk. Anything in Familiars Company overrides anything mentioned by Familiarity, but only applies when in this form. It still keeps its other forms. “Chassis Modifiers” and “Traits” can affect other forms it has at your choice Equipment choices disappear and reappear as it assumes or sheds its form. “New Found Land” is instead a portal to a private realm. “Depths Below” is an ORC operation, and other translations.
 
