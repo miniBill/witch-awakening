@@ -8,12 +8,12 @@
 - Doll type perk multicost: 1-4
 - Don't trigger Hybridize for Amalgams
 - Fix factional magic pictures [faction name overlay]
-- Free rank 2 magic for genies
 - Heirloom
 - Mark which magic from Talisman
 - Menu overflow (on Chrome, no scroll)
 - Mobile mode
 - Multiple classes.
+- Relic Points gained from Body Refinement 5 (not showing up in interactive).
 - Screenshot
 - Separate section for elementalist magic
 - Slot game modes

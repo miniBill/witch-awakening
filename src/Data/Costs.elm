@@ -12,7 +12,7 @@ import Data.Costs.Race
 import Data.Costs.Relics
 import Data.Costs.TypePerks
 import Data.Costs.Utils as Utils exposing (Points, zero)
-import Generated.Types exposing (GameMode(..), Race(..))
+import Generated.Types exposing (GameMode(..))
 import Types exposing (Model)
 
 

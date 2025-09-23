@@ -31,119 +31,117 @@ value { ignoreSorceressBonus } model =
         affinities : AffinityList
         affinities =
             Affinity.fromModel model
-    in
-    Generated.Magic.all
-        |> List.sortBy
-            (\magic ->
-                if magic.faction /= Nothing then
-                    2
 
-                else if magic.isElementalism then
-                    1
+        pointsList : List { name : String, rank : Int, points : Int, isElementalism : Bool, inAffinity : InAffinity }
+        pointsList =
+            Generated.Magic.all
+                |> List.sortBy
+                    (\magic ->
+                        if magic.faction /= Nothing then
+                            2
 
-                else
-                    0
-            )
-        |> List.filterMap (magicValue model affinities)
-        |> Monad.combine
-        |> Monad.andThen
-            (\pointsList ->
-                let
-                    free : Dict String String
-                    free =
-                        case ( model.class, ignoreSorceressBonus, model.capBuild ) of
-                            ( Just ClassSorceress, False, _ ) ->
-                                case
-                                    pointsList
-                                        |> List.filter (\{ isElementalism, inAffinity } -> isElementalism && inAffinity /= OffAffinity)
-                                        |> List.Extra.minimumBy .points
-                                of
-                                    Just magic ->
-                                        Dict.singleton magic.name "[Sorceress]"
-
-                                    Nothing ->
-                                        Dict.empty
-
-                            ( Just ClassAcademic, _, True ) ->
-                                pointsList
-                                    |> List.sortBy .points
-                                    |> List.take 2
-                                    |> List.map (\magic -> ( magic.name, "[Academic]" ))
-                                    |> Dict.fromList
-
-                            _ ->
-                                Dict.empty
-
-                    jackOfAllWarning : Maybe String
-                    jackOfAllWarning =
-                        if List.any (\p -> p.name == PerkJackOfAll) model.perks then
-                            case
-                                List.filterMap
-                                    (\m ->
-                                        if m.rank == 5 then
-                                            Just (Types.magicToString m.name)
-
-                                        else
-                                            Nothing
-                                    )
-                                    model.magic
-                            of
-                                [] ->
-                                    Nothing
-
-                                forbidden ->
-                                    Just ("If you have Jack-of-All you can't have rank 5 magic - you have selected " ++ String.join ", " forbidden)
+                        else if magic.isElementalism then
+                            1
 
                         else
-                            Nothing
+                            0
+                    )
+                |> List.filterMap (magicValue model affinities)
 
-                    offAffinityWarning : Maybe String
-                    offAffinityWarning =
-                        if model.class == Just ClassSorceress then
-                            Nothing
+        free : Dict String String
+        free =
+            case ( model.class, ignoreSorceressBonus, model.capBuild ) of
+                ( Just ClassSorceress, False, _ ) ->
+                    case
+                        pointsList
+                            |> List.filter (\{ isElementalism, inAffinity } -> isElementalism && inAffinity /= OffAffinity)
+                            |> List.Extra.minimumBy .points
+                    of
+                        Just magic ->
+                            Dict.singleton magic.name "[Sorceress]"
 
-                        else
-                            case List.filter (\magic -> magic.isElementalism && magic.inAffinity == OffAffinity) pointsList of
-                                [] ->
-                                    Nothing
+                        Nothing ->
+                            Dict.empty
 
-                                [ _ ] ->
-                                    Nothing
+                ( Just ClassAcademic, _, True ) ->
+                    pointsList
+                        |> List.sortBy .points
+                        |> List.take 2
+                        |> List.map (\magic -> ( magic.name, "[Academic]" ))
+                        |> Dict.fromList
 
-                                list ->
-                                    Just ("Multiple off-affinity elementalism magics are only allowed for Sorceresses. Found: " ++ String.join ", " (List.map .name list))
-                in
-                pointsList
-                    |> Monad.mapAndSum
-                        (\{ name, rank, points } ->
-                            let
-                                label : String
-                                label =
-                                    name ++ " " ++ String.fromInt rank
-                            in
-                            case Dict.get name free of
-                                Just reason ->
-                                    0
-                                        |> Monad.succeed
-                                        |> Monad.withInfo
-                                            { label = label
-                                            , anchor = Just name
-                                            , value = Monad.FreeBecause reason
-                                            }
+                _ ->
+                    Dict.empty
 
-                                Nothing ->
-                                    points
-                                        |> Monad.succeed
-                                        |> Monad.withInfo
-                                            { label = label
-                                            , anchor = Just name
-                                            , value = Monad.Power points
-                                            }
+        jackOfAllWarning : Maybe String
+        jackOfAllWarning =
+            if List.any (\p -> p.name == PerkJackOfAll) model.perks then
+                case
+                    List.filterMap
+                        (\m ->
+                            if m.rank == 5 then
+                                Just (Types.magicToString m.name)
+
+                            else
+                                Nothing
                         )
-                    |> Monad.map Utils.powerToPoints
-                    |> Monad.withWarningMaybe offAffinityWarning
-                    |> Monad.withWarningMaybe jackOfAllWarning
+                        model.magic
+                of
+                    [] ->
+                        Nothing
+
+                    forbidden ->
+                        Just ("If you have Jack-of-All you can't have rank 5 magic - you have selected " ++ String.join ", " forbidden)
+
+            else
+                Nothing
+
+        offAffinityWarning : Maybe String
+        offAffinityWarning =
+            if model.class == Just ClassSorceress then
+                Nothing
+
+            else
+                case List.filter (\magic -> magic.isElementalism && magic.inAffinity == OffAffinity) pointsList of
+                    [] ->
+                        Nothing
+
+                    [ _ ] ->
+                        Nothing
+
+                    list ->
+                        Just ("Multiple off-affinity elementalism magics are only allowed for Sorceresses. Found: " ++ String.join ", " (List.map .name list))
+    in
+    pointsList
+        |> Monad.mapAndSum
+            (\{ name, rank, points } ->
+                let
+                    label : String
+                    label =
+                        name ++ " " ++ String.fromInt rank
+                in
+                case Dict.get name free of
+                    Just reason ->
+                        0
+                            |> Monad.succeed
+                            |> Monad.withInfo
+                                { label = label
+                                , anchor = Just name
+                                , value = Monad.FreeBecause reason
+                                }
+
+                    Nothing ->
+                        points
+                            |> Monad.succeed
+                            |> Monad.withInfo
+                                { label = label
+                                , anchor = Just name
+                                , value = Monad.Power points
+                                }
             )
+        |> Monad.map Utils.powerToPoints
+        |> Monad.withWarningMaybe offAffinityWarning
+        |> Monad.withWarningMaybe jackOfAllWarning
 
 
 magicValue :
@@ -158,14 +156,12 @@ magicValue :
     -> Magic.Details
     ->
         Maybe
-            (Monad
-                { name : String
-                , rank : Int
-                , points : Int
-                , isElementalism : Bool
-                , inAffinity : InAffinity
-                }
-            )
+            { name : String
+            , rank : Int
+            , points : Int
+            , isElementalism : Bool
+            , inAffinity : InAffinity
+            }
 magicValue model affinities magicDetails =
     model.magic
         |> List.Extra.find (\rankedMagic -> magicDetails.name == rankedMagic.name)
@@ -192,50 +188,45 @@ magicValue model affinities magicDetails =
                                         False
                             )
                             model.races
+
+                    inFaction : InFaction
+                    inFaction =
+                        isInFaction model magicDetails
+
+                    inClass : Bool
+                    inClass =
+                        (magicDetails.class == model.class)
+                            && (model.class /= Nothing)
+
+                    finalCost : Int
+                    finalCost =
+                        List.range
+                            (if
+                                isGenie
+                                    && (magicDetails.dlc == Nothing || magicDetails.faction /= Nothing)
+                             then
+                                -- Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free
+                                3
+
+                             else
+                                1
+                            )
+                            rankedMagic.rank
+                            |> List.map
+                                (\rank ->
+                                    rank
+                                        |> factionDiscountIf inFaction
+                                        |> affinityDiscountIf inAffinity
+                                )
+                            |> List.sum
+                            |> classDiscountIf inClass
                 in
-                (-- Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free
-                 if isGenie && magicDetails.dlc == Nothing && rankedMagic.rank <= 2 then
-                    Monad.succeed 0
-
-                 else
-                    let
-                        inFaction : InFaction
-                        inFaction =
-                            isInFaction model magicDetails
-
-                        inClass : Bool
-                        inClass =
-                            (magicDetails.class == model.class)
-                                && (model.class /= Nothing)
-
-                        raw : Int
-                        raw =
-                            List.range 1 rankedMagic.rank
-                                |> List.map
-                                    (\rank ->
-                                        rank
-                                            |> factionDiscountIf inFaction
-                                            |> affinityDiscountIf inAffinity
-                                    )
-                                |> List.sum
-                                |> classDiscountIf inClass
-                    in
-                    if isGenie && magicDetails.dlc == Nothing then
-                        Monad.succeed raw
-                            |> Monad.withWarning "Free rank 2 magic for Genie half-implemented"
-
-                    else
-                        Monad.succeed raw
-                )
-                    |> Monad.map
-                        (\finalCost ->
-                            { name = name
-                            , rank = rankedMagic.rank
-                            , points = -finalCost
-                            , isElementalism = magicDetails.isElementalism
-                            , inAffinity = inAffinity
-                            }
-                        )
+                { name = name
+                , rank = rankedMagic.rank
+                , points = -finalCost
+                , isElementalism = magicDetails.isElementalism
+                , inAffinity = inAffinity
+                }
             )
 
 
