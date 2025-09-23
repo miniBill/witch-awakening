@@ -11,6 +11,7 @@
 - Menu doesn't scroll on Chrome
 - some quests come with multiple levels of reward points under certain circumstances. (in particular discount goods is supposed to give you a discount on up to three reward points worth of relics, introductions should count for 4 RP if you're buying a companion with them, late fees should give more points "if you write at least a sentence in your build for each book's own particular predicament", and some should give more points if you have other quests selected.)
 - The Lodge perk
+- Finite option for the Compulsion drawback
 
 # Checks
 - Check all faction perks implementations
