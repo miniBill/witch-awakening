@@ -288,11 +288,11 @@ When you awaken you’ll be reborn in my world. Your Earth will exist in its own
 ## Perk: Heritage
 - Element: All
 - Class: Sorceress
-- Cost: 4
+- Costs: 4, 0, -4
 
 Choose a relative. They are a witch as well, either not yet awakened or awakened long ago and have been waiting to see your awakening. If you have Isekai’d, it can be a late relative who was isekai’d themselves, or isekai any relative now or later. Sharing your lineage, they have a strong magic tier. Choose up to 50 power for them to have and design a build for them. You can also invest your own Power on their behalf. You can take them as a Companion for [4] undiscounted unless you invested [4] or more already. This is redundant if you cooperate with a relative (or friend) to make independent coexisting builds.
 
-Alternatively, or additionally, If you have Isekai’d, you and another player can choose to be made related and both gain [4] Power.
+Alternatively, or additionally - if you have Isekai’d, you and another player can choose to be made related and both gain [4] Power.
 
 
 ## Perk: Magic Friendship
