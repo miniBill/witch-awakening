@@ -32,7 +32,15 @@ value { ignoreSorceressBonus } model =
         affinities =
             Affinity.fromModel model
 
-        pointsList : List { name : String, rank : Int, points : Int, isElementalism : Bool, inAffinity : InAffinity }
+        pointsList :
+            List
+                { name : String
+                , rank : Int
+                , power : Int
+                , rewardPoints : Int
+                , isElementalism : Bool
+                , inAffinity : InAffinity
+                }
         pointsList =
             Generated.Magic.all
                 |> List.sortBy
@@ -55,7 +63,7 @@ value { ignoreSorceressBonus } model =
                     case
                         pointsList
                             |> List.filter (\{ isElementalism, inAffinity } -> isElementalism && inAffinity /= OffAffinity)
-                            |> List.Extra.minimumBy .points
+                            |> List.Extra.minimumBy .power
                     of
                         Just magic ->
                             Dict.singleton magic.name "[Sorceress]"
@@ -65,7 +73,7 @@ value { ignoreSorceressBonus } model =
 
                 ( Just ClassAcademic, _, True ) ->
                     pointsList
-                        |> List.sortBy .points
+                        |> List.sortBy .power
                         |> List.take 2
                         |> List.map (\magic -> ( magic.name, "[Academic]" ))
                         |> Dict.fromList
@@ -113,8 +121,8 @@ value { ignoreSorceressBonus } model =
                         Just ("Multiple off-affinity elementalism magics are only allowed for Sorceresses. Found: " ++ String.join ", " (List.map .name list))
     in
     pointsList
-        |> Monad.mapAndSum
-            (\{ name, rank, points } ->
+        |> List.map
+            (\{ name, rank, power, rewardPoints } ->
                 let
                     label : String
                     label =
@@ -122,7 +130,9 @@ value { ignoreSorceressBonus } model =
                 in
                 case Dict.get name free of
                     Just reason ->
-                        0
+                        { power = 0
+                        , rewardPoints = rewardPoints
+                        }
                             |> Monad.succeed
                             |> Monad.withInfo
                                 { label = label
@@ -131,15 +141,17 @@ value { ignoreSorceressBonus } model =
                                 }
 
                     Nothing ->
-                        points
+                        { power = power
+                        , rewardPoints = rewardPoints
+                        }
                             |> Monad.succeed
                             |> Monad.withInfo
                                 { label = label
                                 , anchor = Just name
-                                , value = Monad.Power points
+                                , value = Monad.Power power
                                 }
             )
-        |> Monad.map Utils.powerToPoints
+        |> Utils.combineAndSum
         |> Monad.withWarningMaybe offAffinityWarning
         |> Monad.withWarningMaybe jackOfAllWarning
 
@@ -158,7 +170,8 @@ magicValue :
         Maybe
             { name : String
             , rank : Int
-            , points : Int
+            , power : Int
+            , rewardPoints : Int
             , isElementalism : Bool
             , inAffinity : InAffinity
             }
@@ -198,8 +211,7 @@ magicValue model affinities magicDetails =
                         (magicDetails.class == model.class)
                             && (model.class /= Nothing)
 
-                    finalCost : Int
-                    finalCost =
+                    ( finalCost, rewardPoints ) =
                         List.range
                             (if
                                 isGenie
@@ -214,16 +226,29 @@ magicValue model affinities magicDetails =
                             rankedMagic.rank
                             |> List.map
                                 (\rank ->
-                                    rank
+                                    ( rank
                                         |> factionDiscountIf inFaction
                                         |> affinityDiscountIf inAffinity
+                                    , if rankedMagic.name == MagicBodyRefinement && rank >= 3 then
+                                        5
+
+                                      else
+                                        0
+                                    )
                                 )
-                            |> List.sum
-                            |> classDiscountIf inClass
+                            |> List.unzip
+                            |> Tuple.mapBoth
+                                (\ps ->
+                                    ps
+                                        |> List.sum
+                                        |> classDiscountIf inClass
+                                )
+                                List.sum
                 in
                 { name = name
                 , rank = rankedMagic.rank
-                , points = -finalCost
+                , power = -finalCost
+                , rewardPoints = rewardPoints
                 , isElementalism = magicDetails.isElementalism
                 , inAffinity = inAffinity
                 }

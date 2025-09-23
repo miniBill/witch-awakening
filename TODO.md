@@ -1,5 +1,4 @@
 # v2
-- Add ??? affinity with Cosmic Pearl?
 - An extra little box on that says how much that option will actually move your point total if you take it right now
 - Art credit (include typefaces)
 - Cap vs initial build on the ~same page
@@ -13,7 +12,6 @@
 - Menu overflow (on Chrome, no scroll)
 - Mobile mode
 - Multiple classes.
-- Relic Points gained from Body Refinement 5 (not showing up in interactive).
 - Screenshot
 - Separate section for elementalist magic
 - Slot game modes
