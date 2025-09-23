@@ -331,6 +331,15 @@ viewCalculations model power warnings affinities =
                         )
                     |> Theme.column [ width fill ]
               )
+            , section [ alignBottom ] "Meta options"
+            , ( "Hide meta"
+              , Input.checkbox [ width fill ]
+                    { onChange = HideMeta
+                    , icon = Input.defaultCheckbox
+                    , label = Input.labelRight [ width fill ] (text "Hide Meta options")
+                    , checked = model.hideMeta
+                    }
+              )
             ]
     in
     Element.Keyed.column

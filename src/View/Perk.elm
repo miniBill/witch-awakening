@@ -20,13 +20,19 @@ import View
 import View.Race
 
 
-viewPerks : Set String -> Display -> Maybe Race -> List Race -> List RankedPerk -> Element Choice
-viewPerks hideDLC display mainRace races perks =
+viewPerks : Set String -> Bool -> Display -> Maybe Race -> List Race -> List RankedPerk -> Element Choice
+viewPerks hideDLC hideMeta display mainRace races perks =
     let
         filtered : List Perk.Details
         filtered =
-            Generated.Perk.all perks
-                |> View.filterDLC hideDLC
+            if hideMeta then
+                Generated.Perk.all perks
+                    |> List.filter (\perk -> not perk.isMeta)
+                    |> View.filterDLC hideDLC
+
+            else
+                Generated.Perk.all perks
+                    |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then
         Element.none

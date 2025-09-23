@@ -154,6 +154,9 @@ update msg model =
             else
                 ( { model | hideDLCs = Set.insert name model.hideDLCs }, Cmd.none )
 
+        HideMeta hideMeta ->
+            ( { model | hideMeta = hideMeta }, Cmd.none )
+
         Nop ->
             ( model, Cmd.none )
 
@@ -559,6 +562,7 @@ parseUrl navKey url =
         }
     , expandedMenuSections = Set.empty
     , hideDLCs = Set.empty
+    , hideMeta = False
     }
 
 
@@ -635,7 +639,7 @@ innerView model =
                 , Element.Lazy.lazy3 Complications.viewComplications model.hideDLCs model.complicationsDisplay model.complications
                 , Element.Lazy.lazy4 TypePerk.viewTypePerks model.hideDLCs model.races model.typePerksDisplay model.typePerks
                 , Element.Lazy.lazy3 Magic.viewMagics model.hideDLCs model.magicDisplay model.magic
-                , Element.Lazy.lazy5 Perk.viewPerks model.hideDLCs model.perksDisplay model.mainRace model.races model.perks
+                , Element.Lazy.lazy6 Perk.viewPerks model.hideDLCs model.hideMeta model.perksDisplay model.mainRace model.races model.perks
                 , Element.Lazy.lazy3 Faction.viewFaction model.hideDLCs model.factionDisplay model.faction
                 , Element.Lazy.lazy3 FactionalMagic.viewFactionalMagics model.hideDLCs model.factionalMagicDisplay model.magic
                 , Element.Lazy.lazy3 Companion.viewCompanions model.hideDLCs model.companionsDisplay model.companions

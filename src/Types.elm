@@ -15,6 +15,7 @@ type Msg
     | CompactAll
     | ExpandAll
     | ShowDLC String Bool
+    | HideMeta Bool
     | Nop
 
 
@@ -89,6 +90,7 @@ type alias Model key =
     , cosmicPearl : CosmicPearlData
     , expandedMenuSections : Set String
     , hideDLCs : Set String
+    , hideMeta : Bool
     }
 
 
