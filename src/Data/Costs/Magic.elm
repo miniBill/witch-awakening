@@ -6,6 +6,7 @@ import Data.Costs.Utils as Utils exposing (Points, affinityDiscountIf)
 import Data.Magic as Magic
 import Dict exposing (Dict)
 import Generated.Magic
+import Generated.TypePerk
 import Generated.Types as Types exposing (Class(..), Faction, Magic(..), Perk(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
@@ -35,6 +36,7 @@ value { ignoreSorceressBonus } model =
         pointsList :
             List
                 { name : String
+                , freeRankFromRace : Maybe ( Int, Race )
                 , rank : Int
                 , power : Int
                 , rewardPoints : Int
@@ -56,30 +58,59 @@ value { ignoreSorceressBonus } model =
                     )
                 |> List.filterMap (magicValue model affinities)
 
-        free : Dict String String
-        free =
-            case ( model.class, ignoreSorceressBonus, model.capBuild ) of
-                ( Just ClassSorceress, False, _ ) ->
-                    case
+        freeFromClass : Dict String String
+        freeFromClass =
+            case model.class of
+                Just ClassSorceress ->
+                    if ignoreSorceressBonus then
+                        Dict.empty
+
+                    else
+                        case
+                            pointsList
+                                |> List.filter (\{ isElementalism, inAffinity } -> isElementalism && inAffinity /= OffAffinity)
+                                |> List.Extra.minimumBy .power
+                        of
+                            Just magic ->
+                                Dict.singleton magic.name "[Sorceress]"
+
+                            Nothing ->
+                                Dict.empty
+
+                Just ClassAcademic ->
+                    if model.capBuild then
                         pointsList
-                            |> List.filter (\{ isElementalism, inAffinity } -> isElementalism && inAffinity /= OffAffinity)
-                            |> List.Extra.minimumBy .power
-                    of
-                        Just magic ->
-                            Dict.singleton magic.name "[Sorceress]"
+                            |> List.sortBy .power
+                            |> List.take 2
+                            |> List.map (\magic -> ( magic.name, "[Academic]" ))
+                            |> Dict.fromList
 
-                        Nothing ->
-                            Dict.empty
-
-                ( Just ClassAcademic, _, True ) ->
-                    pointsList
-                        |> List.sortBy .power
-                        |> List.take 2
-                        |> List.map (\magic -> ( magic.name, "[Academic]" ))
-                        |> Dict.fromList
+                    else
+                        Dict.empty
 
                 _ ->
                     Dict.empty
+
+        freeFromRace : Dict String String
+        freeFromRace =
+            pointsList
+                |> List.filterMap
+                    (\magic ->
+                        magic.freeRankFromRace
+                            |> Maybe.andThen
+                                (\( freeRank, freeRace ) ->
+                                    if magic.rank <= freeRank then
+                                        Just ( magic.name, "[" ++ Types.raceToString freeRace ++ "]" )
+
+                                    else
+                                        Nothing
+                                )
+                    )
+                |> Dict.fromList
+
+        free : Dict String String
+        free =
+            Dict.union freeFromClass freeFromRace
 
         jackOfAllWarning : Maybe String
         jackOfAllWarning =
@@ -170,6 +201,7 @@ magicValue :
         Maybe
             { name : String
             , rank : Int
+            , freeRankFromRace : Maybe ( Int, Race )
             , power : Int
             , rewardPoints : Int
             , isElementalism : Bool
@@ -189,19 +221,6 @@ magicValue model affinities magicDetails =
                     inAffinity =
                         Affinity.isInAffinity magicDetails.affinities affinities
 
-                    isGenie : Bool
-                    isGenie =
-                        List.any
-                            (\race ->
-                                case race of
-                                    RaceGenie _ ->
-                                        True
-
-                                    _ ->
-                                        False
-                            )
-                            model.races
-
                     inFaction : InFaction
                     inFaction =
                         isInFaction model magicDetails
@@ -211,17 +230,18 @@ magicValue model affinities magicDetails =
                         (magicDetails.class == model.class)
                             && (model.class /= Nothing)
 
+                    freeRankFromRace : Maybe ( Int, Race )
+                    freeRankFromRace =
+                        freeRankFromRaceOrTypePerk model magicDetails rankedMagic
+
                     ( finalCost, rewardPoints ) =
                         List.range
-                            (if
-                                isGenie
-                                    && (magicDetails.dlc == Nothing || magicDetails.faction /= Nothing)
-                             then
-                                -- Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free
-                                3
+                            (case freeRankFromRace of
+                                Nothing ->
+                                    1
 
-                             else
-                                1
+                                Just ( r, _ ) ->
+                                    r + 1
                             )
                             rankedMagic.rank
                             |> List.map
@@ -247,11 +267,78 @@ magicValue model affinities magicDetails =
                 in
                 { name = name
                 , rank = rankedMagic.rank
+                , freeRankFromRace = freeRankFromRace
                 , power = -finalCost
                 , rewardPoints = rewardPoints
                 , isElementalism = magicDetails.isElementalism
                 , inAffinity = inAffinity
                 }
+            )
+
+
+freeRankFromRaceOrTypePerk :
+    { a
+        | faction : Maybe ( Faction, Bool )
+        , class : Maybe Class
+        , typePerks : List Race
+        , magic : List RankedMagic
+        , races : List Race
+    }
+    -> Magic.Details
+    -> { name : Magic, rank : Int }
+    -> Maybe ( Int, Race )
+freeRankFromRaceOrTypePerk model magicDetails rankedMagic =
+    let
+        asGenie : Maybe Race
+        asGenie =
+            List.Extra.find
+                (\race ->
+                    case race of
+                        RaceGenie _ ->
+                            True
+
+                        _ ->
+                            False
+                )
+                model.races
+    in
+    case
+        asGenie
+    of
+        Just race ->
+            if magicDetails.dlc == Nothing || magicDetails.faction /= Nothing then
+                -- Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free
+                Just ( 2, race )
+
+            else
+                fromTypePerk model rankedMagic.name
+
+        Nothing ->
+            fromTypePerk model rankedMagic.name
+
+
+fromTypePerk : { a | typePerks : List Race } -> Magic -> Maybe ( Int, Race )
+fromTypePerk model magic =
+    model.typePerks
+        |> List.Extra.findMap
+            (\race ->
+                List.Extra.findMap
+                    (\typePerk ->
+                        if typePerk.race == race then
+                            List.Extra.findMap
+                                (\ranked ->
+                                    if ranked.name == magic then
+                                        Just ( ranked.rank, race )
+
+                                    else
+                                        Nothing
+                                )
+                                typePerk.gain
+
+                        else
+                            Nothing
+                    )
+                    Generated.TypePerk.all
             )
 
 
