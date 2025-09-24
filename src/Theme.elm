@@ -8,7 +8,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Generated.Affinity
 import Generated.Classes
-import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Slot(..), raceToImage)
+import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Slot(..))
 import Gradients
 import Hex
 import Html exposing (Html)
@@ -316,11 +316,16 @@ viewPiece piece =
                 ]
                 [ Html.text "✅" ]
 
-        JackOfAll ->
-            Html.span
-                [ Html.Attributes.style "font-size" "1.2em"
+        Perk perk ->
+            Html.div
+                [ Html.Attributes.style "width" "30px"
+                , Html.Attributes.style "height" "30px"
+                , Html.Attributes.style "border-radius" "30px"
+                , Html.Attributes.style "background-size" "cover"
+                , Html.Attributes.style "background-image"
+                    ("url(\"" ++ (Types.perkToImage perk).src ++ "\")")
                 ]
-                [ Html.text "🃏" ]
+                []
 
         Affinity affinity ->
             viewAffinityBadge affinity
@@ -335,7 +340,7 @@ viewPiece piece =
                 , Html.Attributes.style "border-radius" "30px"
                 , Html.Attributes.style "background-size" "cover"
                 , Html.Attributes.style "background-image"
-                    ("url(\"" ++ (raceToImage race).src ++ "\")")
+                    ("url(\"" ++ (Types.raceToImage race).src ++ "\")")
                 ]
                 []
 

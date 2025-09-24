@@ -1,6 +1,6 @@
 module MarkMini exposing (Block(..), Color(..), Piece(..), blockParser)
 
-import Generated.Types as Types exposing (Affinity, Class(..), Race, Slot(..))
+import Generated.Types as Types exposing (Affinity, Class(..), Perk, Race, Slot(..))
 import List.Extra
 import Parser exposing ((|.), (|=), Parser)
 import Result.Extra
@@ -25,7 +25,7 @@ type Piece
     | Affinity Affinity
     | Class Class
     | Race Race
-    | JackOfAll
+    | Perk Perk
     | Star
     | Text String
     | Link String
@@ -237,6 +237,9 @@ parseSquareBrackets str =
                 Types.raceFromString input
                     |> Maybe.map Race
             , \input ->
+                Types.perkFromString input
+                    |> Maybe.map Perk
+            , \input ->
                 if String.startsWith "http" input then
                     Just (Link input)
 
@@ -267,9 +270,6 @@ parseSquareBrackets str =
 
                 ( "All", _ ) ->
                     Affinity Types.AffinityAll
-
-                ( "Jack-of-All", _ ) ->
-                    JackOfAll
 
                 ( _, "star" ) ->
                     Star
