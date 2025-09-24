@@ -699,7 +699,7 @@ card attrs config =
                         width <| Element.minimum 500 fill
 
                       else
-                        width <| Element.minimum 320 <| Element.maximum 400 fill
+                        width <| Element.minimum 300 <| Element.maximum 400 fill
                     ]
 
                 imageSizeAttrs : List (Attribute msg)
