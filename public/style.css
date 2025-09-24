@@ -110,3 +110,11 @@ a.link {
 .centerWrap > div.wrp {
     justify-content: center !important;
 }
+@media (max-width: 500px) {
+    .smol {
+        max-width: calc(100vw - 100px);
+        overflow: scroll;
+        min-height: 160px !important;
+        border: 3px solid red;
+    }
+}

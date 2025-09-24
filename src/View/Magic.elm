@@ -1,7 +1,7 @@
 module View.Magic exposing (magicBox, viewMagics)
 
 import Data.Magic as Magic exposing (Affinities(..))
-import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveUp, px, rgb, rgba, width)
+import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveUp, paragraph, px, rgb, rgba, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -38,15 +38,14 @@ viewMagics hideDLC display selected =
             ChoiceMagic
             "# The Magic"
             [ Theme.blocks [] intro
-            , Theme.wrappedRow [ width fill ]
-                [ costTable
-                    |> Element.html
-                    |> el
-                        [ centerX
-                        , Background.color <| rgb 1 1 1
-                        , Font.color <| rgb 0 0 0
-                        ]
-                ]
+            , costTable
+                |> Element.html
+                |> el
+                    [ Background.color <| rgb 1 1 1
+                    , Font.color <| rgb 0 0 0
+                    , centerX
+                    , Element.htmlAttribute (Html.Attributes.class "smol")
+                    ]
             , Theme.blocks
                 [ width <| Element.maximum 600 fill
                 , centerX
@@ -108,6 +107,7 @@ elementalIntro : Element msg
 elementalIntro =
     Theme.row
         (Theme.padding
+            :: width fill
             :: Theme.topBackground Images.magicElementalism
         )
         [ let
@@ -117,7 +117,7 @@ elementalIntro =
           in
           Theme.column
             [ Theme.padding
-            , width <| Element.minimum 480 <| fillPortion 1
+            , width <| Element.minimum 200 <| Element.maximum 600 <| fillPortion 1
             , Background.color color
             , Border.shadow
                 { offset = ( 0, 0 )
@@ -126,16 +126,21 @@ elementalIntro =
                 , color = color
                 }
             ]
-            [ el
-                [ Font.size 58
-                , Theme.morpheus
-                , Theme.style "letter-spacing" ".15em"
-                ]
-              <|
-                Theme.gradientText 4 Gradients.blueGradient "Elementalism"
+            [ "Elementalism"
+                |> String.toList
+                |> List.map
+                    (\c ->
+                        c
+                            |> String.fromChar
+                            |> Theme.gradientText 4 Gradients.blueGradient
+                    )
+                |> paragraph
+                    [ Font.size 58
+                    , Theme.morpheus
+                    , Theme.style "letter-spacing" ".15em"
+                    ]
             , Theme.blocks [] elementalismIntro
             ]
-        , el [ width <| fillPortion 3 ] Element.none
         ]
 
 
@@ -283,13 +288,13 @@ magicBox display factional selected index details =
         Element.none
 
     else if modBy 2 index == 0 || factional then
-        Theme.row [ Theme.id (Types.magicToString details.name) ]
+        Theme.wrappedRow [ Theme.id (Types.magicToString details.name) ]
             [ magicImage details
             , viewContent display selected details
             ]
 
     else
-        Theme.row [ Theme.id (Types.magicToString details.name) ]
+        Theme.wrappedRow [ Theme.id (Types.magicToString details.name) ]
             [ viewContent display selected details
             , magicImage details
             ]
@@ -298,8 +303,8 @@ magicBox display factional selected index details =
 magicImage : { a | name : Magic } -> Element msg
 magicImage { name } =
     el
-        [ height fill
-        , width <| px 320
+        [ height <| Element.minimum 280 fill
+        , width <| Element.minimum 280 <| Element.maximum 320 fill
         , Background.image (Types.magicToImage name).src
         ]
         Element.none
@@ -316,7 +321,7 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
         msg =
             Maybe.map (\s -> ( s, False )) isSelected
     in
-    Theme.maybeButton [ width fill ]
+    Theme.maybeButton [ width <| Element.minimum 200 fill ]
         { label =
             Theme.column
                 [ width fill
@@ -376,15 +381,18 @@ magicTitle display { name, hasRankZero, class, affinities } =
 
               else
                 Element.none
-            , Types.magicToString name
-                |> Theme.gradientText 4 Gradients.yellowGradient
-                |> el []
             ]
+                ++ (Types.magicToString name
+                        |> String.split "-"
+                        |> List.intersperse "-"
+                        |> List.concatMap (\s -> s |> String.split " " |> List.intersperse " ")
+                        |> List.map (Theme.gradientText 4 Gradients.yellowGradient)
+                   )
 
         affinitiesViews : List (Element msg)
         affinitiesViews =
             if display == DisplayFull then
-                [ viewAffinities affinities ]
+                viewAffinities affinities
 
             else
                 []
@@ -399,7 +407,7 @@ magicTitle display { name, hasRankZero, class, affinities } =
         (common ++ affinitiesViews)
 
 
-viewAffinities : Affinities -> Element msg
+viewAffinities : Affinities -> List (Element msg)
 viewAffinities affinities =
     case affinities of
         Regular afs ->
@@ -411,7 +419,8 @@ viewAffinities affinities =
                             ]
                             (Theme.viewAffinity aff)
                     )
-                |> Theme.row [ Theme.centerWrap ]
+                |> Theme.row []
+                |> List.singleton
 
         Alternative alternatives ->
             alternatives
@@ -439,7 +448,6 @@ viewAffinities affinities =
                             , moveDown 4
                             ]
                     )
-                |> Theme.row [ Theme.centerWrap ]
 
 
 viewRank :
@@ -486,7 +494,7 @@ viewRank selected { name, class } rankIndex label =
         Theme.button
             (width fill :: attrs)
             { label =
-                column []
+                column [ width fill ]
                     [ el
                         [ Theme.captureIt
                         , Font.size 20
@@ -496,7 +504,7 @@ viewRank selected { name, class } rankIndex label =
                         Theme.gradientText 2
                             Gradients.yellowGradient
                             ("Rank " ++ String.fromInt rank)
-                    , Theme.blocks [] label
+                    , Theme.blocks [ width fill ] label
                     ]
             , onPress = Just ( rankedMagic, not isTierSelected )
             }
