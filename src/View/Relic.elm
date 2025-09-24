@@ -371,7 +371,7 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
     , Theme.column
         [ width fill
         , Theme.backgroundColor Color.black
-        , Font.color <| Element.rgb 1 1 1
+        , Theme.fontColor Color.white
         , Theme.rounded
         , Theme.padding
         ]
