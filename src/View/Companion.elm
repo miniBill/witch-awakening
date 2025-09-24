@@ -127,8 +127,15 @@ companionSection display companions ( faction, section ) =
     in
     if display == DisplayFull then
         [ (Companion.factionToCollectiveName faction ++ ":")
-            |> Theme.gradientText 2 Gradients.yellowGradient
-            |> el [ Theme.celticHand, Font.size 48 ]
+            |> String.split " "
+            |> List.intersperse " "
+            |> List.map (Theme.gradientText 2 Gradients.yellowGradient)
+            |> Theme.wrappedRow
+                [ Theme.celticHand
+                , Font.size 48
+                , Theme.centerWrap
+                , width fill
+                ]
         , boxes
             |> Theme.wrappedRow
                 [ width fill
@@ -202,10 +209,10 @@ companionBox display selected ({ name } as companion) =
             [ Theme.id (Types.companionToString name)
             , height fill
             , if display == DisplayFull then
-                width <| Element.minimum 660 <| Element.maximum 760 fill
+                width <| Element.maximum 760 fill
 
               else
-                width <| Element.minimum 660 fill
+                width fill
             , Font.color <| rgb 0 0 0
             , Border.rounded Theme.cardRoundness
             , case glow of
@@ -222,9 +229,15 @@ companionBox display selected ({ name } as companion) =
                     Border.width 0
             ]
             { label =
-                Element.row
+                Element.wrappedRow
                     [ height fill
                     , width fill
+                    , Element.htmlAttribute
+                        (Html.Attributes.classList
+                            [ ( "min-660-if-wide", True )
+                            , ( "do-not-overflow", True )
+                            ]
+                        )
                     ]
                     [ image companion
                     , content companion
@@ -300,8 +313,8 @@ image { name, races, hasPerk, cost } =
             ]
     in
     el
-        (width fill
-            :: height fill
+        (width (Element.minimum 200 fill)
+            :: height (Element.minimum 200 fill)
             :: Border.roundEach
                 { topLeft = Theme.cardRoundness
                 , bottomLeft = Theme.cardRoundness
@@ -320,12 +333,14 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
     Theme.column
         [ Theme.padding
         , height fill
-        , width <| fillPortion 2
+        , width <| Element.minimum 200 <| fillPortion 2
         ]
         [ Theme.row [ width fill ]
             [ Types.companionToString name
-                |> Theme.gradientText 4 Gradients.yellowGradient
-                |> el [ Font.size 36 ]
+                |> String.split " "
+                |> List.intersperse " "
+                |> List.map (Theme.gradientText 4 Gradients.yellowGradient)
+                |> Theme.wrappedRow [ Font.size 36, width fill ]
             , case class of
                 ClassOne c ->
                     c
@@ -430,7 +445,10 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
 
 statsTable : Companion.Details -> Element msg
 statsTable details =
-    Element.table [ width fill ]
+    Element.table
+        [ width fill
+        , Element.htmlAttribute (Html.Attributes.class "smol")
+        ]
         { columns =
             { header = Element.none
             , width = shrink

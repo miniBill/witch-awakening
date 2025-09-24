@@ -110,6 +110,15 @@ a.link {
 .centerWrap > div.wrp {
     justify-content: center !important;
 }
+
+.min-660-if-wide {
+    min-width: calc(min(100vw - 100px, 660px));
+}
+
+.do-not-overflow {
+    max-width: calc(100vw - 100px);
+}
+
 @media (max-width: 500px) {
     .smol {
         max-width: calc(100vw - 100px);
