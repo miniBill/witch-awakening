@@ -57,7 +57,7 @@ At rank 5 your constructs are virtually indestructible requiring a concentrated 
 
 "Though [Wands] is what we're best known for, it is my opinion that [Mana-shaping] is far more useful to our students and should be thus prioritized. The headmaster has yet to respond".
 
-Mana-shaping, also known as applied thaumics, mana elementalism, or manamancy, is the practice of reflexively shaping and utilizing mana to alter other spells on the fly. While not especially powerful by itself, mana-shaping is a potent force multiplier for other magical disciplines, empowering your magic and opening up new avenues for your spellcasting. 
+Mana-shaping, also known as applied thaumics, mana elementalism, or manamancy, is the practice of reflexively shaping and utilizing mana to alter other spells on the fly. While not especially powerful by itself, mana-shaping is a potent force multiplier for other magical disciplines, empowering your magic and opening up new avenues for your spellcasting.
 
 ### Rank 1
 At rank 1 you gain a 5% passive bonus to all your mana __Generation__ methods, this bonus doubles with every further rank you gain in Mana-shaping. You learn to imbue you spells with a __Lingering__ effect, allowing them to last 10% longer by using ambient mana, this bonus also doubles per rank of Mana-Shaping.
@@ -78,10 +78,11 @@ At rank 5 you get a flat 40% mana-cost __Reduction__, and your __Delay__ is upgr
 ## Magic: Empathics
 - Class: Sorceress
 - Elements: Soul, Life + Mind
+- Elementalism: True
 
 "Don't be too quick to judge, Empathics might not let you sunder the earth, but the ability to understand others and share with them is a life skill few fully appreciate".
 
-Also known as empathy magic, Empathics is the magic of emotions and connections. Each level in Empathics improves you resistance to psychological trauma by 50%, though it can never fully protect someone. Note: Empathics does not protect against Psychotics in any way. 
+Also known as empathy magic, Empathics is the magic of emotions and connections. Each level in Empathics improves you resistance to psychological trauma by 50%, though it can never fully protect someone. Note: Empathics does not protect against Psychotics in any way.
 
 ### Rank 1
 At rank 1 you can __Sense__ strong emotions in your immediate environment (extreme fury, fresh grief, overwhelming joy etc...), and while this sense does not provide any indication of who is feeling that emotion, you can usually figure it out. In addition you gain an instinctive understanding for how to help those around you overcome their personal demons, you could make a small fortune as a therapist.
@@ -90,10 +91,34 @@ At rank 1 you can __Sense__ strong emotions in your immediate environment (extre
 At rank 2 your sense over emotions becomes sharper, allowing you not only trace emotions back to their source, but also detect less extreme emotions (joy from someone who had a generally good day, anger at having to wait in traffic, nervousness in the presence of a crush etc...). Empamantics at this rank can be somewhat overwhelming if you're in a crowd.
 
 ### Rank 3
-At rank 3 Your emotional sense becomes further refined, allowing you to pick up on whichever emotion a person is feeling most strongly at any particular moment. In addition, you become capable of forming a single __soul-bond__ with someone you share a strong positive emotional connection with (this bond is somewhat similar to the bond between a master and familiar). Soul-bonds allow those bonded to sense where each other are (the direction and rough distance), and enables telepathic communication. These bonds break if either of the bonded die, fall asleep/unconscious, are moved to a different plane, or should either of the bonded voluntarily chose to end the bond.  
+At rank 3 Your emotional sense becomes further refined, allowing you to pick up on whichever emotion a person is feeling most strongly at any particular moment. In addition, you become capable of forming a single __soul-bond__ with someone you share a strong positive emotional connection with (this bond is somewhat similar to the bond between a master and familiar). Soul-bonds allow those bonded to sense where each other are (the direction and rough distance), and enables telepathic communication. These bonds break if either of the bonded die, fall asleep/unconscious, are moved to a different plane, or should either of the bonded voluntarily chose to end the bond.
 
 ### Rank 4
 At rank 4 your emotional sense develop to the point where you can see a person's aura (gain “third eye” perk for free), and by focusing on someone you can pick up on their subtle emotions. You are now able to maintain up to five bonds, and these bonds no longer break when one of the bonded falls asleep. In addition your bonds now allow for the bonded to actively share one of their five sense telepathically, this surprisingly does not cause any disorientation, though it can be distracting.
 
 ### Rank 5
 At rank 5 you can maintain any number of __Bonds__, limited only by the number of people that you have a strong positive emotional connection to. You are now able to form temporary bonds between two others, lasting 24 hours. A __Bond__ now allows you to share one magic you know with the person you're bonded to.
+
+
+## Magic: Reinforcement
+- Class: Sorceress
+- Elements: Body, Metal, Beast
+
+"Don't feel like falling into the stereotype of the bookish and unathletic mage, but also don't want to go through all the effort of actually getting into shape? Are you perhaps already athletic but now want to push past the limits of your mortal form? If you fall into either category then you'll want to learn reinforcement".
+
+Magic that focuses on controlling one's inner self, and has been referred to to as Qi, Chakra, Battle-trance, berserking, and many more names. Many legendary masters of various martial disciplines are practitioners of Reinforcement magic. Reinforcement works by magnifying what you already have, and thus Stacks with various species perks, the Apex perk, and works while shapeshifted. Reinforcement can be toggled on and off at will, and you are able to use any percentage of your maximum boost at your discretion, with lower mana costs to match the amount of Reinforcement you are currently using.
+
+### Rank 1
+At rank 1, for a low mana cost you can __Improve__ the strength of your muscles, and the general durability of your body by 50%. This does not come with instinctive knowledge of how to utilize your newfound strength, and is often disorienting for new practitioners.
+
+### Rank 2
+At rank 2 your __Improve__ can, for a moderate mana cost, double the strength of your muscles, and the toughness of your body as a whole, whilst providing a moderate boost to your reaction time. Again, this will take practice to get used to.
+
+### Rank 3
+At rank 3, for a high mana cost __Improve__ can now multiply your strength and durability by a factor of 4, while also drastically improving your reflexes.
+
+### Rank 4
+At rank 4 you learn to utilize other known magics in your reinforcement, up to one school at a time. Give your strikes an electrical charge (Windkeeping), make your bones as strong as steel (Metallurgy), you could even have each strike you land deliver increasingly bad luck (Curse) to your opponents. R1 __Improve__ can now be maintained at no cost, whilst R2 becomes low cost, and R3 becomes moderate cost.
+
+### Rank 5
+At rank 5 you are able to use mana to maintain your bodily functions. This means that you may use mana in place of breathing or eating (though malnutrition becomes a problem if you do this too long). It also means that even should your body be damaged beyond the ability to function, so long as you have mana you can keep yourself alive through what would otherwise be fatal harm. This effect has a mana cost that scales in accordance to how much of your bodily functions are being magically replicated, with the loss of function of a single organ (like the heart) being mitigated for relatively low cost, losing most/all of your main organs would rapidly drain your reserves. This cannot save you from brain-damage, so if someone gets your heads it's still game over. In addition, the bonuses from __Improve__ are doubled.
