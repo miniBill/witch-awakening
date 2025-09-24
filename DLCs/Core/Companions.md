@@ -1219,7 +1219,7 @@ Vix was always a speed demon, a wild child that started racing tricycles at six 
 - Negative: - Ruthless pursuit of goals she won’t or can’t speak of
 - Mixed: +/- Her body is a combination of flesh and ball-joint doll
 - Has: Xin has Runes 3, Hexes 4, Necromancy 5, Windkeeping 5, Arachnescence 5, _Jester Mask, Ritual Inks, Dollmaker Kit, Servant Dolls_
-- Quote: _*“X.I.N.? She gives me chills, Admin gives her way too much freedom, she gets away with anything... Did you hear something?” ~ Recording*_
+- Quote: _*“X.I.N.? She gives me chills, Admin gives her way too much freedom, she gets away with anything... Did you hear something?” \~ Recording*_
 
 XIN, Dollmaker was the original lead researcher Alphazon employed to study the research and development of new forms of dolls, based on Xin’s own past experience with as one of the first witches to dabble in the art of dollmaking. Allegedly she turned her own daughter into a doll, the only name on file was _Chen_, who, or it’s, since been lost. Arachne (Spider Taura), though usually keeps shifted to human legs.
 
