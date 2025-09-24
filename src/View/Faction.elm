@@ -105,7 +105,7 @@ factionBox display selected details =
     else
         Theme.column [ width fill, Theme.id (Types.factionToString details.name) ]
             [ introRow display details
-            , Theme.row [ width fill ]
+            , Theme.wrappedRow [ width fill ]
                 [ content selected details
                 , viewPerk display selected details
                 ]
@@ -213,7 +213,7 @@ viewPerk display selected { name, perk, perkContent, images } =
 
               else
                 Theme.backgroundColor 0x00C1C1C1
-            , width fill
+            , width <| Element.minimum 150 fill
             , height shrink
             , alignTop
             ]
@@ -262,14 +262,14 @@ introRow display { name, dlc, motto, images } =
         img : Image -> Element msg
         img { src } =
             el
-                [ width fill
+                [ width <| Element.minimum 100 fill
                 , height <| Element.minimum 300 fill
                 , Background.image src
                 ]
                 Element.none
     in
     if display == DisplayFull then
-        Theme.row
+        Theme.wrappedRow
             [ width fill
             , inFront
                 (case dlc of
@@ -291,10 +291,16 @@ introRow display { name, dlc, motto, images } =
                 [ img images.image2
                 , img images.image3
                 , column [ centerX ]
-                    [ el [ centerX, Font.size 40, Theme.celticHand ] <|
-                        Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
-                    , el [ centerX, Font.size 24, Theme.morpheus ] <|
-                        Theme.gradientText 2 Gradients.yellowGradient motto
+                    [ Types.factionToString name
+                        |> String.split " "
+                        |> List.intersperse " "
+                        |> List.map (Theme.gradientText 2 Gradients.blueGradient)
+                        |> Theme.wrappedRow [ Theme.centerWrap, Font.size 40, Theme.celticHand ]
+                    , motto
+                        |> String.split " "
+                        |> List.intersperse " "
+                        |> List.map (Theme.gradientText 2 Gradients.yellowGradient)
+                        |> Theme.wrappedRow [ Theme.centerWrap, Font.size 24, Theme.morpheus ]
                     ]
                 ]
             , img images.image4
