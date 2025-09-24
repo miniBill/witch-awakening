@@ -1,7 +1,7 @@
 module View.Magic exposing (magicBox, viewMagics)
 
 import Data.Magic as Magic exposing (Affinities(..))
-import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveUp, paragraph, px, rgb, rgba, width)
+import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveUp, px, rgb, rgba, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -134,7 +134,7 @@ elementalIntro =
                             |> String.fromChar
                             |> Theme.gradientText 4 Gradients.blueGradient
                     )
-                |> paragraph
+                |> Element.wrappedRow
                     [ Font.size 58
                     , Theme.morpheus
                     , Theme.style "letter-spacing" ".15em"
