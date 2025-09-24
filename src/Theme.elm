@@ -1,6 +1,6 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
 
-import Color
+import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
 import Element.Background as Background
 import Element.Border as Border
@@ -15,7 +15,7 @@ import Html exposing (Html)
 import Html.Attributes
 import Images exposing (Image)
 import List.Extra
-import MarkMini exposing (Block(..), Color(..), Piece(..))
+import MarkMini exposing (Block(..), Piece(..))
 import Parser exposing ((|.))
 import String.Extra
 import String.Multiline
@@ -183,42 +183,52 @@ block toMsg display input =
 
 
 colors :
-    { choice : Int
-    , companionBlack : ( Int, Int )
-    , companionBlue : ( Int, Int )
-    , companionGold : ( Int, Int )
-    , companionOrange : ( Int, Int )
-    , companionRed : ( Int, Int )
-    , epic : Int
-    , folk : Int
-    , gameMode : Int
-    , heroic : Int
-    , noble : Int
-    , speech : Int
-    , white : Int
-    , worldShift : Int
+    { choice : Color
+    , companionBlack : ( Color, Color )
+    , companionBlue : ( Color, Color )
+    , companionGold : ( Color, Color )
+    , companionOrange : ( Color, Color )
+    , companionRed : ( Color, Color )
+    , epic : Color
+    , folk : Color
+    , gameMode : Color
+    , heroic : Color
+    , noble : Color
+    , speech : Color
+    , white : Color
+    , worldShift : Color
     }
 colors =
-    { choice = 0x0004D4ED
-    , companionBlack = ( 0x004B4A4A, 0x008A8A8A )
-    , companionRed = ( 0x00CD4A48, 0x00D98A88 )
-    , companionOrange = ( 0x00FF7E4A, 0x00FFA189 )
-    , companionBlue = ( 0x0049AEFF, 0x0088C2FC )
-    , companionGold = ( 0x00F2E76D, 0x00F5E96F )
-    , epic = 0x00C32DE6
-    , folk = 0x004DE1FF
-    , gameMode = 0x00AA08B9
-    , heroic = 0x00F2D706
-    , noble = 0x0014E602
-    , speech = 0x00F88000
-    , white = 0x00FFFFFF
-    , worldShift = 0x006ED32A
+    { choice = Color.rgb255 0x04 0xD4 0xED
+    , companionBlack =
+        ( Color.rgb255 0x4B 0x4A 0x4A
+        , Color.rgb255 0x8A 0x8A 0x8A
+        )
+    , companionRed =
+        ( Color.rgb255 0xCD 0x4A 0x48
+        , Color.rgb255 0xD9 0x8A 0x88
+        )
+    , companionOrange =
+        ( Color.rgb255 0xFF 0x7E 0x4A
+        , Color.rgb255 0xFF 0xA1 0x89
+        )
+    , companionBlue =
+        ( Color.rgb255 0x49 0xAE 0xFF
+        , Color.rgb255 0x88 0xC2 0xFC
+        )
+    , companionGold =
+        ( Color.rgb255 0xF2 0xE7 0x6D
+        , Color.rgb255 0xF5 0xE9 0x6F
+        )
+    , epic = Color.rgb255 0xC3 0x2D 0xE6
+    , folk = Color.rgb255 0x4D 0xE1 0xFF
+    , gameMode = Color.rgb255 0xAA 0x08 0xB9
+    , heroic = Color.rgb255 0xF2 0xD7 0x06
+    , noble = Color.rgb255 0x14 0xE6 0x02
+    , speech = Color.rgb255 0xF8 0x80 0x00
+    , white = Color.white
+    , worldShift = Color.rgb255 0x6E 0xD3 0x2A
     }
-
-
-toCss : Int -> String
-toCss rgb =
-    "#" ++ String.padLeft 6 '0' (Hex.toString rgb)
 
 
 viewPiece : Piece -> Html msg
@@ -226,25 +236,25 @@ viewPiece piece =
     case piece of
         Speech children ->
             Html.span
-                [ Html.Attributes.style "color" <| toCss colors.speech ]
+                [ Html.Attributes.style "color" <| Color.toCssString colors.speech ]
                 (Html.text "“" :: List.map viewPiece children ++ [ Html.text "”" ])
 
         Colored color children ->
             let
-                colored : Int -> Html msg
+                colored : Color.Color -> Html msg
                 colored colorInt =
                     Html.span
-                        [ Html.Attributes.style "color" <| toCss colorInt ]
+                        [ Html.Attributes.style "color" <| Color.toCssString colorInt ]
                         (List.map viewPiece children)
             in
             case color of
-                ChoiceColor ->
+                MarkMini.ChoiceColor ->
                     colored colors.choice
 
-                ClassColor class ->
+                MarkMini.ClassColor class ->
                     colored <| Generated.Classes.classToColor class
 
-                SlotColor slot ->
+                MarkMini.SlotColor slot ->
                     colored <| slotToColor slot
 
         Smol children ->
@@ -472,7 +482,7 @@ viewAffinityBadge affinity =
         [ Html.text (Types.affinityToString affinity) ]
 
 
-slotToColor : Slot -> Int
+slotToColor : Slot -> Color
 slotToColor slot =
     case slot of
         SlotFolk ->
@@ -618,14 +628,23 @@ hr =
         Element.none
 
 
-borderColor : Int -> Attribute msg
+borderColor : Color -> Attribute msg
 borderColor color =
-    Border.color <| intToColor color
+    Border.color <| colorToElmUi color
 
 
-backgroundColor : Int -> Attribute msg
+colorToElmUi : Color -> Element.Color
+colorToElmUi c =
+    let
+        { red, green, blue, alpha } =
+            Color.toRgba c
+    in
+    Element.rgba red green blue alpha
+
+
+backgroundColor : Color -> Attribute msg
 backgroundColor color =
-    Background.color <| intToColor color
+    Background.color <| colorToElmUi color
 
 
 intToColor : Int -> Element.Color
@@ -638,17 +657,12 @@ intToColor color =
         (modBy 256 color)
 
 
-intToBackground : Int -> Element.Color
-intToBackground color =
+colorToBackground : Color -> Color
+colorToBackground color =
     let
         hsla : { hue : Float, saturation : Float, lightness : Float, alpha : Float }
         hsla =
-            Color.rgb255
-                (color // 65536)
-                ((color // 256)
-                    |> modBy 256
-                )
-                (modBy 256 color)
+            color
                 |> Color.toHsla
 
         rgba : { red : Float, green : Float, blue : Float, alpha : Float }
@@ -657,7 +671,7 @@ intToBackground color =
                 |> Color.fromHsla
                 |> Color.toRgba
     in
-    Element.rgba rgba.red rgba.green rgba.blue rgba.alpha
+    Color.rgba rgba.red rgba.green rgba.blue rgba.alpha
 
 
 style : String -> String -> Attribute msg
@@ -681,7 +695,7 @@ card :
         { display : Display
         , forceShow : Bool
         , onPress : Maybe msg
-        , glow : Int
+        , glow : Color
         , isSelected : Bool
         , imageHeight : Int
         , imageAttrs : List (Attribute msg)
@@ -715,7 +729,7 @@ card attrs config =
                             , bottomRight = 8
                             }
                     , if config.isSelected then
-                        Background.color <| intToBackground config.glow
+                        Background.color <| colorToElmUi <| colorToBackground config.glow
 
                       else
                         Background.color <| rgb 1 1 1
@@ -816,7 +830,7 @@ button attrs =
         )
 
 
-complicationCategoryToColor : ComplicationCategory -> Int
+complicationCategoryToColor : ComplicationCategory -> Color
 complicationCategoryToColor category =
     case category of
         ComplicationCategoryWorldShift ->
@@ -852,9 +866,9 @@ topBackground { src } =
     ]
 
 
-borderGlow : Int -> Attribute msg
+borderGlow : Color -> Attribute msg
 borderGlow color =
-    Border.glow (intToColor color) 8
+    Border.glow (colorToElmUi color) 8
 
 
 viewClasses : Int -> List Types.Class -> Element msg
@@ -945,3 +959,8 @@ slider attrs config =
         , thumb = Maybe.withDefault Input.defaultThumb config.thumb
         , step = config.step
         }
+
+
+fontColor : Color -> Attribute msg
+fontColor color =
+    Font.color (colorToElmUi color)

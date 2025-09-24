@@ -1,5 +1,6 @@
 module View.Quest exposing (viewQuests)
 
+import Color exposing (Color)
 import Data.Faction as Faction
 import Data.Quest as Quest
 import Dict
@@ -333,11 +334,11 @@ statsTable details =
         }
 
 
-dangerToColor : Maybe Int -> Int
+dangerToColor : Maybe Int -> Color
 dangerToColor maybeP =
     case maybeP of
         Nothing ->
-            0x00909090
+            Color.rgb255 0x90 0x90 0x90
 
         Just p ->
             if p == 10 then
@@ -353,7 +354,7 @@ dangerToColor maybeP =
                 Tuple.first Theme.colors.companionBlue
 
 
-scoreToColor : Int -> Int
+scoreToColor : Int -> Color
 scoreToColor p =
     if p == 10 then
         Tuple.first Theme.colors.companionGold
@@ -391,21 +392,21 @@ cellWithLeftBorder attrs label leftBorder content =
         content
 
 
-statColumn : Int -> Element.Column (Maybe ( String, Maybe Int, Int )) msg
+statColumn : Int -> Element.Column (Maybe ( String, Maybe Int, Color )) msg
 statColumn ranking =
     let
-        view : Maybe ( String, Maybe Int, Int ) -> Element msg
+        view : Maybe ( String, Maybe Int, Color ) -> Element msg
         view v =
             case v of
                 Just ( label, maybeScore, mainColor ) ->
                     let
-                        backgroundColor : Int
+                        backgroundColor : Color
                         backgroundColor =
                             if Maybe.withDefault 10 maybeScore >= ranking then
                                 mainColor
 
                             else
-                                0x00FFFFFF
+                                Color.white
                     in
                     cellWithLeftBorder
                         [ Theme.backgroundColor backgroundColor
@@ -418,7 +419,7 @@ statColumn ranking =
                     cellWithLeftBorder
                         [ Font.size 10
                         , Font.center
-                        , Theme.backgroundColor 0x00FFFFFF
+                        , Theme.backgroundColor Color.white
                         ]
                         ""
                         0
@@ -430,23 +431,23 @@ statColumn ranking =
     }
 
 
-slotToColor : Slot -> Int
+slotToColor : Slot -> Color
 slotToColor slot =
     case slot of
         SlotWhite ->
-            0x00FFFFFF
+            Color.rgb255 0xFF 0xFF 0xFF
 
         SlotFolk ->
-            0xE5E5
+            Color.rgb255 0x00 0xE5 0xE5
 
         SlotNoble ->
-            0x007CC534
+            Color.rgb255 0x7C 0xC5 0x34
 
         SlotHeroic ->
-            0x00C5AA3E
+            Color.rgb255 0xC5 0xAA 0x3E
 
         SlotEpic ->
-            0x00FF60A3
+            Color.rgb255 0xFF 0x60 0xA3
 
 
 viewSidebar : Slot -> String -> Element ( Quest, Bool )

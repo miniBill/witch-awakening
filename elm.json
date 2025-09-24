@@ -18,6 +18,7 @@
             "elm/svg": "1.0.1",
             "elm/url": "1.0.0",
             "elm/virtual-dom": "1.0.3",
+            "elm-community/typed-svg": "7.0.0",
             "elmcraft/core-extra": "2.0.0",
             "lydell/elm-app-url": "1.0.4",
             "mgold/elm-nonempty-list": "4.2.0",

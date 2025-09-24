@@ -1,7 +1,8 @@
 module View.Companion exposing (viewCompanions)
 
+import Color exposing (Color)
 import Data.Companion as Companion exposing (MaybeClass(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, px, rgb, rgba, shrink, spacing, table, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, px, shrink, spacing, table, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -76,9 +77,9 @@ introBlock =
         , spacing <| Theme.rhythm * 2
         ]
         [ let
-            color : Element.Color
+            color : Color
             color =
-                rgba 0 0 0 0.75
+                Color.rgba 0 0 0 0.75
           in
           Theme.wrappedRow
             [ width <| Element.maximum 800 fill
@@ -87,30 +88,28 @@ introBlock =
             ]
             [ Theme.blocks
                 [ width fill
-                , Background.color color
+                , Theme.backgroundColor color
                 , Border.shadow
                     { offset = ( 0, 0 )
                     , size = 5
                     , blur = 5
-                    , color = color
+                    , color = Theme.colorToElmUi color
                     }
                 ]
                 Companion.intro
             , Element.table
                 [ width shrink
-                , Background.color color
+                , Theme.backgroundColor color
                 , Border.shadow
                     { offset = ( 0, 0 )
                     , size = 5
                     , blur = 5
-                    , color = color
+                    , color = Theme.colorToElmUi color
                     }
                 , alignBottom
                 ]
-                { columns =
-                    tableColumns
-                , data =
-                    tableData
+                { columns = tableColumns
+                , data = tableData
                 }
             ]
         , el [ height <| px 40 ] Element.none
@@ -146,7 +145,7 @@ companionSection display companions ( faction, section ) =
         boxes
 
 
-tableColumns : List { header : Element msg, width : Element.Length, view : ( ( Int, Int ), String ) -> Element msg }
+tableColumns : List { header : Element msg, width : Element.Length, view : ( ( Color, Color ), String ) -> Element msg }
 tableColumns =
     [ { header = Element.none
       , width = px 30
@@ -154,7 +153,7 @@ tableColumns =
             \( ( color, _ ), _ ) ->
                 el
                     [ Border.width 1
-                    , Border.color <| rgb 0 0 0
+                    , Theme.borderColor Color.black
                     , Theme.backgroundColor color
                     , width fill
                     , height fill
@@ -170,7 +169,7 @@ tableColumns =
     ]
 
 
-tableData : List ( ( Int, Int ), String )
+tableData : List ( ( Color, Color ), String )
 tableData =
     [ ( Theme.colors.companionBlack, "Black is Impaired" )
     , ( Theme.colors.companionRed, "Red is Lacking" )
@@ -196,10 +195,10 @@ companionBox display selected ({ name } as companion) =
 
     else
         let
-            glow : Maybe Int
+            glow : Maybe Color
             glow =
                 if isSelected then
-                    Just 0x00F3EA6F
+                    Just (Color.rgb255 0xF3 0xEA 0x6F)
 
                 else
                     Nothing
@@ -212,14 +211,14 @@ companionBox display selected ({ name } as companion) =
 
               else
                 width fill
-            , Font.color <| rgb 0 0 0
+            , Theme.fontColor Color.black
             , Border.rounded Theme.cardRoundness
             , case glow of
                 Just color ->
-                    Background.color <| Theme.intToBackground color
+                    Theme.backgroundColor <| Theme.colorToBackground color
 
                 Nothing ->
-                    Background.color <| rgb 1 1 1
+                    Theme.backgroundColor Color.white
             , case glow of
                 Just color ->
                     Theme.borderGlow color
@@ -479,7 +478,7 @@ statsTable details =
         }
 
 
-scoreToColor : Int -> ( Int, Int )
+scoreToColor : Int -> ( Color, Color )
 scoreToColor p =
     if p == 10 then
         Theme.colors.companionGold
@@ -520,10 +519,10 @@ cellWithLeftBorder attrs label leftBorder cellContent =
         cellContent
 
 
-statColumn : Int -> Element.Column ( String, Companion.Score, ( Int, Int ) ) msg
+statColumn : Int -> Element.Column ( String, Companion.Score, ( Color, Color ) ) msg
 statColumn ranking =
     let
-        view : ( String, Companion.Score, ( Int, Int ) ) -> Element msg
+        view : ( String, Companion.Score, ( Color, Color ) ) -> Element msg
         view ( label, rawScore, ( mainColor, otherColor ) ) =
             let
                 ( backgroundColor, attrs, cellContent ) =
@@ -535,11 +534,11 @@ statColumn ranking =
                                         mainColor
 
                                     else
-                                        0x00FFFFFF
+                                        Color.white
 
                                 Just w ->
                                     if ranking > better then
-                                        0x00FFFFFF
+                                        Color.white
 
                                     else if ranking == better then
                                         Tuple.first Theme.colors.companionBlack
@@ -593,7 +592,7 @@ statColumn ranking =
                                     otherColor
 
                                   else
-                                    0x00FFFFFF
+                                    Color.white
                                 , []
                                 , if label == "Ranking" then
                                     text <| String.fromInt ranking
@@ -603,7 +602,7 @@ statColumn ranking =
                                 )
             in
             cellWithLeftBorder
-                ([ Border.color <| rgb 0 0 0
+                ([ Theme.borderColor Color.black
                  , Font.center
                  , Theme.backgroundColor backgroundColor
                  ]
@@ -619,7 +618,7 @@ statColumn ranking =
     }
 
 
-grayRow : Int -> ( Int, List (Attribute msg), Element msg )
+grayRow : Int -> ( Color, List (Attribute msg), Element msg )
 grayRow ranking =
     let
         ( mainColor, otherColor ) =
@@ -628,7 +627,7 @@ grayRow ranking =
     if ranking == 1 then
         ( mainColor
         , []
-        , el [ Font.color <| rgb 1 1 1 ] <| text "N/A"
+        , el [ Theme.fontColor Color.white ] <| text "N/A"
         )
 
     else

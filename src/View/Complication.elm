@@ -1,5 +1,6 @@
 module View.Complication exposing (viewComplications)
 
+import Color exposing (Color)
 import Data.Complication as Complication exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, px, spacing, width)
 import Element.Border as Border
@@ -114,7 +115,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 |> Maybe.map Theme.complicationCategoryToGradient
                 |> Maybe.withDefault Gradients.blueGradient
 
-        color : Int
+        color : Color
         color =
             category
                 |> Maybe.map Theme.complicationCategoryToColor
@@ -251,7 +252,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
         }
 
 
-viewContent : List RankedComplication -> Complication.Details -> Int -> List (Element ( RankedComplication, Bool ))
+viewContent : List RankedComplication -> Complication.Details -> Color -> List (Element ( RankedComplication, Bool ))
 viewContent selected { content, name } color =
     case content of
         Single _ block ->

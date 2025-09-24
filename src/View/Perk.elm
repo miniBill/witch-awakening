@@ -1,5 +1,6 @@
 module View.Perk exposing (perkToShortString, viewPerks)
 
+import Color exposing (Color)
 import Data.Perk as Perk exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paragraph, px, rgba, spacing, text, width)
 import Element.Background as Background
@@ -188,9 +189,9 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom, moveUp 48 ]
 
-        color : Int
+        color : Color
         color =
-            0x00F3EA6F
+            Color.rgb255 0xF3 0xEA 0x6F
 
         nameString : String
         nameString =
@@ -294,7 +295,7 @@ perkToShortString name =
             |> String.concat
 
 
-viewContent : Maybe Race -> List Race -> Int -> List RankedPerk -> Perk.Details -> List (Element Choice)
+viewContent : Maybe Race -> List Race -> Color -> List RankedPerk -> Perk.Details -> List (Element Choice)
 viewContent mainRace races color selected { content, name } =
     case content of
         Single _ block ->
@@ -378,7 +379,7 @@ viewContent mainRace races color selected { content, name } =
                     \_ cost -> { name = name, cost = cost }
 
 
-racePicker : String -> (Maybe Race -> Choice) -> Int -> Maybe Race -> List Race -> List (Element Choice)
+racePicker : String -> (Maybe Race -> Choice) -> Color -> Maybe Race -> List Race -> List (Element Choice)
 racePicker label toMsg color mainRace races =
     let
         viewRace : Race -> Element Choice
@@ -409,7 +410,7 @@ racePicker label toMsg color mainRace races =
         []
 
 
-viewChoice : Int -> List RankedPerk -> Types.Perk -> ( String, Int ) -> Element Choice
+viewChoice : Color -> List RankedPerk -> Types.Perk -> ( String, Int ) -> Element Choice
 viewChoice color selected name ( label, cost ) =
     let
         perk : RankedPerk

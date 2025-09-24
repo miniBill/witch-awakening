@@ -1,5 +1,6 @@
 module View.Magic exposing (magicBox, viewMagics)
 
+import Color exposing (Color)
 import Data.Magic as Magic exposing (Affinities(..))
 import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveUp, px, rgb, rgba, width)
 import Element.Background as Background
@@ -481,7 +482,7 @@ viewRank selected { name, class } rankIndex label =
             attrs =
                 if isTierSelected then
                     let
-                        color : Int
+                        color : Color
                         color =
                             class
                                 |> Maybe.map Generated.Classes.classToColor

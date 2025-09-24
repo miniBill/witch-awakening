@@ -1,18 +1,19 @@
 module View.MagicPyramid exposing (view)
 
-import Bitwise
+import Color exposing (Color)
 import Dict
 import Dict.Extra
 import Generated.Classes
 import Generated.Magic
 import Generated.Types as Types
-import Hex
 import Html.Attributes
 import List.Extra
-import Svg exposing (Svg)
-import Svg.Attributes
-import Svg.Attributes.Extra
-import Svg.Events
+import TypedSvg
+import TypedSvg.Attributes
+import TypedSvg.Attributes.InPx
+import TypedSvg.Core as TypedSvg exposing (Svg)
+import TypedSvg.Events
+import TypedSvg.Types exposing (Align(..), MeetOrSlice(..), Paint(..), Scale(..), Transform(..))
 import Types exposing (Msg(..), RankedMagic)
 
 
@@ -21,9 +22,9 @@ view magic =
     let
         styleNode : Svg msg
         styleNode =
-            Svg.node "style"
+            TypedSvg.style
                 []
-                [ Svg.text
+                [ TypedSvg.text
                     """
                     text {
                         fill: white;
@@ -36,14 +37,14 @@ view magic =
 
         defsNode : Svg msg
         defsNode =
-            Svg.defs []
-                [ Svg.linearGradient
-                    [ Svg.Attributes.id "black-gradient"
-                    , Svg.Attributes.gradientTransform "rotate(90)"
+            TypedSvg.defs []
+                [ TypedSvg.linearGradient
+                    [ TypedSvg.Attributes.id "black-gradient"
+                    , TypedSvg.attribute "gradientTransform" "rotate(90)"
                     ]
-                    [ Svg.stop [ Svg.Attributes.offset "0%", Svg.Attributes.stopColor "#0004" ] []
-                    , Svg.stop [ Svg.Attributes.offset "50%", Svg.Attributes.stopColor "#0004" ] []
-                    , Svg.stop [ Svg.Attributes.offset "100%", Svg.Attributes.stopColor "#000f" ] []
+                    [ TypedSvg.stop [ TypedSvg.Attributes.offset "0%", TypedSvg.Attributes.stopColor "#0004" ] []
+                    , TypedSvg.stop [ TypedSvg.Attributes.offset "50%", TypedSvg.Attributes.stopColor "#0004" ] []
+                    , TypedSvg.stop [ TypedSvg.Attributes.offset "100%", TypedSvg.Attributes.stopColor "#000f" ] []
                     ]
                 ]
 
@@ -57,10 +58,10 @@ view magic =
     nodes
         |> (::) styleNode
         |> (::) defsNode
-        |> Svg.svg
-            [ Svg.Attributes.viewBox ("0 0 4 " ++ String.fromInt lastY)
+        |> TypedSvg.svg
+            [ TypedSvg.Attributes.viewBox 0 0 4 (toFloat lastY)
             , Html.Attributes.style "width" "100%"
-            , Svg.Attributes.fontSize "0.5"
+            , TypedSvg.Attributes.InPx.fontSize 0.5
             ]
 
 
@@ -69,9 +70,9 @@ viewMagicRank ( rank, magics ) ( y, acc ) =
     let
         header : Svg msg
         header =
-            [ Svg.path
-                [ Svg.Attributes.fill "black"
-                , Svg.Attributes.d
+            [ TypedSvg.path
+                [ TypedSvg.Attributes.fill (Paint Color.black)
+                , TypedSvg.Attributes.d
                     ("m1 "
                         ++ String.fromInt (y + height)
                         ++ "-1-"
@@ -81,17 +82,17 @@ viewMagicRank ( rank, magics ) ( y, acc ) =
                     )
                 ]
                 []
-            , Svg.text_
-                [ Svg.Attributes.Extra.x 0.6
-                , Svg.Attributes.Extra.y (toFloat y + toFloat height / 2)
+            , TypedSvg.text_
+                [ TypedSvg.Attributes.InPx.x 0.6
+                , TypedSvg.Attributes.InPx.y (toFloat y + toFloat height / 2)
                 ]
-                [ Svg.text (String.fromInt rank)
-                , Svg.title []
-                    [ Svg.text ("Rank " ++ String.fromInt rank)
+                [ TypedSvg.text (String.fromInt rank)
+                , TypedSvg.title []
+                    [ TypedSvg.text ("Rank " ++ String.fromInt rank)
                     ]
                 ]
             ]
-                |> Svg.g [ Svg.Attributes.id ("Header-" ++ String.fromInt rank) ]
+                |> TypedSvg.g [ TypedSvg.Attributes.id ("Header-" ++ String.fromInt rank) ]
 
         height : Int
         height =
@@ -125,7 +126,7 @@ viewMagicRank ( rank, magics ) ( y, acc ) =
                     )
                 |> List.concat
                 |> (::) header
-                |> Svg.g [ Svg.Attributes.id ("Rank " ++ String.fromInt rank) ]
+                |> TypedSvg.g [ TypedSvg.Attributes.id ("Rank " ++ String.fromInt rank) ]
     in
     ( y + height
     , rankView :: acc
@@ -141,74 +142,70 @@ viewMagic name x y =
 
         title : Svg msg
         title =
-            Svg.title [] [ Svg.text nameString ]
+            TypedSvg.title [] [ TypedSvg.text nameString ]
     in
-    [ Svg.image
-        [ Svg.Attributes.Extra.x x
-        , Svg.Attributes.Extra.y y
-        , Svg.Attributes.width "1"
-        , Svg.Attributes.height "1"
-        , Svg.Attributes.xlinkHref (Types.magicToImage name).src
-        , Svg.Attributes.preserveAspectRatio "xMidYMid slice"
+    [ TypedSvg.image
+        [ TypedSvg.Attributes.InPx.x x
+        , TypedSvg.Attributes.InPx.y y
+        , TypedSvg.Attributes.InPx.width 1
+        , TypedSvg.Attributes.InPx.height 1
+        , TypedSvg.Attributes.xlinkHref (Types.magicToImage name).src
+        , TypedSvg.Attributes.preserveAspectRatio (Align ScaleMid ScaleMid) Slice
         ]
         []
-    , Svg.rect
-        [ Svg.Attributes.Extra.x x
-        , Svg.Attributes.Extra.y y
-        , Svg.Attributes.width "1"
-        , Svg.Attributes.height "1"
-        , Svg.Attributes.fill "url(#black-gradient)"
-        , Svg.Attributes.style "cursor: pointer"
+    , TypedSvg.rect
+        [ TypedSvg.Attributes.InPx.x x
+        , TypedSvg.Attributes.InPx.y y
+        , TypedSvg.Attributes.InPx.width 1
+        , TypedSvg.Attributes.InPx.height 1
+        , TypedSvg.Attributes.fill (Reference "black-gradient")
+        , TypedSvg.Attributes.style "cursor: pointer"
         ]
         [ title ]
-    , Svg.circle
-        [ Svg.Attributes.Extra.cx (x + 0.125)
-        , Svg.Attributes.Extra.cy (y + 0.125)
-        , Svg.Attributes.r "0.125"
+    , TypedSvg.circle
+        [ TypedSvg.Attributes.InPx.cx (x + 0.125)
+        , TypedSvg.Attributes.InPx.cy (y + 0.125)
+        , TypedSvg.Attributes.InPx.r 0.125
         , Generated.Magic.all
             |> List.Extra.find (\magicDetails -> magicDetails.name == name)
             |> Maybe.andThen (\{ class } -> Maybe.map Generated.Classes.classToColor class)
-            |> Maybe.withDefault 0x00FFFFFF
-            |> (\hex -> "#" ++ Hex.toString (darken hex))
-            |> Svg.Attributes.fill
-        , Svg.Attributes.style "cursor: pointer"
+            |> Maybe.withDefault Color.white
+            |> darken
+            |> Paint
+            |> TypedSvg.Attributes.fill
+        , TypedSvg.Attributes.style "cursor: pointer"
         ]
         [ title
         ]
-    , Svg.text_
-        [ Svg.Attributes.Extra.x (x + 0.5)
-        , Svg.Attributes.Extra.y (y + 0.4)
-        , Svg.Attributes.style "cursor: pointer"
+    , TypedSvg.text_
+        [ TypedSvg.Attributes.InPx.x (x + 0.5)
+        , TypedSvg.Attributes.InPx.y (y + 0.4)
+        , TypedSvg.Attributes.style "cursor: pointer"
         ]
-        [ Svg.text (String.left 1 nameString)
+        [ TypedSvg.text (String.left 1 nameString)
         , title
         ]
-    , Svg.text_
-        [ Svg.Attributes.Extra.x (x + 0.5)
-        , Svg.Attributes.Extra.y (y + 0.8)
-        , Svg.Attributes.fontSize "0.2"
-        , Svg.Attributes.letterSpacing "-0.007"
-        , Svg.Attributes.style "cursor: pointer"
+    , TypedSvg.text_
+        [ TypedSvg.Attributes.InPx.x (x + 0.5)
+        , TypedSvg.Attributes.InPx.y (y + 0.8)
+        , TypedSvg.Attributes.InPx.fontSize 0.2
+        , TypedSvg.Attributes.letterSpacing "-0.007"
+        , TypedSvg.Attributes.style "cursor: pointer"
         ]
-        [ Svg.text nameString
+        [ TypedSvg.text nameString
         , title
         ]
     ]
-        |> Svg.g
-            [ Svg.Attributes.id ("pyramid-" ++ nameString)
-            , Svg.Events.onClick (ScrollTo nameString)
+        |> TypedSvg.g
+            [ TypedSvg.Attributes.id ("pyramid-" ++ nameString)
+            , TypedSvg.Events.onClick (ScrollTo nameString)
             ]
 
 
-darken : Int -> Int
+darken : Color -> Color
 darken q =
     let
-        go : Int -> Int
-        go i =
-            q
-                |> Bitwise.shiftRightBy i
-                |> Bitwise.and 0xFF
-                |> (\v -> v * 2 // 3)
-                |> Bitwise.shiftLeftBy i
+        { red, green, blue, alpha } =
+            Color.toRgba q
     in
-    go 0 + go 8 + go 16
+    Color.rgba (red * 2 / 3) (green * 2 / 3) (blue * 2 / 3) alpha

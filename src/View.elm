@@ -1,5 +1,6 @@
 module View exposing (collapsible, costButtons, filterDLC)
 
+import Color exposing (Color)
 import Element exposing (Attribute, Element, centerX, centerY, el, fill, px, spacing, text, width)
 import Element.Font as Font
 import Gradients
@@ -46,7 +47,7 @@ collapsible attrs display displayMsg choiceMsg title full compact =
 
 costButtons :
     String
-    -> Int
+    -> Color
     -> List a
     -> String
     -> List Int
@@ -73,7 +74,7 @@ costButtons label color selected before costs builder =
         :: children
 
 
-costButton : Int -> List c -> c -> Int -> Element ( c, Bool )
+costButton : Color -> List c -> c -> Int -> Element ( c, Bool )
 costButton color selected item label =
     let
         isChoiceSelected : Bool

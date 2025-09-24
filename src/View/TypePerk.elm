@@ -1,5 +1,6 @@
 module View.TypePerk exposing (viewTypePerks)
 
+import Color
 import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, moveUp, px, rgb, spacing, width)
 import Element.Font as Font
@@ -96,7 +97,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
     Theme.card [ Theme.id ("perk-" ++ raceString) ]
         { display = display
         , forceShow = List.member race witchRaces
-        , glow = 0x00F3EA6F
+        , glow = Color.rgb255 0xF3 0xEA 0x6F
         , isSelected = isSelected
         , imageAttrs = [ Theme.style "background-position" "top" ]
         , imageHeight = 360

@@ -1,5 +1,6 @@
 module View.GameMode exposing (viewGameMode)
 
+import Color exposing (Color)
 import Data.GameMode as GameMode
 import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, moveDown, moveUp, spacing, width)
 import Element.Border as Border
@@ -73,7 +74,7 @@ gameModeBox display selected { name, content } =
         gradient =
             Gradients.purpleGradient
 
-        color : Int
+        color : Color
         color =
             Theme.colors.gameMode
 

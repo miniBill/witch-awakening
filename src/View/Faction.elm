@@ -1,5 +1,6 @@
 module View.Faction exposing (viewFaction)
 
+import Color exposing (Color)
 import Data.Faction as Faction
 import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, inFront, moveDown, rgb, rgba, shrink, spacing, width)
 import Element.Background as Background
@@ -128,10 +129,10 @@ content selected { name, description, location, relations } =
                 Just ( selectedFaction, _ ) ->
                     selectedFaction == name
 
-        factionGlow : Maybe Int
+        factionGlow : Maybe Color
         factionGlow =
             if isFactionSelected then
-                Just 0x00F3EA6F
+                Just (Color.rgb255 0xF3 0xEA 0x6F)
 
             else
                 Nothing
@@ -150,10 +151,10 @@ content selected { name, description, location, relations } =
         , Font.color <| rgb 0 0 0
         , case factionGlow of
             Just color ->
-                Background.color <| Theme.intToBackground color
+                Theme.backgroundColor <| Theme.colorToBackground color
 
             Nothing ->
-                Theme.backgroundColor 0x00C1C1C1
+                Theme.backgroundColor (Color.rgb255 0xC1 0xC1 0xC1)
         , case factionGlow of
             Just color ->
                 Theme.borderGlow color
@@ -199,9 +200,9 @@ viewPerk display selected { name, perk, perkContent, images } =
 
     else
         let
-            glowColor : Int
+            glowColor : Color
             glowColor =
-                0x00F3EA6F
+                Color.rgb255 0xF3 0xEA 0x6F
 
             perkMsg : Maybe ( Faction, Bool )
             perkMsg =
@@ -209,10 +210,10 @@ viewPerk display selected { name, perk, perkContent, images } =
         in
         Theme.card
             [ if isPerkSelected then
-                Background.color <| Theme.intToBackground glowColor
+                Theme.backgroundColor <| Theme.colorToBackground glowColor
 
               else
-                Theme.backgroundColor 0x00C1C1C1
+                Theme.backgroundColor (Color.rgb255 0xC1 0xC1 0xC1)
             , width <| Element.minimum 150 fill
             , height shrink
             , alignTop

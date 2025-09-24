@@ -1,4 +1,4 @@
-module Svg.Attributes.Extra exposing (cx, cy, x, y)
+module Svg.Attributes.Extra exposing (cx, cy, viewBox, x, y)
 
 import Svg exposing (Attribute)
 import Svg.Attributes
@@ -22,3 +22,11 @@ cx v =
 cy : Float -> Attribute msg
 cy v =
     Svg.Attributes.cy (String.fromFloat v)
+
+
+viewBox : Int -> Int -> Int -> Int -> Attribute msg
+viewBox a b c d =
+    [ a, b, c, d ]
+        |> List.map String.fromInt
+        |> String.join " "
+        |> Svg.Attributes.viewBox

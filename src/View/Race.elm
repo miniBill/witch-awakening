@@ -1,5 +1,6 @@
 module View.Race exposing (raceToShortString, viewRace)
 
+import Color
 import Data.Affinity as Affinity
 import Data.Race as Race
 import Element exposing (Attribute, Element, alignTop, centerX, el, fill, moveDown, moveRight, moveUp, rgb, spacing, text, width)
@@ -63,7 +64,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
     Theme.card [ Theme.id shortName ]
         { display = display
         , forceShow = List.isEmpty selected
-        , glow = 0x00F3EA6F
+        , glow = Color.rgb255 0xF3 0xEA 0x6F
         , isSelected = isSelected
         , imageAttrs = []
         , imageHeight = 600

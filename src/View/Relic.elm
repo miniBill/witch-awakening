@@ -1,5 +1,6 @@
 module View.Relic exposing (viewRelics)
 
+import Color exposing (Color)
 import Data.Affinity as Affinity
 import Data.Relic as Relic exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, paragraph, px, spacing, text, width)
@@ -127,9 +128,9 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                 |> Theme.image [ width <| px 40 ]
                 |> el [ moveDown 4 ]
 
-        color : Int
+        color : Color
         color =
-            0x00F3EA6F
+            Color.rgb255 0xF3 0xEA 0x6F
     in
     Theme.card [ Theme.id (Types.relicToString name) ]
         { display = display
@@ -187,7 +188,7 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
         }
 
 
-viewContent : Maybe Race -> Bool -> List RankedRelic -> CosmicPearlData -> List Race -> Relic.Details -> Int -> List (Element Choice)
+viewContent : Maybe Race -> Bool -> List RankedRelic -> CosmicPearlData -> List Race -> Relic.Details -> Color -> List (Element Choice)
 viewContent mainRace isSelected selected pearl races { content, name } color =
     case content of
         Single _ block ->
@@ -369,7 +370,7 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
         Element.none
     , Theme.column
         [ width fill
-        , Theme.backgroundColor 0
+        , Theme.backgroundColor Color.black
         , Font.color <| Element.rgb 1 1 1
         , Theme.rounded
         , Theme.padding

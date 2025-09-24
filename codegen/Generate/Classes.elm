@@ -6,8 +6,9 @@ import Elm.Arg
 import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
+import Gen.Color
 import Generate.Types exposing (TypesModule)
-import Generate.Utils exposing (yassify)
+import Generate.Utils as Utils exposing (yassify)
 import Parsers
 import String.Extra
 
@@ -46,7 +47,7 @@ classDetails types =
     Elm.Declare.Extra.customRecord "Details"
         |> Elm.Declare.Extra.withField "name" .name types.class.annotation
         |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "color" .color Elm.Annotation.int
+        |> Elm.Declare.Extra.withField "color" .color Gen.Color.annotation_.color
         |> Elm.Declare.Extra.withField "content" .content Elm.Annotation.string
         |> Elm.Declare.Extra.buildCustomRecord
 
@@ -70,7 +71,9 @@ classToColor types dlcClasses =
                     (\( _, classData ) ->
                         Elm.Case.branch
                             (types.class.argWith classData.name [])
-                            (\_ -> Elm.hex classData.color)
+                            (\_ ->
+                                Utils.color classData.color
+                            )
                     )
                 |> Elm.Case.custom class types.class.annotation
         )
@@ -83,7 +86,7 @@ dlcToClasses types classes =
             (classDetails types).make
                 { name = types.class.value class.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                , color = Elm.hex class.color
+                , color = Utils.color class.color
                 , content = Elm.string class.description
                 }
                 |> Elm.declaration (yassify class.name)
