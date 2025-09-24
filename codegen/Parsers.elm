@@ -729,7 +729,7 @@ quest =
                 |> requiredItem "Threat" maybeIntParser
                 |> requiredItem "Conflict" maybeIntParser
                 |> requiredItem "Reward" intParser
-                |> maybeItem "Faction" factionParser
+                |> maybeItem "Faction" Ok
                 |> parseSection
            )
         |= paragraphs True
@@ -738,43 +738,6 @@ quest =
                 |. sectionHeader "###" "Sidebar"
                 |= paragraphs True
             )
-
-
-factionParser : String -> ResultME String String
-factionParser raw =
-    case raw of
-        "Arcadia" ->
-            Ok "TheCollegeOfArcadia"
-
-        "Hawthorne" ->
-            Ok "HawthorneAcademia"
-
-        "Watchers" ->
-            Ok "TheWatchers"
-
-        "Hespatia" ->
-            Ok "TheHespatianCoven"
-
-        "Lunabella" ->
-            Ok "Lunabella"
-
-        "Alliance" ->
-            Ok "AlfheimrAlliance"
-
-        "Outsiders" ->
-            Ok "TheOutsiders"
-
-        "ORC" ->
-            Ok "TheORC"
-
-        "Alphazon" ->
-            Ok "AlphazonIndustries"
-
-        "Independent" ->
-            Ok "Independents"
-
-        _ ->
-            ResultME.error "Unknown faction"
 
 
 type alias Complication =

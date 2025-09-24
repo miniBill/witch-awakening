@@ -19,7 +19,7 @@ Santa will thank you with an extra reward! He teaches you some Christmas Magic, 
 
 ## Quest: Celestial Code
 - Slot: Heroic
-- Faction: Outsiders
+- Faction: The Outsiders
 - Threat: 10
 - Conflict: 10
 - Reward: 10

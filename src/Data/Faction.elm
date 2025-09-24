@@ -71,7 +71,7 @@ summaries =
     """
     {choice _Summaries:_}
 
-    - {choice __*The College at Arcadia*__}. American upstarts running their own pocket realm. Rural american town vibes melded with a mild city experience, lots of personal liberties but they maintain a degree of country justice to keep the order. Heavily integrates modem lifestyle and conveniences you might expect while having quick access to expansive wildlife and wilderness to explore with paradisiacal climate. {choice _Modernity. Homey town surrounding the college. Endless expanse surrounding it full of shifting changing features._}
+    - {choice __*The College of Arcadia*__}. American upstarts running their own pocket realm. Rural american town vibes melded with a mild city experience, lots of personal liberties but they maintain a degree of country justice to keep the order. Heavily integrates modem lifestyle and conveniences you might expect while having quick access to expansive wildlife and wilderness to explore with paradisiacal climate. {choice _Modernity. Homey town surrounding the college. Endless expanse surrounding it full of shifting changing features._}
 
     - {choice __*Hawthorne Academia*__}. A very old prestigious institution that has continued to grow over time. Labyrinthian gothic architecture that heavily employs space folding and relativity, no up or down. It’s located somewhere under the Greenland ice sheet but parts of it sprawl out from connected portals that span the globe and Lunabella. They’re strict and disciplinarian with uniforms and not limited to mortal ethics. {choice _Extremely safe, discounting any punishments. Effective education, magic and mundane. Extraordinary architecture._}
 

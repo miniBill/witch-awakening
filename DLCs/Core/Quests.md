@@ -343,7 +343,7 @@ This is certainly not a solo operation, but you’ll want to cooperate with as m
 
 ## Quest: Hot Springs
 - Slot: Folk
-- Faction: Arcadia
+- Faction: The College of Arcadia
 - Threat: 1
 - Conflict: 1
 - Reward: 2
@@ -359,7 +359,7 @@ Notes:
 
 ## Quest: Tournament Arc
 - Slot: Heroic
-- Faction: Hawthorne
+- Faction: Hawthorne Academia
 - Threat: 7
 - Conflict: 6
 - Reward: 7
@@ -375,7 +375,7 @@ Notes:
 
 ## Quest: Inquisition
 - Slot: Epic
-- Faction: Watchers
+- Faction: The Watchers
 - Threat: 8
 - Conflict: 9
 - Reward: 10
@@ -392,7 +392,7 @@ Notes:
 ## Quest: Pretty Little Things
 - Slot: Epic
 - Evil: True
-- Faction: Hespatia
+- Faction: The Hespatian Coven
 - Threat: 7
 - Conflict: 9
 - Reward: 6
@@ -422,7 +422,7 @@ Notes:
 
 ## Quest: Courtship
 - Slot: Noble
-- Faction: Alliance
+- Faction: Alfheimr Alliance
 - Threat: 5
 - Conflict: 4
 - Reward: 6
@@ -440,7 +440,7 @@ If you are the marriage candidate, you can customize the other by making a secon
 
 ## Quest: Fragments Of Self
 - Slot: Epic
-- Faction: Outsiders
+- Faction: The Outsiders
 - Threat: 10
 - Conflict: 1
 - Reward: 10
@@ -459,7 +459,7 @@ The 100 years counts for Power progression.
 
 ## Quest: Rip And Tear
 - Slot: Epic
-- Faction: ORC
+- Faction: The O.R.C.
 - Threat: 9
 - Conflict: 3
 - Reward: 9
@@ -475,7 +475,7 @@ Notes:
 
 ## Quest: Star Crypt
 - Slot: Heroic
-- Faction: Alphazon
+- Faction: Alphazon Industries
 - Threat: 7
 - Conflict: 4
 - Reward: 7
@@ -493,7 +493,7 @@ The Outsiders mess with the stealth field, causing it to block transportation ma
 
 ## Quest: Dungeoneering
 - Slot: Heroic
-- Faction: Independent
+- Faction: Independents
 - Repeatable: True
 - Threat: ?
 - Conflict: ?

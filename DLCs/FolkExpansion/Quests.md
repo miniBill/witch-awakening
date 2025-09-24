@@ -320,7 +320,7 @@ The Outsiders will double the effective forces of the threat with an assortment 
 
 ## Quest: Time Slip
 - Slot: Epic
-- Faction: Arcadia
+- Faction: The College of Arcadia
 - Threat: 9
 - Conflict: 2
 - Reward: 4
@@ -343,7 +343,7 @@ Increase the reward by 2 RP for each Companion you have. When finished with the 
 
 ## Quest: Witches 'N Inquisition
 - Slot: Epic
-- Faction: Hawthorne
+- Faction: Hawthorne Academia
 
 - Threat: 10
 - Conflict: 9
@@ -365,7 +365,7 @@ To further merit the gold bar Threat ranking despite death not being a serious t
 
 ## Quest: Maiden Train
 - Slot: Noble
-- Faction: Watchers
+- Faction: The Watchers
 - Evil Route: True
 - Threat: 5
 - Conflict: 4
@@ -387,7 +387,7 @@ In doing so condemning the girls you capture to Bad Ends, potentially as many as
 
 ## Quest: Bloodstone Chalice
 - Slot: Noble
-- Faction: Hespatia
+- Faction: The Hespatian Coven
 - Evil: True
 - Threat: 3
 - Conflict: 7
@@ -423,7 +423,7 @@ I mean, or you can take that telescope and go be a voyeur. You do you. Probably 
 
 ## Quest: Faerie King's Court
 - Slot: Epic
-- Faction: Alliance
+- Faction: Alfheimr Alliance
 - Evil Route: True
 - Threat: 8
 - Conflict: 8
@@ -445,7 +445,7 @@ In either case, you can also take Consortation rewritten to utilize equivalent f
 
 ## Quest: Tentacle Party
 - Slot: Noble
-- Faction: Outsiders
+- Faction: The Outsiders
 - Threat: 4
 - Conflict: 5
 - Reward: 7
@@ -458,7 +458,7 @@ Notes:
 
 ## Quest: Public Service
 - Slot: Folk
-- Faction: ORC
+- Faction: The O.R.C.
 - Repeatable: True
 - Threat: 2
 - Conflict: 2
@@ -473,7 +473,7 @@ Notes:
 
 ## Quest: Digital Death
 - Slot: Epic
-- Faction: Alphazon
+- Faction: Alphazon Industries
 - Threat: 10
 - Conflict: 7
 - Reward: 10
@@ -493,7 +493,7 @@ Being known for confronting the Reapers isn’t a great rep to have, but it’s 
 
 ## Quest: Job Board
 - Slot: Heroic
-- Faction: Independent
+- Faction: Independents
 - Repeatable: True
 - Threat: 5
 - Conflict: 5
