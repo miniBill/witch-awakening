@@ -8,7 +8,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Generated.Affinity
 import Generated.Classes
-import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Slot(..))
+import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Slot(..), raceToImage)
 import Gradients
 import Hex
 import Html exposing (Html)
@@ -327,6 +327,17 @@ viewPiece piece =
 
         Class class ->
             Html.img [ Html.Attributes.src (classToBadge class).src ] []
+
+        Race race ->
+            Html.div
+                [ Html.Attributes.style "width" "30px"
+                , Html.Attributes.style "height" "30px"
+                , Html.Attributes.style "border-radius" "30px"
+                , Html.Attributes.style "background-size" "cover"
+                , Html.Attributes.style "background"
+                    ("url(\"" ++ (raceToImage race).src ++ "\")")
+                ]
+                []
 
         Star ->
             Html.span
