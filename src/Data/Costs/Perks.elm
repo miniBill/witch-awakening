@@ -5,10 +5,12 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Data.Magic as Magic
 import Data.Perk as Perk
+import Generated.Magic
 import Generated.Perk
-import Generated.Types as Types exposing (Class, Perk(..), Race(..))
+import Generated.Types as Types exposing (Class, Magic, Perk(..), Race(..))
 import List.Extra
-import Types exposing (CosmicPearlData, RankedPerk)
+import Parser exposing ((|.), (|=), Parser)
+import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 import View.Perk
 
 
@@ -20,6 +22,7 @@ value :
         , typePerks : List Race
         , perks : List RankedPerk
         , class : Maybe Class
+        , magic : List RankedMagic
     }
     -> Monad Points
 value model =
@@ -68,6 +71,7 @@ perkValue :
         , cosmicPearl : CosmicPearlData
         , typePerks : List Race
         , perks : List RankedPerk
+        , magic : List RankedMagic
     }
     -> RankedPerk
     -> Monad { name : String, points : Int, staticCost : Bool }
@@ -87,7 +91,7 @@ perkValue model ranked =
                 model.races
     in
     Utils.find "Perk" .name ranked.name (Generated.Perk.all model.perks) View.Perk.perkToShortString
-        |> Monad.map
+        |> Monad.andThen
             (\perk ->
                 let
                     finalCost : Int
@@ -97,18 +101,71 @@ perkValue model ranked =
 
                         else
                             innerPerkValue model ranked perk
-                in
-                { name = Types.perkToString ranked.name
-                , points = -finalCost
-                , staticCost =
-                    case perk.content of
-                        Perk.Single _ _ ->
-                            True
 
-                        _ ->
-                            False
-                }
+                    res : { name : String, points : Int, staticCost : Bool }
+                    res =
+                        { name = Types.perkToString ranked.name
+                        , points = -finalCost
+                        , staticCost =
+                            case perk.content of
+                                Perk.Single _ _ ->
+                                    True
+
+                                _ ->
+                                    False
+                        }
+                in
+                case perk.requires of
+                    Nothing ->
+                        Monad.succeed res
+
+                    Just req ->
+                        case Parser.run (requisiteParser |. Parser.end) req of
+                            Err _ ->
+                                Monad.succeed res |> Monad.withWarning ("Failed to parse requisite: " ++ req)
+
+                            Ok (RequiresMagic requiredName requiredRank) ->
+                                if
+                                    List.any
+                                        (\rankedMagic ->
+                                            rankedMagic.name == requiredName && rankedMagic.rank >= requiredRank
+                                        )
+                                        model.magic
+                                then
+                                    Monad.succeed res
+
+                                else
+                                    Monad.succeed res
+                                        |> Monad.withWarning
+                                            ("Missing requisite for "
+                                                ++ Types.perkToString ranked.name
+                                                ++ ": "
+                                                ++ req
+                                            )
             )
+
+
+requisiteParser : Parser Requisite
+requisiteParser =
+    let
+        name : Parser Magic
+        name =
+            Generated.Magic.all
+                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Types.magicToString m.name))
+                |> Parser.oneOf
+    in
+    Parser.succeed RequiresMagic
+        |= name
+        |. Parser.spaces
+        |= Parser.int
+        |. Parser.oneOf
+            [ Parser.succeed () |. Parser.symbol "+"
+            , Parser.succeed ()
+            ]
+
+
+type Requisite
+    = RequiresMagic Magic Int
 
 
 innerPerkValue :
