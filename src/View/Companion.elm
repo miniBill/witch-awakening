@@ -126,16 +126,14 @@ companionSection display companions ( faction, section ) =
                 |> List.map (companionBox display companions)
     in
     if display == DisplayFull then
-        [ (Companion.factionToCollectiveName faction ++ ":")
-            |> String.split " "
-            |> List.intersperse " "
-            |> List.map (Theme.gradientText 2 Gradients.yellowGradient)
-            |> Theme.wrappedRow
-                [ Theme.celticHand
-                , Font.size 48
-                , Theme.centerWrap
-                , width fill
-                ]
+        [ Theme.gradientTextWrapped
+            [ Theme.celticHand
+            , Font.size 48
+            , width fill
+            ]
+            2
+            Gradients.yellowGradient
+            (Companion.factionToCollectiveName faction ++ ":")
         , boxes
             |> Theme.wrappedRow
                 [ width fill
@@ -336,11 +334,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
         , width <| Element.minimum 200 <| fillPortion 2
         ]
         [ Theme.row [ width fill ]
-            [ Types.companionToString name
-                |> String.split " "
-                |> List.intersperse " "
-                |> List.map (Theme.gradientText 4 Gradients.yellowGradient)
-                |> Theme.wrappedRow [ Font.size 36, width fill ]
+            [ Theme.gradientTextWrapped [ Font.size 36, width fill ] 4 Gradients.yellowGradient (Types.companionToString name)
             , case class of
                 ClassOne c ->
                     c

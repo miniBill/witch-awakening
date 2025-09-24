@@ -110,17 +110,16 @@ questBox display selected number quest =
                 , imageHeight = 400
                 , image = Types.questToImage quest.name
                 , inFront =
-                    [ nameString
-                        |> String.split " "
-                        |> List.intersperse " "
-                        |> List.map (Theme.gradientText 4 Gradients.yellowGradient)
-                        |> Theme.wrappedRow
-                            [ alignBottom
-                            , Font.size 32
-                            , Theme.captureIt
-                            , moveRight 16
-                            , moveUp 60
-                            ]
+                    [ Theme.gradientTextWrapped
+                        [ alignBottom
+                        , Font.size 32
+                        , Theme.captureIt
+                        , moveRight 16
+                        , moveUp 60
+                        ]
+                        4
+                        Gradients.yellowGradient
+                        nameString
                     , case quest.faction of
                         Nothing ->
                             Element.none

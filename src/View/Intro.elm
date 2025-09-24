@@ -116,17 +116,13 @@ viewDLCAttribution dlcAttribution =
             Theme.choice (" By " ++ dlcAttribution.author)
     in
     (dlcAttribution.name
-        |> String.split " "
+        |> Theme.gradientTextSplit 4 Gradients.purpleGradient
         |> List.map
-            (\word ->
-                word
-                    |> Theme.gradientText 4 Gradients.purpleGradient
-                    |> el
-                        [ Theme.captureIt
-                        , Font.size 20
-                        ]
+            (el
+                [ Theme.captureIt
+                , Font.size 20
+                ]
             )
-        |> List.intersperse (text " ")
     )
         ++ [ case dlcAttribution.link of
                 Just url ->

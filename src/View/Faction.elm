@@ -291,16 +291,8 @@ introRow display { name, dlc, motto, images } =
                 [ img images.image2
                 , img images.image3
                 , column [ centerX ]
-                    [ Types.factionToString name
-                        |> String.split " "
-                        |> List.intersperse " "
-                        |> List.map (Theme.gradientText 2 Gradients.blueGradient)
-                        |> Theme.wrappedRow [ Theme.centerWrap, Font.size 40, Theme.celticHand ]
-                    , motto
-                        |> String.split " "
-                        |> List.intersperse " "
-                        |> List.map (Theme.gradientText 2 Gradients.yellowGradient)
-                        |> Theme.wrappedRow [ Theme.centerWrap, Font.size 24, Theme.morpheus ]
+                    [ Theme.gradientTextWrapped [ Font.size 40, Theme.celticHand ] 2 Gradients.blueGradient (Types.factionToString name)
+                    , Theme.gradientTextWrapped [ Font.size 24, Theme.morpheus ] 2 Gradients.yellowGradient motto
                     ]
                 ]
             , img images.image4

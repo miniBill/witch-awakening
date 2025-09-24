@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
 
 import Color
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -53,6 +53,20 @@ image attrs { src } =
 choice : String -> Element msg
 choice value =
     el [ Font.color <| rgb255 0x04 0xD4 0xED ] <| text value
+
+
+gradientTextWrapped : List (Attribute msg) -> Float -> List ( Int, Int, Int ) -> String -> Element msg
+gradientTextWrapped attrs outlineSize gradient value =
+    gradientTextSplit outlineSize gradient value
+        |> wrappedRow (centerWrap :: attrs)
+
+
+gradientTextSplit : Float -> List ( Int, Int, Int ) -> String -> List (Element msg)
+gradientTextSplit outlineSize gradient value =
+    value
+        |> String.split " "
+        |> List.intersperse " "
+        |> List.map (\word -> gradientText outlineSize gradient word)
 
 
 gradientText : Float -> List ( Int, Int, Int ) -> String -> Element msg
@@ -502,10 +516,7 @@ viewSectionTitle toMsg display label =
     let
         gradient : String -> List (Element msg)
         gradient t =
-            t
-                |> String.split " "
-                |> List.intersperse " "
-                |> List.map (\w -> gradientText 4 Gradients.blueGradient w)
+            gradientTextSplit 4 Gradients.blueGradient t
     in
     wrappedRow
         [ celticHand
