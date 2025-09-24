@@ -17,6 +17,6 @@ __Puazi draw Mana__ from Intimacy, the shared vulnerability of people sharing so
 ### Perk
 - Cost: 3
 
-You gain the ability to intuitively perceive the emotions of people around you, even if they're trying to hide them. Your range is usually a couple meters, and you need line of sight, but you can detect stronger emotions from further apart, and emotions about you in particular even through obstacles.
+You gain the ability to intuitively perceive the emotions of people around you, even if they’re trying to hide them. Your range is usually a couple meters, and you need line of sight, but you can detect stronger emotions from further apart, and emotions about you in particular even through obstacles.
 
 In addition, for people that you are intimate with, you can send and receive emotions over long distances. By default this has a range of several kilometers, and scales up with the intensity of the emotion and how emotionally and physically close you are to the person. As opposed to the passive perception of people next to you, communicating emotions long range is always a voluntary action, initiated from the sender.

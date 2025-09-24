@@ -5,7 +5,7 @@
 - Element: Shadows
 - Cost: 4
 
-You will now be able to sense when you're being scryed upon in real time, gaining cursory information about the person spying on you (the name they are most commonly known by, their general distance and direction from you, and how high rank their [Divination] is). You also gain a vague awareness of any instance of someone speaking your true name.
+You will now be able to sense when you’re being scryed upon in real time, gaining cursory information about the person spying on you (the name they are most commonly known by, their general distance and direction from you, and how high rank their [Divination] is). You also gain a vague awareness of any instance of someone speaking your true name.
 
 
 ## Perk: Serpent's gaze
@@ -13,7 +13,7 @@ You will now be able to sense when you're being scryed upon in real time, gainin
 - Element: Shadows
 - Cost: 6
 
-This perk grants you the boon of the Gorgon's, allowing you to affect people with magical effects from any range so long as you make eye contact with them (as a general guide for what this perk will or will not allow you to do, you can now consider eye-contact to be equivalent to physical contact for purposes of casting magic on someone).
+This perk grants you the boon of the Gorgon’s, allowing you to affect people with magical effects from any range so long as you make eye contact with them (as a general guide for what this perk will or will not allow you to do, you can now consider eye-contact to be equivalent to physical contact for purposes of casting magic on someone).
 
 
 ## Perk: Babel
@@ -53,7 +53,7 @@ With this perk you learn how to create ritually prepared skin-cloaks that allow 
 - Element: Shadows
 - Cost: 6
 
-With this perk you can now trust in the shadows to guide you: when walking in complete darkness you may opt to be guided by shadows, getting ever closer to your goal, teleporting from one patch of darkness to another. This can guide you so long as you vaguely know where you're going/want to go, but has the drawback that the shadows will sometimes redirect you somewhere they think you ought to go instead. Not as fast or reliable as portals, and doesn't let you transport anything except what you carry, but this perk is cheaper, and can guide you to places you've not yet been to.
+With this perk you can now trust in the shadows to guide you: when walking in complete darkness you may opt to be guided by shadows, getting ever closer to your goal, teleporting from one patch of darkness to another. This can guide you so long as you vaguely know where you’re going/want to go, but has the drawback that the shadows will sometimes redirect you somewhere they think you ought to go instead. Not as fast or reliable as portals, and doesn’t let you transport anything except what you carry, but this perk is cheaper, and can guide you to places you’ve not yet been to.
 
 
 ## Perk: Forbidden Knowledge

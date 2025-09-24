@@ -238,7 +238,7 @@ Some Petrichor draw the attention of their ancestral god, who gives them tasks l
 - Mana capacity: Low
 - Mana rate: High
 
-Gabions have been forming for as long as mortals have harnessed the wind and dreamed of flight, forming in other worlds as echoes of particular sailboats, kites, or windmills that became especially loved or treasured. The wind blows between their thin lattice skeletons and against the cloth of their skin and clothes, and they can let it blow them away or stay grounded and heavy as they wish. They are born adults and don't age.
+Gabions have been forming for as long as mortals have harnessed the wind and dreamed of flight, forming in other worlds as echoes of particular sailboats, kites, or windmills that became especially loved or treasured. The wind blows between their thin lattice skeletons and against the cloth of their skin and clothes, and they can let it blow them away or stay grounded and heavy as they wish. They are born adults and don’t age.
 
 A broken or dead gabion must be taken into the sky, completely out of contact with the ground or a building, and left flying for a full day, enough to fill their mana capacity ten times over, and the body will repair itself.
 
@@ -257,7 +257,7 @@ Some gabions can control their reaction to the wind much more precisely, and fly
 
 Solars are the golden children of the sun and the community, and are innately attuned to the rhythms of the day, the year, and the people, from the life of the party to the political currents of the city. They have a sense for the health and security of everyone around them, which their natural affinities push them to use for good, but it also makes them natural cult leaders.
 
-Solar's eyes do not decay; if the pair each receive at least an hour of direct sun on the summer solstice, the light will return to the eyes, and she will reform around them at the next dawn.
+Solar’s eyes do not decay; if the pair each receive at least an hour of direct sun on the summer solstice, the light will return to the eyes, and she will reform around them at the next dawn.
 
 __Solars draw Mana__ from Healing. Helping anyone else heal physical or mental wounds makes a Solar charge for minutes to hours depending on severity of wounds and effectiveness of healing.
 
@@ -272,11 +272,11 @@ Some solars are blessed with special talents for healing. They gain an intuition
 - Mana capacity: Low
 - Mana rate: Medium
 
-Rainbow children, Iridiani live in the sunlight and the sky at heart, and can walk on the sky like an invisible bridge emulating the rainbow bridges in a dozen myths, though they can't fly unaided. Their embrace and breath is healing and restorative, enough to stabilize almost any injury and keep a mortal healthy in very thin air or light radiation.
+Rainbow children, Iridiani live in the sunlight and the sky at heart, and can walk on the sky like an invisible bridge emulating the rainbow bridges in a dozen myths, though they can’t fly unaided. Their embrace and breath is healing and restorative, enough to stabilize almost any injury and keep a mortal healthy in very thin air or light radiation.
 
 They only age at night in still air, and de-age at a rapid rate in direct unclouded sun or under a rainbow. If they die and a lock of their hair massing at least a tenth of a kilo is left under the open sky, it will begin to grow as soon as it reflects a rainbow and the body will coalesce from light when the hair reaches full length.
 
-__Iridiani draw Mana__ from Exposure. The more wind and light falls on an Iridian's skin and hair, the more they charge. Full-body sunbathing gets them up to High rate. Artificial lights that emulate sunlight are only good for a trickle.
+__Iridiani draw Mana__ from Exposure. The more wind and light falls on an Iridian’s skin and hair, the more they charge. Full-body sunbathing gets them up to High rate. Artificial lights that emulate sunlight are only good for a trickle.
 
 ### Perk
 - Cost: 2
@@ -291,7 +291,7 @@ Some Iridiani can swirl the air well enough to make the sky-walking platforms th
 
 Cold fire bobbing in the air and pouring itself into ethereal bodies, Hitodama are fire spirits who are drawn to the passing of the recent dead and light the way to the afterlife for those yet to pass on. They can communicate with most spirits freely, though they often must sing their conversations or ring bells to hold their attention. They have a sense for spirits soon to become corrupted or faded and their light pauses either process if no other magic interferes.
 
-Unless they've gravely offended the Reapers, Hitodama are immediately sent back into the world on their deaths, though it may take as much as a month to reform their body beyond a ball of marsh-light.
+Unless they’ve gravely offended the Reapers, Hitodama are immediately sent back into the world on their deaths, though it may take as much as a month to reform their body beyond a ball of marsh-light.
 
 __Hitodama draw Mana__ from Remembrance. Hitodama charge by taking care of graves, tending shrines, writing obituaries, or in any other way keeping the memory of spirits and the dead alive.
 
@@ -322,7 +322,7 @@ Some mummies are particularly tied to the marshy airless waters of the bogs. In 
 - Mana rate: High
 
 Gulabaa are spirits of wildfires and the plants which rely on them, principally eucalyptus. They can travel though the upper branches of a forest nearly as fast as the wildfires they love, leaving the trees lightly scorched in their wake, and when in an actual wildfire, they are immune to the heat and easily run faster than a car.
-Gulabaa can plant any part of themselves in a tree of any kind, though it is usually one vulnerable to fire. If she dies, she will sprout from one of these tree's roots when one burns down in a wildfire.
+Gulabaa can plant any part of themselves in a tree of any kind, though it is usually one vulnerable to fire. If she dies, she will sprout from one of these tree’s roots when one burns down in a wildfire.
 __Gulabaa draw Mana__ from cycles of Growth. Gulabaa charge both from destroying what they have nurtured and nurturing what they have destroyed. Hours of one spread over weeks are necessary before it will count for the other. Need not be physical destruction or nurturing.
 
 ### Perk
@@ -335,10 +335,10 @@ Particularly spiritual Gulabaa can tend plants to resist fire while still feedin
 - Elements: Life, Metal
 - Mana capacity: High
 - Mana rate: Medium
-An entirely witch and witchknight species, guardians (not technically angels) are never solitary, because each of them is devoted to a particular person, their ward. Guardians always have a vague sense of the well-being of their ward, and use magic more cheaply to aid them or go to their side. Guardians cannot die permanently as long as their ward lives, reviving in one week by their side in the spirit world. The same happens if they die heroically failing to save their ward, which leaves them with Low capacity but constant Low charge for a year if they don't give up on reviving their ward.
+An entirely witch and witchknight species, guardians (not technically angels) are never solitary, because each of them is devoted to a particular person, their ward. Guardians always have a vague sense of the well-being of their ward, and use magic more cheaply to aid them or go to their side. Guardians cannot die permanently as long as their ward lives, reviving in one week by their side in the spirit world. The same happens if they die heroically failing to save their ward, which leaves them with Low capacity but constant Low charge for a year if they don’t give up on reviving their ward.
 __Guardians draw Mana__ from Protection. They charge from watching over their ward, placing protections on them, and diverting harm. Saving their ward from mortal peril gives High charge for a day, and saving anyone else from major danger gives a Low charge for at least an hour.
 
 ### Perk
 - Cost: 2
 
-As long as a Guardian's ward is alive and unthreatened, they may choose a new ward. This cuts them off from their old ward immediately and does not replace it for one month. With the old ward's blessing to change this can drop to a week.
+As long as a Guardian’s ward is alive and unthreatened, they may choose a new ward. This cuts them off from their old ward immediately and does not replace it for one month. With the old ward’s blessing to change this can drop to a week.

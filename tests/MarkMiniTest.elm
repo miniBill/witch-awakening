@@ -36,14 +36,14 @@ suite =
                             }
                             |> Ok
                         )
-        , test "+/- Will mould you into a competent hunter through whatever means she deems necessary, won't hesitate to use tough love. ~~Mother~~ teacher knows best." <|
+        , test "+/- Will mould you into a competent hunter through whatever means she deems necessary, won’t hesitate to use tough love. ~~Mother~~ teacher knows best." <|
             \_ ->
-                "+/- Will mould you into a competent hunter through whatever means she deems necessary, won't hesitate to use tough love. ~~Mother~~ teacher knows best."
+                "+/- Will mould you into a competent hunter through whatever means she deems necessary, won’t hesitate to use tough love. ~~Mother~~ teacher knows best."
                     |> Parser.run (MarkMini.blockParser |. Parser.end)
                     |> Expect.equal
                         (MarkMini.Paragraph
                             { pieces =
-                                [ MarkMini.Text "+/- Will mould you into a competent hunter through whatever means she deems necessary, won't hesitate to use tough love. "
+                                [ MarkMini.Text "+/- Will mould you into a competent hunter through whatever means she deems necessary, won’t hesitate to use tough love. "
                                 , MarkMini.Strikethrough [ MarkMini.Text "Mother" ]
                                 , MarkMini.Text " teacher knows best."
                                 ]

@@ -99,7 +99,7 @@ value { ignoreSorceressBonus } model =
                         Nothing
 
                     forbidden ->
-                        Just ("If you have Jack-of-All you can't have rank 5 magic - you have selected " ++ String.join ", " forbidden)
+                        Just ("If you have Jack-of-All you can’t have rank 5 magic - you have selected " ++ String.join ", " forbidden)
 
             else
                 Nothing

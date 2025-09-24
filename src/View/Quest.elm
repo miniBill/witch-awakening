@@ -500,13 +500,13 @@ introBlock =
 intro : String
 intro =
     """
-    Quests are specific events written into your fate and strongly predestined to occur but by no means are the only things you may end up doing. People used to seek out seers, sages, and prophets in order to get information on their quests, but these days it's pretty easy to use this same guided awakening ritual to get a better look at them, though not as detailed as some seers can get. Find an oracle if you want more information, else you'll just figure it out as you go along like most people.
+    Quests are specific events written into your fate and strongly predestined to occur but by no means are the only things you may end up doing. People used to seek out seers, sages, and prophets in order to get information on their quests, but these days it’s pretty easy to use this same guided awakening ritual to get a better look at them, though not as detailed as some seers can get. Find an oracle if you want more information, else you’ll just figure it out as you go along like most people.
 
-    {choice Choose some quests! You can take a max of __5 folk__ quests, __4 noble__, __2 heroic__, and __1 epic__. Faction quests for your own faction don't count for the limit, but you can also take a faction quest of factions you're on good terms with using your slots.}
+    {choice Choose some quests! You can take a max of __5 folk__ quests, __4 noble__, __2 heroic__, and __1 epic__. Faction quests for your own faction don’t count for the limit, but you can also take a faction quest of factions you’re on good terms with using your slots.}
 
     Each quest shows 3 stats. Threat is roughly how dangerous the quest is, the presence of hazards or enemies. Conflict is the severity of which it causes friction with other factions named in the description. Reward is how many reward points are given by the end, which can be used to buy relics you obtain as part of the quest, or can be spent {1} to [1] to acquire power from your power cap early, bypassing time and method of advancement, just not the cap. You can save points for larger relics.
 
-    {choice Quests do not give specific \\"End States\\", being more of a hook or writing prompt, it's up to you to interpret and satisfy the quest with the means you have available. Writing at least a 100 word storybeat in how you approach it can add an additional reward point to the questo per 100 up to double. You can combine quests into \\"arcs\\" with combined RP and word count. You can spend RP mid \\"Arc\\", such as finding the shiny hat before facing the wolves or taking the bad guy's fancy stick.}
+    {choice Quests do not give specific \\"End States\\", being more of a hook or writing prompt, it’s up to you to interpret and satisfy the quest with the means you have available. Writing at least a 100 word storybeat in how you approach it can add an additional reward point to the questo per 100 up to double. You can combine quests into \\"arcs\\" with combined RP and word count. You can spend RP mid \\"Arc\\", such as finding the shiny hat before facing the wolves or taking the bad guy’s fancy stick.}
     """
 
 

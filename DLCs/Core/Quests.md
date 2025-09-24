@@ -27,16 +27,16 @@ Notes:
 - Conflict: 1
 - Reward: 2
 
-The house of a non-witch or new low rank witch that you are on friendly terms with, or a relative of, will catch fire into a severe inferno, and you'll be in a position to respond, being within actionable distance and aware of the fire occurring after it kicks off. This fate will prioritize a home that you share with them sometimes, such as if you have roommates or a parents house you sometimes visit and have property stored. This factors any transportation and communication abilities or resources you possess, you could be in another dimension and receive a bad feeling or HexVPN / GhostNet communications that warns you something is wrong.
+The house of a non-witch or new low rank witch that you are on friendly terms with, or a relative of, will catch fire into a severe inferno, and you’ll be in a position to respond, being within actionable distance and aware of the fire occurring after it kicks off. This fate will prioritize a home that you share with them sometimes, such as if you have roommates or a parents house you sometimes visit and have property stored. This factors any transportation and communication abilities or resources you possess, you could be in another dimension and receive a bad feeling or HexVPN / GhostNet communications that warns you something is wrong.
 
 Notes:
 + Do you evacuate people, pets, and objects?
 + Do you fight the fire by some means? A number of magics could help, chances are it is on Earth, which could limit your actions within the Masquerade. Watchers or ORC will cover up low evidence of magic, like oddities in forensics.
 
 ### Sidebar
-They cover up evidence in general, it's not a faction issue.
+They cover up evidence in general, it’s not a faction issue.
 
-If you're evil, you can instead be fated to cause a house fire that causes the death of someone close to a high status good character, or scarring of someone fully innocent and kind.
+If you’re evil, you can instead be fated to cause a house fire that causes the death of someone close to a high status good character, or scarring of someone fully innocent and kind.
 
 
 ## Quest: Domesticated
@@ -45,7 +45,7 @@ If you're evil, you can instead be fated to cause a house fire that causes the d
 - Conflict: 1
 - Reward: 1
 
-Fate will conspire to guarantee that at some point in your life you will have a window of clarity and peace, and situations aligned such that you have a guaranteed opportunity to have a healthy wholesome domestic life at some point, with a home, a partner, and a child that came into your life the old fashioned way or by chance. You'll have up to 20 years of peace, but the peace could begin to fade as early as 6 years in, at your discretion, depending on how much adventure you want to inject into the later years with the child and partner. Your circumstance will align such that you genuinely feel a sense of ease, relaxation, and nothing particularly rough will occur.
+Fate will conspire to guarantee that at some point in your life you will have a window of clarity and peace, and situations aligned such that you have a guaranteed opportunity to have a healthy wholesome domestic life at some point, with a home, a partner, and a child that came into your life the old fashioned way or by chance. You’ll have up to 20 years of peace, but the peace could begin to fade as early as 6 years in, at your discretion, depending on how much adventure you want to inject into the later years with the child and partner. Your circumstance will align such that you genuinely feel a sense of ease, relaxation, and nothing particularly rough will occur.
 
 Notes:
 + The child and partner are not necessarily a witch themselves. Most witches bear human or non-witch magical race offspring.
@@ -62,7 +62,7 @@ If you take House Fire, this synergizes- When your grace period ends, it is your
 - Conflict: 2
 - Reward: 3
 
-At some point you somehow find yourself involved with a group of street racers, which as it turns out is a hobby that attracts certain types of witches who appreciate the underground quality to it and I have an affinity for rides, and it's less dangerous when you're semi-immortal beings. Alchemical nitrus potions, firecalling rocket boosts, windkeeping tailwinds, witch races can get wild. On Earth the rules limit to subtle effects, but they tell you about incredible death races off Earth that hold nothing back. Maybe you'll see one some day. For now, you're among very welcoming group of people that love cars and form an extended family.
+At some point you somehow find yourself involved with a group of street racers, which as it turns out is a hobby that attracts certain types of witches who appreciate the underground quality to it and I have an affinity for rides, and it’s less dangerous when you’re semi-immortal beings. Alchemical nitrus potions, firecalling rocket boosts, windkeeping tailwinds, witch races can get wild. On Earth the rules limit to subtle effects, but they tell you about incredible death races off Earth that hold nothing back. Maybe you’ll see one some day. For now, you’re among very welcoming group of people that love cars and form an extended family.
 
 Notes:
 + You can participate as you wish, as moral support, mechanics, or join the race yourself. If you have Hellrider, you can customize it or integrate it into any other vehicle you get your hands on, but Broomstick speed boosts are restricted to off-earth races.
@@ -75,7 +75,7 @@ Notes:
 - Conflict: 2
 - Reward: 3
 
-Looks like you have one hell of a party in your fate. Whether it's a major celebration after a more challenging quest of your own or someone else, random occasion, or your own hard work and planning or contribution, you'll at some point attend an amazing party, parade, festival, or otherwise event that will be talked about for decades to come with fond and novel memories, it might even last a whole week. Whether it's some saturnalian festivity of debauched thrills, or a simple meaningful night of karaoke with a small group of friends, it will be a night to remember, and whatever your normal reservations, you'll feel comfortable and at home.
+Looks like you have one hell of a party in your fate. Whether it’s a major celebration after a more challenging quest of your own or someone else, random occasion, or your own hard work and planning or contribution, you’ll at some point attend an amazing party, parade, festival, or otherwise event that will be talked about for decades to come with fond and novel memories, it might even last a whole week. Whether it’s some saturnalian festivity of debauched thrills, or a simple meaningful night of karaoke with a small group of friends, it will be a night to remember, and whatever your normal reservations, you’ll feel comfortable and at home.
 
 Notes:
 + Design a party of your dreams, small or large.
@@ -91,12 +91,12 @@ Notes:
 - Conflict: 2
 - Reward: 5
 
-Deep in the largest forests on your continent, a tribe of wood elves and dryads have thrived for centuries clinging to their heritage and native ways. However, something is disturbing the local wildlife and is killing their hunters. An ambush by a pack of Dire Wolves went straight for the throat- An intelligent attack that took the lives of their most capable guardians and sages, including their Naturalist Witch matriarch, her soul unable to be reborn, restrained by a foul presence in the Alpha wolf, a soulstealing curse on its fang and claw. Their numbers have gone from numbering in the 100's, to just 34 remaining tribesmen and women. They desperately need help!
+Deep in the largest forests on your continent, a tribe of wood elves and dryads have thrived for centuries clinging to their heritage and native ways. However, something is disturbing the local wildlife and is killing their hunters. An ambush by a pack of Dire Wolves went straight for the throat- An intelligent attack that took the lives of their most capable guardians and sages, including their Naturalist Witch matriarch, her soul unable to be reborn, restrained by a foul presence in the Alpha wolf, a soulstealing curse on its fang and claw. Their numbers have gone from numbering in the 100s, to just 34 remaining tribesmen and women. They desperately need help!
 
 Notes:
-+ If harmed by the Alpha Dire Wolf, you can't benefit from any means of resurrection or reincarnation, natural or magical.
++ If harmed by the Alpha Dire Wolf, you can’t benefit from any means of resurrection or reincarnation, natural or magical.
 + Killing the Alpha or dispelling its curse can free trapped souls.
-+ Dire Wolves, while aggressive and violent, aren't usually this malicious, and can't weave a curse like this itself.
++ Dire Wolves, while aggressive and violent, aren’t usually this malicious, and can’t weave a curse like this itself.
 
 
 ## Quest: Just Desserts
@@ -105,13 +105,13 @@ Notes:
 - Conflict: 4
 - Reward: 6
 
-For any number of reasons, you've found yourself at an elaborate dinner party celebrating the wedding between a local princess and a merchant prince known for making his wealth through the cheap mass production of medicines sold at just enough to make a profit, thanks to his usage of Golemwork for automation. They're both beloved by everyone. And yet, in the middle of the dance, they are both struck with a gruesome death. The large estate is sealed off from outside magics and the borders immediately slam shut on lockdown, thick layers of antimagic wards fully enclose the estate.
+For any number of reasons, you’ve found yourself at an elaborate dinner party celebrating the wedding between a local princess and a merchant prince known for making his wealth through the cheap mass production of medicines sold at just enough to make a profit, thanks to his usage of Golemwork for automation. They’re both beloved by everyone. And yet, in the middle of the dance, they are both struck with a gruesome death. The large estate is sealed off from outside magics and the borders immediately slam shut on lockdown, thick layers of antimagic wards fully enclose the estate.
 
 Until the murderer is caught, every day 1-3 deaths will turn up.
 
 Notes:
 + Each body appears to have a stab wound among other injuries, could it relate to why the souls are missing?
-+ The killer must be an Outsider that didn't expect the lockdown, and are trying to cause as much suffering and terror as they can in order to invoke Far Gods to break themselves free.
++ The killer must be an Outsider that didn’t expect the lockdown, and are trying to cause as much suffering and terror as they can in order to invoke Far Gods to break themselves free.
 
 ### Sidebar
 The Murderer seems to resist the antimagic fields, and whatever is allowing it, is affecting you too -- but you both effectively have the Dysfunction complication for the quest
@@ -123,13 +123,13 @@ The Murderer seems to resist the antimagic fields, and whatever is allowing it, 
 - Conflict: 3
 - Reward: 5
 
-In a rural town you by some means overhear the hushed terrified whispers that a group of teenagers went searching for two of their missing friend who they claim have fallen victim to the “Witch of the Woods” who cursed the town long ago, every 20 years kids go missing, for the past 200 years. If you check with the factions, nobody has heard of the case. Pulling on the thread yourself however, you'll unravel a town full of supernatural occurrences and come to learn the inhabitants are under some subtle compulsion preventing them from leaving and making outsiders less aware of the town, even from Reapers who'd ferry spirits to safety.
+In a rural town you by some means overhear the hushed terrified whispers that a group of teenagers went searching for two of their missing friend who they claim have fallen victim to the “Witch of the Woods” who cursed the town long ago, every 20 years kids go missing, for the past 200 years. If you check with the factions, nobody has heard of the case. Pulling on the thread yourself however, you’ll unravel a town full of supernatural occurrences and come to learn the inhabitants are under some subtle compulsion preventing them from leaving and making outsiders less aware of the town, even from Reapers who’d ferry spirits to safety.
 
 Notes:
-+ An isolated ecosystem that's been cut off from Reapers, the inhabitants denied afterlives, left to wander the region until they go insane or fall victim to predatory spirits, evolving into spirit beasts and monsters such as Poltergeists, Banshees, & other dangers that are well fed enough to affect the material world.
++ An isolated ecosystem that’s been cut off from Reapers, the inhabitants denied afterlives, left to wander the region until they go insane or fall victim to predatory spirits, evolving into spirit beasts and monsters such as Poltergeists, Banshees, & other dangers that are well fed enough to affect the material world.
 
 ### Sidebar
-The avoidance compulsion seems strong, however you ended up there, outside help is unlikely. What's going on here?
+The avoidance compulsion seems strong, however you ended up there, outside help is unlikely. What’s going on here?
 
 
 ## Quest: On Silver Wings
@@ -158,11 +158,11 @@ As an ally, the unicorn can provide silverblood in the future, feathers, and com
 - Conflict: 6
 - Reward: 4
 
-You've received either a bounty tip or an assassination mark for a wanted rogue witch, or a nosy witch who stuck their nose in the wrong person's business or were in the wrong place at the wrong time. They're wanted dead or alive either way. If you take them alive, the Threat and Reward both increase by 2 points as they resist. They'll have at least two tier 4 magics, plus a random assortment of 1-3 rank magics, making them an either an experienced and capable witch, or a naturally gifted witch in over their head. They have allies of similar standard to your own, being a member of a major faction with a companion from that faction.
+You’ve received either a bounty tip or an assassination mark for a wanted rogue witch, or a nosy witch who stuck their nose in the wrong person’s business or were in the wrong place at the wrong time. They’re wanted dead or alive either way. If you take them alive, the Threat and Reward both increase by 2 points as they resist. They’ll have at least two tier 4 magics, plus a random assortment of 1-3 rank magics, making them an either an experienced and capable witch, or a naturally gifted witch in over their head. They have allies of similar standard to your own, being a member of a major faction with a companion from that faction.
 
 Notes:
 + If evil, the client prefers them alive and roughed up a little.
-+ If good, the ORC or Watchers hosting the bounty don't have a preference for alive or dead, but will find any prisoner abuse distasteful or potentially criminal, but they're wanted for some serious reason, such as burning an orphanage.
++ If good, the ORC or Watchers hosting the bounty don’t have a preference for alive or dead, but will find any prisoner abuse distasteful or potentially criminal, but they’re wanted for some serious reason, such as burning an orphanage.
 
 
 ## Quest: The Mathematician
@@ -171,16 +171,16 @@ Notes:
 - Conflict: 4
 - Reward: 7
 
-A form of magic that pops up from time to time. By nature it's hard to describe, but to be brief; High Order Mathematics is a very raw form of magic that unfailingly renders the practitioner insane, not from unnatural memetic hazards, but the raw understanding and changes in perspective utilizing numerals and characters of the First Language used in Runes, The Mathematician is an insane witch, but a glimpse in their mind is like looking upon a Far God -- chaotic, esoteric, unpredictable. The Mathematician is capable of replicating any magic effect, and many unknown magic effects, but is thoroughly insane- And for some reason, they've fixated on you.
+A form of magic that pops up from time to time. By nature it’s hard to describe, but to be brief; High Order Mathematics is a very raw form of magic that unfailingly renders the practitioner insane, not from unnatural memetic hazards, but the raw understanding and changes in perspective utilizing numerals and characters of the First Language used in Runes, The Mathematician is an insane witch, but a glimpse in their mind is like looking upon a Far God -- chaotic, esoteric, unpredictable. The Mathematician is capable of replicating any magic effect, and many unknown magic effects, but is thoroughly insane- And for some reason, they’ve fixated on you.
 
 Notes:
-+ They aren't malicious, but in their fixation they're experimenting on you with any number of parameters. They want -- need -- to know everything about you, remaining distant but engineering scenarios that test some quality or attribute of yours, even as simple as “How do they react to becoming a cat” -- or much worse.
++ They aren’t malicious, but in their fixation they’re experimenting on you with any number of parameters. They want -- need -- to know everything about you, remaining distant but engineering scenarios that test some quality or attribute of yours, even as simple as “How do they react to becoming a cat” -- or much worse.
 
 ### Sidebar
 To be clear, the Mathematician is an insane stalker, who is one of the most powerful non-deities in the setting, & highly paranoid, almost never in-person.
 
 ### Sidebar
-They aren't an ally, and observe you remotely. They make your life more interesting and hazardous, but might intervene to save you from True Death, but not hardships, until bored.
+They aren’t an ally, and observe you remotely. They make your life more interesting and hazardous, but might intervene to save you from True Death, but not hardships, until bored.
 
 
 ## Quest: Pack Tactics
@@ -210,10 +210,10 @@ It takes decades to gain self-mastery sufficient to force a conscious change, st
 - Conflict: 5
 - Reward: 8
 
-Requires *Street Racer*. You're in the big leagues now. Once every 5 years the Death Race is hosted in a random location anywhere off Earth and there are no limits placed on magic usage, barring only soulstealing or curses that lasts beyond the duration of the race. The caveat is that all participants are hooked up into limiters that regulate mana capacity and mana flow. Instead, you have a series of pellets honed to allow the usage of one magic effect of a given rank. You have 1 Ruby pellet (r5), 3 Sapphire pellets (r4), 9 Emerald pellets (r3), and 20 Citrine pellets (r2), r1 magic is unlimited. Any augmentations to your vehicle is separate & functions normally.
+Requires *Street Racer*. You’re in the big leagues now. Once every 5 years the Death Race is hosted in a random location anywhere off Earth and there are no limits placed on magic usage, barring only soulstealing or curses that lasts beyond the duration of the race. The caveat is that all participants are hooked up into limiters that regulate mana capacity and mana flow. Instead, you have a series of pellets honed to allow the usage of one magic effect of a given rank. You have 1 Ruby pellet (r5), 3 Sapphire pellets (r4), 9 Emerald pellets (r3), and 20 Citrine pellets (r2), r1 magic is unlimited. Any augmentations to your vehicle is separate & functions normally.
 
 Notes:
-+ Tactics vary from witches that put everything they've got into speed, while some focus on making sure nothing else is alive to cross the finish line before them.
++ Tactics vary from witches that put everything they’ve got into speed, while some focus on making sure nothing else is alive to cross the finish line before them.
 + Races are designed to require an average time of 2+ hours before the 1st place gets claimed.
 
 ### Sidebar
@@ -242,7 +242,7 @@ Notes:
 - Conflict: 3
 - Reward: 8
 
-An ancient lich thought to be defeated with the destruction of their phylactery has been busy for 600 years. Stray rumors over the years occasionally being investigated with no evidence. Beneath Himalayas the lich founded a new lair and has employed spatial distortion and Domain magics to convert the bottom of a deep cave system into a veritable hollow earth greater in size than Hawthorne's metropolis- Populated entirely of countless undead. Evidently keeping “livestock” including humans in their main palace sustained by magic to keep creating new life to utilize their skeletons in death. A city carved of stone and built up in bone.
+An ancient lich thought to be defeated with the destruction of their phylactery has been busy for 600 years. Stray rumors over the years occasionally being investigated with no evidence. Beneath Himalayas the lich founded a new lair and has employed spatial distortion and Domain magics to convert the bottom of a deep cave system into a veritable hollow earth greater in size than Hawthorne’s metropolis- Populated entirely of countless undead. Evidently keeping “livestock” including humans in their main palace sustained by magic to keep creating new life to utilize their skeletons in death. A city carved of stone and built up in bone.
 
 Notes:
 + A Rank 6 tier necromancer skilled in potions, runes, earthmoving, dominion, witchery, and familiarity with a bone dragon familiar.
@@ -253,7 +253,7 @@ Notes:
 The situation could easily devolve to be worth an Epic quest if you make a mistake, but the number of possible outcomes keep this as a Heroic quest instead.
 
 ### Sidebar
-Bear in mind the dangers of necromancers' ability to trap souls.
+Bear in mind the dangers of necromancers’ ability to trap souls.
 
 
 ## Quest: Tainted Grail
@@ -263,7 +263,7 @@ Bear in mind the dangers of necromancers' ability to trap souls.
 - Conflict: 6
 - Reward: 8
 
-If you have the Nymph's Vessel, you'll notice its waters running red one day: Something terrible has happened at the Baths of the Nymphs. A Hespatian family has broken through their wards and massacred the nymphs, butchering the women in their waters, staining them red and have stolen the Holy Grail, the golden relic 29, and used this act of bloodshed to corrupt it into a twisted opposite of itself. Contact with its waters is an absolute poison and causes an instant transition to undeath moving in a wave over the still living victim's body. Living flesh within a mile of the grail sickens and begins to turn black.
+If you have the Nymph’s Vessel, you’ll notice its waters running red one day: Something terrible has happened at the Baths of the Nymphs. A Hespatian family has broken through their wards and massacred the nymphs, butchering the women in their waters, staining them red and have stolen the Holy Grail, the golden relic 29, and used this act of bloodshed to corrupt it into a twisted opposite of itself. Contact with its waters is an absolute poison and causes an instant transition to undeath moving in a wave over the still living victim’s body. Living flesh within a mile of the grail sickens and begins to turn black.
 
 Notes:
 + You must hunt down the invaders and find a way to restore the grail and restore its place in the Central Fountain, bringing the Baths back to life, and the bodies of the nymphs within.
@@ -282,10 +282,10 @@ Be careful with what you do with the grail... If you lost it in the ocean it cou
 - Conflict: 4
 - Reward: 10
 
-Elder Dragons are apocalyptic beasts. They are to dragons what dragons are to riding drakes. The size of a literal mountain, Elder Dragons were banished from Earth by the gods and archangels, early on before the Great Flood. There's 5 in the solar system currently, one on Mercury, Venus, Titan, Europa, and Pluto. 1+ others are known to have left the solar system, and there are a few dozen known to be scattered through the realms and elemental planes. They share the statistics of a dragon as seen in Metamorphosis, but are scaled up by a thousand and are intelligent, utilizing Relics from their hoard to work magic effects.
+Elder Dragons are apocalyptic beasts. They are to dragons what dragons are to riding drakes. The size of a literal mountain, Elder Dragons were banished from Earth by the gods and archangels, early on before the Great Flood. There’s 5 in the solar system currently, one on Mercury, Venus, Titan, Europa, and Pluto. 1+ others are known to have left the solar system, and there are a few dozen known to be scattered through the realms and elemental planes. They share the statistics of a dragon as seen in Metamorphosis, but are scaled up by a thousand and are intelligent, utilizing Relics from their hoard to work magic effects.
 
 Notes:
-+ Pick a location of your choice, for some reason the Elder Dragon of choice has become agitated and active, lashing out and if it's in the solar system, its roars are being picked up on human scientific equipment. It needs to be silenced one way or another.
++ Pick a location of your choice, for some reason the Elder Dragon of choice has become agitated and active, lashing out and if it’s in the solar system, its roars are being picked up on human scientific equipment. It needs to be silenced one way or another.
 + Nothing escapes and Elder Dragon bite, not even spirits.
 
 
@@ -295,13 +295,13 @@ Notes:
 - Conflict: 5
 - Reward: 6
 
-You've run afoul of an ancient Vampire Lord through some means, from insult or challenge, or your actions against their clan. They are a high level Hespatian with a family that oversees other families, and is the same vampire that turned the Red Mother. A Vampire Lord is almost as strong as a Werewolf and half as fast, but with more agility, keeping speed with fine movements or focusing to execute preplanned movements that seem like teleportation. They are powerful magic users capable of Necromancy without being a witch, and effectively have the Blood Witch perk. They regenerate from harm so long as one undying cell is intact.
+You’ve run afoul of an ancient Vampire Lord through some means, from insult or challenge, or your actions against their clan. They are a high level Hespatian with a family that oversees other families, and is the same vampire that turned the Red Mother. A Vampire Lord is almost as strong as a Werewolf and half as fast, but with more agility, keeping speed with fine movements or focusing to execute preplanned movements that seem like teleportation. They are powerful magic users capable of Necromancy without being a witch, and effectively have the Blood Witch perk. They regenerate from harm so long as one undying cell is intact.
 
 Notes:
-+ This Vampire Lord IS in fact a witch as well. Their magics are boosted by 100% so long as they're well-fed (1 cup a day, decays over 3 days to 0%). Sunlight reduces all magic potency by -75%, along with strength, speed, and regeneration. Garlic is just pungent. Running water burns as a nuisance.
++ This Vampire Lord IS in fact a witch as well. Their magics are boosted by 100% so long as they’re well-fed (1 cup a day, decays over 3 days to 0%). Sunlight reduces all magic potency by -75%, along with strength, speed, and regeneration. Garlic is just pungent. Running water burns as a nuisance.
 
 ### Sidebar
-Holy Symbols just make them uncomfortable. A Vampire is a self-animated corpse that feeds on spirit traces in living blood to sustain their own amalgam spirit. It is not the same person as it was in life - unless an Empusa, or Necromancy is employed to rebind the spirit back to the same body to bypass the change, allowing a true conversion. If bitten and die, you become a normal vampire (See Immortal Blood Vol.), unless you slay and drink a Lord's blood to become one yourself.
+Holy Symbols just make them uncomfortable. A Vampire is a self-animated corpse that feeds on spirit traces in living blood to sustain their own amalgam spirit. It is not the same person as it was in life - unless an Empusa, or Necromancy is employed to rebind the spirit back to the same body to bypass the change, allowing a true conversion. If bitten and die, you become a normal vampire (See Immortal Blood Vol.), unless you slay and drink a Lord’s blood to become one yourself.
 
 
 ## Quest: Mad Bomber
@@ -319,7 +319,7 @@ Notes:
 Explore a world frozen in time and use the temporary power granted to you to walk the past to uncover what happened, why, and who did this, as you work with angels, demons, and faction leaders to resolve the situation and rebuild before humanity wakes.
 
 ### Sidebar
-Tensions will remain high and you'll remain under observation the entire time, after an intense period of questioning and initial detainment. It can be dangerous if you play your cards poorly, you can only imagine what it'd be like if you actually broke the Masquerade... I mean, you didn't do it... right? You believe so...
+Tensions will remain high and you’ll remain under observation the entire time, after an intense period of questioning and initial detainment. It can be dangerous if you play your cards poorly, you can only imagine what it’d be like if you actually broke the Masquerade... I mean, you didn’t do it... right? You believe so...
 
 
 ## Quest: Deep Whispers
@@ -328,7 +328,7 @@ Tensions will remain high and you'll remain under observation the entire time, a
 - Conflict: 10
 - Reward: 10
 
-A cult of Outsiders to a particular Far God have succeeded in creating a corrupted Domain around an entire city of your choice outside of Europe, China, America, or Japan. They've filled that city with waking nightmares and unspeakable crimes for a 1 month period shielded from the eyes of the divine and Godsight Array satellites.. They have managed to tear rifts in the aether sufficient to have invoked the Avatar of a Far God. It is not a full Far God, or Earth would already be a lost cause, but this Avatar has been casting psychic whispers throughout Witchdom greatly increasing violent tendencies and paranoia turning people against each other.
+A cult of Outsiders to a particular Far God have succeeded in creating a corrupted Domain around an entire city of your choice outside of Europe, China, America, or Japan. They’ve filled that city with waking nightmares and unspeakable crimes for a 1 month period shielded from the eyes of the divine and Godsight Array satellites.. They have managed to tear rifts in the aether sufficient to have invoked the Avatar of a Far God. It is not a full Far God, or Earth would already be a lost cause, but this Avatar has been casting psychic whispers throughout Witchdom greatly increasing violent tendencies and paranoia turning people against each other.
 
 Note
 + The Factions are at high tension and conflict is escalating between all witches, some may be in all out war with another.
@@ -338,7 +338,7 @@ Note
 You could form teams and talk with factions you would normally be enemies with. Some are more actively hostile, others see the problem and reach out.
 
 ### Sidebar
-This is certainly not a solo operation, but you'll want to cooperate with as many others as you can. The Avatar is functionally a “world boss” type threat where the Elder Dragon would be a “Raid boss”. One named Companion from every faction can join you, plus unnamed.
+This is certainly not a solo operation, but you’ll want to cooperate with as many others as you can. The Avatar is functionally a “world boss” type threat where the Elder Dragon would be a “Raid boss”. One named Companion from every faction can join you, plus unnamed.
 
 
 ## Quest: Hot Springs
@@ -364,7 +364,7 @@ Notes:
 - Conflict: 6
 - Reward: 7
 
-What magically inclined academy experience would be complete without the Tournament Arc? Looks like you're predestined to participate in one in your future. It can take the form of an organized tiered structure, or it could be a Battle Royale, in either case you'll run into contestants ranging from considerably weaker than yourself to equal matches, to some who may be outright stronger than you requiring tactics or cooperation to take down. The arena is a specially harmonized Domain bubble allowing exterior observers while preventing magic and effects from escaping it, keeping viewers safe and recording every moment at any angle!
+What magically inclined academy experience would be complete without the Tournament Arc? Looks like you’re predestined to participate in one in your future. It can take the form of an organized tiered structure, or it could be a Battle Royale, in either case you’ll run into contestants ranging from considerably weaker than yourself to equal matches, to some who may be outright stronger than you requiring tactics or cooperation to take down. The arena is a specially harmonized Domain bubble allowing exterior observers while preventing magic and effects from escaping it, keeping viewers safe and recording every moment at any angle!
 
 Notes:
 + Soulcatchers allow full lethality, the slain will respawn.
@@ -380,13 +380,13 @@ Notes:
 - Conflict: 9
 - Reward: 10
 
-Only available to dedicated Watchers and very close allies. The Followers of the Apocalypse have called upon you for a serious and somber task; To take up the banner as an Inquisitor agent to hunt down Outsiders with extreme prejudice with full moral license to search and destroy, and obtain further leads by any means necessary. The full weight of Watcher influence and authority is granted on you, providing extraordinarily high levels of political and legal cover second only to Alphazon. You're given starting information of suspects and a newly printed Outsider text heralding a Dark Night planning a magical terror attack on Earth.
+Only available to dedicated Watchers and very close allies. The Followers of the Apocalypse have called upon you for a serious and somber task; To take up the banner as an Inquisitor agent to hunt down Outsiders with extreme prejudice with full moral license to search and destroy, and obtain further leads by any means necessary. The full weight of Watcher influence and authority is granted on you, providing extraordinarily high levels of political and legal cover second only to Alphazon. You’re given starting information of suspects and a newly printed Outsider text heralding a Dark Night planning a magical terror attack on Earth.
 
 Notes:
 + Outsiders are no longer human and are active threats to existence
 + Be extremely cautious of observing aberrations and abominations
 + Worse than death, your mind and soul are at risk, ego death.
-+/- Your license grants you leeway, and you're expected to use it, and may make other enemies in the process.
++/- Your license grants you leeway, and you’re expected to use it, and may make other enemies in the process.
 
 
 ## Quest: Pretty Little Things
@@ -397,13 +397,13 @@ Notes:
 - Conflict: 9
 - Reward: 6
 
-You've received a contract by someone aliased as “The Collector”, you're skilled enough to track down that they have a last name that ends in “-Stein” and that says enough. Powerful figure with hands throughout elite pockets. They're paying up to 3x the reward value directly in Kisses (20 million K) and with 5 billion USD. This is a bonus on top of 6 Reward Points. Their request..? They want one attractive female witch for each Elementalist magic, to least rank 5. They will pay K100,000 and $1mil for each individual captive delivered as you go along, gaining the rest on completion of the set. You can keep any spares you might get along the way.
+You’ve received a contract by someone aliased as “The Collector”, you’re skilled enough to track down that they have a last name that ends in “-Stein” and that says enough. Powerful figure with hands throughout elite pockets. They’re paying up to 3x the reward value directly in Kisses (20 million K) and with 5 billion USD. This is a bonus on top of 6 Reward Points. Their request..? They want one attractive female witch for each Elementalist magic, to least rank 5. They will pay K100,000 and $1mil for each individual captive delivered as you go along, gaining the rest on completion of the set. You can keep any spares you might get along the way.
 
 Notes:
-+ Obviously, this causes serious faction conflict if you're caught.
-+ The witches and their allies won't go easily, expect fights
-+ ...The Collector doesn't care what condition you bring them in.
-+/- The Collector isn't new to the game, and can't be tracked down. If you cross them, don't expect to live long.
++ Obviously, this causes serious faction conflict if you’re caught.
++ The witches and their allies won’t go easily, expect fights
++ ...The Collector doesn’t care what condition you bring them in.
++/- The Collector isn’t new to the game, and can’t be tracked down. If you cross them, don’t expect to live long.
 
 
 ## Quest: Darkside Crater
@@ -416,7 +416,7 @@ Notes:
 Space suit optional. Culicarius is forming a task force to explore the perfectly smooth and spherical crater left by the condemned domain that was overtaken by Outsider abominations. He suspects something has gone wrong and is personally (with one of his clones) leading a strike team to explore the phenomenon. Something is blocking his divination, giving him concern, but the one thing he can see like a trapped lure; An old Lunabellan artifact thought to have been lost, calling him like a siren. It must be retrieved, but something clearly waiting at the bottom of that pit... A corrupted Domain where realspace should be, twisted with aberrant magic.
 
 Notes:
-+ You'll have a team of 3 other powerful witches not including you and Culicarius. Choose companions or make them up.
++ You’ll have a team of 3 other powerful witches not including you and Culicarius. Choose companions or make them up.
 + You risk ego death, or fates worse than death, if you fall to the abominations, as you run into twisted victims of Outsider corruption, both the pitiful, and the overpowering.
 
 
@@ -445,7 +445,7 @@ If you are the marriage candidate, you can customize the other by making a secon
 - Conflict: 1
 - Reward: 10
 
-Must have the Aberration perk. Far Gods aren't exactly known for their care of this human thing “Consent”. One day you suddenly find yourself in front of a yawning chasm with the symbol of the Far God faction you associate with, a tendril of some manner (Chain, tentacle, wires, etc) pulls you through. You'll find yourself in a windowless labyrinthine dungeon-laboratory with no apparent authority figures but automatic systems (magic, technological, or in between) and jam packed full of abominations and horrors. There are a dozen duplicates of yourself and none of you know who is the original. Every day there is a new esoteric task required of you.
+Must have the Aberration perk. Far Gods aren’t exactly known for their care of this human thing “Consent”. One day you suddenly find yourself in front of a yawning chasm with the symbol of the Far God faction you associate with, a tendril of some manner (Chain, tentacle, wires, etc) pulls you through. You’ll find yourself in a windowless labyrinthine dungeon-laboratory with no apparent authority figures but automatic systems (magic, technological, or in between) and jam packed full of abominations and horrors. There are a dozen duplicates of yourself and none of you know who is the original. Every day there is a new esoteric task required of you.
 
 Notes:
 + Tasks range from simple group games, to dangerous trials.
@@ -464,13 +464,13 @@ The 100 years counts for Power progression.
 - Conflict: 3
 - Reward: 9
 
-One of Alphazon's facilities on Mars has experienced an Outsider incursion as an artifact went haywire opening Far Rifts. The facility should be subject to nuclear bombardment, but the daughter of an Alphazon executive is on site, along with a number of ordinary employees and a few non-Outsider artifacts that would survive the blasts and can't be left unaccounted for. So the ORC has been requisitioned to cooperate in a joint mission with Alphazon operators guiding a squad of power armored (xORC-09 Powered Armor and Tesla Arms free for this quest) witches and elite soldiers. Save who you can for quarantine, and secure the artifacts.
+One of Alphazon’s facilities on Mars has experienced an Outsider incursion as an artifact went haywire opening Far Rifts. The facility should be subject to nuclear bombardment, but the daughter of an Alphazon executive is on site, along with a number of ordinary employees and a few non-Outsider artifacts that would survive the blasts and can’t be left unaccounted for. So the ORC has been requisitioned to cooperate in a joint mission with Alphazon operators guiding a squad of power armored (xORC-09 Powered Armor and Tesla Arms free for this quest) witches and elite soldiers. Save who you can for quarantine, and secure the artifacts.
 
 Notes:
-+ You won't find anyone living outside of a few saferooms
++ You won’t find anyone living outside of a few saferooms
 + Some abominations can go toe to toe with dragons
 + Kill as much as you can, you want a clear path for survivors.
-+/- You'll be dropped from orbit and crash through into the main lobby prior to the elevator down to the deep.
++/- You’ll be dropped from orbit and crash through into the main lobby prior to the elevator down to the deep.
 
 
 ## Quest: Star Crypt
@@ -484,7 +484,7 @@ Requires Gold Card, ORC License, or Cornucopia, and field experience working for
 
 Notes:
 + The station employs stealth fields rendering it invisible outside of a 10 mile sphere.
-+ Most your enemies won't require life support systems.
++ Most your enemies won’t require life support systems.
 +/- If the station remains intact and you do good, expect to receive your own penthouse suite onboard.
 
 ### Sidebar

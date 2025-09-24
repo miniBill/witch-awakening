@@ -4,7 +4,7 @@
 - Cost: 4
 - Race: Dryad
 - Class: Academic
-- Quote: _*“Here's your order: one Phoenix feather shed this morning, five ounces of refrigerated manticore venom, and one pound of warg fur collected fresh from Mr. Floofles” - An average day of business for Mayra.*_
+- Quote: _*“Here’s your order: one Phoenix feather shed this morning, five ounces of refrigerated manticore venom, and one pound of warg fur collected fresh from Mr. Floofles” - An average day of business for Mayra.*_
 - Positive: + Trades in monster and mythical creature parts and produce (all harvested humanely)
 - Positive: + Pets of all kinds, cute, cuddly, fluffy...
 - Negative: - Vegan, to an obnoxious degree
@@ -16,7 +16,7 @@
 - Morality: 8
 - Has: Mayra has Familiarism 3 (Ferret), Advanced Familiar (Ur-Ferret), Homunculi-craft 4, and _Monster Tamer_
 
-The magical equivalent of a crazy cat lady, Mayra is an entrepreneurial witch who runs a combined monster shelter, adoption agency, and produce selling business, providing a wide range of alchemical reagents, monster kibble, and creature-care guidebooks. She has a deep love for critters of all kinds and a natural talent with handling and caring for all manner of mythical and monstrous creatures, if you're in the market for a magical pet Mayra is one of the best in the business. Mayra and her bewildering number of pets live with her sister Emilia in their family's dominion-bubble farm estate.
+The magical equivalent of a crazy cat lady, Mayra is an entrepreneurial witch who runs a combined monster shelter, adoption agency, and produce selling business, providing a wide range of alchemical reagents, monster kibble, and creature-care guidebooks. She has a deep love for critters of all kinds and a natural talent with handling and caring for all manner of mythical and monstrous creatures, if you’re in the market for a magical pet Mayra is one of the best in the business. Mayra and her bewildering number of pets live with her sister Emilia in their family’s dominion-bubble farm estate.
 
 
 ## Companion: Emilia Broadleaf
@@ -29,14 +29,14 @@ The magical equivalent of a crazy cat lady, Mayra is an entrepreneurial witch wh
 - Positive: + Will hook you up with high-end alchemical ingredients at a discount
 - Positive: + Hosts amazing barbecues
 - Negative: - Anti-vegan, to an obnoxious degree
-- Negative: - Thinks she knows what's best for her friends
+- Negative: - Thinks she knows what’s best for her friends
 - Mixed: +/- Has access to all the magical drugs (medicinal and otherwise)
 - Power: 5
 - Teamwork: 4
 - Sociability: 8
 - Morality: 6
 
-Your friendly neighborhood alchemist, Emilia is an entrepreneurial witch who runs a combined farm, magical pharmacy, and “recreational alchemy” dispensary. She is a passionate botanist who takes care to cultivate and sell as wide a variety of magical plants as she can, and has constructed an impressively intricate rune-powered greenhouse (more of a green-mansion really, given its' size and complexity) in order to grow plants from just about every biome imaginable. Emilia lives with her sister Mayra in their family's dominion-bubble farm estate.
+Your friendly neighborhood alchemist, Emilia is an entrepreneurial witch who runs a combined farm, magical pharmacy, and “recreational alchemy” dispensary. She is a passionate botanist who takes care to cultivate and sell as wide a variety of magical plants as she can, and has constructed an impressively intricate rune-powered greenhouse (more of a green-mansion really, given its size and complexity) in order to grow plants from just about every biome imaginable. Emilia lives with her sister Mayra in their family’s dominion-bubble farm estate.
 
 
 ## Companion: Edward Ashwell
@@ -73,7 +73,7 @@ Edward has recently graduated college and possesses a fiery determination to mak
 - Sociability: 7
 - Morality: 6
 
-Michele is, without a doubt, one of the foremost experts in package delivery in all of the magical community, when she's on the job the package will get delivered in perfect condition to anywhere on earth (or to a variety of locations off of it) within 24 hours, or your money back! She comes from a prominent and highly influential witch family, but really doesn't like to talk about it, ever, please and thank you. Some might say carrying packages to and fro is beneath the scion of a powerful magical bloodline, but Michele is happy where she is and has no interest whatsoever in gaining magical might or accumulating favours, she just wants to travel across the world and deliver her packages to interesting places while meeting people.
+Michele is, without a doubt, one of the foremost experts in package delivery in all of the magical community, when she’s on the job the package will get delivered in perfect condition to anywhere on earth (or to a variety of locations off of it) within 24 hours, or your money back! She comes from a prominent and highly influential witch family, but really doesn’t like to talk about it, ever, please and thank you. Some might say carrying packages to and fro is beneath the scion of a powerful magical bloodline, but Michele is happy where she is and has no interest whatsoever in gaining magical might or accumulating favours, she just wants to travel across the world and deliver her packages to interesting places while meeting people.
 
 
 ## Companion: Saundra Allard
@@ -81,7 +81,7 @@ Michele is, without a doubt, one of the foremost experts in package delivery in 
 - Race: Nightlight
 - Has Perk: True
 - Class: Sorceress
-- Quote: _*“For all our power we all still go through tough time, there's no shame in reaching out for help” - The tagline of an ad for Saundra's business .*_
+- Quote: _*“For all our power we all still go through tough time, there’s no shame in reaching out for help” - The tagline of an ad for Saundra’s business .*_
 - Has: Familiarity 3 (Otter), Ministration 3, Empathics 3, and Alchemy 1
 - Positive: + Will help you through your traumas
 - Positive: + Offers excellent self-care advice
@@ -93,7 +93,7 @@ Michele is, without a doubt, one of the foremost experts in package delivery in 
 - Sociability: 8
 - Morality: 8
 
-Saundra has always felt the call to help her fellows, and in pursuit of this she started her own therapeutic practice, and had a long and successful career. After awakening to her true nature as a witch in twilight years, and being thus rejuvenated, she decided she wanted to get right back to doing what she had always loved, this time with a fascinating new set of clients with their own unique challenges. Saundra's Otter familiar insists on providing help in the therapy sessions by staying within petting-range of her clients.
+Saundra has always felt the call to help her fellows, and in pursuit of this she started her own therapeutic practice, and had a long and successful career. After awakening to her true nature as a witch in twilight years, and being thus rejuvenated, she decided she wanted to get right back to doing what she had always loved, this time with a fascinating new set of clients with their own unique challenges. Saundra’s Otter familiar insists on providing help in the therapy sessions by staying within petting-range of her clients.
 
 
 ## Companion: Bethany Davina
@@ -111,7 +111,7 @@ Saundra has always felt the call to help her fellows, and in pursuit of this she
 - Sociability: 9
 - Morality: 3
 
-Bethany Davina was nearly the victim of a monster-attack, and had it not been for the O.R.C. Exterminator already on the beast's trail she would certainly not have survived. Amazed by the power and beauty of her saviour, and with the veil of the masquerade now lifted for her, Bethany has been obsessed with all things witch-related since that fateful day, and now spends most of her free time tracking (totally not stalking she swears) any and all witches she can find, and gossiping about their lives with other in-the-know mundanes. Her dream is to someday become an intern, employee (or just maybe, a sidekick!) to a powerful witch, preferably one who shares lots of juicy witch-related gossip.
+Bethany Davina was nearly the victim of a monster-attack, and had it not been for the O.R.C. Exterminator already on the beast’s trail she would certainly not have survived. Amazed by the power and beauty of her saviour, and with the veil of the masquerade now lifted for her, Bethany has been obsessed with all things witch-related since that fateful day, and now spends most of her free time tracking (totally not stalking she swears) any and all witches she can find, and gossiping about their lives with other in-the-know mundanes. Her dream is to someday become an intern, employee (or just maybe, a sidekick!) to a powerful witch, preferably one who shares lots of juicy witch-related gossip.
 
 
 ## Companion: Francisca Uveros
@@ -119,7 +119,7 @@ Bethany Davina was nearly the victim of a monster-attack, and had it not been fo
 - Race: Orc
 - Has Perk: True
 - Class: Academic
-- Quote: _*“From the moment I understood the weakness of my flesh I've found myself craving the strength and certainty of mythril” - Francisca.*_
+- Quote: _*“From the moment I understood the weakness of my flesh I’ve found myself craving the strength and certainty of mythril” - Francisca.*_
 - Has: Francisca has Augmentation 5, Metallurgy 5, Runes 4, Advanced Golemancy 3, and several high-end prostheses
 - Positive: + A master of her craft
 - Positive: + A veteran of many difficult campaigns, she wont fight these days, but she can still coach you
@@ -131,17 +131,17 @@ Bethany Davina was nearly the victim of a monster-attack, and had it not been fo
 - Sociability: 2
 - Morality: 4
 
-Francisca, or Fran to her friends, was once a part of a cross-faction task-force dedicated to containing Outsider outbreaks. She was a front-line fighter, facing down horrors beyond comprehension, fending off inter-dimensional invasions, saving the world (or at least small parts of it), all that was just another Tuesday to her. Unfortunately, even with the greatest care taken, outsider corruption catches up to everyone who interacts with them long enough, and after a particularly brutal fight that left her wounded and overexposed Fran was forced to retire to a quiet and peaceful life before she became fully corrupted. Regular meditation and therapy sessions have helped a great deal with the voices, and Fran is confident she'll be completely free of them in time, but for now she's quite happy with her new career making magitech prostheses.
+Francisca, or Fran to her friends, was once a part of a cross-faction task-force dedicated to containing Outsider outbreaks. She was a front-line fighter, facing down horrors beyond comprehension, fending off inter-dimensional invasions, saving the world (or at least small parts of it), all that was just another Tuesday to her. Unfortunately, even with the greatest care taken, outsider corruption catches up to everyone who interacts with them long enough, and after a particularly brutal fight that left her wounded and overexposed Fran was forced to retire to a quiet and peaceful life before she became fully corrupted. Regular meditation and therapy sessions have helped a great deal with the voices, and Fran is confident she’ll be completely free of them in time, but for now she’s quite happy with her new career making magitech prostheses.
 
 
 ## Companion: Issac Ashwell
 - Cost: 8
 - Race: Neutral
 - Class: Warlock
-- Quote: _*“Please put down the monkey's paw, you would very much regret purchasing it” - Issac addressing a clueless customer.*_
+- Quote: _*“Please put down the monkey’s paw, you would very much regret purchasing it” - Issac addressing a clueless customer.*_
 - Has: Issac has Runes 4, Consortation 3, Necromancy 3, and Psychotics 2
 - Positive: + Has a rotating selection of rare and powerful artifacts
-- Positive: + If he doesn't have it, he can probably find it for you
+- Positive: + If he doesn’t have it, he can probably find it for you
 - Negative: - No friends and Family discount
 - Negative: - Items sold may be every-so-slightly extremely cursed
 - Mixed: +/- Has connections in the magical black-market
