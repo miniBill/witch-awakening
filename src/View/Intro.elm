@@ -15,19 +15,31 @@ viewTitle allCompact =
     let
         mainLogo : List (Attribute msg) -> Element msg
         mainLogo attrs =
-            paragraph
+            Element.wrappedRow
                 ([ Theme.bebasNeue
-                 , Font.size 180
-                 , Font.center
+                 , Theme.centerWrap
+                 , centerX
+                 , Font.size 160
+
+                 --  , Font.center
                  , Element.paddingEach { top = 16, bottom = 0, left = 16, right = 16 }
-                 , Element.htmlAttribute (Html.Attributes.style "max-width" "90vw")
-                 , Element.htmlAttribute (Html.Attributes.style "max-height" "50vh")
+
+                 --  , Element.htmlAttribute (Html.Attributes.style "max-width" "90vw")
+                 --  , Element.htmlAttribute (Html.Attributes.style "max-height" "50vh")
                  , Element.htmlAttribute (Html.Attributes.style "overflow" "clip")
                  ]
                     ++ attrs
                 )
-                [ gradientText 8 Gradients.titleGradient "Witch Awakening"
-                ]
+                ("Witch Awakening"
+                    |> String.toList
+                    |> List.map
+                        (\c ->
+                            c
+                                |> String.fromChar
+                                |> gradientText 8 Gradients.titleGradient
+                                |> el []
+                        )
+                )
     in
     if allCompact then
         mainLogo [ moveDown 24 ]
