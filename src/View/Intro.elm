@@ -130,9 +130,9 @@ viewDLCAttribution dlcAttribution =
 
 viewIntro : Element msg
 viewIntro =
-    Theme.row [ Element.paddingXY 16 0 ]
-        [ Theme.image [ width fill ] Images.penelope
-        , Theme.blocks [ width <| fillPortion 2 ] mainIntro
+    Theme.wrappedRow [ Element.paddingXY 16 0 ]
+        [ Theme.image [ width <| Element.minimum 200 fill ] Images.penelope
+        , Theme.blocks [ width <| Element.minimum 200 <| fillPortion 2 ] mainIntro
         ]
 
 
