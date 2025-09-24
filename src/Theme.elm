@@ -277,6 +277,7 @@ viewPiece piece =
                 [ Html.Attributes.class "link"
                 , Html.Attributes.href target
                 , Html.Attributes.target "_blank"
+                , Html.Attributes.style "overflow-wrap" "anywhere"
                 ]
                 [ Html.text cut ]
 
