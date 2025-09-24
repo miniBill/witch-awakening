@@ -40,6 +40,7 @@ viewClass hideDLC display class =
                 |> Theme.wrappedRow
                     [ width fill
                     , spacing <| Theme.rhythm * 3
+                    , Theme.centerWrap
                     ]
             ]
             [ classBoxes
