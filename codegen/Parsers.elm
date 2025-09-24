@@ -6,12 +6,13 @@ import Dict.Extra
 import Gen.CodeGen.Generate as Generate
 import Hex
 import List.Extra
+import List.Nonempty as Nonempty
 import Maybe.Extra
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, sequence, spaces, succeed, symbol)
 import Parser.Error exposing (DeadEnd)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
 import Regex
-import Result.Extra
+import ResultME exposing (ResultME)
 import Set exposing (Set)
 
 
@@ -36,7 +37,7 @@ type DLCItem
     | DLCFaction Faction
 
 
-parseFiles : List ( String, String, String ) -> Result (List Generate.Error) (List DLC)
+parseFiles : List ( String, String, String ) -> ResultME Generate.Error (List DLC)
 parseFiles inputs =
     let
         join : (DLC -> Maybe String) -> List DLC -> Maybe String
@@ -49,7 +50,7 @@ parseFiles inputs =
                     Just (String.join ", " filtered)
     in
     inputs
-        |> Result.Extra.combineMap parseDLC
+        |> ResultME.combineMap parseDLC
         |> Result.map
             (\dlcList ->
                 dlcList
@@ -72,17 +73,18 @@ parseFiles inputs =
             )
 
 
-parseDLC : ( String, String, String ) -> Result (List Generate.Error) DLC
+parseDLC : ( String, String, String ) -> ResultME Generate.Error DLC
 parseDLC ( folder, filename, content ) =
-    Parser.run dlc content
-        |> Result.mapError
-            (\deadEnds ->
-                [ { title = "Error parsing DLC file"
-                  , description =
-                        "Could not parse " ++ folder ++ "/" ++ filename ++ "\n\n" ++ errorToString content deadEnds
-                  }
-                ]
-            )
+    case Parser.run dlc content of
+        Ok parsed ->
+            Ok parsed
+
+        Err deadEnds ->
+            ResultME.error
+                { title = "Error parsing DLC file"
+                , description =
+                    "Could not parse " ++ folder ++ "/" ++ filename ++ "\n\n" ++ errorToString content deadEnds
+                }
 
 
 errorToString : String -> List (DeadEnd {} Parser.Problem) -> String
@@ -156,6 +158,7 @@ type alias Race =
     , perk :
         Maybe
             { name : Maybe String
+            , gain : Maybe String
             , cost : Int
             , description : String
             }
@@ -175,26 +178,34 @@ race =
             [ backtrackable
                 (section "###"
                     "Perk"
-                    (\name cost description ->
+                    (\name gain cost description ->
                         Just
                             { name = Just name
+                            , gain = gain
                             , cost = cost
                             , description = description
                             }
                     )
+                    |> maybeItem "Gain" Ok
                     |> requiredItem "Cost" intParser
                     |> parseSection
                 )
                 |= paragraphs True
             , succeed
-                (\cost description ->
+                (\gain cost description ->
                     Just
                         { name = Nothing
+                        , gain = gain
                         , cost = cost
                         , description = description
                         }
                 )
                 |. sectionHeader "###" "Perk"
+                |= oneOf
+                    [ succeed Just
+                        |= listItem "Gain" Ok
+                    , succeed Nothing
+                    ]
                 |= listItem "Cost" intParser
                 |= paragraphs True
             , succeed Nothing
@@ -245,7 +256,7 @@ type Section a
     = Section
         { key : String
         , name : String
-        , parser : String -> Dict String (List String) -> Result String a
+        , parser : String -> Dict String (List String) -> ResultME String a
         , items : Set String
         }
 
@@ -260,33 +271,33 @@ section key name ctor =
         }
 
 
-requiredItem : String -> (String -> Result String a) -> Section (a -> b) -> Section b
+requiredItem : String -> (String -> ResultME String a) -> Section (a -> b) -> Section b
 requiredItem key parser (Section i) =
     Section
         { key = i.key
         , name = i.name
         , parser =
             \n dict ->
-                Result.map2 identity
+                ResultME.map2 identity
                     (i.parser n dict)
                     (case Dict.get key dict of
                         Just [ value ] ->
                             parser value
 
                         Just [] ->
-                            Err ("Missing required property: " ++ key)
+                            ResultME.error ("Missing required property: " ++ key)
 
                         Just (_ :: _ :: _) ->
-                            Err ("Multiple values for property: " ++ key)
+                            ResultME.error ("Multiple values for property: " ++ key)
 
                         Nothing ->
-                            Err ("Missing required property: " ++ key)
+                            ResultME.error ("Missing required property: " ++ key)
                     )
         , items = Set.insert key i.items
         }
 
 
-optionalItem : String -> a -> (String -> Result String a) -> Section (a -> b) -> Section b
+optionalItem : String -> a -> (String -> ResultME String a) -> Section (a -> b) -> Section b
 optionalItem key default parser (Section i) =
     Section
         { key = i.key
@@ -303,7 +314,7 @@ optionalItem key default parser (Section i) =
                             Ok default
 
                         Just (_ :: _ :: _) ->
-                            Err ("Multiple values for property: " ++ key)
+                            ResultME.error ("Multiple values for property: " ++ key)
 
                         Nothing ->
                             Ok default
@@ -312,7 +323,7 @@ optionalItem key default parser (Section i) =
         }
 
 
-manyItems : String -> (List String -> Result String a) -> Section (a -> b) -> Section b
+manyItems : String -> (List String -> ResultME String a) -> Section (a -> b) -> Section b
 manyItems key parser (Section i) =
     Section
         { key = i.key
@@ -329,7 +340,7 @@ manyItems key parser (Section i) =
         }
 
 
-maybeItem : String -> (String -> Result String a) -> Section (Maybe a -> b) -> Section b
+maybeItem : String -> (String -> ResultME String a) -> Section (Maybe a -> b) -> Section b
 maybeItem key parser s =
     optionalItem key Nothing (\raw -> raw |> parser |> Result.map Just) s
 
@@ -457,14 +468,14 @@ magic =
            )
 
 
-resultToParser : Result String a -> Parser a
+resultToParser : ResultME String a -> Parser a
 resultToParser result =
     case result of
         Ok v ->
             succeed v
 
         Err e ->
-            Parser.problem e
+            Parser.problem (e |> Nonempty.toList |> String.join ", ")
 
 
 type alias Affinity =
@@ -619,7 +630,7 @@ companion =
                             Ok (SpecialEffect { worse = Just worse, better = better })
 
                         _ ->
-                            Err ("Invalid score: " ++ v)
+                            ResultME.error ("Invalid score: " ++ v)
                 )
     in
     (section "##" "Companion" Companion
@@ -665,7 +676,7 @@ type alias Quest =
 quest : Parser Quest
 quest =
     let
-        evilFlagParser : String -> String -> Result String String
+        evilFlagParser : String -> String -> ResultME String String
         evilFlagParser evil input =
             input
                 |> boolParser
@@ -675,10 +686,10 @@ quest =
                             Ok evil
 
                         else
-                            Err "Unexpected value: False"
+                            ResultME.error "Unexpected value: False"
                     )
 
-        maybeIntParser : String -> Result String (Maybe Int)
+        maybeIntParser : String -> ResultME String (Maybe Int)
         maybeIntParser s =
             if s == "?" then
                 Ok Nothing
@@ -729,7 +740,7 @@ quest =
             )
 
 
-factionParser : String -> Result String String
+factionParser : String -> ResultME String String
 factionParser raw =
     case raw of
         "Arcadia" ->
@@ -763,7 +774,7 @@ factionParser raw =
             Ok "Independents"
 
         _ ->
-            Err "Unknown faction"
+            ResultME.error "Unknown faction"
 
 
 type alias Complication =
@@ -868,7 +879,7 @@ paragraph acceptList =
         |. Parser.spaces
 
 
-boolParser : String -> Result String Bool
+boolParser : String -> ResultME String Bool
 boolParser raw =
     case raw of
         "True" ->
@@ -878,26 +889,27 @@ boolParser raw =
             Ok False
 
         _ ->
-            Err (raw ++ " is not a valid boolean")
+            ResultME.error (raw ++ " is not a valid boolean")
 
 
-hexParser : String -> Result String Int
+hexParser : String -> ResultME String Int
 hexParser raw =
     Hex.fromString (String.toLower raw)
         |> Result.mapError (\e -> raw ++ " is not a valid hex number: " ++ e)
+        |> ResultME.fromResult
 
 
-intParser : String -> Result String Int
+intParser : String -> ResultME String Int
 intParser raw =
     case String.toInt raw of
         Nothing ->
-            Err (raw ++ " is not a valid number")
+            ResultME.error (raw ++ " is not a valid number")
 
         Just n ->
             Ok n
 
 
-intListParser : String -> Result String (List Int)
+intListParser : String -> ResultME String (List Int)
 intListParser raw =
     case
         raw
@@ -910,13 +922,13 @@ intListParser raw =
                 )
     of
         Nothing ->
-            Err (raw ++ " is not a valid list of numbers")
+            ResultME.error (raw ++ " is not a valid list of numbers")
 
         Just n ->
             Ok n
 
 
-stringListParser : String -> Result String (List String)
+stringListParser : String -> ResultME String (List String)
 stringListParser raw =
     raw
         |> String.split ","
@@ -924,7 +936,7 @@ stringListParser raw =
         |> Ok
 
 
-listItem : String -> (String -> Result String a) -> Parser a
+listItem : String -> (String -> ResultME String a) -> Parser a
 listItem key continuation =
     succeed String.trim
         |. backtrackable
@@ -950,7 +962,7 @@ oneOfItems options (Section s) =
             List
                 { key : String
                 , name : String
-                , parser : String -> Dict String (List String) -> Result String b
+                , parser : String -> Dict String (List String) -> ResultME String b
                 , items : Set String
                 }
         mapped =
@@ -982,11 +994,12 @@ oneOfItems options (Section s) =
                                         Ok v
 
                                     Err ee ->
-                                        Err (ee :: eacc)
+                                        Err (Nonempty.toList ee ++ eacc)
                     )
                     (Err [])
                     mapped
                     |> Result.mapError (\es -> "Expected one of:" ++ String.join "\n" es)
+                    |> ResultME.fromResult
         }
 
 

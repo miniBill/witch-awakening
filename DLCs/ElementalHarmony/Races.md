@@ -262,6 +262,7 @@ Solar’s eyes do not decay; if the pair each receive at least an hour of direct
 __Solars draw Mana__ from Healing. Helping anyone else heal physical or mental wounds makes a Solar charge for minutes to hours depending on severity of wounds and effectiveness of healing.
 
 ### Perk
+- Gain: Lifeweaving 2
 - Cost: 6
 
 Some solars are blessed with special talents for healing. They gain an intuition for how best to help anyone around them with traumas greater or lesser, and have natural access to Lifeweaving without any divine blessing or quest required. Gain Lifeweaving 2 for free.
@@ -296,6 +297,7 @@ Unless they’ve gravely offended the Reapers, Hitodama are immediately sent bac
 __Hitodama draw Mana__ from Remembrance. Hitodama charge by taking care of graves, tending shrines, writing obituaries, or in any other way keeping the memory of spirits and the dead alive.
 
 ### Perk
+- Gain: Necromancy 2
 - Cost: 8
 
 Certain Hitodama are natural necromancers, but they bind ectoplasm and loose spirit essence rather than bone. These are more fragile than flesh constructs but fly freely and can be enhanced with alchemy as well a runes. Gain Rank 2 Necromancy for free.

@@ -3,17 +3,17 @@ module Generate.Gradients exposing (gradients)
 import Elm
 import Gen.CodeGen.Generate as Generate
 import List.Extra
-import Result.Extra
+import ResultME exposing (ResultME)
 
 
-gradients : List ( String, String ) -> Result (List Generate.Error) Elm.File
+gradients : List ( String, String ) -> ResultME Generate.Error Elm.File
 gradients files =
     files
-        |> Result.Extra.combineMap gradient
+        |> ResultME.combineMap gradient
         |> Result.map (Elm.file [ "Gradients" ])
 
 
-gradient : ( String, String ) -> Result (List Generate.Error) Elm.Declaration
+gradient : ( String, String ) -> ResultME Generate.Error Elm.Declaration
 gradient ( fileName, content ) =
     let
         name : String
@@ -43,30 +43,29 @@ gradient ( fileName, content ) =
                     )
 
         _ ->
-            Err [ { title = "Invalid file", description = "Could not parse file" } ]
+            ResultME.error { title = "Invalid file", description = "Could not parse file" }
 
 
-rowsToExpression : List (List Int) -> Result (List Generate.Error) Elm.Expression
+rowsToExpression : List (List Int) -> ResultME Generate.Error Elm.Expression
 rowsToExpression rows =
     rows
         |> List.concat
         |> List.Extra.greedyGroupsOf 3
-        |> Result.Extra.combineMap parseRow
+        |> ResultME.combineMap parseRow
         |> Result.map Elm.list
 
 
-parseRow : List Int -> Result (List Generate.Error) Elm.Expression
+parseRow : List Int -> ResultME Generate.Error Elm.Expression
 parseRow row =
     case row of
         [ r, g, b ] ->
             Ok (Elm.triple (Elm.int r) (Elm.int g) (Elm.int b))
 
         _ ->
-            Err
-                [ { title = "Invalid row"
-                  , description =
-                        "Row \""
-                            ++ String.join " " (List.map String.fromInt row)
-                            ++ "\" is not valid"
-                  }
-                ]
+            ResultME.error
+                { title = "Invalid row"
+                , description =
+                    "Row \""
+                        ++ String.join " " (List.map String.fromInt row)
+                        ++ "\" is not valid"
+                }

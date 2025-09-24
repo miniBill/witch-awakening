@@ -22,8 +22,9 @@ import Generate.Relics
 import Generate.TypePerks
 import Generate.Types
 import Json.Decode exposing (Decoder, Value)
+import List.Nonempty as Nonempty
 import Parsers
-import Result.Extra
+import ResultME exposing (ResultME)
 import Triple.Extra
 
 
@@ -48,7 +49,7 @@ init flags =
                             ++ [ Generate.files result.files ]
 
                 Err errors ->
-                    Generate.error errors
+                    Generate.error (Nonempty.toList errors)
             )
 
         Err e ->
@@ -96,7 +97,7 @@ directoryDecoder =
 
 toFiles :
     Directory
-    -> Result (List Generate.Error) { info : List String, files : List Elm.File }
+    -> ResultME Generate.Error { info : List String, files : List Elm.File }
 toFiles root =
     let
         go : String -> Generate.Directory -> List ( String, String, String )
@@ -120,7 +121,7 @@ toFiles root =
                     (Dict.toList directories)
     in
     go "" root
-        |> Result.Extra.combineMap
+        |> ResultME.combineMap
             (\( folder, fileName, fileContent ) ->
                 case fileName of
                     "sizes" ->
@@ -134,11 +135,10 @@ toFiles root =
                             Ok ( [], [], [ ( folder, fileName, fileContent ) ] )
 
                         else
-                            Err
-                                [ { title = "Unexpected file"
-                                  , description = "File " ++ fileName ++ " unexpected, don’t know how to handle it"
-                                  }
-                                ]
+                            ResultME.error
+                                { title = "Unexpected file"
+                                , description = "File " ++ fileName ++ " unexpected, don’t know how to handle it"
+                                }
             )
         |> Result.andThen
             (\list ->
@@ -146,7 +146,7 @@ toFiles root =
                     |> Generate.Images.images
                     |> Result.andThen
                         (\images ->
-                            Result.map2
+                            ResultME.map2
                                 (\gradientsFile dlcFiles ->
                                     { info = []
                                     , files = gradientsFile :: Elm.Declare.toFile images :: dlcFiles
@@ -157,13 +157,13 @@ toFiles root =
                                 )
                                 (List.concatMap Triple.Extra.third list
                                     |> Parsers.parseFiles
-                                    |> Result.andThen (dlcToFiles images.call)
+                                    |> ResultME.andThen (dlcToFiles images.call)
                                 )
                         )
             )
 
 
-dlcToFiles : ImagesModule -> List Parsers.DLC -> Result (List Generate.Error) (List Elm.File)
+dlcToFiles : ImagesModule -> List Parsers.DLC -> ResultME Generate.Error (List Elm.File)
 dlcToFiles images dlcList =
     let
         { dlcAffinities, dlcClasses, dlcCompanions, dlcQuests, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics, dlcFactions } =
@@ -233,21 +233,22 @@ dlcToFiles images dlcList =
         types =
             Generate.Types.file images dlcList
     in
-    Generate.Races.file types.call dlcRaces
-        |> Result.map
-            (\racesFile ->
-                [ Elm.Declare.toFile (Generate.Affinities.file types.call dlcAffinities)
-                , Elm.Declare.toFile (Generate.Classes.file types.call dlcClasses)
-                , Elm.Declare.toFile (Generate.Companions.file types.call dlcCompanions)
-                , Elm.Declare.toFile (Generate.Quests.file types.call dlcQuests)
-                , Elm.Declare.toFile (Generate.Complications.file types.call dlcComplications)
-                , Elm.Declare.toFile (Generate.Magics.file types.call dlcMagics)
-                , Elm.Declare.toFile (Generate.Perks.file types.call dlcPerks)
-                , Elm.Declare.toFile racesFile
-                , Elm.Declare.toFile (Generate.Relics.file types.call dlcRelics)
-                , Elm.Declare.toFile (Generate.TypePerks.file types.call dlcRaces)
-                , Elm.Declare.toFile types
-                , Elm.Declare.toFile (Generate.Attributions.file dlcAttributions)
-                , Elm.Declare.toFile (Generate.Factions.file types.call dlcFactions)
-                ]
-            )
+    ResultME.map2
+        (\racesFile typePerksFile ->
+            [ Elm.Declare.toFile (Generate.Affinities.file types.call dlcAffinities)
+            , Elm.Declare.toFile (Generate.Classes.file types.call dlcClasses)
+            , Elm.Declare.toFile (Generate.Companions.file types.call dlcCompanions)
+            , Elm.Declare.toFile (Generate.Quests.file types.call dlcQuests)
+            , Elm.Declare.toFile (Generate.Complications.file types.call dlcComplications)
+            , Elm.Declare.toFile (Generate.Magics.file types.call dlcMagics)
+            , Elm.Declare.toFile (Generate.Perks.file types.call dlcPerks)
+            , Elm.Declare.toFile racesFile
+            , Elm.Declare.toFile (Generate.Relics.file types.call dlcRelics)
+            , Elm.Declare.toFile typePerksFile
+            , Elm.Declare.toFile types
+            , Elm.Declare.toFile (Generate.Attributions.file dlcAttributions)
+            , Elm.Declare.toFile (Generate.Factions.file types.call dlcFactions)
+            ]
+        )
+        (Generate.Races.file types.call dlcRaces)
+        (Generate.TypePerks.file types.call dlcRaces)

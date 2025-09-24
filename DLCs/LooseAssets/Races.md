@@ -10,6 +10,7 @@ Xenos are a new species only discovered in the last 10 years by an Alphazon rese
 __Xenos draw Mana__ from _Eggs_, laid by the xeno if female. Male xenos benefit from the eggs laid by their parent or eggs laid by their own mate. Each egg individually provides about 1% total mana per minute af fa range of 500 meters, .5 for an additional 500, .1 in another 500. Stacks. Eggs can’t be fertilized after being laid, remaining as mana batteries, but are fertilized during formation like the sexual reproduction most witches are familiar with. An egg lasts 1 month before running dry, unless supplied blood. 1 drop = 1% charge.
 
 ### Perk
+- Gain: Necromancy 3, Hexes 3
 - Cost: 10
 
 Some Xenos seem to have a natural affinity for working biomatter. Gain Necromancy 3 and Hexes 3.

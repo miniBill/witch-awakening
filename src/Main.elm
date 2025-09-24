@@ -10,6 +10,7 @@ import Dict
 import Element exposing (Element, fill, rgb, width)
 import Element.Font as Font
 import Element.Lazy
+import Generated.TypePerk
 import Generated.Types as Types exposing (Perk(..), Relic(..))
 import Images
 import Json.Decode as JD
@@ -248,7 +249,34 @@ updateOnChoice choice model =
             { model | complicationsDisplay = complicationsDisplay }
 
         ChoiceTypePerk ( race, selected ) ->
-            { model | typePerks = toggle Types.isSameRace selected race model.typePerks }
+            { model
+                | typePerks = toggle Types.isSameRace selected race model.typePerks
+                , magic =
+                    if selected then
+                        case
+                            List.Extra.findMap
+                                (\typePerk ->
+                                    if typePerk.race == race then
+                                        Just typePerk.gain
+
+                                    else
+                                        Nothing
+                                )
+                                Generated.TypePerk.all
+                        of
+                            Just gained ->
+                                List.foldl
+                                    (\magic -> Dict.insert (Types.magicToString magic.name) magic)
+                                    Dict.empty
+                                    (gained ++ model.magic)
+                                    |> Dict.values
+
+                            Nothing ->
+                                model.magic
+
+                    else
+                        model.magic
+            }
 
         DisplayTypePerks typePerksDisplay ->
             { model | typePerksDisplay = typePerksDisplay }

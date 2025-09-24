@@ -8,7 +8,7 @@ import Elm.Declare
 import Elm.Declare.Extra
 import Gen.CodeGen.Generate as Generate
 import Parser exposing ((|.), (|=), Parser)
-import Result.Extra
+import ResultME exposing (ResultME)
 import String.Extra
 import Triple.Extra
 
@@ -22,12 +22,12 @@ moduleName =
     [ "Images" ]
 
 
-images : List String -> Result (List Generate.Error) (Elm.Declare.Module ImagesModule)
+images : List String -> ResultME Generate.Error (Elm.Declare.Module ImagesModule)
 images sizesList =
     sizesList
         |> List.concatMap String.lines
         |> List.filter (\line -> not (String.isEmpty line))
-        |> Result.Extra.combineMap
+        |> ResultME.combineMap
             (\line ->
                 case String.split " " line of
                     filePath :: "PNG" :: size :: _ ->
@@ -37,20 +37,16 @@ images sizesList =
                         fromLine filePath size
 
                     _ ->
-                        Err <| "Wrong line: " ++ line
+                        ResultME.error
+                            { title = "Wrong line"
+                            , description = "Wrong line: " ++ line
+                            }
             )
-        |> Result.map addGroups
-        |> Result.Extra.mapBoth
-            (\e ->
-                [ { title = "Error"
-                  , description = e
-                  }
-                ]
-            )
+        |> Result.map
             (\declarations ->
                 Elm.Declare.module_ moduleName ImagesModule
                     |> Elm.Declare.with imageType
-                    |> Elm.Declare.Extra.withDeclarations declarations
+                    |> Elm.Declare.Extra.withDeclarations (addGroups declarations)
             )
 
 
@@ -62,7 +58,7 @@ type alias ImageData =
     }
 
 
-fromLine : String -> String -> Result String ImageData
+fromLine : String -> String -> ResultME Generate.Error ImageData
 fromLine filePath size =
     let
         fileName : Maybe String
@@ -116,7 +112,11 @@ fromLine filePath size =
                 |> Ok
 
         _ ->
-            Err <| "Unexpected size: " ++ size
+            ResultME.error
+                { title = "Unexpected size"
+                , description =
+                    "Unexpected size: " ++ size
+                }
 
 
 addGroups : List ImageData -> List Elm.Declaration

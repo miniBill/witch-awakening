@@ -13,7 +13,7 @@ import Gen.Maybe
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
-import Result.Extra
+import ResultME exposing (ResultME)
 import String.Extra
 
 
@@ -22,7 +22,7 @@ type alias RacesModule =
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Race ) -> Result (List Generate.Error) (Elm.Declare.Module RacesModule)
+file : TypesModule -> List ( Maybe String, Parsers.Race ) -> ResultME Generate.Error (Elm.Declare.Module RacesModule)
 file types dlcRaces =
     Result.map
         (\declarations ->
@@ -63,9 +63,9 @@ all types dlcRaces =
                 |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
 
 
-dlcToRaces : TypesModule -> List ( Maybe String, Parsers.Race ) -> Result (List Generate.Error) (List Elm.Declaration)
+dlcToRaces : TypesModule -> List ( Maybe String, Parsers.Race ) -> ResultME Generate.Error (List Elm.Declaration)
 dlcToRaces types races =
-    Result.Extra.combineMap
+    ResultME.combineMap
         (\( dlcName, race ) ->
             raceToDeclaration types dlcName race
                 |> Result.map
@@ -78,7 +78,7 @@ dlcToRaces types races =
         races
 
 
-raceToDeclaration : TypesModule -> Maybe String -> Parsers.Race -> Result (List Generate.Error) Elm.Expression
+raceToDeclaration : TypesModule -> Maybe String -> Parsers.Race -> ResultME Generate.Error Elm.Expression
 raceToDeclaration types dlcName race =
     case race.elements of
         [ _, _ ] ->
@@ -156,8 +156,7 @@ raceToDeclaration types dlcName race =
                 |> Ok
 
         _ ->
-            Err
-                [ { title = "Error parsing races file"
-                  , description = "Unexpected elements list, expected at most two"
-                  }
-                ]
+            ResultME.error
+                { title = "Error parsing races file"
+                , description = "Unexpected elements list, expected at most two"
+                }
