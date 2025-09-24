@@ -324,6 +324,7 @@ viewPiece piece =
                 , Html.Attributes.style "background-size" "cover"
                 , Html.Attributes.style "background-image"
                     ("url(\"" ++ (Types.perkToImage perk).src ++ "\")")
+                , Html.Attributes.title (Types.perkToString perk)
                 ]
                 []
 
@@ -341,6 +342,7 @@ viewPiece piece =
                 , Html.Attributes.style "background-size" "cover"
                 , Html.Attributes.style "background-image"
                     ("url(\"" ++ (Types.raceToImage race).src ++ "\")")
+                , Html.Attributes.title (Types.raceToString race)
                 ]
                 []
 
