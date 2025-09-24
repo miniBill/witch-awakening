@@ -334,12 +334,15 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
                         Element.none
 
                     Just dlcName ->
-                        el
-                            [ centerX
-                            , Theme.captureIt
-                            , Font.size 24
-                            ]
-                            (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                        dlcName
+                            |> String.split " "
+                            |> List.intersperse " "
+                            |> List.map (Theme.gradientText 4 Gradients.purpleGradient)
+                            |> Theme.wrappedRow
+                                [ Theme.centerWrap
+                                , Theme.captureIt
+                                , Font.size 24
+                                ]
                 , Theme.column [ height fill, Theme.padding ] <|
                     Theme.blocks [] description
                         :: List.indexedMap

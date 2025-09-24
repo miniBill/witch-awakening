@@ -115,6 +115,10 @@ a.link {
     min-width: calc(min(100vw - 100px, 660px));
 }
 
+.min-460-if-wide {
+    min-width: calc(min(100vw - 100px, 460px));
+}
+
 .do-not-overflow {
     max-width: calc(100vw - 100px);
 }

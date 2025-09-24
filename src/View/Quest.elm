@@ -83,7 +83,8 @@ questBox display selected number quest =
                 , Border.width 3
                 , Theme.borderColor (slotToColor quest.slot)
                 , Border.rounded Theme.cardRoundness
-                , width <| Element.minimum 460 fill
+                , width fill
+                , Element.htmlAttribute (Html.Attributes.class "min-460-if-wide")
                 , Background.color (rgba 0.1 0.1 0.1 0.8)
                 , Font.color (rgb 1 1 1)
                 ]
@@ -109,8 +110,11 @@ questBox display selected number quest =
                 , imageHeight = 400
                 , image = Types.questToImage quest.name
                 , inFront =
-                    [ Theme.gradientText 4 Gradients.yellowGradient nameString
-                        |> el
+                    [ nameString
+                        |> String.split " "
+                        |> List.intersperse " "
+                        |> List.map (Theme.gradientText 4 Gradients.yellowGradient)
+                        |> Theme.wrappedRow
                             [ alignBottom
                             , Font.size 32
                             , Theme.captureIt
