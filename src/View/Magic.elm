@@ -337,6 +337,7 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
                         Theme.gradientTextWrapped
                             [ Theme.captureIt
                             , Font.size 24
+                            , width fill
                             ]
                             4
                             Gradients.purpleGradient
