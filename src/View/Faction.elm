@@ -73,8 +73,6 @@ viewFaction hideDLC display faction =
                 , Theme.image
                     [ width fill
                     , alignBottom
-
-                    -- , moveDown <| 40 + Theme.rhythm * 3.5
                     ]
                     Images.factionHumansIntro2
                 ]
@@ -100,182 +98,208 @@ factionBox :
     -> Maybe ( Faction, Bool )
     -> Faction.Details
     -> Maybe (Element (Maybe ( Faction, Bool )))
-factionBox display selected { name, dlc, motto, description, location, relations, perk, perkContent, images } =
-    if display /= DisplayFull && Maybe.map Tuple.first selected /= Just name then
+factionBox display selected details =
+    if display /= DisplayFull && Maybe.map Tuple.first selected /= Just details.name then
         Nothing
 
     else
-        let
-            ( isFactionSelected, isPerkSelected ) =
-                case selected of
-                    Nothing ->
-                        ( False, False )
-
-                    Just ( selectedFaction, perkSelected ) ->
-                        if selectedFaction == name then
-                            ( True, perkSelected )
-
-                        else
-                            ( False, False )
-
-            factionGlow : Maybe Int
-            factionGlow =
-                if isFactionSelected then
-                    Just 0x00F3EA6F
-
-                else
-                    Nothing
-
-            factionMsg : Maybe ( Faction, Bool )
-            factionMsg =
-                if isFactionSelected then
-                    Nothing
-
-                else
-                    Just ( name, False )
-
-            img : Image -> Element msg
-            img { src } =
-                el
-                    [ width fill
-                    , height <| Element.minimum 300 fill
-                    , Background.image src
-                    ]
-                    Element.none
-
-            introRow : Element msg
-            introRow =
-                if display == DisplayFull then
-                    Theme.row
-                        [ width fill
-                        , inFront
-                            (case dlc of
-                                Nothing ->
-                                    Element.none
-
-                                Just dlcName ->
-                                    el
-                                        [ centerX
-                                        , Theme.captureIt
-                                        , Font.size 24
-                                        , moveDown 4
-                                        ]
-                                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
-                            )
-                        ]
-                        [ img images.image1
-                        , Theme.column [ width <| fillPortion 4 ]
-                            [ img images.image2
-                            , img images.image3
-                            , column [ centerX ]
-                                [ el [ centerX, Font.size 40, Theme.celticHand ] <|
-                                    Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
-                                , el [ centerX, Font.size 24, Theme.morpheus ] <|
-                                    Theme.gradientText 2 Gradients.yellowGradient motto
-                                ]
-                            ]
-                        , img images.image4
-                        ]
-
-                else
-                    el [ centerX, Font.size 40, Theme.celticHand ] <|
-                        Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
-        in
-        Theme.column [ width fill, Theme.id (Types.factionToString name) ]
-            [ introRow
+        Theme.column [ width fill, Theme.id (Types.factionToString details.name) ]
+            [ introRow display details
             , Theme.row [ width fill ]
-                [ Theme.maybeButton
-                    [ width <| fillPortion 5
-                    , height fill
-                    , Font.color <| rgb 0 0 0
-                    , case factionGlow of
-                        Just color ->
-                            Background.color <| Theme.intToBackground color
-
-                        Nothing ->
-                            Theme.backgroundColor 0x00C1C1C1
-                    , case factionGlow of
-                        Just color ->
-                            Theme.borderGlow color
-
-                        Nothing ->
-                            Border.width 0
-                    ]
-                    { label =
-                        Theme.column []
-                            [ Theme.blocks
-                                [ height fill
-                                , Theme.padding
-                                ]
-                                ("[DESCRIPTION:] " ++ description)
-                            , Theme.blocks
-                                [ height fill
-                                , Theme.padding
-                                ]
-                                ("[LOCATION:] " ++ location)
-                            , Theme.blocks
-                                [ height fill
-                                , Theme.padding
-                                ]
-                                ("[RELATIONS:] " ++ relations)
-                            ]
-                    , onPress = Just factionMsg
-                    }
-                , if display /= DisplayFull && not isPerkSelected then
-                    Element.none
-
-                  else
-                    let
-                        perkMsg : Maybe ( Faction, Bool )
-                        perkMsg =
-                            if isPerkSelected then
-                                Just ( name, False )
-
-                            else
-                                Just ( name, True )
-
-                        glowColor : Int
-                        glowColor =
-                            0x00F3EA6F
-                    in
-                    Theme.card
-                        [ if isPerkSelected then
-                            Background.color <| Theme.intToBackground glowColor
-
-                          else
-                            Theme.backgroundColor 0x00C1C1C1
-                        , width fill
-                        , height shrink
-                        , alignTop
-                        ]
-                        { display = DisplayFull
-                        , forceShow = False
-                        , glow = glowColor
-                        , isSelected = isPerkSelected
-                        , imageAttrs = []
-                        , imageHeight = 240
-                        , image = images.image5
-                        , inFront =
-                            [ el
-                                [ alignBottom
-                                , Theme.celticHand
-                                , Font.size 24
-                                , centerX
-                                ]
-                                (gradientText 3 Gradients.blueGradient perk)
-                            ]
-                        , content =
-                            case List.Extra.find (\magic -> magic.faction == Just name) Generated.Magic.all of
-                                Nothing ->
-                                    [ Theme.blocks [] perkContent ]
-
-                                Just magic ->
-                                    [ Theme.blocks []
-                                        (perkContent ++ "\n\n_*" ++ Types.magicToString magic.name ++ "*_ is half price for you, stacks with affinity.")
-                                    ]
-                        , onPress = Just perkMsg
-                        }
-                        |> Maybe.withDefault Element.none
+                [ content selected details
+                , viewPerk display selected details
                 ]
             ]
             |> Just
+
+
+content :
+    Maybe ( Faction, Bool )
+    -> Faction.Details
+    -> Element (Maybe ( Faction, Bool ))
+content selected { name, description, location, relations } =
+    let
+        isFactionSelected : Bool
+        isFactionSelected =
+            case selected of
+                Nothing ->
+                    False
+
+                Just ( selectedFaction, _ ) ->
+                    selectedFaction == name
+
+        factionGlow : Maybe Int
+        factionGlow =
+            if isFactionSelected then
+                Just 0x00F3EA6F
+
+            else
+                Nothing
+
+        factionMsg : Maybe ( Faction, Bool )
+        factionMsg =
+            if isFactionSelected then
+                Nothing
+
+            else
+                Just ( name, False )
+    in
+    Theme.maybeButton
+        [ width <| fillPortion 5
+        , height fill
+        , Font.color <| rgb 0 0 0
+        , case factionGlow of
+            Just color ->
+                Background.color <| Theme.intToBackground color
+
+            Nothing ->
+                Theme.backgroundColor 0x00C1C1C1
+        , case factionGlow of
+            Just color ->
+                Theme.borderGlow color
+
+            Nothing ->
+                Border.width 0
+        ]
+        { label =
+            Theme.column []
+                [ Theme.blocks
+                    [ height fill
+                    , Theme.padding
+                    ]
+                    ("[DESCRIPTION:] " ++ description)
+                , Theme.blocks
+                    [ height fill
+                    , Theme.padding
+                    ]
+                    ("[LOCATION:] " ++ location)
+                , Theme.blocks
+                    [ height fill
+                    , Theme.padding
+                    ]
+                    ("[RELATIONS:] " ++ relations)
+                ]
+        , onPress = Just factionMsg
+        }
+
+
+viewPerk :
+    Display
+    -> Maybe ( Faction, Bool )
+    -> Faction.Details
+    -> Element (Maybe ( Faction, Bool ))
+viewPerk display selected { name, perk, perkContent, images } =
+    let
+        isPerkSelected : Bool
+        isPerkSelected =
+            selected == Just ( name, True )
+    in
+    if display /= DisplayFull && not isPerkSelected then
+        Element.none
+
+    else
+        let
+            glowColor : Int
+            glowColor =
+                0x00F3EA6F
+
+            perkMsg : Maybe ( Faction, Bool )
+            perkMsg =
+                Just ( name, not isPerkSelected )
+        in
+        Theme.card
+            [ if isPerkSelected then
+                Background.color <| Theme.intToBackground glowColor
+
+              else
+                Theme.backgroundColor 0x00C1C1C1
+            , width fill
+            , height shrink
+            , alignTop
+            ]
+            { display = DisplayFull
+            , forceShow = False
+            , glow = glowColor
+            , isSelected = isPerkSelected
+            , imageAttrs = []
+            , imageHeight = 240
+            , image = images.image5
+            , inFront =
+                [ el
+                    [ alignBottom
+                    , Theme.celticHand
+                    , Font.size 24
+                    , centerX
+                    ]
+                    (gradientText 3 Gradients.blueGradient perk)
+                ]
+            , content =
+                case List.Extra.find (\magic -> magic.faction == Just name) Generated.Magic.all of
+                    Nothing ->
+                        [ Theme.blocks [] perkContent ]
+
+                    Just magic ->
+                        [ Theme.blocks []
+                            (perkContent ++ "\n\n_*" ++ Types.magicToString magic.name ++ "*_ is half price for you, stacks with affinity.")
+                        ]
+            , onPress = Just perkMsg
+            }
+            |> Maybe.withDefault Element.none
+
+
+introRow :
+    Display
+    ->
+        { a
+            | name : Faction
+            , dlc : Maybe String
+            , motto : String
+            , images : { image1 : Image, image2 : Image, image3 : Image, image4 : Image, image5 : Image }
+        }
+    -> Element msg
+introRow display { name, dlc, motto, images } =
+    let
+        img : Image -> Element msg
+        img { src } =
+            el
+                [ width fill
+                , height <| Element.minimum 300 fill
+                , Background.image src
+                ]
+                Element.none
+    in
+    if display == DisplayFull then
+        Theme.row
+            [ width fill
+            , inFront
+                (case dlc of
+                    Nothing ->
+                        Element.none
+
+                    Just dlcName ->
+                        el
+                            [ centerX
+                            , Theme.captureIt
+                            , Font.size 24
+                            , moveDown 4
+                            ]
+                            (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                )
+            ]
+            [ img images.image1
+            , Theme.column [ width <| fillPortion 4 ]
+                [ img images.image2
+                , img images.image3
+                , column [ centerX ]
+                    [ el [ centerX, Font.size 40, Theme.celticHand ] <|
+                        Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
+                    , el [ centerX, Font.size 24, Theme.morpheus ] <|
+                        Theme.gradientText 2 Gradients.yellowGradient motto
+                    ]
+                ]
+            , img images.image4
+            ]
+
+    else
+        el [ centerX, Font.size 40, Theme.celticHand ] <|
+            Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
