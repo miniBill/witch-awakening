@@ -13,7 +13,7 @@ import TypedSvg.Attributes
 import TypedSvg.Attributes.InPx
 import TypedSvg.Core as TypedSvg exposing (Svg)
 import TypedSvg.Events
-import TypedSvg.Types exposing (Align(..), MeetOrSlice(..), Paint(..), Scale(..), Transform(..))
+import TypedSvg.Types exposing (Align(..), MeetOrSlice(..), Paint(..), Scale(..))
 import Types exposing (Msg(..), RankedMagic)
 
 

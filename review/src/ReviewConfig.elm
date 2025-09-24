@@ -50,6 +50,7 @@ config =
     , NoUnused.Patterns.rule
         |> Rule.ignoreErrorsForDirectories [ "generated" ]
     , NoUnused.Variables.rule
+        |> Rule.ignoreErrorsForDirectories [ "generated" ]
     , Simplify.rule Simplify.defaults
         |> Rule.ignoreErrorsForDirectories [ "generated" ]
     , ReviewPipelineStyles.rule pipelineConfig
