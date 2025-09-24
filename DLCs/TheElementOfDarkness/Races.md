@@ -88,6 +88,11 @@ An Obscura takes the form of a remarkably average human, possessing no features 
 
 __Obscuras draw Mana__ from Obscurity. While unobserved an Obscura will continuously generate a low charge of mana. This is interrupted instantly as soon as they are seen by anyone or anything (remote surveillance only counts if it’s being broadcast/monitored live).
 
+### Perk: Blind-Eye
+- Cost: 5
+
+An Obscura with their species perk is capable of designating one person at a time as a non-observer. This individual will be able to see the Obscura perfectly clearly without the Obscura needing to lower their defenses. More notably, this individual will not count as observing the Obscura for purposes of aging, cheating death, or generating mana. An Obscura can change who is a non-observer at any time with a quick minute-long ritual, and for every 10 years of life past their awakening the number of non-observers they can have at a time increases by 1.
+
 
 ## Race: Ornian
 - Elements: Wind, Shadows
