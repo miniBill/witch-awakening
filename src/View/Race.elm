@@ -30,6 +30,7 @@ viewRace hideDLC display races =
                 |> Theme.wrappedRow
                     [ width fill
                     , spacing <| Theme.rhythm * 3
+                    , Theme.centerWrap
                     ]
     in
     View.collapsible []
@@ -71,7 +72,14 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
             [ el
                 [ alignTop
                 , Theme.captureIt
-                , Font.size 56
+                , if String.length shortName > 10 then
+                    Font.size 46
+
+                  else if String.length shortName > 8 then
+                    Font.size 52
+
+                  else
+                    Font.size 56
                 , centerX
                 ]
                 (gradientText 6 Gradients.yellowGradient shortName)
