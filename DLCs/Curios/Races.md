@@ -12,4 +12,4 @@ __Cantors draw Mana__ from Singing, The greater the performance’s skill and th
 ### Perk
 - Cost: 5
 
-Gain the Soul affinity and also gain mana when people listen to your songs, either from live performances (the strongest, and you still gain mana from singing yourself), your own original compositions (mid), and recordings of your works (weaker, much more so with distance). The mana increases the larger the audience, with diminishing returns (five people give twice as much mana as a single person, 25 give three times as much mana, 125 gives x4, and so on).
+Gain the [Soul] affinity and also gain mana when people listen to your songs, either from live performances (the strongest, and you still gain mana from singing yourself), your own original compositions (mid), and recordings of your works (weaker, much more so with distance). The mana increases the larger the audience, with diminishing returns (five people give twice as much mana as a single person, 25 give three times as much mana, 125 gives x4, and so on).
