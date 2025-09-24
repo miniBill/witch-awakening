@@ -73,3 +73,27 @@ At rank 4 your spells become __Anchored__, which means it will cost twice as muc
 
 ### Rank 5
 At rank 5 you get a flat 40% mana-cost __Reduction__, and your __Delay__ is upgraded with Conditions allowing you to set specific conditions by which the spell will be triggered, rather than just putting them on a timer (synergizes very well with runes and contracts). If not anchored with runes conditioned spells will last up to one day per rank before fading away.
+
+
+## Magic: Empathics
+- Class: Sorceress
+- Elements: Soul, Life + Mind
+
+"Don't be too quick to judge, Empathics might not let you sunder the earth, but the ability to understand others and share with them is a life skill few fully appreciate".
+
+Also known as empathy magic, Empathics is the magic of emotions and connections. Each level in Empathics improves you resistance to psychological trauma by 50%, though it can never fully protect someone. Note: Empathics does not protect against Psychotics in any way. 
+
+### Rank 1
+At rank 1 you can __Sense__ strong emotions in your immediate environment (extreme fury, fresh grief, overwhelming joy etc...), and while this sense does not provide any indication of who is feeling that emotion, you can usually figure it out. In addition you gain an instinctive understanding for how to help those around you overcome their personal demons, you could make a small fortune as a therapist.
+
+### Rank 2
+At rank 2 your sense over emotions becomes sharper, allowing you not only trace emotions back to their source, but also detect less extreme emotions (joy from someone who had a generally good day, anger at having to wait in traffic, nervousness in the presence of a crush etc...). Empamantics at this rank can be somewhat overwhelming if you're in a crowd.
+
+### Rank 3
+At rank 3 Your emotional sense becomes further refined, allowing you to pick up on whichever emotion a person is feeling most strongly at any particular moment. In addition, you become capable of forming a single __soul-bond__ with someone you share a strong positive emotional connection with (this bond is somewhat similar to the bond between a master and familiar). Soul-bonds allow those bonded to sense where each other are (the direction and rough distance), and enables telepathic communication. These bonds break if either of the bonded die, fall asleep/unconscious, are moved to a different plane, or should either of the bonded voluntarily chose to end the bond.  
+
+### Rank 4
+At rank 4 your emotional sense develop to the point where you can see a person's aura (gain “third eye” perk for free), and by focusing on someone you can pick up on their subtle emotions. You are now able to maintain up to five bonds, and these bonds no longer break when one of the bonded falls asleep. In addition your bonds now allow for the bonded to actively share one of their five sense telepathically, this surprisingly does not cause any disorientation, though it can be distracting.
+
+### Rank 5
+At rank 5 you can maintain any number of __Bonds__, limited only by the number of people that you have a strong positive emotional connection to. You are now able to form temporary bonds between two others, lasting 24 hours. A __Bond__ now allows you to share one magic you know with the person you're bonded to.
