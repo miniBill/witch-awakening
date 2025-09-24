@@ -334,7 +334,7 @@ viewPiece piece =
                 , Html.Attributes.style "height" "30px"
                 , Html.Attributes.style "border-radius" "30px"
                 , Html.Attributes.style "background-size" "cover"
-                , Html.Attributes.style "background"
+                , Html.Attributes.style "background-image"
                     ("url(\"" ++ (raceToImage race).src ++ "\")")
                 ]
                 []
