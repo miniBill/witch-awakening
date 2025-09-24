@@ -1,7 +1,7 @@
 module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, gradientText, gradientTextHtml, id, image, intToBackground, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
 
 import Color
-import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, text, width)
+import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -500,15 +500,14 @@ wrappedRow attrs children =
 viewSectionTitle : Maybe (Display -> msg) -> Display -> String -> Element msg
 viewSectionTitle toMsg display label =
     let
-        gradient : String -> Element msg
+        gradient : String -> List (Element msg)
         gradient t =
             t
                 |> String.split " "
                 |> List.intersperse " "
                 |> List.map (\w -> gradientText 4 Gradients.blueGradient w)
-                |> wrappedRow [ centerWrap ]
     in
-    row
+    wrappedRow
         [ celticHand
         , Font.size 36
         , width fill
@@ -524,32 +523,32 @@ viewSectionTitle toMsg display label =
                             [ rounded
                             , Element.padding 4
                             , borderColor colors.choice
+                            , width shrink
                             ]
                             { onPress = Just <| tag <| Types.nextDisplay display
                             , label =
                                 case display of
                                     DisplayFull ->
-                                        gradient triangleDown
+                                        row [] (gradient triangleDown)
 
                                     DisplayCompact ->
-                                        gradient triangleRight
+                                        row [] (gradient triangleRight)
 
                                     DisplayCollapsed ->
-                                        gradient triangleUp
+                                        row [] (gradient triangleUp)
                             }
                 in
-                [ hr
-                , gradient label
-                , text " "
-                , expandButton
-                , hr
-                ]
+                hr
+                    :: gradient label
+                    ++ [ text " "
+                       , expandButton
+                       , hr
+                       ]
 
             Nothing ->
-                [ hr
-                , gradient label
-                , hr
-                ]
+                hr
+                    :: gradient label
+                    ++ [ hr ]
 
 
 triangleDown : String
