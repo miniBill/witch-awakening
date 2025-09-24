@@ -138,6 +138,7 @@ companionSection display companions ( faction, section ) =
             |> Theme.wrappedRow
                 [ width fill
                 , spacing <| Theme.rhythm * 3
+                , Theme.centerWrap
                 ]
         ]
 

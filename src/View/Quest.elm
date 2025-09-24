@@ -49,12 +49,14 @@ viewQuests hideDLC display quests =
             , blocks
                 |> Theme.wrappedRow
                     [ width fill
+                    , Theme.centerWrap
                     , spacing <| Theme.rhythm * 3
                     ]
             ]
             [ blocks
                 |> Theme.wrappedRow
                     [ width fill
+                    , Theme.centerWrap
                     , spacing <| Theme.rhythm * 3
                     ]
             ]
