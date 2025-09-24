@@ -264,7 +264,7 @@ __Solars draw Mana__ from Healing. Helping anyone else heal physical or mental w
 ### Perk
 - Cost: 6
 
-Some solars are blessed with special talents for healing. They gain an intuition for how best to help anyone around them with traumas greater or lesser, and have natural access to Lifeweaving without any divine blessing or quest required. Gain Lifeweaving 2 for free. 
+Some solars are blessed with special talents for healing. They gain an intuition for how best to help anyone around them with traumas greater or lesser, and have natural access to Lifeweaving without any divine blessing or quest required. Gain Lifeweaving 2 for free.
 
 
 ## Race: Iridian
