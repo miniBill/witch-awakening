@@ -15,6 +15,7 @@
 - Finite option for the Compulsion drawback
 - Domesticated (folk) Quest doesn't trigger the synergy with the previous quest
 - Pack Tactics (Heroic) Quest required Gone Feral (Noble) but can be taken without it
+- Mark which secondary class you get from the Neutral perk
 
 # Checks
 - Check all faction perks implementations
