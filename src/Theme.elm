@@ -502,8 +502,8 @@ viewSectionTitle toMsg display label =
         gradient : String -> Element msg
         gradient t =
             t
-                |> String.split " - "
-                |> List.intersperse " - "
+                |> String.split " "
+                |> List.intersperse " "
                 |> List.map (\w -> gradientText 4 Gradients.blueGradient w)
                 |> wrappedRow [ centerWrap ]
     in
