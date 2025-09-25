@@ -200,3 +200,30 @@ At rank 4 you can generate enough sound to cause physical harm, generate harmoni
 
 ### Rank 5
 At rank 5 you gain an innate sense for the resonant frequency of inanimate objects, and become capable of generating enough sound to cripple or kill an average person. You could at this point easily damage or bring down large structures. Your sense of hearing is now both supernaturally good, and supernaturally resistant to loud noises.
+
+
+## Magic: Crystal-Crafting
+- Class: Sorceress
+- Elements: Earth, Fire + Metal
+- Elementalism: True
+
+"A truly beautiful form of magic, Crystal-Crafting is worth learning for the artistic potential alone in my opinion. That being said, even the most boorish philistine could find value in the magical benefits Crystal-crafting can offer".
+
+Also known as Crystallomancy, Crystal-Crafting is technically a subset of [Earth-Moving], but it is specialized enough to be considered a school all of its' own. 
+
+Crystallomancy allows its' practitioners to move, grow and reshape crystals and gems, but its' greatest capability is using the gems to store, capture, and empower mana and spells. 
+
+### Rank 1
+At rank 1 you can telekinetically control a small handful of precious gems.
+
+### Rank 2
+At rank 2 you become capable of making gems __Grow__ at an accelerated rate, up to 10 grams per minute. 
+
+### Rank 3
+At rank 3 your ability to __Grow__ gems/crystals much is accelerated, up to 100 grams per minute, and you can now freely reshape them to whichever form you please. "Try not to look suspicious by selling large amounts of precious gems on the mundane market".
+
+### Rank 4
+At rank 4 you can __Store__ mana in gems with a 100 gram gem/crystal being able to __Store__ 1/10th the mana as a witch with “low” storage capacity. Gems with magic stored in them will slowly draw in ambient mana up until full, the more mana they currently have in them the faster they will refill. Having a large numbers of such gems in a given area will lead to diminishing recharge rates.
+
+### Rank 5
+At rank 5 you can catch spells by drawing them into a gem, though if the magic is being controlled by another it may take a contest of wills to steal it. Once caught, the spell can either be stored for later use or rendered back into raw mana. Note that should a gem be over-filled it will fracture and eventually explode, the more mana stuffed into it the faster it will fracture, and the larger the explosion will be. You will also gain the ability to create empowering gems which, when added to a wand, staff, or other magical artifact/focus, will colour any spells casted through it in a similar manner to how a Sorceress can colour their elementalism. Magic cast through an artifact/focus with an empowering gem is 25% more powerful, and if a sorceress casts through a gem the same colour as their aura, the magic is empowered by 50% instead.
