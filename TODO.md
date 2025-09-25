@@ -23,7 +23,7 @@
 # Cleanup
 - Deduplicate ALL the things
 - Fix factional magic pictures [faction name overlay]
-- Separate section in menu for elementalist magic
+- Separate section in menu, and collapsible section, for elementalist magic
 
 # Hard / Long
 - An extra little box on that says how much that option will actually move your point total if you take it right now
