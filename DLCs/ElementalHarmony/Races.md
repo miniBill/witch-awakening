@@ -215,6 +215,11 @@ Revenants are very difficult to kill. If they are and their body is laid in the 
 
 __Revenants draw Mana__ from Endurance. Revenants gain main by subjecting themselves to things they dislike and remaining in their presence without acting to stop them. Taking up annoying fiddly hobbies or exercising to the point of pain are popular methods.
 
+### Perk
+- Cost: 6
+
+A few Revenants have control over their self-image and can become stronger and faster through exercise. The changes speed up when they are injured and regenerate, and enduring the pain makes these talented Revenants able to charge higher than their usual capacity and keep it for a few hours.
+
 
 ## Race: Petrichor
 - Elements: Earth, Blood
