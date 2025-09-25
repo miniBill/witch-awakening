@@ -22,35 +22,44 @@ import View.Affinity as Affinity
 viewRelics : Set String -> Display -> CosmicPearlData -> Maybe Race -> List Race -> List RankedRelic -> Element Choice
 viewRelics hideDLC display pearl mainRace races relics =
     let
-        sorted : List (Element Choice)
-        sorted =
+        filtered : List Relic.Details
+        filtered =
             Generated.Relic.all
                 |> View.filterDLC hideDLC
-                |> List.filterMap (relicBox mainRace display relics pearl races)
     in
-    View.collapsible []
-        display
-        DisplayRelics
-        identity
-        "# Relics"
-        [ Theme.blocks [ centerX ] Relic.intro
-        , sorted
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rhythm * 3
+    if List.isEmpty filtered then
+        Element.none
+
+    else
+        let
+            sorted : List (Element Choice)
+            sorted =
+                filtered
+                    |> List.filterMap (relicBox mainRace display relics pearl races)
+        in
+        View.collapsible []
+            display
+            DisplayRelics
+            identity
+            "# Relics"
+            [ Theme.blocks [ centerX ] Relic.intro
+            , sorted
+                |> Theme.wrappedRow
+                    [ centerX
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            , Theme.image
+                [ width fill
+                , Theme.style "mask-image" "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 50%)"
                 ]
-        , Theme.image
-            [ width fill
-            , Theme.style "mask-image" "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 50%)"
+                Images.relicFooter
             ]
-            Images.relicFooter
-        ]
-        [ sorted
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
+            [ sorted
+                |> Theme.wrappedRow
+                    [ centerX
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
 
 
 relicBox :
