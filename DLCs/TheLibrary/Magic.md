@@ -144,7 +144,7 @@ At rank 2 your __Lift__ improves enough for you to carry a person, and move obje
 At rank 3 your __Lift__ improves to the point where you could pick up a car, and can move objects around fast enough to be lethal. At this stage you learn how to __Crush__ objects by directing force towards a single point, pulling in and squeezing nearby objects. At this rank __Crush__ is strong enough to break ribs and make breathing all but impossible, and could affect an area of up to a 5 meter sphere.
 
 ### Rank 4
-At rank 4 your __Lift__ improves enough that you could __Lift__ several train cars at once, and can move objects with enough force to threaten a building's structural integrity. Your __Crush__ can now apply enough pressure to outright kill anyone you catch with it, and can cover the area up to 15 meters across. 
+At rank 4 your __Lift__ improves enough that you could __Lift__ several train cars at once, and can move objects with enough force to threaten a building's structural integrity. Your __Crush__ can now apply enough pressure to outright kill anyone you catch with it, and can cover the area up to 15 meters across.
 
 ### Rank 5
 At rank 5 your __Lift__ could, with some effort and concentration, rip a mid-sized apartment building from the ground. Your __Crush__ is powerful enough to turn a car into scrap-metal, and could affect an area up to 50 meters across. You also learn to cast __Stasis__, a wide-range spell that drains away kinetic energy from an area, causing objects to be slowed down or held in place. With the same maximum area of crush, if __Stasis__ is spread out it would be very difficult to move through as if objects within are trying to push through liquid tar, while if you were to concentrate the __Stasis__ down onto a small area it would cancel out 99% of all motion.
@@ -156,7 +156,7 @@ At rank 5 your __Lift__ could, with some effort and concentration, rip a mid-siz
 
 "Whether you're a mage in battle fooling the senses of your foe, or a bored student causing rude words to appear behind your teacher's head, Illusions is a classical school of magic beloved and bemoaned by many".
 
-The art of creating false impressions and deceiving the senses of a target. Illusion magic might not be the first thing that comes to mind when you think of combat magic, but the ability to control your opponent's perception of reality is not to be underestimated. 
+The art of creating false impressions and deceiving the senses of a target. Illusion magic might not be the first thing that comes to mind when you think of combat magic, but the ability to control your opponent's perception of reality is not to be underestimated.
 
 Note: Divination can pierce Illusions of lower rank (eg: Someone with Divination rank 3 can see through Illusions of rank 1 or 2). Maintaining Illusion magic requires negligible amounts of mana.
 
@@ -174,3 +174,29 @@ At rank 4 your illusions are now capable of deceiving all 5 senses, can be 100 m
 
 ### Rank 5
 At rank 5 your illusions can fool magical senses as well, can be a kilometer across, and can affect up to 100 people, as well as any number of people within the area of the illusion. Your illusions will no longer break no matter how distracted you get, and will only be dispelled when you yourself dismissed them, or when the next full moon rises. For a moderate amount of mana you can now __Bind__ an illusion to someone, causing it to follow them, and requiring no focus from you.
+
+
+## Magic: Resonance
+- Class: Academic
+- Elements: Water, Fire, Mind
+
+"Resonance is a school of magic I'm somewhat conflicted on, on the one hand students will often use it to make some of the most distracting and irritating noises imaginable, but on the other hand the ability to suppress sound is very handy for a librarian".
+
+Resonance is the magic school of revolving around the generation and suppression of sound and vibration. Resonance allows you to move in complete silence, to distract and disorient with sound. At the higher ranks, you will be able to fracture, deafen, or fire off shockwaves.
+
+Note: Resonance is notably different from illusions in that while illusions can make you \\*think\\* you hear something, resonance would actually generate a real sound. A microphone would pick up sounds made by resonance, it would not pick up sound from illusion magic.
+
+### Rank 1
+At rank 1 you can generate or suppress sounds in a small area, loud enough to irritate someone, or muffle an anomalous car-engine sound you're trying to ignore. Your sense of hearing becomes slightly sharper.
+
+### Rank 2
+At rank 2 you can generate enough sound to make someone uncomfortable, or suppress sounds in a wider area. You could prevent eavesdropping by setting up an area of sound suppression, or by making to much noise to hear over.
+
+### Rank 3
+At rank 3 you can generate enough sound to cause serious pain or break glass, or mute all but the loudest sounds. Move in near-complete silence, or stun and disorient someone with noise. Your sense of hearing is now at peak human performance.
+
+### Rank 4
+At rank 4 you can generate enough sound to cause physical harm, generate harmonic vibrations that can crack or weaken large structures. You can now limit the distance your sonic magic travels or the direction it travels in. You could wound someone with sound without the person beside them hearing a peep.
+
+### Rank 5
+At rank 5 you gain an innate sense for the resonant frequency of inanimate objects, and become capable of generating enough sound to cripple or kill an average person. You could at this point easily damage or bring down large structures. Your sense of hearing is now both supernaturally good, and supernaturally resistant to loud noises.
