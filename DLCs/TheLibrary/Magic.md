@@ -122,3 +122,29 @@ At rank 4 you learn to utilize other known magics in your reinforcement, up to o
 
 ### Rank 5
 At rank 5 you are able to use mana to maintain your bodily functions. This means that you may use mana in place of breathing or eating (though malnutrition becomes a problem if you do this too long). It also means that even should your body be damaged beyond the ability to function, so long as you have mana you can keep yourself alive through what would otherwise be fatal harm. This effect has a mana cost that scales in accordance to how much of your bodily functions are being magically replicated, with the loss of function of a single organ (like the heart) being mitigated for relatively low cost, losing most/all of your main organs would rapidly drain your reserves. This cannot save you from brain-damage, so if someone gets your heads it's still game over. In addition, the bonuses from __Improve__ are doubled.
+
+
+## Magic: Kinomancy
+- Class: Sorceress
+- Elements: Mind, Body, Beast
+
+"One of the great equalizers of the magical Community, no prizes for guessing why those of us without opposable thumbs are so fond of Kinomancy".
+
+Also known as telekinesis or force-magic (and loosely the inspiration for “The Force”, George Lucas wasn't a witch himself but was close friends with a kinomancer), Kinomancy is the magic of creating and controlling kinetic energy.
+
+Kinomancy works by targeting an area you can see/sense, and is not instant or particularly precise (a fast moving target would be difficult to catch with kinomancy). But what it lacks in precision it makes up for in versatility and power.
+
+### Rank 1
+At rank 1 you can __Lift__ up common household items and move them as fast as you might walk.
+
+### Rank 2
+At rank 2 your __Lift__ improves enough for you to carry a person, and move objects with enough force to cause bruises and broken bones. You may levitate with this, but be warned: it will be an unpleasant, dizzying, and difficult form of flight.
+
+### Rank 3
+At rank 3 your __Lift__ improves to the point where you could pick up a car, and can move objects around fast enough to be lethal. At this stage you learn how to __Crush__ objects by directing force towards a single point, pulling in and squeezing nearby objects. At this rank __Crush__ is strong enough to break ribs and make breathing all but impossible, and could affect an area of up to a 5 meter sphere.
+
+### Rank 4
+At rank 4 your __Lift__ improves enough that you could __Lift__ several train cars at once, and can move objects with enough force to threaten a building's structural integrity. Your __Crush__ can now apply enough pressure to outright kill anyone you catch with it, and can cover the area up to 15 meters across. 
+
+### Rank 5
+At rank 5 your __Lift__ could, with some effort and concentration, rip a mid-sized apartment building from the ground. Your __Crush__ is powerful enough to turn a car into scrap-metal, and could affect an area up to 50 meters across. You also learn to cast __Stasis__, a wide-range spell that drains away kinetic energy from an area, causing objects to be slowed down or held in place. With the same maximum area of crush, if __Stasis__ is spread out it would be very difficult to move through as if objects within are trying to push through liquid tar, while if you were to concentrate the __Stasis__ down onto a small area it would cancel out 99% of all motion.
