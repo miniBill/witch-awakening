@@ -23,27 +23,36 @@ import View.Affinity as Affinity
 viewRace : Set String -> Display -> List Race -> Element Choice
 viewRace hideDLC display races =
     let
-        raceBoxes : Element ( Race, Bool )
-        raceBoxes =
+        filtered : List Race.Details
+        filtered =
             Generated.Race.all races
                 |> View.filterDLC hideDLC
-                |> List.filterMap (raceBox display races)
-                |> Theme.wrappedRow
-                    [ width fill
-                    , spacing <| Theme.rhythm * 3
-                    , Theme.centerWrap
-                    ]
     in
-    View.collapsible []
-        display
-        DisplayRace
-        ChoiceRace
-        "# True Form - Race"
-        [ Theme.blocks [] intro
-        , raceBoxes
-        ]
-        [ raceBoxes
-        ]
+    if List.isEmpty filtered then
+        Element.none
+
+    else
+        let
+            raceBoxes : Element ( Race, Bool )
+            raceBoxes =
+                filtered
+                    |> List.filterMap (raceBox display races)
+                    |> Theme.wrappedRow
+                        [ width fill
+                        , spacing <| Theme.rhythm * 3
+                        , Theme.centerWrap
+                        ]
+        in
+        View.collapsible []
+            display
+            DisplayRace
+            ChoiceRace
+            "# True Form - Race"
+            [ Theme.blocks [] intro
+            , raceBoxes
+            ]
+            [ raceBoxes
+            ]
 
 
 raceBox :
