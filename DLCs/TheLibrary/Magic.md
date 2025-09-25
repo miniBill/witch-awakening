@@ -283,14 +283,13 @@ At rank 5 your golems can have 3 rank 3 magics imbued into each of them, they ar
 - Class: Warlock
 - Elements: Life, Soul, Necro
 
-"A most noble school of magic that will allow you to shape wonderous new life from raw mana, Spirit-weaving is one of the most incredible magics you witches have ever come up with. Yes, I'm a bit biased". 
+"A most noble school of magic that will allow you to shape wonderous new life from raw mana, Spirit-weaving is one of the most incredible magics you witches have ever come up with. Yes, I'm a bit biased".
 
-Also known as Conjuration, Spirit-weaving is the art of creating living spirits from your mana. 
+Also known as Conjuration, Spirit-weaving is the art of creating living spirits from your mana.
 
 These spirits are loyal to the one who made them within reason, they are as "alive" as other living being, and being abused may lead to them abandoning, or even attacking their maker.
 
 Spirits may be used in place of souls for things like necromancy or golemancy, but don't expect a devil to accept one as payment if you've made some promises you shouldn't have.
-
 
 ### Rank 1
 At rank 1 you can create wisps, small ephemeral spirits capable of delivering messages, observing and relaying information, or acting as a light source. These spirits are extremely simple, and have no capacity for independent thought or introspection.
@@ -306,3 +305,84 @@ At rank 4 you can create spirits up to the size of a grizzly bear, which can be 
 
 ### Rank 5
 At rank 5 you can now create __Noble__ spirits, beings with the same capacity for introspection and independent thought as any human. A __Noble__ spirit can be up to the size of a school-bus, and can be imbued with any number of rank 3 magics you know yourself. Over time these spirits will grow in power, reaching rank 4 in their imbued magics after one century, and rank 5 after one millennium.
+
+
+## Magic: Plagues
+- Class: Warlock
+- Elements: Blood, Water, Necro
+
+"Now, I know what you might be thinking, and yes Plagues doesn't have the best reputation, but I assure you it can be used for good. It's my opinion that anyone interested in becoming a healer should learn at least a few ranks of Plagues so as to better combat disease in their patients".
+
+Also known as disease magic or blight-forging, Plagues allows its' practitioners to create, store, modify, and spread various diseases.
+
+For obvious reasons this school of magic has a very bad reputation, but it can actually be used for good. Modifying a disease to be more infectious but far less lethal so it outcompetes other more dangerous variants, directly manipulating a disease to make it easier for a victim to recover from, or at high levels, even spreading positive effects via infection.
+
+Of course, if you're feeling evil you could always just create mega-influenza, you monster.
+
+### Rank 1
+At rank 1 you are capable of __Controlling__ and __Creating__ viruses, allowing you to infect someone with a virus you've encountered before, or to alleviate symptoms in someone already infected.
+
+### Rank 2
+At rank 2 you learn to make slight changes to a disease, slightly altering how infective it is, or making small changes to symptoms.
+
+### Rank 3
+At rank 3 your magic now extends to bacteria, and you become able to make significant changes such as completely removing a symptom, or adding a symptom similar to what the disease already does. You are now functionally immune to mundane disease.
+
+### Rank 4
+At rank 4 your magic extends to prions (with Homunculus magic or Entomism you gain control over parasites). You can now add or remove any symptoms you've previously encountered, freely mixing and matching between the different types of disease you have access to.
+
+### Rank 5
+At rank 5 you become capable of adding magical effects to the diseases you create or alter. Make a prion that repairs your body [lifeweaving], a parasite that causes someone to forget you [Psychotics], a virus that causes its' victims to spontaneously combust [firecalling]. "It goes without saying, but do be careful with magical diseases, not only are they extremely dangerous, but they're effectively a masquerade violation waiting to happen. Do *NOT* let them get out of control, please...".
+
+
+## Magic: Entomism
+- Class: Warlock
+- Elements: Nature, Wind, Beast
+
+"I have one use and one use only for Entomism, and that's to keep creepy-crawlies away from me. I'll still teach you some if you insist, but I'm not going to be happy about it".
+
+Entomism, also known hive-calling, or (somewhat erroneously) as insect-magic, is a school which allows one to command and control creepy-crawlies of all varieties, calling them to you, storing and conjuring them, setting them on people and eventually growing them into new and deadly forms.
+While Entomism doesn't have a particularly good reputation, it has a hell of a lot more potential than most give it credit for, as well as being massively powerful in psychological warfare.
+
+### Rank 1
+At rank 1 you are capable of __Commanding__ insects to you from up to 10 meters away, and controlling where them move to.
+
+### Rank 2
+At rank 2 your __Command__ now reaches out to 30 meters away. In addition, your magic now works on arachnids, and you can __Store__ away the critters you command into a pocket space (not the same one as granted by witchery) from up to 10 meters away, and __Summon__ them into any unoccupied space within 10 meters. Any insects or arachnids you __Store__ are held in suspended animation.
+
+### Rank 3
+At rank 3 you can __Command__ from 100 meters away, and can __Store__/__Summon__ within 30 meters. You are now able to issue simple commands to your creepy crawlies, such as causing them to attack someone, or build a new hive in a specific location.
+
+### Rank 4
+At rank 4 your magic now works on all arthropods. Your __Command__ now reaches any/all arthropods within 300 meters, and you can __Store__/__Summon__ within a 100 meter radius.  The arthropods you __Summon__ can now be made to __Dire-evolve__ into a far more powerful form over the course of 15 seconds: they will be 10 times their usual size, will become remarkably more aggressive, but will die within one hour.
+
+### Rank 5
+At rank 5 your __Command__ reaches out to 1 kilometer away, and you can __Store__/__Summon__ from 300 meters. The Arthropods you have stored will no longer be held in a timeless void, and will instead find themselves in an environment suitable to them in which they will live and reproduce. You will be able to command any arthropod hatched in your storage space from any distance, and one out of every hundred hatched will be a __Dire-evolved__ variant which will not have a reduced lifespan. "It was recently discovered that there is an upper limit to how many arthropods an Entomancer can __Store__ at once, but the limit is so absurdly huge that you will almost never hit it. Plague of locusts, anyone?".
+
+
+## Magic: World-Shaping
+- Class: Academic
+- Elements: Wind, Water, Nature
+
+"One of the professors here used to use World-shaping to maintain a tropical beach house down in Antarctica. I remember she was very grumpy when she had to move it into a pocket dimension after the mundanes started exploring down there".
+
+A magic for the patient witch, world-shaping, also know as environmancy or totem magic, allows you to slowly but surely alter a biome to you exact specifications. Want a tropical oasis in the middle of an arctic wasteland? Need to change a desert into a boreal forest? Perhaps you'd like it just a few degrees cooler? World-shaping is the magic for you.
+
+World-shaping requires you to use magical totems to enact and maintain its' effects. These totems require little to no maintenance, but do be sure to protect them from harm, lest you loose all control you had over the land.
+
+Note: By synergizing with Naturalism, Entomism, plagues, or Homunculus magic, World-Shaping could be used to precisely control and alter various parts of the biosphere in its' area of effect.
+
+### Rank 1
+At rank 1 you learn to carve a shifting totem, a magical artifact that will induce slow but steady change in the local environment. To begin with your totems will take a decade to enact change, can affect the land in a 1Km radius, and can make small changes like shifting the average humidity or temperature.
+
+### Rank 2
+At rank 2 your totems now make changes within 3 years, can affect up to a 5Km radius, and can now change one biome into a similar biome, like turning a rainforest into a temperate forest, or a desert into a shrubland.
+
+### Rank 3
+At rank 3 your totems now make changes after 1 year, can affect up to a 30Km radius, and can now change a biome into any other biome.
+
+### Rank 4
+At rank 4 your totems now make changes after 6 months, can affect up to a 60Km radius, and will allow you to include multiple different biomes within the area of a single totem. Want to have some steamy mediterranean beachfront property 30 feet from the cool alpine biome you built your house in? A scorching desert right beside a snowy forest? Go wild.
+
+### Rank 5
+At rank 5 you learn how to add the effects of other known magics to your totems in order to create a magical landscape, including but not limited to: flying islands [Earthmoving] or [Kinomancy], huge crystal growths [Crystallomancy], recurring abundant ore veins [Metallurgy], permanent weather effects [Waterworking] and/or [Windkeeping], impossible geometry [Aethernautics], etc. Create the magical wonderland landscape you always wished you could live in.
