@@ -214,7 +214,7 @@ You'll also need to retrieve the initial window size. You can either use [`Brows
 
 import Html exposing (Html)
 import Html.Attributes
-import Internal.Flag as Flag exposing (Flag)
+import Internal.Flag as Flag
 import Internal.Model as Internal
 import Internal.Style exposing (classes)
 
@@ -480,22 +480,6 @@ noStaticStyleSheet =
 
 
 {-| -}
-defaultFocus :
-    { borderColor : Maybe Color
-    , backgroundColor : Maybe Color
-    , shadow :
-        Maybe
-            { color : Color
-            , offset : ( Int, Int )
-            , blur : Int
-            , size : Int
-            }
-    }
-defaultFocus =
-    Internal.focusDefaultStyle
-
-
-{-| -}
 type alias FocusStyle =
     { borderColor : Maybe Color
     , backgroundColor : Maybe Color
@@ -643,42 +627,41 @@ wrappedRow attrs children =
         Just (Internal.Spaced spaceName x y) ->
             let
                 newPadding =
-                    case padded of
-                        Just (Internal.Padding name t r b l) ->
-                            if r >= (toFloat x / 2) && b >= (toFloat y / 2) then
-                                let
-                                    newTop =
-                                        t - (toFloat y / 2)
+                    padded
+                        |> Maybe.andThen
+                            (\(Internal.Padding _ t r b l) ->
+                                if r >= (toFloat x / 2) && b >= (toFloat y / 2) then
+                                    let
+                                        newTop =
+                                            t - (toFloat y / 2)
 
-                                    newRight =
-                                        r - (toFloat x / 2)
+                                        newRight =
+                                            r - (toFloat x / 2)
 
-                                    newBottom =
-                                        b - (toFloat y / 2)
+                                        newBottom =
+                                            b - (toFloat y / 2)
 
-                                    newLeft =
-                                        l - (toFloat x / 2)
-                                in
-                                Just <|
-                                    Internal.StyleClass Flag.padding
-                                        (Internal.PaddingStyle
-                                            (Internal.paddingNameFloat
+                                        newLeft =
+                                            l - (toFloat x / 2)
+                                    in
+                                    Just <|
+                                        Internal.StyleClass Flag.padding
+                                            (Internal.PaddingStyle
+                                                (Internal.paddingNameFloat
+                                                    newTop
+                                                    newRight
+                                                    newBottom
+                                                    newLeft
+                                                )
                                                 newTop
                                                 newRight
                                                 newBottom
                                                 newLeft
                                             )
-                                            newTop
-                                            newRight
-                                            newBottom
-                                            newLeft
-                                        )
 
-                            else
-                                Nothing
-
-                        Nothing ->
-                            Nothing
+                                else
+                                    Nothing
+                            )
             in
             case newPadding of
                 Just pad ->
@@ -716,39 +699,38 @@ wrappedRow attrs children =
                             [ Internal.element
                                 Internal.asRow
                                 Internal.div
-                                (Internal.htmlClass
+                                [ Internal.htmlClass
                                     (classes.contentLeft
                                         ++ " "
                                         ++ classes.contentCenterY
                                         ++ " "
                                         ++ classes.wrapped
                                     )
-                                    :: Internal.Attr
-                                        (Html.Attributes.style "margin"
-                                            (String.fromFloat halfY
-                                                ++ "px"
-                                                ++ " "
-                                                ++ String.fromFloat halfX
-                                                ++ "px"
-                                            )
+                                , Internal.Attr
+                                    (Html.Attributes.style "margin"
+                                        (String.fromFloat halfY
+                                            ++ "px"
+                                            ++ " "
+                                            ++ String.fromFloat halfX
+                                            ++ "px"
                                         )
-                                    :: Internal.Attr
-                                        (Html.Attributes.style "width"
-                                            ("calc(100% + "
-                                                ++ String.fromInt x
-                                                ++ "px)"
-                                            )
+                                    )
+                                , Internal.Attr
+                                    (Html.Attributes.style "width"
+                                        ("calc(100% + "
+                                            ++ String.fromInt x
+                                            ++ "px)"
                                         )
-                                    :: Internal.Attr
-                                        (Html.Attributes.style "height"
-                                            ("calc(100% + "
-                                                ++ String.fromInt y
-                                                ++ "px)"
-                                            )
+                                    )
+                                , Internal.Attr
+                                    (Html.Attributes.style "height"
+                                        ("calc(100% + "
+                                            ++ String.fromInt y
+                                            ++ "px)"
                                         )
-                                    :: Internal.StyleClass Flag.spacing (Internal.SpacingStyle spaceName x y)
-                                    :: []
-                                )
+                                    )
+                                , Internal.StyleClass Flag.spacing (Internal.SpacingStyle spaceName x y)
+                                ]
                                 (Internal.Unkeyed children)
                             ]
                         )

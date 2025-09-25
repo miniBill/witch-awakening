@@ -137,38 +137,6 @@ typeface =
     Internal.Typeface
 
 
-{-| -}
-type alias Adjustment =
-    { capital : Float
-    , lowercase : Float
-    , baseline : Float
-    , descender : Float
-    }
-
-
-{-| -}
-with :
-    { name : String
-    , adjustment : Maybe Adjustment
-    , variants : List Variant
-    }
-    -> Font
-with =
-    Internal.FontWith
-
-
-{-| -}
-sizeByCapital : Attribute msg
-sizeByCapital =
-    Internal.htmlClass classes.sizeByCapital
-
-
-{-| -}
-full : Attribute msg
-full =
-    Internal.htmlClass classes.fullSize
-
-
 {-| **Note** it's likely that `Font.external` will cause a flash on your page on loading.
 
 To bypass this, import your fonts using a separate stylesheet and just use `Font.typeface`.

@@ -63,42 +63,6 @@ tiledY src =
     Internal.Attr (VirtualDom.style "background" ("url(\"" ++ src ++ "\") repeat-y"))
 
 
-type Direction
-    = ToUp
-    | ToDown
-    | ToRight
-    | ToTopRight
-    | ToBottomRight
-    | ToLeft
-    | ToTopLeft
-    | ToBottomLeft
-    | ToAngle Float
-
-
-type Step
-    = ColorStep Color
-    | PercentStep Float Color
-    | PxStep Int Color
-
-
-{-| -}
-step : Color -> Step
-step =
-    ColorStep
-
-
-{-| -}
-percent : Float -> Color -> Step
-percent =
-    PercentStep
-
-
-{-| -}
-px : Int -> Color -> Step
-px =
-    PxStep
-
-
 {-| A linear gradient.
 
 First you need to specify what direction the gradient is going by providing an angle in radians. `0` is up and `pi` is down.

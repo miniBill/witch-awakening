@@ -109,9 +109,8 @@ module Internal.Model exposing
 
 import Html
 import Html.Attributes
-import Html.Keyed
 import Internal.Flag as Flag exposing (Flag)
-import Internal.Style exposing (classes, dot)
+import Internal.Style exposing (classes)
 import Json.Encode as Encode
 import Set exposing (Set)
 import VirtualDom
@@ -271,7 +270,7 @@ isSmallCaps var =
         VariantActive name ->
             name == "smcp"
 
-        VariantOff name ->
+        VariantOff _ ->
             False
 
         VariantIndexed name index ->
@@ -611,30 +610,6 @@ reduceStyles style (( cache, existing ) as nevermind) =
         )
 
 
-sortedReduce styles =
-    styles
-        -- |> List.map (\x -> ( getStyleName x, x ))
-        |> List.sortBy getStyleName
-        |> reduceRecursiveCalcName []
-
-
-reduceRecursiveCalcName : List Style -> List Style -> List Style
-reduceRecursiveCalcName found styles =
-    case styles of
-        [] ->
-            found
-
-        headOfList :: [] ->
-            headOfList :: found
-
-        headOfList :: other :: remaining ->
-            if headOfList /= other then
-                reduceRecursiveCalcName (headOfList :: found) (other :: remaining)
-
-            else
-                reduceRecursiveCalcName found (other :: remaining)
-
-
 reduceRecursive : List Style -> List ( String, Style ) -> List Style
 reduceRecursive found styles =
     case styles of
@@ -878,7 +853,7 @@ skippable flag style =
             FontSize i ->
                 i >= 8 && i <= 32
 
-            PaddingStyle name t r b l ->
+            PaddingStyle _ t r b l ->
                 t == b && t == r && t == l && t >= 0 && t <= 24
 
             -- SpacingStyle _ _ _ ->
@@ -1177,10 +1152,10 @@ gatherAttrRecursive classes node has transform styles attrs children elementAttr
                                 Empty ->
                                     styles
 
-                                Text str ->
+                                Text _ ->
                                     styles
 
-                                Unstyled html ->
+                                Unstyled _ ->
                                     styles
 
                                 Styled styled ->
@@ -1806,10 +1781,6 @@ addKeyedChildren key existing nearbyChildren =
                 ++ List.map (\x -> ( key, x )) inFront
 
 
-unit =
-    0
-
-
 defaultOptions =
     { hover = AllowHover
     , focus = focusDefaultStyle
@@ -1855,37 +1826,37 @@ filter attrs =
                     NoAttribute ->
                         ( found, has )
 
-                    Class key _ ->
+                    Class _ _ ->
                         ( x :: found, has )
 
-                    Attr attr ->
+                    Attr _ ->
                         ( x :: found, has )
 
-                    StyleClass _ style ->
+                    StyleClass _ _ ->
                         ( x :: found, has )
 
-                    Width width ->
+                    Width _ ->
                         if Set.member "width" has then
                             ( found, has )
 
                         else
                             ( x :: found, Set.insert "width" has )
 
-                    Height height ->
+                    Height _ ->
                         if Set.member "height" has then
                             ( found, has )
 
                         else
                             ( x :: found, Set.insert "height" has )
 
-                    Describe description ->
+                    Describe _ ->
                         if Set.member "described" has then
                             ( found, has )
 
                         else
                             ( x :: found, Set.insert "described" has )
 
-                    Nearby location elem ->
+                    Nearby _ _ ->
                         ( x :: found, has )
 
                     AlignX _ ->
@@ -1956,7 +1927,7 @@ extractSpacingAndPadding attrs =
     List.foldr
         (\attr ( pad, spacing ) ->
             ( case pad of
-                Just x ->
+                Just _ ->
                     pad
 
                 Nothing ->
@@ -1967,7 +1938,7 @@ extractSpacingAndPadding attrs =
                         _ ->
                             Nothing
             , case spacing of
-                Just x ->
+                Just _ ->
                     spacing
 
                 Nothing ->
@@ -2201,7 +2172,7 @@ renderFontClassName font current =
                         |> String.words
                         |> String.join "-"
 
-                ImportFont name url ->
+                ImportFont name _ ->
                     name
                         |> String.toLower
                         |> String.words
@@ -2569,7 +2540,7 @@ fontName font =
         Typeface name ->
             "\"" ++ name ++ "\""
 
-        ImportFont name url ->
+        ImportFont name _ ->
             "\"" ++ name ++ "\""
 
         FontWith { name } ->
@@ -2781,7 +2752,7 @@ renderStyleRule options rule maybePseudo =
                 any =
                     "." ++ Internal.Style.classes.any
 
-                single =
+                _ =
                     "." ++ Internal.Style.classes.single
             in
             List.concat
@@ -2910,7 +2881,7 @@ renderStyleRule options rule maybePseudo =
                 ySpacing =
                     toGridLength (Tuple.second template.spacing)
 
-                xSpacing =
+                _ =
                     toGridLength (Tuple.first template.spacing)
 
                 toGridLength x =
@@ -3216,7 +3187,7 @@ getStyleName style =
         Shadows name _ ->
             name
 
-        Transparency name o ->
+        Transparency name _ ->
             name
 
         Style class _ ->
@@ -3234,13 +3205,13 @@ getStyleName style =
         Colored class _ _ ->
             class
 
-        SpacingStyle cls x y ->
+        SpacingStyle cls _ _ ->
             cls
 
-        PaddingStyle cls top right bottom left ->
+        PaddingStyle cls _ _ _ _ ->
             cls
 
-        BorderWidth cls top right bottom left ->
+        BorderWidth cls _ _ _ _ ->
             cls
 
         GridTemplateStyle template ->
@@ -3436,7 +3407,7 @@ unwrapDecsHelper attr ( styles, trans ) =
         StyleClass _ style ->
             ( style :: styles, trans )
 
-        TransformComponent flag component ->
+        TransformComponent _ component ->
             ( styles, composeTransformation trans component )
 
         _ ->
@@ -3486,20 +3457,20 @@ convertAdjustment adjustment =
         lineHeight =
             1.5
 
-        base =
+        _ =
             lineHeight
 
-        normalDescender =
+        _ =
             (lineHeight - 1)
                 / 2
 
-        oldMiddle =
+        _ =
             lineHeight / 2
 
-        newCapitalMiddle =
+        _ =
             ((ascender - newBaseline) / 2) + newBaseline
 
-        newFullMiddle =
+        _ =
             ((ascender - descender) / 2) + descender
 
         lines =

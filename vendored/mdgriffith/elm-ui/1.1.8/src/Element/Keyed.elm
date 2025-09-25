@@ -20,7 +20,7 @@ This means if a key is changed between renders, then the diffing step will be sk
 
 -}
 
-import Element exposing (Attribute, Element, fill, height, shrink, width)
+import Element exposing (Attribute, Element, height, shrink, width)
 import Internal.Model as Internal
 import Internal.Style exposing (classes)
 

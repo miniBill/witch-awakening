@@ -184,7 +184,7 @@ Alternatively, see if it's reasonable to _not_ display an input if you'd normall
 
 -}
 
-import Element exposing (Attribute, Color, Element)
+import Element exposing (Attribute, Element)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
@@ -401,15 +401,6 @@ hasFocusStyle attr =
 
         _ ->
             False
-
-
-{-| -}
-type alias Checkbox msg =
-    { onChange : Maybe (Bool -> msg)
-    , icon : Maybe (Element msg)
-    , checked : Bool
-    , label : Label msg
-    }
 
 
 {-|
@@ -867,17 +858,9 @@ textHelper textInput attrs textOptions =
                 (isStacked textOptions.label)
                 withDefaults
 
-        onlySpacing attr =
-            case attr of
-                Internal.StyleClass _ (Internal.SpacingStyle _ _ _) ->
-                    True
-
-                _ ->
-                    False
-
         getPadding attr =
             case attr of
-                Internal.StyleClass cls (Internal.PaddingStyle pad t r b l) ->
+                Internal.StyleClass _ (Internal.PaddingStyle _ t r b l) ->
                     -- The - 3 is here to prevent accidental triggering of scrollbars
                     -- when things are off by a pixel or two.
                     -- (or at least when the browser *thinks* it's off by a pixel or two)
@@ -893,7 +876,7 @@ textHelper textInput attrs textOptions =
 
         heightConstrained =
             case textInput.type_ of
-                TextInputNode inputType ->
+                TextInputNode _ ->
                     False
 
                 TextArea ->
@@ -920,7 +903,7 @@ textHelper textInput attrs textOptions =
             Internal.element
                 Internal.asEl
                 (case textInput.type_ of
-                    TextInputNode inputType ->
+                    TextInputNode _ ->
                         Internal.NodeName "input"
 
                     TextArea ->
@@ -1023,7 +1006,7 @@ textHelper textInput attrs textOptions =
                             ]
                         )
 
-                TextInputNode inputType ->
+                TextInputNode _ ->
                     Internal.element
                         Internal.asEl
                         Internal.div
@@ -1123,7 +1106,7 @@ calcMoveToCompensateForPadding attrs =
     let
         gatherSpacing attr found =
             case attr of
-                Internal.StyleClass _ (Internal.SpacingStyle _ x y) ->
+                Internal.StyleClass _ (Internal.SpacingStyle _ _ y) ->
                     case found of
                         Nothing ->
                             Just y
@@ -1201,24 +1184,6 @@ isFill len =
             isFill l
 
 
-isShrink len =
-    case len of
-        Internal.Content ->
-            True
-
-        Internal.Px _ ->
-            False
-
-        Internal.Fill _ ->
-            False
-
-        Internal.Min _ l ->
-            isShrink l
-
-        Internal.Max _ l ->
-            isShrink l
-
-
 isConstrained len =
     case len of
         Internal.Content ->
@@ -1233,7 +1198,7 @@ isConstrained len =
         Internal.Min _ l ->
             isConstrained l
 
-        Internal.Max _ l ->
+        Internal.Max _ _ ->
             True
 
 
@@ -1315,7 +1280,7 @@ redistributeOver isMultiline stacked attr els =
                 , wrapper = attr :: els.wrapper
             }
 
-        Internal.StyleClass cls (Internal.PaddingStyle pad t r b l) ->
+        Internal.StyleClass _ (Internal.PaddingStyle _ t r b l) ->
             if isMultiline then
                 { els
                     | parent = attr :: els.parent
@@ -1383,13 +1348,13 @@ redistributeOver isMultiline stacked attr els =
         Internal.StyleClass _ (Internal.FontFamily _ _) ->
             { els | fullParent = attr :: els.fullParent }
 
-        Internal.StyleClass flag cls ->
+        Internal.StyleClass _ _ ->
             { els | parent = attr :: els.parent }
 
         Internal.NoAttribute ->
             els
 
-        Internal.Attr a ->
+        Internal.Attr _ ->
             { els | input = attr :: els.input }
 
         Internal.Describe _ ->
@@ -1603,7 +1568,7 @@ isHiddenLabel label =
 applyLabel : List (Attribute msg) -> Label msg -> Element msg -> Element msg
 applyLabel attrs label input =
     case label of
-        HiddenLabel labelText ->
+        HiddenLabel _ ->
             -- NOTE: This means that the label is applied outside of this function!
             -- It would be nice to unify this logic, but it's a little tricky
             Internal.element
@@ -1889,13 +1854,10 @@ radioHelper orientation attrs input =
             , Just <|
                 Internal.Attr <|
                     Html.Attributes.attribute "role" "radiogroup"
-            , case prevNext of
-                Nothing ->
-                    Nothing
-
-                Just ( prev, next ) ->
-                    Just
-                        (onKeyLookup <|
+            , prevNext
+                |> Maybe.map
+                    (\( prev, next ) ->
+                        onKeyLookup <|
                             \code ->
                                 if code == leftArrow then
                                     Just (input.onChange prev)
@@ -1919,7 +1881,7 @@ radioHelper orientation attrs input =
 
                                 else
                                     Nothing
-                        )
+                    )
             ]
             ++ events
          -- ++ hideIfEverythingisInvisible
@@ -1966,60 +1928,9 @@ row attributes children =
 {- Event Handlers -}
 
 
-{-| -}
-onEnter : msg -> Attribute msg
-onEnter msg =
-    onKey enter msg
-
-
-{-| -}
-onSpace : msg -> Attribute msg
-onSpace msg =
-    onKey space msg
-
-
-{-| -}
-onUpArrow : msg -> Attribute msg
-onUpArrow msg =
-    onKey upArrow msg
-
-
-{-| -}
-onRightArrow : msg -> Attribute msg
-onRightArrow msg =
-    onKey rightArrow msg
-
-
-{-| -}
-onLeftArrow : msg -> Attribute msg
-onLeftArrow msg =
-    onKey leftArrow msg
-
-
-{-| -}
-onDownArrow : msg -> Attribute msg
-onDownArrow msg =
-    onKey downArrow msg
-
-
 enter : String
 enter =
     "Enter"
-
-
-tab : String
-tab =
-    "Tab"
-
-
-delete : String
-delete =
-    "Delete"
-
-
-backspace : String
-backspace =
-    "Backspace"
 
 
 upArrow : String
@@ -2045,26 +1956,6 @@ downArrow =
 space : String
 space =
     " "
-
-
-{-| -}
-onKey : String -> msg -> Attribute msg
-onKey desiredCode msg =
-    let
-        decode code =
-            if code == desiredCode then
-                Json.succeed msg
-
-            else
-                Json.fail "Not the enter key"
-
-        isKey =
-            Json.field "key" Json.string
-                |> Json.andThen decode
-    in
-    Internal.Attr <|
-        Html.Events.preventDefaultOn "keyup"
-            (Json.map (\fired -> ( fired, True )) isKey)
 
 
 
@@ -2110,28 +2001,6 @@ onKeyLookup lookup =
             (Json.map (\fired -> ( fired, True )) isKey)
 
 
-{-| -}
-onFocusOut : msg -> Attribute msg
-onFocusOut msg =
-    Internal.Attr <| Html.Events.on "focusout" (Json.succeed msg)
-
-
-{-| -}
-onFocusIn : msg -> Attribute msg
-onFocusIn msg =
-    Internal.Attr <| Html.Events.on "focusin" (Json.succeed msg)
-
-
-selected : Bool -> Attribute msg
-selected =
-    Internal.Attr << Html.Attributes.selected
-
-
-name : String -> Attribute msg
-name =
-    Internal.Attr << Html.Attributes.name
-
-
 value : String -> Attribute msg
 value =
     Internal.Attr << Html.Attributes.value
@@ -2142,19 +2011,9 @@ tabindex =
     Internal.Attr << Html.Attributes.tabindex
 
 
-disabled : Bool -> Attribute msg
-disabled =
-    Internal.Attr << Html.Attributes.disabled
-
-
 spellcheck : Bool -> Attribute msg
 spellcheck =
     Internal.Attr << Html.Attributes.spellcheck
-
-
-readonly : Bool -> Attribute msg
-readonly =
-    Internal.Attr << Html.Attributes.readonly
 
 
 autofill : String -> Attribute msg

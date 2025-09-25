@@ -35,7 +35,7 @@ module Element.Border exposing
 import Element exposing (Attr, Attribute, Color)
 import Internal.Flag as Flag
 import Internal.Model as Internal
-import Internal.Style as Style exposing (classes)
+import Internal.Style exposing (classes)
 
 
 {-| -}
