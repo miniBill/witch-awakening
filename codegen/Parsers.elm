@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Faction, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), dlc, parseFiles)
+module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), dlc, parseFiles)
 
 import Ansi.Color
 import Dict exposing (Dict)
@@ -27,6 +27,7 @@ type alias DLC =
 type DLCItem
     = DLCAffinity Affinity
     | DLCClass Class
+    | DLCGameMode GameMode
     | DLCRace Race
     | DLCCompanion Companion
     | DLCQuest Quest
@@ -131,6 +132,7 @@ dlc =
             (oneOf
                 [ map DLCAffinity affinity
                 , map DLCClass class
+                , map DLCGameMode gameMode
                 , map DLCCompanion companion
                 , map DLCQuest quest
                 , map DLCComplication complication
@@ -782,6 +784,21 @@ class : Parser Class
 class =
     (section "##" "Class" Class
         |> requiredItem "Color" hexParser
+        |> parseSection
+    )
+        |= paragraphs True
+        |. spaces
+
+
+type alias GameMode =
+    { name : String
+    , description : String
+    }
+
+
+gameMode : Parser GameMode
+gameMode =
+    (section "##" "Game Mode" GameMode
         |> parseSection
     )
         |= paragraphs True

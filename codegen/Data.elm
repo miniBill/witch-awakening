@@ -63,7 +63,7 @@ enums parsedDLCs =
     , faction =
         buildEnum "Faction" combinedDLC.factions
     , gameMode =
-        buildEnum "GameMode" (buildVariants coreGameModes)
+        buildEnum "GameMode" combinedDLC.gameModes
             |> withImages
     , magic =
         buildEnum "Magic" combinedDLC.magics
@@ -120,6 +120,9 @@ fromParsed { name, items } =
 
                 Parsers.DLCClass v ->
                     { dlc | classes = variant v.name :: dlc.classes }
+
+                Parsers.DLCGameMode v ->
+                    { dlc | gameModes = variant v.name :: dlc.gameModes }
 
                 Parsers.DLCCompanion v ->
                     { dlc
@@ -194,6 +197,7 @@ withDLC dlcName original additional =
     in
     { affinities = merge .affinities
     , classes = merge .classes
+    , gameModes = merge .gameModes
     , companions = merge .companions
     , quests = merge .quests
     , complicationCategories = merge .complicationCategories
@@ -247,6 +251,7 @@ withArguments name arguments enum =
 type alias DLC =
     { affinities : List Variant
     , classes : List Variant
+    , gameModes : List Variant
     , companions : List Variant
     , quests : List Variant
     , complicationCategories : List Variant
@@ -263,6 +268,7 @@ emptyDLC : DLC
 emptyDLC =
     { affinities = []
     , classes = []
+    , gameModes = []
     , companions = []
     , quests = []
     , complicationCategories = []
@@ -286,11 +292,6 @@ core =
 coreSizes : List String
 coreSizes =
     [ "Low", "Medium", "High" ]
-
-
-coreGameModes : List String
-coreGameModes =
-    [ "Story Arc", "Early Bird", "Skill Tree", "Constellation" ]
 
 
 coreSlots : List String

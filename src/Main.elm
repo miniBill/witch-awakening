@@ -663,7 +663,7 @@ innerView model =
                 ]
                 [ Element.Lazy.lazy3 Class.viewClass model.hideDLCs model.classDisplay model.class
                 , Element.Lazy.lazy3 Race.viewRace model.hideDLCs model.raceDisplay model.races
-                , Element.Lazy.lazy2 GameMode.viewGameMode model.gameModeDisplay model.gameMode
+                , Element.Lazy.lazy3 GameMode.viewGameMode model.hideDLCs model.gameModeDisplay model.gameMode
                 , Element.Lazy.lazy3 Complications.viewComplications model.hideDLCs model.complicationsDisplay model.complications
                 , Element.Lazy.lazy4 TypePerk.viewTypePerks model.hideDLCs model.races model.typePerksDisplay model.typePerks
                 , Element.Lazy.lazy3 Magic.viewMagics model.hideDLCs model.magicDisplay model.magic

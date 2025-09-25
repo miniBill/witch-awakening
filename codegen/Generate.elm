@@ -12,6 +12,7 @@ import Generate.Classes
 import Generate.Companions
 import Generate.Complications
 import Generate.Factions
+import Generate.GameModes
 import Generate.Gradients
 import Generate.Images exposing (ImagesModule)
 import Generate.Magics
@@ -166,7 +167,7 @@ toFiles root =
 dlcToFiles : ImagesModule -> List Parsers.DLC -> ResultME Generate.Error (List Elm.File)
 dlcToFiles images dlcList =
     let
-        { dlcAffinities, dlcClasses, dlcCompanions, dlcQuests, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics, dlcFactions } =
+        { dlcAffinities, dlcClasses, dlcGameModes, dlcCompanions, dlcQuests, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics, dlcFactions } =
             List.foldr
                 (\( dlcName, item ) acc ->
                     case item of
@@ -175,6 +176,9 @@ dlcToFiles images dlcList =
 
                         Parsers.DLCClass class ->
                             { acc | dlcClasses = ( dlcName, class ) :: acc.dlcClasses }
+
+                        Parsers.DLCGameMode gameMode ->
+                            { acc | dlcGameModes = ( dlcName, gameMode ) :: acc.dlcGameModes }
 
                         Parsers.DLCCompanion companion ->
                             { acc | dlcCompanions = ( dlcName, companion ) :: acc.dlcCompanions }
@@ -202,6 +206,7 @@ dlcToFiles images dlcList =
                 )
                 { dlcAffinities = []
                 , dlcClasses = []
+                , dlcGameModes = []
                 , dlcCompanions = []
                 , dlcQuests = []
                 , dlcComplications = []
@@ -237,6 +242,7 @@ dlcToFiles images dlcList =
         (\racesFile typePerksFile ->
             [ Elm.Declare.toFile (Generate.Affinities.file types.call dlcAffinities)
             , Elm.Declare.toFile (Generate.Classes.file types.call dlcClasses)
+            , Elm.Declare.toFile (Generate.GameModes.file types.call dlcGameModes)
             , Elm.Declare.toFile (Generate.Companions.file types.call dlcCompanions)
             , Elm.Declare.toFile (Generate.Quests.file types.call dlcQuests)
             , Elm.Declare.toFile (Generate.Complications.file types.call dlcComplications)

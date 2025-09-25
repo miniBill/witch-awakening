@@ -5,50 +5,62 @@ import Data.GameMode as GameMode
 import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, moveDown, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
+import Generated.GameMode as GameMode
 import Generated.Types as Types exposing (GameMode)
 import Gradients
+import Set exposing (Set)
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display)
 import View
 
 
-viewGameMode : Display -> Maybe GameMode -> Element Choice
-viewGameMode display gameMode =
+viewGameMode : Set String -> Display -> Maybe GameMode -> Element Choice
+viewGameMode hideDLC display gameMode =
     let
-        slotsBox : Element msg
-        slotsBox =
-            Theme.blocks
-                [ width <| Element.maximum 400 fill
-                , alignTop
-                , Border.width 1
-                , Theme.padding
-                , Theme.borderColor Theme.colors.gameMode
-                ]
-                GameMode.slotDescription
-
-        boxes : List (Element (Maybe GameMode))
-        boxes =
+        filtered : List GameMode.Details
+        filtered =
             GameMode.all
-                |> List.filterMap (gameModeBox display gameMode)
+                |> View.filterDLC hideDLC
     in
-    View.collapsible []
-        display
-        DisplayGameMode
-        ChoiceGameMode
-        GameMode.title
-        [ Theme.blocks [] GameMode.intro
-        , (boxes ++ [ slotsBox ])
-            |> Theme.wrappedRow
-                [ centerX
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
-        [ boxes
-            |> Theme.wrappedRow
-                [ width fill
-                , spacing <| Theme.rhythm * 3
-                ]
-        ]
+    if List.isEmpty filtered then
+        Element.none
+
+    else
+        let
+            slotsBox : Element msg
+            slotsBox =
+                Theme.blocks
+                    [ width <| Element.maximum 400 fill
+                    , alignTop
+                    , Border.width 1
+                    , Theme.padding
+                    , Theme.borderColor Theme.colors.gameMode
+                    ]
+                    GameMode.slotDescription
+
+            boxes : List (Element (Maybe GameMode))
+            boxes =
+                filtered
+                    |> List.filterMap (gameModeBox display gameMode)
+        in
+        View.collapsible []
+            display
+            DisplayGameMode
+            ChoiceGameMode
+            "# Game Mode"
+            [ Theme.blocks [] GameMode.intro
+            , (boxes ++ [ slotsBox ])
+                |> Theme.wrappedRow
+                    [ centerX
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
+            [ boxes
+                |> Theme.wrappedRow
+                    [ width fill
+                    , spacing <| Theme.rhythm * 3
+                    ]
+            ]
 
 
 gameModeBox :
