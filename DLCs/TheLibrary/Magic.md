@@ -209,15 +209,15 @@ At rank 5 you gain an innate sense for the resonant frequency of inanimate objec
 
 "A truly beautiful form of magic, Crystal-Crafting is worth learning for the artistic potential alone in my opinion. That being said, even the most boorish philistine could find value in the magical benefits Crystal-crafting can offer".
 
-Also known as Crystallomancy, Crystal-Crafting is technically a subset of [Earth-Moving], but it is specialized enough to be considered a school all of its' own. 
+Also known as Crystallomancy, Crystal-Crafting is technically a subset of [Earth-Moving], but it is specialized enough to be considered a school all of its' own.
 
-Crystallomancy allows its' practitioners to move, grow and reshape crystals and gems, but its' greatest capability is using the gems to store, capture, and empower mana and spells. 
+Crystallomancy allows its' practitioners to move, grow and reshape crystals and gems, but its' greatest capability is using the gems to store, capture, and empower mana and spells.
 
 ### Rank 1
 At rank 1 you can telekinetically control a small handful of precious gems.
 
 ### Rank 2
-At rank 2 you become capable of making gems __Grow__ at an accelerated rate, up to 10 grams per minute. 
+At rank 2 you become capable of making gems __Grow__ at an accelerated rate, up to 10 grams per minute.
 
 ### Rank 3
 At rank 3 your ability to __Grow__ gems/crystals much is accelerated, up to 100 grams per minute, and you can now freely reshape them to whichever form you please. "Try not to look suspicious by selling large amounts of precious gems on the mundane market".
@@ -227,3 +227,82 @@ At rank 4 you can __Store__ mana in gems with a 100 gram gem/crystal being able 
 
 ### Rank 5
 At rank 5 you can catch spells by drawing them into a gem, though if the magic is being controlled by another it may take a contest of wills to steal it. Once caught, the spell can either be stored for later use or rendered back into raw mana. Note that should a gem be over-filled it will fracture and eventually explode, the more mana stuffed into it the faster it will fracture, and the larger the explosion will be. You will also gain the ability to create empowering gems which, when added to a wand, staff, or other magical artifact/focus, will colour any spells casted through it in a similar manner to how a Sorceress can colour their elementalism. Magic cast through an artifact/focus with an empowering gem is 25% more powerful, and if a sorceress casts through a gem the same colour as their aura, the magic is empowered by 50% instead.
+
+
+## Magic: Homunculus-Craft
+- Class: Warlock
+- Elements: Blood, Nature, Earth
+
+"Many a species of monster can trace its' origin to a mage with too much imagination and too little foresight. Please try to be sensible when creating creatures with Homunculus-craft, or at the very least, don't just go releasing failed creations into the wild".
+
+Homunculus Magic revolves around the growth and alteration of flesh-and-blood creatures. A skilled Homunculus mage is capable of creating life anew from the tiniest start, or of making all sorts of alterations to a living being. Homunculus magic can not create souls, but crafted Homonculi can serve as bodies for demons, spirits, or souls summoned by necromancy. Homunculus magic has drastically reduced effect on unwilling sapient beings, and takes longer to affect more intelligent animals.
+
+### Rank 1
+At rank 1 you are able to make small __Alterations__ to living beings, like changing the natural colour of someone's hair or eyes, or causing a living creature to grow slightly (5%) faster
+
+### Rank 2
+At rank 2 you are able to make moderate __Alterations__ to living beings, like causing feathers to grow on a mammal, or changing someone's height by up to half a meter. You can now cause a living creature to grow 20% faster or slower, and can grant the ability for them to heal twice as fast as they would otherwise, and to heal without scaring.
+
+### Rank 3
+At rank 3 you are able to make significant __Alterations__ to living beings, like causing someone to grow functional extra arms, or making a reptile warm-blooded. You are able to cause a living being to grow 75% faster or slower, and can now grant them greater physical strength, double what they should otherwise be capable of.
+
+### Rank 4
+At rank 4 you are able to __Alter__ a living being as you please, so long as they are still made of flesh and blood (with naturalism Rank 4+ you can incorporate plant matter). Able to make a living being grow 300% faster or slower. Altered beings can be made supernaturally durable, twice as tough as they would naturally be.
+
+### Rank 5
+At rank 5 you are able to grow a __Homunculus__, a body to your exact specifications, starting with any biological matter. You are now able to accelerate a living being's natural growth by up to 1000%, or halt it entirely. While creating a __Homunculus__ you can imbue it with up to 10 effects from the magics you know (for example, [Firecalling] could be used to give a __Homunculus__ fire-breath).
+
+
+## Magic: Advanced Golemancy
+- Class: Academic
+- Elements: Body, Earth, Life
+
+"You may have noticed that I have a number of charming little golems flittering about the place, I don't think I could keep this labyrinth of a library in any semblance of order without them".
+
+Based on Hexes, Advanced Golemancy is as much an academic profession as it is a magic school. Dedicated golemancers create highly intricate magical servants out of inanimate matter, using a variety of methods and means to add various effects and abilities to their creations.
+
+You do not require any other schools of magic to learn Advanced Golemancy, but some schools certainly help. For every 3 ranks of [Hexes] or [Runes] that you possess gain a free rank in golemancy (for example, if you had [Hexes] 2 and [Runes] 1 you would get 1 free level in Advanced Golemancy).
+
+### Rank 1
+At rank 1 you can animate simple magical mechanisms: pulleys, levers, automated doors etc. It may not sound all that impressive, but everyone has to start somewhere.
+
+### Rank 2
+At rank 2 you become capable of animating human-sized (though not necessarily human-shaped) statues to serve you. These statues are made of a single material and will either require a soul to animate it, or will behave like a video-game AI.
+
+### Rank 3
+At rank 3 you learn to diversify your golems, allowing for up to 3 material to be used in its' construction. Your golems can vary in size from being child sized, to being half-again as large as an average adult human. They are now twice as durable as their base materials would normally be.
+
+### Rank 4
+At rank 4 your golems can be made of 5 materials, and be imbued with magical effects up to rank 2 from schools you know, for example: a hovering golems by using Kinomancy. Their max and min sizes are now 3x and 1/3 the max and min from rank 3.
+
+### Rank 5
+At rank 5 your golems can have 3 rank 3 magics imbued into each of them, they are 4 times as tough as their base materials, and can be 3 times larger or smaller than a rank 4 golem. Your golems can now slowly self-repair, having lost mass slowly move back towards them and re-integrate into where they were before. By studying the Phylactery of a Lich you have learned how to bind yourself to a souless golem. While bound in this way, you share a hivemind-like telepathic connection with the golem, able to easily control, command, share senses with, or even possess them. Should you die while you are bound in this way to any golems, you may choose to have your spirit possess one of them.
+
+
+## Magic: Spirit-Weaving
+- Class: Warlock
+- Elements: Life, Soul, Necro
+
+"A most noble school of magic that will allow you to shape wonderous new life from raw mana, Spirit-weaving is one of the most incredible magics you witches have ever come up with. Yes, I'm a bit biased". 
+
+Also known as Conjuration, Spirit-weaving is the art of creating living spirits from your mana. 
+
+These spirits are loyal to the one who made them within reason, they are as "alive" as other living being, and being abused may lead to them abandoning, or even attacking their maker.
+
+Spirits may be used in place of souls for things like necromancy or golemancy, but don't expect a devil to accept one as payment if you've made some promises you shouldn't have.
+
+
+### Rank 1
+At rank 1 you can create wisps, small ephemeral spirits capable of delivering messages, observing and relaying information, or acting as a light source. These spirits are extremely simple, and have no capacity for independent thought or introspection.
+
+### Rank 2
+At rank 2 you can create small spirits that can take the form of a mundane animal, roughly as capable of introspection and independent thought as a swarm insect, like an ant. Rank 2 spirits can be Imbued with one rank one magic that you possess.
+
+### Rank 3
+At rank 3 you can create spirits up to human size that can be a mix of physical traits from any two mundane species, "Though you don't have to mix creatures together if you don't want to, sometimes keeping things simple, and feathery, works best". These spirits are roughly as capable of introspection and independent thought as a small reptile, like a salamander. Rank 3 spirits can be Imbued with up to 3 rank 2 magics that you possess.
+
+### Rank 4
+At rank 4 you can create spirits up to the size of a grizzly bear, which can be a mix of any two mundane or fantastical species. These spirits are roughly as capable as introspection and independent thought as moderately intelligent mammal, like a rat. Rank 4 spirits can be imbued with up to 9 rank 3 magic that you possess
+
+### Rank 5
+At rank 5 you can now create __Noble__ spirits, beings with the same capacity for introspection and independent thought as any human. A __Noble__ spirit can be up to the size of a school-bus, and can be imbued with any number of rank 3 magics you know yourself. Over time these spirits will grow in power, reaching rank 4 in their imbued magics after one century, and rank 5 after one millennium.
