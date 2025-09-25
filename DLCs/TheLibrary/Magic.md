@@ -148,3 +148,29 @@ At rank 4 your __Lift__ improves enough that you could __Lift__ several train ca
 
 ### Rank 5
 At rank 5 your __Lift__ could, with some effort and concentration, rip a mid-sized apartment building from the ground. Your __Crush__ is powerful enough to turn a car into scrap-metal, and could affect an area up to 50 meters across. You also learn to cast __Stasis__, a wide-range spell that drains away kinetic energy from an area, causing objects to be slowed down or held in place. With the same maximum area of crush, if __Stasis__ is spread out it would be very difficult to move through as if objects within are trying to push through liquid tar, while if you were to concentrate the __Stasis__ down onto a small area it would cancel out 99% of all motion.
+
+
+## Magic: Illusions
+- Class: Warlock
+- Elements: Mind, Fire, Soul
+
+"Whether you're a mage in battle fooling the senses of your foe, or a bored student causing rude words to appear behind your teacher's head, Illusions is a classical school of magic beloved and bemoaned by many".
+
+The art of creating false impressions and deceiving the senses of a target. Illusion magic might not be the first thing that comes to mind when you think of combat magic, but the ability to control your opponent's perception of reality is not to be underestimated. 
+
+Note: Divination can pierce Illusions of lower rank (eg: Someone with Divination rank 3 can see through Illusions of rank 1 or 2). Maintaining Illusion magic requires negligible amounts of mana.
+
+### Rank 1
+At rank 1 your illusions that can fool someone's sense of sight, can cover an area up to a one foot wide sphere, and can affect one person at a time. Maintaining the illusion requires considerable focus, to the point that you wouldn't be able to make an illusion while doing anything else. Illusions are static images.
+
+### Rank 2
+At rank 2 your illusions can also fool someone's sense of hearing, can be 3 meters across, and can affect 3 people at once. Maintaining an illusion still requires considerable focus, but you could feasibly walk around or perform very simple tasks. An illusion at this rank can move according to your imagination.
+
+### Rank 3
+At rank 3 your illusions can now affect Smell and Taste, can be 15 meters across, and can affect 10 people at once. Maintaining the illusion now requires moderate focus. An illusion at this rank can __Draw__ from its' target's imagination to fill in blanks and appear more convincing.
+
+### Rank 4
+At rank 4 your illusions are now capable of deceiving all 5 senses, can be 100 meters across, and could be used on 30 people at a time. You'll now be able to maintain an illusion with with only a small amount of focus. Your illusions can now __Draw__ inspiration from their targets: appearing as someone's greatest fear or closest friend, for example.
+
+### Rank 5
+At rank 5 your illusions can fool magical senses as well, can be a kilometer across, and can affect up to 100 people, as well as any number of people within the area of the illusion. Your illusions will no longer break no matter how distracted you get, and will only be dispelled when you yourself dismissed them, or when the next full moon rises. For a moderate amount of mana you can now __Bind__ an illusion to someone, causing it to follow them, and requiring no focus from you.
