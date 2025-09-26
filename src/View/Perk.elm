@@ -2,7 +2,7 @@ module View.Perk exposing (perkToShortString, viewPerks)
 
 import Color exposing (Color)
 import Data.Perk as Perk exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, px, rgba, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paddingXY, px, rgba, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -218,35 +218,34 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 , moveDown 4
                 ]
                 (Theme.viewAffinity affinity)
-            , if isMeta then
-                el
-                    [ centerX
-                    , Theme.captureIt
-                    , Font.size 32
-                    , moveDown 4
-                    ]
-                    (Theme.gradientText 4 Gradients.yellowGradient "META")
-
-              else
-                Element.none
-            , case dlc of
-                Nothing ->
-                    Element.none
-
-                Just dlcName ->
+            , Theme.column
+                [ centerX
+                , paddingXY 64 8
+                ]
+                [ if isMeta then
                     el
                         [ centerX
                         , Theme.captureIt
-                        , Font.size 24
-                        , moveDown
-                            (if isMeta then
-                                40
-
-                             else
-                                8
-                            )
+                        , Font.size 32
                         ]
-                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                        (Theme.gradientText 4 Gradients.yellowGradient "META")
+
+                  else
+                    Element.none
+                , case dlc of
+                    Nothing ->
+                        Element.none
+
+                    Just dlcName ->
+                        Theme.gradientTextWrapped
+                            [ centerX
+                            , Theme.captureIt
+                            , Font.size 24
+                            ]
+                            4
+                            Gradients.purpleGradient
+                            dlcName
+                ]
             , Theme.classToBadge class
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom ]
