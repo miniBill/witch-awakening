@@ -17,7 +17,7 @@ import Generated.Faction
 import Generated.Magic
 import Generated.Perk
 import Generated.Race
-import Generated.Relic
+import Generated.Relic as Relic
 import Generated.TypePerk
 import Generated.Types exposing (Affinity(..), Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, relicToString, sizeToString)
 import Html exposing (Html)
@@ -146,7 +146,7 @@ dump model =
             go (dumpMagic >> Just) Generated.Magic.all
 
         Relic ->
-            go dumpRelic Generated.Relic.all
+            go dumpRelic Relic.all
 
         Complication ->
             go dumpComplication Generated.Complication.all
@@ -310,7 +310,7 @@ dumpMagic details =
     ]
 
 
-dumpRelic : Data.Relic.Details -> Maybe (List (Maybe String))
+dumpRelic : Relic.Details -> Maybe (List (Maybe String))
 dumpRelic relic =
     let
         ( cost, maybeDescription ) =
