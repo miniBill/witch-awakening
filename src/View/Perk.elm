@@ -260,16 +260,17 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
 
                 _ ->
                     viewSlot SlotWhite
-            , nameString
-                |> Theme.gradientTextWrapped
-                    [ alignBottom
-                    , Theme.celticHand
-                    , Font.size 36
-                    , centerX
-                    , Font.center
-                    ]
-                    4
-                    Gradients.blueGradient
+            , Theme.gradientTextWrapped
+                [ alignBottom
+                , Theme.celticHand
+                , Font.size 36
+                , centerX
+                , Font.center
+                , Element.paddingXY 32 0
+                ]
+                4
+                Gradients.blueGradient
+                nameString
             ]
         , content =
             case perk.requires of
