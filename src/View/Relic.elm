@@ -6,7 +6,7 @@ import Data.Relic as Relic exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, px, spacing, text, width)
 import Element.Font as Font
 import Generated.Affinity
-import Generated.Relic
+import Generated.Relic as Relic
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
 import Gradients
 import Images
@@ -23,7 +23,7 @@ viewRelics hideDLC display pearl mainRace races relics =
     let
         filtered : List Relic.Details
         filtered =
-            Generated.Relic.all
+            Relic.all
                 |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then

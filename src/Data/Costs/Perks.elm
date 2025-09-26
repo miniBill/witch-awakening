@@ -5,11 +5,9 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Data.Magic as Magic
 import Data.Perk as Perk
-import Generated.Magic
 import Generated.Perk
 import Generated.Types as Types exposing (Class, Magic(..), Perk(..), Race(..))
 import List.Extra
-import Parser exposing ((|.), (|=), Parser)
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 import View.Perk
 
@@ -123,7 +121,7 @@ perkValue model ranked =
                 let
                     freeIfHasMagicAtRank : Types.Magic -> Int -> Maybe String
                     freeIfHasMagicAtRank magic rank =
-                        if hasMagicAtRank model magic rank then
+                        if Utils.hasMagicAtRank model magic rank then
                             Just ("[" ++ Types.magicToString magic ++ "]")
 
                         else
@@ -166,60 +164,8 @@ perkValue model ranked =
                                     False
                         }
                 in
-                case perk.requires of
-                    Nothing ->
-                        Monad.succeed res
-
-                    Just req ->
-                        case Parser.run (requisiteParser |. Parser.end) req of
-                            Err _ ->
-                                Monad.succeed res |> Monad.withWarning ("Failed to parse requisite: " ++ req)
-
-                            Ok (RequiresMagic requiredName requiredRank) ->
-                                if hasMagicAtRank model requiredName requiredRank then
-                                    Monad.succeed res
-
-                                else
-                                    Monad.succeed res
-                                        |> Monad.withWarning
-                                            ("Missing requisite for "
-                                                ++ Types.perkToString ranked.name
-                                                ++ ": "
-                                                ++ req
-                                            )
+                Utils.checkRequisites perk (Types.perkToString ranked.name) model res
             )
-
-
-hasMagicAtRank : { a | magic : List RankedMagic } -> Magic -> Int -> Bool
-hasMagicAtRank model requiredName requiredRank =
-    List.any
-        (\rankedMagic ->
-            rankedMagic.name == requiredName && rankedMagic.rank >= requiredRank
-        )
-        model.magic
-
-
-requisiteParser : Parser Requisite
-requisiteParser =
-    let
-        name : Parser Magic
-        name =
-            Generated.Magic.all
-                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Types.magicToString m.name))
-                |> Parser.oneOf
-    in
-    Parser.succeed RequiresMagic
-        |= name
-        |. Parser.spaces
-        |= Parser.int
-        |. Parser.oneOf
-            [ Parser.succeed () |. Parser.symbol "+"
-            , Parser.succeed ()
-            ]
-
-
-type Requisite
-    = RequiresMagic Magic Int
 
 
 innerPerkCost :

@@ -1,8 +1,13 @@
-module Data.Costs.Utils exposing (Points, affinityDiscountIf, applyClassBonusIf, capWithWarning, combineAndSum, find, negate, powerToPoints, rewardPointsToPoints, slotUnsupported, sum, sumPoints, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequisites, combineAndSum, find, hasMagicAtRank, negate, powerToPoints, rewardPointsToPoints, slotUnsupported, sum, sumPoints, zero, zeroOut)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
+import Generated.Classes
+import Generated.Magic
+import Generated.Types as Types exposing (Class, Magic)
 import List.Extra
+import Parser exposing ((|.), (|=), Parser)
+import Types exposing (RankedMagic)
 
 
 type alias Points =
@@ -113,3 +118,118 @@ affinityDiscountIf inAffinity cost =
 
             OffAffinity ->
                 cost
+
+
+requisiteParser : Parser Requisite
+requisiteParser =
+    let
+        magicParser : Parser Magic
+        magicParser =
+            Generated.Magic.all
+                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Types.magicToString m.name))
+                |> Parser.oneOf
+
+        classParser : Parser Class
+        classParser =
+            Generated.Classes.all
+                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Types.classToString m.name))
+                |> Parser.oneOf
+    in
+    Parser.oneOf
+        [ Parser.succeed RequiresMagic
+            |= magicParser
+            |. Parser.spaces
+            |= Parser.int
+            |. Parser.oneOf
+                [ Parser.succeed () |. Parser.symbol "+"
+                , Parser.succeed ()
+                ]
+        , Parser.succeed RequiresClass
+            |= classParser
+        ]
+
+
+checkRequisites :
+    { a | requires : Maybe String }
+    -> String
+    ->
+        { model
+            | class : Maybe Class
+            , magic : List RankedMagic
+        }
+    -> c
+    -> Monad c
+checkRequisites details nameString model res =
+    case details.requires of
+        Nothing ->
+            Monad.succeed res
+
+        Just req ->
+            case
+                Parser.run
+                    (Parser.sequence
+                        { start = ""
+                        , end = ""
+                        , trailing = Parser.Forbidden
+                        , spaces = Parser.spaces
+                        , item = requisiteParser
+                        , separator = ","
+                        }
+                        |. Parser.end
+                    )
+                    req
+            of
+                Err _ ->
+                    Monad.succeed res
+                        |> Monad.withWarning ("Failed to parse requisite for " ++ nameString ++ ": " ++ req)
+
+                Ok requisites ->
+                    requisites
+                        |> Monad.combineMap
+                            (\requisite ->
+                                let
+                                    check : Result String ()
+                                    check =
+                                        case requisite of
+                                            RequiresMagic requiredName requiredRank ->
+                                                if hasMagicAtRank model requiredName requiredRank then
+                                                    Ok ()
+
+                                                else
+                                                    Err (Types.magicToString requiredName ++ " " ++ String.fromInt requiredRank)
+
+                                            RequiresClass class ->
+                                                if model.class == Just class then
+                                                    Ok ()
+
+                                                else
+                                                    Err (Types.classToString class)
+                                in
+                                case check of
+                                    Ok a ->
+                                        Monad.succeed a
+
+                                    Err e ->
+                                        Monad.succeed ()
+                                            |> Monad.withWarning
+                                                ("Missing requisite for "
+                                                    ++ nameString
+                                                    ++ ": "
+                                                    ++ e
+                                                )
+                            )
+                        |> Monad.map (\_ -> res)
+
+
+hasMagicAtRank : { a | magic : List RankedMagic } -> Magic -> Int -> Bool
+hasMagicAtRank model requiredName requiredRank =
+    List.any
+        (\rankedMagic ->
+            rankedMagic.name == requiredName && rankedMagic.rank >= requiredRank
+        )
+        model.magic
+
+
+type Requisite
+    = RequiresMagic Magic Int
+    | RequiresClass Class

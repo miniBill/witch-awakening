@@ -20,18 +20,18 @@ type alias RelicsModule =
 file : TypesModule -> List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Module RelicsModule
 file types dlcRelics =
     Elm.Declare.module_ [ "Generated", "Relic" ] RelicsModule
-        |> Elm.Declare.with (all dlcRelics)
+        |> Elm.Declare.with (all types dlcRelics)
         |> Elm.Declare.with (details types)
         |> Elm.Declare.Extra.withDeclarations (dlcToRelics types dlcRelics)
 
 
-all : List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Value
-all dlcRelics =
+all : TypesModule -> List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Value
+all types dlcRelics =
     dlcRelics
         |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.map (\( _, relic ) -> Elm.val (String.Extra.decapitalize (yassify relic.name)))
         |> Elm.list
-        |> Elm.withType (Elm.Annotation.list Gen.Data.Relic.annotation_.details)
+        |> Elm.withType (Elm.Annotation.list (details types).annotation)
         |> Elm.Declare.value "all"
 
 
@@ -44,6 +44,7 @@ details :
         , make :
             { content : Elm.Expression
             , dlc : Elm.Expression
+            , requires : Elm.Expression
             , classes : Elm.Expression
             , name : Elm.Expression
             }
@@ -54,6 +55,7 @@ details types =
         |> Elm.Declare.Extra.withField "name" .name types.relic.annotation
         |> Elm.Declare.Extra.withField "classes" .classes (Elm.Annotation.list types.class.annotation)
         |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.Extra.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
         |> Elm.Declare.Extra.withField "content" .content Gen.Data.Relic.annotation_.content
         |> Elm.Declare.Extra.buildCustomRecord
 
@@ -66,6 +68,7 @@ dlcToRelics types relics =
                 { name = types.relic.value relic.name
                 , classes = Elm.list (List.map types.class.value relic.classes)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                , requires = Elm.maybe (Maybe.map Elm.string relic.requires)
                 , content =
                     case relic.content of
                         Parsers.Single cost description ->

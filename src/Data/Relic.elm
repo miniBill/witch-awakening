@@ -1,14 +1,4 @@
-module Data.Relic exposing (Content(..), Details, intro)
-
-import Generated.Types exposing (Class, Relic)
-
-
-type alias Details =
-    { name : Relic
-    , classes : List Class
-    , content : Content
-    , dlc : Maybe String
-    }
+module Data.Relic exposing (Content(..), intro)
 
 
 type Content
