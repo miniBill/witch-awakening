@@ -182,15 +182,17 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                 _ ->
                     viewSlot SlotWhite
             , Types.relicToString name
-                |> String.Extra.softBreak 16
-                |> List.map (gradientText 4 Gradients.yellowGradient)
-                |> paragraph
+                |> Theme.gradientTextWrapped
                     [ alignBottom
                     , Theme.captureIt
                     , Font.size 36
                     , centerX
                     , Font.center
+                    , width <| fill
+                    , Element.paddingXY 30 0
                     ]
+                    4
+                    Gradients.yellowGradient
             ]
         , content = viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
         , onPress = msg

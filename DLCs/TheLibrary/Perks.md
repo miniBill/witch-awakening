@@ -1,6 +1,6 @@
 # The Library
 
-## Perk: Magic Muffins
+## Perk: Magic Muffins and cursed cookies
 - Element: Body
 - Class: Academic
 - Cost: 2
