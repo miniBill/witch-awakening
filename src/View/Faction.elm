@@ -244,7 +244,7 @@ viewPerk display selected { name, perk, perkContent, images } =
 
                     Just magic ->
                         [ Theme.blocks []
-                            (perkContent ++ "\n\n_*" ++ Types.magicToString magic.name ++ "*_ is half price for you, stacks with affinity.")
+                            (perkContent ++ "\n\n_*[" ++ Types.magicToString magic.name ++ "]*_ is half price for you, stacks with affinity.")
                         ]
             , onPress = Just perkMsg
             }
