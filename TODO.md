@@ -4,6 +4,7 @@
 - require hybridize for Amalgams, with race - 1
 
 # Missing features
+- free Advanced Golemancy ranks from Hexes and Runes
 - Siren type perk missing the possible 1p option
 - Doll type perk multicost: 1-4
 - Don't trigger Hybridize for Amalgams
