@@ -55,18 +55,18 @@ At rank 5 your constructs are virtually indestructible requiring a concentrated 
 - Class: Sorceress
 - Elements: All
 
-"Though [Wands] is what we're best known for, it is my opinion that [Mana-shaping] is far more useful to our students and should be thus prioritized. The headmaster has yet to respond".
+"Though Wands is what we're best known for, it is my opinion that Mana-Shaping is far more useful to our students and should be thus prioritized. The headmaster has yet to respond".
 
-Mana-shaping, also known as applied thaumics, mana elementalism, or manamancy, is the practice of reflexively shaping and utilizing mana to alter other spells on the fly. While not especially powerful by itself, mana-shaping is a potent force multiplier for other magical disciplines, empowering your magic and opening up new avenues for your spellcasting.
+Mana-Shaping, also known as applied thaumics, mana elementalism, or manamancy, is the practice of reflexively shaping and utilizing mana to alter other spells on the fly. While not especially powerful by itself, mana-shaping is a potent force multiplier for other magical disciplines, empowering your magic and opening up new avenues for your spellcasting.
 
 ### Rank 1
-At rank 1 you gain a 5% passive bonus to all your mana __Generation__ methods, this bonus doubles with every further rank you gain in Mana-shaping. You learn to imbue you spells with a __Lingering__ effect, allowing them to last 10% longer by using ambient mana, this bonus also doubles per rank of Mana-Shaping.
+At rank 1 you gain a 5% passive bonus to all your mana __Generation__ methods, this bonus doubles with every further rank you gain in Mana-Shaping. You learn to imbue you spells with a __Lingering__ effect, allowing them to last 10% longer by using ambient mana, this bonus also doubles per rank of Mana-Shaping.
 
 ### Rank 2
 At rank 2 you benefit from greatly increased __Precision__ with the spells you cast: use hexes to selectively transmute a pattern into an object, control a scalpel with surgical precision using metallurgy, etc. You also become capable of __Excluding__ some targets from the direct effects of your magic: cast a wave of freezing cold that ignores allies, cast an wide-area curse that is selective with its targets etc.
 
 ### Rank 3
-At rank 3 your spells become slightly more __Powerful__, resulting in a 5% increase to the power of your magic, this bonus increasing by 10% for every rank of Mana-shaping after 3rd. You also learn how to add a Delay to any of your spells, causing them to go off at a pre-set time after being cast.
+At rank 3 your spells become slightly more __Powerful__, resulting in a 5% increase to the power of your magic, this bonus increasing by 10% for every rank of Mana-Shaping after 3rd. You also learn how to add a Delay to any of your spells, causing them to go off at a pre-set time after being cast.
 
 ### Rank 4
 At rank 4 your spells become __Anchored__, which means it will cost twice as much mana to dispell them, and warding against them is only half as effective as it would otherwise be. You learn how to imbue a Homing effect into your spells, causing them to seek out targets you designate.
