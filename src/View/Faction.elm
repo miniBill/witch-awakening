@@ -2,7 +2,7 @@ module View.Faction exposing (viewFaction)
 
 import Color exposing (Color)
 import Data.Faction as Faction
-import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, inFront, moveDown, rgb, rgba, shrink, spacing, width)
+import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, inFront, moveDown, paddingXY, rgb, rgba, shrink, spacing, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -13,7 +13,7 @@ import Gradients
 import Images exposing (Image)
 import List.Extra
 import Set exposing (Set)
-import Theme exposing (gradientText)
+import Theme
 import Types exposing (Choice(..), Display(..))
 import View
 
@@ -226,13 +226,16 @@ viewPerk display selected { name, perk, perkContent, images } =
             , imageHeight = 240
             , image = images.image5
             , inFront =
-                [ el
+                [ Theme.gradientTextWrapped
                     [ alignBottom
                     , Theme.celticHand
                     , Font.size 24
                     , centerX
+                    , paddingXY 8 0
                     ]
-                    (gradientText 3 Gradients.blueGradient perk)
+                    3
+                    Gradients.blueGradient
+                    perk
                 ]
             , content =
                 case List.Extra.find (\magic -> magic.faction == Just name) Generated.Magic.all of
@@ -291,14 +294,34 @@ introRow display { name, dlc, motto, images } =
             , Theme.column [ width <| fillPortion 4 ]
                 [ img images.image2
                 , img images.image3
-                , column [ centerX ]
-                    [ Theme.gradientTextWrapped [ Font.size 40, Theme.celticHand ] 2 Gradients.blueGradient (Types.factionToString name)
-                    , Theme.gradientTextWrapped [ Font.size 24, Theme.morpheus ] 2 Gradients.yellowGradient motto
+                , column [ width fill ]
+                    [ Theme.gradientTextWrapped
+                        [ width fill
+                        , Font.size 40
+                        , Theme.celticHand
+                        ]
+                        2
+                        Gradients.blueGradient
+                        (Types.factionToString name)
+                    , Theme.gradientTextWrapped
+                        [ width fill
+                        , Font.size 24
+                        , Theme.morpheus
+                        ]
+                        2
+                        Gradients.yellowGradient
+                        motto
                     ]
                 ]
             , img images.image4
             ]
 
     else
-        el [ centerX, Font.size 40, Theme.celticHand ] <|
-            Theme.gradientText 2 Gradients.blueGradient (Types.factionToString name)
+        Theme.gradientTextWrapped
+            [ width fill
+            , Font.size 40
+            , Theme.celticHand
+            ]
+            2
+            Gradients.blueGradient
+            (Types.factionToString name)
