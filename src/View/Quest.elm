@@ -5,7 +5,7 @@ import Data.Faction as Faction
 import Data.Quest as Quest
 import Dict
 import Dict.Extra
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, inFront, moveDown, moveLeft, moveRight, moveUp, padding, px, rgb, rgba, shrink, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, inFront, moveDown, moveLeft, moveRight, moveUp, padding, paddingXY, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -113,75 +113,88 @@ questBox display selected number quest =
                 , imageHeight = 400
                 , image = Types.questToImage quest.name
                 , inFront =
-                    [ Theme.gradientTextWrapped
-                        [ alignBottom
-                        , Font.size 32
+                    [ Theme.column
+                        [ width fill
                         , Theme.captureIt
-                        , moveRight 16
-                        , moveUp 60
+                        , case quest.evil of
+                            Quest.EvilNo ->
+                                paddingXY 16 8
+
+                            _ ->
+                                paddingXY 64 8
                         ]
-                        4
-                        Gradients.yellowGradient
-                        nameString
-                    , case quest.faction of
-                        Nothing ->
-                            Element.none
-
-                        Just faction ->
-                            faction
-                                |> Faction.toShortString
-                                |> Theme.gradientText 4 Gradients.blueGradient
-                                |> el
-                                    [ alignBottom
-                                    , Font.size 28
-                                    , Theme.celticHand
-                                    , moveRight 16
-                                    , moveUp 92
-                                    ]
-                    , [ if quest.name == QuestDungeoneering then
-                            "Any"
-                                |> Theme.gradientText 4 Gradients.yellowGradient
-                                |> el [ alignBottom ]
-
-                        else
-                            Element.none
-                      , if quest.name == QuestDungeoneering then
-                            "/"
-                                |> Theme.gradientText 4 Gradients.yellowGradient
-                                |> el
-                                    [ Font.size 40
-                                    , Font.bold
-                                    ]
-
-                        else
-                            Element.none
-                      , quest.slot
-                            |> Types.slotToString
-                            |> Theme.gradientText 4
-                                (case quest.slot of
-                                    SlotEpic ->
-                                        Gradients.epicGradient
-
-                                    SlotHeroic ->
-                                        Gradients.heroicGradient
-
-                                    SlotNoble ->
-                                        Gradients.nobleGradient
-
-                                    _ ->
-                                        Gradients.blueGradient
-                                )
-                            |> el [ alignBottom ]
-                      ]
-                        |> Element.row
-                            [ alignBottom
-                            , alignRight
-                            , Font.size 28
-                            , Theme.celticHand
-                            , moveLeft 16
-                            , moveUp 64
-                            , spacing 4
+                        [ Theme.gradientTextWrapped
+                            [ Font.size 32
+                            , centerX
                             ]
+                            4
+                            Gradients.yellowGradient
+                            nameString
+                        , case quest.dlc of
+                            Nothing ->
+                                Element.none
+
+                            Just dlcName ->
+                                Theme.gradientTextWrapped
+                                    [ Font.size 24
+                                    , centerX
+                                    ]
+                                    4
+                                    Gradients.purpleGradient
+                                    dlcName
+                        ]
+                    , Element.row
+                        [ alignBottom
+                        , width fill
+                        , Font.size 28
+                        , Theme.celticHand
+                        , spacing 4
+                        , paddingXY 8 0
+                        , moveUp 64
+                        ]
+                        [ case quest.faction of
+                            Nothing ->
+                                Element.none
+
+                            Just faction ->
+                                Theme.gradientTextWrapped
+                                    []
+                                    4
+                                    Gradients.blueGradient
+                                    (Faction.toShortString faction)
+                        , let
+                            slotGradient : Element msg
+                            slotGradient =
+                                Theme.gradientText
+                                    4
+                                    (case quest.slot of
+                                        SlotEpic ->
+                                            Gradients.epicGradient
+
+                                        SlotHeroic ->
+                                            Gradients.heroicGradient
+
+                                        SlotNoble ->
+                                            Gradients.nobleGradient
+
+                                        _ ->
+                                            Gradients.blueGradient
+                                    )
+                                    (Types.slotToString quest.slot)
+                          in
+                          if quest.name == QuestDungeoneering then
+                            Element.row [ alignRight, spacing 4 ]
+                                [ "Any"
+                                    |> Theme.gradientText 4 Gradients.yellowGradient
+                                , "/"
+                                    |> Theme.gradientText 4 Gradients.yellowGradient
+                                    |> el [ Font.size 40, Font.bold ]
+                                , slotGradient
+                                ]
+
+                          else
+                            el [ alignRight ] slotGradient
+                        ]
                     , (case quest.evil of
                         Quest.EvilNo ->
                             Element.none
@@ -197,18 +210,6 @@ questBox display selected number quest =
                             , moveRight 4
                             , moveUp 4
                             ]
-                    , case quest.dlc of
-                        Nothing ->
-                            Element.none
-
-                        Just dlcName ->
-                            el
-                                [ centerX
-                                , Theme.captureIt
-                                , Font.size 24
-                                , moveDown 8
-                                ]
-                                (Theme.gradientText 4 Gradients.purpleGradient dlcName)
                     , statsTable quest
                         |> el
                             [ alignBottom
