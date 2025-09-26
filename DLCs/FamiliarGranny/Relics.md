@@ -17,6 +17,7 @@ Anyways, these cards are quite tricky, as they will force the loser of any games
 ## Relic: Tome of Restore
 - Class: Academic
 - Cost: 3
+- Requires: Academic, Enchantment 1
 
 This tome contains the enchantment rune for restore, also known as the healing one. But a smart witch can use it for so much more. And in case you haven’t realized it yet, this rune would allow you to achieve, if somewhat annoying, immortality, so long as you can use the rune. Of course, many factions would love to add this to their collection, and since I want make sure these are actually used and not locked up in a dusty vault, I have one big restriction, *only an academic class witch with some rank in enchantment can buy this*. In return, I have this on heavy discount for that special witch. 
 
