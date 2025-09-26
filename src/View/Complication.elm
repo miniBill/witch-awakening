@@ -10,7 +10,7 @@ import Generated.Types as Types exposing (ComplicationCategory(..), Slot(..))
 import Gradients
 import List.Extra
 import Set exposing (Set)
-import Theme exposing (gradientText)
+import Theme
 import Types exposing (Choice(..), ComplicationKind(..), Display, RankedComplication)
 import View
 
@@ -145,13 +145,13 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 (List.take 1 gains ++ List.take 1 (List.reverse gains))
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/.../"
-                    |> gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradients.yellowGradient
 
             else
                 gains
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/"
-                    |> gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradients.yellowGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -186,9 +186,11 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                         , centerX
                         , moveDown 8
                         ]
-                        [ el [ centerX, Theme.captureIt ] <|
-                            gradientText 4 gradient <|
-                                Types.complicationCategoryToString c
+                        [ Theme.gradientTextWrapped
+                            [ centerX, Theme.captureIt ]
+                            4
+                            gradient
+                            (Types.complicationCategoryToString c)
                         , el [ centerX, Theme.captureIt ] gainGradient
                         ]
 
@@ -205,7 +207,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                     Element.none
 
                 Just dlcName ->
-                    el
+                    Theme.gradientTextWrapped
                         [ centerX
                         , Theme.captureIt
                         , Font.size 24
@@ -222,17 +224,19 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                             ( Nothing, _ ) ->
                                 moveDown 18
                         ]
-                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
-            , el
+                        4
+                        Gradients.purpleGradient
+                        dlcName
+            , Theme.gradientTextWrapped
                 [ alignBottom
                 , Theme.celticHand
                 , Font.size 32
                 , centerX
                 , moveUp 4
                 ]
-                (gradientText 4 gradient <|
-                    Types.complicationToString name
-                )
+                4
+                gradient
+                (Types.complicationToString name)
             ]
     in
     Theme.card [ Theme.id (Types.complicationToString name) ]

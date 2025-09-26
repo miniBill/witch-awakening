@@ -1,6 +1,6 @@
 module View.Intro exposing (viewIntro, viewTitle)
 
-import Element exposing (Attribute, Element, alignRight, centerX, el, fill, fillPortion, moveDown, newTabLink, paragraph, text, width)
+import Element exposing (Element, alignRight, centerX, el, fill, fillPortion, newTabLink, paragraph, text, width)
 import Element.Font as Font
 import Generated.Attribution
 import Gradients
@@ -13,45 +13,40 @@ import Theme exposing (gradientText)
 viewTitle : Bool -> Element msg
 viewTitle allCompact =
     let
-        mainLogo : List (Attribute msg) -> Element msg
-        mainLogo attrs =
-            Element.wrappedRow
-                ([ Theme.bebasNeue
-                 , Theme.centerWrap
-                 , centerX
-                 , Font.size 160
-
-                 --  , Font.center
-                 , Element.paddingEach { top = 16, bottom = 0, left = 16, right = 16 }
-
-                 --  , Element.htmlAttribute (Html.Attributes.style "max-width" "90vw")
-                 --  , Element.htmlAttribute (Html.Attributes.style "max-height" "50vh")
-                 , Element.htmlAttribute (Html.Attributes.style "overflow" "clip")
-                 ]
-                    ++ attrs
-                )
-                ("Witch Awakening"
-                    |> String.toList
-                    |> List.map
-                        (\c ->
-                            c
-                                |> String.fromChar
-                                |> gradientText 8 Gradients.titleGradient
-                                |> el []
-                        )
-                )
+        mainLogo : Element msg
+        mainLogo =
+            Theme.gradientTextWrapped
+                [ Theme.bebasNeue
+                , Theme.centerWrap
+                , centerX
+                , Font.size 160
+                , Element.paddingEach
+                    { top = Theme.rhythm * 2
+                    , bottom = 0
+                    , left = Theme.rhythm * 2
+                    , right = Theme.rhythm * 2
+                    }
+                , Element.htmlAttribute (Html.Attributes.style "overflow" "clip")
+                ]
+                8
+                Gradients.titleGradient
+                "Wit\u{200B}ch Awa\u{200B}ken\u{200B}ing"
     in
     if allCompact then
-        mainLogo [ moveDown 24 ]
+        mainLogo
 
     else
-        Element.column
-            [ width fill
-            ]
-            [ mainLogo [ moveDown 16 ]
-            , Element.column
+        Theme.column
+            [ width fill ]
+            [ mainLogo
+            , Theme.column
                 [ centerX
-                , Element.paddingEach { left = 0, top = 0, right = 0, bottom = 10 }
+                , Element.paddingEach
+                    { left = Theme.rhythm
+                    , top = 0
+                    , right = Theme.rhythm
+                    , bottom = Theme.rhythm * 2
+                    }
                 ]
                 [ paragraph
                     [ Font.center
@@ -70,7 +65,7 @@ viewTitle allCompact =
                     [ alignRight
                     , Font.alignLeft
                     , Font.size 14
-                    , Element.paddingEach { left = 20, top = 10, right = 0, bottom = 0 }
+                    , Element.paddingEach { left = 12, top = 0, right = 0, bottom = 0 }
                     ]
                     [ Theme.choice "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
                     ]
@@ -79,7 +74,7 @@ viewTitle allCompact =
                     , width fill
                     , Font.size 14
                     , Font.underline
-                    , Element.paddingEach { left = 0, top = 0, right = Theme.rhythm, bottom = 10 }
+                    , Element.paddingEach { left = 0, top = 0, right = 0, bottom = Theme.rhythm }
                     ]
                     [ newTabLink []
                         { label = Theme.choice "By OutrageousBears"
@@ -90,7 +85,7 @@ viewTitle allCompact =
                     [ Font.alignRight
                     , width fill
                     , Font.size 14
-                    , Element.paddingEach { left = 0, top = 0, bottom = 0, right = Theme.rhythm }
+                    , Element.spacing Theme.rhythm
                     ]
                     (text "With DLCs: "
                         :: (Generated.Attribution.all

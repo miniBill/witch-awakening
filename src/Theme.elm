@@ -58,15 +58,20 @@ choice value =
 gradientTextWrapped : List (Attribute msg) -> Float -> List ( Int, Int, Int ) -> String -> Element msg
 gradientTextWrapped attrs outlineSize gradient value =
     gradientTextSplit outlineSize gradient value
-        |> wrappedRow (centerWrap :: attrs)
+        |> Element.wrappedRow (Element.spacing 1 :: centerWrap :: attrs)
 
 
 gradientTextSplit : Float -> List ( Int, Int, Int ) -> String -> List (Element msg)
 gradientTextSplit outlineSize gradient value =
     value
         |> String.split " "
-        |> List.intersperse " "
-        |> List.map (\word -> gradientText outlineSize gradient word)
+        |> List.map
+            (\word ->
+                word
+                    |> String.split "\u{200B}"
+                    |> List.map (\p -> gradientText outlineSize gradient (p ++ "\u{200B}"))
+            )
+        |> List.Extra.intercalate [ text " " ]
 
 
 gradientText : Float -> List ( Int, Int, Int ) -> String -> Element msg

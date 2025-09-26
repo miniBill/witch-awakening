@@ -1,14 +1,14 @@
 module View.GameMode exposing (viewGameMode)
 
 import Color exposing (Color)
-import Element exposing (Element, alignBottom, alignTop, centerX, el, fill, moveDown, moveUp, spacing, width)
+import Element exposing (Element, alignBottom, alignTop, centerX, fill, moveDown, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Generated.GameMode as GameMode
 import Generated.Types as Types exposing (GameMode)
 import Gradients
 import Set exposing (Set)
-import Theme exposing (gradientText)
+import Theme
 import Types exposing (Choice(..), Display)
 import View
 
@@ -88,11 +88,6 @@ gameModeBox display selected { name, content } =
         color : Color
         color =
             Theme.colors.gameMode
-
-        gainGradient : Element msg
-        gainGradient =
-            ""
-                |> gradientText 4 Gradients.yellowGradient
     in
     Theme.card [ Theme.id (Types.gameModeToString name) ]
         { display = display
@@ -106,26 +101,25 @@ gameModeBox display selected { name, content } =
         , imageHeight = 400
         , image = Types.gameModeToImage name
         , inFront =
-            [ Element.column
-                [ alignTop
-                , Font.size 28
-                , centerX
+            [ Theme.gradientTextWrapped
+                [ centerX
+                , Theme.captureIt
                 , moveDown 8
+                , Font.size 28
                 ]
-                [ el [ centerX, Theme.captureIt ] <|
-                    gradientText 4 gradient "Game Mode"
-                , el [ centerX, Theme.captureIt ] gainGradient
-                ]
-            , el
+                4
+                gradient
+                "Game Mode"
+            , Theme.gradientTextWrapped
                 [ alignBottom
                 , Theme.celticHand
                 , Font.size 32
                 , centerX
                 , moveUp 4
                 ]
-                (gradientText 4 gradient <|
-                    Types.gameModeToString name
-                )
+                4
+                gradient
+                (Types.gameModeToString name)
             ]
         , content = [ Theme.blocks [] content ]
         , onPress = Just msg
