@@ -1,5 +1,21 @@
 # The Library
 
+## Perk: A kind Fate
+- Element: Nature
+- Class: Warlock
+- Cost: 3
+
+You have been blessed by a kind fate, or more accurately, your pets have. Fate will twist ever so slightly to keep your beloved beasties from harm, and so long as you don't put them in harm's way, you can expect them to live unusually long and very happy lives.
+
+
+## Perk: Chance Mage
+- Element: Soul
+- Class: Sorceress
+- Cost: 8
+
+Gain the ability to minorly influence probability, increase the chance of a coin coming up heads, of a pair of dice rolling snake eyes, or of the old floorboards under your opponent giving way at just the right time. The more chaotic an environment is, the more room there is for this magic to take hold, and the more pronounced the effect will be.
+
+
 ## Perk: Full Steam Ahead
 - Element: Water
 - Class: Sorceress
