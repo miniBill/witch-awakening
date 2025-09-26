@@ -7,7 +7,6 @@ import Element exposing (Attribute, Element, alignTop, centerX, el, fill, moveDo
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Affinity
 import Generated.Race
 import Generated.Types as Types exposing (Affinity(..), Race(..), Size)
 import Gradients
@@ -215,15 +214,13 @@ affinityPicker selected race =
                 ]
 
         RaceGenie currentAffinity ->
-            Generated.Affinity.all
+            Affinity.selectable
                 |> List.map .name
-                |> List.Extra.remove AffinityAll
                 |> picker RaceGenie currentAffinity
 
         RaceGemini currentAffinity ->
-            Generated.Affinity.all
+            Affinity.selectable
                 |> List.map .name
-                |> List.Extra.remove AffinityAll
                 |> List.Extra.remove AffinityEarth
                 |> picker RaceGemini currentAffinity
 

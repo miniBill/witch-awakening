@@ -1,16 +1,11 @@
-module Data.Affinity exposing (AffinityList, Details, InAffinity(..), affinitiesForRace, defaultList, fromModel, isInAffinity, toList)
+module Data.Affinity exposing (AffinityList, InAffinity(..), affinitiesForRace, defaultList, fromModel, isInAffinity, selectable, toList)
 
 import Data.Magic as Magic
+import Generated.Affinity as Affinity
 import Generated.Race
 import Generated.Types exposing (Affinity(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData)
-
-
-type alias Details =
-    { name : Affinity
-    , dlc : Maybe String
-    }
 
 
 fromModel :
@@ -148,3 +143,16 @@ toList (AffinityList list) =
 defaultList : AffinityList
 defaultList =
     AffinityList []
+
+
+selectable : List Affinity.Details
+selectable =
+    Affinity.all
+        |> List.Extra.removeWhen
+            (\{ name } ->
+                (name == AffinityWhispers)
+                    || (name == AffinityDreams)
+                    || (name == AffinitySilence)
+                    || (name == AffinityDivine)
+                    || (name == AffinityAll)
+            )
