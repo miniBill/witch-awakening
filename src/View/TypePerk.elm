@@ -9,7 +9,7 @@ import Generated.Types as Types exposing (Race(..), Slot)
 import Gradients
 import Images
 import Set exposing (Set)
-import Theme exposing (gradientText)
+import Theme
 import Types exposing (Choice(..), Display)
 import View
 import View.Race
@@ -147,27 +147,30 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 6
                 Gradients.yellowGradient
                 raceString
-            , String.fromInt -cost
-                |> gradientText 6 Gradients.yellowGradient
-                |> el
-                    [ alignRight
-                    , Theme.captureIt
-                    , moveLeft 28
-                    , moveDown 16
-                    , Font.size 30
-                    ]
+            , Theme.gradientTextWrapped
+                [ alignRight
+                , Theme.captureIt
+                , moveLeft 28
+                , moveDown 16
+                , Font.size 30
+                ]
+                6
+                Gradients.yellowGradient
+                (String.fromInt -cost)
             , case dlc of
                 Nothing ->
                     Element.none
 
                 Just dlcName ->
-                    el
+                    Theme.gradientTextWrapped
                         [ centerX
                         , Theme.captureIt
                         , Font.size 24
                         , moveDown 60
                         ]
-                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                        4
+                        Gradients.purpleGradient
+                        dlcName
             , case name of
                 Nothing ->
                     Element.none

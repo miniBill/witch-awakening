@@ -7,7 +7,7 @@ import Gradients
 import Html.Attributes
 import Images
 import List.Extra
-import Theme exposing (gradientText)
+import Theme
 
 
 viewTitle : Bool -> Element msg
@@ -53,13 +53,13 @@ viewTitle allCompact =
                     , Theme.morpheus
                     , Font.size 52
                     ]
-                    [ gradientText 4 Gradients.grayGradient "Heavy Metal"
+                    [ Theme.gradientText 4 Gradients.grayGradient "Heavy Metal"
                     , text " "
-                    , gradientText 4 Gradients.yellowGradient "&"
+                    , Theme.gradientText 4 Gradients.yellowGradient "&"
                     , text " "
-                    , gradientText 4 Gradients.orangeGradient "Witch Party"
+                    , Theme.gradientText 4 Gradients.orangeGradient "Witch Party"
                     , text " "
-                    , gradientText 4 Gradients.yellowGradient "Update"
+                    , Theme.gradientText 4 Gradients.yellowGradient "Update"
                     ]
                 , paragraph
                     [ alignRight

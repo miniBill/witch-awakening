@@ -14,7 +14,7 @@ import Images
 import List.Extra
 import Maybe.Extra
 import Set exposing (Set)
-import Theme exposing (gradientText)
+import Theme
 import Types exposing (Choice(..), Display, RankedPerk)
 import View
 import View.Race
@@ -174,13 +174,13 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradients.yellowGradient
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradients.yellowGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -223,12 +223,14 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 , paddingXY 64 8
                 ]
                 [ if isMeta then
-                    el
+                    Theme.gradientTextWrapped
                         [ centerX
                         , Theme.captureIt
                         , Font.size 32
                         ]
-                        (Theme.gradientText 4 Gradients.yellowGradient "META")
+                        4
+                        Gradients.yellowGradient
+                        "META"
 
                   else
                     Element.none

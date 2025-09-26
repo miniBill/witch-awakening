@@ -12,7 +12,7 @@ import Gradients
 import Images
 import List.Extra
 import Set exposing (Set)
-import Theme exposing (gradientText)
+import Theme
 import Types exposing (Choice(..), CosmicPearlData, Display, RankedRelic)
 import View
 import View.Affinity as Affinity
@@ -122,13 +122,13 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradients.yellowGradient
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradients.yellowGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
