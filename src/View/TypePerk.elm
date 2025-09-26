@@ -2,7 +2,7 @@ module View.TypePerk exposing (viewTypePerks)
 
 import Color
 import Data.TypePerk as TypePerk
-import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, moveUp, px, rgb, spacing, width)
+import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, moveUp, paddingXY, px, rgb, spacing, width)
 import Element.Font as Font
 import Generated.TypePerk
 import Generated.Types as Types exposing (Race(..), Slot)
@@ -112,39 +112,41 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
         , imageHeight = 360
         , image = raceToTypePerkImage race
         , inFront =
-            [ raceString
-                |> gradientText 6 Gradients.yellowGradient
-                |> el
-                    [ Theme.captureIt
-                    , case nameLength of
-                        Short ->
-                            Font.size 56
+            [ Theme.gradientTextWrapped
+                [ Theme.captureIt
+                , case nameLength of
+                    Short ->
+                        Font.size 56
 
-                        Average ->
-                            Font.size 46
+                    Average ->
+                        Font.size 46
 
-                        Long ->
-                            Font.size 40
-                    , case nameLength of
-                        Short ->
-                            moveLeft 0
+                    Long ->
+                        Font.size 40
+                , case nameLength of
+                    Short ->
+                        moveLeft 0
 
-                        Average ->
-                            moveLeft 18
+                    Average ->
+                        moveLeft 18
 
-                        Long ->
-                            moveLeft 30
-                    , case nameLength of
-                        Short ->
-                            moveDown 0
+                    Long ->
+                        moveLeft 30
+                , case nameLength of
+                    Short ->
+                        moveDown 0
 
-                        Average ->
-                            moveDown 8
+                    Average ->
+                        moveDown 8
 
-                        Long ->
-                            moveDown 11
-                    , centerX
-                    ]
+                    Long ->
+                        moveDown 11
+                , centerX
+                , paddingXY 30 0
+                ]
+                6
+                Gradients.yellowGradient
+                raceString
             , String.fromInt -cost
                 |> gradientText 6 Gradients.yellowGradient
                 |> el
