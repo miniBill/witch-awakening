@@ -3,7 +3,7 @@ module View.Relic exposing (viewRelics)
 import Color exposing (Color)
 import Data.Affinity as Affinity
 import Data.Relic as Relic exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, paragraph, px, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, px, spacing, text, width)
 import Element.Font as Font
 import Generated.Affinity
 import Generated.Relic
@@ -12,7 +12,6 @@ import Gradients
 import Images
 import List.Extra
 import Set exposing (Set)
-import String.Extra
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), CosmicPearlData, Display, RankedRelic)
 import View

@@ -2,7 +2,7 @@ module View.Perk exposing (perkToShortString, viewPerks)
 
 import Color exposing (Color)
 import Data.Perk as Perk exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paragraph, px, rgba, spacing, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, px, rgba, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -14,7 +14,6 @@ import Images
 import List.Extra
 import Maybe.Extra
 import Set exposing (Set)
-import String.Extra
 import Theme exposing (gradientText)
 import Types exposing (Choice(..), Display, RankedPerk)
 import View
