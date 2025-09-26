@@ -163,12 +163,19 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
 
                 Just dlcName ->
                     el
-                        [ centerX
-                        , Theme.captureIt
-                        , Font.size 24
-                        , moveDown 8
+                        [ Element.paddingXY 52 0
+                        , width fill
                         ]
-                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                    <|
+                        Theme.gradientTextWrapped
+                            [ centerX
+                            , Theme.captureIt
+                            , Font.size 24
+                            , moveDown 12
+                            ]
+                            4
+                            Gradients.purpleGradient
+                            dlcName
             , Theme.viewClasses 40 classes
                 |> el [ Element.alignBottom ]
             , case costs of
@@ -180,18 +187,17 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
 
                 _ ->
                     viewSlot SlotWhite
-            , Types.relicToString name
-                |> Theme.gradientTextWrapped
-                    [ alignBottom
-                    , Theme.captureIt
-                    , Font.size 36
-                    , centerX
-                    , Font.center
-                    , width <| fill
-                    , Element.paddingXY 30 0
-                    ]
-                    4
-                    Gradients.yellowGradient
+            , Theme.gradientTextWrapped
+                [ alignBottom
+                , Theme.captureIt
+                , Font.size 36
+                , centerX
+                , Font.center
+                , Element.paddingXY 30 8
+                ]
+                4
+                Gradients.yellowGradient
+                (Types.relicToString name)
             ]
         , content = viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
         , onPress = msg
