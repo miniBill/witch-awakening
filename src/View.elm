@@ -1,4 +1,4 @@
-module View exposing (collapsible, costButtons, filterDLC, viewRequisites)
+module View exposing (collapsible, costButtons, filterDLC, viewRequirements)
 
 import Color exposing (Color)
 import Data.Costs.Utils as Utils
@@ -116,8 +116,8 @@ filterDLC hideDLC list =
         list
 
 
-viewRequisites : String -> Element msg
-viewRequisites req =
+viewRequirements : String -> Element msg
+viewRequirements req =
     case Parser.run Utils.requisitesParser req of
         Ok requisites ->
             let

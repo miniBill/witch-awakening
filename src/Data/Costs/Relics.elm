@@ -46,6 +46,6 @@ relicCost ({ class, cosmicPearl } as model) details =
                             1
                 in
                 (baseCost * multiplier)
-                    |> Utils.checkRequisites relic (Types.relicToString details.name) model
+                    |> Utils.checkRequirements relic (Types.relicToString details.name) model
             )
         |> Monad.withRewardInfo (Types.relicToString details.name)

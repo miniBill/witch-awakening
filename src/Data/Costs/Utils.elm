@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Points, Requisite(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequisites, combineAndSum, find, hasMagicAtRank, negate, powerToPoints, requisitesParser, rewardPointsToPoints, slotUnsupported, sum, sumPoints, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, combineAndSum, find, hasMagicAtRank, negate, powerToPoints, requisitesParser, rewardPointsToPoints, slotUnsupported, sum, sumPoints, zero, zeroOut)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
@@ -120,7 +120,7 @@ affinityDiscountIf inAffinity cost =
                 cost
 
 
-requisiteParser : Parser Requisite
+requisiteParser : Parser Requirement
 requisiteParser =
     let
         magicParser : Parser Magic
@@ -149,7 +149,7 @@ requisiteParser =
         ]
 
 
-checkRequisites :
+checkRequirements :
     { a | requires : Maybe String }
     -> String
     ->
@@ -159,7 +159,7 @@ checkRequisites :
         }
     -> c
     -> Monad c
-checkRequisites details nameString model res =
+checkRequirements details nameString model res =
     case details.requires of
         Nothing ->
             Monad.succeed res
@@ -208,7 +208,7 @@ checkRequisites details nameString model res =
                         |> Monad.map (\_ -> res)
 
 
-requisitesParser : Parser (List Requisite)
+requisitesParser : Parser (List Requirement)
 requisitesParser =
     Parser.sequence
         { start = ""
@@ -230,6 +230,6 @@ hasMagicAtRank model requiredName requiredRank =
         model.magic
 
 
-type Requisite
+type Requirement
     = RequiresMagic Magic Int
     | RequiresClass Class

@@ -205,7 +205,7 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                     viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
 
                 Just req ->
-                    View.viewRequisites req :: viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
+                    View.viewRequirements req :: viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
         , onPress = msg
         }
 

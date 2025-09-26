@@ -164,7 +164,7 @@ perkValue model ranked =
                                     False
                         }
                 in
-                Utils.checkRequisites perk (Types.perkToString ranked.name) model res
+                Utils.checkRequirements perk (Types.perkToString ranked.name) model res
             )
 
 
