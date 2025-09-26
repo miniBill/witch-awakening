@@ -56,4 +56,4 @@ Monsters just seem so much more... docile around you. With most monsters having 
 - Requires: Digicasting 3+
 - Cost: 8
 
-Monsters just seem so much more... docile around you. With most monsters having lower levels of aggression, and a newfound tendency towards learning and conditioning, you can safely be near and even directly handled otherwise deadly creatures... usually. If a monster goes a week spending at least 8 hours a day in your presence this docile effect becomes permanent. This perk has no effect on sentient monsters.
+Gain the ability to connect to and seize control of electrical devices. This isn't quite so sophisticated as the hacking granted by integration, but it is able to “hack” into both wired and wireless devices.
