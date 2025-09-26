@@ -139,7 +139,7 @@ testJack12 label model expected =
         \_ ->
             Data.Costs.Perks.perkValue model jack12
                 |> Result.map (.value >> .points)
-                |> Expect.equal (Ok expected)
+                |> Expect.equal (Ok (CostsMonad.Power expected))
 
 
 genieMagicalHeart : Test
@@ -152,7 +152,7 @@ genieMagicalHeart =
                 , cost = 20
                 }
                 |> Result.map (.value >> .points)
-                |> Expect.equal (Ok -4)
+                |> Expect.equal (Ok (CostsMonad.Power -4))
 
 
 magicCosts : Test
