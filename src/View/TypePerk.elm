@@ -56,12 +56,14 @@ viewTypePerks hideDLC witchRaces display typePerks =
                 |> Theme.wrappedRow
                     [ width fill
                     , spacing <| Theme.rhythm * 3
+                    , Theme.centerWrap
                     ]
             ]
             [ boxes
                 |> Theme.wrappedRow
                     [ width fill
                     , spacing <| Theme.rhythm * 3
+                    , Theme.centerWrap
                     ]
             ]
 
