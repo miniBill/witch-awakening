@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -8,7 +8,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Generated.Affinity
 import Generated.Classes
-import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Slot(..))
+import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Size, Slot(..))
 import Gradients
 import Hex
 import Html exposing (Html)
@@ -152,6 +152,10 @@ block : Bool -> Maybe (Display -> msg) -> Display -> String -> Element msg
 block expandBadges toMsg display input =
     case Parser.run (MarkMini.blockParser |. Parser.end) (String.trim input) of
         Err _ ->
+            -- let
+            --     _ =
+            --         Debug.log "Failed to parse markmini" input
+            -- in
             Element.paragraph
                 [ Font.color <| rgb 1 0 0 ]
                 [ text input ]
@@ -365,29 +369,20 @@ viewPiece expandBadges piece =
         Magic magic ->
             viewGenericBadge expandBadges (Types.magicToImage magic) (Types.magicToString magic)
 
-        Star ->
-            [ Html.span
-                [ Html.Attributes.style "font-family" "\"Capture It\""
-                , Html.Attributes.style "font-size" "20px"
-                ]
-                [ gradientTextHtml 4 Gradients.yellowGradient "★" ]
+        Size size ->
+            [ Types.sizeToString size
+                |> String.replace "Medium" "Med"
+                |> gradientTextSpan "Morpheus" 4 Gradients.blueGradient
             ]
+
+        Star ->
+            [ gradientTextSpan "Capture It" 4 Gradients.yellowGradient "★" ]
 
         Power value ->
-            [ Html.span
-                [ Html.Attributes.style "font-family" "\"Capture It\""
-                , Html.Attributes.style "font-size" "20px"
-                ]
-                [ gradientTextHtml 4 Gradients.yellowGradient value ]
-            ]
+            [ gradientTextSpan "Capture It" 4 Gradients.yellowGradient value ]
 
         RewardPoints value ->
-            [ Html.span
-                [ Html.Attributes.style "font-family" "\"Capture It\""
-                , Html.Attributes.style "font-size" "20px"
-                ]
-                [ gradientTextHtml 4 Gradients.blueGradient value ]
-            ]
+            [ gradientTextSpan "Capture It" 4 Gradients.blueGradient value ]
 
         Kisses value ->
             [ Html.span []
@@ -398,6 +393,15 @@ viewPiece expandBadges piece =
 
         LineBreak ->
             [ Html.br [] [] ]
+
+
+gradientTextSpan : String -> Float -> List ( Int, Int, Int ) -> String -> Html msg
+gradientTextSpan font outlineSize gradient value =
+    Html.span
+        [ Html.Attributes.style "font-family" ("\"" ++ font ++ "\"")
+        , Html.Attributes.style "font-size" "20px"
+        ]
+        [ gradientTextHtml outlineSize gradient value ]
 
 
 viewGenericBadge : Bool -> Image -> String -> List (Html msg)
@@ -998,3 +1002,17 @@ slider attrs config =
 fontColor : Color -> Attribute msg
 fontColor color =
     Font.color (colorToElmUi color)
+
+
+viewSize :
+    List ( Int, Int, Int )
+    -> Size
+    -> Element msg
+viewSize gradient size =
+    Types.sizeToString size
+        |> String.replace "Medium" "Med"
+        |> gradientText 4 gradient
+        |> el
+            [ morpheus
+            , Font.size 20
+            ]

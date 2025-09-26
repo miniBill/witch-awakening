@@ -209,7 +209,7 @@ At rank 5 you gain an innate sense for the resonant frequency of inanimate objec
 
 "A truly beautiful form of magic, Crystal-Crafting is worth learning for the artistic potential alone in my opinion. That being said, even the most boorish philistine could find value in the magical benefits Crystal-crafting can offer".
 
-Also known as Crystallomancy, Crystal-Crafting is technically a subset of [Earth-Moving], but it is specialized enough to be considered a school all of its' own.
+Also known as Crystallomancy, Crystal-Crafting is technically a subset of [Earthmoving], but it is specialized enough to be considered a school all of its' own.
 
 Crystallomancy allows its' practitioners to move, grow and reshape crystals and gems, but its' greatest capability is using the gems to store, capture, and empower mana and spells.
 
@@ -385,4 +385,4 @@ At rank 3 your totems now make changes after 1 year, can affect up to a 30Km rad
 At rank 4 your totems now make changes after 6 months, can affect up to a 60Km radius, and will allow you to include multiple different biomes within the area of a single totem. Want to have some steamy mediterranean beachfront property 30 feet from the cool alpine biome you built your house in? A scorching desert right beside a snowy forest? Go wild.
 
 ### Rank 5
-At rank 5 you learn how to add the effects of other known magics to your totems in order to create a magical landscape, including but not limited to: flying islands [Earthmoving] or [Kinomancy], huge crystal growths [Crystallomancy], recurring abundant ore veins [Metallurgy], permanent weather effects [Waterworking] and/or [Windkeeping], impossible geometry [Aethernautics], etc. Create the magical wonderland landscape you always wished you could live in.
+At rank 5 you learn how to add the effects of other known magics to your totems in order to create a magical landscape, including but not limited to: flying islands [Earthmoving] or [Kinomancy], huge crystal growths [Crystal-Crafting], recurring abundant ore veins [Metallurgy], permanent weather effects [Waterworking] and/or [Windkeeping], impossible geometry [Aethernautics], etc. Create the magical wonderland landscape you always wished you could live in.

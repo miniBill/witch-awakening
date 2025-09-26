@@ -37,6 +37,7 @@ type Piece
     | RewardPoints String
     | LineBreak
     | Magic Types.Magic
+    | Size Types.Size
 
 
 type Color
@@ -244,6 +245,9 @@ parseSquareBrackets str =
                 Types.perkFromString input
                     |> Maybe.map Perk
             , \input ->
+                Types.sizeFromString input
+                    |> Maybe.map Size
+            , \input ->
                 if String.startsWith "http" input then
                     Just (Link input)
 
@@ -286,6 +290,10 @@ parseSquareBrackets str =
                         Power str
 
                     else
+                        -- let
+                        --     _ =
+                        --         Debug.log "Unparsed square brackets" str
+                        -- in
                         Text ("[" ++ str ++ "]")
 
 
