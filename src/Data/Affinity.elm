@@ -95,7 +95,7 @@ isInAffinity magicAffinities affinities =
         Magic.Alternative alternatives ->
             List.foldl
                 (\alternative acc ->
-                    case ( acc, isInAffinityRegular alternative affinities ) of
+                    case ( acc, isInAffinityElementalism alternative affinities ) of
                         ( DoubleAffinity, _ ) ->
                             DoubleAffinity
 
@@ -125,6 +125,26 @@ isInAffinityRegular regular (AffinityList affinities) =
                 regular
     in
     case ( List.member AffinityAll regular, inList ) of
+        ( True, True ) ->
+            DoubleAffinity
+
+        ( False, False ) ->
+            OffAffinity
+
+        _ ->
+            InAffinity
+
+
+isInAffinityElementalism : List Affinity -> AffinityList -> InAffinity
+isInAffinityElementalism elementalism (AffinityList affinities) =
+    let
+        inList : Bool
+        inList =
+            List.all
+                (\affinity -> List.member affinity affinities)
+                elementalism
+    in
+    case ( List.member AffinityAll elementalism, inList ) of
         ( True, True ) ->
             DoubleAffinity
 
