@@ -425,7 +425,7 @@ row label expandedMenuSections result target =
                                 rightPoints { rewardPoints = rewardPoints, power = 0 }
 
                             CostsMonad.FreeBecause message ->
-                                Theme.blocks [] message
+                                Theme.compactBlocks [] message
                     ]
             in
             Theme.column [ width fill ]

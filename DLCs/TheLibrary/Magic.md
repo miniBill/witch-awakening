@@ -332,7 +332,7 @@ At rank 3 your magic now extends to bacteria, and you become able to make signif
 At rank 4 your magic extends to prions (with Homunculus magic or Entomism you gain control over parasites). You can now add or remove any symptoms you've previously encountered, freely mixing and matching between the different types of disease you have access to.
 
 ### Rank 5
-At rank 5 you become capable of adding magical effects to the diseases you create or alter. Make a prion that repairs your body [lifeweaving], a parasite that causes someone to forget you [Psychotics], a virus that causes its' victims to spontaneously combust [firecalling]. "It goes without saying, but do be careful with magical diseases, not only are they extremely dangerous, but they're effectively a masquerade violation waiting to happen. Do *NOT* let them get out of control, please...".
+At rank 5 you become capable of adding magical effects to the diseases you create or alter. Make a prion that repairs your body [Lifeweaving], a parasite that causes someone to forget you [Psychotics], a virus that causes its' victims to spontaneously combust [Firecalling]. "It goes without saying, but do be careful with magical diseases, not only are they extremely dangerous, but they're effectively a masquerade violation waiting to happen. Do *NOT* let them get out of control, please...".
 
 
 ## Magic: Entomism

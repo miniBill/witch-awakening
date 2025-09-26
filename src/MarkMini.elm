@@ -36,6 +36,7 @@ type Piece
     | Checkmark
     | RewardPoints String
     | LineBreak
+    | Magic Types.Magic
 
 
 type Color
@@ -236,6 +237,9 @@ parseSquareBrackets str =
             , \input ->
                 Types.raceFromString input
                     |> Maybe.map Race
+            , \input ->
+                Types.magicFromString input
+                    |> Maybe.map Magic
             , \input ->
                 Types.perkFromString input
                     |> Maybe.map Perk

@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, wrappedRow)
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -124,27 +124,32 @@ captureIt =
     Font.family [ Font.typeface "Capture It" ]
 
 
+compactBlocks : List (Attribute msg) -> String -> Element msg
+compactBlocks attrs input =
+    genericBlocks False Nothing DisplayFull attrs input
+
+
 blocks : List (Attribute msg) -> String -> Element msg
-blocks =
-    genericBlocks Nothing DisplayFull
+blocks attrs input =
+    genericBlocks True Nothing DisplayFull attrs input
 
 
 collapsibleBlocks : (Display -> msg) -> Display -> List (Attribute msg) -> String -> Element msg
-collapsibleBlocks toMsg =
-    genericBlocks (Just toMsg)
+collapsibleBlocks toMsg display attrs input =
+    genericBlocks True (Just toMsg) display attrs input
 
 
-genericBlocks : Maybe (Display -> msg) -> Display -> List (Attribute msg) -> String -> Element msg
-genericBlocks toMsg display attrs input =
+genericBlocks : Bool -> Maybe (Display -> msg) -> Display -> List (Attribute msg) -> String -> Element msg
+genericBlocks expandBadges toMsg display attrs input =
     input
         |> String.Multiline.here
         |> String.split "\n\n"
-        |> List.map (block toMsg display)
+        |> List.map (block expandBadges toMsg display)
         |> column (spacing :: width fill :: attrs)
 
 
-block : Maybe (Display -> msg) -> Display -> String -> Element msg
-block toMsg display input =
+block : Bool -> Maybe (Display -> msg) -> Display -> String -> Element msg
+block expandBadges toMsg display input =
     case Parser.run (MarkMini.blockParser |. Parser.end) (String.trim input) of
         Err _ ->
             Element.paragraph
@@ -159,7 +164,7 @@ block toMsg display input =
                 |> List.map
                     (\line ->
                         line
-                            |> List.map viewPiece
+                            |> List.concatMap (viewPiece expandBadges)
                             |> Html.li []
                     )
                 |> Html.ul [ Html.Attributes.class "markdown" ]
@@ -169,7 +174,7 @@ block toMsg display input =
 
         Ok (Paragraph { pieces, center, mono }) ->
             pieces
-                |> List.map viewPiece
+                |> List.concatMap (viewPiece expandBadges)
                 |> Html.span [ Html.Attributes.class "markdown" ]
                 |> Element.html
                 |> List.singleton
@@ -236,21 +241,23 @@ colors =
     }
 
 
-viewPiece : Piece -> Html msg
-viewPiece piece =
+viewPiece : Bool -> Piece -> List (Html msg)
+viewPiece expandBadges piece =
     case piece of
         Speech children ->
-            Html.span
+            [ Html.span
                 [ Html.Attributes.style "color" <| Color.toCssString colors.speech ]
-                (Html.text "“" :: List.map viewPiece children ++ [ Html.text "”" ])
+                (Html.text "“" :: List.concatMap (viewPiece expandBadges) children ++ [ Html.text "”" ])
+            ]
 
         Colored color children ->
             let
-                colored : Color.Color -> Html msg
+                colored : Color.Color -> List (Html msg)
                 colored colorInt =
-                    Html.span
+                    [ Html.span
                         [ Html.Attributes.style "color" <| Color.toCssString colorInt ]
-                        (List.map viewPiece children)
+                        (List.concatMap (viewPiece expandBadges) children)
+                    ]
             in
             case color of
                 MarkMini.ChoiceColor ->
@@ -263,28 +270,33 @@ viewPiece piece =
                     colored <| slotToColor slot
 
         Smol children ->
-            Html.span
+            [ Html.span
                 [ Html.Attributes.style "font-size" "0.8em" ]
-                (List.map viewPiece children)
+                (List.concatMap (viewPiece expandBadges) children)
+            ]
 
         Italic children ->
-            Html.i []
-                (List.map viewPiece children)
+            [ Html.i []
+                (List.concatMap (viewPiece expandBadges) children)
+            ]
 
         Underlined children ->
-            Html.u []
-                (List.map viewPiece children)
+            [ Html.u []
+                (List.concatMap (viewPiece expandBadges) children)
+            ]
 
         Strikethrough children ->
-            Html.s []
-                (List.map viewPiece children)
+            [ Html.s []
+                (List.concatMap (viewPiece expandBadges) children)
+            ]
 
         Bold children ->
-            Html.b []
-                (List.map viewPiece children)
+            [ Html.b []
+                (List.concatMap (viewPiece expandBadges) children)
+            ]
 
         Text value ->
-            Html.text (String.replace "..." "…" value)
+            [ Html.text (String.replace "..." "…" value) ]
 
         Link target ->
             let
@@ -302,94 +314,111 @@ viewPiece piece =
                     else
                         target
             in
-            Html.a
+            [ Html.a
                 [ Html.Attributes.class "link"
                 , Html.Attributes.href target
                 , Html.Attributes.target "_blank"
                 , Html.Attributes.style "overflow-wrap" "anywhere"
                 ]
                 [ Html.text cut ]
+            ]
 
         Slot slot ->
-            Html.img [ Html.Attributes.src (Types.slotToImage slot).src ] []
+            [ Html.img
+                [ Html.Attributes.src (Types.slotToImage slot).src ]
+                []
+            ]
 
         Warning ->
-            Html.span
+            [ Html.span
                 [ Html.Attributes.style "font-size" "1.2em"
                 ]
                 [ Html.text "⚠️" ]
+            ]
 
         Error ->
-            Html.span
+            [ Html.span
                 [ Html.Attributes.style "font-size" "1.2em"
                 ]
                 [ Html.text "⛔" ]
+            ]
 
         Checkmark ->
-            Html.span
+            [ Html.span
                 [ Html.Attributes.style "font-size" "1.2em"
                 ]
                 [ Html.text "✅" ]
-
-        Perk perk ->
-            Html.div
-                [ Html.Attributes.style "width" "30px"
-                , Html.Attributes.style "height" "30px"
-                , Html.Attributes.style "border-radius" "30px"
-                , Html.Attributes.style "background-size" "cover"
-                , Html.Attributes.style "background-image"
-                    ("url(\"" ++ (Types.perkToImage perk).src ++ "\")")
-                , Html.Attributes.title (Types.perkToString perk)
-                ]
-                []
+            ]
 
         Affinity affinity ->
-            viewAffinityBadge affinity
+            [ viewAffinityBadge affinity ]
 
         Class class ->
-            Html.img [ Html.Attributes.src (classToBadge class).src ] []
+            [ Html.img [ Html.Attributes.src (classToBadge class).src ] [] ]
+
+        Perk perk ->
+            viewGenericBadge expandBadges (Types.perkToImage perk) (Types.perkToString perk)
 
         Race race ->
-            Html.div
-                [ Html.Attributes.style "width" "30px"
-                , Html.Attributes.style "height" "30px"
-                , Html.Attributes.style "border-radius" "30px"
-                , Html.Attributes.style "background-size" "cover"
-                , Html.Attributes.style "background-image"
-                    ("url(\"" ++ (Types.raceToImage race).src ++ "\")")
-                , Html.Attributes.title (Types.raceToString race)
-                ]
-                []
+            viewGenericBadge expandBadges (Types.raceToImage race) (Types.raceToString race)
+
+        Magic magic ->
+            viewGenericBadge expandBadges (Types.magicToImage magic) (Types.magicToString magic)
 
         Star ->
-            Html.span
+            [ Html.span
                 [ Html.Attributes.style "font-family" "\"Capture It\""
                 , Html.Attributes.style "font-size" "20px"
                 ]
                 [ gradientTextHtml 4 Gradients.yellowGradient "★" ]
+            ]
 
         Power value ->
-            Html.span
+            [ Html.span
                 [ Html.Attributes.style "font-family" "\"Capture It\""
                 , Html.Attributes.style "font-size" "20px"
                 ]
                 [ gradientTextHtml 4 Gradients.yellowGradient value ]
+            ]
 
         RewardPoints value ->
-            Html.span
+            [ Html.span
                 [ Html.Attributes.style "font-family" "\"Capture It\""
                 , Html.Attributes.style "font-size" "20px"
                 ]
                 [ gradientTextHtml 4 Gradients.blueGradient value ]
+            ]
 
         Kisses value ->
-            Html.span []
+            [ Html.span []
                 [ Html.b [] [ Html.i [] [ Html.text "₭\u{200A}" ] ]
                 , Html.text value
                 ]
+            ]
 
         LineBreak ->
-            Html.br [] []
+            [ Html.br [] [] ]
+
+
+viewGenericBadge : Bool -> Image -> String -> List (Html msg)
+viewGenericBadge expandBadges source title =
+    [ Html.div
+        [ Html.Attributes.style "width" "30px"
+        , Html.Attributes.style "display" "inline-block"
+        , Html.Attributes.style "height" "30px"
+        , Html.Attributes.style "border-radius" "30px"
+        , Html.Attributes.style "background-size" "cover"
+        , Html.Attributes.style "background-image"
+            ("url(\"" ++ source.src ++ "\")")
+        , Html.Attributes.title title
+        ]
+        []
+    , if expandBadges then
+        Html.text (" " ++ title)
+
+      else
+        Html.text ""
+    ]
 
 
 viewAffinityBadge : Affinity -> Html msg
