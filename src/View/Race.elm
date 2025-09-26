@@ -14,7 +14,7 @@ import Gradients
 import Images exposing (Image)
 import List.Extra
 import Set exposing (Set)
-import Theme exposing (gradientText, viewAffinity)
+import Theme
 import Types exposing (Choice(..), Display)
 import View
 import View.Affinity as Affinity
@@ -79,7 +79,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
         , imageHeight = 600
         , image = Types.raceToImage name
         , inFront =
-            [ el
+            [ Theme.gradientTextWrapped
                 [ alignTop
                 , Theme.captureIt
                 , if String.length shortName > 10 then
@@ -92,7 +92,9 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                     Font.size 56
                 , centerX
                 ]
-                (gradientText 6 Gradients.yellowGradient shortName)
+                6
+                Gradients.yellowGradient
+                shortName
             , case dlc of
                 Nothing ->
                     Element.none
@@ -238,7 +240,7 @@ viewAffinities affinities =
         , Border.rounded 999
         , Background.color <| rgb 0 0 0
         ]
-        (List.map viewAffinity affinities)
+        (List.map Theme.viewAffinity affinities)
 
 
 viewTank : Size -> Element msg
