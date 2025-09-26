@@ -1,10 +1,13 @@
-module View exposing (collapsible, costButtons, filterDLC)
+module View exposing (collapsible, costButtons, filterDLC, viewRequisites)
 
 import Color exposing (Color)
+import Data.Costs.Utils as Utils
 import Element exposing (Attribute, Element, centerX, centerY, el, fill, px, spacing, text, width)
 import Element.Font as Font
+import Generated.Types as Types
 import Gradients
 import List.Extra
+import Parser
 import Set exposing (Set)
 import Theme
 import Types exposing (Display(..))
@@ -111,3 +114,28 @@ filterDLC hideDLC list =
                     Set.member "Core" hideDLC
         )
         list
+
+
+viewRequisites : String -> Element msg
+viewRequisites req =
+    case Parser.run Utils.requisitesParser req of
+        Ok requisites ->
+            let
+                requisitesString : String
+                requisitesString =
+                    requisites
+                        |> List.map
+                            (\requisite ->
+                                case requisite of
+                                    Utils.RequiresClass reqClass ->
+                                        "[" ++ Types.classToString reqClass ++ "] " ++ Types.classToString reqClass
+
+                                    Utils.RequiresMagic reqMagic rank ->
+                                        "[" ++ Types.magicToString reqMagic ++ "] " ++ String.fromInt rank
+                            )
+                        |> String.join ", "
+            in
+            Theme.blocks [] ("_Requires " ++ requisitesString ++ "._")
+
+        Err _ ->
+            Theme.blocks [] ("_Requires " ++ req ++ "._")

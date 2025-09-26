@@ -199,7 +199,13 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                 Gradients.yellowGradient
                 (Types.relicToString name)
             ]
-        , content = viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
+        , content =
+            case relic.requires of
+                Nothing ->
+                    viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
+
+                Just req ->
+                    View.viewRequisites req :: viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
         , onPress = msg
         }
 

@@ -278,8 +278,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                     viewContent mainRace races color selected perk
 
                 Just req ->
-                    Theme.blocks [] ("_Requires " ++ req ++ "._")
-                        :: viewContent mainRace races color selected perk
+                    View.viewRequisites req :: viewContent mainRace races color selected perk
         , onPress = msg
         }
 

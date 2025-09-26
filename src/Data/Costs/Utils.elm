@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Points, affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequisites, combineAndSum, find, hasMagicAtRank, negate, powerToPoints, rewardPointsToPoints, slotUnsupported, sum, sumPoints, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, Requisite(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequisites, combineAndSum, find, hasMagicAtRank, negate, powerToPoints, requisitesParser, rewardPointsToPoints, slotUnsupported, sum, sumPoints, zero, zeroOut)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
@@ -165,20 +165,7 @@ checkRequisites details nameString model res =
             Monad.succeed res
 
         Just req ->
-            case
-                Parser.run
-                    (Parser.sequence
-                        { start = ""
-                        , end = ""
-                        , trailing = Parser.Forbidden
-                        , spaces = Parser.spaces
-                        , item = requisiteParser
-                        , separator = ","
-                        }
-                        |. Parser.end
-                    )
-                    req
-            of
+            case Parser.run requisitesParser req of
                 Err _ ->
                     Monad.succeed res
                         |> Monad.withWarning ("Failed to parse requisite for " ++ nameString ++ ": " ++ req)
@@ -219,6 +206,19 @@ checkRequisites details nameString model res =
                                                 )
                             )
                         |> Monad.map (\_ -> res)
+
+
+requisitesParser : Parser (List Requisite)
+requisitesParser =
+    Parser.sequence
+        { start = ""
+        , end = ""
+        , trailing = Parser.Forbidden
+        , spaces = Parser.spaces
+        , item = requisiteParser
+        , separator = ","
+        }
+        |. Parser.end
 
 
 hasMagicAtRank : { a | magic : List RankedMagic } -> Magic -> Int -> Bool
