@@ -1,13 +1,13 @@
 module View.Class exposing (viewClass)
 
-import Element exposing (Element, alignBottom, centerX, el, fill, moveDown, moveUp, spacing, width)
+import Element exposing (Element, alignBottom, centerX, fill, moveDown, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Classes as Classes
 import Generated.Types as Types exposing (Class)
 import Gradients
 import Set exposing (Set)
-import Theme exposing (gradientText)
+import Theme
 import Types exposing (Choice(..), Display)
 import View
 
@@ -98,28 +98,30 @@ classBox display selected { name, dlc, color, content } =
         , imageHeight = 400
         , image = Types.classToImage name
         , inFront =
-            [ el
+            [ Theme.gradientTextWrapped
                 [ alignBottom
                 , Theme.morpheus
                 , Font.size 56
                 , centerX
-                , moveUp 8
+                , moveUp 10
                 ]
-                (gradientText 4 Gradients.yellowGradient <|
-                    Types.classToString name
-                )
+                4
+                Gradients.yellowGradient
+                (Types.classToString name)
             , case dlc of
                 Nothing ->
                     Element.none
 
                 Just dlcName ->
-                    el
+                    Theme.gradientTextWrapped
                         [ centerX
                         , Theme.captureIt
                         , Font.size 24
                         , moveDown 8
                         ]
-                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                        4
+                        Gradients.purpleGradient
+                        dlcName
             ]
         , content = [ Theme.blocks [] content ]
         , onPress = Just msg
