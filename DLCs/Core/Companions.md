@@ -1114,7 +1114,7 @@ Jen... is not a typical agent or employee of Alphazon. She’s a daughter of a h
 - Positive: + Can tell you how your ex is doing.
 - Negative: - No morals, only corporate policy.
 - Mixed: +/- Can read your ID through the reflection on the wall through the window. Knows what you did last night.
-- Has: Sev has Integration 5 (many reserve bodies), DIvination 5 & _Gold Card_, (+2 Spysats, with observers)
+- Has: Sev has Integration 5 (many reserve bodies), Divination 5 & _Gold Card_, (+2 Spysats, with observers)
 - Quote: _*“A-7Y is a mastermind with the utilization of the GS Arrays, upper management is considering assigning her 2 more,” - An Operator.*_
 
 “Sev” is a human working for Alphazon that operates the 4th and 7th Godsight Arrays; Stealth satellite-ships with colossal telescope arrays that look like large canons running their full length while hosting Alphazon server farms and datacrypts housing the phylactery-like pods that host the minds of those implanted with Observers, semi-autonomously operated via an Observer like a synth body.
