@@ -163,7 +163,7 @@ content selected { name, description, location, relations } =
                 Border.width 0
         ]
         { label =
-            Theme.column []
+            Theme.column [ alignTop ]
                 [ Theme.blocks
                     [ height fill
                     , Theme.padding
