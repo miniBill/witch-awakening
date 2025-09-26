@@ -7,7 +7,7 @@ import Data.Magic as Magic
 import Data.Perk as Perk
 import Generated.Magic
 import Generated.Perk
-import Generated.Types as Types exposing (Class, Magic, Perk(..), Race(..))
+import Generated.Types as Types exposing (Class, Magic(..), Perk(..), Race(..))
 import List.Extra
 import Parser exposing ((|.), (|=), Parser)
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
@@ -36,31 +36,52 @@ value model =
                         if List.any (\p -> p.name == PerkJackOfAll) model.perks then
                             pointsList
                                 |> List.filter (\{ staticCost } -> staticCost)
-                                |> List.Extra.minimumBy .points
+                                |> List.Extra.maximumBy
+                                    (\{ points } ->
+                                        case points of
+                                            Monad.Power p ->
+                                                p
+
+                                            Monad.RewardPoints p ->
+                                                p
+
+                                            Monad.FreeBecause _ ->
+                                                -1
+                                    )
                                 |> Maybe.map .name
 
                         else
                             Nothing
                 in
                 pointsList
-                    |> Monad.mapAndSum
+                    |> Monad.combineMap
                         (\{ name, points } ->
-                            if Just name == free then
-                                0
-                                    |> Monad.succeed
-                                    |> Monad.withInfo
-                                        { label = name
-                                        , anchor = Just name
-                                        , value = Monad.FreeBecause "[Jack-of-All]"
-                                        }
+                            let
+                                ( v, raw ) =
+                                    if Just name == free then
+                                        ( Monad.FreeBecause "[Jack-of-All]", Utils.powerToPoints 0 )
 
-                            else
-                                points
-                                    |> Monad.succeed
-                                    |> Monad.withPowerInfo name
+                                    else
+                                        case points of
+                                            Monad.Power p ->
+                                                ( points, Utils.powerToPoints p )
+
+                                            Monad.RewardPoints p ->
+                                                ( points, Utils.rewardPointsToPoints p )
+
+                                            Monad.FreeBecause _ ->
+                                                ( points, Utils.powerToPoints 0 )
+                            in
+                            raw
+                                |> Monad.succeed
+                                |> Monad.withInfo
+                                    { label = name
+                                    , anchor = Just name
+                                    , value = v
+                                    }
                         )
+                    |> Monad.map Utils.sumPoints
             )
-        |> Monad.map Utils.powerToPoints
 
 
 perkValue :
@@ -74,38 +95,68 @@ perkValue :
         , magic : List RankedMagic
     }
     -> RankedPerk
-    -> Monad { name : String, points : Int, staticCost : Bool }
+    -> Monad { name : String, points : Monad.Value, staticCost : Bool }
 perkValue model ranked =
     let
-        isGenie : Bool
+        isGenie : Maybe String
         isGenie =
-            List.any
-                (\race ->
-                    case race of
-                        RaceGenie _ ->
-                            True
+            if
+                List.any
+                    (\race ->
+                        case race of
+                            RaceGenie _ ->
+                                True
 
-                        _ ->
-                            False
-                )
-                model.races
+                            _ ->
+                                False
+                    )
+                    model.races
+            then
+                Just "[Genie]"
+
+            else
+                Nothing
     in
     Utils.find "Perk" .name ranked.name (Generated.Perk.all model.perks) View.Perk.perkToShortString
         |> Monad.andThen
             (\perk ->
                 let
-                    finalCost : Int
-                    finalCost =
-                        if isGenie && (ranked.name == PerkPrestidigitation || ranked.name == PerkConjuration) then
-                            0
+                    freeIfHasMagicAtRank : Types.Magic -> Int -> Maybe String
+                    freeIfHasMagicAtRank magic rank =
+                        if hasMagicAtRank model magic rank then
+                            Just ("[" ++ Types.magicToString magic ++ "]")
 
                         else
-                            innerPerkValue model ranked perk
+                            Nothing
 
-                    res : { name : String, points : Int, staticCost : Bool }
+                    isFree : Maybe String
+                    isFree =
+                        case ranked.name of
+                            PerkPrestidigitation ->
+                                isGenie
+
+                            PerkConjuration ->
+                                isGenie
+
+                            PerkFullSteamAhead ->
+                                freeIfHasMagicAtRank MagicWaterworking 3
+
+                            _ ->
+                                Nothing
+
+                    finalCost : Monad.Value
+                    finalCost =
+                        case isFree of
+                            Just reason ->
+                                Monad.FreeBecause reason
+
+                            Nothing ->
+                                Monad.Power -(innerPerkCost model ranked perk)
+
+                    res : { name : String, points : Monad.Value, staticCost : Bool }
                     res =
                         { name = Types.perkToString ranked.name
-                        , points = -finalCost
+                        , points = finalCost
                         , staticCost =
                             case perk.content of
                                 Perk.Single _ _ ->
@@ -125,13 +176,7 @@ perkValue model ranked =
                                 Monad.succeed res |> Monad.withWarning ("Failed to parse requisite: " ++ req)
 
                             Ok (RequiresMagic requiredName requiredRank) ->
-                                if
-                                    List.any
-                                        (\rankedMagic ->
-                                            rankedMagic.name == requiredName && rankedMagic.rank >= requiredRank
-                                        )
-                                        model.magic
-                                then
+                                if hasMagicAtRank model requiredName requiredRank then
                                     Monad.succeed res
 
                                 else
@@ -143,6 +188,15 @@ perkValue model ranked =
                                                 ++ req
                                             )
             )
+
+
+hasMagicAtRank : { a | magic : List RankedMagic } -> Magic -> Int -> Bool
+hasMagicAtRank model requiredName requiredRank =
+    List.any
+        (\rankedMagic ->
+            rankedMagic.name == requiredName && rankedMagic.rank >= requiredRank
+        )
+        model.magic
 
 
 requisiteParser : Parser Requisite
@@ -168,7 +222,7 @@ type Requisite
     = RequiresMagic Magic Int
 
 
-innerPerkValue :
+innerPerkCost :
     { a
         | class : Maybe Class
         , races : List Race
@@ -180,7 +234,7 @@ innerPerkValue :
     -> { name : Perk, cost : Int }
     -> Perk.Details
     -> Int
-innerPerkValue ({ class } as model) { name, cost } perk =
+innerPerkCost ({ class } as model) { name, cost } perk =
     let
         apexDiff : Int
         apexDiff =

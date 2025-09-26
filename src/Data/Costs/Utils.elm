@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Points, affinityDiscountIf, applyClassBonusIf, capWithWarning, combineAndSum, find, negate, powerToPoints, rewardPointsToPoints, slotUnsupported, sum, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, affinityDiscountIf, applyClassBonusIf, capWithWarning, combineAndSum, find, negate, powerToPoints, rewardPointsToPoints, slotUnsupported, sum, sumPoints, zero, zeroOut)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
