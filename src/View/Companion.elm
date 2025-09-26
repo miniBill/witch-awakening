@@ -2,7 +2,7 @@ module View.Companion exposing (viewCompanions)
 
 import Color exposing (Color)
 import Data.Companion as Companion exposing (MaybeClass(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, px, shrink, spacing, table, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, paddingXY, px, shrink, spacing, table, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -333,24 +333,34 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
         , height fill
         , width <| Element.minimum 200 <| fillPortion 2
         ]
-        [ Theme.row [ width fill ]
-            [ Theme.gradientTextWrapped [ Font.size 36, width fill ] 4 Gradients.yellowGradient (Types.companionToString name)
-            , case class of
-                ClassOne c ->
-                    c
-                        |> Theme.classToBadge
-                        |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+        [ Theme.row
+            [ width fill
+            , inFront <|
+                case class of
+                    ClassOne c ->
+                        c
+                            |> Theme.classToBadge
+                            |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
 
-                ClassAny ->
-                    Theme.viewClasses 32 [ Types.ClassSorceress, Types.ClassWarlock, Types.ClassAcademic ]
-                        |> el [ alignRight, moveLeft 24 ]
+                    ClassAny ->
+                        Theme.viewClasses 32 [ Types.ClassSorceress, Types.ClassWarlock, Types.ClassAcademic ]
+                            |> el [ alignRight, moveLeft 24 ]
 
-                ClassNone ->
-                    Element.none
+                    ClassNone ->
+                        Element.none
 
-                ClassSpecial ->
-                    Images.badgeSpecial
-                        |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+                    ClassSpecial ->
+                        Images.badgeSpecial
+                            |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
+            ]
+            [ Theme.gradientTextWrapped
+                [ Font.size 36
+                , width fill
+                , paddingXY 60 0
+                ]
+                4
+                Gradients.yellowGradient
+                (Types.companionToString name)
             ]
         , case dlc of
             Nothing ->
