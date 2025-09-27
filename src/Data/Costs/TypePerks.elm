@@ -11,12 +11,12 @@ import View.Race
 value : Model key -> Monad Points
 value model =
     model.typePerks
-        |> Monad.mapAndSum typePerkCost
+        |> Monad.mapAndSum (typePerkCost model)
         |> Monad.map (\p -> Utils.powerToPoints -p)
 
 
-typePerkCost : Race -> Monad Int
-typePerkCost race =
+typePerkCost : Model key -> Race -> Monad Int
+typePerkCost model race =
     Utils.find "Type perk" .race race Generated.TypePerk.all View.Race.raceToShortString
         |> Monad.andThen
             (\{ cost } ->
@@ -26,4 +26,10 @@ typePerkCost race =
                         , anchor = Just ("perk-" ++ View.Race.raceToShortString race)
                         , value = Monad.Power cost
                         }
+                    |> (if List.member race model.races then
+                            identity
+
+                        else
+                            Monad.withWarning ("Selected type perk from a race you don't have: " ++ View.Race.raceToShortString race)
+                       )
             )
