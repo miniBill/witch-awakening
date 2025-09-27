@@ -282,8 +282,21 @@ dumpPerk details =
 
 dumpMagic : Data.Magic.Details -> List (Maybe String)
 dumpMagic details =
+    let
+        class : Maybe String
+        class =
+            case details.class of
+                Data.Magic.ClassNone ->
+                    Nothing
+
+                Data.Magic.ClassOne c ->
+                    Just (classToString c)
+
+                Data.Magic.ClassSpecial ->
+                    Just "Special"
+    in
     [ Just <| "## Magic: " ++ magicToString details.name
-    , maybeItem "Class" classToString details.class
+    , maybeItem "Class" identity class
     , maybeItem "Faction" factionToString details.faction
     , item "Elements" affinitiesToString details.affinities
     , flagItem "Has rank zero" details.hasRankZero

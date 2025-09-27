@@ -4,6 +4,7 @@ import Data.Affinity as Affinity exposing (AffinityList, InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points, affinityDiscountIf)
 import Data.Magic as Magic
+import Data.Race as Race
 import Dict exposing (Dict)
 import Generated.Magic
 import Generated.TypePerk
@@ -227,8 +228,15 @@ magicValue model affinities magicDetails =
 
                     inClass : Bool
                     inClass =
-                        (magicDetails.class == model.class)
-                            && (model.class /= Nothing)
+                        case magicDetails.class of
+                            Magic.ClassSpecial ->
+                                List.any Race.isGenie model.races
+
+                            Magic.ClassOne c ->
+                                model.class == Just c
+
+                            Magic.ClassNone ->
+                                False
 
                     freeRankFromRace : Maybe ( Int, Race )
                     freeRankFromRace =
@@ -291,16 +299,7 @@ freeRankFromRaceOrTypePerk model magicDetails rankedMagic =
     let
         asGenie : Maybe Race
         asGenie =
-            List.Extra.find
-                (\race ->
-                    case race of
-                        RaceGenie _ ->
-                            True
-
-                        _ ->
-                            False
-                )
-                model.races
+            List.Extra.find Race.isGenie model.races
     in
     case
         asGenie

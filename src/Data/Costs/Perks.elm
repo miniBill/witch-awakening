@@ -5,6 +5,7 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Data.Magic as Magic
 import Data.Perk as Perk
+import Data.Race as Race
 import Generated.Perk
 import Generated.Types as Types exposing (Class, Magic(..), Perk(..), Race(..))
 import List.Extra
@@ -98,18 +99,7 @@ perkValue model ranked =
     let
         isGenie : Maybe String
         isGenie =
-            if
-                List.any
-                    (\race ->
-                        case race of
-                            RaceGenie _ ->
-                                True
-
-                            _ ->
-                                False
-                    )
-                    model.races
-            then
+            if List.any Race.isGenie model.races then
                 Just "[Genie]"
 
             else

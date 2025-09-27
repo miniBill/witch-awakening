@@ -3,7 +3,6 @@ module View.MagicPyramid exposing (view)
 import Color exposing (Color)
 import Dict
 import Dict.Extra
-import Generated.Classes
 import Generated.Magic
 import Generated.Types as Types
 import Html.Attributes
@@ -15,6 +14,7 @@ import TypedSvg.Core as TypedSvg exposing (Svg)
 import TypedSvg.Events
 import TypedSvg.Types exposing (Align(..), MeetOrSlice(..), Paint(..), Scale(..))
 import Types exposing (Msg(..), RankedMagic)
+import View.Magic
 
 
 view : List RankedMagic -> Svg Msg
@@ -168,7 +168,7 @@ viewMagic name x y =
         , TypedSvg.Attributes.InPx.r 0.125
         , Generated.Magic.all
             |> List.Extra.find (\magicDetails -> magicDetails.name == name)
-            |> Maybe.andThen (\{ class } -> Maybe.map Generated.Classes.classToColor class)
+            |> Maybe.map (\{ class } -> View.Magic.maybeClassToColor class)
             |> Maybe.withDefault Color.white
             |> darken
             |> Paint

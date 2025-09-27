@@ -1,14 +1,14 @@
-module View.Magic exposing (magicBox, viewMagics)
+module View.Magic exposing (magicBox, maybeClassToColor, viewMagics)
 
 import Color exposing (Color)
-import Data.Magic as Magic exposing (Affinities(..))
+import Data.Magic as Magic exposing (Affinities(..), MaybeClass(..))
 import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveUp, px, rgb, rgba, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Classes
 import Generated.Magic
-import Generated.Types as Types exposing (Class, Magic, Slot(..))
+import Generated.Types as Types exposing (Magic, Slot(..))
 import Gradients
 import Html
 import Html.Attributes
@@ -282,7 +282,7 @@ magicBox :
     -> Bool
     -> List RankedMagic
     -> Int
-    -> { a | hasRankZero : Bool, class : Maybe Class, affinities : Affinities, description : String, ranks : List String, name : Magic, dlc : Maybe String }
+    -> Magic.Details
     -> Element ( RankedMagic, Bool )
 magicBox display factional selected index details =
     if display == DisplayCompact && List.all (\sel -> sel.name /= details.name) selected then
@@ -311,7 +311,7 @@ magicImage { name } =
         Element.none
 
 
-viewContent : Display -> List RankedMagic -> { a | name : Magic, description : String, ranks : List String, hasRankZero : Bool, class : Maybe Class, affinities : Affinities, dlc : Maybe String } -> Element ( RankedMagic, Bool )
+viewContent : Display -> List RankedMagic -> Magic.Details -> Element ( RankedMagic, Bool )
 viewContent display selected ({ name, description, ranks, dlc } as details) =
     let
         isSelected : Maybe RankedMagic
@@ -358,21 +358,28 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
         }
 
 
-magicTitle : Display -> { a | name : Magic, hasRankZero : Bool, class : Maybe Class, affinities : Affinities } -> Element msg
+magicTitle : Display -> Magic.Details -> Element msg
 magicTitle display { name, hasRankZero, class, affinities } =
     let
         common : List (Element msg)
         common =
             [ case class of
-                Nothing ->
+                ClassNone ->
                     Element.none
 
-                Just c ->
+                ClassOne c ->
                     Theme.image
                         [ width <| px 32
                         , centerY
                         ]
                         (Theme.classToBadge c)
+
+                ClassSpecial ->
+                    Theme.image
+                        [ width <| px 32
+                        , centerY
+                        ]
+                        Images.badgeSpecial
             , if hasRankZero then
                 el
                     [ Font.size 48
@@ -454,7 +461,7 @@ viewAffinities affinities =
 
 viewRank :
     List RankedMagic
-    -> { a | name : Magic, class : Maybe Class }
+    -> Magic.Details
     -> Int
     -> String
     -> Element ( RankedMagic, Bool )
@@ -481,14 +488,7 @@ viewRank selected { name, class } rankIndex label =
             attrs : List (Element.Attribute msg)
             attrs =
                 if isTierSelected then
-                    let
-                        color : Color
-                        color =
-                            class
-                                |> Maybe.map Generated.Classes.classToColor
-                                |> Maybe.withDefault Theme.colors.epic
-                    in
-                    [ Theme.backgroundColor color ]
+                    [ Theme.backgroundColor (maybeClassToColor class) ]
 
                 else
                     []
@@ -510,3 +510,16 @@ viewRank selected { name, class } rankIndex label =
                     ]
             , onPress = Just ( rankedMagic, not isTierSelected )
             }
+
+
+maybeClassToColor : MaybeClass -> Color
+maybeClassToColor class =
+    case class of
+        ClassOne c ->
+            Generated.Classes.classToColor c
+
+        ClassSpecial ->
+            Theme.colors.epic
+
+        ClassNone ->
+            Theme.colors.epic

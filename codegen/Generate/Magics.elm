@@ -45,10 +45,22 @@ dlcToMagics types magics =
                         |> Dict.keys
                         |> List.maximum
                         |> Maybe.withDefault 5
+
+                class : Elm.Expression
+                class =
+                    case magic.class of
+                        Just "Special" ->
+                            Gen.Data.Magic.make_.classSpecial
+
+                        Just c ->
+                            Gen.Data.Magic.make_.classOne (types.class.value c)
+
+                        Nothing ->
+                            Gen.Data.Magic.make_.classNone
             in
             Gen.Data.Magic.make_.details
                 { name = types.magic.value magic.name
-                , class = Elm.maybe (Maybe.map types.class.value magic.class)
+                , class = class
                 , faction = Elm.maybe (Maybe.map types.faction.value magic.faction)
                 , hasRankZero = Elm.bool magic.hasRankZero
                 , isElementalism = Elm.bool magic.isElementalism

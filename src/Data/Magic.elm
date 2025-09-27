@@ -1,4 +1,4 @@
-module Data.Magic exposing (Affinities(..), Details)
+module Data.Magic exposing (Affinities(..), Details, MaybeClass(..))
 
 import Generated.Types exposing (Affinity, Class, Faction, Magic)
 
@@ -6,7 +6,7 @@ import Generated.Types exposing (Affinity, Class, Faction, Magic)
 type alias Details =
     { name : Magic
     , hasRankZero : Bool
-    , class : Maybe Class
+    , class : MaybeClass
     , faction : Maybe Faction
     , affinities : Affinities
     , isElementalism : Bool
@@ -14,6 +14,12 @@ type alias Details =
     , ranks : List String
     , dlc : Maybe String
     }
+
+
+type MaybeClass
+    = ClassOne Class
+    | ClassSpecial
+    | ClassNone
 
 
 type Affinities

@@ -1,6 +1,6 @@
-module Data.Race exposing (Details, withVariantAffinity1, withVariantAffinity2)
+module Data.Race exposing (Details, isGenie, withVariantAffinity1, withVariantAffinity2)
 
-import Generated.Types exposing (Affinity(..), Race, Size)
+import Generated.Types exposing (Affinity(..), Race(..), Size)
 import List.Extra
 
 
@@ -67,3 +67,13 @@ withVariantAffinity2 match details races =
     , dlc = details.dlc
     , content = details.content
     }
+
+
+isGenie : Race -> Bool
+isGenie race =
+    case race of
+        RaceGenie _ ->
+            True
+
+        _ ->
+            False
