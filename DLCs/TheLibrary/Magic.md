@@ -287,7 +287,7 @@ At rank 5 your golems can have 3 rank 3 magics imbued into each of them, they ar
 
 Also known as Conjuration, Spirit-weaving is the art of creating living spirits from your mana.
 
-These spirits are loyal to the one who made them within reason, they are as "alive" as other living being, and being abused may lead to them abandoning, or even attacking their maker.
+These spirits are loyal to the one who made them within reason, they are as “alive” as other living being, and being abused may lead to them abandoning, or even attacking their maker.
 
 Spirits may be used in place of souls for things like necromancy or golemancy, but don't expect a devil to accept one as payment if you've made some promises you shouldn't have.
 
