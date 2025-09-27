@@ -336,7 +336,7 @@ viewCalculations model power warnings affinities =
               , Input.checkbox [ width fill ]
                     { onChange = HideMeta
                     , icon = Input.defaultCheckbox
-                    , label = Input.labelRight [ width fill ] (text "Hide Meta options")
+                    , label = Input.labelRight [ width fill ] (paragraph [] [ text "Hide Meta options" ])
                     , checked = model.hideMeta
                     }
               )
@@ -366,7 +366,7 @@ magicPyramidRow model =
         [ Theme.row []
             [ chevronButton label model.expandedMenuSections
             , Input.button [ Font.bold ]
-                { label = text label
+                { label = paragraph [] [ text label ]
                 , onPress = ToggleMenuSectionExpansion label |> Choice |> Just
                 }
             ]
@@ -661,10 +661,10 @@ relicSlider model =
 linkLabel : String -> Maybe String -> Element Msg
 linkLabel label target =
     if label == "Result" then
-        el [ Font.bold, width fill ] <| text label
+        paragraph [ Font.bold, width fill ] [ text label ]
 
     else
-        Input.button [ Font.underline ]
+        Input.button [ Font.underline, width fill ]
             { onPress = Just <| ScrollTo <| Maybe.withDefault label target
-            , label = el [ Font.bold, width fill ] <| text label
+            , label = paragraph [ Font.bold, width fill ] [ text label ]
             }
