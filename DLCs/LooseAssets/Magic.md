@@ -66,3 +66,48 @@ With rank 4 they gain a fourth adaptive slot, and can now add spider body parts 
 
 ### Rank 5
 At rank 5, they have a fifth adaptive slot and they can combine equivalent mass and parts to 3 prior spiders, being larger if desired or just adding extra eyes. Every eye is now a partial brain forming a networked mind. So long as they have gem eyes, they have a functioning brain regardless of damage to the head. They can now shapeshift or make use of parts and traits from magical spider beings, provided the effects are roughly balanced to compare to a rank 5 magic effect. If the arachne has curses, they can deliver curses wordlessly through eye contact or an eye can be sacrificed (occupying that space for an eye until healed) to deliver another spell effect directly onto the target without travel time, such as using a Firecalling evil eye to cause them to self immolate. The Arachne can control their spiderwebs as though they were prehensile and telekinetically animated. If a being is wrapped with at least 10 loops of web, the arachne can induce suspended animation lasting until the web is removed.
+
+
+## Magic: Wishcasting
+- Class: Special
+- Elements: All
+
+Wishcasting is an esoteric magic reserved to genies and particular powerful entities. Genies can always consider this to be class magic. If not a genie, then this magic can only be accessed temporarily when making a WISH through use of, including but not limited to, consortation, dungeoneering, or so on. This is also referenced with wishmagic from the meta perk Keeper of Magic. If any source would grant you a wish, instead reference this magic here to determine what you are capable of wishing for.
+
+Unlimited Whims are equivalent to Least Wishes. Three Wishes are equivalent to Wishes. Most effects stating they grant a wish, reference Rank 5. _Heart's Desire_ wishes are Rank 7 wishes, which is up to the player to appropriately balance as being roughly 9x as potent as a Wish.
+
+The wishes of an Immortal Chain equate to a _Heart's Desire_.
+
+Wishes are in no way omnipotent, they're just broad spectrum general magics, but are nonetheless ranked effects in a world of many other entities of equal or greater power up to actual omnipotence at the top of the food chain. 
+Wishes cannot influence game mechanics except in the vein of granting power, granting a combined total from all sources, of no more than 10 Power and 10 Reward Points in various effects, per max magic ranking the wisher possesses or the max rank of the caster of the wish (i.e.: the genie). Wishes also cannot stack the same effect on top of one another, from any source, up to the limit of the genie’s wishcasting rank. ie; Having r5, multiple r3's might stack up, including r3's from other or past genies, to rank 5 effectiveness. Meanwhile an r7 genie might stack off that up to rank 7, for example.
+
+A genie can use wishcasting at any time, doing so depletes 99% of their mana capacity, -25% per rank less than their max wishcasting rank. (r5 = free Least wishes). However, a genie granting a master's wish fully replenishes their mana, meaning it may be effectively free. In addition to this, a genie only has 1 slot for casting wishes of their highest rank, gaining double the slots at each rank under their highest rank. (15 = 16 Least wishes). These slots are unique to every individual that makes a wish of you, so you have slots yourself, and your master has separate slots. Slots recover over time proportional to the referenced “Wish energy accumulation”. So regain an r5 slot in 1 month, but also the other slots lost in the meantime, the counters are independent of other ranks, though it would take 48 hours to recover all 16 Least slots, for example.
+
+A genie can use focus/might/favor to boost r5 wishcasting to r6 temporarily, same as boosting other magics. Doing so will let them cast 1 r6 wish, completely depleting their mana, and the unseen 16 slot will take 1 year to recover. Unless Rank 6 magic is further detailed; 6 wish can create a permanent rank 5 effect, or something 3x powerful for a moment. Note: Multiple wish slots can be used at once for combined effect, if you have the mana for it.
+
+### Rank 1
+*Least Wishes*. _Relative to a jinn, comparable to 3 hours of “Wish energy” accumulation_. Note: A Jinn in this setting cannot exceed their wishcasting rank in wish energy used at once, though stored energy can be used in place of slots. A least wish can instantaneously replicate the effects of any rank 1 magic without duration. Can grant up to 50 USD equivalent of assets.
+
+Examples: “I wish for a sandwich”, “I wish for a ticket to the movies and some Popcorn”, “I wish Suzy would get stung by that bee (Curses 1)”, “I wish I had a pet cat (Familiarity 0)”, etc.
+
+### Rank 2
+*Minor Wishes*. _Relative to a jinn, comparable to 24 hours of “Wish energy” accumulation_. Replicate rank 2 magics without duration, or establish permanent rank 1 effects. Grant 2 power or 1p (Directly, or via wishing for a particular power, or item.) Can wish for the creation of a new Relic comparable to 2rp relics, use Power instead to soulbind it. Can grant up to 5,000 USD of assets.
+
+Examples: “I wish I had a good gaming PC...” “I wish my car was fixed (probably...)”, “I wish I could understand my dog (Familiarity 2)”, “I wish this cold would go away (Alchemy 2)”, etc.
+
+### Rank 3
+*Simple Wishes*. _Relative to a jinn, comparable to 3 days of “Wish energy” accumulation_. Replicate rank 3 magics without duration, permanent rank 2 effects. Grant 6 power/rp. Can network a complex series of rank 1 effects into one wish. Can wish for the creation of a new Relic comparable to 6rp relics, use Power instead to soulbind it. Can grant up to 50,000 USD equivalent of assets.
+
+Examples: “I wish I had a new car”, “I wish I could go on a fancy vacation”, “I wish Suzy would go die in a fire (Firecalling 3)”, “I wish he would heal (Alchemy 3, or lifeweaving)”, etc.
+
+### Rank 4
+*Lesser Wishes*. _Relative to a jinn, comparable to 1 week of “Wish energy” accumulation_. Replicate rank 4 magics without duration, permanent rank 3 effects. Grant 12 power/rp. Can network a series of rank 2 effects into one wish. Can wish for the creation of a new Relic comparable to 12rp relics, use Power instead to soulbind it. Can grant up to 500,000 USD equivalent of assets.
+
+Examples: “I wish I had a fancy new car!”, “I wish I had a new home”, “I wish daddy would stop... etc [drinking, yelling] (Psychotics 4)”, “I wish Fluffy could talk! (Nature 4)”, etc.
+
+### Rank 5
+*Wishes*. _Relative to a jinn, comparable to 1 month of “Wish energy” accumulation._ Replicate rank 5 magics without duration, permanent rank 4 effects. Grant 20 power/rp. Can network a series of rank 3 effects into one wish. Can wish for a mortal to become a witch, with said 20 power. (Repeat wishes to expand power up to 50). Can wish for the creation of a new Relic comparable to 20rp relics, use Power instead to soulbind it. Can grant up to 5 million USD equivalent of assets.
+
+A wish could instead do anything, provided the wish Is granted in the subject's own dreamspace with no effects beyond It, including the acquisition of any new abilities they didn't possess when they entered, and no new knowledge exists in here that they did not know before, or the genie knew, though they can creatively explore new concepts on their own.
+
+Examples: “I wish I for a private jet”, “I wish I for a fancy house”, “I wish I was a dragon! (Metamorph 5)” temporarily or permanently via power. “I wish for business success (Occult 4, perm)”, “I wish Anna / John loved me” (Alchemy 5 temporary or Psychotics 4 perm), “I wish I was godking of the universe bestest at everything!” (Comatose in custom reality of their specification).

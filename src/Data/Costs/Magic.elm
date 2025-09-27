@@ -33,159 +33,152 @@ value { ignoreSorceressBonus } model =
         affinities : AffinityList
         affinities =
             Affinity.fromModel model
+    in
+    Generated.Magic.all
+        |> List.sortBy
+            (\magic ->
+                if magic.faction /= Nothing then
+                    2
 
-        pointsList :
-            List
-                { name : String
-                , freeRankFromRace : Maybe ( Int, Race )
-                , rank : Int
-                , power : Int
-                , rewardPoints : Int
-                , isElementalism : Bool
-                , inAffinity : InAffinity
-                }
-        pointsList =
-            Generated.Magic.all
-                |> List.sortBy
-                    (\magic ->
-                        if magic.faction /= Nothing then
-                            2
+                else if magic.isElementalism then
+                    1
 
-                        else if magic.isElementalism then
-                            1
+                else
+                    0
+            )
+        |> List.filterMap (magicValue model affinities)
+        |> Monad.combine
+        |> Monad.andThen
+            (\pointsList ->
+                let
+                    freeFromClass : Dict String String
+                    freeFromClass =
+                        case model.class of
+                            Just ClassSorceress ->
+                                if ignoreSorceressBonus then
+                                    Dict.empty
 
-                        else
-                            0
-                    )
-                |> List.filterMap (magicValue model affinities)
+                                else
+                                    case
+                                        pointsList
+                                            |> List.filter (\{ isElementalism, inAffinity } -> isElementalism && inAffinity /= OffAffinity)
+                                            |> List.Extra.minimumBy .power
+                                    of
+                                        Just magic ->
+                                            Dict.singleton magic.name "[Sorceress]"
 
-        freeFromClass : Dict String String
-        freeFromClass =
-            case model.class of
-                Just ClassSorceress ->
-                    if ignoreSorceressBonus then
-                        Dict.empty
+                                        Nothing ->
+                                            Dict.empty
 
-                    else
-                        case
-                            pointsList
-                                |> List.filter (\{ isElementalism, inAffinity } -> isElementalism && inAffinity /= OffAffinity)
-                                |> List.Extra.minimumBy .power
-                        of
-                            Just magic ->
-                                Dict.singleton magic.name "[Sorceress]"
+                            Just ClassAcademic ->
+                                if model.capBuild then
+                                    pointsList
+                                        |> List.sortBy .power
+                                        |> List.take 2
+                                        |> List.map (\magic -> ( magic.name, "[Academic]" ))
+                                        |> Dict.fromList
 
-                            Nothing ->
+                                else
+                                    Dict.empty
+
+                            _ ->
                                 Dict.empty
 
-                Just ClassAcademic ->
-                    if model.capBuild then
+                    freeFromRace : Dict String String
+                    freeFromRace =
                         pointsList
-                            |> List.sortBy .power
-                            |> List.take 2
-                            |> List.map (\magic -> ( magic.name, "[Academic]" ))
+                            |> List.filterMap
+                                (\magic ->
+                                    magic.freeRankFromRace
+                                        |> Maybe.andThen
+                                            (\( freeRank, freeRace ) ->
+                                                if magic.rank <= freeRank then
+                                                    Just ( magic.name, "[" ++ Types.raceToString freeRace ++ "]" )
+
+                                                else
+                                                    Nothing
+                                            )
+                                )
                             |> Dict.fromList
 
-                    else
-                        Dict.empty
+                    free : Dict String String
+                    free =
+                        Dict.union freeFromClass freeFromRace
 
-                _ ->
-                    Dict.empty
+                    jackOfAllWarning : Maybe String
+                    jackOfAllWarning =
+                        if List.any (\p -> p.name == PerkJackOfAll) model.perks then
+                            case
+                                List.filterMap
+                                    (\m ->
+                                        if m.rank == 5 then
+                                            Just (Types.magicToString m.name)
 
-        freeFromRace : Dict String String
-        freeFromRace =
-            pointsList
-                |> List.filterMap
-                    (\magic ->
-                        magic.freeRankFromRace
-                            |> Maybe.andThen
-                                (\( freeRank, freeRace ) ->
-                                    if magic.rank <= freeRank then
-                                        Just ( magic.name, "[" ++ Types.raceToString freeRace ++ "]" )
+                                        else
+                                            Nothing
+                                    )
+                                    model.magic
+                            of
+                                [] ->
+                                    Nothing
 
-                                    else
-                                        Nothing
-                                )
-                    )
-                |> Dict.fromList
+                                forbidden ->
+                                    Just ("If you have Jack-of-All you can’t have rank 5 magic - you have selected " ++ String.join ", " forbidden)
 
-        free : Dict String String
-        free =
-            Dict.union freeFromClass freeFromRace
+                        else
+                            Nothing
 
-        jackOfAllWarning : Maybe String
-        jackOfAllWarning =
-            if List.any (\p -> p.name == PerkJackOfAll) model.perks then
-                case
-                    List.filterMap
-                        (\m ->
-                            if m.rank == 5 then
-                                Just (Types.magicToString m.name)
+                    offAffinityWarning : Maybe String
+                    offAffinityWarning =
+                        if model.class == Just ClassSorceress then
+                            Nothing
 
-                            else
-                                Nothing
-                        )
-                        model.magic
-                of
-                    [] ->
-                        Nothing
+                        else
+                            case List.filter (\magic -> magic.isElementalism && magic.inAffinity == OffAffinity) pointsList of
+                                [] ->
+                                    Nothing
 
-                    forbidden ->
-                        Just ("If you have Jack-of-All you can’t have rank 5 magic - you have selected " ++ String.join ", " forbidden)
+                                [ _ ] ->
+                                    Nothing
 
-            else
-                Nothing
-
-        offAffinityWarning : Maybe String
-        offAffinityWarning =
-            if model.class == Just ClassSorceress then
-                Nothing
-
-            else
-                case List.filter (\magic -> magic.isElementalism && magic.inAffinity == OffAffinity) pointsList of
-                    [] ->
-                        Nothing
-
-                    [ _ ] ->
-                        Nothing
-
-                    list ->
-                        Just ("Multiple off-affinity elementalism magics are only allowed for Sorceresses. Found: " ++ String.join ", " (List.map .name list))
-    in
-    pointsList
-        |> List.map
-            (\{ name, rank, power, rewardPoints } ->
-                let
-                    label : String
-                    label =
-                        name ++ " " ++ String.fromInt rank
+                                list ->
+                                    Just ("Multiple off-affinity elementalism magics are only allowed for Sorceresses. Found: " ++ String.join ", " (List.map .name list))
                 in
-                case Dict.get name free of
-                    Just reason ->
-                        { power = 0
-                        , rewardPoints = rewardPoints
-                        }
-                            |> Monad.succeed
-                            |> Monad.withInfo
-                                { label = label
-                                , anchor = Just name
-                                , value = Monad.FreeBecause reason
-                                }
+                pointsList
+                    |> List.map
+                        (\{ name, rank, power, rewardPoints } ->
+                            let
+                                label : String
+                                label =
+                                    name ++ " " ++ String.fromInt rank
+                            in
+                            case Dict.get name free of
+                                Just reason ->
+                                    { power = 0
+                                    , rewardPoints = rewardPoints
+                                    }
+                                        |> Monad.succeed
+                                        |> Monad.withInfo
+                                            { label = label
+                                            , anchor = Just name
+                                            , value = Monad.FreeBecause reason
+                                            }
 
-                    Nothing ->
-                        { power = power
-                        , rewardPoints = rewardPoints
-                        }
-                            |> Monad.succeed
-                            |> Monad.withInfo
-                                { label = label
-                                , anchor = Just name
-                                , value = Monad.Power power
-                                }
+                                Nothing ->
+                                    { power = power
+                                    , rewardPoints = rewardPoints
+                                    }
+                                        |> Monad.succeed
+                                        |> Monad.withInfo
+                                            { label = label
+                                            , anchor = Just name
+                                            , value = Monad.Power power
+                                            }
+                        )
+                    |> Utils.combineAndSum
+                    |> Monad.withWarningMaybe offAffinityWarning
+                    |> Monad.withWarningMaybe jackOfAllWarning
             )
-        |> Utils.combineAndSum
-        |> Monad.withWarningMaybe offAffinityWarning
-        |> Monad.withWarningMaybe jackOfAllWarning
 
 
 magicValue :
@@ -200,14 +193,16 @@ magicValue :
     -> Magic.Details
     ->
         Maybe
-            { name : String
-            , rank : Int
-            , freeRankFromRace : Maybe ( Int, Race )
-            , power : Int
-            , rewardPoints : Int
-            , isElementalism : Bool
-            , inAffinity : InAffinity
-            }
+            (Monad
+                { name : String
+                , rank : Int
+                , freeRankFromRace : Maybe ( Int, Race )
+                , power : Int
+                , rewardPoints : Int
+                , isElementalism : Bool
+                , inAffinity : InAffinity
+                }
+            )
 magicValue model affinities magicDetails =
     model.magic
         |> List.Extra.find (\rankedMagic -> magicDetails.name == rankedMagic.name)
@@ -230,7 +225,7 @@ magicValue model affinities magicDetails =
                     inClass =
                         case magicDetails.class of
                             Magic.ClassSpecial ->
-                                List.any Race.isGenie model.races
+                                magicDetails.name == MagicWishcasting && List.any Race.isGenie model.races
 
                             Magic.ClassOne c ->
                                 model.class == Just c
@@ -281,6 +276,13 @@ magicValue model affinities magicDetails =
                 , isElementalism = magicDetails.isElementalism
                 , inAffinity = inAffinity
                 }
+                    |> Monad.succeed
+                    |> (if magicDetails.name == MagicWishcasting && not (List.any Race.isGenie model.races) then
+                            Monad.withWarning "Only Genies can access Wishcasting"
+
+                        else
+                            identity
+                       )
             )
 
 
