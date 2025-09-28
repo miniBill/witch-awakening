@@ -8,10 +8,30 @@ import View.Race
 
 value : Model key -> Monad Points
 value model =
-    model.races
-        |> Monad.mapAndSum
-            (\race ->
-                Monad.succeed 0
-                    |> Monad.withPowerInfo (View.Race.raceToShortString race)
-            )
-        |> Monad.map Utils.powerToPoints
+    let
+        inner : Monad Points
+        inner =
+            model.races
+                |> Monad.mapAndSum
+                    (\race ->
+                        Monad.succeed 0
+                            |> Monad.withPowerInfo (View.Race.raceToShortString race)
+                    )
+                |> Monad.map Utils.powerToPoints
+    in
+    case model.races of
+        [ _ ] ->
+            inner
+
+        [] ->
+            inner
+                |> Monad.withWarning "You need to select a race."
+
+        _ ->
+            case model.mainRace of
+                Nothing ->
+                    inner
+                        |> Monad.withWarning "You need to select a main race."
+
+                Just _ ->
+                    inner

@@ -311,7 +311,7 @@ viewContent mainRace races color selected { content, name } =
             if name == PerkHybridize then
                 Theme.blocks [] before
                     :: choicesView
-                    ++ racePicker "Pick your main race:" ChoiceMainRace color mainRace races
+                    ++ racePicker "Pick your main race:" ChoiceRaces color mainRace races
                     ++ [ Theme.blocks [] after ]
 
             else

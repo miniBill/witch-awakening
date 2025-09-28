@@ -63,7 +63,7 @@ value model =
                                 if sameRace companion model.races then
                                     Just ( "Same race", cost, companion )
 
-                                else if sameClass companion model.class then
+                                else if sameClass companion model.mainClass then
                                     Just ( "Same class", cost, companion )
 
                                 else

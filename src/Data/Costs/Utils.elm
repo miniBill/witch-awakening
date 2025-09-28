@@ -154,7 +154,7 @@ checkRequirements :
     -> String
     ->
         { model
-            | class : Maybe Class
+            | mainClass : Maybe Class
             , magic : List RankedMagic
         }
     -> c
@@ -186,7 +186,7 @@ checkRequirements details nameString model res =
                                                     Err (Types.magicToString requiredName ++ " " ++ String.fromInt requiredRank)
 
                                             RequiresClass class ->
-                                                if model.class == Just class then
+                                                if model.mainClass == Just class then
                                                     Ok ()
 
                                                 else

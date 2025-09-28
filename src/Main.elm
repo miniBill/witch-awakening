@@ -11,7 +11,7 @@ import Element exposing (Element, fill, rgb, width)
 import Element.Font as Font
 import Element.Lazy
 import Generated.TypePerk
-import Generated.Types as Types exposing (Perk(..), Relic(..))
+import Generated.Types as Types exposing (Perk(..), Race(..), Relic(..))
 import Images
 import Json.Decode as JD
 import List.Extra
@@ -21,7 +21,7 @@ import Set.Extra
 import String.Extra
 import Task
 import Theme
-import Types exposing (Choice(..), Display(..), Model, Msg(..))
+import Types exposing (Choice(..), Display(..), Model, Msg(..), ZeroOrMore(..))
 import Url
 import Url.Builder exposing (QueryParameter)
 import View.Class as Class
@@ -38,6 +38,7 @@ import View.Quest as Quest
 import View.Race as Race
 import View.Relic as Relic
 import View.TypePerk as TypePerk
+import ZeroOrMore exposing (ZeroOrMore(..))
 
 
 type alias Flags =
@@ -164,27 +165,17 @@ update msg model =
 
 fixupModel : Model key -> Model key
 fixupModel model =
+    let
+        addIf : Bool -> b -> List b -> List b
+        addIf c e v =
+            if c then
+                e :: v
+
+            else
+                v
+    in
     { model
-        | mainRace =
-            case model.races of
-                [] ->
-                    Nothing
-
-                [ _ ] ->
-                    Nothing
-
-                _ ->
-                    case model.mainRace of
-                        Nothing ->
-                            model.mainRace
-
-                        Just m ->
-                            if List.member m model.races then
-                                model.mainRace
-
-                            else
-                                Nothing
-        , cosmicPearl =
+        | cosmicPearl =
             if List.any (\{ name } -> name == RelicCosmicPearl) model.relics then
                 model.cosmicPearl
 
@@ -192,20 +183,33 @@ fixupModel model =
                 { add = []
                 , change = []
                 }
+        , typePerks =
+            case model.classes of
+                TwoOrMore _ _ _ ->
+                    if not (List.member RaceNeutral model.typePerks) then
+                        RaceNeutral :: model.typePerks
+
+                    else
+                        model.typePerks
+
+                _ ->
+                    model.typePerks
         , perks =
             let
                 removed : List { cost : Int, name : Perk }
                 removed =
                     List.filter (\{ name } -> name /= PerkHybridize) model.perks
             in
-            if List.length model.races > 1 then
-                { name = PerkHybridize
-                , cost = Data.Perk.hybridizeCost * (List.length model.races - 1)
-                }
-                    :: removed
+            case model.races of
+                TwoOrMore _ _ r ->
+                    removed
+                        |> (::)
+                            { name = PerkHybridize
+                            , cost = Data.Perk.hybridizeCost * (List.length r + 1)
+                            }
 
-            else
-                removed
+                _ ->
+                    removed
     }
 
 
@@ -221,17 +225,31 @@ toggle isSame selected item list =
 updateOnChoice : Choice -> Model key -> Model key
 updateOnChoice choice model =
     case choice of
-        ChoiceClass class ->
-            { model | class = class }
+        ChoiceClass ( class, selected ) ->
+            if ZeroOrMore.member Types.RaceNeutral model.races then
+                { model | classes = ZeroOrMore.toggle (==) selected class model.classes }
+
+            else
+                { model
+                    | classes =
+                        if selected then
+                            One class
+
+                        else
+                            None
+                }
+
+        ChoiceClasses classes ->
+            { model | classes = classes }
 
         DisplayClass classDisplay ->
             { model | classDisplay = classDisplay }
 
         ChoiceRace ( race, selected ) ->
-            { model | races = toggle Types.isSameRace selected race model.races }
+            { model | races = ZeroOrMore.toggle Types.isSameRace selected race model.races }
 
-        ChoiceMainRace mainRace ->
-            { model | mainRace = mainRace }
+        ChoiceRaces races ->
+            { model | races = races }
 
         DisplayRace raceDisplay ->
             { model | raceDisplay = raceDisplay }
@@ -374,7 +392,8 @@ toUrl model =
     [ one "capBuild" boolToString (withDefault False model.capBuild)
     , int "towardsCap" model.towardsCap
     , int "powerToRewards" model.powerToRewards
-    , one "class" Types.classToString model.class
+    , list "class" Types.classToString model.classes
+    , one "mainClass" Types.classToString model.mainClass
     , list "race" Types.raceToString model.races
     , one "mainRace" Types.raceToString model.mainRace
     , one "gameMode" Types.gameModeToString model.gameMode
@@ -542,7 +561,8 @@ parseUrl navKey url =
     , towardsCap = parseInt "towardsCap"
     , capBuild = parseBool "capBuild"
     , powerToRewards = parseInt "powerToRewards"
-    , class = parseOne "class" Types.classFromString
+    , classes = parseMany "class" Types.classFromString
+    , mainClass = parseOne "mainClass" Types.classFromString
     , classDisplay = DisplayFull
     , races = parseMany "race" Types.raceFromString
     , mainRace = parseOne "mainRace" Types.raceFromString
@@ -661,11 +681,11 @@ innerView model =
                   else
                     Element.paddingXY 16 0
                 ]
-                [ Element.Lazy.lazy3 Class.viewClass model.hideDLCs model.classDisplay model.class
+                [ Element.Lazy.lazy3 Class.viewClass model.hideDLCs model.classDisplay model.classes
                 , Element.Lazy.lazy3 Race.viewRace model.hideDLCs model.raceDisplay model.races
                 , Element.Lazy.lazy3 GameMode.viewGameMode model.hideDLCs model.gameModeDisplay model.gameMode
                 , Element.Lazy.lazy3 Complications.viewComplications model.hideDLCs model.complicationsDisplay model.complications
-                , Element.Lazy.lazy4 TypePerk.viewTypePerks model.hideDLCs model.races model.typePerksDisplay model.typePerks
+                , Element.Lazy.lazy6 TypePerk.viewTypePerks model.hideDLCs model.typePerksDisplay model.races model.classes model.mainClass model.typePerks
                 , Element.Lazy.lazy3 Magic.viewMagics model.hideDLCs model.magicDisplay model.magic
                 , Element.Lazy.lazy6 Perk.viewPerks model.hideDLCs model.hideMeta model.perksDisplay model.mainRace model.races model.perks
                 , Element.Lazy.lazy3 Faction.viewFaction model.hideDLCs model.factionDisplay model.faction

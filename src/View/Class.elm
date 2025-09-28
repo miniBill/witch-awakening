@@ -12,8 +12,8 @@ import Types exposing (Choice(..), Display)
 import View
 
 
-viewClass : Set String -> Display -> Maybe Class -> Element Choice
-viewClass hideDLC display class =
+viewClass : Set String -> Display -> List Class -> Element Choice
+viewClass hideDLC display classes =
     let
         filtered : List Classes.Details
         filtered =
@@ -25,10 +25,10 @@ viewClass hideDLC display class =
 
     else
         let
-            classBoxes : List (Element (Maybe Class))
+            classBoxes : List (Element ( Class, Bool ))
             classBoxes =
                 filtered
-                    |> List.filterMap (classBox display class)
+                    |> List.filterMap (classBox display classes)
         in
         View.collapsible []
             display
@@ -64,31 +64,18 @@ intro =
 
 classBox :
     Display
-    -> Maybe Class
+    -> List Class
     -> Classes.Details
-    -> Maybe (Element (Maybe Class))
+    -> Maybe (Element ( Class, Bool ))
 classBox display selected { name, dlc, color, content } =
     let
         isSelected : Bool
         isSelected =
-            case selected of
-                Nothing ->
-                    False
-
-                Just selectedClass ->
-                    selectedClass == name
-
-        msg : Maybe Class
-        msg =
-            if isSelected then
-                Nothing
-
-            else
-                Just name
+            List.member name selected
     in
     Theme.card [ Theme.id (Types.classToString name) ]
         { display = display
-        , forceShow = selected == Nothing
+        , forceShow = List.isEmpty selected
         , glow = color
         , isSelected = isSelected
         , imageAttrs =
@@ -124,5 +111,5 @@ classBox display selected { name, dlc, color, content } =
                         dlcName
             ]
         , content = [ Theme.blocks [] content ]
-        , onPress = Just msg
+        , onPress = Just ( name, not isSelected )
         }

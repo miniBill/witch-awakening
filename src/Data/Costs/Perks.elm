@@ -20,7 +20,7 @@ value :
         , cosmicPearl : CosmicPearlData
         , typePerks : List Race
         , perks : List RankedPerk
-        , class : Maybe Class
+        , mainClass : Maybe Class
         , magic : List RankedMagic
     }
     -> Monad Points
@@ -85,7 +85,7 @@ value model =
 
 perkValue :
     { a
-        | class : Maybe Class
+        | mainClass : Maybe Class
         , races : List Race
         , mainRace : Maybe Race
         , cosmicPearl : CosmicPearlData
@@ -160,7 +160,7 @@ perkValue model ranked =
 
 innerPerkCost :
     { a
-        | class : Maybe Class
+        | mainClass : Maybe Class
         , races : List Race
         , mainRace : Maybe Race
         , cosmicPearl : CosmicPearlData
@@ -170,7 +170,7 @@ innerPerkCost :
     -> { name : Perk, cost : Int }
     -> Perk.Details
     -> Int
-innerPerkCost ({ class } as model) { name, cost } perk =
+innerPerkCost ({ mainClass } as model) { name, cost } perk =
     let
         apexDiff : Int
         apexDiff =
@@ -191,7 +191,7 @@ innerPerkCost ({ class } as model) { name, cost } perk =
 
         isClass : Bool
         isClass =
-            Just perk.class == class
+            Just perk.class == mainClass
 
         isInAffinity : InAffinity
         isInAffinity =

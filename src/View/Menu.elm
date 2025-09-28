@@ -47,24 +47,9 @@ viewMenu model =
                 Err es ->
                     ( [], List.Extra.unique <| List.Nonempty.toList es )
 
-        affinities : AffinityList
-        affinities =
-            Affinity.fromModel model
-
-        warnIf : Bool -> a -> List a -> List a
-        warnIf b msg list =
-            if b then
-                msg :: list
-
-            else
-                list
-
         warnings : List String
         warnings =
-            (rawWarnings
-                |> warnIf (List.isEmpty (Affinity.toList affinities)) "No main race selected."
-            )
-                ++ badPyramid model.magic
+            rawWarnings ++ badPyramid model.magic
     in
     Theme.column
         [ alignTop
@@ -100,6 +85,11 @@ viewMenu model =
             , label = menuLabel totalPoints warnings
             }
         , if model.menuOpen then
+            let
+                affinities : AffinityList
+                affinities =
+                    Affinity.fromModel model
+            in
             viewCalculations model totalPoints warnings affinities
 
           else

@@ -22,7 +22,7 @@ value :
             , races : List Race
             , perks : List RankedPerk
             , faction : Maybe ( Faction, Bool )
-            , class : Maybe Class
+            , mainClass : Maybe Class
             , typePerks : List Race
             , magic : List RankedMagic
             , capBuild : Bool
@@ -53,7 +53,7 @@ value { ignoreSorceressBonus } model =
                 let
                     freeFromClass : Dict String String
                     freeFromClass =
-                        case model.class of
+                        case model.mainClass of
                             Just ClassSorceress ->
                                 if ignoreSorceressBonus then
                                     Dict.empty
@@ -130,7 +130,7 @@ value { ignoreSorceressBonus } model =
 
                     offAffinityWarning : Maybe String
                     offAffinityWarning =
-                        if model.class == Just ClassSorceress then
+                        if model.mainClass == Just ClassSorceress then
                             Nothing
 
                         else
@@ -184,7 +184,7 @@ value { ignoreSorceressBonus } model =
 magicValue :
     { a
         | faction : Maybe ( Faction, Bool )
-        , class : Maybe Class
+        , mainClass : Maybe Class
         , typePerks : List Race
         , magic : List RankedMagic
         , races : List Race
@@ -228,7 +228,7 @@ magicValue model affinities magicDetails =
                                 magicDetails.name == MagicWishcasting && List.any Race.isGenie model.races
 
                             Magic.ClassOne c ->
-                                model.class == Just c
+                                model.mainClass == Just c
 
                             Magic.ClassNone ->
                                 False
@@ -278,7 +278,7 @@ magicValue model affinities magicDetails =
                 }
                     |> Monad.succeed
                     |> (if magicDetails.name == MagicWishcasting && not (List.any Race.isGenie model.races) then
-                            Monad.withWarning "Only Genies can access Wishcasting"
+                            Monad.withWarning "Only Genies can access Wishcasting."
 
                         else
                             identity
@@ -289,7 +289,7 @@ magicValue model affinities magicDetails =
 freeRankFromRaceOrTypePerk :
     { a
         | faction : Maybe ( Faction, Bool )
-        , class : Maybe Class
+        , mainClass : Maybe Class
         , typePerks : List Race
         , magic : List RankedMagic
         , races : List Race

@@ -1,11 +1,11 @@
 module View.TypePerk exposing (viewTypePerks)
 
-import Color
+import Color exposing (Color)
 import Data.TypePerk as TypePerk
-import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, moveUp, paddingXY, px, rgb, spacing, width)
+import Element exposing (Element, alignBottom, alignRight, centerX, centerY, el, fill, moveDown, moveLeft, moveUp, paddingXY, px, rgb, spacing, text, width)
 import Element.Font as Font
 import Generated.TypePerk
-import Generated.Types as Types exposing (Race(..), Slot)
+import Generated.Types as Types exposing (Class, Race(..), Slot)
 import Gradients
 import Images
 import Set exposing (Set)
@@ -15,8 +15,8 @@ import View
 import View.Race
 
 
-viewTypePerks : Set String -> List Race -> Display -> List Race -> Element Choice
-viewTypePerks hideDLC witchRaces display typePerks =
+viewTypePerks : Set String -> Display -> List Race -> List Class -> Maybe Class -> List Race -> Element Choice
+viewTypePerks hideDLC display witchRaces classes mainClass typePerks =
     let
         filtered : List TypePerk.Details
         filtered =
@@ -28,10 +28,10 @@ viewTypePerks hideDLC witchRaces display typePerks =
 
     else
         let
-            boxes : List (Element ( Race, Bool ))
+            boxes : List (Element Choice)
             boxes =
                 filtered
-                    |> List.filterMap (typePerkBox witchRaces display typePerks)
+                    |> List.filterMap (typePerkBox classes mainClass witchRaces display typePerks)
         in
         View.collapsible
             [ Theme.style "background-image" <| "url(\"" ++ Images.typePerkBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
@@ -41,7 +41,7 @@ viewTypePerks hideDLC witchRaces display typePerks =
             ]
             display
             DisplayTypePerks
-            ChoiceTypePerk
+            identity
             TypePerk.title
             [ Theme.blocks
                 [ Font.color <| rgb 0 0 0
@@ -75,16 +75,18 @@ type Length
 
 
 typePerkBox :
-    List Race
+    List Class
+    -> Maybe Class
+    -> List Race
     -> Display
     -> List Race
     -> TypePerk.Details
-    -> Maybe (Element ( Race, Bool ))
-typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
+    -> Maybe (Element Choice)
+typePerkBox classes mainClass witchRaces display selected ({ cost, content, dlc } as details) =
     let
         isSelected : Bool
         isSelected =
-            List.member race selected
+            List.member details.race selected
 
         slot : Slot
         slot =
@@ -92,7 +94,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
 
         raceString : String
         raceString =
-            View.Race.raceToShortString race
+            View.Race.raceToShortString details.race
 
         nameLength : Length
         nameLength =
@@ -104,15 +106,19 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
 
             else
                 Long
+
+        color : Color.Color
+        color =
+            Color.rgb255 0xF3 0xEA 0x6F
     in
     Theme.card [ Theme.id ("perk-" ++ raceString) ]
         { display = display
-        , forceShow = List.member race witchRaces
-        , glow = Color.rgb255 0xF3 0xEA 0x6F
+        , forceShow = List.member details.race witchRaces
+        , glow = color
         , isSelected = isSelected
         , imageAttrs = [ Theme.style "background-position" "top" ]
         , imageHeight = 360
-        , image = raceToTypePerkImage race
+        , image = raceToTypePerkImage details.race
         , inFront =
             [ Theme.gradientTextWrapped
                 [ Theme.captureIt
@@ -173,7 +179,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                         4
                         Gradients.purpleGradient
                         dlcName
-            , case name of
+            , case details.name of
                 Nothing ->
                     Element.none
 
@@ -230,9 +236,52 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom ]
             ]
-        , content = [ Theme.blocks [] content ]
-        , onPress = Just ( race, not isSelected )
+        , content =
+            case details.race of
+                RaceNeutral ->
+                    [ Theme.blocks [] content
+                    , el [ Font.bold ] <| text "Pick your main class:"
+                    , classPicker color mainClass classes
+                    ]
+
+                _ ->
+                    [ Theme.blocks [] content ]
+        , onPress = Just (ChoiceTypePerk ( details.race, not isSelected ))
         }
+
+
+classPicker : Color -> Maybe Class -> List Class -> Element Choice
+classPicker color mainClass classes =
+    let
+        viewClass : Class -> Element Choice
+        viewClass class =
+            let
+                ( attrs, newValue ) =
+                    if Just class == mainClass then
+                        ( [ Theme.backgroundColor color ], Nothing )
+
+                    else
+                        ( [], Just class )
+            in
+            Theme.button (width fill :: Font.center :: attrs)
+                { label =
+                    Theme.row [ centerX, centerY ]
+                        [ ("[" ++ Types.classToString class ++ "]")
+                            |> Theme.blocks []
+                        , Types.classToString class
+                            |> text
+                            |> el [ centerY ]
+                        ]
+                , onPress = Just <| ChoiceClasses newValue
+                }
+    in
+    if List.length classes > 1 then
+        classes
+            |> List.map viewClass
+            |> Theme.wrappedRow [ width fill ]
+
+    else
+        Element.none
 
 
 raceToTypePerkImage : Race -> Images.Image

@@ -8,18 +8,32 @@ import Types exposing (Model)
 
 value : Model key -> Monad Points
 value model =
-    case model.class of
-        Just class ->
-            case class of
-                ClassWarlock ->
-                    Monad.succeed { zero | rewardPoints = 20 }
+    case model.classes of
+        [ class ] ->
+            valueFor class
 
-                ClassAcademic ->
-                    Monad.succeed zero
-
-                ClassSorceress ->
-                    Monad.succeed zero
-
-        Nothing ->
+        [] ->
             Monad.succeed zero
-                |> Monad.withWarning "You need to select a class"
+                |> Monad.withWarning "You need to select a class."
+
+        _ ->
+            case model.mainClass of
+                Nothing ->
+                    Monad.succeed zero
+                        |> Monad.withWarning "You need to select a main class."
+
+                Just mainClass ->
+                    valueFor mainClass
+
+
+valueFor : Class -> Monad Points
+valueFor class =
+    case class of
+        ClassWarlock ->
+            Monad.succeed { zero | rewardPoints = 20 }
+
+        ClassAcademic ->
+            Monad.succeed zero
+
+        ClassSorceress ->
+            Monad.succeed zero

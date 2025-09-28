@@ -3,6 +3,7 @@ module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Displa
 import Browser exposing (UrlRequest)
 import Generated.Types exposing (Affinity, Class, Companion, Complication, Faction, GameMode, Magic, Perk, Quest, Race, Relic, Slot(..))
 import Set exposing (Set)
+import ZeroOrMore exposing (ZeroOrMore)
 
 
 type Msg
@@ -20,10 +21,11 @@ type Msg
 
 
 type Choice
-    = ChoiceClass (Maybe Class)
+    = ChoiceClass ( Class, Bool )
+    | ChoiceClasses (ZeroOrMore Class)
     | DisplayClass Display
     | ChoiceRace ( Race, Bool )
-    | ChoiceMainRace (Maybe Race)
+    | ChoiceRaces (ZeroOrMore Race)
     | DisplayRace Display
     | ChoiceGameMode (Maybe GameMode)
     | DisplayGameMode Display
@@ -63,10 +65,9 @@ type alias Model key =
     , towardsCap : Int
     , powerToRewards : Int
     , menuOpen : Bool
-    , class : Maybe Class
+    , classes : ZeroOrMore Class
     , classDisplay : Display
-    , races : List Race
-    , mainRace : Maybe Race
+    , races : ZeroOrMore Race
     , raceDisplay : Display
     , gameMode : Maybe GameMode
     , gameModeDisplay : Display

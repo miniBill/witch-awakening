@@ -15,14 +15,14 @@ value model =
 
 
 relicCost : Model key -> RankedRelic -> Monad Int
-relicCost ({ class, cosmicPearl } as model) details =
+relicCost ({ mainClass, cosmicPearl } as model) details =
     Utils.find "Relic" .name details.name Generated.Relic.all Types.relicToString
         |> Monad.andThen
             (\relic ->
                 let
                     isClass : Bool
                     isClass =
-                        case class of
+                        case mainClass of
                             Nothing ->
                                 False
 
