@@ -46,7 +46,7 @@ Your friendly neighborhood alchemist, Emilia is an entrepreneurial witch who run
 - Has: Edward is a mundane human with no powers. He has a handful of protective magical items gifted to him by his father
 - Positive: + Brains and brawn
 - Positive: + Idealistic, and genuinely believes what he says
-- Negative: - Has made… regrettable attempts at writing poetry
+- Negative: - Has made... regrettable attempts at writing poetry
 - Negative: - Idealistic in a very naive way
 - Mixed: +/- Rebel with seven causes at a time
 - Power: 0

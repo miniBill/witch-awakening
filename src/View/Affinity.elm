@@ -12,7 +12,7 @@ button : Bool -> msg -> Affinity -> Element msg
 button isSelected msg to =
     Input.button
         [ if isSelected then
-            Border.glow (Theme.intToColor <| Generated.Affinity.affinityToColor to) 4
+            Border.glow (Theme.colorToElmUi (Generated.Affinity.affinityToColor to)) 4
 
           else
             Border.width 0

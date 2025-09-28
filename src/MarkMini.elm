@@ -1,6 +1,8 @@
 module MarkMini exposing (Block(..), Color(..), Piece(..), blockParser)
 
-import Generated.Types as Types exposing (Affinity, Class(..), Perk, Race, Slot(..))
+import Generated.Affinity as Affinity
+import Generated.Classes as Classes
+import Generated.Types as Types exposing (Affinity, Class, Perk, Race, Slot(..))
 import List.Extra
 import Parser exposing ((|.), (|=), Parser)
 import Result.Extra
@@ -44,6 +46,7 @@ type Color
     = ChoiceColor
     | ClassColor Class
     | SlotColor Slot
+    | AffinityColor Affinity
 
 
 blockParser : Parser Block
@@ -170,25 +173,33 @@ mainParser =
             |= Parser.oneOf
                 [ Parser.succeed Colored
                     |= Parser.oneOf
-                        [ Parser.succeed ChoiceColor
+                        ((Parser.succeed ChoiceColor
                             |. Parser.symbol "choice"
-                        , Parser.succeed (ClassColor ClassAcademic)
-                            |. Parser.symbol "academic"
-                        , Parser.succeed (ClassColor ClassSorceress)
-                            |. Parser.symbol "sorceress"
-                        , Parser.succeed (ClassColor ClassWarlock)
-                            |. Parser.symbol "warlock"
-                        , Parser.succeed (SlotColor SlotFolk)
-                            |. Parser.symbol "folk"
-                        , Parser.succeed (SlotColor SlotNoble)
-                            |. Parser.symbol "noble"
-                        , Parser.succeed (SlotColor SlotHeroic)
-                            |. Parser.symbol "heroic"
-                        , Parser.succeed (SlotColor SlotEpic)
-                            |. Parser.symbol "epic"
-                        , Parser.succeed (SlotColor SlotWhite)
-                            |. Parser.symbol "white"
-                        ]
+                         )
+                            :: List.map
+                                (\name ->
+                                    Parser.succeed (SlotColor name)
+                                        |. Parser.symbol (Types.slotToString name |> String.toLower)
+                                )
+                                [ SlotFolk
+                                , SlotNoble
+                                , SlotHeroic
+                                , SlotEpic
+                                , SlotWhite
+                                ]
+                            ++ List.map
+                                (\{ name } ->
+                                    Parser.succeed (ClassColor name)
+                                        |. Parser.symbol (Types.classToString name |> String.toLower)
+                                )
+                                Classes.all
+                            ++ List.map
+                                (\{ name } ->
+                                    Parser.succeed (AffinityColor name)
+                                        |. Parser.symbol (Types.affinityToString name |> String.toLower)
+                                )
+                                Affinity.all
+                        )
                     |. Parser.symbol " "
                     |= innerParser '}'
                 , Parser.succeed Smol

@@ -10,7 +10,6 @@ import Generated.Affinity
 import Generated.Classes
 import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Size, Slot(..))
 import Gradients
-import Hex
 import Html exposing (Html)
 import Html.Attributes
 import Images exposing (Image)
@@ -274,6 +273,9 @@ viewPiece expandBadges piece =
                 MarkMini.SlotColor slot ->
                     colored <| slotToColor slot
 
+                MarkMini.AffinityColor affinity ->
+                    colored <| Generated.Affinity.affinityToColor affinity
+
         Smol children ->
             [ Html.span
                 [ Html.Attributes.style "font-size" "0.8em" ]
@@ -419,7 +421,7 @@ viewGenericBadge expandBadges source title =
         ]
         []
     , if expandBadges then
-        Html.text (" " ++ title)
+        Html.text ("\u{00A0}" ++ title)
 
       else
         Html.text ""
@@ -445,14 +447,6 @@ viewAffinityBadge affinity =
                         stops
                     )
                 ++ ")"
-
-        opaque : Int -> Int
-        opaque f =
-            f * 256 + 0xFF
-
-        colorToCss : Int -> String
-        colorToCss color =
-            "#" ++ String.padLeft 8 '0' (Hex.toString color)
 
         common : List (Html.Attribute msg)
         common =
@@ -503,7 +497,7 @@ viewAffinityBadge affinity =
                 let
                     affinityColor : String
                     affinityColor =
-                        colorToCss (Generated.Affinity.affinityToColor affinity |> opaque)
+                        Color.toCssString (Generated.Affinity.affinityToColor affinity)
 
                     whiteGradient : String
                     whiteGradient =

@@ -145,7 +145,7 @@ Gratianus, or Grant to those that know him, is a very old member of the Lodge, a
 - Cost: 10
 - Race: Lamia
 - Class: Sorceress
-- Quote: _*“One moment please, I have some rights I’m supposed to read you, I know I’ve got it written down in one of these pockets…” - Nazli*_
+- Quote: _*“One moment please, I have some rights I’m supposed to read you, I know I’ve got it written down in one of these pockets...” - Nazli*_
 - Positive: + Laid back when off the clock, highly attentive on the job
 - Positive: + Only takes one neophyte student at a time, so they receive her full attention and care
 - Negative: - Spends too much of her pay on drinking and gambling

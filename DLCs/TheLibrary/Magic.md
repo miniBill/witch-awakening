@@ -329,7 +329,7 @@ At rank 2 you learn to make slight changes to a disease, slightly altering how i
 At rank 3 your magic now extends to bacteria, and you become able to make significant changes such as completely removing a symptom, or adding a symptom similar to what the disease already does. You are now functionally immune to mundane disease.
 
 ### Rank 4
-At rank 4 your magic extends to prions (with Homunculus magic or Entomism you gain control over parasites). You can now add or remove any symptoms you've previously encountered, freely mixing and matching between the different types of disease you have access to.
+At rank 4 your magic extends to prions (with [Homunculus-Craft] or [Entomism] you gain control over parasites). You can now add or remove any symptoms you've previously encountered, freely mixing and matching between the different types of disease you have access to.
 
 ### Rank 5
 At rank 5 you become capable of adding magical effects to the diseases you create or alter. Make a prion that repairs your body [Lifeweaving], a parasite that causes someone to forget you [Psychotics], a virus that causes its' victims to spontaneously combust [Firecalling]. "It goes without saying, but do be careful with magical diseases, not only are they extremely dangerous, but they're effectively a masquerade violation waiting to happen. Do *NOT* let them get out of control, please...".
@@ -370,7 +370,7 @@ A magic for the patient witch, world-shaping, also know as environmancy or totem
 
 World-shaping requires you to use magical totems to enact and maintain its' effects. These totems require little to no maintenance, but do be sure to protect them from harm, lest you loose all control you had over the land.
 
-Note: By synergizing with Naturalism, Entomism, plagues, or Homunculus magic, World-Shaping could be used to precisely control and alter various parts of the biosphere in its' area of effect.
+Note: By synergizing with [Naturalism], [Entomism], [Plagues], or [Homunculus-Craft], World-Shaping could be used to precisely control and alter various parts of the biosphere in its' area of effect.
 
 ### Rank 1
 At rank 1 you learn to carve a shifting totem, a magical artifact that will induce slow but steady change in the local environment. To begin with your totems will take a decade to enact change, can affect the land in a 1Km radius, and can make small changes like shifting the average humidity or temperature.
@@ -386,3 +386,89 @@ At rank 4 your totems now make changes after 6 months, can affect up to a 60Km r
 
 ### Rank 5
 At rank 5 you learn how to add the effects of other known magics to your totems in order to create a magical landscape, including but not limited to: flying islands [Earthmoving] or [Kinomancy], huge crystal growths [Crystal-Crafting], recurring abundant ore veins [Metallurgy], permanent weather effects [Waterworking] and/or [Windkeeping], impossible geometry [Aethernautics], etc. Create the magical wonderland landscape you always wished you could live in.
+
+
+## Magic: The Hallowing Echo
+- Class: Special
+- Elements: Whispers, Dreams, Silence
+
+"Personally I try to avoid using Hallowing wherever possible, it feel... unnatural to me, gives me the creeps. Still, the ability to turn spells you cast on their head can be quite useful at times".
+
+An otherworldly magic that bends and inverts the rules of magic in a local area around the caster. The origin and exact nature of this magic is an unknown and widely debated topic, but wherever it comes from, magic of The Hallowing Echo is as potent as it is bizarre.
+
+Despite its' lack of conventional affinities, Hallowing magic is strangely easy to learn for almost all witches (half off as if you had affinity), with the exception of witches who are associated with the far gods who find it far more difficult to learn, as if the magic resents being used by them.
+
+A final warning, when you use the magic of the Hallowing Echo you must always be used at the highest rank available to you.
+
+### Rank 1
+At rank 1 you become capable of __Drawing__ a small amount of extra power from the mana you spend on spells, effectively increasing the power of your magic by 10%. Utilizing __Drawing__ for more than an hour a day will make you feel increasingly dizzy.
+
+### Rank 2
+At rank 2 __Drawing__ results in a 25% increase in the potency for your spells. While you are __Drawing__ you will be able to __Invert__ a spell for three times the mana cost, causing it have the opposite to its' usual effect (eg: inverted lifeweaving would cause existing wounds and illnesses to get progressively worse). __Drawing__ for more than 15 minutes out of an hour will result in severe nausea.
+
+### Rank 3
+At rank 2 __Drawing__ results in a 45% increase in the strength of your spells. It now costs only twice as much mana to Invert a spell. __Drawing__ for more than 3 minutes out of every 15 will result in increasingly painful headaches.
+
+### Rank 4
+At rank 4 __Drawing__ results in a 70% increase in spellpower, and you no longer need to spend extra mana to Invert a spell. __Drawing__ power for more than 15 seconds out of every 3 minutes results in increasingly severe paranoia and hallucinations. It is now moderately difficult to use magic without __Drawing__.
+
+### Rank 5
+At rank 5 __Drawing__ results in 100% more spellpower, as well as a staggering 50% reduction in mana-cost. Casting an Inverted spell costs only half as much as the spell would have otherwise costed (stacking with 50% reduction). __Drawing__ extra power from mana now immediately results in the drawbacks of all previous tiers. It is no longer possible for you to cast spells without __Drawing__.
+
+
+## Magic: Timewarping
+- Class: Special
+- Elements: Divine
+
+"The academy had to add temporal magic to the restricted list after a few too many students thought to use it as a way to get extra study time in during the exam period. Needless to say not everyone was careful enough and even now 40 years later we're still waiting for some of them to show back up".
+
+A very powerful magic  commonly associated with divinity, Timewarping is usually wielded by the likes of the most powerful and eldest of Arch-fey, Demons, and angels. While some rare witches are capable of wielding time-magic, they must contend with {divine *distortion*}.
+
+Whenever you cast a spell using temporal magic you will cause {divine *distortion*} to begin building up. In order to alleviate this you must cast temporal spells that are the opposite of whatever caused the {divine *distortion*} in the first place (for example: if you speed yourself up you must later slow yourself down by the same amount for the same amount of time).
+
+If you fail to alleviate the {divine *distortion*} it will eventually manifest itself, causing unpredictable, but almost universally undesirable results: Get frozen in place, suddenly have one portion of your body experience time differently from the rest, be transported into next week. The more {divine *distortion*} you have when the dam breaks the worse the effect will be, in extreme cases Witches have found themselves skipped decades, or even centuries into the future.
+
+### Rank 1
+At rank 1 you gain the simple ability to speed up or slow down your __Perception__ of time by a factor of 2.
+
+### Rank 2
+At rank 2 you gain the ability to speed up or slow down your own __Passage__ of time by a factor of 2 (can stack with __Perception__).
+
+### Rank 3
+At rank 3 your __Passage__ ability can be projected in a sphere with a maximum diameter of 3 meter. In addition your __Perception__ and __Passage__ abilities can now speed or slow by a factor of 4. Your {divine *distortion*} build-up is now cut to half its' previous rate
+
+### Rank 4
+At rank 4 your __Perception__ and __Passage__ abilities can now speed or slow by a factor of 7, and your __Passage__ can be projected into a sphere with a maximum diameter of 9 Meters. You now have the ability to inflict {divine *distortion*} on others, causing half of what you inflict to build up on you.
+
+### Rank 5
+At rank 5 your __Perception__ and __Passage__ abilities can now speed or slow by a factor of 10, and your __Passage__ can be projected into a sphere with a maximum diameter of 30 meters. You now have an innate sense of how much {divine *distortion*} you have built up at any given time, no longer will you need to meticulously track your every use of timewarping. While you may never be capable of reversing time you have learned how to supercharge your __Passage__ ability: by expending all your mana reserves you are able to stop time with your passage ability, lasting until you decide to cancel it. Beware: while you're stopping time with your supercharged __Passage__ ability your mana reserves will not fill by any means. Curiously, stopping time with passage does not build up any {divine *distortion*}.
+
+
+## Magic: Reaping
+- Class: Special
+- Elements: Blood, Metal, Necro
+
+"Look, if this is something you really want to learn I'm not going to stop you, just... please, be careful".
+
+0ut of all the restricted magics, Reaping is without a doubt the one that has the most obvious reason for being restricted. 
+
+Reaping allows its' practitioners to draw power from the essence of those they kill, with higher ranks in Reaping awarding greater and greater power. 
+
+The problem with Reaping, aside from the fact that it incentives wanton murder, is that it is an incredibly addictive form of magic, with higher ranks being increasingly intoxicating.
+
+Some witches have had success with using reaping only at lower ranks, but there is always the temptation, the whisper at the back of their mind, to learn to draw out just a little bit more...
+
+### Rank 1
+At rank 1 reaping will award it's practitioners with one {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every sapient being they kill. At this rank reaping is an itch in the back of your mind, a slight desire to draw ever more strength from battle. You will feel the urge to learn more reaping, but it will only get worse from here. 
+
+### Rank 2
+At rank 2 reaping awards 3 {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every sapient being they murder. Reaping is now roughly as addictive as sugar, which might not sound to bad to those who have never tried to cut sugar out of their diet, but it's not as easy as you might imagine.
+
+### Rank 3
+At rank 3 reaping awards 6 {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every death of a sapient they cause to die, and is roughly as habit forming and hard to quit as alcohol. Expect any withdrawals to be uncomfortable. 
+
+### Rank 4
+At rank 4 reaping awards 10 {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every sapient life brought to an end. At this stage reaping is roughly as habit forming and difficult to quit as tobacco. Practitioners also unlock the ability to __Drain__ magical talent from their victims (every time you kill another witch there is a 1/50 chance of learning one rank of a magic that they have a higher rank in than you). 
+
+### Rank 5
+At the fifth rank of reaping practitioners are awarded with 20 {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} per murder, and __Drain__ has a 1/10 chance. Reaping is now as addictive and difficult to quit as heroin, without help you wont be able to resist the urge to kill, not for long. It is widely agreed that anyone who learns this rank of reaping is either a complete fool or an utter monster.

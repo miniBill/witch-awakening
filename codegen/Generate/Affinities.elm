@@ -7,7 +7,7 @@ import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
 import Generate.Types exposing (TypesModule)
-import Generate.Utils exposing (yassify)
+import Generate.Utils as Utils exposing (yassify)
 import Parsers
 import String.Extra
 
@@ -48,7 +48,7 @@ affinityToColor types dlcAffinities =
                     (\( _, affinityData ) ->
                         Elm.Case.branch
                             (types.affinity.argWith affinityData.name [])
-                            (\_ -> Elm.hex affinityData.color)
+                            (\_ -> Utils.color affinityData.color)
                     )
                 |> Elm.Case.custom affinity types.affinity.annotation
         )

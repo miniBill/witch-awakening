@@ -8,7 +8,7 @@ import Data.Race as Race
 import Dict exposing (Dict)
 import Generated.Magic
 import Generated.TypePerk
-import Generated.Types as Types exposing (Class(..), Faction, Magic(..), Perk(..), Race(..))
+import Generated.Types as Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
@@ -215,7 +215,14 @@ magicValue model affinities magicDetails =
 
                     inAffinity : Affinity.InAffinity
                     inAffinity =
-                        Affinity.isInAffinity magicDetails.affinities affinities
+                        if
+                            (magicDetails.name == MagicTheHallowingEcho)
+                                && (Maybe.map Tuple.first model.faction /= Just FactionTheOutsiders)
+                        then
+                            InAffinity
+
+                        else
+                            Affinity.isInAffinity magicDetails.affinities affinities
 
                     inFaction : InFaction
                     inFaction =

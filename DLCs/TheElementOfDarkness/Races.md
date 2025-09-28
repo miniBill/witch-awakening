@@ -73,7 +73,7 @@ Also called chaos dragons, Jabberwocky are seen as harbingers of chaos and disor
 
 __Jabberwockys draw Mana__ Randomly. Anywhere from 0 to 5 charges a day, spread randomly throughout the day, with each charge having an equal chance to be Low, Medium, or High (the Jabberwocky will be able to “feel” an oncoming charge of mana a minute or so before it occurs).
 
-### Perk: …the Vorpal blade went snicker-snack…
+### Perk: ...the Vorpal blade went snicker-snack...
 - Cost: 8
 
 You are now immune to non-magical weapons and attacks so long as they aren’t immediately fatal (any harm inflicted by non-magical weapons will be immediately healed).
