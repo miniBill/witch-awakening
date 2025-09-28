@@ -2,7 +2,7 @@ module View.Companion exposing (viewCompanions)
 
 import Color exposing (Color)
 import Data.Companion as Companion exposing (MaybeClass(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, paddingXY, px, shrink, spacing, table, text, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, paddingEach, px, shrink, spacing, table, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -328,39 +328,105 @@ image { name, races, hasPerk, cost } =
 
 content : Companion.Details -> Element msg
 content ({ name, quote, class, description, positives, mixed, negatives, has, dlc } as companion) =
+    let
+        toBlocks : List String -> List (Element msg)
+        toBlocks lines =
+            List.map
+                (\line ->
+                    if String.startsWith "-" line then
+                        Theme.blocks [] <| "\\" ++ line
+
+                    else
+                        Theme.blocks [] line
+                )
+                lines
+
+        toColumn : String -> List String -> Element msg
+        toColumn label items =
+            if List.isEmpty items then
+                Element.none
+
+            else
+                column
+                    [ width fill
+                    , alignTop
+                    , spacing <| Theme.rhythm // 2
+                    ]
+                    [ el [ Font.bold ] <| text <| label ++ ":"
+                    , table [ width fill, spacing <| Theme.rhythm // 2 ]
+                        { data =
+                            List.map
+                                (\line ->
+                                    case String.split " " line of
+                                        [] ->
+                                            ( "", "" )
+
+                                        head :: tail ->
+                                            ( head, String.join " " tail )
+                                )
+                                items
+                        , columns =
+                            [ { header = Element.none
+                              , width = shrink
+                              , view = \( sign, _ ) -> text sign
+                              }
+                            , { header = Element.none
+                              , width = fill
+                              , view = \( _, tail ) -> Theme.blocks [] tail
+                              }
+                            ]
+                        }
+                    ]
+
+        beforeBlock : Element msg
+        beforeBlock =
+            [ toColumn "Positives" positives
+            , toColumn "Negatives" negatives
+            ]
+                |> Theme.row [ width fill ]
+
+        classBadge : Element msg
+        classBadge =
+            case class of
+                ClassOne c ->
+                    Theme.viewClasses 32 [ c ]
+
+                ClassAny ->
+                    Theme.viewClasses 32 [ Types.ClassSorceress, Types.ClassWarlock, Types.ClassAcademic ]
+
+                ClassNone ->
+                    Element.none
+
+                ClassSpecial ->
+                    Theme.image
+                        [ width <| px 32 ]
+                        Images.badgeSpecial
+    in
     Theme.column
         [ Theme.padding
         , height fill
         , width <| Element.minimum 200 <| fillPortion 2
         ]
-        [ Theme.row
-            [ width fill
-            , inFront <|
-                case class of
-                    ClassOne c ->
-                        c
-                            |> Theme.classToBadge
-                            |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
-
-                    ClassAny ->
-                        Theme.viewClasses 32 [ Types.ClassSorceress, Types.ClassWarlock, Types.ClassAcademic ]
-                            |> el [ alignRight, moveLeft 24 ]
-
-                    ClassNone ->
-                        Element.none
-
-                    ClassSpecial ->
-                        Images.badgeSpecial
-                            |> Theme.image [ width <| px 32, alignRight, moveLeft 24 ]
-            ]
-            [ Theme.gradientTextWrapped
+        [ Theme.wrappedRow
+            [ width fill, Theme.centerWrap ]
+            [ classBadge
+                |> el
+                    [ paddingEach { left = 24, top = 0, right = 0, bottom = 0 }
+                    , Element.htmlAttribute (Html.Attributes.style "visibility" "hidden")
+                    , Element.htmlAttribute (Html.Attributes.style "min-width" "0px")
+                    ]
+            , Theme.gradientTextWrapped
                 [ Font.size 36
                 , width fill
-                , paddingXY 60 0
                 ]
                 4
                 Gradients.yellowGradient
                 (Types.companionToString name)
+            , classBadge
+                |> el
+                    [ alignRight
+                    , paddingEach { right = 24, top = 0, left = 0, bottom = 0 }
+                    ]
             ]
         , case dlc of
             Nothing ->
@@ -376,64 +442,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
         , statsTable companion
         , Theme.blocks [ Font.size 14 ] quote
         , Theme.blocks [] description
-        , let
-            toBlocks : List String -> List (Element msg)
-            toBlocks lines =
-                List.map
-                    (\line ->
-                        if String.startsWith "-" line then
-                            Theme.blocks [] <| "\\" ++ line
-
-                        else
-                            Theme.blocks [] line
-                    )
-                    lines
-
-            toColumn : String -> List String -> Element msg
-            toColumn label items =
-                if List.isEmpty items then
-                    Element.none
-
-                else
-                    column
-                        [ width fill
-                        , alignTop
-                        , spacing <| Theme.rhythm // 2
-                        ]
-                        [ el [ Font.bold ] <| text <| label ++ ":"
-                        , table [ width fill, spacing <| Theme.rhythm // 2 ]
-                            { data =
-                                List.map
-                                    (\line ->
-                                        case String.split " " line of
-                                            [] ->
-                                                ( "", "" )
-
-                                            head :: tail ->
-                                                ( head, String.join " " tail )
-                                    )
-                                    items
-                            , columns =
-                                [ { header = Element.none
-                                  , width = shrink
-                                  , view = \( sign, _ ) -> text sign
-                                  }
-                                , { header = Element.none
-                                  , width = fill
-                                  , view = \( _, tail ) -> Theme.blocks [] tail
-                                  }
-                                ]
-                            }
-                        ]
-
-            beforeBlock : Element msg
-            beforeBlock =
-                [ toColumn "Positives" positives
-                , toColumn "Negatives" negatives
-                ]
-                    |> Theme.row [ width fill ]
-          in
-          column
+        , column
             [ width fill
             , spacing <| Theme.rhythm // 2
             ]
