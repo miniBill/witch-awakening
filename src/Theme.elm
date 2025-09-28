@@ -68,6 +68,9 @@ gradientTextSplit outlineSize gradient value =
         |> String.replace "the " "the\u{00A0}"
         |> String.replace "of " "of\u{00A0}"
         |> String.replace "Of " "Of\u{00A0}"
+        |> String.replace "and " "and\u{00A0}"
+        |> String.replace "And " "And\u{00A0}"
+        |> String.replace "-" "-\u{200B}"
         |> String.split " "
         |> List.map
             (\word ->
