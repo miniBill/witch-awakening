@@ -452,7 +452,7 @@ Instead of locations presented by those cyoas, you can if you wish, choose any l
 - Element: Life
 - Class: Academic
 - Meta: True
-- Costs: 20, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150
+- Costs: 15, 20, 30, 45, 60, 75, 90, 105, 120, 135, 150
 
 Sometime within the next few years tops, you’ll meet my great-times-8 grandmother who has an. offer for you. She knows some unique ancient magics and can teach you a thing or two. Take the _Keeper of Magic by TroyXPage_ [https://imgur.com/a/yoKPeub], [https://imgur.com/a/BoACmQp], [https://imgur.com/a/4GHVEQa].
 
