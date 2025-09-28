@@ -186,17 +186,20 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
 
                 _ ->
                     viewSlot SlotWhite
-            , Theme.gradientTextWrapped
+            , el
                 [ alignBottom
-                , Theme.captureIt
-                , Font.size 36
-                , centerX
-                , Font.center
                 , Element.paddingXY 30 8
+                , width fill
                 ]
-                4
-                Gradients.yellowGradient
-                (Types.relicToString name)
+              <|
+                Theme.gradientTextWrapped
+                    [ Theme.captureIt
+                    , Font.size 36
+                    , centerX
+                    ]
+                    4
+                    Gradients.yellowGradient
+                    (Types.relicToString name)
             ]
         , content =
             case relic.requires of
