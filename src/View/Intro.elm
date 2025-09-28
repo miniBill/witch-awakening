@@ -111,6 +111,10 @@ viewDLCAttribution dlcAttribution =
             Theme.choice (" By " ++ dlcAttribution.author)
     in
     (dlcAttribution.name
+        |> String.replace "The " "The\u{00A0}"
+        |> String.replace "the " "the\u{00A0}"
+        |> String.replace "of " "of\u{00A0}"
+        |> String.replace "Of " "Of\u{00A0}"
         |> Theme.gradientTextSplit 4 Gradients.purpleGradient
         |> List.map
             (el

@@ -64,12 +64,6 @@ gradientTextWrapped attrs outlineSize gradient value =
 gradientTextSplit : Float -> List ( Int, Int, Int ) -> String -> List (Element msg)
 gradientTextSplit outlineSize gradient value =
     value
-        |> String.replace "The " "The\u{00A0}\u{200B}"
-        |> String.replace "the " "the\u{00A0}\u{200B}"
-        |> String.replace "of " "of\u{00A0}\u{200B}"
-        |> String.replace "Of " "Of\u{00A0}\u{200B}"
-        |> String.replace "and " "and\u{00A0}\u{200B}"
-        |> String.replace "And " "And\u{00A0}\u{200B}"
         |> String.replace "-" "-\u{200B}"
         |> String.split " "
         |> List.map
