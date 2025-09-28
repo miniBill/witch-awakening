@@ -307,7 +307,10 @@ freeRankFromRaceOrTypePerk model magicDetails rankedMagic =
         asGenie
     of
         Just race ->
-            if magicDetails.dlc == Nothing || magicDetails.faction /= Nothing then
+            if
+                (magicDetails.dlc == Nothing)
+                    || (magicDetails.faction /= Nothing && magicDetails.class /= Magic.ClassNone)
+            then
                 -- Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free
                 Just ( 2, race )
 
