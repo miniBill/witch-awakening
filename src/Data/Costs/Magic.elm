@@ -248,7 +248,37 @@ magicValue model affinities magicDetails =
                         List.range
                             (case freeRankFromRace of
                                 Nothing ->
-                                    1
+                                    if magicDetails.name == MagicAdvancedGolemancy then
+                                        let
+                                            ranksIn : Magic -> Int
+                                            ranksIn magic =
+                                                model.magic
+                                                    |> List.Extra.findMap
+                                                        (\r ->
+                                                            if r.name == magic then
+                                                                Just r.rank
+
+                                                            else
+                                                                Nothing
+                                                        )
+                                                    |> Maybe.withDefault 0
+
+                                            ranksInHexes : Int
+                                            ranksInHexes =
+                                                ranksIn MagicHexes
+
+                                            ranksInRunes : Int
+                                            ranksInRunes =
+                                                ranksIn MagicRunes
+
+                                            freeRanks : Int
+                                            freeRanks =
+                                                (ranksInHexes + ranksInRunes) // 3
+                                        in
+                                        1 + freeRanks
+
+                                    else
+                                        1
 
                                 Just ( r, _ ) ->
                                     r + 1
