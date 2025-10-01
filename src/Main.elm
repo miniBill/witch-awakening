@@ -161,6 +161,38 @@ update msg model =
         Nop ->
             ( model, Cmd.none )
 
+        Reset ->
+            let
+                newModel : Model Nav.Key
+                newModel =
+                    model |> emptyModel
+            in
+            ( newModel
+            , Nav.replaceUrl model.key (toUrl newModel)
+            )
+
+
+emptyModel : Model key -> Model key
+emptyModel model =
+    { model
+        | capBuild = False
+        , towardsCap = 0
+        , powerToRewards = 0
+        , class = Nothing
+        , races = []
+        , mainRace = Nothing
+        , gameMode = Nothing
+        , complications = []
+        , typePerks = []
+        , magic = []
+        , perks = []
+        , faction = Nothing
+        , companions = []
+        , quests = []
+        , relics = []
+        , cosmicPearl = { add = [], change = [] }
+    }
+
 
 fixupModel : Model key -> Model key
 fixupModel model =

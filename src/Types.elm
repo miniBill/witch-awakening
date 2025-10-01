@@ -16,6 +16,7 @@ type Msg
     | ExpandAll
     | ShowDLC String Bool
     | HideMeta Bool
+    | Reset
     | Nop
 
 

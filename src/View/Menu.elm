@@ -1,5 +1,6 @@
 module View.Menu exposing (viewMenu)
 
+import Color
 import Data.Affinity as Affinity exposing (AffinityList)
 import Data.Costs as Costs
 import Data.Costs.Class
@@ -338,6 +339,18 @@ viewCalculations model power warnings affinities =
                     , icon = Input.defaultCheckbox
                     , label = Input.labelRight [ width fill ] (paragraph [] [ text "Hide Meta options" ])
                     , checked = model.hideMeta
+                    }
+              )
+            , ( "Reset"
+              , Theme.button
+                    [ width fill
+                    , Font.center
+                    , Theme.backgroundColor Color.red
+                    , Theme.fontColor Color.white
+                    , Theme.borderColor Color.darkRed
+                    ]
+                    { onPress = Just Reset
+                    , label = text "Reset"
                     }
               )
             ]
