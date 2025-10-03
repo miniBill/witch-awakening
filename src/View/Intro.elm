@@ -8,6 +8,7 @@ import Html.Attributes
 import Images
 import List.Extra
 import Theme
+import Types exposing (IdKind(..))
 
 
 viewTitle : Bool -> Element msg
@@ -139,7 +140,7 @@ viewIntro : Element msg
 viewIntro =
     Theme.wrappedRow [ Element.paddingXY 16 0 ]
         [ Theme.image [ width <| Element.minimum 200 fill ] Images.penelope
-        , Theme.blocks [ width <| Element.minimum 200 <| fillPortion 2 ] mainIntro
+        , Theme.blocks [ width <| Element.minimum 200 <| fillPortion 2 ] IdKindGameMode mainIntro
         ]
 
 

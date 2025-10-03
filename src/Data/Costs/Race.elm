@@ -2,7 +2,7 @@ module Data.Costs.Race exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
-import Types exposing (Model)
+import Types exposing (IdKind(..), Model)
 import View.Race
 
 
@@ -12,6 +12,6 @@ value model =
         |> Monad.mapAndSum
             (\race ->
                 Monad.succeed 0
-                    |> Monad.withPowerInfo (View.Race.raceToShortString race)
+                    |> Monad.withPowerInfo IdKindRace (View.Race.raceToShortString race)
             )
         |> Monad.map Utils.powerToPoints

@@ -16,7 +16,7 @@ import Html.Attributes
 import Images
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Display(..))
+import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
 
 
@@ -45,6 +45,7 @@ viewQuests hideDLC display quests =
             display
             DisplayQuests
             ChoiceQuest
+            IdKindQuest
             "# Quests"
             [ introBlock
             , blocks
@@ -82,7 +83,7 @@ questBox display selected number quest =
         card : Maybe (Element ( Quest, Bool ))
         card =
             Theme.card
-                [ Theme.id nameString
+                [ Theme.id IdKindQuest nameString
                 , Border.width 3
                 , Theme.borderColor (slotToColor quest.slot)
                 , Border.rounded Theme.cardRoundness
@@ -243,6 +244,7 @@ questBox display selected number quest =
                         [ Element.htmlAttribute (Html.Attributes.class "compact")
                         , spacing 4
                         ]
+                        IdKindQuest
                         (if List.isEmpty quest.notes then
                             String.trim quest.description
 
@@ -295,6 +297,7 @@ evilSidebar =
         , Theme.blocks
             [ Element.htmlAttribute (Html.Attributes.class "compact")
             ]
+            IdKindQuest
             sidebar
         ]
 
@@ -462,6 +465,7 @@ viewSidebar slot content =
         , Font.size 14
         , Element.htmlAttribute (Html.Attributes.class "compact")
         ]
+        IdKindQuest
         content
 
 
@@ -498,6 +502,7 @@ introBlock =
                     , color = color
                     }
                 ]
+                IdKindQuest
                 intro
             ]
         , el [ height <| px 40 ] Element.none

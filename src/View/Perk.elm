@@ -15,7 +15,7 @@ import List.Extra
 import Maybe.Extra
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Display, RankedPerk)
+import Types exposing (Choice(..), Display, IdKind(..), RankedPerk)
 import View
 import View.Race
 
@@ -42,6 +42,7 @@ viewPerks hideDLC hideMeta display mainRace races perks =
             display
             DisplayPerks
             identity
+            IdKindPerk
             "# Perks"
             [ introBlock
             , filtered
@@ -106,6 +107,7 @@ introBlock =
                 , color = blackish
                 }
             ]
+            IdKindPerk
             Perk.intro
         , el [ height <| px 200 ] Element.none
         ]
@@ -196,7 +198,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
         nameString =
             perkToShortString name
     in
-    Theme.card [ Theme.id nameString ]
+    Theme.card [ Theme.id IdKindPerk nameString ]
         { display = display
         , forceShow = False
         , glow = color
@@ -278,7 +280,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                     viewContent mainRace races color selected perk
 
                 Just req ->
-                    View.viewRequirements req :: viewContent mainRace races color selected perk
+                    View.viewRequirements IdKindPerk req :: viewContent mainRace races color selected perk
         , onPress = msg
         }
 
@@ -299,7 +301,7 @@ viewContent : Maybe Race -> List Race -> Color -> List RankedPerk -> Perk.Detail
 viewContent mainRace races color selected { content, name } =
     case content of
         Single _ block ->
-            [ Theme.blocks [] block
+            [ Theme.blocks [] IdKindPerk block
             ]
 
         WithChoices before choices after ->
@@ -309,15 +311,15 @@ viewContent mainRace races color selected { content, name } =
                     List.map (viewChoice color selected name) choices
             in
             if name == PerkHybridize then
-                Theme.blocks [] before
+                Theme.blocks [] IdKindPerk before
                     :: choicesView
                     ++ racePicker "Pick your main race:" ChoiceMainRace color mainRace races
-                    ++ [ Theme.blocks [] after ]
+                    ++ [ Theme.blocks [] IdKindPerk after ]
 
             else
-                Theme.blocks [] before
+                Theme.blocks [] IdKindPerk before
                     :: choicesView
-                    ++ [ Theme.blocks [] after ]
+                    ++ [ Theme.blocks [] IdKindPerk after ]
 
         WithChoicesChargeSwap before choices ->
             let
@@ -346,7 +348,7 @@ viewContent mainRace races color selected { content, name } =
                                 )
                             )
             in
-            Theme.blocks [] before
+            Theme.blocks [] IdKindPerk before
                 :: choicesView
                 ++ racePicker "Pick the race:"
                     (\newRace ->
@@ -375,7 +377,7 @@ viewContent mainRace races color selected { content, name } =
 
         WithCosts costs before ->
             List.map (Element.map ChoicePerk) <|
-                View.costButtons "Cost" color selected before costs <|
+                View.costButtons "Cost" color selected IdKindPerk before costs <|
                     \_ cost -> { name = name, cost = cost }
 
 
@@ -435,6 +437,7 @@ viewChoice color selected name ( label, cost ) =
         (width fill :: attrs)
         { label =
             Theme.blocks []
+                IdKindPerk
                 (if String.endsWith ";" label || String.endsWith "," label then
                     "- " ++ label
 

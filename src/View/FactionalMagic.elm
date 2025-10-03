@@ -5,7 +5,7 @@ import Element exposing (Element, centerX, fill, width)
 import Generated.Magic
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Display, RankedMagic)
+import Types exposing (Choice(..), Display, IdKind(..), RankedMagic)
 import View
 import View.Magic as Magic
 
@@ -34,8 +34,9 @@ viewFactionalMagics hideDLC display selected =
             display
             DisplayFactionalMagic
             ChoiceMagic
+            IdKindMagic
             "# Factional Magic"
-            [ Theme.blocks [ centerX, width <| Element.maximum 800 fill ] intro
+            [ Theme.blocks [ centerX, width <| Element.maximum 800 fill ] IdKindMagic intro
             , boxes
             ]
             [ boxes ]

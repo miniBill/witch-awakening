@@ -8,7 +8,7 @@ import Dict.Extra
 import Generated.Quest
 import Generated.Types as Types exposing (Faction(..), Quest)
 import List.Extra
-import Types exposing (Model)
+import Types exposing (IdKind(..), Model)
 
 
 value : Model key -> Monad Points
@@ -82,6 +82,6 @@ questCost named =
             (\quest ->
                 quest.reward
                     |> Monad.succeed
-                    |> Monad.withRewardInfo (Types.questToString named)
+                    |> Monad.withRewardInfo IdKindQuest (Types.questToString named)
                     |> Monad.map (\rp -> ( rp, quest ))
             )

@@ -10,7 +10,7 @@ import Generated.Magic
 import Generated.TypePerk
 import Generated.Types as Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
 import List.Extra
-import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
+import Types exposing (CosmicPearlData, IdKind(..), RankedMagic, RankedPerk)
 
 
 value :
@@ -160,6 +160,7 @@ value { ignoreSorceressBonus } model =
                                         |> Monad.succeed
                                         |> Monad.withInfo
                                             { label = label
+                                            , kind = IdKindMagic
                                             , anchor = Just name
                                             , value = Monad.FreeBecause reason
                                             }
@@ -171,6 +172,7 @@ value { ignoreSorceressBonus } model =
                                         |> Monad.succeed
                                         |> Monad.withInfo
                                             { label = label
+                                            , kind = IdKindMagic
                                             , anchor = Just name
                                             , value = Monad.Power power
                                             }

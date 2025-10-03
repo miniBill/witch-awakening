@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, intToColor, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
+module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -18,7 +18,7 @@ import MarkMini exposing (Block(..), Piece(..))
 import Parser exposing ((|.))
 import String.Extra
 import String.Multiline
-import Types exposing (Display(..))
+import Types exposing (Display(..), IdKind)
 
 
 rhythm : number
@@ -124,32 +124,32 @@ captureIt =
     Font.family [ Font.typeface "Capture It" ]
 
 
-compactBlocks : List (Attribute msg) -> String -> Element msg
-compactBlocks attrs input =
-    genericBlocks False Nothing DisplayFull attrs input
+compactBlocks : List (Attribute msg) -> IdKind -> String -> Element msg
+compactBlocks attrs kind input =
+    genericBlocks False Nothing DisplayFull attrs kind input
 
 
-blocks : List (Attribute msg) -> String -> Element msg
-blocks attrs input =
-    genericBlocks True Nothing DisplayFull attrs input
+blocks : List (Attribute msg) -> IdKind -> String -> Element msg
+blocks attrs kind input =
+    genericBlocks True Nothing DisplayFull attrs kind input
 
 
-collapsibleBlocks : (Display -> msg) -> Display -> List (Attribute msg) -> String -> Element msg
-collapsibleBlocks toMsg display attrs input =
-    genericBlocks True (Just toMsg) display attrs input
+collapsibleBlocks : (Display -> msg) -> Display -> List (Attribute msg) -> IdKind -> String -> Element msg
+collapsibleBlocks toMsg display attrs kind input =
+    genericBlocks True (Just toMsg) display attrs kind input
 
 
-genericBlocks : Bool -> Maybe (Display -> msg) -> Display -> List (Attribute msg) -> String -> Element msg
-genericBlocks expandBadges toMsg display attrs input =
+genericBlocks : Bool -> Maybe (Display -> msg) -> Display -> List (Attribute msg) -> IdKind -> String -> Element msg
+genericBlocks expandBadges toMsg display attrs kind input =
     input
         |> String.Multiline.here
         |> String.split "\n\n"
-        |> List.map (block expandBadges toMsg display)
+        |> List.map (block expandBadges toMsg display kind)
         |> column (spacing :: width fill :: attrs)
 
 
-block : Bool -> Maybe (Display -> msg) -> Display -> String -> Element msg
-block expandBadges toMsg display input =
+block : Bool -> Maybe (Display -> msg) -> Display -> IdKind -> String -> Element msg
+block expandBadges toMsg display kind input =
     case Parser.run (MarkMini.blockParser |. Parser.end) (String.trim input) of
         Err _ ->
             -- let
@@ -161,7 +161,7 @@ block expandBadges toMsg display input =
                 [ text input ]
 
         Ok (SectionTitle value) ->
-            viewSectionTitle toMsg display value
+            viewSectionTitle toMsg display kind value
 
         Ok (UnorderedList lines) ->
             lines
@@ -572,8 +572,8 @@ wrappedRow attrs children =
     Element.wrappedRow (spacing :: attrs) children
 
 
-viewSectionTitle : Maybe (Display -> msg) -> Display -> String -> Element msg
-viewSectionTitle toMsg display label =
+viewSectionTitle : Maybe (Display -> msg) -> Display -> IdKind -> String -> Element msg
+viewSectionTitle toMsg display kind label =
     let
         gradient : String -> List (Element msg)
         gradient t =
@@ -583,7 +583,7 @@ viewSectionTitle toMsg display label =
         [ celticHand
         , Font.size 36
         , width fill
-        , id label
+        , id kind label
         ]
     <|
         case toMsg of
@@ -638,9 +638,9 @@ triangleRight =
     "▶"
 
 
-id : String -> Attribute msg
-id label =
-    Element.htmlAttribute <| Html.Attributes.id (String.Extra.underscored label)
+id : IdKind -> String -> Attribute msg
+id kind label =
+    Element.htmlAttribute <| Html.Attributes.id (Types.idKindToString kind ++ "-" ++ String.Extra.underscored label)
 
 
 hr : Element msg
@@ -678,16 +678,6 @@ colorToElmUi c =
 backgroundColor : Color -> Attribute msg
 backgroundColor color =
     Background.color <| colorToElmUi color
-
-
-intToColor : Int -> Element.Color
-intToColor color =
-    rgb255
-        (color // 65536)
-        ((color // 256)
-            |> modBy 256
-        )
-        (modBy 256 color)
 
 
 colorToBackground : Color -> Color

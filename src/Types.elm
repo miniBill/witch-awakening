@@ -1,4 +1,4 @@
-module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, gainToSlot, nextDisplay)
+module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), IdKind(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, gainToSlot, idKindToString, nextDisplay)
 
 import Browser exposing (UrlRequest)
 import Generated.Types exposing (Affinity, Class, Companion, Complication, Faction, GameMode, Magic, Perk, Quest, Race, Relic, Slot(..))
@@ -11,7 +11,7 @@ type Msg
     | Choice Choice
     | OpenMenu
     | CloseMenu
-    | ScrollTo String
+    | ScrollTo IdKind String
     | CompactAll
     | ExpandAll
     | ShowDLC String Bool
@@ -166,3 +166,54 @@ nextDisplay display =
 
         DisplayCollapsed ->
             DisplayFull
+
+
+type IdKind
+    = IdKindRace
+    | IdKindGameMode
+    | IdKindClass
+    | IdKindComplication
+    | IdKindTypePerk
+    | IdKindMagic
+    | IdKindPerk
+    | IdKindFaction
+    | IdKindCompanion
+    | IdKindQuest
+    | IdKindRelic
+
+
+idKindToString : IdKind -> String
+idKindToString kind =
+    case kind of
+        IdKindGameMode ->
+            "game-mode"
+
+        IdKindRace ->
+            "race"
+
+        IdKindClass ->
+            "class"
+
+        IdKindComplication ->
+            "complication"
+
+        IdKindTypePerk ->
+            "typePerk"
+
+        IdKindMagic ->
+            "magic"
+
+        IdKindPerk ->
+            "perk"
+
+        IdKindFaction ->
+            "faction"
+
+        IdKindCompanion ->
+            "companion"
+
+        IdKindQuest ->
+            "quest"
+
+        IdKindRelic ->
+            "relic"

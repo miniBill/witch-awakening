@@ -15,7 +15,7 @@ import Set exposing (Set)
 import Svg
 import Svg.Attributes
 import Theme
-import Types exposing (Choice(..), Display(..))
+import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
 import View.Race
 
@@ -54,6 +54,7 @@ viewCompanions hideDLC display companions =
             display
             DisplayCompanions
             ChoiceCompanion
+            IdKindCompanion
             "# Companions"
             [ introBlock
             , blocks
@@ -96,6 +97,7 @@ introBlock =
                     , color = Theme.colorToElmUi color
                     }
                 ]
+                IdKindCompanion
                 Companion.intro
             , Element.table
                 [ width shrink
@@ -164,7 +166,7 @@ tableColumns =
       , width = shrink
       , view =
             \( _, label ) ->
-                Theme.blocks [] <| "{choice _" ++ label ++ "_}"
+                Theme.blocks [] IdKindCompanion <| "{choice _" ++ label ++ "_}"
       }
     ]
 
@@ -204,7 +206,7 @@ companionBox display selected ({ name } as companion) =
                     Nothing
         in
         Theme.button
-            [ Theme.id (Types.companionToString name)
+            [ Theme.id IdKindCompanion (Types.companionToString name)
             , height fill
             , if display == DisplayFull then
                 width <| Element.maximum 760 fill
@@ -334,10 +336,10 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
             List.map
                 (\line ->
                     if String.startsWith "-" line then
-                        Theme.blocks [] <| "\\" ++ line
+                        Theme.blocks [] IdKindCompanion ("\\" ++ line)
 
                     else
-                        Theme.blocks [] line
+                        Theme.blocks [] IdKindCompanion line
                 )
                 lines
 
@@ -372,7 +374,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                               }
                             , { header = Element.none
                               , width = fill
-                              , view = \( _, tail ) -> Theme.blocks [] tail
+                              , view = \( _, tail ) -> Theme.blocks [] IdKindCompanion tail
                               }
                             ]
                         }
@@ -440,8 +442,8 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                     ]
                     (Theme.gradientText 4 Gradients.purpleGradient dlcName)
         , statsTable companion
-        , Theme.blocks [ Font.size 14 ] quote
-        , Theme.blocks [] description
+        , Theme.blocks [ Font.size 14 ] IdKindCompanion quote
+        , Theme.blocks [] IdKindCompanion description
         , column
             [ width fill
             , spacing <| Theme.rhythm // 2
@@ -452,6 +454,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
 
           else
             Theme.blocks []
+                IdKindCompanion
                 ("*" ++ has ++ ".*")
         ]
 

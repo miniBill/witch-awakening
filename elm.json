@@ -22,7 +22,6 @@
             "elmcraft/core-extra": "2.0.0",
             "lydell/elm-app-url": "1.0.4",
             "mgold/elm-nonempty-list": "4.2.0",
-            "rtfeldman/elm-hex": "1.0.0",
             "the-sett/elm-error-handling": "2.2.1"
         },
         "indirect": {

@@ -16,7 +16,7 @@ import Images
 import List.Extra
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Display(..), RankedMagic)
+import Types exposing (Choice(..), Display(..), IdKind(..), RankedMagic)
 import View
 
 
@@ -37,8 +37,9 @@ viewMagics hideDLC display selected =
             display
             DisplayMagic
             ChoiceMagic
+            IdKindMagic
             "# The Magic"
-            [ Theme.blocks [] intro
+            [ Theme.blocks [] IdKindMagic intro
             , costTable
                 |> Element.html
                 |> el
@@ -55,6 +56,7 @@ viewMagics hideDLC display selected =
                 , Theme.borderColor Theme.colors.gameMode
                 , Font.color <| rgb 1 1 1
                 ]
+                IdKindMagic
                 slotDescription
             , filtered
                 |> List.Extra.removeWhen .isElementalism
@@ -140,7 +142,7 @@ elementalIntro =
                     , Theme.morpheus
                     , Theme.style "letter-spacing" ".15em"
                     ]
-            , Theme.blocks [] elementalismIntro
+            , Theme.blocks [] IdKindMagic elementalismIntro
             ]
         ]
 
@@ -289,13 +291,13 @@ magicBox display factional selected index details =
         Element.none
 
     else if modBy 2 index == 0 || factional then
-        Theme.wrappedRow [ Theme.id (Types.magicToString details.name) ]
+        Theme.wrappedRow [ Theme.id IdKindMagic (Types.magicToString details.name) ]
             [ magicImage details
             , viewContent display selected details
             ]
 
     else
-        Theme.wrappedRow [ Theme.id (Types.magicToString details.name) ]
+        Theme.wrappedRow [ Theme.id IdKindMagic (Types.magicToString details.name) ]
             [ viewContent display selected details
             , magicImage details
             ]
@@ -344,7 +346,7 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
                             Gradients.purpleGradient
                             dlcName
                 , Theme.column [ height fill, Theme.padding ] <|
-                    Theme.blocks [] description
+                    Theme.blocks [] IdKindMagic description
                         :: List.indexedMap
                             (viewRank selected details)
                             (if display == DisplayFull then
@@ -506,7 +508,7 @@ viewRank selected { name, class } rankIndex label =
                         Theme.gradientText 2
                             Gradients.yellowGradient
                             ("Rank " ++ String.fromInt rank)
-                    , Theme.blocks [ width fill ] label
+                    , Theme.blocks [ width fill ] IdKindMagic label
                     ]
             , onPress = Just ( rankedMagic, not isTierSelected )
             }

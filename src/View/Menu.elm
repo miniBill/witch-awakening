@@ -29,7 +29,7 @@ import List.Extra
 import List.Nonempty
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Model, Msg(..))
+import Types exposing (Choice(..), IdKind(..), Model, Msg(..))
 import View.MagicPyramid
 
 
@@ -98,7 +98,7 @@ viewMenu model =
 
                 else
                     Just OpenMenu
-            , label = menuLabel totalPoints warnings
+            , label = menuLabel IdKindGameMode totalPoints warnings
             }
         , if model.menuOpen then
             viewCalculations model totalPoints warnings affinities
@@ -154,8 +154,8 @@ badPyramid magics =
         |> List.filterMap identity
 
 
-menuLabel : CostsMonad.Monad Points -> List String -> Element msg
-menuLabel result warnings =
+menuLabel : IdKind -> CostsMonad.Monad Points -> List String -> Element msg
+menuLabel kind result warnings =
     let
         children : List String
         children =
@@ -206,7 +206,7 @@ menuLabel result warnings =
                     Element.none
 
                 else
-                    Theme.blocks [ centerX, centerY ] ("{center} " ++ s)
+                    Theme.blocks [ centerX, centerY ] kind ("{center} " ++ s)
             )
         |> Theme.row [ centerX, centerY ]
 
@@ -216,7 +216,7 @@ viewCalculations model power warnings affinities =
     let
         resultRow : ( String, Element Msg )
         resultRow =
-            keyedRow
+            keyedRow IdKindGameMode
                 "Result"
                 model.expandedMenuSections
                 (power
@@ -253,19 +253,19 @@ viewCalculations model power warnings affinities =
               )
             , section [] "Build kind"
             , ( "Switch", capBuildSwitch model )
-            , keyedRow "Class" model.expandedMenuSections (Data.Costs.Class.value model) <| Just "True Form - Class"
-            , keyedRow "Race" model.expandedMenuSections (Data.Costs.Race.value model) <| Just "True Form - Race"
-            , keyedRow "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
-            , keyedRow "Complications" model.expandedMenuSections (Data.Costs.Complications.value model) Nothing
+            , keyedRow IdKindClass "Class" model.expandedMenuSections (Data.Costs.Class.value model) <| Just "True Form - Class"
+            , keyedRow IdKindRace "Race" model.expandedMenuSections (Data.Costs.Race.value model) <| Just "True Form - Race"
+            , keyedRow IdKindGameMode "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
+            , keyedRow IdKindComplication "Complications" model.expandedMenuSections (Data.Costs.Complications.value model) Nothing
             , ( "Cap Slider", capSlider model )
-            , keyedRow "Type perks" model.expandedMenuSections (Data.Costs.TypePerks.value model) Nothing
-            , keyedRow "Magic" model.expandedMenuSections (Data.Costs.Magic.value { ignoreSorceressBonus = False } model) <| Just "The Magic"
+            , keyedRow IdKindTypePerk "Type perks" model.expandedMenuSections (Data.Costs.TypePerks.value model) Nothing
+            , keyedRow IdKindMagic "Magic" model.expandedMenuSections (Data.Costs.Magic.value { ignoreSorceressBonus = False } model) <| Just "The Magic"
             , magicPyramidRow model
-            , keyedRow "Perks" model.expandedMenuSections (Data.Costs.Perks.value model) Nothing
-            , keyedRow "Faction" model.expandedMenuSections (Data.Costs.Factions.value model) <| Just "Factions"
-            , keyedRow "Companions" model.expandedMenuSections (Data.Costs.Companions.value model) Nothing
-            , keyedRow "Quests" model.expandedMenuSections (Data.Costs.Quests.value model) Nothing
-            , keyedRow "Relics" model.expandedMenuSections (Data.Costs.Relics.value model) Nothing
+            , keyedRow IdKindPerk "Perks" model.expandedMenuSections (Data.Costs.Perks.value model) Nothing
+            , keyedRow IdKindFaction "Faction" model.expandedMenuSections (Data.Costs.Factions.value model) <| Just "Factions"
+            , keyedRow IdKindCompanion "Companions" model.expandedMenuSections (Data.Costs.Companions.value model) Nothing
+            , keyedRow IdKindQuest "Quests" model.expandedMenuSections (Data.Costs.Quests.value model) Nothing
+            , keyedRow IdKindRelic "Relics" model.expandedMenuSections (Data.Costs.Relics.value model) Nothing
             , ( "RelicSlider", relicSlider model )
             , ( "Separator", el [ width fill, height <| px 1, Background.color <| rgb 0 0 0 ] Element.none )
             , resultRow
@@ -305,7 +305,7 @@ viewCalculations model power warnings affinities =
                     Theme.wrappedRow [] <|
                         List.map Theme.viewAffinity (Affinity.toList affinities)
               )
-            , keyedRow "Power cap" model.expandedMenuSections (Data.Costs.Complications.powerCap model) <| Just "Game Mode"
+            , keyedRow IdKindGameMode "Power cap" model.expandedMenuSections (Data.Costs.Complications.powerCap model) <| Just "Game Mode"
             , button
                 { onPress = CompactAll
                 , label = "Compact all"
@@ -394,13 +394,13 @@ magicPyramidRow model =
     )
 
 
-keyedRow : String -> Set String -> CostsMonad.Monad Points -> Maybe String -> ( String, Element Msg )
-keyedRow label expandedMenuSections result target =
-    ( label, row label expandedMenuSections result target )
+keyedRow : IdKind -> String -> Set String -> CostsMonad.Monad Points -> Maybe String -> ( String, Element Msg )
+keyedRow kind label expandedMenuSections result target =
+    ( label, row kind label expandedMenuSections result target )
 
 
-row : String -> Set String -> CostsMonad.Monad Points -> Maybe String -> Element Msg
-row label expandedMenuSections result target =
+row : IdKind -> String -> Set String -> CostsMonad.Monad Points -> Maybe String -> Element Msg
+row kind label expandedMenuSections result target =
     case result of
         Err es ->
             let
@@ -418,7 +418,7 @@ row label expandedMenuSections result target =
                         (List.Nonempty.toList es)
             in
             Theme.column [ width fill ] <|
-                linkLabel label target
+                linkLabel kind label target
                     :: errorViews
 
         Ok value ->
@@ -427,18 +427,18 @@ row label expandedMenuSections result target =
                 viewInfoBlock info =
                     [ paragraph [ width fill, centerY ]
                         [ text "- "
-                        , linkLabel info.label info.anchor
+                        , linkLabel info.kind info.label info.anchor
                         ]
                     , el [ alignRight, centerY ] <|
                         case info.value of
                             CostsMonad.Power power ->
-                                rightPoints { rewardPoints = 0, power = power }
+                                rightPoints kind { rewardPoints = 0, power = power }
 
                             CostsMonad.RewardPoints rewardPoints ->
-                                rightPoints { rewardPoints = rewardPoints, power = 0 }
+                                rightPoints kind { rewardPoints = rewardPoints, power = 0 }
 
                             CostsMonad.FreeBecause message ->
-                                Theme.compactBlocks [] message
+                                Theme.compactBlocks [] kind message
                     ]
             in
             Theme.column [ width fill ]
@@ -448,13 +448,13 @@ row label expandedMenuSections result target =
 
                       else
                         chevronButton label expandedMenuSections
-                    , linkLabel label target
+                    , linkLabel kind label target
                     , if List.isEmpty value.infos then
-                        rightPoints value.value
+                        rightPoints kind value.value
 
                       else
                         Input.button [ alignRight ]
-                            { label = rightPoints value.value
+                            { label = rightPoints kind value.value
                             , onPress = ToggleMenuSectionExpansion label |> Choice |> Just
                             }
                     ]
@@ -523,8 +523,8 @@ capBuildSwitch { capBuild } =
         ]
 
 
-rightPoints : Points -> Element msg
-rightPoints value =
+rightPoints : IdKind -> Points -> Element msg
+rightPoints kind value =
     let
         wrap : String -> Int -> String -> String
         wrap before v after =
@@ -558,7 +558,7 @@ rightPoints value =
             else
                 joined
     in
-    rightText fullString
+    rightText kind fullString
 
 
 emptyRowContent : String
@@ -566,14 +566,14 @@ emptyRowContent =
     "[-] {-}"
 
 
-rightText : String -> Element msg
-rightText value =
+rightText : IdKind -> String -> Element msg
+rightText kind value =
     el
         [ alignRight
         , Theme.captureIt
         , Font.size 20
         ]
-        (Theme.blocks [] value)
+        (Theme.blocks [] kind value)
 
 
 capSlider : Model key -> Element Msg
@@ -598,7 +598,7 @@ capSlider model =
                     Input.labelAbove [] <|
                         paragraph [ Font.bold ]
                             [ text label
-                            , rightPoints <| Costs.powerToPoints -model.towardsCap
+                            , rightPoints IdKindGameMode <| Costs.powerToPoints -model.towardsCap
                             ]
                 , min =
                     (rawComplicationsValue - 30)
@@ -617,7 +617,7 @@ capSlider model =
             Element.none
 
         Just GameModeStoryArc ->
-            row
+            row IdKindGameMode
                 label
                 model.expandedMenuSections
                 (Data.Costs.Complications.complicationsRawValue model
@@ -646,7 +646,7 @@ relicSlider model =
                             zero =
                                 Costs.zero
                           in
-                          rightPoints
+                          rightPoints IdKindRelic
                             { zero
                                 | power = -model.powerToRewards
                                 , rewardPoints = model.powerToRewards
@@ -671,13 +671,13 @@ relicSlider model =
         }
 
 
-linkLabel : String -> Maybe String -> Element Msg
-linkLabel label target =
+linkLabel : IdKind -> String -> Maybe String -> Element Msg
+linkLabel kind label target =
     if label == "Result" then
         paragraph [ Font.bold, width fill ] [ text label ]
 
     else
         Input.button [ Font.underline, width fill ]
-            { onPress = Just <| ScrollTo <| Maybe.withDefault label target
+            { onPress = Just <| ScrollTo kind <| Maybe.withDefault label target
             , label = paragraph [ Font.bold, width fill ] [ text label ]
             }

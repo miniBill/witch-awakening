@@ -4,7 +4,7 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Generated.TypePerk
 import Generated.Types as Types exposing (Race)
-import Types exposing (Model)
+import Types exposing (IdKind(..), Model)
 import View.Race
 
 
@@ -23,7 +23,8 @@ typePerkCost model race =
                 Monad.succeed cost
                     |> Monad.withInfo
                         { label = View.Race.raceToShortString race
-                        , anchor = Just ("perk-" ++ View.Race.raceToShortString race)
+                        , kind = IdKindTypePerk
+                        , anchor = Just (View.Race.raceToShortString race)
                         , value = Monad.Power cost
                         }
                     |> (if List.any (Types.isSameRace race) model.races then

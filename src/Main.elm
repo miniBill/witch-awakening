@@ -98,10 +98,9 @@ update msg model =
         CloseMenu ->
             ( { model | menuOpen = False }, Cmd.none )
 
-        ScrollTo id ->
+        ScrollTo kind id ->
             ( model
-            , id
-                |> String.Extra.underscored
+            , (Types.idKindToString kind ++ "-" ++ String.Extra.underscored id)
                 |> Browser.Dom.getElement
                 |> Task.andThen
                     (\{ element } ->

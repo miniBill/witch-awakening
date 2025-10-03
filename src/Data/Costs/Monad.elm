@@ -1,10 +1,12 @@
 module Data.Costs.Monad exposing (Info, Monad, Value(..), andThen, combine, combineMap, error, map, map2, map3, mapAndSum, succeed, withInfo, withPowerInfo, withRewardInfo, withWarning, withWarningMaybe)
 
 import ResultME exposing (ResultME)
+import Types exposing (IdKind)
 
 
 type alias Info =
     { label : String
+    , kind : IdKind
     , anchor : Maybe String
     , value : Value
     }
@@ -115,23 +117,35 @@ mapAndSum toValue list =
         |> map List.sum
 
 
-withPowerInfo : String -> Monad Int -> Monad Int
-withPowerInfo key r =
+withPowerInfo : IdKind -> String -> Monad Int -> Monad Int
+withPowerInfo kind key r =
     Result.map
         (\v ->
             { v
-                | infos = { label = key, anchor = Just key, value = Power v.value } :: v.infos
+                | infos =
+                    { label = key
+                    , kind = kind
+                    , anchor = Just key
+                    , value = Power v.value
+                    }
+                        :: v.infos
             }
         )
         r
 
 
-withRewardInfo : String -> Monad Int -> Monad Int
-withRewardInfo key r =
+withRewardInfo : IdKind -> String -> Monad Int -> Monad Int
+withRewardInfo kind key r =
     Result.map
         (\v ->
             { v
-                | infos = { label = key, anchor = Just key, value = RewardPoints v.value } :: v.infos
+                | infos =
+                    { label = key
+                    , kind = kind
+                    , anchor = Just key
+                    , value = RewardPoints v.value
+                    }
+                        :: v.infos
             }
         )
         r

@@ -14,7 +14,7 @@ import Images exposing (Image)
 import List.Extra
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Display)
+import Types exposing (Choice(..), Display, IdKind(..))
 import View
 import View.Affinity as Affinity
 
@@ -46,8 +46,9 @@ viewRace hideDLC display races =
             display
             DisplayRace
             ChoiceRace
+            IdKindRace
             "# True Form - Race"
-            [ Theme.blocks [] intro
+            [ Theme.blocks [] IdKindRace intro
             , raceBoxes
             ]
             [ raceBoxes
@@ -69,7 +70,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
         shortName =
             raceToShortString name
     in
-    Theme.card [ Theme.id shortName ]
+    Theme.card [ Theme.id IdKindRace shortName ]
         { display = display
         , forceShow = List.isEmpty selected
         , glow = Color.rgb255 0xF3 0xEA 0x6F
@@ -113,7 +114,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                 , viewAffinities affinities
                 , viewCharge charge
                 ]
-                :: Theme.blocks [] content
+                :: Theme.blocks [] IdKindRace content
                 :: affinityPicker selected name
         , onPress =
             case ( name, isSelected ) of

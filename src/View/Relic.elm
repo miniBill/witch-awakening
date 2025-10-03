@@ -12,7 +12,7 @@ import Images
 import List.Extra
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), CosmicPearlData, Display, RankedRelic)
+import Types exposing (Choice(..), CosmicPearlData, Display, IdKind(..), RankedRelic)
 import View
 import View.Affinity as Affinity
 
@@ -39,8 +39,9 @@ viewRelics hideDLC display pearl mainRace races relics =
             display
             DisplayRelics
             identity
+            IdKindRelic
             "# Relics"
-            [ Theme.blocks [ centerX ] Relic.intro
+            [ Theme.blocks [ centerX ] IdKindRelic Relic.intro
             , sorted
                 |> Theme.wrappedRow
                     [ centerX
@@ -139,7 +140,7 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
         color =
             Color.rgb255 0xF3 0xEA 0x6F
     in
-    Theme.card [ Theme.id (Types.relicToString name) ]
+    Theme.card [ Theme.id IdKindRelic (Types.relicToString name) ]
         { display = display
         , forceShow = False
         , glow = color
@@ -207,7 +208,7 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                     viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
 
                 Just req ->
-                    View.viewRequirements req :: viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
+                    View.viewRequirements IdKindRelic req :: viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
         , onPress = msg
         }
 
@@ -216,7 +217,7 @@ viewContent : Maybe Race -> Bool -> List RankedRelic -> CosmicPearlData -> List 
 viewContent mainRace isSelected selected pearl races { content, name } color =
     case content of
         Single _ block ->
-            [ Theme.blocks [] block ]
+            [ Theme.blocks [] IdKindRelic block ]
 
         CosmicPearlContent cost block ->
             viewCosmicPearl mainRace isSelected pearl races name cost block
@@ -261,7 +262,7 @@ viewContent mainRace isSelected selected pearl races { content, name } color =
                         , onPress = Just <| ChoiceRelic ( relic, not isChoiceSelected )
                         }
             in
-            Theme.blocks [] before :: choicesView
+            Theme.blocks [] IdKindRelic before :: choicesView
 
 
 viewCosmicPearl :
@@ -316,9 +317,9 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
             in
             Theme.column [ width fill ] <|
                 [ Theme.row []
-                    [ Theme.blocks [] "Swap"
+                    [ Theme.blocks [] IdKindRelic "Swap"
                     , Theme.viewAffinity from
-                    , Theme.blocks [] "with"
+                    , Theme.blocks [] IdKindRelic "with"
                     ]
                 , Affinity.selectable
                     |> List.map (\affinity -> viewSwap affinity.name)
@@ -357,7 +358,7 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                     Affinity.button isButtonSelected msg to
             in
             Theme.column [ width fill ]
-                [ Theme.blocks [ width fill ] "Add an affinity: "
+                [ Theme.blocks [ width fill ] IdKindRelic "Add an affinity: "
                 , Affinity.selectable
                     |> List.map (\affinity -> viewAdd affinity.name)
                     |> Theme.wrappedRow []
@@ -377,7 +378,7 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                     pearl.add ++ [ AffinityAll ]
                 )
     in
-    [ Theme.blocks [ height fill ] block
+    [ Theme.blocks [ height fill ] IdKindRelic block
     , if isSelected then
         Theme.button
             [ width fill
@@ -406,5 +407,5 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
                 swapBlock main ++ addBlock
 
             _ ->
-                Theme.blocks [] "You need to select a main race to change its affinities" :: addBlock
+                Theme.blocks [] IdKindRelic "You need to select a main race to change its affinities" :: addBlock
     ]

@@ -7,7 +7,7 @@ import Dict exposing (Dict)
 import Generated.Companion
 import Generated.Types as Types exposing (Class, Companion, Faction(..), Race)
 import List.Extra
-import Types exposing (Model)
+import Types exposing (IdKind(..), Model)
 
 
 value : Model key -> Monad Points
@@ -160,6 +160,7 @@ value model =
                                 Monad.succeed 0
                                     |> Monad.withInfo
                                         { label = nameString
+                                        , kind = IdKindCompanion
                                         , anchor = Nothing
                                         , value = Monad.FreeBecause reason
                                         }
@@ -168,7 +169,7 @@ value model =
                                 case cost of
                                     Just v ->
                                         Monad.succeed -v
-                                            |> Monad.withPowerInfo nameString
+                                            |> Monad.withPowerInfo IdKindCompanion nameString
 
                                     Nothing ->
                                         Monad.error <| "Companion " ++ nameString ++ " does not have a fixed cost"

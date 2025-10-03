@@ -8,7 +8,7 @@ import Generated.Types as Types exposing (Class)
 import Gradients
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Display)
+import Types exposing (Choice(..), Display, IdKind(..))
 import View
 
 
@@ -34,8 +34,9 @@ viewClass hideDLC display class =
             display
             DisplayClass
             ChoiceClass
+            IdKindClass
             "# True Form - Class"
-            [ Theme.blocks [] intro
+            [ Theme.blocks [] IdKindClass intro
             , classBoxes
                 |> Theme.wrappedRow
                     [ width fill
@@ -86,7 +87,7 @@ classBox display selected { name, dlc, color, content } =
             else
                 Just name
     in
-    Theme.card [ Theme.id (Types.classToString name) ]
+    Theme.card [ Theme.id IdKindClass (Types.classToString name) ]
         { display = display
         , forceShow = selected == Nothing
         , glow = color
@@ -123,6 +124,6 @@ classBox display selected { name, dlc, color, content } =
                         Gradients.purpleGradient
                         dlcName
             ]
-        , content = [ Theme.blocks [] content ]
+        , content = [ Theme.blocks [] IdKindClass content ]
         , onPress = Just msg
         }

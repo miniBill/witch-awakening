@@ -9,7 +9,7 @@ import Data.Race as Race
 import Generated.Perk
 import Generated.Types as Types exposing (Class, Magic(..), Perk(..), Race(..))
 import List.Extra
-import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
+import Types exposing (CosmicPearlData, IdKind(..), RankedMagic, RankedPerk)
 import View.Perk
 
 
@@ -75,6 +75,7 @@ value model =
                                 |> Monad.succeed
                                 |> Monad.withInfo
                                     { label = name
+                                    , kind = IdKindPerk
                                     , anchor = Just name
                                     , value = v
                                     }

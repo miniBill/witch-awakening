@@ -13,7 +13,7 @@ import TypedSvg.Attributes.InPx
 import TypedSvg.Core as TypedSvg exposing (Svg)
 import TypedSvg.Events
 import TypedSvg.Types exposing (Align(..), MeetOrSlice(..), Paint(..), Scale(..))
-import Types exposing (Msg(..), RankedMagic)
+import Types exposing (IdKind(..), Msg(..), RankedMagic)
 import View.Magic
 
 
@@ -198,7 +198,7 @@ viewMagic name x y =
     ]
         |> TypedSvg.g
             [ TypedSvg.Attributes.id ("pyramid-" ++ nameString)
-            , TypedSvg.Events.onClick (ScrollTo nameString)
+            , TypedSvg.Events.onClick (ScrollTo IdKindMagic nameString)
             ]
 
 

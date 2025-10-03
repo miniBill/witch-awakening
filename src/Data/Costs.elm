@@ -13,7 +13,7 @@ import Data.Costs.Relics
 import Data.Costs.TypePerks
 import Data.Costs.Utils as Utils exposing (Points, zero)
 import Generated.Types exposing (GameMode(..))
-import Types exposing (Model)
+import Types exposing (IdKind(..), Model)
 
 
 
@@ -86,6 +86,7 @@ startingPower model =
             succeed v
                 |> Monad.withInfo
                     { label = label
+                    , kind = IdKindGameMode
                     , anchor = Just "Game mode"
                     , value = Monad.Power v
                     }

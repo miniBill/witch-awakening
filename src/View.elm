@@ -10,7 +10,7 @@ import List.Extra
 import Parser
 import Set exposing (Set)
 import Theme
-import Types exposing (Display(..))
+import Types exposing (Display(..), IdKind)
 
 
 collapsible :
@@ -18,11 +18,12 @@ collapsible :
     -> Display
     -> (Display -> msg)
     -> (innerMsg -> msg)
+    -> IdKind
     -> String
     -> List (Element innerMsg)
     -> List (Element innerMsg)
     -> Element msg
-collapsible attrs display displayMsg choiceMsg title full compact =
+collapsible attrs display displayMsg choiceMsg kind title full compact =
     case display of
         DisplayFull ->
             Theme.column
@@ -32,7 +33,7 @@ collapsible attrs display displayMsg choiceMsg title full compact =
                     ++ attrs
                 )
             <|
-                Theme.collapsibleBlocks displayMsg display [] title
+                Theme.collapsibleBlocks displayMsg display [] kind title
                     :: List.map (Element.map choiceMsg) full
 
         DisplayCompact ->
@@ -41,22 +42,23 @@ collapsible attrs display displayMsg choiceMsg title full compact =
                 , spacing <| Theme.rhythm * 2
                 ]
             <|
-                Theme.collapsibleBlocks displayMsg display [] title
+                Theme.collapsibleBlocks displayMsg display [] kind title
                     :: List.map (Element.map choiceMsg) compact
 
         DisplayCollapsed ->
-            Theme.collapsibleBlocks displayMsg display [] title
+            Theme.collapsibleBlocks displayMsg display [] kind title
 
 
 costButtons :
     String
     -> Color
     -> List a
+    -> IdKind
     -> String
     -> List Int
     -> (Int -> Int -> a)
     -> List (Element ( a, Bool ))
-costButtons label color selected before costs builder =
+costButtons label color selected kind before costs builder =
     let
         children : List (Element ( a, Bool ))
         children =
@@ -73,7 +75,7 @@ costButtons label color selected before costs builder =
                 |> Theme.wrappedRow []
             ]
     in
-    Theme.blocks [] before
+    Theme.blocks [] kind before
         :: children
 
 
@@ -116,8 +118,8 @@ filterDLC hideDLC list =
         list
 
 
-viewRequirements : String -> Element msg
-viewRequirements req =
+viewRequirements : IdKind -> String -> Element msg
+viewRequirements kind req =
     case Parser.run Utils.requisitesParser req of
         Ok requisites ->
             let
@@ -135,7 +137,7 @@ viewRequirements req =
                             )
                         |> String.join ", "
             in
-            Theme.blocks [] ("_Requires " ++ requisitesString ++ "._")
+            Theme.blocks [] kind ("_Requires " ++ requisitesString ++ "._")
 
         Err _ ->
-            Theme.blocks [] ("_Requires " ++ req ++ "._")
+            Theme.blocks [] kind ("_Requires " ++ req ++ "._")

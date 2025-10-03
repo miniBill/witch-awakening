@@ -9,7 +9,7 @@ import Generated.Types as Types exposing (GameMode)
 import Gradients
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Display)
+import Types exposing (Choice(..), Display, IdKind(..))
 import View
 
 
@@ -35,6 +35,7 @@ viewGameMode hideDLC display gameMode =
                     , Theme.padding
                     , Theme.borderColor Theme.colors.gameMode
                     ]
+                    IdKindGameMode
                     slotDescription
 
             boxes : List (Element (Maybe GameMode))
@@ -46,8 +47,9 @@ viewGameMode hideDLC display gameMode =
             display
             DisplayGameMode
             ChoiceGameMode
+            IdKindGameMode
             "# Game Mode"
-            [ Theme.blocks [] intro
+            [ Theme.blocks [] IdKindGameMode intro
             , (boxes ++ [ slotsBox ])
                 |> Theme.wrappedRow
                     [ centerX
@@ -89,7 +91,7 @@ gameModeBox display selected { name, content } =
         color =
             Theme.colors.gameMode
     in
-    Theme.card [ Theme.id (Types.gameModeToString name) ]
+    Theme.card [ Theme.id IdKindGameMode (Types.gameModeToString name) ]
         { display = display
         , forceShow = False
         , glow = color
@@ -121,7 +123,7 @@ gameModeBox display selected { name, content } =
                 gradient
                 (Types.gameModeToString name)
             ]
-        , content = [ Theme.blocks [] content ]
+        , content = [ Theme.blocks [] IdKindGameMode content ]
         , onPress = Just msg
         }
 

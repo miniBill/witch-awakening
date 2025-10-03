@@ -4,7 +4,7 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points, zero)
 import Generated.Relic
 import Generated.Types as Types exposing (Relic(..))
-import Types exposing (Model, RankedRelic)
+import Types exposing (IdKind(..), Model, RankedRelic)
 
 
 value : Model key -> Monad Points
@@ -48,4 +48,4 @@ relicCost ({ class, cosmicPearl } as model) details =
                 (baseCost * multiplier)
                     |> Utils.checkRequirements relic (Types.relicToString details.name) model
             )
-        |> Monad.withRewardInfo (Types.relicToString details.name)
+        |> Monad.withRewardInfo IdKindRelic (Types.relicToString details.name)

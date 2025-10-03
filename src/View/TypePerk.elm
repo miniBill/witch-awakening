@@ -10,7 +10,7 @@ import Gradients
 import Images
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Display)
+import Types exposing (Choice(..), Display, IdKind(..))
 import View
 import View.Race
 
@@ -42,6 +42,7 @@ viewTypePerks hideDLC witchRaces display typePerks =
             display
             DisplayTypePerks
             ChoiceTypePerk
+            IdKindTypePerk
             TypePerk.title
             [ Theme.blocks
                 [ Font.color <| rgb 0 0 0
@@ -51,6 +52,7 @@ viewTypePerks hideDLC witchRaces display typePerks =
                 , width <| Element.maximum 600 fill
                 , Theme.rounded
                 ]
+                IdKindTypePerk
                 "These are particular perks that can be optionally taken by a witch of a given racial type. If hybridized (via later perk), you can purchase type perks of both types."
             , boxes
                 |> Theme.wrappedRow
@@ -105,7 +107,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
             else
                 Long
     in
-    Theme.card [ Theme.id ("perk-" ++ raceString) ]
+    Theme.card [ Theme.id IdKindTypePerk raceString ]
         { display = display
         , forceShow = List.any (Types.isSameRace race) witchRaces
         , glow = Color.rgb255 0xF3 0xEA 0x6F
@@ -230,7 +232,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 |> Theme.image [ width <| px 40 ]
                 |> el [ alignBottom ]
             ]
-        , content = [ Theme.blocks [] content ]
+        , content = [ Theme.blocks [] IdKindTypePerk content ]
         , onPress = Just ( race, not isSelected )
         }
 

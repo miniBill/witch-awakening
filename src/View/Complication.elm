@@ -11,7 +11,7 @@ import Gradients
 import List.Extra
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), ComplicationKind(..), Display, RankedComplication)
+import Types exposing (Choice(..), ComplicationKind(..), Display, IdKind(..), RankedComplication)
 import View
 
 
@@ -49,9 +49,10 @@ viewComplications hideDLC display complications =
             display
             DisplayComplications
             ChoiceComplication
+            IdKindComplication
             Complication.title
-            [ Theme.blocks [] Complication.intro
-            , Theme.blocks [] "# World Shifts"
+            [ Theme.blocks [] IdKindComplication Complication.intro
+            , Theme.blocks [] IdKindComplication "# World Shifts"
             , ((filtered
                     |> List.filter isWorldShift
                     |> List.filterMap
@@ -64,11 +65,12 @@ viewComplications hideDLC display complications =
                         , Theme.padding
                         , Theme.borderColor Theme.colors.worldShift
                         ]
+                        IdKindComplication
                         Complication.worldShiftsDescription
                    ]
               )
                 |> wrappedRow
-            , Theme.blocks [] "# Generic Complications"
+            , Theme.blocks [] IdKindComplication "# Generic Complications"
             , filtered
                 |> List.filter (\complication -> not (isWorldShift complication))
                 |> List.filterMap (complicationBox display complications)
@@ -239,7 +241,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 (Types.complicationToString name)
             ]
     in
-    Theme.card [ Theme.id (Types.complicationToString name) ]
+    Theme.card [ Theme.id IdKindComplication (Types.complicationToString name) ]
         { display = display
         , forceShow = False
         , glow = color
@@ -264,6 +266,7 @@ viewContent selected { content, name } color =
                 [ height fill
                 , Theme.padding
                 ]
+                IdKindComplication
                 block
             ]
 
@@ -294,6 +297,7 @@ viewContent selected { content, name } color =
                         (width fill :: attrs)
                         { label =
                             Theme.blocks []
+                                IdKindComplication
                                 ("- *Tier "
                                     ++ String.fromInt (tier + 1)
                                     ++ "*: "
@@ -307,9 +311,9 @@ viewContent selected { content, name } color =
                 tiersView =
                     List.indexedMap viewTier tiers
             in
-            Theme.blocks [] before
+            Theme.blocks [] IdKindComplication before
                 :: tiersView
-                ++ [ Theme.blocks [] after ]
+                ++ [ Theme.blocks [] IdKindComplication after ]
 
         WithChoices before choices after ->
             let
@@ -342,6 +346,7 @@ viewContent selected { content, name } color =
                         (width fill :: attrs)
                         { label =
                             Theme.blocks []
+                                IdKindComplication
                                 ("- "
                                     ++ label
                                     ++ "."
@@ -349,10 +354,10 @@ viewContent selected { content, name } color =
                         , onPress = Just ( complication, not isChoiceSelected )
                         }
             in
-            Theme.blocks [] before
+            Theme.blocks [] IdKindComplication before
                 :: choicesView
-                ++ [ Theme.blocks [] after ]
+                ++ [ Theme.blocks [] IdKindComplication after ]
 
         WithGains costs before ->
-            View.costButtons "Gain" color selected before costs <|
+            View.costButtons "Gain" color selected IdKindComplication before costs <|
                 \tier _ -> { name = name, kind = Tiered (tier + 1) }

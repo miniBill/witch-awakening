@@ -14,7 +14,7 @@ import Images exposing (Image)
 import List.Extra
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), Display(..))
+import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
 
 
@@ -34,6 +34,7 @@ viewFaction hideDLC display faction =
             display
             DisplayFaction
             ChoiceFaction
+            IdKindFaction
             "# Factions"
             [ Theme.column
                 [ Theme.padding
@@ -47,6 +48,7 @@ viewFaction hideDLC display faction =
                     , width <| Element.maximum 800 fill
                     , centerX
                     ]
+                    IdKindFaction
                     (Faction.intro ++ String.repeat 4 "\n" ++ Faction.summaries)
                 ]
             , filtered
@@ -70,6 +72,7 @@ viewFaction hideDLC display faction =
                         , Theme.padding
                         , Theme.rounded
                         ]
+                        IdKindFaction
                         Faction.humansIntro
                 , Theme.image
                     [ width fill
@@ -104,7 +107,7 @@ factionBox display selected details =
         Nothing
 
     else
-        Theme.column [ width fill, Theme.id (Types.factionToString details.name) ]
+        Theme.column [ width fill, Theme.id IdKindFaction (Types.factionToString details.name) ]
             [ introRow display details
             , Theme.wrappedRow [ width fill ]
                 [ content selected details
@@ -168,16 +171,19 @@ content selected { name, description, location, relations } =
                     [ height fill
                     , Theme.padding
                     ]
+                    IdKindFaction
                     ("[DESCRIPTION:] " ++ description)
                 , Theme.blocks
                     [ height fill
                     , Theme.padding
                     ]
+                    IdKindFaction
                     ("[LOCATION:] " ++ location)
                 , Theme.blocks
                     [ height fill
                     , Theme.padding
                     ]
+                    IdKindFaction
                     ("[RELATIONS:] " ++ relations)
                 ]
         , onPress = Just factionMsg
@@ -240,10 +246,11 @@ viewPerk display selected { name, perk, perkContent, images } =
             , content =
                 case List.Extra.find (\magic -> magic.faction == Just name) Generated.Magic.all of
                     Nothing ->
-                        [ Theme.blocks [] perkContent ]
+                        [ Theme.blocks [] IdKindFaction perkContent ]
 
                     Just magic ->
                         [ Theme.blocks []
+                            IdKindFaction
                             (perkContent ++ "\n\n_*[" ++ Types.magicToString magic.name ++ "]*_ is half price for you, stacks with affinity.")
                         ]
             , onPress = Just perkMsg

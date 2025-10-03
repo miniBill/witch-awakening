@@ -6,7 +6,7 @@ import Data.Costs.Utils as Utils exposing (Points, zero)
 import Generated.Complication
 import Generated.Types as Types exposing (GameMode(..))
 import List.Extra
-import Types exposing (ComplicationKind(..), Model)
+import Types exposing (ComplicationKind(..), IdKind(..), Model)
 
 
 {-| "Complications can only increase the starting power by up to 30 points"
@@ -154,5 +154,5 @@ complicationValue model complication =
                         in
                         r + bonus
                     )
-                |> Monad.withPowerInfo
+                |> Monad.withPowerInfo IdKindComplication
                     (Types.complicationToString details.name)
