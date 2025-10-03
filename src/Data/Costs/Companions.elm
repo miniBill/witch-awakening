@@ -199,7 +199,7 @@ sameClass companion maybeClass =
 sameRace : Companion.Details -> List Race -> Bool
 sameRace companion races =
     List.isEmpty companion.races
-        || List.any (\companionRace -> List.member companionRace races) companion.races
+        || List.any (\companionRace -> List.any (Types.isSameRace companionRace) races) companion.races
 
 
 getCompanion : Companion -> Monad ( Maybe Faction, Companion.Details )

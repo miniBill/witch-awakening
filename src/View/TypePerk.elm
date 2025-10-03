@@ -107,7 +107,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
     in
     Theme.card [ Theme.id ("perk-" ++ raceString) ]
         { display = display
-        , forceShow = List.member race witchRaces
+        , forceShow = List.any (Types.isSameRace race) witchRaces
         , glow = Color.rgb255 0xF3 0xEA 0x6F
         , isSelected = isSelected
         , imageAttrs = [ Theme.style "background-position" "top" ]

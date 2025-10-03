@@ -3,7 +3,7 @@ module Data.Costs.TypePerks exposing (value)
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Generated.TypePerk
-import Generated.Types exposing (Race)
+import Generated.Types as Types exposing (Race)
 import Types exposing (Model)
 import View.Race
 
@@ -26,7 +26,7 @@ typePerkCost model race =
                         , anchor = Just ("perk-" ++ View.Race.raceToShortString race)
                         , value = Monad.Power cost
                         }
-                    |> (if List.member race model.races then
+                    |> (if List.any (Types.isSameRace race) model.races then
                             identity
 
                         else
