@@ -122,13 +122,13 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> Theme.gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradients.blueGradient
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> Theme.gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradients.blueGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
