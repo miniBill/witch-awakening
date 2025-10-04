@@ -2,6 +2,7 @@ module View.Companion exposing (viewCompanions)
 
 import Color exposing (Color)
 import Data.Companion as Companion exposing (MaybeClass(..))
+import Data.Faction as Faction
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, paddingEach, px, shrink, spacing, table, text, width)
 import Element.Background as Background
 import Element.Border as Border
@@ -134,7 +135,7 @@ companionSection display companions ( faction, section ) =
             ]
             2
             Gradients.yellowGradient
-            (Companion.factionToCollectiveName faction ++ ":")
+            (Faction.toCollectiveName faction ++ ":")
         , boxes
             |> Theme.wrappedRow
                 [ width fill

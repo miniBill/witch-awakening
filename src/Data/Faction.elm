@@ -1,4 +1,4 @@
-module Data.Faction exposing (Details, toShortString)
+module Data.Faction exposing (Details, toCollectiveName, toShortString)
 
 import Generated.Types exposing (Faction(..))
 import Images exposing (Image)
@@ -53,3 +53,43 @@ toShortString raw =
 
         FactionTheLodge ->
             "Lodge"
+
+
+toCollectiveName : Maybe Faction -> String
+toCollectiveName faction =
+    case faction of
+        Just FactionTheCollegeOfArcadia ->
+            "The Arcadians"
+
+        Just FactionHawthorneAcademia ->
+            "Hawthorne"
+
+        Just FactionTheWatchers ->
+            "The Watchers"
+
+        Just FactionTheHespatianCoven ->
+            "The Hespatians"
+
+        Just FactionLunabella ->
+            "The Lunabellans"
+
+        Just FactionAlfheimrAlliance ->
+            "Alliance"
+
+        Just FactionTheOutsiders ->
+            "Outsiders"
+
+        Just FactionTheORC ->
+            "The ORCs / Badges"
+
+        Just FactionAlphazonIndustries ->
+            "The Alphazonians / Suits"
+
+        Just FactionIndependents ->
+            "Independents / Other"
+
+        Just FactionTheLodge ->
+            "Lodge"
+
+        Nothing ->
+            "Independents / Other"

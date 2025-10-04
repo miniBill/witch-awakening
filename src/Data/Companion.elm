@@ -1,6 +1,6 @@
-module Data.Companion exposing (Details, MaybeClass(..), Score(..), factionToCollectiveName)
+module Data.Companion exposing (Details, MaybeClass(..), Score(..))
 
-import Generated.Types exposing (Class, Companion, Faction(..), Race)
+import Generated.Types exposing (Class, Companion, Race)
 
 
 type alias Details =
@@ -33,43 +33,3 @@ type MaybeClass
 type Score
     = NormalScore Int
     | SpecialEffect { better : Int, worse : Maybe Int }
-
-
-factionToCollectiveName : Maybe Faction -> String
-factionToCollectiveName faction =
-    case faction of
-        Just FactionTheCollegeOfArcadia ->
-            "The Arcadians"
-
-        Just FactionHawthorneAcademia ->
-            "Hawthorne"
-
-        Just FactionTheWatchers ->
-            "The Watchers"
-
-        Just FactionTheHespatianCoven ->
-            "The Hespatians"
-
-        Just FactionLunabella ->
-            "The Lunabellans"
-
-        Just FactionAlfheimrAlliance ->
-            "Alliance"
-
-        Just FactionTheOutsiders ->
-            "Outsiders"
-
-        Just FactionTheORC ->
-            "The ORCs / Badges"
-
-        Just FactionAlphazonIndustries ->
-            "The Alphazonians / Suits"
-
-        Just FactionIndependents ->
-            "Independents / Other"
-
-        Just FactionTheLodge ->
-            "Lodge"
-
-        Nothing ->
-            "Independents / Other"
