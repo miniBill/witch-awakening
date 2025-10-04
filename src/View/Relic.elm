@@ -2,7 +2,7 @@ module View.Relic exposing (viewRelics)
 
 import Color exposing (Color)
 import Data.Affinity as Affinity
-import Data.Relic as Relic exposing (Content(..))
+import Data.Relic exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, px, spacing, text, width)
 import Element.Font as Font
 import Generated.Relic as Relic
@@ -41,7 +41,7 @@ viewRelics hideDLC display pearl mainRace races relics =
             identity
             IdKindRelic
             "# Relics"
-            [ Theme.blocks [ centerX ] IdKindRelic Relic.intro
+            [ Theme.blocks [ centerX ] IdKindRelic intro
             , sorted
                 |> Theme.wrappedRow
                     [ centerX
@@ -409,3 +409,14 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
             _ ->
                 Theme.blocks [] IdKindRelic "You need to select a main race to change its affinities" :: addBlock
     ]
+
+
+intro : String
+intro =
+    """
+    {center} Relics are like perks, but are external boons in the form of magical artifacts, as a rest they aren’t things inherent to yourself, but are things you can acquire over time.
+
+    {center} "Let’s see if we can detect any Relics in your future, they sometimes show up in these tests..."
+
+    {center} {choice *Relics cost REWARD points obtained from Quests, as shown, however you can buy them with POWER instead, if you so choose.*}
+    """
