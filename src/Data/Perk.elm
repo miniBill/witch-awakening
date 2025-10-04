@@ -1,4 +1,4 @@
-module Data.Perk exposing (Content(..), Details, all, hybridizeCost)
+module Data.Perk exposing (Content(..), Details, hybridizeCost, weird)
 
 import Generated.Types exposing (Affinity(..), Class(..), Perk(..), Race(..))
 import List.Extra
@@ -23,8 +23,8 @@ type Content
     | WithChoicesChargeSwap String (List ( String, Int ))
 
 
-all : List RankedPerk -> List Details
-all perks =
+weird : List RankedPerk -> List Details
+weird perks =
     [ chargeSwap perks ]
 
 
@@ -36,21 +36,21 @@ hybridizeCost =
 chargeSwap : List RankedPerk -> Details
 chargeSwap perks =
     let
-        race : Race
-        race =
+        name : Perk
+        name =
             List.Extra.findMap
-                (\{ name } ->
-                    case name of
-                        PerkChargeSwap r ->
-                            Just r
+                (\rp ->
+                    case rp.name of
+                        PerkChargeSwap _ ->
+                            Just rp.name
 
                         _ ->
                             Nothing
                 )
                 perks
-                |> Maybe.withDefault RaceNeutral
+                |> Maybe.withDefault (PerkChargeSwap RaceNeutral)
     in
-    { name = PerkChargeSwap race
+    { name = name
     , class = ClassWarlock
     , requires = Nothing
     , affinity = AffinitySoul

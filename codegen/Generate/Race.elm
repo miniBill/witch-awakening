@@ -1,4 +1,4 @@
-module Generate.Races exposing (RacesModule, file)
+module Generate.Race exposing (RacesModule, file)
 
 import Elm
 import Elm.Annotation
@@ -10,6 +10,7 @@ import Gen.CodeGen.Generate as Generate
 import Gen.Data.Race
 import Gen.List
 import Gen.Maybe
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
@@ -19,15 +20,17 @@ import String.Extra
 
 type alias RacesModule =
     { all : Elm.Expression -> Elm.Expression
+    , toString : Elm.Expression -> Elm.Expression
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Race ) -> ResultME Generate.Error (Elm.Declare.Module RacesModule)
-file types dlcRaces =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Race ) -> ResultME Generate.Error (Elm.Declare.Module RacesModule)
+file types enum dlcRaces =
     Result.map
         (\declarations ->
             Elm.Declare.module_ [ "Generated", "Race" ] RacesModule
                 |> Elm.Declare.with (all types dlcRaces)
+                |> Elm.Declare.with (Enum.toString enum)
                 |> Elm.Declare.Extra.withDeclarations declarations
         )
         (dlcToRaces types dlcRaces)

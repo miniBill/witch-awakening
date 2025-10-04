@@ -1,23 +1,8 @@
-module Data exposing (Enum, Enums, Variant, enums)
+module Data exposing (Enums, enums)
 
+import Generate.Enum exposing (Enum, Variant)
 import List.Extra
 import Parsers
-
-
-type alias Enum =
-    { name : String
-    , variants : List Variant
-    , toImage : Bool
-    , isSame : Bool
-    }
-
-
-type alias Variant =
-    { name : String
-    , arguments : List String
-    , dlc : Maybe String
-    , toStringException : Maybe String
-    }
 
 
 type alias Enums =

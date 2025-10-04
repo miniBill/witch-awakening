@@ -6,11 +6,11 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, e
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Perk
+import Generated.Gradient as Gradient
+import Generated.Image as Image
+import Generated.Perk as Perk
 import Generated.Race
 import Generated.Types as Types exposing (Perk(..), Race(..), Slot(..))
-import Gradients
-import Images
 import List.Extra
 import Maybe.Extra
 import Set exposing (Set)
@@ -26,19 +26,19 @@ viewPerks hideDLC hideMeta display mainRace races perks =
         filtered : List Perk.Details
         filtered =
             if hideMeta then
-                Generated.Perk.all perks
+                Perk.all perks
                     |> List.filter (\perk -> not perk.isMeta)
                     |> View.filterDLC hideDLC
 
             else
-                Generated.Perk.all perks
+                Perk.all perks
                     |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then
         Element.none
 
     else
-        View.collapsible (Theme.topBackground Images.perkIntro)
+        View.collapsible (Theme.topBackground Image.perkIntro)
             display
             DisplayPerks
             identity
@@ -176,13 +176,13 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> Theme.gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradient.yellowGradient
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> Theme.gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradient.yellowGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -231,7 +231,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                         , Font.size 32
                         ]
                         4
-                        Gradients.yellowGradient
+                        Gradient.yellowGradient
                         "META"
 
                   else
@@ -247,7 +247,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                             , Font.size 24
                             ]
                             4
-                            Gradients.purpleGradient
+                            Gradient.purpleGradient
                             dlcName
                 ]
             , Theme.classToBadge class
@@ -271,7 +271,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 , Element.paddingXY 32 0
                 ]
                 4
-                Gradients.blueGradient
+                Gradient.blueGradient
                 nameString
             ]
         , content =
@@ -287,11 +287,11 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
 
 perkToShortString : Perk -> String
 perkToShortString name =
-    if Generated.Perk.containsDash name then
-        Types.perkToString name
+    if Perk.containsDash name then
+        Perk.toString name
 
     else
-        Types.perkToString name
+        Perk.toString name
             |> String.split "-"
             |> List.take 1
             |> String.concat

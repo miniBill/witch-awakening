@@ -5,8 +5,8 @@ import Element exposing (Element, alignBottom, alignTop, centerX, fill, moveDown
 import Element.Border as Border
 import Element.Font as Font
 import Generated.GameMode as GameMode
+import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (GameMode)
-import Gradients
 import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display, IdKind(..))
@@ -85,13 +85,13 @@ gameModeBox display selected { name, content } =
 
         gradient : List ( Int, Int, Int )
         gradient =
-            Gradients.purpleGradient
+            Gradient.purpleGradient
 
         color : Color
         color =
             Theme.colors.gameMode
     in
-    Theme.card [ Theme.id IdKindGameMode (Types.gameModeToString name) ]
+    Theme.card [ Theme.id IdKindGameMode (GameMode.toString name) ]
         { display = display
         , forceShow = False
         , glow = color
@@ -121,7 +121,7 @@ gameModeBox display selected { name, content } =
                 ]
                 4
                 gradient
-                (Types.gameModeToString name)
+                (GameMode.toString name)
             ]
         , content = [ Theme.blocks [] IdKindGameMode content ]
         , onPress = Just msg

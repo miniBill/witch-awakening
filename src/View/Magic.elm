@@ -6,13 +6,13 @@ import Element exposing (Element, centerX, centerY, column, el, fill, fillPortio
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Classes
-import Generated.Magic
+import Generated.Class as Class
+import Generated.Gradient as Gradient
+import Generated.Image as Image
+import Generated.Magic as Magic
 import Generated.Types as Types exposing (Magic, Slot(..))
-import Gradients
 import Html
 import Html.Attributes
-import Images
 import List.Extra
 import Set exposing (Set)
 import Theme
@@ -25,7 +25,7 @@ viewMagics hideDLC display selected =
     let
         filtered : List Magic.Details
         filtered =
-            Generated.Magic.all
+            Magic.all
                 |> View.filterDLC hideDLC
                 |> List.filter (\{ faction } -> faction == Nothing)
     in
@@ -111,7 +111,7 @@ elementalIntro =
     Theme.row
         (Theme.padding
             :: width fill
-            :: Theme.topBackground Images.magicElementalism
+            :: Theme.topBackground Image.magicElementalism
         )
         [ let
             color : Element.Color
@@ -135,7 +135,7 @@ elementalIntro =
                     (\c ->
                         c
                             |> String.fromChar
-                            |> Theme.gradientText 4 Gradients.blueGradient
+                            |> Theme.gradientText 4 Gradient.blueGradient
                     )
                 |> Element.wrappedRow
                     [ Font.size 58
@@ -242,7 +242,7 @@ costTable =
                 , Html.Attributes.style "color" "white"
                 ]
                 (Html.td [ textAlign "center" ]
-                    [ Theme.gradientTextHtml 1 Gradients.yellowGradient "Slot costs" ]
+                    [ Theme.gradientTextHtml 1 Gradient.yellowGradient "Slot costs" ]
                     :: List.map viewSlot [ SlotWhite, SlotFolk, SlotNoble, SlotHeroic, SlotEpic ]
                 )
 
@@ -291,13 +291,13 @@ magicBox display factional selected index details =
         Element.none
 
     else if modBy 2 index == 0 || factional then
-        Theme.wrappedRow [ Theme.id IdKindMagic (Types.magicToString details.name) ]
+        Theme.wrappedRow [ Theme.id IdKindMagic (Magic.toString details.name) ]
             [ magicImage details
             , viewContent display selected details
             ]
 
     else
-        Theme.wrappedRow [ Theme.id IdKindMagic (Types.magicToString details.name) ]
+        Theme.wrappedRow [ Theme.id IdKindMagic (Magic.toString details.name) ]
             [ viewContent display selected details
             , magicImage details
             ]
@@ -343,7 +343,7 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
                             , width fill
                             ]
                             4
-                            Gradients.purpleGradient
+                            Gradient.purpleGradient
                             dlcName
                 , Theme.column [ height fill, Theme.padding ] <|
                     Theme.blocks [] IdKindMagic description
@@ -381,7 +381,7 @@ magicTitle display { name, hasRankZero, class, affinities } =
                         [ width <| px 32
                         , centerY
                         ]
-                        Images.badgeSpecial
+                        Image.badgeSpecial
             , if hasRankZero then
                 el
                     [ Font.size 48
@@ -389,15 +389,15 @@ magicTitle display { name, hasRankZero, class, affinities } =
                     , centerY
                     ]
                 <|
-                    Theme.gradientText 1 Gradients.yellowGradient "★"
+                    Theme.gradientText 1 Gradient.yellowGradient "★"
 
               else
                 Element.none
             ]
-                ++ (Types.magicToString name
+                ++ (Magic.toString name
                         |> String.split "-"
                         |> List.intersperse "-"
-                        |> List.concatMap (Theme.gradientTextSplit 4 Gradients.yellowGradient)
+                        |> List.concatMap (Theme.gradientTextSplit 4 Gradient.yellowGradient)
                    )
 
         affinitiesViews : List (Element msg)
@@ -444,7 +444,7 @@ viewAffinities affinities =
                                         (Theme.viewAffinity aff)
                                 )
                             |> List.intersperse
-                                (Theme.gradientText 2 Gradients.yellowGradient " + "
+                                (Theme.gradientText 2 Gradient.yellowGradient " + "
                                     |> el
                                         [ Font.size 24
                                         , moveUp 4
@@ -453,7 +453,7 @@ viewAffinities affinities =
                             |> Theme.row []
                     )
                 |> List.intersperse
-                    (Theme.gradientText 2 Gradients.yellowGradient " OR "
+                    (Theme.gradientText 2 Gradient.yellowGradient " OR "
                         |> el
                             [ Font.size 24
                             , moveDown 4
@@ -506,7 +506,7 @@ viewRank selected { name, class } rankIndex label =
                         ]
                       <|
                         Theme.gradientText 2
-                            Gradients.yellowGradient
+                            Gradient.yellowGradient
                             ("Rank " ++ String.fromInt rank)
                     , Theme.blocks [ width fill ] IdKindMagic label
                     ]
@@ -518,7 +518,7 @@ maybeClassToColor : MaybeClass -> Color
 maybeClassToColor class =
     case class of
         ClassOne c ->
-            Generated.Classes.toColor c
+            Class.toColor c
 
         ClassSpecial ->
             Theme.colors.epic

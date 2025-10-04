@@ -10,15 +10,19 @@ import Data.Race
 import Data.Relic
 import Dict exposing (Dict)
 import Dict.Extra
-import Generated.Companion
-import Generated.Complication
-import Generated.Faction
-import Generated.Magic
-import Generated.Perk
-import Generated.Race
+import Generated.Affinity as Affinity
+import Generated.Class as Class
+import Generated.Companion as Companion
+import Generated.Complication as Complication
+import Generated.ComplicationCategory as ComplicationCategory
+import Generated.Faction as Faction
+import Generated.Magic as Magic
+import Generated.Perk as Perk
+import Generated.Race as Race
 import Generated.Relic as Relic
+import Generated.Size as Size
 import Generated.TypePerk as TypePerk
-import Generated.Types exposing (Affinity(..), Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, relicToString, sizeToString)
+import Generated.Types exposing (Affinity(..), Faction)
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
@@ -136,25 +140,25 @@ dump model =
                     TypePerk.all
                         |> Dict.Extra.fromListBy (\typePerk -> View.Race.raceToShortString typePerk.race)
             in
-            go (dumpRace typePerks >> Just) (Generated.Race.all [])
+            go (dumpRace typePerks >> Just) (Race.all [])
 
         Perk ->
-            go dumpPerk (Generated.Perk.all [])
+            go dumpPerk (Perk.all [])
 
         Magic ->
-            go (dumpMagic >> Just) Generated.Magic.all
+            go (dumpMagic >> Just) Magic.all
 
         Relic ->
             go dumpRelic Relic.all
 
         Complication ->
-            go dumpComplication Generated.Complication.all
+            go dumpComplication Complication.all
 
         Faction ->
-            go (dumpFaction >> Just) Generated.Faction.all
+            go (dumpFaction >> Just) Faction.all
 
         Companion ->
-            Generated.Companion.all
+            Companion.all
                 |> List.filterMap
                     (\( faction, companions ) ->
                         let
@@ -175,7 +179,7 @@ dump model =
 
 dlcs : List (Maybe String)
 dlcs =
-    Generated.Race.all []
+    Race.all []
         |> List.map .dlc
         |> List.Extra.unique
 
@@ -210,8 +214,8 @@ dumpRace : Dict String TypePerk.Details -> Data.Race.Details -> List (Maybe Stri
 dumpRace typePerks details =
     [ Just <| "## Race: " ++ View.Race.raceToShortString details.name
     , listItem "Elements" affinityToString details.affinities
-    , item "Mana capacity" sizeToString details.tank
-    , item "Mana rate" sizeToString details.charge
+    , item "Mana capacity" Size.toString details.tank
+    , item "Mana rate" Size.toString details.charge
     , Just ""
     , Just <| String.Multiline.here details.content
     ]
@@ -259,9 +263,9 @@ dumpPerk details =
     maybeContent
         |> Maybe.map
             (\content ->
-                [ Just <| "## Perk: " ++ perkToString details.name
-                , item "Element" affinityToString details.affinity
-                , item "Class" classToString details.class
+                [ Just <| "## Perk: " ++ Perk.toString details.name
+                , item "Element" Affinity.toString details.affinity
+                , item "Class" Class.toString details.class
                 , flagItem "Meta" details.isMeta
                 , maybeCost
                     |> Maybe.andThen
@@ -289,14 +293,14 @@ dumpMagic details =
                     Nothing
 
                 Data.Magic.ClassOne c ->
-                    Just (classToString c)
+                    Just (Class.toString c)
 
                 Data.Magic.ClassSpecial ->
                     Just "Special"
     in
-    [ Just <| "## Magic: " ++ magicToString details.name
+    [ Just <| "## Magic: " ++ Magic.toString details.name
     , maybeItem "Class" identity class
-    , maybeItem "Faction" factionToString details.faction
+    , maybeItem "Faction" Faction.toString details.faction
     , item "Elements" affinitiesToString details.affinities
     , flagItem "Has rank zero" details.hasRankZero
     , flagItem "Elementalism" details.isElementalism
@@ -339,16 +343,16 @@ dumpRelic relic =
     maybeDescription
         |> Maybe.map
             (\details ->
-                [ Just <| "## Relic: " ++ relicToString relic.name
+                [ Just <| "## Relic: " ++ Relic.toString relic.name
                 , case relic.classes of
                     [] ->
                         Nothing
 
                     [ class ] ->
-                        item "Class" classToString class
+                        item "Class" Class.toString class
 
                     classes ->
-                        listItem "Classes" classToString classes
+                        listItem "Classes" Class.toString classes
                 , cost
                 , Just ""
                 , Just (String.Multiline.here details)
@@ -358,7 +362,7 @@ dumpRelic relic =
 
 dumpFaction : Data.Faction.Details -> List (Maybe String)
 dumpFaction faction =
-    [ Just <| "## Faction: " ++ factionToString faction.name
+    [ Just <| "## Faction: " ++ Faction.toString faction.name
     , item "Motto" identity faction.motto
     , flagItem "Human" faction.isHuman
     , Just ""
@@ -395,7 +399,7 @@ dumpCompanion faction companion =
                     Just "Any"
 
                 Data.Companion.ClassOne c ->
-                    Just (classToString c)
+                    Just (Class.toString c)
 
                 Data.Companion.ClassSpecial ->
                     Just "Special"
@@ -421,7 +425,7 @@ dumpCompanion faction companion =
 
         name : String
         name =
-            case companionToString companion.name of
+            case Companion.toString companion.name of
                 "Xiao Liena 肖列娜" ->
                     "Xiao Liena"
 
@@ -429,12 +433,12 @@ dumpCompanion faction companion =
                     n
     in
     [ Just <| "## Companion: " ++ name
-    , if companionToString companion.name == name then
+    , if Companion.toString companion.name == name then
         Nothing
 
       else
-        item "Full name" companionToString companion.name
-    , maybeItem "Faction" factionToString faction
+        item "Full name" Companion.toString companion.name
+    , maybeItem "Faction" Faction.toString faction
     , maybeItem "Class" identity class
     , case List.map View.Race.raceToShortString companion.races of
         [] ->
@@ -532,10 +536,10 @@ dumpComplication complication =
     maybeDescription
         |> Maybe.map
             (\description ->
-                [ Just <| "## Complication: " ++ complicationToString complication.name
+                [ Just <| "## Complication: " ++ Complication.toString complication.name
                 , flagItem "Tiered" tiered
-                , maybeItem "Category" complicationCategoryToString complication.category
-                , maybeItem "Class" classToString complication.class
+                , maybeItem "Category" ComplicationCategory.toString complication.category
+                , maybeItem "Class" Class.toString complication.class
                 , maybeGain
                 , Just ""
                 , Just description
@@ -605,4 +609,4 @@ affinityToString affinity =
         "All"
 
     else
-        Generated.Types.affinityToString affinity
+        Affinity.toString affinity

@@ -3,8 +3,8 @@ module Data.Costs.Complications exposing (complicationsRawValue, powerCap, value
 import Data.Complication as Complication
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points, zero)
-import Generated.Complication
-import Generated.Types as Types exposing (GameMode(..))
+import Generated.Complication as Complication
+import Generated.Types exposing (GameMode(..))
 import List.Extra
 import Types exposing (ComplicationKind(..), IdKind(..), Model)
 
@@ -114,11 +114,11 @@ complicationValue model complication =
                     Monad.succeed v
 
                 Nothing ->
-                    Monad.error <| "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Types.complicationToString complication.name
+                    Monad.error <| "Could not get tier " ++ String.fromInt tier ++ " for complication " ++ Complication.toString complication.name
     in
-    case List.Extra.find (\{ name } -> name == complication.name) Generated.Complication.all of
+    case List.Extra.find (\{ name } -> name == complication.name) Complication.all of
         Nothing ->
-            Monad.error <| "Could not find complication " ++ Types.complicationToString complication.name
+            Monad.error <| "Could not find complication " ++ Complication.toString complication.name
 
         Just details ->
             let
@@ -138,7 +138,7 @@ complicationValue model complication =
                             get tier costs
 
                         ( _, Nontiered ) ->
-                            Monad.error <| "Need a tier for complication " ++ Types.complicationToString complication.name
+                            Monad.error <| "Need a tier for complication " ++ Complication.toString complication.name
             in
             raw
                 |> Monad.map
@@ -155,4 +155,4 @@ complicationValue model complication =
                         r + bonus
                     )
                 |> Monad.withPowerInfo IdKindComplication
-                    (Types.complicationToString details.name)
+                    (Complication.toString details.name)

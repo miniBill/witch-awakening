@@ -1,4 +1,4 @@
-module Generate.Gradients exposing (gradients)
+module Generate.Gradient exposing (gradients)
 
 import Elm
 import Gen.CodeGen.Generate as Generate
@@ -10,7 +10,7 @@ gradients : List ( String, String ) -> ResultME Generate.Error Elm.File
 gradients files =
     files
         |> ResultME.combineMap gradient
-        |> Result.map (Elm.file [ "Gradients" ])
+        |> Result.map (Elm.file [ "Generated", "Gradient" ])
 
 
 gradient : ( String, String ) -> ResultME Generate.Error Elm.Declaration

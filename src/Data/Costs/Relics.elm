@@ -2,8 +2,8 @@ module Data.Costs.Relics exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points, zero)
-import Generated.Relic
-import Generated.Types as Types exposing (Relic(..))
+import Generated.Relic as Relic
+import Generated.Types exposing (Relic(..))
 import Types exposing (IdKind(..), Model, RankedRelic)
 
 
@@ -16,7 +16,7 @@ value model =
 
 relicCost : Model key -> RankedRelic -> Monad Int
 relicCost ({ class, cosmicPearl } as model) details =
-    Utils.find "Relic" .name details.name Generated.Relic.all Types.relicToString
+    Utils.find "Relic" .name details.name Relic.all Relic.toString
         |> Monad.andThen
             (\relic ->
                 let
@@ -46,6 +46,6 @@ relicCost ({ class, cosmicPearl } as model) details =
                             1
                 in
                 (baseCost * multiplier)
-                    |> Utils.checkRequirements relic (Types.relicToString details.name) model
+                    |> Utils.checkRequirements relic (Relic.toString details.name) model
             )
-        |> Monad.withRewardInfo IdKindRelic (Types.relicToString details.name)
+        |> Monad.withRewardInfo IdKindRelic (Relic.toString details.name)

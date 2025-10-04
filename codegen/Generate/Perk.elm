@@ -1,4 +1,4 @@
-module Generate.Perks exposing (PerkModule, file)
+module Generate.Perk exposing (PerkModule, file)
 
 import Elm
 import Elm.Annotation
@@ -11,6 +11,7 @@ import Gen.Data.Perk
 import Gen.List
 import Gen.Maybe
 import Gen.Types
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers exposing (Content(..))
@@ -19,14 +20,16 @@ import String.Extra
 
 type alias PerkModule =
     { all : Elm.Expression -> Elm.Expression
+    , toString : Elm.Expression -> Elm.Expression
     , containsDash : Elm.Expression -> Elm.Expression
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Module PerkModule
-file types dlcPerks =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Module PerkModule
+file types enum dlcPerks =
     Elm.Declare.module_ [ "Generated", "Perk" ] PerkModule
         |> Elm.Declare.with (all dlcPerks)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.with (containsDash types dlcPerks)
         |> Elm.Declare.Extra.withDeclarations (dlcToPerks types dlcPerks)
 
@@ -40,7 +43,7 @@ all dlcPerks =
     <|
         \perks ->
             Elm.Op.append
-                (Gen.Data.Perk.call_.all perks)
+                (Gen.Data.Perk.call_.weird perks)
                 (dlcPerks
                     |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
                     |> List.map (\( _, perk ) -> Elm.val (String.Extra.decapitalize (yassify perk.name)))

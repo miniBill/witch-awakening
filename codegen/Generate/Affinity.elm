@@ -1,4 +1,4 @@
-module Generate.Affinities exposing (file)
+module Generate.Affinity exposing (file)
 
 import Elm
 import Elm.Annotation
@@ -6,6 +6,7 @@ import Elm.Arg
 import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils as Utils exposing (yassify)
 import Parsers
@@ -15,16 +16,18 @@ import String.Extra
 type alias AffinitiesModule =
     { all : Elm.Expression
     , toColor : Elm.Expression -> Elm.Expression
+    , toString : Elm.Expression -> Elm.Expression
     , isSelectable : Elm.Expression -> Elm.Expression
     , details : Elm.Annotation.Annotation
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Module AffinitiesModule
-file types dlcAffinities =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Module AffinitiesModule
+file types enum dlcAffinities =
     Elm.Declare.module_ [ "Generated", "Affinity" ] AffinitiesModule
         |> Elm.Declare.with (all types dlcAffinities)
         |> Elm.Declare.with (toColor types dlcAffinities)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.with (isSelectable types dlcAffinities)
         |> Elm.Declare.with (details types)
         |> Elm.Declare.Extra.withDeclarations (dlcToAffinities types dlcAffinities)

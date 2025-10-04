@@ -4,8 +4,9 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points, zero)
 import Dict
 import Dict.Extra
-import Generated.Quest
-import Generated.Types as Types exposing (Faction(..), Quest)
+import Generated.Quest as Quest
+import Generated.Slot as Slot
+import Generated.Types exposing (Faction(..), Quest)
 import List.Extra
 import Types exposing (IdKind(..), Model)
 
@@ -30,7 +31,7 @@ value model =
                                     Just ( faction, _ ) ->
                                         List.Extra.removeWhen (\details -> details.faction == Just faction)
                                )
-                            |> Dict.Extra.groupBy (\{ slot } -> Types.slotToString slot)
+                            |> Dict.Extra.groupBy (\{ slot } -> Slot.toString slot)
                             |> Dict.map (\_ s -> List.length s)
                             |> Dict.toList
                             |> Monad.combineMap
@@ -74,13 +75,13 @@ value model =
             )
 
 
-questCost : Quest -> Monad ( Int, Generated.Quest.Details )
+questCost : Quest -> Monad ( Int, Quest.Details )
 questCost named =
-    Utils.find "Quest" .name named Generated.Quest.all Types.questToString
+    Utils.find "Quest" .name named Quest.all Quest.toString
         |> Monad.andThen
             (\quest ->
                 quest.reward
                     |> Monad.succeed
-                    |> Monad.withRewardInfo IdKindQuest (Types.questToString named)
+                    |> Monad.withRewardInfo IdKindQuest (Quest.toString named)
                     |> Monad.map (\rp -> ( rp, quest ))
             )

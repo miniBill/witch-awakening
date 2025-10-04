@@ -1,4 +1,4 @@
-module Generate.Classes exposing (file)
+module Generate.Class exposing (file)
 
 import Elm
 import Elm.Annotation
@@ -7,24 +7,27 @@ import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.Color
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils as Utils exposing (yassify)
 import Parsers
 import String.Extra
 
 
-type alias ClassesModule =
+type alias ClassModule =
     { all : Elm.Expression
     , toColor : Elm.Expression -> Elm.Expression
+    , toString : Elm.Expression -> Elm.Expression
     , details : Elm.Annotation.Annotation
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module ClassesModule
-file types dlcClasses =
-    Elm.Declare.module_ [ "Generated", "Classes" ] ClassesModule
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module ClassModule
+file types enum dlcClasses =
+    Elm.Declare.module_ [ "Generated", "Class" ] ClassModule
         |> Elm.Declare.with (all types dlcClasses)
         |> Elm.Declare.with (toColor types dlcClasses)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.with (details types)
         |> Elm.Declare.Extra.withDeclarations (dlcToClasses types dlcClasses)
 

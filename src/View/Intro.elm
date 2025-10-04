@@ -3,9 +3,9 @@ module View.Intro exposing (viewIntro, viewTitle)
 import Element exposing (Element, alignRight, centerX, el, fill, fillPortion, newTabLink, paragraph, text, width)
 import Element.Font as Font
 import Generated.Attribution
-import Gradients
+import Generated.Gradient as Gradient
+import Generated.Image as Image
 import Html.Attributes
-import Images
 import List.Extra
 import Theme
 import Types exposing (IdKind(..))
@@ -30,7 +30,7 @@ viewTitle allCompact =
                 , Element.htmlAttribute (Html.Attributes.style "overflow" "clip")
                 ]
                 8
-                Gradients.titleGradient
+                Gradient.titleGradient
                 "Wit\u{200B}ch Awa\u{200B}ken\u{200B}ing"
     in
     if allCompact then
@@ -54,13 +54,13 @@ viewTitle allCompact =
                     , Theme.morpheus
                     , Font.size 52
                     ]
-                    [ Theme.gradientText 4 Gradients.grayGradient "Heavy Metal"
+                    [ Theme.gradientText 4 Gradient.grayGradient "Heavy Metal"
                     , text " "
-                    , Theme.gradientText 4 Gradients.yellowGradient "&"
+                    , Theme.gradientText 4 Gradient.yellowGradient "&"
                     , text " "
-                    , Theme.gradientText 4 Gradients.orangeGradient "Witch Party"
+                    , Theme.gradientText 4 Gradient.orangeGradient "Witch Party"
                     , text " "
-                    , Theme.gradientText 4 Gradients.yellowGradient "Update"
+                    , Theme.gradientText 4 Gradient.yellowGradient "Update"
                     ]
                 , paragraph
                     [ alignRight
@@ -116,7 +116,7 @@ viewDLCAttribution dlcAttribution =
         |> String.replace "the " "the\u{00A0}"
         |> String.replace "of " "of\u{00A0}"
         |> String.replace "Of " "Of\u{00A0}"
-        |> Theme.gradientTextSplit 4 Gradients.purpleGradient
+        |> Theme.gradientTextSplit 4 Gradient.purpleGradient
         |> List.map
             (el
                 [ Theme.captureIt
@@ -139,7 +139,7 @@ viewDLCAttribution dlcAttribution =
 viewIntro : Element msg
 viewIntro =
     Theme.wrappedRow [ Element.paddingXY 16 0 ]
-        [ Theme.image [ width <| Element.minimum 200 fill ] Images.penelope
+        [ Theme.image [ width <| Element.minimum 200 fill ] Image.penelope
         , Theme.blocks [ width <| Element.minimum 200 <| fillPortion 2 ] IdKindGameMode mainIntro
         ]
 

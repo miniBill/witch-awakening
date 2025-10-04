@@ -1,4 +1,4 @@
-module Generate.Images exposing (ImagesModule, images, valueFrom)
+module Generate.Image exposing (ImagesModule, images, valueFrom)
 
 import Dict
 import Dict.Extra
@@ -19,7 +19,7 @@ type alias ImagesModule =
 
 moduleName : List String
 moduleName =
-    [ "Images" ]
+    [ "Generated", "Image" ]
 
 
 images : List String -> ResultME Generate.Error (Elm.Declare.Module ImagesModule)
@@ -171,11 +171,15 @@ imageType :
     , make : { src : Elm.Expression, height : Elm.Expression, width : Elm.Expression } -> Elm.Expression
     }
 imageType =
-    Elm.Declare.Extra.customRecord "Image"
-        |> Elm.Declare.Extra.withField "width" .width Elm.Annotation.int
-        |> Elm.Declare.Extra.withField "height" .height Elm.Annotation.int
-        |> Elm.Declare.Extra.withField "src" .src Elm.Annotation.string
-        |> Elm.Declare.Extra.buildCustomRecord
+    let
+        inner =
+            Elm.Declare.Extra.customRecord "Image"
+                |> Elm.Declare.Extra.withField "width" .width Elm.Annotation.int
+                |> Elm.Declare.Extra.withField "height" .height Elm.Annotation.int
+                |> Elm.Declare.Extra.withField "src" .src Elm.Annotation.string
+                |> Elm.Declare.Extra.buildCustomRecord
+    in
+    { inner | declaration = Elm.withDocumentation "Image data" inner.declaration }
 
 
 imageGroupParser : Parser ( String, Int )

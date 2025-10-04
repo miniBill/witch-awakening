@@ -1,4 +1,4 @@
-module Generate.Attributions exposing (..)
+module Generate.Attribution exposing (..)
 
 import Elm
 import Elm.Annotation as Annotation

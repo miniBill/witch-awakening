@@ -1,9 +1,10 @@
-module Generate.GameModes exposing (file)
+module Generate.GameMode exposing (file)
 
 import Elm
 import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
@@ -13,14 +14,16 @@ import String.Extra
 type alias GameModesModule =
     { all : Elm.Expression
     , gameModeDetails : Elm.Annotation.Annotation
+    , toString : Elm.Expression -> Elm.Expression
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.GameMode ) -> Elm.Declare.Module GameModesModule
-file types dlcGameModes =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.GameMode ) -> Elm.Declare.Module GameModesModule
+file types enum dlcGameModes =
     Elm.Declare.module_ [ "Generated", "GameMode" ] GameModesModule
         |> Elm.Declare.with (all types dlcGameModes)
         |> Elm.Declare.with (gameModeDetails types)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.Extra.withDeclarations (dlcToGameModes types dlcGameModes)
 
 

@@ -1,10 +1,11 @@
-module Generate.Companions exposing (CompanionModule, file)
+module Generate.Companion exposing (CompanionModule, file)
 
 import Elm
 import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.Data.Companion
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import List.Extra
@@ -14,13 +15,15 @@ import String.Extra
 
 type alias CompanionModule =
     { all : Elm.Expression
+    , toString : Elm.Expression -> Elm.Expression
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Companion ) -> Elm.Declare.Module CompanionModule
-file types dlcCompanions =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Companion ) -> Elm.Declare.Module CompanionModule
+file types enum dlcCompanions =
     Elm.Declare.module_ [ "Generated", "Companion" ] CompanionModule
         |> Elm.Declare.with (all types dlcCompanions)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.Extra.withDeclarations (dlcToCompanions types dlcCompanions)
 
 

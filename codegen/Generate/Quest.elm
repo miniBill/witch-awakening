@@ -1,9 +1,10 @@
-module Generate.Quests exposing (QuestModule, file)
+module Generate.Quest exposing (QuestModule, file)
 
 import Elm
 import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers exposing (Score(..))
@@ -12,7 +13,8 @@ import String.Extra
 
 type alias QuestModule =
     { all : Elm.Expression
-    , questDetails : Elm.Annotation.Annotation
+    , details : Elm.Annotation.Annotation
+    , toString : Elm.Expression -> Elm.Expression
     , evil :
         { annotation : Elm.Annotation.Annotation
         , make_ :
@@ -32,16 +34,17 @@ type alias QuestModule =
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Quest ) -> Elm.Declare.Module QuestModule
-file types dlcQuests =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Quest ) -> Elm.Declare.Module QuestModule
+file types enum dlcQuests =
     Elm.Declare.module_ [ "Generated", "Quest" ] QuestModule
         |> Elm.Declare.with (all types dlcQuests)
-        |> Elm.Declare.with (questDetails types)
+        |> Elm.Declare.with (details types)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.with evil
         |> Elm.Declare.Extra.withDeclarations (dlcToQuests types dlcQuests)
 
 
-questDetails :
+details :
     TypesModule
     ->
         { annotation : Elm.Annotation.Annotation
@@ -63,7 +66,7 @@ questDetails :
             }
             -> Elm.Expression
         }
-questDetails types =
+details types =
     Elm.Declare.Extra.customRecord "Details"
         |> Elm.Declare.Extra.withField "name" .name types.quest.annotation
         |> Elm.Declare.Extra.withField "evil" .evil evil.annotation
@@ -107,7 +110,7 @@ all types dlcQuests =
         |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.map (\( _, quest ) -> Elm.val (String.Extra.decapitalize (yassify quest.name)))
         |> Elm.list
-        |> Elm.withType (Elm.Annotation.list (questDetails types).annotation)
+        |> Elm.withType (Elm.Annotation.list (details types).annotation)
         |> Elm.Declare.value "all"
 
 
@@ -115,7 +118,7 @@ dlcToQuests : TypesModule -> List ( Maybe String, Parsers.Quest ) -> List Elm.De
 dlcToQuests types quests =
     List.map
         (\( dlcName, quest ) ->
-            (questDetails types).make
+            (details types).make
                 { name = types.quest.value quest.name
                 , evil =
                     case quest.evil of

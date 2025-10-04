@@ -1,10 +1,11 @@
-module Generate.Relics exposing (RelicsModule, file)
+module Generate.Relic exposing (RelicsModule, file)
 
 import Elm
 import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.Data.Relic
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers exposing (Content(..))
@@ -13,14 +14,16 @@ import String.Extra
 
 type alias RelicsModule =
     { all : Elm.Expression
+    , toString : Elm.Expression -> Elm.Expression
     , declaration : Elm.Annotation.Annotation
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Module RelicsModule
-file types dlcRelics =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Relic ) -> Elm.Declare.Module RelicsModule
+file types enum dlcRelics =
     Elm.Declare.module_ [ "Generated", "Relic" ] RelicsModule
         |> Elm.Declare.with (all types dlcRelics)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.with (details types)
         |> Elm.Declare.Extra.withDeclarations (dlcToRelics types dlcRelics)
 

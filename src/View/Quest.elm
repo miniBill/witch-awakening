@@ -8,11 +8,12 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, 
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Gradient as Gradient
+import Generated.Image as Image
 import Generated.Quest as Quest
+import Generated.Slot as Slot
 import Generated.Types as Types exposing (Quest(..), Slot(..))
-import Gradients
 import Html.Attributes
-import Images
 import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display(..), IdKind(..))
@@ -40,7 +41,7 @@ viewQuests hideDLC display quests =
                     |> List.concatMap (List.indexedMap (questBox display quests))
                     |> List.filterMap identity
         in
-        View.collapsible (Theme.topBackground Images.questIntro)
+        View.collapsible (Theme.topBackground Image.questIntro)
             display
             DisplayQuests
             ChoiceQuest
@@ -77,7 +78,7 @@ questBox display selected number quest =
 
         nameString : String
         nameString =
-            Types.questToString quest.name
+            Quest.toString quest.name
 
         card : Maybe (Element ( Quest, Bool ))
         card =
@@ -128,7 +129,7 @@ questBox display selected number quest =
                             , centerX
                             ]
                             4
-                            Gradients.yellowGradient
+                            Gradient.yellowGradient
                             nameString
                         , case quest.dlc of
                             Nothing ->
@@ -140,7 +141,7 @@ questBox display selected number quest =
                                     , centerX
                                     ]
                                     4
-                                    Gradients.purpleGradient
+                                    Gradient.purpleGradient
                                     dlcName
                         ]
                     , Element.row
@@ -160,7 +161,7 @@ questBox display selected number quest =
                                 Theme.gradientTextWrapped
                                     []
                                     4
-                                    Gradients.blueGradient
+                                    Gradient.blueGradient
                                     (Faction.toShortString faction)
                         , let
                             slotGradient : Element msg
@@ -169,25 +170,25 @@ questBox display selected number quest =
                                     4
                                     (case quest.slot of
                                         SlotEpic ->
-                                            Gradients.epicGradient
+                                            Gradient.epicGradient
 
                                         SlotHeroic ->
-                                            Gradients.heroicGradient
+                                            Gradient.heroicGradient
 
                                         SlotNoble ->
-                                            Gradients.nobleGradient
+                                            Gradient.nobleGradient
 
                                         _ ->
-                                            Gradients.blueGradient
+                                            Gradient.blueGradient
                                     )
-                                    (Types.slotToString quest.slot)
+                                    (Slot.toString quest.slot)
                           in
                           if quest.name == QuestDungeoneering then
                             Element.row [ alignRight, spacing 4 ]
                                 [ "Any"
-                                    |> Theme.gradientText 4 Gradients.yellowGradient
+                                    |> Theme.gradientText 4 Gradient.yellowGradient
                                 , "/"
-                                    |> Theme.gradientText 4 Gradients.yellowGradient
+                                    |> Theme.gradientText 4 Gradient.yellowGradient
                                     |> el [ Font.size 40, Font.bold ]
                                 , slotGradient
                                 ]
@@ -200,10 +201,10 @@ questBox display selected number quest =
                             Element.none
 
                         Quest.EvilMaybe ->
-                            Theme.image [] Images.questEvilPath
+                            Theme.image [] Image.questEvilPath
 
                         Quest.EvilYes ->
-                            Theme.image [] Images.questEvil
+                            Theme.image [] Image.questEvil
                       )
                         |> el
                             [ alignRight
@@ -219,14 +220,14 @@ questBox display selected number quest =
                             ]
                     , (number + 1)
                         |> String.fromInt
-                        |> Theme.gradientText 4 Gradients.yellowGradient
+                        |> Theme.gradientText 4 Gradient.yellowGradient
                         |> el
                             [ Font.size 28
                             , Theme.captureIt
                             ]
                     , if quest.repeatable then
                         "♻️"
-                            |> Theme.gradientText 4 Gradients.yellowGradient
+                            |> Theme.gradientText 4 Gradient.yellowGradient
                             |> el
                                 [ Font.size 32
                                 , Theme.captureIt
@@ -281,7 +282,7 @@ evilSidebar =
         , moveRight 16
         , moveDown 16
         , width (Element.maximum 100 fill)
-        , Images.questEvilPath
+        , Image.questEvilPath
             |> Theme.image
                 [ moveUp 16
                 , moveLeft 16
@@ -474,7 +475,7 @@ introBlock =
         [ width fill
         , spacing <| Theme.rhythm * 2
         ]
-        [ Theme.gradientText 4 Gradients.yellowGradient "Or \"Plot Hooks\""
+        [ Theme.gradientText 4 Gradient.yellowGradient "Or \"Plot Hooks\""
             |> el
                 [ Font.size 38
                 , Theme.morpheus

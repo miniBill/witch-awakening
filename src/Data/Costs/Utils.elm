@@ -2,9 +2,9 @@ module Data.Costs.Utils exposing (Points, Requirement(..), affinityDiscountIf, a
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
-import Generated.Classes
-import Generated.Magic
-import Generated.Types as Types exposing (Class, Magic)
+import Generated.Class as Class
+import Generated.Magic as Magic
+import Generated.Types exposing (Class, Magic)
 import List.Extra
 import Parser exposing ((|.), (|=), Parser)
 import Types exposing (RankedMagic)
@@ -125,14 +125,14 @@ requisiteParser =
     let
         magicParser : Parser Magic
         magicParser =
-            Generated.Magic.all
-                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Types.magicToString m.name))
+            Magic.all
+                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Magic.toString m.name))
                 |> Parser.oneOf
 
         classParser : Parser Class
         classParser =
-            Generated.Classes.all
-                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Types.classToString m.name))
+            Class.all
+                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Class.toString m.name))
                 |> Parser.oneOf
     in
     Parser.oneOf
@@ -183,14 +183,14 @@ checkRequirements details nameString model res =
                                                     Ok ()
 
                                                 else
-                                                    Err (Types.magicToString requiredName ++ " " ++ String.fromInt requiredRank)
+                                                    Err (Magic.toString requiredName ++ " " ++ String.fromInt requiredRank)
 
                                             RequiresClass class ->
                                                 if model.class == Just class then
                                                     Ok ()
 
                                                 else
-                                                    Err (Types.classToString class)
+                                                    Err (Class.toString class)
                                 in
                                 case check of
                                     Ok a ->

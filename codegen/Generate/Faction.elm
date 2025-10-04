@@ -1,4 +1,4 @@
-module Generate.Factions exposing (..)
+module Generate.Faction exposing (..)
 
 import Elm
 import Elm.Annotation
@@ -8,6 +8,7 @@ import Elm.Declare.Extra
 import Gen.Data.Faction
 import Gen.List
 import Gen.Maybe
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
@@ -16,13 +17,15 @@ import String.Extra
 
 type alias FactionsModule =
     { all : Elm.Expression
+    , toString : Elm.Expression -> Elm.Expression
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Faction ) -> Elm.Declare.Module FactionsModule
-file types dlcFactions =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Faction ) -> Elm.Declare.Module FactionsModule
+file types enum dlcFactions =
     Elm.Declare.module_ [ "Generated", "Faction" ] FactionsModule
         |> Elm.Declare.with (all dlcFactions)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.Extra.withDeclarations (dlcToFactions types dlcFactions)
 
 
@@ -62,7 +65,7 @@ dlcToFactions types factions =
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , images =
                     Elm.value
-                        { importFrom = [ "Images" ]
+                        { importFrom = [ "Generated", "Image" ]
                         , name = "faction" ++ yassify faction.name
                         , annotation = Nothing
                         }

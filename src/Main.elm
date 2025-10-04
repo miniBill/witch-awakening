@@ -10,9 +10,20 @@ import Dict
 import Element exposing (Element, fill, rgb, width)
 import Element.Font as Font
 import Element.Lazy
-import Generated.TypePerk
+import Generated.Affinity as Affinity
+import Generated.Class as Class
+import Generated.Companion as Companion
+import Generated.Complication as Complication
+import Generated.Faction as Faction
+import Generated.GameMode as GameMode
+import Generated.Image as Image
+import Generated.Magic as Magic
+import Generated.Perk as Perk
+import Generated.Quest as Quest
+import Generated.Race as Race
+import Generated.Relic as Relic
+import Generated.TypePerk as TypePerk
 import Generated.Types as Types exposing (Perk(..), Relic(..))
-import Images
 import Json.Decode as JD
 import List.Extra
 import Maybe.Extra
@@ -293,11 +304,11 @@ updateOnChoice choice model =
                                     else
                                         Nothing
                                 )
-                                Generated.TypePerk.all
+                                TypePerk.all
                         of
                             Just gained ->
                                 List.foldl
-                                    (\magic -> Dict.insert (Types.magicToString magic.name) magic)
+                                    (\magic -> Dict.insert (Magic.toString magic.name) magic)
                                     Dict.empty
                                     (gained ++ model.magic)
                                     |> Dict.values
@@ -405,41 +416,41 @@ toUrl model =
     [ one "capBuild" boolToString (withDefault False model.capBuild)
     , int "towardsCap" model.towardsCap
     , int "powerToRewards" model.powerToRewards
-    , one "class" Types.classToString model.class
-    , list "race" Types.raceToString model.races
-    , one "mainRace" Types.raceToString model.mainRace
-    , one "gameMode" Types.gameModeToString model.gameMode
-    , list "typePerk" Types.raceToString model.typePerks
+    , one "class" Class.toString model.class
+    , list "race" Race.toString model.races
+    , one "mainRace" Race.toString model.mainRace
+    , one "gameMode" GameMode.toString model.gameMode
+    , list "typePerk" Race.toString model.typePerks
     , list "complication"
         (\{ name, kind } ->
-            Types.complicationToString name ++ Types.complicationKindToString kind
+            Complication.toString name ++ Types.complicationKindToString kind
         )
         model.complications
     , list "magic"
         (\{ name, rank } ->
-            Types.magicToString name ++ String.fromInt rank
+            Magic.toString name ++ String.fromInt rank
         )
         model.magic
     , list "perk"
         (\{ name, cost } ->
-            Types.perkToString name ++ String.fromInt cost
+            Perk.toString name ++ String.fromInt cost
         )
         model.perks
-    , one "faction" (\( name, _ ) -> Types.factionToString name) model.faction
+    , one "faction" (\( name, _ ) -> Faction.toString name) model.faction
     , one "factionPerk" (\( _, perk ) -> boolToString perk) model.faction
-    , list "companion" Types.companionToString model.companions
-    , list "quest" Types.questToString model.quests
+    , list "companion" Companion.toString model.companions
+    , list "quest" Quest.toString model.quests
     , list "relic"
         (\{ name, cost } ->
-            Types.relicToString name ++ String.fromInt cost
+            Relic.toString name ++ String.fromInt cost
         )
         model.relics
-    , list "addAffinity" Types.affinityToString model.cosmicPearl.add
+    , list "addAffinity" Affinity.toString model.cosmicPearl.add
     , list "changeAffinity"
         (\( from, to ) ->
-            Types.affinityToString from
+            Affinity.toString from
                 ++ "-"
-                ++ Types.affinityToString to
+                ++ Affinity.toString to
         )
         model.cosmicPearl.change
     ]
@@ -669,7 +680,7 @@ innerView model =
     Theme.column
         [ width fill
         , Font.color <| rgb 1 1 1
-        , Theme.style "background" ("url(" ++ Images.pattern.src ++ ")")
+        , Theme.style "background" ("url(" ++ Image.pattern.src ++ ")")
         ]
         [ Intro.viewTitle allCompact
         , if allCompact then
@@ -679,7 +690,7 @@ innerView model =
             Intro.viewIntro
         , Theme.column
             [ width fill
-            , Theme.style "border-image-source" ("url(" ++ Images.border.src ++ ")")
+            , Theme.style "border-image-source" ("url(" ++ Image.border.src ++ ")")
             , Theme.style "border-image-slice" "60 30 0"
             , Theme.style "border-image-width" "60px 30px 0"
             , Theme.style "border-image-repeat" "space round"

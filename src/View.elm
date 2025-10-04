@@ -4,8 +4,9 @@ import Color exposing (Color)
 import Data.Costs.Utils as Utils
 import Element exposing (Attribute, Element, centerX, centerY, el, fill, px, spacing, text, width)
 import Element.Font as Font
-import Generated.Types as Types
-import Gradients
+import Generated.Class as Class
+import Generated.Gradient as Gradient
+import Generated.Magic as Magic
 import List.Extra
 import Parser
 import Set exposing (Set)
@@ -98,7 +99,7 @@ costButton color selected item label =
         ((width <| px 24) :: attrs)
         { label =
             String.fromInt label
-                |> Theme.gradientText 4 Gradients.yellowGradient
+                |> Theme.gradientText 4 Gradient.yellowGradient
                 |> el [ centerX, centerY, Theme.captureIt ]
         , onPress = Just ( item, not isChoiceSelected )
         }
@@ -130,10 +131,10 @@ viewRequirements kind req =
                             (\requisite ->
                                 case requisite of
                                     Utils.RequiresClass reqClass ->
-                                        "[" ++ Types.classToString reqClass ++ "] " ++ Types.classToString reqClass
+                                        "[" ++ Class.toString reqClass ++ "] " ++ Class.toString reqClass
 
                                     Utils.RequiresMagic reqMagic rank ->
-                                        "[" ++ Types.magicToString reqMagic ++ "] " ++ String.fromInt rank
+                                        "[" ++ Magic.toString reqMagic ++ "] " ++ String.fromInt rank
                             )
                         |> String.join ", "
             in

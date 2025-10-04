@@ -1,4 +1,4 @@
-module Generate.Magics exposing (MagicModule, file)
+module Generate.Magic exposing (MagicModule, file)
 
 import Dict
 import Elm
@@ -6,6 +6,7 @@ import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.Data.Magic
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
@@ -14,13 +15,15 @@ import String.Extra
 
 type alias MagicModule =
     { all : Elm.Expression
+    , toString : Elm.Expression -> Elm.Expression
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Magic ) -> Elm.Declare.Module MagicModule
-file types dlcMagics =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Magic ) -> Elm.Declare.Module MagicModule
+file types enum dlcMagics =
     Elm.Declare.module_ [ "Generated", "Magic" ] MagicModule
         |> Elm.Declare.with (all dlcMagics)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.Extra.withDeclarations (dlcToMagics types dlcMagics)
 
 

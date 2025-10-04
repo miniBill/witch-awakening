@@ -7,10 +7,10 @@ import Element exposing (Attribute, Element, alignTop, centerX, el, fill, moveDo
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Race
+import Generated.Gradient as Gradient
+import Generated.Image as Image exposing (Image)
+import Generated.Race as Race
 import Generated.Types as Types exposing (Affinity(..), Race(..), Size)
-import Gradients
-import Images exposing (Image)
 import List.Extra
 import Set exposing (Set)
 import Theme
@@ -24,7 +24,7 @@ viewRace hideDLC display races =
     let
         filtered : List Race.Details
         filtered =
-            Generated.Race.all races
+            Race.all races
                 |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then
@@ -93,7 +93,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                 , centerX
                 ]
                 6
-                Gradients.yellowGradient
+                Gradient.yellowGradient
                 shortName
             , case dlc of
                 Nothing ->
@@ -106,7 +106,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                         , Font.size 24
                         , moveDown 60
                         ]
-                        (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                        (Theme.gradientText 4 Gradient.purpleGradient dlcName)
             ]
         , content =
             Theme.row [ centerX ]
@@ -134,7 +134,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
 
 raceToShortString : Race -> String
 raceToShortString name =
-    Types.raceToString name
+    Race.toString name
         |> String.split "-"
         |> List.take 1
         |> String.concat
@@ -244,10 +244,10 @@ viewAffinities affinities =
 viewTank : Size -> Element msg
 viewTank size =
     viewSize []
-        Images.tank
+        Image.tank
         (List.map
             (\( r, g, b ) -> ( r // 2, g * 3 // 5, b ))
-            Gradients.blueGradient
+            Gradient.blueGradient
         )
         size
 
@@ -255,8 +255,8 @@ viewTank size =
 viewCharge : Size -> Element msg
 viewCharge size =
     viewSize [ moveRight 30 ]
-        Images.charge
-        Gradients.yellowGradient
+        Image.charge
+        Gradient.yellowGradient
         size
 
 

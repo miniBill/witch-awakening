@@ -1,7 +1,7 @@
 module Data.Faction exposing (Details, toCollectiveName, toShortString)
 
+import Generated.Image exposing (Image)
 import Generated.Types exposing (Faction(..))
-import Images exposing (Image)
 
 
 type alias Details =

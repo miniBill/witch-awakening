@@ -7,11 +7,11 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, 
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Companion
+import Generated.Companion as Companion
+import Generated.Gradient as Gradient
+import Generated.Image as Image
 import Generated.Types as Types exposing (Companion, Faction)
-import Gradients
 import Html.Attributes
-import Images
 import Set exposing (Set)
 import Svg
 import Svg.Attributes
@@ -26,7 +26,7 @@ viewCompanions hideDLC display companions =
     let
         filtered : List ( Maybe Faction, List Companion.Details )
         filtered =
-            Generated.Companion.all
+            Companion.all
                 |> List.filterMap
                     (\( faction, factionCompanions ) ->
                         let
@@ -51,7 +51,7 @@ viewCompanions hideDLC display companions =
                 filtered
                     |> List.concatMap (companionSection display companions)
         in
-        View.collapsible (Theme.topBackground Images.companionIntro)
+        View.collapsible (Theme.topBackground Image.companionIntro)
             display
             DisplayCompanions
             ChoiceCompanion
@@ -134,7 +134,7 @@ companionSection display companions ( faction, section ) =
             , width fill
             ]
             2
-            Gradients.yellowGradient
+            Gradient.yellowGradient
             (Faction.toCollectiveName faction ++ ":")
         , boxes
             |> Theme.wrappedRow
@@ -207,7 +207,7 @@ companionBox display selected ({ name } as companion) =
                     Nothing
         in
         Theme.button
-            [ Theme.id IdKindCompanion (Types.companionToString name)
+            [ Theme.id IdKindCompanion (Companion.toString name)
             , height fill
             , if display == DisplayFull then
                 width <| Element.maximum 760 fill
@@ -289,7 +289,7 @@ image { name, races, hasPerk, cost } =
             [ cost
                 |> Maybe.map String.fromInt
                 |> Maybe.withDefault "X"
-                |> Theme.gradientText 4 Gradients.blueGradient
+                |> Theme.gradientText 4 Gradient.blueGradient
                 |> el
                     [ alignRight
                     , Font.size 32
@@ -298,7 +298,7 @@ image { name, races, hasPerk, cost } =
                     , moveDown 4
                     ]
             , raceLabel
-                |> List.map (\race -> el [ centerX ] (Theme.gradientText 4 Gradients.yellowGradient race))
+                |> List.map (\race -> el [ centerX ] (Theme.gradientText 4 Gradient.yellowGradient race))
                 |> Theme.column
                     [ alignBottom
                     , centerX
@@ -403,7 +403,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                 ClassSpecial ->
                     Theme.image
                         [ width <| px 32 ]
-                        Images.badgeSpecial
+                        Image.badgeSpecial
     in
     Theme.column
         [ Theme.padding
@@ -423,8 +423,8 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                 , width fill
                 ]
                 4
-                Gradients.yellowGradient
-                (Types.companionToString name)
+                Gradient.yellowGradient
+                (Companion.toString name)
             , classBadge
                 |> el
                     [ alignRight
@@ -441,7 +441,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                     , Theme.captureIt
                     , Font.size 24
                     ]
-                    (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                    (Theme.gradientText 4 Gradient.purpleGradient dlcName)
         , statsTable companion
         , Theme.blocks [ Font.size 14 ] IdKindCompanion quote
         , Theme.blocks [] IdKindCompanion description
@@ -591,7 +591,7 @@ statColumn ranking =
                                             , Theme.style "z-index" "1"
                                             ]
                                         <|
-                                            Theme.gradientText 2 Gradients.blueGradient "Special Effect"
+                                            Theme.gradientText 2 Gradient.blueGradient "Special Effect"
                                 ]
 
                               else

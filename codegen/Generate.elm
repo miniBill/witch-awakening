@@ -6,21 +6,24 @@ import Dict
 import Elm
 import Elm.Declare
 import Gen.CodeGen.Generate as Generate exposing (Directory)
-import Generate.Affinities
-import Generate.Attributions exposing (DLCAttribution)
-import Generate.Classes
-import Generate.Companions
-import Generate.Complications
-import Generate.Factions
-import Generate.GameModes
-import Generate.Gradients
-import Generate.Images exposing (ImagesModule)
-import Generate.Magics
-import Generate.Perks
-import Generate.Quests
-import Generate.Races
-import Generate.Relics
-import Generate.TypePerks
+import Generate.Affinity
+import Generate.Attribution exposing (DLCAttribution)
+import Generate.Class
+import Generate.Companion
+import Generate.Complication
+import Generate.ComplicationCategory
+import Generate.Faction
+import Generate.GameMode
+import Generate.Gradient
+import Generate.Image exposing (ImagesModule)
+import Generate.Magic
+import Generate.Perk
+import Generate.Quest
+import Generate.Race
+import Generate.Relic
+import Generate.Size
+import Generate.Slot
+import Generate.TypePerk
 import Generate.Types
 import Json.Decode exposing (Decoder, Value)
 import List.Nonempty as Nonempty
@@ -144,7 +147,7 @@ toFiles root =
         |> Result.andThen
             (\list ->
                 List.concatMap Triple.Extra.first list
-                    |> Generate.Images.images
+                    |> Generate.Image.images
                     |> Result.andThen
                         (\images ->
                             ResultME.map2
@@ -154,7 +157,7 @@ toFiles root =
                                     }
                                 )
                                 (List.concatMap Triple.Extra.second list
-                                    |> Generate.Gradients.gradients
+                                    |> Generate.Gradient.gradients
                                 )
                                 (List.concatMap Triple.Extra.third list
                                     |> Parsers.parseFiles
@@ -234,27 +237,29 @@ dlcToFiles images dlcList =
                             author
                     )
 
-        types : Elm.Declare.Module Generate.Types.TypesModule
-        types =
+        ( types, enums ) =
             Generate.Types.file images dlcList
     in
     ResultME.map2
         (\racesFile typePerksFile ->
-            [ Elm.Declare.toFile (Generate.Affinities.file types.call dlcAffinities)
-            , Elm.Declare.toFile (Generate.Classes.file types.call dlcClasses)
-            , Elm.Declare.toFile (Generate.GameModes.file types.call dlcGameModes)
-            , Elm.Declare.toFile (Generate.Companions.file types.call dlcCompanions)
-            , Elm.Declare.toFile (Generate.Quests.file types.call dlcQuests)
-            , Elm.Declare.toFile (Generate.Complications.file types.call dlcComplications)
-            , Elm.Declare.toFile (Generate.Magics.file types.call dlcMagics)
-            , Elm.Declare.toFile (Generate.Perks.file types.call dlcPerks)
+            [ Elm.Declare.toFile (Generate.Affinity.file types.call enums.affinity dlcAffinities)
+            , Elm.Declare.toFile (Generate.Attribution.file dlcAttributions)
+            , Elm.Declare.toFile (Generate.Class.file types.call enums.class dlcClasses)
+            , Elm.Declare.toFile (Generate.Companion.file types.call enums.companion dlcCompanions)
+            , Elm.Declare.toFile (Generate.Complication.file types.call enums.complication dlcComplications)
+            , Elm.Declare.toFile (Generate.ComplicationCategory.file enums.complicationCategory)
+            , Elm.Declare.toFile (Generate.Faction.file types.call enums.faction dlcFactions)
+            , Elm.Declare.toFile (Generate.GameMode.file types.call enums.gameMode dlcGameModes)
+            , Elm.Declare.toFile (Generate.Magic.file types.call enums.magic dlcMagics)
+            , Elm.Declare.toFile (Generate.Perk.file types.call enums.perk dlcPerks)
+            , Elm.Declare.toFile (Generate.Quest.file types.call enums.quest dlcQuests)
+            , Elm.Declare.toFile (Generate.Relic.file types.call enums.relic dlcRelics)
+            , Elm.Declare.toFile (Generate.Size.file enums.size)
+            , Elm.Declare.toFile (Generate.Slot.file enums.slot)
             , Elm.Declare.toFile racesFile
-            , Elm.Declare.toFile (Generate.Relics.file types.call dlcRelics)
             , Elm.Declare.toFile typePerksFile
             , Elm.Declare.toFile types
-            , Elm.Declare.toFile (Generate.Attributions.file dlcAttributions)
-            , Elm.Declare.toFile (Generate.Factions.file types.call dlcFactions)
             ]
         )
-        (Generate.Races.file types.call dlcRaces)
-        (Generate.TypePerks.file types.call dlcRaces)
+        (Generate.Race.file types.call enums.race dlcRaces)
+        (Generate.TypePerk.file types.call dlcRaces)

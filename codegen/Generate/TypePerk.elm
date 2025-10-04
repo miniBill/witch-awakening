@@ -1,4 +1,4 @@
-module Generate.TypePerks exposing (TypePerksModule, file)
+module Generate.TypePerk exposing (TypePerksModule, file)
 
 import Elm
 import Elm.Annotation

@@ -6,9 +6,10 @@ import Data.Costs.Utils as Utils exposing (Points, affinityDiscountIf)
 import Data.Magic as Magic
 import Data.Race as Race
 import Dict exposing (Dict)
-import Generated.Magic
-import Generated.TypePerk
-import Generated.Types as Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
+import Generated.Magic as Magic
+import Generated.Race as Race
+import Generated.TypePerk as TypePerk
+import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData, IdKind(..), RankedMagic, RankedPerk)
 
@@ -34,7 +35,7 @@ value { ignoreSorceressBonus } model =
         affinities =
             Affinity.fromModel model
     in
-    Generated.Magic.all
+    Magic.all
         |> List.sortBy
             (\magic ->
                 if magic.faction /= Nothing then
@@ -93,7 +94,7 @@ value { ignoreSorceressBonus } model =
                                         |> Maybe.andThen
                                             (\( freeRank, freeRace ) ->
                                                 if magic.rank <= freeRank then
-                                                    Just ( magic.name, "[" ++ Types.raceToString freeRace ++ "]" )
+                                                    Just ( magic.name, "[" ++ Race.toString freeRace ++ "]" )
 
                                                 else
                                                     Nothing
@@ -112,7 +113,7 @@ value { ignoreSorceressBonus } model =
                                 List.filterMap
                                     (\m ->
                                         if m.rank == 5 then
-                                            Just (Types.magicToString m.name)
+                                            Just (Magic.toString m.name)
 
                                         else
                                             Nothing
@@ -213,7 +214,7 @@ magicValue model affinities magicDetails =
                 let
                     name : String
                     name =
-                        Types.magicToString rankedMagic.name
+                        Magic.toString rankedMagic.name
 
                     inAffinity : Affinity.InAffinity
                     inAffinity =
@@ -381,7 +382,7 @@ fromTypePerk model magic =
                         else
                             Nothing
                     )
-                    Generated.TypePerk.all
+                    TypePerk.all
             )
 
 

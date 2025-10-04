@@ -1,7 +1,8 @@
 module MarkMini exposing (Block(..), Color(..), Piece(..), blockParser)
 
 import Generated.Affinity as Affinity
-import Generated.Classes as Classes
+import Generated.Class as Class
+import Generated.Slot as Slot
 import Generated.Types as Types exposing (Affinity, Class, Perk, Race, Slot(..))
 import List.Extra
 import Parser exposing ((|.), (|=), Parser)
@@ -179,7 +180,7 @@ mainParser =
                             :: List.map
                                 (\name ->
                                     Parser.succeed (SlotColor name)
-                                        |. Parser.symbol (Types.slotToString name |> String.toLower)
+                                        |. Parser.symbol (Slot.toString name |> String.toLower)
                                 )
                                 [ SlotFolk
                                 , SlotNoble
@@ -190,13 +191,13 @@ mainParser =
                             ++ List.map
                                 (\{ name } ->
                                     Parser.succeed (ClassColor name)
-                                        |. Parser.symbol (Types.classToString name |> String.toLower)
+                                        |. Parser.symbol (Class.toString name |> String.toLower)
                                 )
-                                Classes.all
+                                Class.all
                             ++ List.map
                                 (\{ name } ->
                                     Parser.succeed (AffinityColor name)
-                                        |. Parser.symbol (Types.affinityToString name |> String.toLower)
+                                        |. Parser.symbol (Affinity.toString name |> String.toLower)
                                 )
                                 Affinity.all
                         )

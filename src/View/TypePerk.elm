@@ -3,10 +3,10 @@ module View.TypePerk exposing (viewTypePerks)
 import Color
 import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, moveUp, paddingXY, px, rgb, spacing, width)
 import Element.Font as Font
+import Generated.Gradient as Gradient
+import Generated.Image as Image exposing (Image)
 import Generated.TypePerk as TypePerk
 import Generated.Types as Types exposing (Race(..), Slot)
-import Gradients
-import Images
 import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display, IdKind(..))
@@ -33,7 +33,7 @@ viewTypePerks hideDLC witchRaces display typePerks =
                     |> List.filterMap (typePerkBox witchRaces display typePerks)
         in
         View.collapsible
-            [ Theme.style "background-image" <| "url(\"" ++ Images.typePerkBackground.src ++ "\"), url(\"" ++ Images.typePerkBottomBackground.src ++ "\")"
+            [ Theme.style "background-image" <| "url(\"" ++ Image.typePerkBackground.src ++ "\"), url(\"" ++ Image.typePerkBottomBackground.src ++ "\")"
             , Theme.style "background-repeat" "no-repeat, no-repeat"
             , Theme.style "background-position" "top, bottom"
             , Theme.style "background-size" "100%, 100%"
@@ -148,7 +148,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 , paddingXY 30 0
                 ]
                 6
-                Gradients.yellowGradient
+                Gradient.yellowGradient
                 raceString
             , Theme.gradientTextWrapped
                 [ alignRight
@@ -158,7 +158,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 , Font.size 30
                 ]
                 6
-                Gradients.yellowGradient
+                Gradient.yellowGradient
                 (String.fromInt -cost)
             , case dlc of
                 Nothing ->
@@ -172,7 +172,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                         , moveDown 60
                         ]
                         4
-                        Gradients.purpleGradient
+                        Gradient.purpleGradient
                         dlcName
             , case name of
                 Nothing ->
@@ -220,12 +220,12 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                                     (\line ->
                                         line
                                             |> String.join " "
-                                            |> Theme.gradientText 4 Gradients.yellowGradient
+                                            |> Theme.gradientText 4 Gradient.yellowGradient
                                             |> el [ centerX ]
                                     )
 
                          else
-                            [ Theme.gradientText 4 Gradients.yellowGradient n ]
+                            [ Theme.gradientText 4 Gradient.yellowGradient n ]
                         )
             , Types.slotToImage slot
                 |> Theme.image [ width <| px 40 ]
@@ -236,29 +236,29 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
         }
 
 
-raceToTypePerkImage : Race -> Images.Image
+raceToTypePerkImage : Race -> Image
 raceToTypePerkImage race =
     case race of
         RaceJotun ->
-            Images.typePerkJotun
+            Image.typePerkJotun
 
         RaceXeno ->
-            Images.typePerkXeno
+            Image.typePerkXeno
 
         RaceSpider ->
-            Images.typePerkSpider
+            Image.typePerkSpider
 
         RacePixie ->
-            Images.typePerkPixie
+            Image.typePerkPixie
 
         RaceFairy ->
-            Images.typePerkFairy
+            Image.typePerkFairy
 
         RaceGenie _ ->
-            Images.typePerkGenie
+            Image.typePerkGenie
 
         RaceGemini _ ->
-            Images.typePerkGemini
+            Image.typePerkGemini
 
         _ ->
             Types.raceToImage race

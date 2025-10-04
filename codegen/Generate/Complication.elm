@@ -1,10 +1,11 @@
-module Generate.Complications exposing (file)
+module Generate.Complication exposing (file)
 
 import Elm
 import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.Data.Complication
+import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers exposing (Content(..))
@@ -13,13 +14,15 @@ import String.Extra
 
 type alias ComplicationModule =
     { all : Elm.Expression
+    , toString : Elm.Expression -> Elm.Expression
     }
 
 
-file : TypesModule -> List ( Maybe String, Parsers.Complication ) -> Elm.Declare.Module ComplicationModule
-file types dlcComplications =
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Complication ) -> Elm.Declare.Module ComplicationModule
+file types enum dlcComplications =
     Elm.Declare.module_ [ "Generated", "Complication" ] ComplicationModule
         |> Elm.Declare.with (all dlcComplications)
+        |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.Extra.withDeclarations (dlcToComplications types dlcComplications)
 
 

@@ -3,7 +3,7 @@ module View.MagicPyramid exposing (view)
 import Color exposing (Color)
 import Dict
 import Dict.Extra
-import Generated.Magic
+import Generated.Magic as Magic
 import Generated.Types as Types
 import Html.Attributes
 import List.Extra
@@ -138,7 +138,7 @@ viewMagic name x y =
     let
         nameString : String
         nameString =
-            Types.magicToString name
+            Magic.toString name
 
         title : Svg msg
         title =
@@ -166,7 +166,7 @@ viewMagic name x y =
         [ TypedSvg.Attributes.InPx.cx (x + 0.125)
         , TypedSvg.Attributes.InPx.cy (y + 0.125)
         , TypedSvg.Attributes.InPx.r 0.125
-        , Generated.Magic.all
+        , Magic.all
             |> List.Extra.find (\magicDetails -> magicDetails.name == name)
             |> Maybe.map (\{ class } -> View.Magic.maybeClassToColor class)
             |> Maybe.withDefault Color.white

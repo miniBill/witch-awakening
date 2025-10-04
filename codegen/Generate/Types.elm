@@ -1,6 +1,6 @@
 module Generate.Types exposing (TypesModule, file)
 
-import Data exposing (Enum, Variant)
+import Data exposing (Enums)
 import Elm
 import Elm.Annotation
 import Elm.Arg
@@ -8,11 +8,11 @@ import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
 import Elm.Op
-import Elm.Op.Extra
 import Gen.Maybe
 import Gen.Parser
 import Gen.Result
-import Generate.Images exposing (ImagesModule)
+import Generate.Enum as Enum exposing (Enum, Variant)
+import Generate.Image exposing (ImagesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
@@ -36,7 +36,7 @@ type alias TypesModule =
     }
 
 
-file : ImagesModule -> List Parsers.DLC -> Elm.Declare.Module TypesModule
+file : ImagesModule -> List Parsers.DLC -> ( Elm.Declare.Module TypesModule, Enums )
 file images dlcList =
     let
         moduleName : List String
@@ -65,16 +65,17 @@ file images dlcList =
                 |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.size)
                 |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.slot)
     in
-    { name = module_.name
-    , declarations = module_.declarations
-    , call = module_.call
-    }
+    ( { name = module_.name
+      , declarations = module_.declarations
+      , call = module_.call
+      }
+    , enums
+    )
 
 
 type alias EnumModule =
     { value : String -> Elm.Expression
     , annotation : Elm.Annotation.Annotation
-    , toString : Elm.Expression -> Elm.Expression
     , parser : Elm.Expression
     , fromString : Elm.Expression -> Elm.Expression
     , argWith : String -> List (Elm.Arg Elm.Expression) -> Elm.Arg (List Elm.Expression)
@@ -86,7 +87,7 @@ enumToDeclarations moduleName images enum =
     let
         type_ : Elm.Declare.Annotation
         type_ =
-            typeDeclaration enum
+            Enum.toAnnotation enum
 
         config : Config
         config =
@@ -120,7 +121,6 @@ enumToDeclarations moduleName images enum =
                     Elm.Declare.module_ moduleName (EnumModule valueFrom)
                         |> Elm.Declare.Extra.withDeclarations [ Elm.docs ("# " ++ enum.name) ]
                         |> Elm.Declare.with type_
-                        |> Elm.Declare.with (toStringDeclaration config enum)
                         |> Elm.Declare.with (parserDeclaration config enum)
                         |> Elm.Declare.with (fromStringDeclaration config enum)
             in
@@ -208,7 +208,7 @@ toImageDeclaration images { lowerName, type_ } { name, variants } =
 
                         image : Elm.Expression
                         image =
-                            Generate.Images.valueFrom (lowerName ++ constructor)
+                            Generate.Image.valueFrom (lowerName ++ constructor)
                     in
                     Elm.Case.branch
                         (Elm.Arg.customType (name ++ constructor) identity
@@ -259,61 +259,6 @@ isSameDeclaration { lowerName, type_ } { name, variants } =
         |> Elm.Declare.fn2 ("isSame" ++ String.Extra.toSentenceCase lowerName)
             (Elm.Arg.varWith (lowerName ++ "1") type_)
             (Elm.Arg.varWith (lowerName ++ "2") type_)
-
-
-typeDeclaration : Enum -> Elm.Declare.Annotation
-typeDeclaration { name, variants } =
-    variants
-        |> List.map
-            (\variant ->
-                variant.arguments
-                    |> List.map (Elm.Annotation.named [])
-                    |> Elm.variantWith (name ++ yassify variant.name)
-            )
-        |> Elm.Declare.customType name
-        |> Elm.Declare.Extra.exposeConstructor
-
-
-toStringDeclaration : Config -> Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
-toStringDeclaration { lowerName, type_ } { name, variants } =
-    (\value ->
-        let
-            variantToBranch : Variant -> Elm.Case.Branch
-            variantToBranch variant =
-                let
-                    variantString : Elm.Expression
-                    variantString =
-                        variant.toStringException
-                            |> Maybe.withDefault variant.name
-                            |> Elm.string
-                in
-                Elm.Case.branch
-                    (Elm.Arg.customType (name ++ yassify variant.name) identity
-                        |> Elm.Arg.items (List.map Elm.Arg.var variant.arguments)
-                    )
-                <|
-                    \vals ->
-                        (variantString
-                            :: List.map2
-                                (\arg val ->
-                                    Elm.apply
-                                        (Elm.val <|
-                                            String.Extra.decapitalize arg
-                                                ++ "ToString"
-                                        )
-                                        [ val ]
-                                )
-                                variant.arguments
-                                vals
-                        )
-                            |> List.intersperse (Elm.string "-")
-                            |> Elm.Op.Extra.appendsStrings
-        in
-        variants
-            |> List.map variantToBranch
-            |> Elm.Case.custom value type_
-    )
-        |> Elm.Declare.fn (lowerName ++ "ToString") (Elm.Arg.varWith lowerName type_)
 
 
 fromStringDeclaration : Config -> Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)

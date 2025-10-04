@@ -3,9 +3,9 @@ module View.Class exposing (viewClass)
 import Element exposing (Element, alignBottom, centerX, fill, moveDown, moveUp, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Classes as Classes
+import Generated.Class as Class
+import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (Class)
-import Gradients
 import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display, IdKind(..))
@@ -15,9 +15,9 @@ import View
 viewClass : Set String -> Display -> Maybe Class -> Element Choice
 viewClass hideDLC display class =
     let
-        filtered : List Classes.Details
+        filtered : List Class.Details
         filtered =
-            Classes.all
+            Class.all
                 |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then
@@ -66,7 +66,7 @@ intro =
 classBox :
     Display
     -> Maybe Class
-    -> Classes.Details
+    -> Class.Details
     -> Maybe (Element (Maybe Class))
 classBox display selected { name, dlc, color, content } =
     let
@@ -87,7 +87,7 @@ classBox display selected { name, dlc, color, content } =
             else
                 Just name
     in
-    Theme.card [ Theme.id IdKindClass (Types.classToString name) ]
+    Theme.card [ Theme.id IdKindClass (Class.toString name) ]
         { display = display
         , forceShow = selected == Nothing
         , glow = color
@@ -107,8 +107,8 @@ classBox display selected { name, dlc, color, content } =
                 , moveUp 10
                 ]
                 4
-                Gradients.yellowGradient
-                (Types.classToString name)
+                Gradient.yellowGradient
+                (Class.toString name)
             , case dlc of
                 Nothing ->
                     Element.none
@@ -121,7 +121,7 @@ classBox display selected { name, dlc, color, content } =
                         , moveDown 8
                         ]
                         4
-                        Gradients.purpleGradient
+                        Gradient.purpleGradient
                         dlcName
             ]
         , content = [ Theme.blocks [] IdKindClass content ]

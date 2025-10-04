@@ -2,7 +2,7 @@ module Data.Costs.Factions exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
-import Generated.Types as Types
+import Generated.Faction as Faction
 import Types exposing (IdKind(..), Model)
 
 
@@ -15,7 +15,7 @@ value model =
 
         Just ( name, False ) ->
             [ Monad.succeed 0
-                |> Monad.withPowerInfo IdKindFaction (Types.factionToString name)
+                |> Monad.withPowerInfo IdKindFaction (Faction.toString name)
             , Monad.succeed 2
                 |> Monad.withPowerInfo IdKindFaction "No faction magic"
             ]
@@ -23,6 +23,6 @@ value model =
 
         Just ( name, True ) ->
             Monad.succeed 0
-                |> Monad.withPowerInfo IdKindFaction (Types.factionToString name)
+                |> Monad.withPowerInfo IdKindFaction (Faction.toString name)
     )
         |> Monad.map Utils.powerToPoints

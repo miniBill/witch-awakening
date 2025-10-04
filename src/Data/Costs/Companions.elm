@@ -4,7 +4,7 @@ import Data.Companion as Companion
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points)
 import Dict exposing (Dict)
-import Generated.Companion
+import Generated.Companion as Companion
 import Generated.Types as Types exposing (Class, Companion, Faction(..), Race)
 import List.Extra
 import Types exposing (IdKind(..), Model)
@@ -109,7 +109,7 @@ value model =
                                     unique
                                         |> List.map
                                             (\( label, _, { name } ) ->
-                                                ( Types.companionToString name, label )
+                                                ( Companion.toString name, label )
                                             )
                                         |> Dict.fromList
                                 }
@@ -153,7 +153,7 @@ value model =
                         let
                             nameString : String
                             nameString =
-                                Types.companionToString name
+                                Companion.toString name
                         in
                         case Dict.get nameString forFree of
                             Just reason ->
@@ -218,10 +218,10 @@ getCompanion companion =
                     )
                     group
             )
-            Generated.Companion.all
+            Companion.all
     of
         Just p ->
             Monad.succeed p
 
         Nothing ->
-            Monad.error <| "Companion " ++ Types.companionToString companion ++ " not found"
+            Monad.error <| "Companion " ++ Companion.toString companion ++ " not found"

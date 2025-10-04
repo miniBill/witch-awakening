@@ -5,9 +5,10 @@ import Data.Complication as Complication exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, px, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Complication
+import Generated.Complication as Complication
+import Generated.ComplicationCategory as ComplicationCategory
+import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (ComplicationCategory(..), Slot(..))
-import Gradients
 import List.Extra
 import Set exposing (Set)
 import Theme
@@ -20,7 +21,7 @@ viewComplications hideDLC display complications =
     let
         filtered : List Complication.Details
         filtered =
-            Generated.Complication.all
+            Complication.all
                 |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then
@@ -115,7 +116,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
         gradient =
             category
                 |> Maybe.map Theme.complicationCategoryToGradient
-                |> Maybe.withDefault Gradients.blueGradient
+                |> Maybe.withDefault Gradient.blueGradient
 
         color : Color
         color =
@@ -147,13 +148,13 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 (List.take 1 gains ++ List.take 1 (List.reverse gains))
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/.../"
-                    |> Theme.gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradient.yellowGradient
 
             else
                 gains
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/"
-                    |> Theme.gradientText 4 Gradients.yellowGradient
+                    |> Theme.gradientText 4 Gradient.yellowGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -192,7 +193,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                             [ centerX, Theme.captureIt ]
                             4
                             gradient
-                            (Types.complicationCategoryToString c)
+                            (ComplicationCategory.toString c)
                         , el [ centerX, Theme.captureIt ] gainGradient
                         ]
 
@@ -227,7 +228,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                                 moveDown 18
                         ]
                         4
-                        Gradients.purpleGradient
+                        Gradient.purpleGradient
                         dlcName
             , Theme.gradientTextWrapped
                 [ alignBottom
@@ -238,10 +239,10 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 ]
                 4
                 gradient
-                (Types.complicationToString name)
+                (Complication.toString name)
             ]
     in
-    Theme.card [ Theme.id IdKindComplication (Types.complicationToString name) ]
+    Theme.card [ Theme.id IdKindComplication (Complication.toString name) ]
         { display = display
         , forceShow = False
         , glow = color

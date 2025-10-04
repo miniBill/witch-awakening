@@ -6,13 +6,17 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Generated.Affinity
-import Generated.Classes
+import Generated.Affinity as Affinity
+import Generated.Class as Class
+import Generated.Gradient as Gradient
+import Generated.Image as Image exposing (Image)
+import Generated.Magic as Magic
+import Generated.Perk as Perk
+import Generated.Race as Race
+import Generated.Size as Size
 import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Size, Slot(..))
-import Gradients
 import Html exposing (Html)
 import Html.Attributes
-import Images exposing (Image)
 import List.Extra
 import MarkMini exposing (Block(..), Piece(..))
 import Parser exposing ((|.))
@@ -268,13 +272,13 @@ viewPiece expandBadges piece =
                     colored colors.choice
 
                 MarkMini.ClassColor class ->
-                    colored <| Generated.Classes.toColor class
+                    colored <| Class.toColor class
 
                 MarkMini.SlotColor slot ->
                     colored <| slotToColor slot
 
                 MarkMini.AffinityColor affinity ->
-                    colored <| Generated.Affinity.toColor affinity
+                    colored <| Affinity.toColor affinity
 
         Smol children ->
             [ Html.span
@@ -364,28 +368,28 @@ viewPiece expandBadges piece =
             [ Html.img [ Html.Attributes.src (classToBadge class).src ] [] ]
 
         Perk perk ->
-            viewGenericBadge expandBadges (Types.perkToImage perk) (Types.perkToString perk)
+            viewGenericBadge expandBadges (Types.perkToImage perk) (Perk.toString perk)
 
         Race race ->
-            viewGenericBadge expandBadges (Types.raceToImage race) (Types.raceToString race)
+            viewGenericBadge expandBadges (Types.raceToImage race) (Race.toString race)
 
         Magic magic ->
-            viewGenericBadge expandBadges (Types.magicToImage magic) (Types.magicToString magic)
+            viewGenericBadge expandBadges (Types.magicToImage magic) (Magic.toString magic)
 
         Size size ->
-            [ Types.sizeToString size
+            [ Size.toString size
                 |> String.replace "Medium" "Med"
-                |> gradientTextSpan "Morpheus" 4 Gradients.blueGradient
+                |> gradientTextSpan "Morpheus" 4 Gradient.blueGradient
             ]
 
         Star ->
-            [ gradientTextSpan "Capture It" 4 Gradients.yellowGradient "★" ]
+            [ gradientTextSpan "Capture It" 4 Gradient.yellowGradient "★" ]
 
         Power value ->
-            [ gradientTextSpan "Capture It" 4 Gradients.yellowGradient value ]
+            [ gradientTextSpan "Capture It" 4 Gradient.yellowGradient value ]
 
         RewardPoints value ->
-            [ gradientTextSpan "Capture It" 4 Gradients.blueGradient value ]
+            [ gradientTextSpan "Capture It" 4 Gradient.blueGradient value ]
 
         Kisses value ->
             [ Html.span []
@@ -497,7 +501,7 @@ viewAffinityBadge affinity =
                 let
                     affinityColor : String
                     affinityColor =
-                        Color.toCssString (Generated.Affinity.toColor affinity)
+                        Color.toCssString (Affinity.toColor affinity)
 
                     whiteGradient : String
                     whiteGradient =
@@ -512,7 +516,7 @@ viewAffinityBadge affinity =
     in
     Html.div
         (common ++ perColor)
-        [ Html.text (Types.affinityToString affinity) ]
+        [ Html.text (Affinity.toString affinity) ]
 
 
 slotToColor : Slot -> Color
@@ -577,7 +581,7 @@ viewSectionTitle toMsg display kind label =
     let
         gradient : String -> List (Element msg)
         gradient t =
-            gradientTextSplit 4 Gradients.blueGradient t
+            gradientTextSplit 4 Gradient.blueGradient t
     in
     wrappedRow
         [ celticHand
@@ -864,23 +868,23 @@ complicationCategoryToGradient : ComplicationCategory -> List ( Int, Int, Int )
 complicationCategoryToGradient category =
     case category of
         ComplicationCategoryWorldShift ->
-            Gradients.greenGradient
+            Gradient.greenGradient
 
 
 classToBadge : Class -> Image
 classToBadge class =
     case class of
         ClassAcademic ->
-            Images.badgeAcademic
+            Image.badgeAcademic
 
         ClassSorceress ->
-            Images.badgeSorceress
+            Image.badgeSorceress
 
         ClassWarlock ->
-            Images.badgeWarlock
+            Image.badgeWarlock
 
 
-topBackground : Images.Image -> List (Element.Attribute msg)
+topBackground : Image -> List (Element.Attribute msg)
 topBackground { src } =
     [ style "background-image" <| "url(\"" ++ src ++ "\")"
     , style "background-repeat" "no-repeat"
@@ -994,7 +998,7 @@ viewSize :
     -> Size
     -> Element msg
 viewSize gradient size =
-    Types.sizeToString size
+    Size.toString size
         |> String.replace "Medium" "Med"
         |> gradientText 4 gradient
         |> el

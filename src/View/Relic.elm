@@ -5,10 +5,10 @@ import Data.Affinity as Affinity
 import Data.Relic exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, px, spacing, text, width)
 import Element.Font as Font
+import Generated.Gradient as Gradient
+import Generated.Image as Image
 import Generated.Relic as Relic
 import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
-import Gradients
-import Images
 import List.Extra
 import Set exposing (Set)
 import Theme
@@ -51,7 +51,7 @@ viewRelics hideDLC display pearl mainRace races relics =
                 [ width fill
                 , Theme.style "mask-image" "linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 50%)"
                 ]
-                Images.relicFooter
+                Image.relicFooter
             ]
             [ sorted
                 |> Theme.wrappedRow
@@ -122,13 +122,13 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> Theme.gradientText 4 Gradients.blueGradient
+                    |> Theme.gradientText 4 Gradient.blueGradient
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> Theme.gradientText 4 Gradients.blueGradient
+                    |> Theme.gradientText 4 Gradient.blueGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -140,7 +140,7 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
         color =
             Color.rgb255 0xF3 0xEA 0x6F
     in
-    Theme.card [ Theme.id IdKindRelic (Types.relicToString name) ]
+    Theme.card [ Theme.id IdKindRelic (Relic.toString name) ]
         { display = display
         , forceShow = False
         , glow = color
@@ -174,7 +174,7 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                             , moveDown 12
                             ]
                             4
-                            Gradients.purpleGradient
+                            Gradient.purpleGradient
                             dlcName
             , Theme.viewClasses 40 classes
                 |> el [ Element.alignBottom ]
@@ -199,8 +199,8 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                     , centerX
                     ]
                     4
-                    Gradients.yellowGradient
-                    (Types.relicToString name)
+                    Gradient.yellowGradient
+                    (Relic.toString name)
             ]
         , content =
             case relic.requires of
@@ -257,7 +257,7 @@ viewContent mainRace isSelected selected pearl races { content, name } color =
                         ((width <| px 24) :: attrs)
                         { label =
                             String.fromInt cost
-                                |> Theme.gradientText 4 Gradients.yellowGradient
+                                |> Theme.gradientText 4 Gradient.yellowGradient
                                 |> el [ centerX, centerY, Theme.captureIt ]
                         , onPress = Just <| ChoiceRelic ( relic, not isChoiceSelected )
                         }

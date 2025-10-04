@@ -6,7 +6,8 @@ import Data.Costs.Utils as Utils exposing (Points)
 import Data.Magic as Magic
 import Data.Perk as Perk
 import Data.Race as Race
-import Generated.Perk
+import Generated.Magic as Magic
+import Generated.Perk as Perk
 import Generated.Types as Types exposing (Class, Magic(..), Perk(..), Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData, IdKind(..), RankedMagic, RankedPerk)
@@ -106,14 +107,14 @@ perkValue model ranked =
             else
                 Nothing
     in
-    Utils.find "Perk" .name ranked.name (Generated.Perk.all model.perks) View.Perk.perkToShortString
+    Utils.find "Perk" .name ranked.name (Perk.all model.perks) View.Perk.perkToShortString
         |> Monad.andThen
             (\perk ->
                 let
                     freeIfHasMagicAtRank : Types.Magic -> Int -> Maybe String
                     freeIfHasMagicAtRank magic rank =
                         if Utils.hasMagicAtRank model magic rank then
-                            Just ("[" ++ Types.magicToString magic ++ "]")
+                            Just ("[" ++ Magic.toString magic ++ "]")
 
                         else
                             Nothing
@@ -144,7 +145,7 @@ perkValue model ranked =
 
                     res : { name : String, points : Monad.Value, staticCost : Bool }
                     res =
-                        { name = Types.perkToString ranked.name
+                        { name = Perk.toString ranked.name
                         , points = finalCost
                         , staticCost =
                             case perk.content of
@@ -155,7 +156,7 @@ perkValue model ranked =
                                     False
                         }
                 in
-                Utils.checkRequirements perk (Types.perkToString ranked.name) model res
+                Utils.checkRequirements perk (Perk.toString ranked.name) model res
             )
 
 

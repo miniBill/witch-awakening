@@ -6,11 +6,11 @@ import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fi
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Faction
-import Generated.Magic
-import Generated.Types as Types exposing (Faction)
-import Gradients
-import Images exposing (Image)
+import Generated.Faction as Faction
+import Generated.Gradient as Gradient
+import Generated.Image as Image exposing (Image)
+import Generated.Magic as Magic
+import Generated.Types exposing (Faction)
 import List.Extra
 import Set exposing (Set)
 import Theme
@@ -23,14 +23,14 @@ viewFaction hideDLC display faction =
     let
         filtered : List Faction.Details
         filtered =
-            Generated.Faction.all
+            Faction.all
                 |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then
         Element.none
 
     else
-        View.collapsible (Theme.topBackground Images.factionIntro)
+        View.collapsible (Theme.topBackground Image.factionIntro)
             display
             DisplayFaction
             ChoiceFaction
@@ -60,7 +60,7 @@ viewFaction hideDLC display faction =
                     ]
             , Element.row
                 [ width fill
-                , Background.image Images.factionHumansIntro1.src
+                , Background.image Image.factionHumansIntro1.src
                 , width fill
                 ]
                 [ el [ width fill, Element.paddingEach { left = 32, bottom = 64, top = 200, right = 32 } ] <|
@@ -78,7 +78,7 @@ viewFaction hideDLC display faction =
                     [ width fill
                     , alignBottom
                     ]
-                    Images.factionHumansIntro2
+                    Image.factionHumansIntro2
                 ]
             , filtered
                 |> List.filter .isHuman
@@ -107,7 +107,7 @@ factionBox display selected details =
         Nothing
 
     else
-        Theme.column [ width fill, Theme.id IdKindFaction (Types.factionToString details.name) ]
+        Theme.column [ width fill, Theme.id IdKindFaction (Faction.toString details.name) ]
             [ introRow display details
             , Theme.wrappedRow [ width fill ]
                 [ content selected details
@@ -240,18 +240,18 @@ viewPerk display selected { name, perk, perkContent, images } =
                     , paddingXY 8 0
                     ]
                     3
-                    Gradients.blueGradient
+                    Gradient.blueGradient
                     perk
                 ]
             , content =
-                case List.Extra.find (\magic -> magic.faction == Just name) Generated.Magic.all of
+                case List.Extra.find (\magic -> magic.faction == Just name) Magic.all of
                     Nothing ->
                         [ Theme.blocks [] IdKindFaction perkContent ]
 
                     Just magic ->
                         [ Theme.blocks []
                             IdKindFaction
-                            (perkContent ++ "\n\n_*[" ++ Types.magicToString magic.name ++ "]*_ is half price for you, stacks with affinity.")
+                            (perkContent ++ "\n\n_*[" ++ Magic.toString magic.name ++ "]*_ is half price for you, stacks with affinity.")
                         ]
             , onPress = Just perkMsg
             }
@@ -294,7 +294,7 @@ introRow display { name, dlc, motto, images } =
                             , Font.size 24
                             , moveDown 4
                             ]
-                            (Theme.gradientText 4 Gradients.purpleGradient dlcName)
+                            (Theme.gradientText 4 Gradient.purpleGradient dlcName)
                 )
             ]
             [ img images.image1
@@ -308,15 +308,15 @@ introRow display { name, dlc, motto, images } =
                         , Theme.celticHand
                         ]
                         2
-                        Gradients.blueGradient
-                        (Types.factionToString name)
+                        Gradient.blueGradient
+                        (Faction.toString name)
                     , Theme.gradientTextWrapped
                         [ width fill
                         , Font.size 24
                         , Theme.morpheus
                         ]
                         2
-                        Gradients.yellowGradient
+                        Gradient.yellowGradient
                         motto
                     ]
                 ]
@@ -330,8 +330,8 @@ introRow display { name, dlc, motto, images } =
             , Theme.celticHand
             ]
             2
-            Gradients.blueGradient
-            (Types.factionToString name)
+            Gradient.blueGradient
+            (Faction.toString name)
 
 
 intro : String
