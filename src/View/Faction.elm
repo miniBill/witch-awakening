@@ -1,4 +1,4 @@
-module View.Faction exposing (humansIntro, viewFaction)
+module View.Faction exposing (viewFaction)
 
 import Color exposing (Color)
 import Data.Faction as Faction
