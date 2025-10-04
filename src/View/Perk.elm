@@ -108,7 +108,7 @@ introBlock =
                 }
             ]
             IdKindPerk
-            Perk.intro
+            intro
         , el [ height <| px 200 ] Element.none
         ]
 
@@ -446,3 +446,10 @@ viewChoice color selected name ( label, cost ) =
                 )
         , onPress = Just <| ChoicePerk ( perk, not isChoiceSelected )
         }
+
+
+intro : String
+intro =
+    """
+    Perks are an assortment of bonus traits ranging from added benefits of your new witch true form, to special magical abilities you learn or manifest in your transformation that differ from anything already shown. {choice *Perks cost POWER as shown in the corner. Like Magic, Perks have half the cost if you have the Affinity shown in the other corner. [???] is universally halved (Not pre-factored).*}
+    """

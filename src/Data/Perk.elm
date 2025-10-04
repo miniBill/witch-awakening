@@ -1,4 +1,4 @@
-module Data.Perk exposing (Content(..), Details, all, hybridizeCost, intro)
+module Data.Perk exposing (Content(..), Details, all, hybridizeCost)
 
 import Generated.Types exposing (Affinity(..), Class(..), Perk(..), Race(..))
 import List.Extra
@@ -21,13 +21,6 @@ type Content
     | WithChoices String (List ( String, Int )) String
     | WithCosts (List Int) String
     | WithChoicesChargeSwap String (List ( String, Int ))
-
-
-intro : String
-intro =
-    """
-    Perks are an assortment of bonus traits ranging from added benefits of your new witch true form, to special magical abilities you learn or manifest in your transformation that differ from anything already shown. {choice *Perks cost POWER as shown in the corner. Like Magic, Perks have half the cost if you have the Affinity shown in the other corner. [???] is universally halved (Not pre-factored).*}
-    """
 
 
 all : List RankedPerk -> List Details
