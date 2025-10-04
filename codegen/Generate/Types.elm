@@ -12,7 +12,7 @@ import Gen.Maybe
 import Gen.Parser
 import Gen.Result
 import Generate.Enum as Enum exposing (Enum, Variant)
-import Generate.Image exposing (ImagesModule)
+import Generate.Image exposing (ImageModule)
 import Generate.Utils exposing (yassify)
 import Parsers
 import String.Extra
@@ -36,7 +36,7 @@ type alias TypesModule =
     }
 
 
-file : ImagesModule -> List Parsers.DLC -> ( Elm.Declare.Module TypesModule, Enums )
+file : ImageModule -> List Parsers.DLC -> ( Elm.Declare.Module TypesModule, Enums )
 file images dlcList =
     let
         moduleName : List String
@@ -82,7 +82,7 @@ type alias EnumModule =
     }
 
 
-enumToDeclarations : List String -> ImagesModule -> Enum -> Elm.Declare.Module EnumModule
+enumToDeclarations : List String -> ImageModule -> Enum -> Elm.Declare.Module EnumModule
 enumToDeclarations moduleName images enum =
     let
         type_ : Elm.Declare.Annotation
@@ -195,7 +195,7 @@ parserDeclaration { lowerName, type_ } { name, variants } =
         |> Elm.Declare.value (lowerName ++ "Parser")
 
 
-toImageDeclaration : ImagesModule -> Config -> Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+toImageDeclaration : ImageModule -> Config -> Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
 toImageDeclaration images { lowerName, type_ } { name, variants } =
     (\value ->
         variants

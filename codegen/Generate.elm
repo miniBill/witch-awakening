@@ -15,7 +15,7 @@ import Generate.ComplicationCategory
 import Generate.Faction
 import Generate.GameMode
 import Generate.Gradient
-import Generate.Image exposing (ImagesModule)
+import Generate.Image exposing (ImageModule)
 import Generate.Magic
 import Generate.Perk
 import Generate.Quest
@@ -147,13 +147,13 @@ toFiles root =
         |> Result.andThen
             (\list ->
                 List.concatMap Triple.Extra.first list
-                    |> Generate.Image.images
+                    |> Generate.Image.file
                     |> Result.andThen
-                        (\images ->
+                        (\image ->
                             ResultME.map2
                                 (\gradientsFile dlcFiles ->
                                     { info = []
-                                    , files = gradientsFile :: Elm.Declare.toFile images :: dlcFiles
+                                    , files = gradientsFile :: Elm.Declare.toFile image :: dlcFiles
                                     }
                                 )
                                 (List.concatMap Triple.Extra.second list
@@ -161,14 +161,14 @@ toFiles root =
                                 )
                                 (List.concatMap Triple.Extra.third list
                                     |> Parsers.parseFiles
-                                    |> ResultME.andThen (dlcToFiles images.call)
+                                    |> ResultME.andThen (dlcToFiles image.call)
                                 )
                         )
             )
 
 
-dlcToFiles : ImagesModule -> List Parsers.DLC -> ResultME Generate.Error (List Elm.File)
-dlcToFiles images dlcList =
+dlcToFiles : ImageModule -> List Parsers.DLC -> ResultME Generate.Error (List Elm.File)
+dlcToFiles image dlcList =
     let
         { dlcAffinities, dlcClasses, dlcGameModes, dlcCompanions, dlcQuests, dlcComplications, dlcMagics, dlcPerks, dlcRaces, dlcRelics, dlcFactions } =
             List.foldr
@@ -238,7 +238,7 @@ dlcToFiles images dlcList =
                     )
 
         ( types, enums ) =
-            Generate.Types.file images dlcList
+            Generate.Types.file image dlcList
     in
     ResultME.map2
         (\racesFile typePerksFile ->
@@ -248,7 +248,7 @@ dlcToFiles images dlcList =
             , Elm.Declare.toFile (Generate.Companion.file types.call enums.companion dlcCompanions)
             , Elm.Declare.toFile (Generate.Complication.file types.call enums.complication dlcComplications)
             , Elm.Declare.toFile (Generate.ComplicationCategory.file enums.complicationCategory)
-            , Elm.Declare.toFile (Generate.Faction.file types.call enums.faction dlcFactions)
+            , Elm.Declare.toFile (Generate.Faction.file types.call image enums.faction dlcFactions)
             , Elm.Declare.toFile (Generate.GameMode.file types.call enums.gameMode dlcGameModes)
             , Elm.Declare.toFile (Generate.Magic.file types.call enums.magic dlcMagics)
             , Elm.Declare.toFile (Generate.Perk.file types.call enums.perk dlcPerks)

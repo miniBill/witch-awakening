@@ -1,4 +1,4 @@
-module Generate.Image exposing (ImagesModule, images, valueFrom)
+module Generate.Image exposing (ImageModule, file, valueFrom)
 
 import Dict
 import Dict.Extra
@@ -13,8 +13,10 @@ import String.Extra
 import Triple.Extra
 
 
-type alias ImagesModule =
-    { image : Elm.Annotation.Annotation }
+type alias ImageModule =
+    { valueFrom : String -> Elm.Expression
+    , image : Elm.Annotation.Annotation
+    }
 
 
 moduleName : List String
@@ -22,8 +24,8 @@ moduleName =
     [ "Generated", "Image" ]
 
 
-images : List String -> ResultME Generate.Error (Elm.Declare.Module ImagesModule)
-images sizesList =
+file : List String -> ResultME Generate.Error (Elm.Declare.Module ImageModule)
+file sizesList =
     sizesList
         |> List.concatMap String.lines
         |> List.filter (\line -> not (String.isEmpty line))
@@ -44,7 +46,16 @@ images sizesList =
             )
         |> Result.map
             (\declarations ->
-                Elm.Declare.module_ moduleName ImagesModule
+                Elm.Declare.module_ moduleName
+                    (ImageModule
+                        (\name ->
+                            Elm.value
+                                { name = name
+                                , importFrom = moduleName
+                                , annotation = Just (Elm.Annotation.named moduleName "Image")
+                                }
+                        )
+                    )
                     |> Elm.Declare.with imageType
                     |> Elm.Declare.Extra.withDeclarations (addGroups declarations)
             )

@@ -9,6 +9,7 @@ import Gen.Data.Faction
 import Gen.List
 import Gen.Maybe
 import Generate.Enum as Enum exposing (Enum)
+import Generate.Image exposing (ImageModule)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers
@@ -21,12 +22,12 @@ type alias FactionsModule =
     }
 
 
-file : TypesModule -> Enum -> List ( Maybe String, Parsers.Faction ) -> Elm.Declare.Module FactionsModule
-file types enum dlcFactions =
+file : TypesModule -> ImageModule -> Enum -> List ( Maybe String, Parsers.Faction ) -> Elm.Declare.Module FactionsModule
+file types image enum dlcFactions =
     Elm.Declare.module_ [ "Generated", "Faction" ] FactionsModule
         |> Elm.Declare.with (all dlcFactions)
         |> Elm.Declare.with (Enum.toString enum)
-        |> Elm.Declare.Extra.withDeclarations (dlcToFactions types dlcFactions)
+        |> Elm.Declare.Extra.withDeclarations (dlcToFactions types image dlcFactions)
 
 
 all : List ( Maybe String, Parsers.Faction ) -> Elm.Declare.Value
@@ -49,8 +50,8 @@ all dlcFactions =
         |> Elm.Declare.value "all"
 
 
-dlcToFactions : TypesModule -> List ( Maybe String, Parsers.Faction ) -> List Elm.Declaration
-dlcToFactions types factions =
+dlcToFactions : TypesModule -> ImageModule -> List ( Maybe String, Parsers.Faction ) -> List Elm.Declaration
+dlcToFactions types image factions =
     List.map
         (\( dlcName, faction ) ->
             Gen.Data.Faction.make_.details
@@ -63,12 +64,7 @@ dlcToFactions types factions =
                 , perkContent = Elm.string faction.perkContent
                 , isHuman = Elm.bool faction.isHuman
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                , images =
-                    Elm.value
-                        { importFrom = [ "Generated", "Image" ]
-                        , name = "faction" ++ yassify faction.name
-                        , annotation = Nothing
-                        }
+                , images = image.valueFrom ("faction" ++ yassify faction.name)
                 }
                 |> Elm.declaration (yassify faction.name)
                 |> Elm.expose
