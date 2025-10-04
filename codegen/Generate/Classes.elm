@@ -15,8 +15,8 @@ import String.Extra
 
 type alias ClassesModule =
     { all : Elm.Expression
-    , classToColor : Elm.Expression -> Elm.Expression
-    , classDetails : Elm.Annotation.Annotation
+    , toColor : Elm.Expression -> Elm.Expression
+    , details : Elm.Annotation.Annotation
     }
 
 
@@ -24,12 +24,12 @@ file : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Module
 file types dlcClasses =
     Elm.Declare.module_ [ "Generated", "Classes" ] ClassesModule
         |> Elm.Declare.with (all types dlcClasses)
-        |> Elm.Declare.with (classToColor types dlcClasses)
-        |> Elm.Declare.with (classDetails types)
+        |> Elm.Declare.with (toColor types dlcClasses)
+        |> Elm.Declare.with (details types)
         |> Elm.Declare.Extra.withDeclarations (dlcToClasses types dlcClasses)
 
 
-classDetails :
+details :
     TypesModule
     ->
         { annotation : Elm.Annotation.Annotation
@@ -43,7 +43,7 @@ classDetails :
             }
             -> Elm.Expression
         }
-classDetails types =
+details types =
     Elm.Declare.Extra.customRecord "Details"
         |> Elm.Declare.Extra.withField "name" .name types.class.annotation
         |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
@@ -57,13 +57,13 @@ all types dlcClasses =
     dlcClasses
         |> List.map (\( _, class ) -> Elm.val (String.Extra.decapitalize (yassify class.name)))
         |> Elm.list
-        |> Elm.withType (Elm.Annotation.list (classDetails types).annotation)
+        |> Elm.withType (Elm.Annotation.list (details types).annotation)
         |> Elm.Declare.value "all"
 
 
-classToColor : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
-classToColor types dlcClasses =
-    Elm.Declare.fn "classToColor"
+toColor : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+toColor types dlcClasses =
+    Elm.Declare.fn "toColor"
         (Elm.Arg.var "class")
         (\class ->
             dlcClasses
@@ -83,7 +83,7 @@ dlcToClasses : TypesModule -> List ( Maybe String, Parsers.Class ) -> List Elm.D
 dlcToClasses types classes =
     List.map
         (\( dlcName, class ) ->
-            (classDetails types).make
+            (details types).make
                 { name = types.class.value class.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 , color = Utils.color class.color

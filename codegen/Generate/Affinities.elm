@@ -14,8 +14,9 @@ import String.Extra
 
 type alias AffinitiesModule =
     { all : Elm.Expression
-    , affinityToColor : Elm.Expression -> Elm.Expression
-    , affinityDetails : Elm.Annotation.Annotation
+    , toColor : Elm.Expression -> Elm.Expression
+    , isSelectable : Elm.Expression -> Elm.Expression
+    , details : Elm.Annotation.Annotation
     }
 
 
@@ -23,8 +24,9 @@ file : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Mod
 file types dlcAffinities =
     Elm.Declare.module_ [ "Generated", "Affinity" ] AffinitiesModule
         |> Elm.Declare.with (all types dlcAffinities)
-        |> Elm.Declare.with (affinityToColor types dlcAffinities)
-        |> Elm.Declare.with (affinityDetails types)
+        |> Elm.Declare.with (toColor types dlcAffinities)
+        |> Elm.Declare.with (isSelectable types dlcAffinities)
+        |> Elm.Declare.with (details types)
         |> Elm.Declare.Extra.withDeclarations (dlcToAffinities types dlcAffinities)
 
 
@@ -34,13 +36,29 @@ all types dlcAffinities =
         |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.map (\( _, affinity ) -> Elm.val (affinityToVarName affinity.name))
         |> Elm.list
-        |> Elm.withType (Elm.Annotation.list (affinityDetails types).annotation)
+        |> Elm.withType (Elm.Annotation.list (details types).annotation)
         |> Elm.Declare.value "all"
 
 
-affinityToColor : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
-affinityToColor types dlcAffinities =
-    Elm.Declare.fn "affinityToColor"
+isSelectable : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+isSelectable types dlcAffinities =
+    Elm.Declare.fn "isSelectable"
+        (Elm.Arg.var "affinity")
+        (\affinity ->
+            dlcAffinities
+                |> List.map
+                    (\( _, affinityData ) ->
+                        Elm.Case.branch
+                            (types.affinity.argWith affinityData.name [])
+                            (\_ -> Elm.bool affinityData.selectable)
+                    )
+                |> Elm.Case.custom affinity types.affinity.annotation
+        )
+
+
+toColor : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+toColor types dlcAffinities =
+    Elm.Declare.fn "toColor"
         (Elm.Arg.var "affinity")
         (\affinity ->
             dlcAffinities
@@ -54,7 +72,7 @@ affinityToColor types dlcAffinities =
         )
 
 
-affinityDetails :
+details :
     TypesModule
     ->
         { annotation : Elm.Annotation.Annotation
@@ -66,7 +84,7 @@ affinityDetails :
             }
             -> Elm.Expression
         }
-affinityDetails types =
+details types =
     Elm.Declare.Extra.customRecord "Details"
         |> Elm.Declare.Extra.withField "name" .name types.affinity.annotation
         |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
@@ -77,7 +95,7 @@ dlcToAffinities : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> List
 dlcToAffinities types affinities =
     List.map
         (\( dlcName, affinity ) ->
-            (affinityDetails types).make
+            (details types).make
                 { name = types.affinity.value affinity.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }

@@ -3,6 +3,7 @@
 ## Affinity: All
 - Color: ffffff
 - Rainbow: True
+- Selectable: False
 - Symbol: ???
 
 ## Affinity: Beast

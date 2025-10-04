@@ -268,13 +268,13 @@ viewPiece expandBadges piece =
                     colored colors.choice
 
                 MarkMini.ClassColor class ->
-                    colored <| Generated.Classes.classToColor class
+                    colored <| Generated.Classes.toColor class
 
                 MarkMini.SlotColor slot ->
                     colored <| slotToColor slot
 
                 MarkMini.AffinityColor affinity ->
-                    colored <| Generated.Affinity.affinityToColor affinity
+                    colored <| Generated.Affinity.toColor affinity
 
         Smol children ->
             [ Html.span
@@ -497,7 +497,7 @@ viewAffinityBadge affinity =
                 let
                     affinityColor : String
                     affinityColor =
-                        Color.toCssString (Generated.Affinity.affinityToColor affinity)
+                        Color.toCssString (Generated.Affinity.toColor affinity)
 
                     whiteGradient : String
                     whiteGradient =

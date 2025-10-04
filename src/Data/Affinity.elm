@@ -167,12 +167,8 @@ defaultList =
 
 selectable : List Affinity.Details
 selectable =
-    Affinity.all
-        |> List.Extra.removeWhen
-            (\{ name } ->
-                (name == AffinityWhispers)
-                    || (name == AffinityDreams)
-                    || (name == AffinitySilence)
-                    || (name == AffinityDivine)
-                    || (name == AffinityAll)
-            )
+    List.filter
+        (\{ name } ->
+            Affinity.isSelectable name
+        )
+        Affinity.all

@@ -484,6 +484,7 @@ type alias Affinity =
     { name : String
     , color : Int
     , rainbow : Bool
+    , selectable : Bool
     , symbol : Maybe String
     }
 
@@ -493,6 +494,7 @@ affinity =
     section "##" "Affinity" Affinity
         |> requiredItem "Color" hexParser
         |> flagItem "Rainbow"
+        |> optionalItem "Selectable" True boolParser
         |> maybeItem "Symbol" Ok
         |> parseSection
 

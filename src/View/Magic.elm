@@ -518,7 +518,7 @@ maybeClassToColor : MaybeClass -> Color
 maybeClassToColor class =
     case class of
         ClassOne c ->
-            Generated.Classes.classToColor c
+            Generated.Classes.toColor c
 
         ClassSpecial ->
             Theme.colors.epic
