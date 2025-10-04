@@ -6,7 +6,6 @@ import Elm.Arg
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.CodeGen.Generate as Generate
-import Gen.Data.TypePerk
 import Gen.List
 import Gen.Maybe
 import Gen.Types
@@ -20,6 +19,7 @@ import String.Extra
 
 type alias TypePerksModule =
     { all : Elm.Expression
+    , details : Elm.Annotation.Annotation
     }
 
 
@@ -29,13 +29,41 @@ file types dlcRaces =
         |> Result.map
             (\declarations ->
                 Elm.Declare.module_ [ "Generated", "TypePerk" ] TypePerksModule
-                    |> Elm.Declare.with (all dlcRaces)
+                    |> Elm.Declare.with (all types dlcRaces)
+                    |> Elm.Declare.with (details types)
                     |> Elm.Declare.Extra.withDeclarations declarations
             )
 
 
-all : List ( Maybe String, Parsers.Race ) -> Elm.Declare.Value
-all dlcRaces =
+details :
+    TypesModule
+    ->
+        { annotation : Elm.Annotation.Annotation
+        , declaration : Elm.Declaration
+        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
+        , make :
+            { content : Elm.Expression
+            , cost : Elm.Expression
+            , dlc : Elm.Expression
+            , gain : Elm.Expression
+            , race : Elm.Expression
+            , name : Elm.Expression
+            }
+            -> Elm.Expression
+        }
+details types =
+    Elm.Declare.Extra.customRecord "Details"
+        |> Elm.Declare.Extra.withField "race" .race types.race.annotation
+        |> Elm.Declare.Extra.withField "name" .name (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.Extra.withField "gain" .gain (Elm.Annotation.list Gen.Types.annotation_.rankedMagic)
+        |> Elm.Declare.Extra.withField "cost" .cost Elm.Annotation.int
+        |> Elm.Declare.Extra.withField "content" .content Elm.Annotation.string
+        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.Extra.buildCustomRecord
+
+
+all : TypesModule -> List ( Maybe String, Parsers.Race ) -> Elm.Declare.Value
+all types dlcRaces =
     dlcRaces
         |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.filterMap
@@ -54,7 +82,7 @@ all dlcRaces =
                 )
                 (\dlc -> Gen.Maybe.withDefault (Elm.string "") dlc)
             )
-        |> Elm.withType (Elm.Annotation.list Gen.Data.TypePerk.annotation_.details)
+        |> Elm.withType (Elm.Annotation.list (details types).annotation)
         |> Elm.Declare.value "all"
 
 
@@ -128,7 +156,7 @@ perkToDeclaration types dlcName race perk =
     gainResult
         |> Result.map
             (\gain ->
-                Gen.Data.TypePerk.make_.details
+                (details types).make
                     { race =
                         case race.elements of
                             [] ->

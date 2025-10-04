@@ -8,7 +8,6 @@ import Data.Magic
 import Data.Perk
 import Data.Race
 import Data.Relic
-import Data.TypePerk
 import Dict exposing (Dict)
 import Dict.Extra
 import Generated.Companion
@@ -18,7 +17,7 @@ import Generated.Magic
 import Generated.Perk
 import Generated.Race
 import Generated.Relic as Relic
-import Generated.TypePerk
+import Generated.TypePerk as TypePerk
 import Generated.Types exposing (Affinity(..), Faction, classToString, companionToString, complicationCategoryToString, complicationToString, factionToString, magicToString, perkToString, relicToString, sizeToString)
 import Html exposing (Html)
 import Html.Attributes
@@ -132,9 +131,9 @@ dump model =
     case model.category of
         Race ->
             let
-                typePerks : Dict String Data.TypePerk.Details
+                typePerks : Dict String TypePerk.Details
                 typePerks =
-                    Generated.TypePerk.all
+                    TypePerk.all
                         |> Dict.Extra.fromListBy (\typePerk -> View.Race.raceToShortString typePerk.race)
             in
             go (dumpRace typePerks >> Just) (Generated.Race.all [])
@@ -207,7 +206,7 @@ categoryButton selected ( name, category ) =
         [ Html.text name ]
 
 
-dumpRace : Dict String Data.TypePerk.Details -> Data.Race.Details -> List (Maybe String)
+dumpRace : Dict String TypePerk.Details -> Data.Race.Details -> List (Maybe String)
 dumpRace typePerks details =
     [ Just <| "## Race: " ++ View.Race.raceToShortString details.name
     , listItem "Elements" affinityToString details.affinities

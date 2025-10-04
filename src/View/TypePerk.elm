@@ -1,10 +1,9 @@
 module View.TypePerk exposing (viewTypePerks)
 
 import Color
-import Data.TypePerk as TypePerk
 import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, moveUp, paddingXY, px, rgb, spacing, width)
 import Element.Font as Font
-import Generated.TypePerk
+import Generated.TypePerk as TypePerk
 import Generated.Types as Types exposing (Race(..), Slot)
 import Gradients
 import Images
@@ -20,7 +19,7 @@ viewTypePerks hideDLC witchRaces display typePerks =
     let
         filtered : List TypePerk.Details
         filtered =
-            Generated.TypePerk.all
+            TypePerk.all
                 |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then
