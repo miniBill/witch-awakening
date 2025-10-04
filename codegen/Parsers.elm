@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), dlc, parseFiles)
+module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Evil(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), dlc, parseFiles)
 
 import Ansi.Color
 import Dict exposing (Dict)
@@ -666,7 +666,7 @@ companion =
 type alias Quest =
     { name : String
     , slot : String
-    , evil : String
+    , evil : Evil
     , repeatable : Bool
     , threat : Maybe Int
     , conflict : Maybe Int
@@ -678,10 +678,16 @@ type alias Quest =
     }
 
 
+type Evil
+    = EvilYes
+    | EvilMaybe
+    | EvilNo
+
+
 quest : Parser Quest
 quest =
     let
-        evilFlagParser : String -> String -> ResultME String String
+        evilFlagParser : Evil -> String -> ResultME String Evil
         evilFlagParser evil input =
             input
                 |> boolParser
@@ -726,9 +732,9 @@ quest =
         |= (section "##" "Quest" Quest
                 |> requiredItem "Slot" Ok
                 |> oneOfItems
-                    [ requiredItem "Evil Route" (evilFlagParser "EvilMaybe")
-                    , requiredItem "Evil" (evilFlagParser "EvilYes")
-                    , optionalItem nonexistentKey "EvilNo" (\_ -> Ok "EvilNo")
+                    [ requiredItem "Evil Route" (evilFlagParser EvilMaybe)
+                    , requiredItem "Evil" (evilFlagParser EvilYes)
+                    , optionalItem nonexistentKey EvilNo (\_ -> Ok EvilNo)
                     ]
                 |> optionalItem "Repeatable" False boolParser
                 |> requiredItem "Threat" maybeIntParser

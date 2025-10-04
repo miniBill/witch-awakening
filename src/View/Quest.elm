@@ -2,14 +2,13 @@ module View.Quest exposing (viewQuests)
 
 import Color exposing (Color)
 import Data.Faction as Faction
-import Data.Quest as Quest
 import Dict
 import Dict.Extra
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, inFront, moveDown, moveLeft, moveRight, moveUp, padding, paddingXY, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Quest
+import Generated.Quest as Quest
 import Generated.Types as Types exposing (Quest(..), Slot(..))
 import Gradients
 import Html.Attributes
@@ -25,7 +24,7 @@ viewQuests hideDLC display quests =
     let
         filtered : List Quest.Details
         filtered =
-            Generated.Quest.all
+            Quest.all
                 |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then

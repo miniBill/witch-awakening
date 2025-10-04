@@ -2,7 +2,6 @@ module Data.Costs.Quests exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points, zero)
-import Data.Quest as Quest
 import Dict
 import Dict.Extra
 import Generated.Quest
@@ -75,7 +74,7 @@ value model =
             )
 
 
-questCost : Quest -> Monad ( Int, Quest.Details )
+questCost : Quest -> Monad ( Int, Generated.Quest.Details )
 questCost named =
     Utils.find "Quest" .name named Generated.Quest.all Types.questToString
         |> Monad.andThen

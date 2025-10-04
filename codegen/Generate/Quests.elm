@@ -4,7 +4,6 @@ import Elm
 import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
-import Gen.Data.Quest
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers exposing (Score(..))
@@ -13,23 +12,102 @@ import String.Extra
 
 type alias QuestModule =
     { all : Elm.Expression
+    , questDetails : Elm.Annotation.Annotation
+    , evil :
+        { annotation : Elm.Annotation.Annotation
+        , make_ :
+            { evilNo : Elm.Expression
+            , evilMaybe : Elm.Expression
+            , evilYes : Elm.Expression
+            }
+        , case_ :
+            Elm.Expression
+            ->
+                { evilNo : Elm.Expression
+                , evilMaybe : Elm.Expression
+                , evilYes : Elm.Expression
+                }
+            -> Elm.Expression
+        }
     }
 
 
 file : TypesModule -> List ( Maybe String, Parsers.Quest ) -> Elm.Declare.Module QuestModule
 file types dlcQuests =
     Elm.Declare.module_ [ "Generated", "Quest" ] QuestModule
-        |> Elm.Declare.with (all dlcQuests)
+        |> Elm.Declare.with (all types dlcQuests)
+        |> Elm.Declare.with (questDetails types)
+        |> Elm.Declare.with evil
         |> Elm.Declare.Extra.withDeclarations (dlcToQuests types dlcQuests)
 
 
-all : List ( Maybe String, Parsers.Quest ) -> Elm.Declare.Value
-all dlcQuests =
+questDetails :
+    TypesModule
+    ->
+        { annotation : Elm.Annotation.Annotation
+        , declaration : Elm.Declaration
+        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
+        , make :
+            { name : Elm.Expression
+            , evil : Elm.Expression
+            , repeatable : Elm.Expression
+            , slot : Elm.Expression
+            , faction : Elm.Expression
+            , threat : Elm.Expression
+            , conflict : Elm.Expression
+            , reward : Elm.Expression
+            , description : Elm.Expression
+            , notes : Elm.Expression
+            , sidebars : Elm.Expression
+            , dlc : Elm.Expression
+            }
+            -> Elm.Expression
+        }
+questDetails types =
+    Elm.Declare.Extra.customRecord "Details"
+        |> Elm.Declare.Extra.withField "name" .name types.quest.annotation
+        |> Elm.Declare.Extra.withField "evil" .evil evil.annotation
+        |> Elm.Declare.Extra.withField "repeatable" .repeatable Elm.Annotation.bool
+        |> Elm.Declare.Extra.withField "slot" .slot types.slot.annotation
+        |> Elm.Declare.Extra.withField "faction" .faction (Elm.Annotation.maybe types.faction.annotation)
+        |> Elm.Declare.Extra.withField "threat" .threat (Elm.Annotation.maybe Elm.Annotation.int)
+        |> Elm.Declare.Extra.withField "conflict" .conflict (Elm.Annotation.maybe Elm.Annotation.int)
+        |> Elm.Declare.Extra.withField "reward" .reward Elm.Annotation.int
+        |> Elm.Declare.Extra.withField "description" .description Elm.Annotation.string
+        |> Elm.Declare.Extra.withField "notes" .notes (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.Extra.withField "sidebars" .sidebars (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.Extra.buildCustomRecord
+
+
+type alias Evil a =
+    { evilYes : a
+    , evilMaybe : a
+    , evilNo : a
+    }
+
+
+evil :
+    Elm.Declare.CustomType
+        { evilNo : Elm.Expression
+        , evilMaybe : Elm.Expression
+        , evilYes : Elm.Expression
+        }
+evil =
+    Elm.Declare.customTypeAdvanced "Evil" { exposeConstructor = True } Evil
+        |> Elm.Declare.variant0 "EvilYes" .evilYes
+        |> Elm.Declare.variant0 "EvilMaybe" .evilMaybe
+        |> Elm.Declare.variant0 "EvilNo" .evilNo
+        |> Elm.Declare.finishCustomType
+
+
+all : TypesModule -> List ( Maybe String, Parsers.Quest ) -> Elm.Declare.Value
+all types dlcQuests =
     dlcQuests
         |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.map (\( _, quest ) -> Elm.val (String.Extra.decapitalize (yassify quest.name)))
         |> Elm.list
-        |> Elm.withType (Elm.Annotation.list Gen.Data.Quest.annotation_.details)
+        |> Elm.withType (Elm.Annotation.list (questDetails types).annotation)
         |> Elm.Declare.value "all"
 
 
@@ -37,14 +115,18 @@ dlcToQuests : TypesModule -> List ( Maybe String, Parsers.Quest ) -> List Elm.De
 dlcToQuests types quests =
     List.map
         (\( dlcName, quest ) ->
-            Gen.Data.Quest.make_.details
+            (questDetails types).make
                 { name = types.quest.value quest.name
                 , evil =
-                    Elm.value
-                        { importFrom = [ "Data", "Quest" ]
-                        , name = quest.evil
-                        , annotation = Nothing
-                        }
+                    case quest.evil of
+                        Parsers.EvilYes ->
+                            evil.make_.evilYes
+
+                        Parsers.EvilMaybe ->
+                            evil.make_.evilMaybe
+
+                        Parsers.EvilNo ->
+                            evil.make_.evilNo
                 , slot = types.slot.value quest.slot
                 , threat = Elm.maybe (Maybe.map Elm.int quest.threat)
                 , conflict = Elm.maybe (Maybe.map Elm.int quest.conflict)
