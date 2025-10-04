@@ -1,4 +1,4 @@
-module Data.TypePerk exposing (Details, title)
+module Data.TypePerk exposing (Details)
 
 import Generated.Types exposing (Race)
 import Types exposing (RankedMagic)
@@ -12,8 +12,3 @@ type alias Details =
     , content : String
     , dlc : Maybe String
     }
-
-
-title : String
-title =
-    "# Type Perks"

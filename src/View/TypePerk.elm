@@ -43,7 +43,7 @@ viewTypePerks hideDLC witchRaces display typePerks =
             DisplayTypePerks
             ChoiceTypePerk
             IdKindTypePerk
-            TypePerk.title
+            "# Type Perks"
             [ Theme.blocks
                 [ Font.color <| rgb 0 0 0
                 , Theme.backgroundColor Theme.colors.white
