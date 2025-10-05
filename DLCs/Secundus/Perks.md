@@ -31,6 +31,21 @@ To be a Lavender Bride is both a blessing and burden. No longer are you yet anot
 If you choose to stay on Earth just keep in mind that you are still bound by the Masquerade.
 
 
+## Perk: The Mask
+- Class: Warlock
+- Element: Soul
+- Meta: True
+- Cost: 15
+
+One night you will be visited by the Mask Maker as many others have been. He's a powerful, enigmatic figure who will craft a special mask just for you. Play through the Mask Maker.
+
+[https://imgur.com/a/fjVdKYG]
+
+A Wooden Mask requires Rank 3+ Magic to damage, the Spirit Mask requires Rank 4+, and the Stone Mask requires Rank 5+. Another individual with a Mask is able to ignore the Magic 4+ requirement to damage a Spirit Mask so long as they use the abilities from their mask.
+
+Asa a Witch you may repair your mask if its damaged or broken. This will require roughly equivalent of a Heroic Quest which can be taken for free as many times as needed.
+
+
 ## Perk: Beast Fodder
 - Class: Sorceress
 - Element: Soul
