@@ -1,1 +1,1 @@
-- Witches Got Talent: https://www.artstation.com/artwork/BXeE66
+- Witches Got Talent: https://www.deviantart.com/simoneferriero/art/Singer-931990411
