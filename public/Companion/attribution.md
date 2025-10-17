@@ -9,3 +9,7 @@
 ## John Doe
 - https://www.deviantart.com/simoneferriero/art/Witch-Night-805031200
 - Artist: Simone Ferriero
+
+## Agent 9s (Original)
+- https://www.artstation.com/artwork/d0kxkW
+- Artist: Z.W. Gu
