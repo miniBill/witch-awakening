@@ -151,6 +151,7 @@ mainParser =
             |. Parser.symbol "["
             |= Parser.getChompedString (Parser.chompWhile <| \c -> c /= ']')
             |. Parser.symbol "]"
+        , parseEntity
         , Parser.succeed identity
             |. Parser.symbol "("
             |= Parser.oneOf
@@ -221,6 +222,12 @@ mainParser =
                 )
         ]
         |> many
+
+
+parseEntity : Parser Piece
+parseEntity =
+    Parser.succeed (Text "\u{00A0}")
+        |. Parser.symbol "&nbsp;"
 
 
 slotParser : Parser Slot
@@ -340,6 +347,7 @@ special =
     , '\\'
     , '('
     , 'K'
+    , '&'
     ]
         |> Set.fromList
 
