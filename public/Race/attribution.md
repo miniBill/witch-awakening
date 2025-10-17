@@ -1,6 +1,17 @@
-- Ifrit: https://www.newgrounds.com/art/view/darevous/anne-bonnie-ghost-rider
-- Siren: https://www.artstation.com/artwork/48exO8
-- Kekubi: https://www.zerochan.net/3346296
-- Elf: https://safebooru.org/index.php?page=post&s=view&id=1627957
-- Vanir: https://www.artstation.com/artwork/final-fantasy-shiva
-- Pixie: https://www.deviantart.com/rousteinire/art/Fairy-848195151
+## Ifrit
+- https://www.newgrounds.com/art/view/darevous/anne-bonnie-ghost-rider
+
+## Siren
+- https://www.artstation.com/artwork/48exO8
+
+## Kekubi
+- https://www.zerochan.net/3346296
+
+## Elf
+- https://safebooru.org/index.php?page=post&s=view&id=1627957
+
+## Vanir
+- https://www.artstation.com/artwork/final-fantasy-shiva
+
+## Pixie
+- https://www.deviantart.com/rousteinire/art/Fairy-848195151
