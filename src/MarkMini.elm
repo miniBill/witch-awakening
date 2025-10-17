@@ -226,8 +226,12 @@ mainParser =
 
 parseEntity : Parser Piece
 parseEntity =
-    Parser.succeed (Text "\u{00A0}")
-        |. Parser.symbol "&nbsp;"
+    Parser.oneOf
+        [ Parser.succeed (Text "\u{00A0}")
+            |. Parser.symbol "&nbsp;"
+        , Parser.succeed (Text "&")
+            |. Parser.symbol "&"
+        ]
 
 
 slotParser : Parser Slot
