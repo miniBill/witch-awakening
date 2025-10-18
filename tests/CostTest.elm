@@ -91,6 +91,7 @@ jackOfAllTest =
             , typePerks : List Race
             , perks : List RankedPerk
             , magic : List RankedMagic
+            , quests : List Quest
             }
         defaultModel =
             { class = Just ClassWarlock
@@ -103,6 +104,7 @@ jackOfAllTest =
             , typePerks = []
             , perks = [ jack12 ]
             , magic = []
+            , quests = []
             }
 
         changelingModel :
@@ -113,6 +115,7 @@ jackOfAllTest =
             , typePerks : List Race
             , perks : List RankedPerk
             , magic : List RankedMagic
+            , quests : List Quest
             }
         changelingModel =
             { defaultModel
@@ -135,7 +138,7 @@ jack12 =
     { name = PerkJackOfAll, cost = -10 }
 
 
-testJack12 : String -> { a | class : Maybe Class, races : List Race, magic : List RankedMagic, mainRace : Maybe Race, cosmicPearl : CosmicPearlData, typePerks : List Race, perks : List RankedPerk } -> Int -> Test
+testJack12 : String -> { a | class : Maybe Class, races : List Race, magic : List RankedMagic, mainRace : Maybe Race, cosmicPearl : CosmicPearlData, typePerks : List Race, perks : List RankedPerk, quests : List Quest } -> Int -> Test
 testJack12 label model expected =
     test label <|
         \_ ->
