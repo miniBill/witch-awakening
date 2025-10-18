@@ -138,7 +138,7 @@ viewRequirements kind req =
                                         "[" ++ Magic.toString reqMagic ++ "] " ++ String.fromInt rank
 
                                     Utils.RequiresQuest reqQuest ->
-                                        "[" ++ Quest.toString reqQuest ++ "] " ++ Quest.toString reqQuest
+                                        "[" ++ Quest.toString reqQuest ++ "]"
                             )
                         |> String.join ", "
             in

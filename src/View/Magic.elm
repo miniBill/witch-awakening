@@ -346,7 +346,14 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
                             Gradient.purpleGradient
                             dlcName
                 , Theme.column [ height fill, Theme.padding ] <|
-                    Theme.blocks [] IdKindMagic description
+                    (case details.requires of
+                        Nothing ->
+                            Element.none
+
+                        Just req ->
+                            View.viewRequirements IdKindMagic req
+                    )
+                        :: Theme.blocks [] IdKindMagic description
                         :: List.indexedMap
                             (viewRank selected details)
                             (if display == DisplayFull then
