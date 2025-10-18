@@ -16,3 +16,7 @@
 ## Memorize
 - https://www.artstation.com/artwork/oe0zm
 - Artist: Z.W. Gu
+
+## Inheritance
+- https://www.deviantart.com/satibalzane/art/Necronomicon-720914649
+- Artist: Maichol Quinto

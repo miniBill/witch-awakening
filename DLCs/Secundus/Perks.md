@@ -46,6 +46,21 @@ A Wooden Mask requires Rank 3+ Magic to damage, the Spirit Mask requires Rank 4+
 Asa a Witch you may repair your mask if its damaged or broken. This will require roughly equivalent of a Heroic Quest which can be taken for free as many times as needed.
 
 
+## Perk: Inheritance
+- Class: Academic
+- Element: Mind
+- Meta: True
+- Cost: 15
+
+You are destined to receive a strange package in the mail from an unknown sender. Inside the package will be a set of specialized tools and grimoires for an esoteric magic specialization. Play through An Eldritch Bloodline.
+
+[https://imgur.com/a/7xFhZ]
+
+Gain +25 Sanity from being a Witch. Only Witches of your bloodline seem able to learn this magic. There may be other bloodlines out there however if so they remain hidden from you for now. 
+
+Dolls are considered Witches though the extent of their power is what you have selected. You may spend your own power on their behalf and they can benefit from Quests like Companions. You may also take your Doll as your Familiar if desired. 
+
+
 ## Perk: Beast Fodder
 - Class: Sorceress
 - Element: Soul
