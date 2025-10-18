@@ -428,6 +428,7 @@ factionFuzzer =
         , Generated.Types.FactionTheHespatianCoven
         , Generated.Types.FactionLunabella
         , Generated.Types.FactionAlfheimrAlliance
+        , Generated.Types.FactionTheFourFamilies
         , Generated.Types.FactionTheOutsiders
         , Generated.Types.FactionTheORC
         , Generated.Types.FactionAlphazonIndustries
