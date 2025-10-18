@@ -20,3 +20,6 @@
 ## Inheritance
 - https://www.deviantart.com/satibalzane/art/Necronomicon-720914649
 - Artist: Maichol Quinto
+
+## Potion Forgery
+- https://shadowverse-portal.com/card/113312010

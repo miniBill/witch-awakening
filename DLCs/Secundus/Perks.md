@@ -71,6 +71,14 @@ Unlike many other witches you are able to attune non-sapient plants and animals 
 This is specific to your pocket dimension however you may perform this on another witch’s behalf in their pocket dimension at triple the cost.
 
 
+## Perk: Potion Forgery
+- Class: Academic
+- Element: Water
+- Cost: 4
+
+All witches have their own unique ‘signature’ for the potions they create and you are no exception. What you have a talent for is imitating the unique potion signature of other witches. As long as you have an example of their work then you can easily disguise your own potions as theirs without issue. You also have the ability to make your potions seem either one rank higher or lower than they actually are along with disguising the nature of the potions. For example you could disguise a poison as a healing potion it you wanted. 
+
+
 ## Perk: Cursed Lineage
 - Class: Warlock
 - Element: Blood
