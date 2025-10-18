@@ -1,4 +1,4 @@
-module Main exposing (Flags, main)
+module Main exposing (Flags, main, parseUrl, toUrl)
 
 import AppUrl exposing (AppUrl)
 import Browser exposing (UrlRequest(..))
@@ -474,7 +474,7 @@ boolToString bool =
         "False"
 
 
-parseUrl : Nav.Key -> Url.Url -> Model Nav.Key
+parseUrl : key -> Url.Url -> Model key
 parseUrl navKey url =
     let
         appUrl : AppUrl
