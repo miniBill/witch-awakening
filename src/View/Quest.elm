@@ -240,6 +240,12 @@ questBox display selected number quest =
                     ]
                 , content =
                     [ el [ height (px 40) ] Element.none
+                    , case quest.requires of
+                        Nothing ->
+                            Element.none
+
+                        Just req ->
+                            View.viewRequirements IdKindQuest req
                     , Theme.blocks
                         [ Element.htmlAttribute (Html.Attributes.class "compact")
                         , spacing 4

@@ -675,6 +675,7 @@ type alias Quest =
     , threat : Maybe Int
     , conflict : Maybe Int
     , reward : Int
+    , requires : Maybe String
     , faction : Maybe String
     , description : String
     , notes : List String
@@ -744,6 +745,7 @@ quest =
                 |> requiredItem "Threat" maybeIntParser
                 |> requiredItem "Conflict" maybeIntParser
                 |> requiredItem "Reward" intParser
+                |> maybeItem "Requires" Ok
                 |> maybeItem "Faction" Ok
                 |> parseSection
            )

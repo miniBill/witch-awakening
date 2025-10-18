@@ -14,7 +14,7 @@ import Types exposing (IdKind(..), Model)
 value : Model key -> Monad Points
 value model =
     model.quests
-        |> Monad.combineMap questCost
+        |> Monad.combineMap (questCost model)
         |> Monad.andThen
             (\rpsAndSlots ->
                 let
@@ -75,13 +75,13 @@ value model =
             )
 
 
-questCost : Quest -> Monad ( Int, Quest.Details )
-questCost named =
+questCost : Model key -> Quest -> Monad ( Int, Quest.Details )
+questCost model named =
     Utils.find "Quest" .name named Quest.all Quest.toString
         |> Monad.andThen
             (\quest ->
                 quest.reward
-                    |> Monad.succeed
+                    |> Utils.checkRequirements quest (Quest.toString named) model
                     |> Monad.withRewardInfo IdKindQuest (Quest.toString named)
                     |> Monad.map (\rp -> ( rp, quest ))
             )

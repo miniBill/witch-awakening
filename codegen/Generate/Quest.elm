@@ -59,6 +59,7 @@ details :
             , threat : Elm.Expression
             , conflict : Elm.Expression
             , reward : Elm.Expression
+            , requires : Elm.Expression
             , description : Elm.Expression
             , notes : Elm.Expression
             , sidebars : Elm.Expression
@@ -76,6 +77,7 @@ details types =
         |> Elm.Declare.Extra.withField "threat" .threat (Elm.Annotation.maybe Elm.Annotation.int)
         |> Elm.Declare.Extra.withField "conflict" .conflict (Elm.Annotation.maybe Elm.Annotation.int)
         |> Elm.Declare.Extra.withField "reward" .reward Elm.Annotation.int
+        |> Elm.Declare.Extra.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
         |> Elm.Declare.Extra.withField "description" .description Elm.Annotation.string
         |> Elm.Declare.Extra.withField "notes" .notes (Elm.Annotation.list Elm.Annotation.string)
         |> Elm.Declare.Extra.withField "sidebars" .sidebars (Elm.Annotation.list Elm.Annotation.string)
@@ -135,6 +137,7 @@ dlcToQuests types quests =
                 , conflict = Elm.maybe (Maybe.map Elm.int quest.conflict)
                 , repeatable = Elm.bool quest.repeatable
                 , reward = Elm.int quest.reward
+                , requires = Elm.maybe (Maybe.map Elm.string quest.requires)
                 , faction = Elm.maybe (Maybe.map types.faction.value quest.faction)
                 , description = Elm.string quest.description
                 , sidebars = Elm.list (List.map Elm.string quest.sidebars)

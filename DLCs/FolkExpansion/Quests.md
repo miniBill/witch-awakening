@@ -284,8 +284,9 @@ there’s an obvious bad route where you do not save the dead witch, leaving the
 - Threat: 8
 - Conflict: 4
 - Reward: 4
+- Requires: Special Delivery
 
-Requires Special Delivery. Halloween Town is a semi-secret location in its own realm, where it is halloween every day with a Novelty enchantment ensuring that anything you see for the first time here, will always feel as novel as that first time. Everyone is always in some manner of costume and everyone lives openly to celebrate their different races of witch, and non-witch supernaturals. However, your visit comes at an inopportune moment, as Halloween Town is under threat from the Skeleton King who recently usurped the Pumpkin King as owner of the private realm, and is subjecting the citizens to tyrannical laws via Covenant and Dominion magics.
+Halloween Town is a semi-secret location in its own realm, where it is halloween every day with a Novelty enchantment ensuring that anything you see for the first time here, will always feel as novel as that first time. Everyone is always in some manner of costume and everyone lives openly to celebrate their different races of witch, and non-witch supernaturals. However, your visit comes at an inopportune moment, as Halloween Town is under threat from the Skeleton King who recently usurped the Pumpkin King as owner of the private realm, and is subjecting the citizens to tyrannical laws via Covenant and Dominion magics.
 
 Notes:
 + The Skeleton King may mind control citizens to use against you.

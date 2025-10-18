@@ -188,8 +188,9 @@ They aren’t an ally, and observe you remotely. They make your life more intere
 - Threat: 8
 - Conflict: 3
 - Reward: 7
+- Requires: Gone Feral
 
-Requires *Gone Feral*. You track down the source of the soulstealing curse within the dire wolves, leading you to discover that the pack of dire wolves are just an offshoot from the greater Lycanthrope packs that are currently embroiled in a blood feud. Werewolves Hulking hominid beasts between 8 and 12ft in height full of tense muscle. Immune to damage except from silver weapons, or Golden Relics, with strength sufficient to crush through concrete walls and shred steel plating like paper, or hurling an elephant across a football field. They are all overwhelmed by bloodlust currently, with the Soulstealer curse, as feral as though it were a full moon.
+You track down the source of the soulstealing curse within the dire wolves, leading you to discover that the pack of dire wolves are just an offshoot from the greater Lycanthrope packs that are currently embroiled in a blood feud. Werewolves Hulking hominid beasts between 8 and 12ft in height full of tense muscle. Immune to damage except from silver weapons, or Golden Relics, with strength sufficient to crush through concrete walls and shred steel plating like paper, or hurling an elephant across a football field. They are all overwhelmed by bloodlust currently, with the Soulstealer curse, as feral as though it were a full moon.
 
 Notes:
 + They can leap hundreds of meters in height and distance
@@ -209,8 +210,9 @@ It takes decades to gain self-mastery sufficient to force a conscious change, st
 - Threat: 7
 - Conflict: 5
 - Reward: 8
+- Requires: Street Racer.
 
-Requires *Street Racer*. You’re in the big leagues now. Once every 5 years the Death Race is hosted in a random location anywhere off Earth and there are no limits placed on magic usage, barring only soulstealing or curses that lasts beyond the duration of the race. The caveat is that all participants are hooked up into limiters that regulate mana capacity and mana flow. Instead, you have a series of pellets honed to allow the usage of one magic effect of a given rank. You have 1 Ruby pellet (r5), 3 Sapphire pellets (r4), 9 Emerald pellets (r3), and 20 Citrine pellets (r2), r1 magic is unlimited. Any augmentations to your vehicle is separate & functions normally.
+You’re in the big leagues now. Once every 5 years the Death Race is hosted in a random location anywhere off Earth and there are no limits placed on magic usage, barring only soulstealing or curses that lasts beyond the duration of the race. The caveat is that all participants are hooked up into limiters that regulate mana capacity and mana flow. Instead, you have a series of pellets honed to allow the usage of one magic effect of a given rank. You have 1 Ruby pellet (r5), 3 Sapphire pellets (r4), 9 Emerald pellets (r3), and 20 Citrine pellets (r2), r1 magic is unlimited. Any augmentations to your vehicle is separate & functions normally.
 
 Notes:
 + Tactics vary from witches that put everything they’ve got into speed, while some focus on making sure nothing else is alive to cross the finish line before them.
