@@ -203,8 +203,9 @@ Notes:
 - Threat: 4
 - Conflict: 5
 - Reward: 3
+- Requires: Summer School
 
-Requires Summer School perk. One of your teachers at summer school proved to be an exceptional teacher and a master of both the subject, and teaching. Or maybe you were just enthralled by them, you found yourself respecting them or possibly looking up to them. Whatever the case, you valued their teachings more, as well as them as a person, and they were able to teach you more. it’s not without its consequences however, for you face a rival in monopolizing the teacher’s time: The Teacher’s Pet, The Class Rep, The Delinquent, and The Bully will all compete in a social and/or literal free-for-all, and Teacher’s lessons will be extra rough!
+One of your teachers at summer school proved to be an exceptional teacher and a master of both the subject, and teaching. Or maybe you were just enthralled by them, you found yourself respecting them or possibly looking up to them. Whatever the case, you valued their teachings more, as well as them as a person, and they were able to teach you more. it’s not without its consequences however, for you face a rival in monopolizing the teacher’s time: The Teacher’s Pet, The Class Rep, The Delinquent, and The Bully will all compete in a social and/or literal free-for-all, and Teacher’s lessons will be extra rough!
 
 Notes:
 + You can select the teacher for any options that would allow you to select a friend, and choose a second School Trip.
@@ -305,8 +306,9 @@ With, if you don’t mind the meta elements, a selection of six Pumpkin Boons fo
 - Threat: 9
 - Conflict: 4
 - Reward: 7
+- Requires: Distress Beacon
 
-Requires Distress Beacon. So you killed the space kraken and saved the strange witch. The dust was starting to settle and maybe you’ve had one or a few conversations with the witch calling herself Sara Star through her translator. She’s often seen working on repairing her ship, Red Betty, but no more than 1 week later you get the call. Those in the know have been watching the direction Sara came from, and it just paid off as we’ve noticed a fleet of entities entering the system from the same spot as Sara & her space tentacle friends. Sara’s ship might be done in time to help towards the end, but for now a team of witches including yourself will intercept.
+So you killed the space kraken and saved the strange witch. The dust was starting to settle and maybe you’ve had one or a few conversations with the witch calling herself Sara Star through her translator. She’s often seen working on repairing her ship, Red Betty, but no more than 1 week later you get the call. Those in the know have been watching the direction Sara came from, and it just paid off as we’ve noticed a fleet of entities entering the system from the same spot as Sara & her space tentacle friends. Sara’s ship might be done in time to help towards the end, but for now a team of witches including yourself will intercept.
 
 Notes:
 + Invaders will be composed of 1 mothership (Space Leviathan), 4 space krakens, and a dozen swarms of space squid, with countless face hugging octopi that are more like projectiles than fighters.
