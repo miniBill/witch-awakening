@@ -8,7 +8,7 @@ import Data.Perk as Perk
 import Data.Race as Race
 import Generated.Magic as Magic
 import Generated.Perk as Perk
-import Generated.Types as Types exposing (Class, Magic(..), Perk(..), Race(..))
+import Generated.Types as Types exposing (Class, Magic(..), Perk(..), Quest, Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData, IdKind(..), RankedMagic, RankedPerk)
 import View.Perk
@@ -23,6 +23,7 @@ value :
         , perks : List RankedPerk
         , class : Maybe Class
         , magic : List RankedMagic
+        , quests : List Quest
     }
     -> Monad Points
 value model =
@@ -94,6 +95,7 @@ perkValue :
         , typePerks : List Race
         , perks : List RankedPerk
         , magic : List RankedMagic
+        , quests : List Quest
     }
     -> RankedPerk
     -> Monad { name : String, points : Monad.Value, staticCost : Bool }

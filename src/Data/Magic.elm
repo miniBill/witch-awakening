@@ -13,6 +13,7 @@ type alias Details =
     , description : String
     , ranks : List String
     , dlc : Maybe String
+    , requires : Maybe String
     }
 
 

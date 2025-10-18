@@ -395,6 +395,7 @@ type alias Magic =
     , elements : MagicAffinity
     , hasRankZero : Bool
     , isElementalism : Bool
+    , requires : Maybe String
     , description : String
     , ranks : Dict Int String
     }
@@ -444,6 +445,7 @@ magic =
             )
         |> flagItem "Has rank zero"
         |> flagItem "Elementalism"
+        |> maybeItem "Requires" Ok
         |> parseSection
     )
         |= paragraphs True

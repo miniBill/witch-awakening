@@ -12,6 +12,7 @@ import Generated.Gradient as Gradient
 import Generated.Image as Image exposing (Image)
 import Generated.Magic as Magic
 import Generated.Perk as Perk
+import Generated.Quest as Quest
 import Generated.Race as Race
 import Generated.Size as Size
 import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Size, Slot(..))
@@ -372,6 +373,9 @@ viewPiece expandBadges piece =
 
         Race race ->
             viewGenericBadge expandBadges (Types.raceToImage race) (Race.toString race)
+
+        Quest quest ->
+            viewGenericBadge expandBadges (Types.questToImage quest) (Quest.toString quest)
 
         Magic magic ->
             viewGenericBadge expandBadges (Types.magicToImage magic) (Magic.toString magic)

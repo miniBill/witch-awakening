@@ -9,7 +9,7 @@ import Dict exposing (Dict)
 import Generated.Magic as Magic
 import Generated.Race as Race
 import Generated.TypePerk as TypePerk
-import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Race(..))
+import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Quest, Race(..))
 import List.Extra
 import Types exposing (CosmicPearlData, IdKind(..), RankedMagic, RankedPerk)
 
@@ -27,6 +27,7 @@ value :
             , typePerks : List Race
             , magic : List RankedMagic
             , capBuild : Bool
+            , quests : List Quest
         }
     -> Monad Points
 value { ignoreSorceressBonus } model =
@@ -191,6 +192,7 @@ magicValue :
         , typePerks : List Race
         , magic : List RankedMagic
         , races : List Race
+        , quests : List Quest
     }
     -> Affinity.AffinityList
     -> Magic.Details
@@ -316,7 +318,15 @@ magicValue model affinities magicDetails =
                 , isElementalism = magicDetails.isElementalism
                 , inAffinity = inAffinity
                 }
-                    |> Monad.succeed
+                    |> (case freeRankFromRace of
+                            Nothing ->
+                                -- If you get it free from your race it usually
+                                -- doesn't require the normal prerequisites
+                                Utils.checkRequirements magicDetails name model
+
+                            Just _ ->
+                                Monad.succeed
+                       )
                     |> (if magicDetails.name == MagicWishcasting && not (List.any Race.isGenie model.races) then
                             Monad.withWarning "Only Genies can access Wishcasting"
 

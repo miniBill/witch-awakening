@@ -41,6 +41,7 @@ type Piece
     | LineBreak
     | Magic Types.Magic
     | Size Types.Size
+    | Quest Types.Quest
 
 
 type Color
@@ -258,6 +259,9 @@ parseSquareBrackets str =
             , \input ->
                 Types.classFromString input
                     |> Maybe.map Class
+            , \input ->
+                Types.questFromString input
+                    |> Maybe.map Quest
             , \input ->
                 Types.raceFromString input
                     |> Maybe.map Race

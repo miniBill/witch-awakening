@@ -4,6 +4,7 @@
 - Class: Sorceress
 - Elements: Life, Fire + Soul
 - Elementalism: True
+- Requires: Vital Lotus
 
 Lifeweaving is the pseudo-elemental magic of Life, encompassing a spark of genesis from the moment of creation, it can also be considered the Light element. With Life magic, every rank increases your natural healing factor by 200%. At rank 3, you will never scar and lost organs or limbs can be recovered. At rank 5, you will continue to regenerate from the point of death so long as a living cell remains. If you have a means of cheating death that would be faster, you can choose to default to that first.
 

@@ -79,6 +79,7 @@ dlcToMagics types magics =
                                     |> Elm.string
                             )
                         |> Elm.list
+                , requires = Elm.maybe (Maybe.map Elm.string magic.requires)
                 }
                 |> Elm.declaration (yassify magic.name)
                 |> Elm.expose

@@ -4,7 +4,8 @@ import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
 import Generated.Class as Class
 import Generated.Magic as Magic
-import Generated.Types exposing (Class, Magic)
+import Generated.Quest as Quest
+import Generated.Types exposing (Class, Magic, Quest)
 import List.Extra
 import Parser exposing ((|.), (|=), Parser)
 import Types exposing (RankedMagic)
@@ -129,10 +130,16 @@ requisiteParser =
                 |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Magic.toString m.name))
                 |> Parser.oneOf
 
-        classParser : Parser Class
+        classParser : Parser Requirement
         classParser =
             Class.all
-                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Class.toString m.name))
+                |> List.map (\m -> Parser.succeed (RequiresClass m.name) |. Parser.keyword (Class.toString m.name))
+                |> Parser.oneOf
+
+        questParser : Parser Requirement
+        questParser =
+            Quest.all
+                |> List.map (\m -> Parser.succeed (RequiresQuest m.name) |. Parser.keyword (Quest.toString m.name))
                 |> Parser.oneOf
     in
     Parser.oneOf
@@ -144,8 +151,8 @@ requisiteParser =
                 [ Parser.succeed () |. Parser.symbol "+"
                 , Parser.succeed ()
                 ]
-        , Parser.succeed RequiresClass
-            |= classParser
+        , classParser
+        , questParser
         ]
 
 
@@ -156,6 +163,7 @@ checkRequirements :
         { model
             | class : Maybe Class
             , magic : List RankedMagic
+            , quests : List Quest
         }
     -> c
     -> Monad c
@@ -191,6 +199,13 @@ checkRequirements details nameString model res =
 
                                                 else
                                                     Err (Class.toString class)
+
+                                            RequiresQuest quest ->
+                                                if List.member quest model.quests then
+                                                    Ok ()
+
+                                                else
+                                                    Err (Quest.toString quest)
                                 in
                                 case check of
                                     Ok a ->
@@ -233,3 +248,4 @@ hasMagicAtRank model requiredName requiredRank =
 type Requirement
     = RequiresMagic Magic Int
     | RequiresClass Class
+    | RequiresQuest Generated.Types.Quest

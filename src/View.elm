@@ -7,6 +7,7 @@ import Element.Font as Font
 import Generated.Class as Class
 import Generated.Gradient as Gradient
 import Generated.Magic as Magic
+import Generated.Quest as Quest
 import List.Extra
 import Parser
 import Set exposing (Set)
@@ -135,6 +136,9 @@ viewRequirements kind req =
 
                                     Utils.RequiresMagic reqMagic rank ->
                                         "[" ++ Magic.toString reqMagic ++ "] " ++ String.fromInt rank
+
+                                    Utils.RequiresQuest reqQuest ->
+                                        "[" ++ Quest.toString reqQuest ++ "] " ++ Quest.toString reqQuest
                             )
                         |> String.join ", "
             in

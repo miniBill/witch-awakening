@@ -5,7 +5,7 @@ import Data.Costs.Monad as CostsMonad
 import Data.Costs.Perks
 import Data.Costs.Utils
 import Expect
-import Generated.Types exposing (Affinity(..), Class(..), Faction(..), Magic(..), Perk(..), Race(..))
+import Generated.Types exposing (Affinity(..), Class(..), Faction(..), Magic(..), Perk(..), Quest, Race(..))
 import Test exposing (Test, describe, test)
 import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
 
@@ -20,6 +20,7 @@ type alias MagicModel =
     , faction : Maybe ( Faction, Bool )
     , cosmicPearl : CosmicPearlData
     , perks : List RankedPerk
+    , quests : List Quest
     }
 
 
@@ -34,6 +35,7 @@ sorceress race =
     , perks = []
     , faction = Nothing
     , cosmicPearl = { change = [], add = [] }
+    , quests = []
     }
 
 
