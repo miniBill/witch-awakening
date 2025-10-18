@@ -56,9 +56,9 @@ You are destined to receive a strange package in the mail from an unknown sender
 
 [https://imgur.com/a/7xFhZ]
 
-Gain +25 Sanity from being a Witch. Only Witches of your bloodline seem able to learn this magic. There may be other bloodlines out there however if so they remain hidden from you for now. 
+Gain +25 Sanity from being a Witch. Only Witches of your bloodline seem able to learn this magic. There may be other bloodlines out there however if so they remain hidden from you for now.
 
-Dolls are considered Witches though the extent of their power is what you have selected. You may spend your own power on their behalf and they can benefit from Quests like Companions. You may also take your Doll as your Familiar if desired. 
+Dolls are considered Witches though the extent of their power is what you have selected. You may spend your own power on their behalf and they can benefit from Quests like Companions. You may also take your Doll as your Familiar if desired.
 
 
 ## Perk: Beast Fodder
@@ -67,8 +67,8 @@ Dolls are considered Witches though the extent of their power is what you have s
 - Requires: Witchery 5
 - Cost: 5
 
-Unlike many other witches you are able to attune non-sapient plants and animals to your pocket dimension. This allows for them to be able to survive off of the false matter creations while in your pocket dimension. If they have magic requirements for their survival such as the Golden Fish for example then you won’t be able to substitute false matter creations in their place. It requires [K]10.000 in Rank 4 ingredients per animal or plant be expended to attune them and any resulting offspring they have will also inherit this trait though only for that specific pocket dimension. 
-This is specific to your pocket dimension however you may perform this on another witch’s behalf in their pocket dimension at triple the cost. 
+Unlike many other witches you are able to attune non-sapient plants and animals to your pocket dimension. This allows for them to be able to survive off of the false matter creations while in your pocket dimension. If they have magic requirements for their survival such as the Golden Fish for example then you won’t be able to substitute false matter creations in their place. It requires [K]10.000 in Rank 4 ingredients per animal or plant be expended to attune them and any resulting offspring they have will also inherit this trait though only for that specific pocket dimension.
+This is specific to your pocket dimension however you may perform this on another witch’s behalf in their pocket dimension at triple the cost.
 
 
 ## Perk: Cursed Lineage
