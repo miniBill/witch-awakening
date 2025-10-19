@@ -164,7 +164,7 @@ Stackhold, the dimension it is in is a seemingly infinite ocean upon which the w
 The Four Families have great relations with the Alliance, see Outsiders a threat the same as anyone else but Stackhold seems resistant to Far Entropy, though not immune. Very friendly with Lunabella and Watchers, good with Hawthorne, some tension with Arcadia and the ORC, actively hostile with the Hespatians.
 
 ### Perk: Season Shard
-Rather than having a fragment of a legendary blade, you have a fuller *shard*. When you wield [Swordsinging], you may also match it with equal ranks in [Naturalism] (Spring), [Firecalling] (Summer), [Earthmoving] (Fall), or [Waterworking] (Winter). Using elementalism in this way must be manifest in ways relevant to your use of Swordsinging. When you use Swordsinging, you can summon a blade composed of that element freely, passively or as part of spells. _*Swordsinging*_ is half price for you, stacks with affinity. 
+Rather than having a fragment of a legendary blade, you have a fuller *shard*. When you wield [Swordsinging], you may also match it with equal ranks in [Naturalism] (Spring), [Firecalling] (Summer), [Earthmoving] (Fall), or [Waterworking] (Winter). Using elementalism in this way must be manifest in ways relevant to your use of Swordsinging. When you use Swordsinging, you can summon a blade composed of that element freely, passively or as part of spells.
 
 
 
