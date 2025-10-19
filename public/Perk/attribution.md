@@ -23,3 +23,7 @@
 
 ## Potion Forgery
 - https://shadowverse-portal.com/card/113312010
+
+## Mana Berry
+- https://www.deviantart.com/tharal2814/art/Manaberry-1234996625
+- Artist: Tharal2814
