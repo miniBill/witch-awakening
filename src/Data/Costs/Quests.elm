@@ -6,7 +6,7 @@ import Dict
 import Dict.Extra
 import Generated.Quest as Quest
 import Generated.Slot as Slot
-import Generated.Types exposing (Faction(..), Quest)
+import Generated.Types exposing (Faction(..), Quest(..))
 import List.Extra
 import Types exposing (IdKind(..), Model)
 
@@ -87,8 +87,27 @@ questCost model named =
     Utils.find "Quest" .name named Quest.all Quest.toString
         |> Monad.andThen
             (\quest ->
-                quest.reward
-                    |> Utils.checkRequirements quest (Quest.toString named) model
-                    |> Monad.withRewardInfo IdKindQuest (Quest.toString named)
-                    |> Monad.map (\rp -> ( rp, quest ))
+                let
+                    base : Monad Int
+                    base =
+                        quest.reward
+                            |> Utils.checkRequirements quest (Quest.toString named) model
+                            |> Monad.withRewardInfo IdKindQuest (Quest.toString named)
+                in
+                if named == QuestDomesticated && List.member QuestHouseFire model.quests then
+                    [ base
+                    , 2
+                        |> Monad.succeed
+                        |> Monad.withInfo
+                            { kind = IdKindQuest
+                            , label = "Domesticated + House Fire"
+                            , value = Monad.RewardPoints 2
+                            , anchor = Just (Quest.toString named)
+                            }
+                    ]
+                        |> Monad.mapAndSum identity
+                        |> Monad.map (\rp -> ( rp, quest ))
+
+                else
+                    base |> Monad.map (\rp -> ( rp, quest ))
             )
