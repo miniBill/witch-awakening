@@ -37,7 +37,7 @@ If you choose to stay on Earth just keep in mind that you are still bound by the
 - Meta: True
 - Cost: 15
 
-One night you will be visited by the Mask Maker as many others have been. He's a powerful, enigmatic figure who will craft a special mask just for you. Play through the Mask Maker.
+One night you will be visited by the Mask Maker as many others have been. He’s a powerful, enigmatic figure who will craft a special mask just for you. Play through the Mask Maker.
 
 [https://imgur.com/a/fjVdKYG]
 
@@ -86,7 +86,7 @@ All witches have their own unique ‘signature’ for the potions they create an
 
 Swap your Faction rent for a different one. You gain the price reduction for their faction magic rather than your own faction.
 
-For [10] you can also gain access to a secondary Faction Perk. This also provides a discount to their Faction Magic as well. Optionally. you may join this second Faction which gives access to their Quests and all other associated benefits. If you are part of two different Factions then you'll need to find some way to balance your obligations between them both or eventually be forced to commit to one of them entirely. In the case of joining two antagonistic factions such as ORC and Hespatian Covens then you'll need to eventually figure out which one actually has your loyalty. Not a choice to make lightly as you'll end up making an enemy of the Faction you betrayed.
+For [10] you can also gain access to a secondary Faction Perk. This also provides a discount to their Faction Magic as well. Optionally. you may join this second Faction which gives access to their Quests and all other associated benefits. If you are part of two different Factions then you’ll need to find some way to balance your obligations between them both or eventually be forced to commit to one of them entirely. In the case of joining two antagonistic factions such as ORC and Hespatian Covens then you’ll need to eventually figure out which one actually has your loyalty. Not a choice to make lightly as you’ll end up making an enemy of the Faction you betrayed.
 
 *This is added/removed automatically when you select your faction[s] and faction perk[s]*
 
@@ -98,3 +98,14 @@ For [10] you can also gain access to a secondary Faction Perk. This also provide
 - Cost: 7
 
 For a small amount of additional effort you are able to tie your curses to the very bloodline of those you target. All those descended from that initial individual will in turn inherit the original curse you placed on them and so on and so forth. This ‘bloodline curse’ can last up to the 13th generation after which you will need to ‘refresh’ it should you desire for it to continue. As like with other curses you may establish Conditions if desired.
+
+
+## Perk: Sanguine Curse
+- Class: Warlock
+- Element: Blood
+- Requires: Curses 5, Necromancy 4+
+- Cost: 10
+
+You’ve acquired the ‘Sanguine Curse’ which is a curse of Rank 5 allowing you to inflict vampirism upon yourself or another. Refer to the Immortal Blood option from The Value of Life [https://old.reddit.com/r/makeyourchoice/comments/n56p5m/value_of_life_cyoa_final_version_v4_12_options] for a general idea of the baseline. If desired you may personalize your specific strain of vampirism to create a unique lineage that takes inspiration from your nature as a Witch.
+
+By default those individuals afflicted with the ‘Sanguine Curse’ are not able to transmit their vampirism to others. You may modify this to either allow transmission or for their children to inherit it. But, each subsequent vampiric generation will be weaker than the one before with the 13th generation being the last.

@@ -27,3 +27,7 @@
 ## Mana Berry
 - https://www.deviantart.com/tharal2814/art/Manaberry-1234996625
 - Artist: Tharal2814
+
+## Sanguine Curse
+- https://x.com/marcelam_arts/status/1429840231746916355/photo/1
+- Artist: Marcela Medeiros
