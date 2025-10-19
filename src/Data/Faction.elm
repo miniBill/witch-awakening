@@ -57,6 +57,9 @@ toShortString raw =
         FactionTheFourFamilies ->
             "Seasons"
 
+        FactionOutwardBound ->
+            "Outward"
+
 
 toCollectiveName : Maybe Faction -> String
 toCollectiveName faction =
@@ -96,6 +99,9 @@ toCollectiveName faction =
 
         Just FactionTheFourFamilies ->
             "The Seasons"
+
+        Just FactionOutwardBound ->
+            "The Outward Bounds"
 
         Nothing ->
             "Independents / Other"
