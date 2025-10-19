@@ -196,7 +196,8 @@ emptyModel model =
         , typePerks = []
         , magic = []
         , perks = []
-        , faction = Nothing
+        , factions = []
+        , factionPerks = []
         , companions = []
         , quests = []
         , relics = []
@@ -235,19 +236,39 @@ fixupModel model =
                 , change = []
                 }
         , perks =
-            let
-                removed : List { cost : Int, name : Perk }
-                removed =
-                    List.filter (\{ name } -> name /= PerkHybridize) model.perks
-            in
-            if List.length model.races > 1 then
-                { name = PerkHybridize
-                , cost = Data.Perk.hybridizeCost * (List.length model.races - 1)
-                }
-                    :: removed
+            model.perks
+                |> List.filter
+                    (\{ name } ->
+                        (name /= PerkHybridize)
+                            && (name /= PerkMultiFactional)
+                    )
+                |> (if List.length model.races > 1 then
+                        (::)
+                            { name = PerkHybridize
+                            , cost = Data.Perk.hybridizeCost * (List.length model.races - 1)
+                            }
 
-            else
-                removed
+                    else
+                        identity
+                   )
+                |> (if
+                        (List.length model.factions > 1)
+                            || (List.length model.factionPerks > 1)
+                    then
+                        (::)
+                            { name = PerkMultiFactional
+                            , cost = 10
+                            }
+
+                    else if List.any (\faction -> not (List.member faction model.factions)) model.factionPerks then
+                        (::)
+                            { name = PerkMultiFactional
+                            , cost = 4
+                            }
+
+                    else
+                        identity
+                   )
     }
 
 
@@ -335,8 +356,11 @@ updateOnChoice choice model =
         DisplayPerks perksDisplay ->
             { model | perksDisplay = perksDisplay }
 
-        ChoiceFaction faction ->
-            { model | faction = faction }
+        ChoiceFaction ( faction, selected ) ->
+            { model | factions = toggle (==) selected faction model.factions }
+
+        ChoiceFactionPerk ( factionPerk, selected ) ->
+            { model | factionPerks = toggle (==) selected factionPerk model.factionPerks }
 
         DisplayFaction factionDisplay ->
             { model | factionDisplay = factionDisplay }
@@ -436,8 +460,8 @@ toUrl model =
             Perk.toString name ++ String.fromInt cost
         )
         model.perks
-    , one "faction" (\( name, _ ) -> Faction.toString name) model.faction
-    , one "factionPerk" (\( _, perk ) -> boolToString perk) model.faction
+    , list "faction" Faction.toString model.factions
+    , list "factionPerk" Faction.toString model.factionPerks
     , list "companion" Companion.toString model.companions
     , list "quest" Quest.toString model.quests
     , list "relic"
@@ -578,6 +602,10 @@ parseUrl navKey url =
         parseInt key =
             parseOne key String.toInt
                 |> Maybe.withDefault 0
+
+        factions : List Types.Faction
+        factions =
+            parseMany "faction" Types.factionFromString
     in
     { key = navKey
     , menuOpen = False
@@ -599,14 +627,20 @@ parseUrl navKey url =
     , magicDisplay = DisplayFull
     , perks = parseMany "perk" parsePerk
     , perksDisplay = DisplayFull
-    , faction =
-        parseOne "faction" Types.factionFromString
-            |> Maybe.map
-                (\faction ->
-                    ( faction
-                    , parseBool "factionPerk"
-                    )
-                )
+    , factions = factions
+    , factionPerks =
+        parseMany "factionPerk" Types.factionFromString
+            ++ -- Backward compat for builds made before Multi-Factional
+               (case parseOne "factionPerk" stringToBool of
+                    Just True ->
+                        factions
+
+                    Nothing ->
+                        []
+
+                    Just False ->
+                        []
+               )
     , factionDisplay = DisplayFull
     , factionalMagicDisplay = DisplayFull
     , companions = parseMany "companion" Types.companionFromString
@@ -710,7 +744,7 @@ innerView model =
                 , Element.Lazy.lazy4 TypePerk.viewTypePerks model.hideDLCs model.races model.typePerksDisplay model.typePerks
                 , Element.Lazy.lazy3 Magic.viewMagics model.hideDLCs model.magicDisplay model.magic
                 , Element.Lazy.lazy6 Perk.viewPerks model.hideDLCs model.hideMeta model.perksDisplay model.mainRace model.races model.perks
-                , Element.Lazy.lazy3 Faction.viewFaction model.hideDLCs model.factionDisplay model.faction
+                , Element.Lazy.lazy4 Faction.viewFaction model.hideDLCs model.factionDisplay model.factions model.factionPerks
                 , Element.Lazy.lazy3 FactionalMagic.viewFactionalMagics model.hideDLCs model.factionalMagicDisplay model.magic
                 , Element.Lazy.lazy3 Companion.viewCompanions model.hideDLCs model.companionsDisplay model.companions
                 , Element.Lazy.lazy3 Quest.viewQuests model.hideDLCs model.questsDisplay model.quests

@@ -24,12 +24,19 @@ value model =
                     slotsChecks : Monad (List ())
                     slotsChecks =
                         questsDetails
-                            |> (case model.faction of
-                                    Nothing ->
-                                        List.Extra.removeWhen (\details -> details.faction == Just FactionIndependents)
+                            |> (if List.isEmpty model.factions then
+                                    List.Extra.removeWhen (\details -> details.faction == Just FactionIndependents)
 
-                                    Just ( faction, _ ) ->
-                                        List.Extra.removeWhen (\details -> details.faction == Just faction)
+                                else
+                                    List.Extra.removeWhen
+                                        (\details ->
+                                            case details.faction of
+                                                Nothing ->
+                                                    False
+
+                                                Just faction ->
+                                                    List.member faction model.factions
+                                        )
                                )
                             |> Dict.Extra.groupBy (\{ slot } -> Slot.toString slot)
                             |> Dict.map (\_ s -> List.length s)

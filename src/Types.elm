@@ -36,7 +36,8 @@ type Choice
     | DisplayMagic Display
     | ChoicePerk ( RankedPerk, Bool )
     | DisplayPerks Display
-    | ChoiceFaction (Maybe ( Faction, Bool ))
+    | ChoiceFaction ( Faction, Bool )
+    | ChoiceFactionPerk ( Faction, Bool )
     | DisplayFaction Display
     | DisplayFactionalMagic Display
     | ChoiceCompanion ( Companion, Bool )
@@ -79,7 +80,8 @@ type alias Model key =
     , magicDisplay : Display
     , perks : List RankedPerk
     , perksDisplay : Display
-    , faction : Maybe ( Faction, Bool )
+    , factions : List Faction
+    , factionPerks : List Faction
     , factionDisplay : Display
     , factionalMagicDisplay : Display
     , companions : List Companion

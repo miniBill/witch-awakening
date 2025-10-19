@@ -22,7 +22,8 @@ value :
             , mainRace : Maybe Race
             , races : List Race
             , perks : List RankedPerk
-            , faction : Maybe ( Faction, Bool )
+            , factions : List Faction
+            , factionPerks : List Faction
             , class : Maybe Class
             , typePerks : List Race
             , magic : List RankedMagic
@@ -187,7 +188,8 @@ value { ignoreSorceressBonus } model =
 
 magicValue :
     { a
-        | faction : Maybe ( Faction, Bool )
+        | factions : List Faction
+        , factionPerks : List Faction
         , class : Maybe Class
         , typePerks : List Race
         , magic : List RankedMagic
@@ -222,7 +224,7 @@ magicValue model affinities magicDetails =
                     inAffinity =
                         if
                             (magicDetails.name == MagicTheHallowingEcho)
-                                && (Maybe.map Tuple.first model.faction /= Just FactionTheOutsiders)
+                                && not (List.member FactionTheOutsiders model.factions)
                         then
                             InAffinity
 
@@ -338,7 +340,8 @@ magicValue model affinities magicDetails =
 
 freeRankFromRaceOrTypePerk :
     { a
-        | faction : Maybe ( Faction, Bool )
+        | factions : List Faction
+        , factionPerks : List Faction
         , class : Maybe Class
         , typePerks : List Race
         , magic : List RankedMagic
@@ -405,12 +408,13 @@ type InFaction
 
 isInFaction :
     { a
-        | faction : Maybe ( Faction, Bool )
+        | factions : List Faction
+        , factionPerks : List Faction
         , typePerks : List Race
     }
     -> Magic.Details
     -> InFaction
-isInFaction { faction, typePerks } magicDetails =
+isInFaction { factions, factionPerks, typePerks } magicDetails =
     if
         (List.member RaceSpider typePerks && magicDetails.name == MagicArachnescence)
             || (List.member RaceCyborg typePerks && magicDetails.name == MagicGadgetry)
@@ -421,11 +425,12 @@ isInFaction { faction, typePerks } magicDetails =
     else
         case magicDetails.faction of
             Just magicFaction ->
-                if Just ( magicFaction, True ) == faction then
-                    InFactionPerk
+                if List.member magicFaction factions then
+                    if List.member magicFaction factionPerks then
+                        InFactionPerk
 
-                else if Just ( magicFaction, False ) == faction then
-                    InFactionNoPerk
+                    else
+                        InFactionNoPerk
 
                 else
                     OutOfFaction

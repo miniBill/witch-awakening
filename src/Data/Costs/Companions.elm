@@ -18,7 +18,30 @@ value model =
             let
                 treasure : Bool
                 treasure =
-                    model.faction == Just ( FactionTheCollegeOfArcadia, True )
+                    List.member FactionTheCollegeOfArcadia model.factionPerks
+
+                filterMapAtMost : Int -> (a -> Maybe b) -> List a -> List b
+                filterMapAtMost n f list =
+                    let
+                        go : Int -> List a -> List b -> List b
+                        go i queue acc =
+                            if i <= 0 then
+                                List.reverse acc
+
+                            else
+                                case queue of
+                                    [] ->
+                                        List.reverse acc
+
+                                    h :: t ->
+                                        case f h of
+                                            Nothing ->
+                                                go i t acc
+
+                                            Just v ->
+                                                go (i - 1) t (v :: acc)
+                    in
+                    go n list []
 
                 mostExpensiveFirst : List ( Maybe Faction, Int, Companion.Details )
                 mostExpensiveFirst =
@@ -33,32 +56,37 @@ value model =
 
                 sameFaction : List ( Int, Companion.Details )
                 sameFaction =
-                    case model.faction of
-                        Nothing ->
-                            []
+                    mostExpensiveFirst
+                        |> filterMapAtMost
+                            (if treasure then
+                                4
 
-                        Just ( f, _ ) ->
-                            mostExpensiveFirst
-                                |> List.filterMap
-                                    (\( faction, cost, c ) ->
-                                        if faction == Just f then
+                             else
+                                2
+                            )
+                            (\( faction, cost, c ) ->
+                                case faction of
+                                    Just f ->
+                                        if List.member f model.factions then
                                             Just ( cost, c )
 
                                         else
                                             Nothing
-                                    )
-                                |> List.take
-                                    (if treasure then
-                                        4
 
-                                     else
-                                        2
-                                    )
+                                    Nothing ->
+                                        Nothing
+                            )
 
                 sameKind : List ( String, Int, Companion.Details )
                 sameKind =
                     mostExpensiveFirst
-                        |> List.filterMap
+                        |> filterMapAtMost
+                            (if treasure then
+                                4
+
+                             else
+                                2
+                            )
                             (\( _, cost, companion ) ->
                                 if sameRace companion model.races then
                                     Just ( "Same race", cost, companion )
@@ -68,13 +96,6 @@ value model =
 
                                 else
                                     Nothing
-                            )
-                        |> List.take
-                            (if treasure then
-                                4
-
-                             else
-                                2
                             )
 
                 withReason :
@@ -126,11 +147,14 @@ value model =
                             possiblyFriendly =
                                 List.filterMap
                                     (\( f, cost, c ) ->
-                                        if f == Just FactionTheOutsiders || f == Just FactionAlphazonIndustries || f == Just FactionTheCollegeOfArcadia then
-                                            Nothing
+                                        if
+                                            (f /= Just FactionTheOutsiders)
+                                                && (f /= Just FactionAlphazonIndustries)
+                                        then
+                                            Just ( cost, c )
 
                                         else
-                                            Just ( cost, c )
+                                            Nothing
                                     )
                                     mostExpensiveFirst
                         in

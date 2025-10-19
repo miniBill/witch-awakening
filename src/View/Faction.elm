@@ -18,8 +18,8 @@ import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
 
 
-viewFaction : Set String -> Display -> Maybe ( Faction, Bool ) -> Element Choice
-viewFaction hideDLC display faction =
+viewFaction : Set String -> Display -> List Faction -> List Faction -> Element Choice
+viewFaction hideDLC display factions factionPerks =
     let
         filtered : List Faction.Details
         filtered =
@@ -33,7 +33,7 @@ viewFaction hideDLC display faction =
         View.collapsible (Theme.topBackground Image.factionIntro)
             display
             DisplayFaction
-            ChoiceFaction
+            identity
             IdKindFaction
             "# Factions"
             [ Theme.column
@@ -53,7 +53,7 @@ viewFaction hideDLC display faction =
                 ]
             , filtered
                 |> List.Extra.removeWhen .isHuman
-                |> List.filterMap (factionBox display faction)
+                |> List.filterMap (factionBox display factions factionPerks)
                 |> Theme.column
                     [ width fill
                     , spacing <| Theme.rhythm * 3
@@ -82,14 +82,14 @@ viewFaction hideDLC display faction =
                 ]
             , filtered
                 |> List.filter .isHuman
-                |> List.filterMap (factionBox display faction)
+                |> List.filterMap (factionBox display factions factionPerks)
                 |> Theme.column
                     [ width fill
                     , spacing <| Theme.rhythm * 3
                     ]
             ]
             [ filtered
-                |> List.filterMap (factionBox display faction)
+                |> List.filterMap (factionBox display factions factionPerks)
                 |> Theme.column
                     [ width fill
                     , spacing <| Theme.rhythm * 3
@@ -99,38 +99,34 @@ viewFaction hideDLC display faction =
 
 factionBox :
     Display
-    -> Maybe ( Faction, Bool )
+    -> List Faction
+    -> List Faction
     -> Faction.Details
-    -> Maybe (Element (Maybe ( Faction, Bool )))
-factionBox display selected details =
-    if display /= DisplayFull && Maybe.map Tuple.first selected /= Just details.name then
+    -> Maybe (Element Choice)
+factionBox display factions factionPerks details =
+    if display /= DisplayFull && not (List.member details.name factions) then
         Nothing
 
     else
         Theme.column [ width fill, Theme.id IdKindFaction (Faction.toString details.name) ]
             [ introRow display details
             , Theme.wrappedRow [ width fill ]
-                [ content selected details
-                , viewPerk display selected details
+                [ content factions details
+                , viewPerk display factionPerks details
                 ]
             ]
             |> Just
 
 
 content :
-    Maybe ( Faction, Bool )
+    List Faction
     -> Faction.Details
-    -> Element (Maybe ( Faction, Bool ))
-content selected { name, description, location, relations } =
+    -> Element Choice
+content factions { name, description, location, relations } =
     let
         isFactionSelected : Bool
         isFactionSelected =
-            case selected of
-                Nothing ->
-                    False
-
-                Just ( selectedFaction, _ ) ->
-                    selectedFaction == name
+            List.member name factions
 
         factionGlow : Maybe Color
         factionGlow =
@@ -139,14 +135,6 @@ content selected { name, description, location, relations } =
 
             else
                 Nothing
-
-        factionMsg : Maybe ( Faction, Bool )
-        factionMsg =
-            if isFactionSelected then
-                Nothing
-
-            else
-                Just ( name, False )
     in
     Theme.maybeButton
         [ width <| fillPortion 5
@@ -186,20 +174,20 @@ content selected { name, description, location, relations } =
                     IdKindFaction
                     ("[RELATIONS:] " ++ relations)
                 ]
-        , onPress = Just factionMsg
+        , onPress = Just (ChoiceFaction ( name, not isFactionSelected ))
         }
 
 
 viewPerk :
     Display
-    -> Maybe ( Faction, Bool )
+    -> List Faction
     -> Faction.Details
-    -> Element (Maybe ( Faction, Bool ))
-viewPerk display selected { name, perk, perkContent, images } =
+    -> Element Choice
+viewPerk display factionPerks { name, perk, perkContent, images } =
     let
         isPerkSelected : Bool
         isPerkSelected =
-            selected == Just ( name, True )
+            List.member name factionPerks
     in
     if display /= DisplayFull && not isPerkSelected then
         Element.none
@@ -209,10 +197,6 @@ viewPerk display selected { name, perk, perkContent, images } =
             glowColor : Color
             glowColor =
                 Color.rgb255 0xF3 0xEA 0x6F
-
-            perkMsg : Maybe ( Faction, Bool )
-            perkMsg =
-                Just ( name, not isPerkSelected )
         in
         Theme.card
             [ if isPerkSelected then
@@ -253,7 +237,7 @@ viewPerk display selected { name, perk, perkContent, images } =
                             IdKindFaction
                             (perkContent ++ "\n\n_*[" ++ Magic.toString magic.name ++ "]*_ is half price for you, stacks with affinity.")
                         ]
-            , onPress = Just perkMsg
+            , onPress = Just (ChoiceFactionPerk ( name, not isPerkSelected ))
             }
             |> Maybe.withDefault Element.none
 

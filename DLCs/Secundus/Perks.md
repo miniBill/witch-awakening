@@ -76,7 +76,19 @@ This is specific to your pocket dimension however you may perform this on anothe
 - Element: Water
 - Cost: 4
 
-All witches have their own unique ‘signature’ for the potions they create and you are no exception. What you have a talent for is imitating the unique potion signature of other witches. As long as you have an example of their work then you can easily disguise your own potions as theirs without issue. You also have the ability to make your potions seem either one rank higher or lower than they actually are along with disguising the nature of the potions. For example you could disguise a poison as a healing potion it you wanted. 
+All witches have their own unique ‘signature’ for the potions they create and you are no exception. What you have a talent for is imitating the unique potion signature of other witches. As long as you have an example of their work then you can easily disguise your own potions as theirs without issue. You also have the ability to make your potions seem either one rank higher or lower than they actually are along with disguising the nature of the potions. For example you could disguise a poison as a healing potion it you wanted.
+
+
+## Perk: Multi-Factional
+- Class: Warlock
+- Element: Life
+- Costs: 4, 10
+
+Swap your Faction rent for a different one. You gain the price reduction for their faction magic rather than your own faction.
+
+For [10] you can also gain access to a secondary Faction Perk. This also provides a discount to their Faction Magic as well. Optionally. you may join this second Faction which gives access to their Quests and all other associated benefits. If you are part of two different Factions then you'll need to find some way to balance your obligations between them both or eventually be forced to commit to one of them entirely. In the case of joining two antagonistic factions such as ORC and Hespatian Covens then you'll need to eventually figure out which one actually has your loyalty. Not a choice to make lightly as you'll end up making an enemy of the Faction you betrayed.
+
+*This is added/removed automatically when you select your faction[s] and faction perk[s]*
 
 
 ## Perk: Cursed Lineage
