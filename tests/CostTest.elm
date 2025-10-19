@@ -17,7 +17,8 @@ type alias MagicModel =
     , mainRace : Maybe Race
     , typePerks : List Race
     , magic : List RankedMagic
-    , faction : Maybe ( Faction, Bool )
+    , factions : List Faction
+    , factionPerks : List Faction
     , cosmicPearl : CosmicPearlData
     , perks : List RankedPerk
     , quests : List Quest
@@ -33,7 +34,8 @@ sorceress race =
     , typePerks = []
     , magic = []
     , perks = []
-    , faction = Nothing
+    , factions = []
+    , factionPerks = []
     , cosmicPearl = { change = [], add = [] }
     , quests = []
     }
@@ -176,16 +178,16 @@ magicCosts =
             , testRanks academicDryad "In affinity, in class" MagicWands -1 1 4 8 13
             ]
         , describe "In faction, no perk"
-            [ testRanks { sorceressDryad | faction = Just ( FactionTheHespatianCoven, False ) } "Off affinity, off class" MagicOccultism 1 3 6 10 15
-            , testRanks { sorceressDryad | faction = Just ( FactionLunabella, False ) } "In affinity, off class" MagicDominion 1 2 4 6 9
-            , testRanks { academicDryad | faction = Just ( FactionTheCollegeOfArcadia, False ) } "Off affinity, in class" MagicDigicasting -1 1 4 8 13
-            , testRanks { academicDryad | faction = Just ( FactionHawthorneAcademia, False ) } "In affinity, in class" MagicWands -1 0 2 4 7
+            [ testRanks { sorceressDryad | factions = [ FactionTheHespatianCoven ] } "Off affinity, off class" MagicOccultism 1 3 6 10 15
+            , testRanks { sorceressDryad | factions = [ FactionLunabella ] } "In affinity, off class" MagicDominion 1 2 4 6 9
+            , testRanks { academicDryad | factions = [ FactionTheCollegeOfArcadia ] } "Off affinity, in class" MagicDigicasting -1 1 4 8 13
+            , testRanks { academicDryad | factions = [ FactionHawthorneAcademia ] } "In affinity, in class" MagicWands -1 0 2 4 7
             ]
         , describe "In faction, with perk"
-            [ testRanks { sorceressDryad | faction = Just ( FactionTheHespatianCoven, True ) } "Off affinity, off class" MagicOccultism 1 2 4 6 9
-            , testRanks { sorceressDryad | faction = Just ( FactionLunabella, True ) } "In affinity, off class" MagicDominion 1 2 3 4 6
-            , testRanks { academicDryad | faction = Just ( FactionTheCollegeOfArcadia, True ) } "Off affinity, in class" MagicDigicasting -1 0 2 4 7
-            , testRanks { academicDryad | faction = Just ( FactionHawthorneAcademia, True ) } "In affinity, in class" MagicWands -1 0 1 2 4
+            [ testRanks { sorceressDryad | factions = [ FactionTheHespatianCoven ], factionPerks = [ FactionTheHespatianCoven ] } "Off affinity, off class" MagicOccultism 1 2 4 6 9
+            , testRanks { sorceressDryad | factions = [ FactionLunabella ], factionPerks = [ FactionLunabella ] } "In affinity, off class" MagicDominion 1 2 3 4 6
+            , testRanks { academicDryad | factions = [ FactionTheCollegeOfArcadia ], factionPerks = [ FactionTheCollegeOfArcadia ] } "Off affinity, in class" MagicDigicasting -1 0 2 4 7
+            , testRanks { academicDryad | factions = [ FactionHawthorneAcademia ], factionPerks = [ FactionHawthorneAcademia ] } "In affinity, in class" MagicWands -1 0 1 2 4
             ]
         , describe "Cyborgs with perk"
             [ testRanks { sorceressCyborg | typePerks = [ RaceCyborg ] } "Gadgetry is in affinity" MagicGadgetry 1 2 4 6 9
