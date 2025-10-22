@@ -52,6 +52,10 @@ viewMenu model =
         affinities =
             Affinity.fromModel model
 
+        affinitiesCount : Int
+        affinitiesCount =
+            List.length (Affinity.toList affinities)
+
         warnIf : Bool -> a -> List a -> List a
         warnIf b msg list =
             if b then
@@ -63,7 +67,8 @@ viewMenu model =
         warnings : List String
         warnings =
             (rawWarnings
-                |> warnIf (List.isEmpty (Affinity.toList affinities)) "No main race selected."
+                |> warnIf (affinitiesCount == 0) "No main race selected."
+                |> warnIf (affinitiesCount > 4) "You can only have up to four affinities"
             )
                 ++ badPyramid model.magic
     in
