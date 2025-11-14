@@ -53,7 +53,7 @@ value model =
                                                     { kind = IdKindFaction
                                                     , anchor = Just (Faction.toString factionPerk)
                                                     , label = factionDetails.perk
-                                                    , value = Monad.Power 0
+                                                    , value = Monad.power 0
                                                     }
                                         )
                             )

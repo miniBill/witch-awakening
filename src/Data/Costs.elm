@@ -88,7 +88,7 @@ startingPower model =
                     { label = label
                     , kind = IdKindGameMode
                     , anchor = Just "Game mode"
-                    , value = Monad.Power v
+                    , value = Monad.power v
                     }
     in
     case model.gameMode of

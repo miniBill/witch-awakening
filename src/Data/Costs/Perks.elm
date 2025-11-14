@@ -32,19 +32,16 @@ value model =
         |> Monad.andThen
             (\pointsList ->
                 let
-                    free : Maybe String
-                    free =
+                    freeFromJackOfAll : Maybe String
+                    freeFromJackOfAll =
                         if List.any (\p -> p.name == PerkJackOfAll) model.perks then
                             pointsList
                                 |> List.filter (\{ staticCost } -> staticCost)
                                 |> List.Extra.maximumBy
                                     (\{ points } ->
                                         case points of
-                                            Monad.Power p ->
-                                                p
-
-                                            Monad.RewardPoints p ->
-                                                p
+                                            Monad.PowerAndRewardPoints p r ->
+                                                p + r
 
                                             Monad.FreeBecause _ ->
                                                 -1
@@ -59,19 +56,11 @@ value model =
                         (\{ name, points } ->
                             let
                                 ( v, raw ) =
-                                    if Just name == free then
+                                    if Just name == freeFromJackOfAll then
                                         ( Monad.FreeBecause "[Jack-of-All]", Utils.powerToPoints 0 )
 
                                     else
-                                        case points of
-                                            Monad.Power p ->
-                                                ( points, Utils.powerToPoints p )
-
-                                            Monad.RewardPoints p ->
-                                                ( points, Utils.rewardPointsToPoints p )
-
-                                            Monad.FreeBecause _ ->
-                                                ( points, Utils.powerToPoints 0 )
+                                        ( points, Utils.valueToPoints points )
                             in
                             raw
                                 |> Monad.succeed
@@ -143,7 +132,7 @@ perkValue model ranked =
                                 Monad.FreeBecause reason
 
                             Nothing ->
-                                Monad.Power -(innerPerkCost model ranked perk)
+                                Monad.power -(innerPerkCost model ranked perk)
 
                     res : { name : String, points : Monad.Value, staticCost : Bool }
                     res =

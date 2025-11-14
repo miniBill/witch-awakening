@@ -1,7 +1,7 @@
-module Data.Costs.Utils exposing (Points, Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, combineAndSum, find, hasMagicAtRank, negate, powerToPoints, requisitesParser, rewardPointsToPoints, slotUnsupported, sum, sumPoints, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, combineAndSum, find, hasMagicAtRank, negate, powerToPoints, requisitesParser, rewardPointsToPoints, slotUnsupported, sum, sumPoints, valueToPoints, zero, zeroOut)
 
 import Data.Affinity exposing (InAffinity(..))
-import Data.Costs.Monad as Monad exposing (Monad)
+import Data.Costs.Monad as Monad exposing (Monad, Value(..))
 import Generated.Class as Class
 import Generated.Magic as Magic
 import Generated.Quest as Quest
@@ -46,6 +46,16 @@ combineAndSum list =
     list
         |> Monad.combine
         |> Monad.map sumPoints
+
+
+valueToPoints : Value -> Points
+valueToPoints v =
+    case v of
+        FreeBecause _ ->
+            zero
+
+        PowerAndRewardPoints p r ->
+            { power = p, rewardPoints = r }
 
 
 rewardPointsToPoints : Int -> Points

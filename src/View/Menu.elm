@@ -437,11 +437,8 @@ row kind label expandedMenuSections result target =
                         ]
                     , el [ alignRight, centerY ] <|
                         case info.value of
-                            CostsMonad.Power power ->
-                                rightPoints kind { rewardPoints = 0, power = power }
-
-                            CostsMonad.RewardPoints rewardPoints ->
-                                rightPoints kind { rewardPoints = rewardPoints, power = 0 }
+                            CostsMonad.PowerAndRewardPoints power rewardPoints ->
+                                rightPoints kind { rewardPoints = rewardPoints, power = power }
 
                             CostsMonad.FreeBecause message ->
                                 Theme.compactBlocks [] kind message

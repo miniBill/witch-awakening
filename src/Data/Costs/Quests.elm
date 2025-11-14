@@ -101,7 +101,7 @@ questCost model named =
                         |> Monad.withInfo
                             { kind = IdKindQuest
                             , label = "Domesticated + House Fire"
-                            , value = Monad.RewardPoints 2
+                            , value = Monad.rewardPoints 2
                             , anchor = Just (Quest.toString named)
                             }
                     ]

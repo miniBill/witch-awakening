@@ -37,7 +37,7 @@ typePerkCost model race =
                         { label = View.Race.raceToShortString race
                         , kind = IdKindTypePerk
                         , anchor = Just (View.Race.raceToShortString race)
-                        , value = Monad.Power cost
+                        , value = Monad.power cost
                         }
                     |> (if List.any (Types.isSameRace race) model.races then
                             identity

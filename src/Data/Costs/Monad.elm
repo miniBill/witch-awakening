@@ -1,4 +1,4 @@
-module Data.Costs.Monad exposing (Info, Monad, Value(..), andThen, combine, combineMap, error, map, map2, map3, mapAndSum, succeed, withInfo, withPowerInfo, withRewardInfo, withWarning, withWarningMaybe)
+module Data.Costs.Monad exposing (Info, Monad, Value(..), andThen, combine, combineMap, error, map, map2, map3, mapAndSum, power, rewardPoints, succeed, withInfo, withPowerInfo, withRewardInfo, withWarning, withWarningMaybe)
 
 import ResultME exposing (ResultME)
 import Types exposing (IdKind)
@@ -13,9 +13,18 @@ type alias Info =
 
 
 type Value
-    = Power Int
-    | RewardPoints Int
+    = PowerAndRewardPoints Int Int
     | FreeBecause String
+
+
+power : Int -> Value
+power p =
+    PowerAndRewardPoints p 0
+
+
+rewardPoints : Int -> Value
+rewardPoints r =
+    PowerAndRewardPoints 0 r
 
 
 type alias Monad a =
@@ -126,7 +135,7 @@ withPowerInfo kind key r =
                     { label = key
                     , kind = kind
                     , anchor = Just key
-                    , value = Power v.value
+                    , value = power v.value
                     }
                         :: v.infos
             }
@@ -143,7 +152,7 @@ withRewardInfo kind key r =
                     { label = key
                     , kind = kind
                     , anchor = Just key
-                    , value = RewardPoints v.value
+                    , value = rewardPoints v.value
                     }
                         :: v.infos
             }

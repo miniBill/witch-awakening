@@ -177,7 +177,7 @@ value { ignoreSorceressBonus } model =
                                             { label = label
                                             , kind = IdKindMagic
                                             , anchor = Just name
-                                            , value = Monad.Power power
+                                            , value = Monad.PowerAndRewardPoints power rewardPoints
                                             }
                         )
                     |> Utils.combineAndSum
