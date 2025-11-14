@@ -208,10 +208,10 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
         , content =
             case relic.requires of
                 Nothing ->
-                    viewContent mainRace (isSelected /= Nothing) relics races typePerks relic color
+                    viewContent mainRace isSelected relics races typePerks relic color
 
                 Just req ->
-                    View.viewRequirements IdKindRelic req :: viewContent mainRace (isSelected /= Nothing) relics races typePerks relic color
+                    View.viewRequirements IdKindRelic req :: viewContent mainRace isSelected relics races typePerks relic color
         , onPress = msg
         }
 
@@ -224,7 +224,7 @@ relicToShortString name =
         |> String.concat
 
 
-viewContent : Maybe Race -> Bool -> List RankedRelic -> List Race -> List Race -> Relic.Details -> Color -> List (Element Choice)
+viewContent : Maybe Race -> Maybe RankedRelic -> List RankedRelic -> List Race -> List Race -> Relic.Details -> Color -> List (Element Choice)
 viewContent mainRace isSelected relics races typePerks { content, name } color =
     case ( name, content ) of
         ( RelicCosmicPearl pearl, Single cost block ) ->
@@ -278,7 +278,7 @@ viewContent mainRace isSelected relics races typePerks { content, name } color =
 
 viewCosmicPearl :
     Maybe Race
-    -> Bool
+    -> Maybe RankedRelic
     -> CosmicPearlData
     -> List Race
     -> List Race
@@ -286,13 +286,13 @@ viewCosmicPearl :
     -> Int
     -> String
     -> List (Element Choice)
-viewCosmicPearl mainRace isSelected pearl races typePerks name cost block =
+viewCosmicPearl mainRace isSelected pearl races typePerks name baseCost block =
     let
         toMsg : CosmicPearlData -> Choice
         toMsg newPearl =
             ( { name = RelicCosmicPearl newPearl
               , cost =
-                    cost * (List.length newPearl.add + List.length newPearl.change)
+                    baseCost * (List.length newPearl.add + List.length newPearl.change)
               }
             , True
             )
@@ -404,18 +404,19 @@ viewCosmicPearl mainRace isSelected pearl races typePerks name cost block =
                 )
     in
     [ Theme.blocks [ height fill ] IdKindRelic block
-    , if isSelected then
-        Theme.button
-            [ width fill
-            , Font.center
-            ]
-            { onPress =
-                Just (ChoiceRelic ( { name = name, cost = cost }, False ))
-            , label = text "Remove"
-            }
+    , case isSelected of
+        Just { cost } ->
+            Theme.button
+                [ width fill
+                , Font.center
+                ]
+                { onPress =
+                    Just (ChoiceRelic ( { name = name, cost = cost }, False ))
+                , label = text "Remove"
+                }
 
-      else
-        Element.none
+        Nothing ->
+            Element.none
     , Theme.column
         [ width fill
         , Theme.backgroundColor Color.black
