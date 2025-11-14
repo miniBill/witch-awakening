@@ -116,7 +116,7 @@ jackOfAllTest =
             , quests : List Quest
             , relics : List RankedRelic
             }
-        changelingModel =
+        changelingModel = 
             { defaultModel
                 | races = [ RaceChangeling ] -- Body and Mind
                 , mainRace = Just RaceChangeling
@@ -157,7 +157,7 @@ testJack12 label model expected =
         \_ ->
             Data.Costs.Perks.perkValue model jack12
                 |> Result.map (.value >> .points)
-                |> Expect.equal (Ok (CostsMonad.Power expected))
+                |> Expect.equal (Ok (CostsMonad.power expected))
 
 
 genieMagicalHeart : Test
@@ -170,7 +170,7 @@ genieMagicalHeart =
                 , cost = 20
                 }
                 |> Result.map (.value >> .points)
-                |> Expect.equal (Ok (CostsMonad.Power -4))
+                |> Expect.equal (Ok (CostsMonad.power -4))
 
 
 magicCosts : Test
