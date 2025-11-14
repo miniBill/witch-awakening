@@ -507,7 +507,7 @@ parseUrl navKey url =
                     value
                         |> String.toList
                         |> List.reverse
-                        |> List.Extra.break (\c -> not (Char.isDigit c || c == '-'))
+                        |> List.Extra.span (\c -> Char.isDigit c || c == '-')
                         |> Tuple.mapBoth List.reverse List.reverse
             in
             (parser <| String.fromList before)
@@ -558,8 +558,25 @@ parseUrl navKey url =
                 )
 
         parseRelic : String -> Maybe Types.RankedRelic
-        parseRelic =
-            withCost Types.relicFromString
+        parseRelic value =
+            let
+                ( after, before ) =
+                    value
+                        |> String.toList
+                        |> List.reverse
+                        |> List.Extra.span Char.isDigit
+                        |> Tuple.mapBoth
+                            (List.reverse >> String.fromList)
+                            (List.reverse >> String.fromList)
+            in
+            Maybe.map2
+                (\name cost ->
+                    { name = name
+                    , cost = cost
+                    }
+                )
+                (Types.relicFromString before)
+                (String.toInt after)
 
         withCost : (String -> Maybe a) -> String -> Maybe { name : a, cost : Int }
         withCost fromString =
