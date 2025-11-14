@@ -3,7 +3,6 @@ module Data.Costs.Relics exposing (value)
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Utils as Utils exposing (Points, zero)
 import Generated.Relic as Relic
-import Generated.Types exposing (Relic(..))
 import Types exposing (IdKind(..), Model, RankedRelic)
 import View.Relic
 
@@ -29,25 +28,9 @@ relicCost ({ class } as model) details =
 
                             Just c ->
                                 List.member c relic.classes
-
-                    baseCost : Int
-                    baseCost =
-                        if isClass then
-                            details.cost - 2
-
-                        else
-                            details.cost
-
-                    multiplier : Int
-                    multiplier =
-                        case relic.name of
-                            RelicCosmicPearl cosmicPearl ->
-                                max 1 <| List.length cosmicPearl.add + List.length cosmicPearl.change
-
-                            _ ->
-                                1
                 in
-                (baseCost * multiplier)
+                details.cost
+                    |> Utils.applyClassBonusIf isClass
                     |> Utils.checkRequirements relic (Relic.toString details.name) model
             )
         |> Monad.withRewardInfo IdKindRelic (View.Relic.relicToShortString details.name)

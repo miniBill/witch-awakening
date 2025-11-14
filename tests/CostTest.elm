@@ -7,7 +7,7 @@ import Data.Costs.Utils
 import Expect
 import Generated.Types exposing (Affinity(..), Class(..), Faction(..), Magic(..), Perk(..), Quest, Race(..))
 import Test exposing (Test, describe, test)
-import Types exposing (CosmicPearlData, RankedMagic, RankedPerk)
+import Types exposing (RankedMagic, RankedPerk, RankedRelic)
 
 
 type alias MagicModel =
@@ -19,7 +19,7 @@ type alias MagicModel =
     , magic : List RankedMagic
     , factions : List Faction
     , factionPerks : List Faction
-    , cosmicPearl : CosmicPearlData
+    , relics : List RankedRelic
     , perks : List RankedPerk
     , quests : List Quest
     }
@@ -36,7 +36,7 @@ sorceress race =
     , perks = []
     , factions = []
     , factionPerks = []
-    , cosmicPearl = { change = [], add = [] }
+    , relics = []
     , quests = []
     }
 
@@ -89,35 +89,32 @@ jackOfAllTest =
             { class : Maybe Class
             , races : List Race
             , mainRace : Maybe Race
-            , cosmicPearl : CosmicPearlData
             , typePerks : List Race
             , perks : List RankedPerk
             , magic : List RankedMagic
             , quests : List Quest
+            , relics : List RankedRelic
             }
         defaultModel =
             { class = Just ClassWarlock
             , races = [ RaceNeutral ] -- Soul and Body
             , mainRace = Just RaceNeutral
-            , cosmicPearl =
-                { add = []
-                , change = []
-                }
             , typePerks = []
             , perks = [ jack12 ]
             , magic = []
             , quests = []
+            , relics = []
             }
 
         changelingModel :
             { class : Maybe Class
             , races : List Race
             , mainRace : Maybe Race
-            , cosmicPearl : CosmicPearlData
             , typePerks : List Race
             , perks : List RankedPerk
             , magic : List RankedMagic
             , quests : List Quest
+            , relics : List RankedRelic
             }
         changelingModel =
             { defaultModel
@@ -140,7 +137,21 @@ jack12 =
     { name = PerkJackOfAll, cost = -10 }
 
 
-testJack12 : String -> { a | class : Maybe Class, races : List Race, magic : List RankedMagic, mainRace : Maybe Race, cosmicPearl : CosmicPearlData, typePerks : List Race, perks : List RankedPerk, quests : List Quest } -> Int -> Test
+testJack12 :
+    String
+    ->
+        { a
+            | class : Maybe Class
+            , races : List Race
+            , magic : List RankedMagic
+            , mainRace : Maybe Race
+            , typePerks : List Race
+            , perks : List RankedPerk
+            , quests : List Quest
+            , relics : List RankedRelic
+        }
+    -> Int
+    -> Test
 testJack12 label model expected =
     test label <|
         \_ ->

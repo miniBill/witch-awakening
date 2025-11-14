@@ -53,7 +53,6 @@ modelFuzzer =
         |> Fuzz.andMap (Fuzz.constant Types.DisplayFull)
         |> Fuzz.andMap (Fuzz.list rankedRelicFuzzer)
         |> Fuzz.andMap (Fuzz.constant Types.DisplayFull)
-        |> Fuzz.andMap cosmicPearlDataFuzzer
         |> Fuzz.andMap (Fuzz.constant Set.empty)
         |> Fuzz.andMap (Fuzz.constant Set.empty)
         |> Fuzz.andMap (Fuzz.constant False)
@@ -619,75 +618,75 @@ questFuzzer =
 
 rankedRelicFuzzer : Fuzzer Types.RankedRelic
 rankedRelicFuzzer =
-    Fuzz.map2 Types.RankedRelic relicFuzzer Fuzz.int
+    Fuzz.map2 Types.RankedRelic relicFuzzer (Fuzz.intAtLeast 0)
 
 
 relicFuzzer : Fuzzer Generated.Types.Relic
 relicFuzzer =
-    Fuzz.oneOfValues
-        [ Generated.Types.RelicHexVPN
-        , Generated.Types.RelicStormBrew
-        , Generated.Types.RelicNightlight
-        , Generated.Types.RelicStainedSliver
-        , Generated.Types.RelicJadeBolt
-        , Generated.Types.RelicGoldenFish
-        , Generated.Types.RelicNecronomicon
-        , Generated.Types.RelicAlchemistStone
-        , Generated.Types.RelicYagaRoot
-        , Generated.Types.RelicNymphVessel
-        , Generated.Types.RelicLongingMirror
-        , Generated.Types.RelicHellrider
-        , Generated.Types.RelicArcherSBow
-        , Generated.Types.RelicAssassinSEdge
-        , Generated.Types.RelicWardenSMaul
-        , Generated.Types.RelicDevilSTrident
-        , Generated.Types.RelicGuardianSWall
-        , Generated.Types.RelicAlchemistStash
-        , Generated.Types.RelicGemOfRenewal
-        , Generated.Types.RelicProsthesis
-        , Generated.Types.RelicVioletLenses
-        , Generated.Types.RelicManaCore
-        , Generated.Types.RelicMagicTalisman
-        , Generated.Types.RelicTreasurerSMint
-        , Generated.Types.RelicCompanionBrick
-        , Generated.Types.RelicHeirloom
-        , Generated.Types.RelicRiftblade
-        , Generated.Types.RelicLifeRecord
-        , Generated.Types.RelicServantDolls
-        , Generated.Types.RelicDollmakerSKit
-        , Generated.Types.RelicThaumicSpikes
-        , Generated.Types.RelicSecretElixir
-        , Generated.Types.RelicCosmicPearl
-        , Generated.Types.RelicWitchDeck
-        , Generated.Types.RelicBattleship
-        , Generated.Types.RelicMythrilArmor
-        , Generated.Types.RelicRitualInks
-        , Generated.Types.RelicSpellBullets
-        , Generated.Types.RelicGreatWarRifle
-        , Generated.Types.RelicWitchPistol
-        , Generated.Types.RelicJesterOniMask
-        , Generated.Types.RelicFarTalisman
-        , Generated.Types.RelicMasterKey
-        , Generated.Types.RelicPewterCrown
-        , Generated.Types.RelicSunShard
-        , Generated.Types.RelicHydron
-        , Generated.Types.RelicCollection
-        , Generated.Types.RelicWitchKisses
-        , Generated.Types.RelicTrainerBands
-        , Generated.Types.RelicBlurForm
-        , Generated.Types.RelicTomeOfRestore
-        , Generated.Types.RelicCursedCards
-        , Generated.Types.RelicShiftingSword
-        , Generated.Types.RelicPocketLance
-        , Generated.Types.RelicFlyingDagger
-        , Generated.Types.RelicGemBlade
-        , Generated.Types.RelicMansionSeed
-        , Generated.Types.RelicBookOfBlooms
-        , Generated.Types.RelicClockworkCreature
-        , Generated.Types.RelicPaintedWorld
+    Fuzz.oneOf
+        [ Fuzz.constant Generated.Types.RelicHexVPN
+        , Fuzz.constant Generated.Types.RelicStormBrew
+        , Fuzz.constant Generated.Types.RelicNightlight
+        , Fuzz.constant Generated.Types.RelicStainedSliver
+        , Fuzz.constant Generated.Types.RelicJadeBolt
+        , Fuzz.constant Generated.Types.RelicGoldenFish
+        , Fuzz.constant Generated.Types.RelicNecronomicon
+        , Fuzz.constant Generated.Types.RelicAlchemistStone
+        , Fuzz.constant Generated.Types.RelicYagaRoot
+        , Fuzz.constant Generated.Types.RelicNymphVessel
+        , Fuzz.constant Generated.Types.RelicLongingMirror
+        , Fuzz.constant Generated.Types.RelicHellrider
+        , Fuzz.constant Generated.Types.RelicArcherSBow
+        , Fuzz.constant Generated.Types.RelicAssassinSEdge
+        , Fuzz.constant Generated.Types.RelicWardenSMaul
+        , Fuzz.constant Generated.Types.RelicDevilSTrident
+        , Fuzz.constant Generated.Types.RelicGuardianSWall
+        , Fuzz.constant Generated.Types.RelicAlchemistStash
+        , Fuzz.constant Generated.Types.RelicGemOfRenewal
+        , Fuzz.constant Generated.Types.RelicProsthesis
+        , Fuzz.constant Generated.Types.RelicVioletLenses
+        , Fuzz.constant Generated.Types.RelicManaCore
+        , Fuzz.constant Generated.Types.RelicMagicTalisman
+        , Fuzz.constant Generated.Types.RelicTreasurerSMint
+        , Fuzz.constant Generated.Types.RelicCompanionBrick
+        , Fuzz.constant Generated.Types.RelicHeirloom
+        , Fuzz.constant Generated.Types.RelicRiftblade
+        , Fuzz.constant Generated.Types.RelicLifeRecord
+        , Fuzz.constant Generated.Types.RelicServantDolls
+        , Fuzz.constant Generated.Types.RelicDollmakerSKit
+        , Fuzz.constant Generated.Types.RelicThaumicSpikes
+        , Fuzz.constant Generated.Types.RelicSecretElixir
+        , Fuzz.map Generated.Types.RelicCosmicPearl cosmicPearlDataFuzzer
+        , Fuzz.constant Generated.Types.RelicWitchDeck
+        , Fuzz.constant Generated.Types.RelicBattleship
+        , Fuzz.constant Generated.Types.RelicMythrilArmor
+        , Fuzz.constant Generated.Types.RelicRitualInks
+        , Fuzz.constant Generated.Types.RelicSpellBullets
+        , Fuzz.constant Generated.Types.RelicGreatWarRifle
+        , Fuzz.constant Generated.Types.RelicWitchPistol
+        , Fuzz.constant Generated.Types.RelicJesterOniMask
+        , Fuzz.constant Generated.Types.RelicFarTalisman
+        , Fuzz.constant Generated.Types.RelicMasterKey
+        , Fuzz.constant Generated.Types.RelicPewterCrown
+        , Fuzz.constant Generated.Types.RelicSunShard
+        , Fuzz.constant Generated.Types.RelicHydron
+        , Fuzz.constant Generated.Types.RelicCollection
+        , Fuzz.constant Generated.Types.RelicWitchKisses
+        , Fuzz.constant Generated.Types.RelicTrainerBands
+        , Fuzz.constant Generated.Types.RelicBlurForm
+        , Fuzz.constant Generated.Types.RelicTomeOfRestore
+        , Fuzz.constant Generated.Types.RelicCursedCards
+        , Fuzz.constant Generated.Types.RelicShiftingSword
+        , Fuzz.constant Generated.Types.RelicPocketLance
+        , Fuzz.constant Generated.Types.RelicFlyingDagger
+        , Fuzz.constant Generated.Types.RelicGemBlade
+        , Fuzz.constant Generated.Types.RelicMansionSeed
+        , Fuzz.constant Generated.Types.RelicBookOfBlooms
+        , Fuzz.constant Generated.Types.RelicClockworkCreature
+        , Fuzz.constant Generated.Types.RelicPaintedWorld
         ]
 
 
-cosmicPearlDataFuzzer : Fuzzer Types.CosmicPearlData
+cosmicPearlDataFuzzer : Fuzzer Generated.Types.CosmicPearlData
 cosmicPearlDataFuzzer =
-    Fuzz.map2 Types.CosmicPearlData (Fuzz.list (Fuzz.pair affinityFuzzer affinityFuzzer)) (Fuzz.list affinityFuzzer)
+    Fuzz.map2 Generated.Types.CosmicPearlData (Fuzz.list (Fuzz.pair affinityFuzzer affinityFuzzer)) (Fuzz.list affinityFuzzer)

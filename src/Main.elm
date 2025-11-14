@@ -559,24 +559,28 @@ parseUrl navKey url =
 
         parseRelic : String -> Maybe Types.RankedRelic
         parseRelic value =
-            let
-                ( after, before ) =
-                    value
-                        |> String.toList
-                        |> List.reverse
-                        |> List.Extra.span Char.isDigit
-                        |> Tuple.mapBoth
-                            (List.reverse >> String.fromList)
-                            (List.reverse >> String.fromList)
-            in
-            Maybe.map2
-                (\name cost ->
-                    { name = name
-                    , cost = cost
-                    }
-                )
-                (Types.relicFromString before)
-                (String.toInt after)
+            if String.startsWith "Cosmic Pearl" value then
+                let
+                    ( after, before ) =
+                        value
+                            |> String.toList
+                            |> List.reverse
+                            |> List.Extra.span Char.isDigit
+                            |> Tuple.mapBoth
+                                (List.reverse >> String.fromList)
+                                (List.reverse >> String.fromList)
+                in
+                Maybe.map2
+                    (\name cost ->
+                        { name = name
+                        , cost = cost
+                        }
+                    )
+                    (Types.relicFromString before)
+                    (String.toInt after)
+
+            else
+                withCost Types.relicFromString value
 
         withCost : (String -> Maybe a) -> String -> Maybe { name : a, cost : Int }
         withCost fromString =
