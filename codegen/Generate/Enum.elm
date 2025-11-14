@@ -1,4 +1,4 @@
-module Generate.Enum exposing (Enum, Variant, toAnnotation, toString)
+module Generate.Enum exposing (Argument(..), Enum, Variant, toAnnotation, toString)
 
 import Elm
 import Elm.Annotation
@@ -7,6 +7,8 @@ import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
 import Elm.Op.Extra
+import Gen.List
+import Gen.String
 import Generate.Utils as Utils
 import String.Extra
 
@@ -21,10 +23,15 @@ type alias Enum =
 
 type alias Variant =
     { name : String
-    , arguments : List String
+    , arguments : List Argument
     , dlc : Maybe String
     , toStringException : Maybe String
     }
+
+
+type Argument
+    = ValueArgument String
+    | ListArgument String
 
 
 toString : Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
@@ -51,21 +58,45 @@ toString enum =
                 in
                 Elm.Case.branch
                     (Elm.Arg.customType (enum.name ++ Utils.yassify variant.name) identity
-                        |> Elm.Arg.items (List.map Elm.Arg.var variant.arguments)
+                        |> Elm.Arg.items
+                            (List.map
+                                (\t ->
+                                    case t of
+                                        ValueArgument v ->
+                                            Elm.Arg.var v
+
+                                        ListArgument v ->
+                                            Elm.Arg.var v
+                                )
+                                variant.arguments
+                            )
                     )
                 <|
                     \vals ->
                         (variantString
                             :: List.map2
                                 (\arg val ->
-                                    Elm.apply
-                                        (Elm.value
-                                            { importFrom = [ "Generated", arg ]
-                                            , name = "toString"
-                                            , annotation = Nothing
-                                            }
-                                        )
-                                        [ val ]
+                                    case arg of
+                                        ValueArgument i ->
+                                            Elm.apply
+                                                (Elm.value
+                                                    { importFrom = [ "Generated", i ]
+                                                    , name = "toString"
+                                                    , annotation = Nothing
+                                                    }
+                                                )
+                                                [ val ]
+
+                                        ListArgument i ->
+                                            val
+                                                |> Gen.List.call_.map
+                                                    (Elm.value
+                                                        { importFrom = [ "Generated", i ]
+                                                        , name = "toString"
+                                                        , annotation = Nothing
+                                                        }
+                                                    )
+                                                |> Gen.String.call_.join (Elm.string ",")
                                 )
                                 variant.arguments
                                 vals
@@ -86,7 +117,15 @@ toAnnotation enum =
         |> List.map
             (\variant ->
                 variant.arguments
-                    |> List.map (Elm.Annotation.named [])
+                    |> List.map
+                        (\t ->
+                            case t of
+                                ListArgument i ->
+                                    Elm.Annotation.list (Elm.Annotation.named [] i)
+
+                                ValueArgument i ->
+                                    Elm.Annotation.named [] i
+                        )
                     |> Elm.variantWith (enum.name ++ Utils.yassify variant.name)
             )
         |> Elm.Declare.customType enum.name

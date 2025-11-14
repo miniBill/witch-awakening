@@ -149,7 +149,7 @@ dump model =
             go (dumpMagic >> Just) Magic.all
 
         Relic ->
-            go dumpRelic Relic.all
+            go dumpRelic (Relic.all [])
 
         Complication ->
             go dumpComplication Complication.all
@@ -256,9 +256,6 @@ dumpPerk details =
 
                 Data.Perk.WithCosts costs c ->
                     ( Just costs, Just (String.Multiline.here c) )
-
-                Data.Perk.WithChoicesChargeSwap _ _ ->
-                    ( Nothing, Nothing )
     in
     maybeContent
         |> Maybe.map
@@ -336,9 +333,6 @@ dumpRelic relic =
 
                 Data.Relic.WithChoices costs details ->
                     ( intListItem "Costs" costs, Just details )
-
-                Data.Relic.CosmicPearlContent _ _ ->
-                    ( Nothing, Nothing )
     in
     maybeDescription
         |> Maybe.map

@@ -6,49 +6,64 @@ import Elm.Arg
 import Elm.Case
 import Elm.Declare
 import Elm.Declare.Extra
+import Elm.Let
 import Elm.Op
+import Gen.CodeGen.Generate as Generate
 import Gen.Data.Perk
 import Gen.List
+import Gen.List.Extra
 import Gen.Maybe
 import Gen.Types
-import Generate.Enum as Enum exposing (Enum)
+import Generate.Enum as Enum exposing (Argument(..), Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import Parsers exposing (Content(..))
+import ResultME exposing (ResultME)
 import String.Extra
 
 
 type alias PerkModule =
     { all : Elm.Expression -> Elm.Expression
     , toString : Elm.Expression -> Elm.Expression
+    , details : Elm.Annotation.Annotation
     , containsDash : Elm.Expression -> Elm.Expression
     }
 
 
-file : TypesModule -> Enum -> List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Module PerkModule
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Perk ) -> ResultME Generate.Error (Elm.Declare.Module PerkModule)
 file types enum dlcPerks =
-    Elm.Declare.module_ [ "Generated", "Perk" ] PerkModule
-        |> Elm.Declare.with (all dlcPerks)
-        |> Elm.Declare.with (Enum.toString enum)
-        |> Elm.Declare.with (containsDash types dlcPerks)
-        |> Elm.Declare.Extra.withDeclarations (dlcToPerks types dlcPerks)
+    ResultME.map
+        (\declarations ->
+            Elm.Declare.module_ [ "Generated", "Perk" ] PerkModule
+                |> Elm.Declare.with (all types dlcPerks)
+                |> Elm.Declare.with (Enum.toString enum)
+                |> Elm.Declare.with (details types)
+                |> Elm.Declare.with (containsDash types dlcPerks)
+                |> Elm.Declare.Extra.withDeclarations declarations
+        )
+        (dlcToPerks types dlcPerks)
 
 
-all : List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
-all dlcPerks =
+all : TypesModule -> List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+all types dlcPerks =
     Elm.Declare.fn "all"
         (Elm.Arg.varWith "perks"
             (Elm.Annotation.list Gen.Types.annotation_.rankedPerk)
         )
     <|
         \perks ->
-            Elm.Op.append
-                (Gen.Data.Perk.call_.weird perks)
-                (dlcPerks
-                    |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-                    |> List.map (\( _, perk ) -> Elm.val (String.Extra.decapitalize (yassify perk.name)))
-                    |> Elm.list
-                )
+            (dlcPerks
+                |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
+                |> List.map
+                    (\( _, perk ) ->
+                        if List.isEmpty perk.arguments then
+                            Elm.val (String.Extra.decapitalize (yassify perk.name))
+
+                        else
+                            Elm.apply (Elm.val (String.Extra.decapitalize (yassify perk.name))) [ perks ]
+                    )
+                |> Elm.list
+            )
                 |> Gen.List.call_.sortBy
                     (Elm.fn
                         (Elm.Arg.record identity
@@ -56,7 +71,7 @@ all dlcPerks =
                         )
                         (\dlc -> Gen.Maybe.withDefault (Elm.string "") dlc)
                     )
-                |> Elm.withType (Elm.Annotation.list Gen.Data.Perk.annotation_.details)
+                |> Elm.withType (Elm.Annotation.list (details types).annotation)
 
 
 containsDash : TypesModule -> List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
@@ -68,9 +83,10 @@ containsDash types dlcPerks =
             dlcPerks
                 |> List.map
                     (\( _, dlcPerk ) ->
-                        ( dlcPerk.name, [] )
+                        ( dlcPerk.name
+                        , List.map (\_ -> Elm.Arg.ignore) dlcPerk.arguments
+                        )
                     )
-                |> (::) ( "Charge Swap", [ Elm.Arg.ignore ] )
                 |> List.map
                     (\( name, args ) ->
                         Elm.Case.branch (types.perk.argWith name args)
@@ -79,11 +95,55 @@ containsDash types dlcPerks =
                 |> Elm.Case.custom perk types.perk.annotation
 
 
-dlcToPerks : TypesModule -> List ( Maybe String, Parsers.Perk ) -> List Elm.Declaration
+details :
+    TypesModule
+    ->
+        { annotation : Elm.Annotation.Annotation
+        , declaration : Elm.Declaration
+        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
+        , make :
+            { name : Elm.Expression
+            , class : Elm.Expression
+            , affinity : Elm.Expression
+            , isMeta : Elm.Expression
+            , requires : Elm.Expression
+            , content : Elm.Expression
+            , dlc : Elm.Expression
+            }
+            -> Elm.Expression
+        }
+details types =
+    Elm.Declare.Extra.customRecord "Details"
+        |> Elm.Declare.Extra.withField "name" .name types.perk.annotation
+        |> Elm.Declare.Extra.withField "class" .class types.class.annotation
+        |> Elm.Declare.Extra.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.Extra.withField "affinity" .affinity types.affinity.annotation
+        |> Elm.Declare.Extra.withField "isMeta" .isMeta Elm.Annotation.bool
+        |> Elm.Declare.Extra.withField "content" .content Gen.Data.Perk.annotation_.content
+        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.Extra.buildCustomRecord
+
+
+dlcToPerks : TypesModule -> List ( Maybe String, Parsers.Perk ) -> ResultME Generate.Error (List Elm.Declaration)
 dlcToPerks types perks =
-    List.map
+    ResultME.combineMap
         (\( dlcName, perk ) ->
-            Gen.Data.Perk.make_.details
+            perkToDeclaration types dlcName perk
+                |> Result.map
+                    (\expr ->
+                        expr
+                            |> Elm.declaration (yassify perk.name)
+                            |> Elm.expose
+                    )
+        )
+        perks
+
+
+perkToDeclaration : TypesModule -> Maybe String -> Parsers.Perk -> ResultME Generate.Error Elm.Expression
+perkToDeclaration types dlcName perk =
+    case perk.arguments of
+        [] ->
+            (details types).make
                 { name = types.perk.value perk.name
                 , class = types.class.value perk.class
                 , affinity = types.affinity.value perk.element
@@ -108,7 +168,65 @@ dlcToPerks types perks =
                                 (Elm.string after)
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
                 }
-                |> Elm.declaration (yassify perk.name)
-                |> Elm.expose
-        )
-        perks
+                |> Ok
+
+        [ ValueArgument "Race" ] ->
+            Elm.fn (Elm.Arg.varWith "perks" (Elm.Annotation.list Gen.Types.annotation_.rankedPerk))
+                (\perks ->
+                    Elm.Let.letIn identity
+                        |> Elm.Let.value "race"
+                            (Gen.List.Extra.call_.findMap
+                                (Elm.fn (Elm.Arg.var "per") <|
+                                    \p ->
+                                        Elm.Case.custom (p |> Elm.get "name")
+                                            types.perk.annotation
+                                            [ Elm.Case.branch (types.perk.argWith perk.name [ Elm.Arg.var "race" ])
+                                                (\race ->
+                                                    Elm.maybe (List.head race)
+                                                )
+                                            , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
+                                            ]
+                                )
+                                perks
+                                |> Elm.Op.pipe
+                                    (Elm.functionReduced "race"
+                                        (Gen.Maybe.withDefault (types.race.value "Neutral"))
+                                    )
+                            )
+                        |> Elm.Let.withBody
+                            (\race ->
+                                (details types).make
+                                    { name = Elm.apply (types.perk.value perk.name) [ race ]
+                                    , class = types.class.value perk.class
+                                    , affinity = types.affinity.value perk.element
+                                    , isMeta = Elm.bool perk.isMeta
+                                    , requires = Elm.maybe (Maybe.map Elm.string perk.requires)
+                                    , content =
+                                        case perk.content of
+                                            Parsers.Single cost description ->
+                                                Gen.Data.Perk.make_.single (Elm.int cost) (Elm.string description)
+
+                                            Parsers.WithCosts costs description ->
+                                                Gen.Data.Perk.make_.withCosts (Elm.list (List.map Elm.int costs)) (Elm.string description)
+
+                                            Parsers.WithChoices () before choices after ->
+                                                Gen.Data.Perk.make_.withChoices
+                                                    (Elm.string before)
+                                                    (choices
+                                                        |> List.map
+                                                            (\( choice, cost ) -> Elm.tuple (Elm.string choice) (Elm.int cost))
+                                                        |> Elm.list
+                                                    )
+                                                    (Elm.string after)
+                                    , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                                    }
+                            )
+                        |> Elm.withType (details types).annotation
+                )
+                |> Ok
+
+        _ ->
+            ResultME.error
+                { title = "Error parsing perks file"
+                , description = "Unexpected extra arguments list, expected at most one"
+                }

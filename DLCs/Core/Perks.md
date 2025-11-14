@@ -203,6 +203,17 @@ Choose a second racial type for your true form, and reasonably combine the physi
 You are a supreme example of your species of witch, a paragon among your peers and a prime specimen. Every notable quality about your witch’s race is exaggerated above normal, and numerical aspects are tripled. Your height and mass may or may not be increased by 50% at your discretion. If your race didn’t already increase your physique, you are more physically attractive and have peak human prowess. This also applies to type perks of your race, and applies to all parts of a _Hybridize_. but cost [+3]/each.
 
 
+## Perk: Charge Swap
+- Element: Soul
+- Class: Warlock
+- Extra Argument: Race
+
+Replace your Charge method with the method of another race, unless the chosen charge type would not be possible without an integral aspect of that race. ie; Can’t take the Aurai charge type if you don’t have the Aurai paradox voice, or a Gorgon’s charge without their petrify. This changes your charge rate to match, as it’s inherent to the method, not the type.
+
+- [4] This is the basic version and costs 4 power
+- [10] _For an extra 6 power_, you instead _gain_ the desired charge method as an _additional_ charge method. They can both be providing mana gain at the same time, at their individual rates
+
+
 ## Perk: Crystallize
 - Element: Earth
 - Class: Sorceress

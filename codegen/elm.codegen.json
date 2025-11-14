@@ -4,7 +4,8 @@
         "packages": {
             "elm/core": "1.0.5",
             "elm/parser": "1.1.0",
-            "avh4/elm-color": "1.0.0"
+            "avh4/elm-color": "1.0.0",
+            "elmcraft/core-extra": "2.2.0"
         },
         "local": [
             "src"

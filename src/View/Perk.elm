@@ -70,18 +70,12 @@ viewPerks hideDLC hideMeta display mainRace races perks =
 
 
 isOverlong : Perk.Details -> Bool
-isOverlong { content } =
-    case content of
-        Perk.WithChoicesChargeSwap _ _ ->
+isOverlong { name } =
+    case name of
+        PerkChargeSwap _ ->
             True
 
-        Perk.Single _ _ ->
-            False
-
-        Perk.WithChoices _ _ _ ->
-            False
-
-        Perk.WithCosts _ _ ->
+        _ ->
             False
 
 
@@ -138,9 +132,6 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 ( WithChoices _ _ _, Nothing ) ->
                     Nothing
 
-                ( WithChoicesChargeSwap _ _, Nothing ) ->
-                    Nothing
-
                 ( WithCosts _ _, Nothing ) ->
                     Nothing
 
@@ -148,9 +139,6 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
         costs =
             (case content of
                 WithChoices _ choices _ ->
-                    List.map Tuple.second choices
-
-                WithChoicesChargeSwap _ choices ->
                     List.map Tuple.second choices
 
                 WithCosts k _ ->
@@ -298,86 +286,88 @@ perkToShortString name =
 
 
 viewContent : Maybe Race -> List Race -> Color -> List RankedPerk -> Perk.Details -> List (Element Choice)
-viewContent mainRace races color selected { content, name } =
+viewContent mainRace races color perks { content, name } =
     case content of
         Single _ block ->
             [ Theme.blocks [] IdKindPerk block
             ]
 
         WithChoices before choices after ->
-            let
-                choicesView : List (Element Choice)
-                choicesView =
-                    List.map (viewChoice color selected name) choices
-            in
-            if name == PerkHybridize then
-                Theme.blocks [] IdKindPerk before
-                    :: choicesView
-                    ++ racePicker "Pick your main race:" ChoiceMainRace color mainRace races
-                    ++ [ Theme.blocks [] IdKindPerk after ]
+            case name of
+                PerkChargeSwap _ ->
+                    let
+                        choicesView : List (Element Choice)
+                        choicesView =
+                            List.map (viewChoice color perks name) choices
 
-            else
-                Theme.blocks [] IdKindPerk before
-                    :: choicesView
-                    ++ [ Theme.blocks [] IdKindPerk after ]
+                        ( cost, swapRace ) =
+                            perks
+                                |> List.Extra.findMap
+                                    (\perk ->
+                                        case perk.name of
+                                            PerkChargeSwap r ->
+                                                Just ( perk.cost, Just r )
 
-        WithChoicesChargeSwap before choices ->
-            let
-                choicesView : List (Element Choice)
-                choicesView =
-                    List.map (viewChoice color selected name) choices
+                                            _ ->
+                                                Nothing
+                                    )
+                                |> Maybe.Extra.withDefaultLazy
+                                    (\_ ->
+                                        ( choices
+                                            |> List.head
+                                            |> Maybe.map Tuple.second
+                                            |> Maybe.withDefault 999
+                                        , Nothing
+                                        )
+                                    )
+                    in
+                    Theme.blocks [] IdKindPerk before
+                        :: choicesView
+                        ++ racePicker "Pick the race:"
+                            (\newRace ->
+                                case newRace of
+                                    Just r ->
+                                        ChoicePerk
+                                            ( { name = PerkChargeSwap r
+                                              , cost = cost
+                                              }
+                                            , True
+                                            )
 
-                ( cost, swapRace ) =
-                    List.Extra.findMap
-                        (\perk ->
-                            case perk.name of
-                                PerkChargeSwap r ->
-                                    Just ( perk.cost, Just r )
-
-                                _ ->
-                                    Nothing
-                        )
-                        selected
-                        |> Maybe.Extra.withDefaultLazy
-                            (\_ ->
-                                ( choices
-                                    |> List.head
-                                    |> Maybe.map Tuple.second
-                                    |> Maybe.withDefault 999
-                                , Nothing
-                                )
+                                    Nothing ->
+                                        ChoicePerk
+                                            ( { name = PerkChargeSwap <| Maybe.withDefault RaceNeutral swapRace
+                                              , cost = cost
+                                              }
+                                            , False
+                                            )
                             )
-            in
-            Theme.blocks [] IdKindPerk before
-                :: choicesView
-                ++ racePicker "Pick the race:"
-                    (\newRace ->
-                        case newRace of
-                            Just r ->
-                                ChoicePerk
-                                    ( { name = PerkChargeSwap r
-                                      , cost = cost
-                                      }
-                                    , True
-                                    )
+                            color
+                            swapRace
+                            (Generated.Race.all races
+                                |> List.map .name
+                            )
 
-                            Nothing ->
-                                ChoicePerk
-                                    ( { name = PerkChargeSwap <| Maybe.withDefault RaceNeutral swapRace
-                                      , cost = cost
-                                      }
-                                    , False
-                                    )
-                    )
-                    color
-                    swapRace
-                    (Generated.Race.all races
-                        |> List.map .name
-                    )
+                _ ->
+                    let
+                        choicesView : List (Element Choice)
+                        choicesView =
+                            List.map (viewChoice color perks name) choices
+                    in
+                    if name == PerkHybridize then
+                        Theme.blocks [] IdKindPerk before
+                            :: choicesView
+                            ++ racePicker "Pick your main race:" ChoiceMainRace color mainRace races
+                            ++ [ Theme.blocks [] IdKindPerk after ]
+
+                    else
+                        Theme.blocks [] IdKindPerk before
+                            :: choicesView
+                            ++ [ Theme.blocks [] IdKindPerk after ]
 
         WithCosts costs before ->
             List.map (Element.map ChoicePerk) <|
-                View.costButtons "Cost" color selected IdKindPerk before costs <|
+                View.costButtons "Cost" color perks IdKindPerk before costs <|
                     \_ cost -> { name = name, cost = cost }
 
 

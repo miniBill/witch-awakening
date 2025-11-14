@@ -11,7 +11,8 @@ import Elm.Op
 import Gen.Maybe
 import Gen.Parser
 import Gen.Result
-import Generate.Enum as Enum exposing (Enum, Variant)
+import Gen.Tuple
+import Generate.Enum as Enum exposing (Argument(..), Enum, Variant)
 import Generate.Image exposing (ImageModule)
 import Generate.Utils exposing (yassify)
 import Parsers
@@ -33,6 +34,7 @@ type alias TypesModule =
     , relic : EnumModule
     , size : EnumModule
     , slot : EnumModule
+    , cosmicPearl : Elm.Annotation.Annotation
     }
 
 
@@ -64,6 +66,9 @@ file images dlcList =
                 |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.relic)
                 |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.size)
                 |> Elm.Declare.withSubmodule (enumToDeclarations moduleName images enums.slot)
+                |> Elm.Declare.with cosmicPearlData
+                |> Elm.Declare.withUnexposed cosmicPearlDataParser
+                |> Elm.Declare.withUnexposed listParser
     in
     ( { name = module_.name
       , declarations = module_.declarations
@@ -71,6 +76,62 @@ file images dlcList =
       }
     , enums
     )
+
+
+cosmicPearlData : Elm.Declare.Annotation
+cosmicPearlData =
+    let
+        affinity : Elm.Annotation.Annotation
+        affinity =
+            Elm.Annotation.named [] "Affinity"
+    in
+    Elm.Declare.alias "CosmicPearlData"
+        (Elm.Annotation.record
+            [ ( "change", Elm.Annotation.list (Elm.Annotation.tuple affinity affinity) )
+            , ( "add", Elm.Annotation.list affinity )
+            ]
+        )
+
+
+keep : Elm.Expression -> Elm.Expression -> Elm.Expression
+keep after before =
+    Elm.Op.keep before after
+
+
+skip : Elm.Expression -> Elm.Expression -> Elm.Expression
+skip after before =
+    Elm.Op.skip before after
+
+
+cosmicPearlDataParser : Elm.Declare.Value
+cosmicPearlDataParser =
+    Elm.Declare.value "cosmicPearlDataParser"
+        (Gen.Parser.succeed (Elm.val "CosmicPearlData")
+            |> keep
+                (listParser.call
+                    (Gen.Parser.succeed Gen.Tuple.values_.pair
+                        |> keep (Elm.val "affinityParser")
+                        |> keep (Elm.val "affinityParser")
+                    )
+                )
+            |> skip (Gen.Parser.symbol "-")
+            |> keep (listParser.call (Elm.val "affinityParser"))
+            |> Elm.withType (Gen.Parser.annotation_.parser cosmicPearlData.annotation)
+        )
+
+
+listParser : Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+listParser =
+    Elm.Declare.fn "listParser" (Elm.Arg.var "parser") <|
+        \parser ->
+            Gen.Parser.sequence
+                { start = ""
+                , end = ""
+                , separator = ","
+                , spaces = Gen.Parser.succeed Elm.unit
+                , item = parser
+                , trailing = Gen.Parser.make_.forbidden |> Elm.withType Gen.Parser.annotation_.trailing
+                }
 
 
 type alias EnumModule =
@@ -170,22 +231,19 @@ parserDeclaration { lowerName, type_ } { name, variants } =
                 let
                     start : Elm.Expression
                     start =
-                        Elm.Op.skip
-                            (Gen.Parser.succeed (Elm.val <| name ++ yassify variant.name))
-                            (variant.toStringException
-                                |> Maybe.withDefault variant.name
-                                |> String.replace "\"" "\\\""
-                                |> Gen.Parser.symbol
-                            )
+                        Gen.Parser.succeed (Elm.val <| name ++ yassify variant.name)
+                            |> skip
+                                (variant.toStringException
+                                    |> Maybe.withDefault variant.name
+                                    |> String.replace "\"" "\\\""
+                                    |> Gen.Parser.symbol
+                                )
                 in
                 List.foldl
                     (\arg acc ->
-                        Elm.Op.keep
-                            (Elm.Op.skip
-                                acc
-                                (Gen.Parser.symbol "-")
-                            )
-                            (Elm.val <| String.Extra.decapitalize arg ++ "Parser")
+                        acc
+                            |> skip (Gen.Parser.symbol "-")
+                            |> keep (argToParser arg)
                     )
                     start
                     variant.arguments
@@ -193,6 +251,16 @@ parserDeclaration { lowerName, type_ } { name, variants } =
         |> Gen.Parser.oneOf
         |> Elm.withType (Gen.Parser.annotation_.parser type_)
         |> Elm.Declare.value (lowerName ++ "Parser")
+
+
+argToParser : Argument -> Elm.Expression
+argToParser arg =
+    case arg of
+        ListArgument v ->
+            listParser.call (Elm.val <| String.Extra.decapitalize v ++ "Parser")
+
+        ValueArgument v ->
+            Elm.val <| String.Extra.decapitalize v ++ "Parser"
 
 
 toImageDeclaration : ImageModule -> Config -> Enum -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
@@ -282,9 +350,8 @@ fromStringDeclaration { lowerName, type_ } { name, variants } =
          else
             value
                 |> Gen.Parser.call_.run
-                    (Elm.Op.skip
-                        (Elm.val (lowerName ++ "Parser"))
-                        Gen.Parser.end
+                    (Elm.val (lowerName ++ "Parser")
+                        |> skip Gen.Parser.end
                     )
                 |> Gen.Result.toMaybe
         )

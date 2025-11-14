@@ -10,7 +10,7 @@ import Generated.Magic as Magic
 import Generated.Perk as Perk
 import Generated.Types as Types exposing (Class, Magic(..), Perk(..), Quest, Race(..))
 import List.Extra
-import Types exposing (CosmicPearlData, IdKind(..), RankedMagic, RankedPerk)
+import Types exposing (IdKind(..), RankedMagic, RankedPerk, RankedRelic)
 import View.Perk
 
 
@@ -18,7 +18,7 @@ value :
     { a
         | races : List Race
         , mainRace : Maybe Race
-        , cosmicPearl : CosmicPearlData
+        , relics : List RankedRelic
         , typePerks : List Race
         , perks : List RankedPerk
         , class : Maybe Class
@@ -91,7 +91,7 @@ perkValue :
         | class : Maybe Class
         , races : List Race
         , mainRace : Maybe Race
-        , cosmicPearl : CosmicPearlData
+        , relics : List RankedRelic
         , typePerks : List Race
         , perks : List RankedPerk
         , magic : List RankedMagic
@@ -167,7 +167,7 @@ innerPerkCost :
         | class : Maybe Class
         , races : List Race
         , mainRace : Maybe Race
-        , cosmicPearl : CosmicPearlData
+        , relics : List RankedRelic
         , typePerks : List Race
         , perks : List RankedPerk
     }

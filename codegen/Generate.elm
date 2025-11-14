@@ -240,8 +240,8 @@ dlcToFiles image dlcList =
         ( types, enums ) =
             Generate.Types.file image dlcList
     in
-    ResultME.map2
-        (\racesFile typePerksFile ->
+    ResultME.map4
+        (\racesFile typePerksFile relicsFile perksFile ->
             [ Elm.Declare.toFile (Generate.Affinity.file types.call enums.affinity dlcAffinities)
             , Elm.Declare.toFile (Generate.Attribution.file dlcAttributions)
             , Elm.Declare.toFile (Generate.Class.file types.call enums.class dlcClasses)
@@ -251,15 +251,17 @@ dlcToFiles image dlcList =
             , Elm.Declare.toFile (Generate.Faction.file types.call image enums.faction dlcFactions)
             , Elm.Declare.toFile (Generate.GameMode.file types.call enums.gameMode dlcGameModes)
             , Elm.Declare.toFile (Generate.Magic.file types.call enums.magic dlcMagics)
-            , Elm.Declare.toFile (Generate.Perk.file types.call enums.perk dlcPerks)
             , Elm.Declare.toFile (Generate.Quest.file types.call enums.quest dlcQuests)
-            , Elm.Declare.toFile (Generate.Relic.file types.call enums.relic dlcRelics)
             , Elm.Declare.toFile (Generate.Size.file enums.size)
             , Elm.Declare.toFile (Generate.Slot.file enums.slot)
             , Elm.Declare.toFile racesFile
             , Elm.Declare.toFile typePerksFile
+            , Elm.Declare.toFile relicsFile
+            , Elm.Declare.toFile perksFile
             , Elm.Declare.toFile types
             ]
         )
         (Generate.Race.file types.call enums.race dlcRaces)
         (Generate.TypePerk.file types.call dlcRaces)
+        (Generate.Relic.file types.call enums.relic dlcRelics)
+        (Generate.Perk.file types.call enums.perk dlcPerks)

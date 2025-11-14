@@ -1,7 +1,7 @@
-module Types exposing (Choice(..), ComplicationKind(..), CosmicPearlData, Display(..), IdKind(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, gainToSlot, idKindToString, nextDisplay)
+module Types exposing (Choice(..), ComplicationKind(..), Display(..), IdKind(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, gainToSlot, idKindToString, nextDisplay)
 
 import Browser exposing (UrlRequest)
-import Generated.Types exposing (Affinity, Class, Companion, Complication, Faction, GameMode, Magic, Perk, Quest, Race, Relic, Slot(..))
+import Generated.Types exposing (Class, Companion, Complication, CosmicPearlData, Faction, GameMode, Magic, Perk, Quest, Race, Relic, Slot(..))
 import Set exposing (Set)
 
 
@@ -46,17 +46,10 @@ type Choice
     | DisplayQuests Display
     | ChoiceRelic ( RankedRelic, Bool )
     | DisplayRelics Display
-    | ChoiceCosmicPearl CosmicPearlData
     | TowardsCap Int
     | PowerToRewards Int
     | ChoiceCapBuild Bool
     | ToggleMenuSectionExpansion String
-
-
-type alias CosmicPearlData =
-    { change : List ( Affinity, Affinity )
-    , add : List Affinity
-    }
 
 
 type alias Model key =
@@ -90,7 +83,6 @@ type alias Model key =
     , questsDisplay : Display
     , relics : List RankedRelic
     , relicsDisplay : Display
-    , cosmicPearl : CosmicPearlData
     , expandedMenuSections : Set String
     , hideDLCs : Set String
     , hideMeta : Bool

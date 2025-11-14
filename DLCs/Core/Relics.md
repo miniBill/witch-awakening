@@ -267,6 +267,7 @@ Requires distilling 5 rank 5 potions in one, & activating the potion with your a
 ## Relic: Cosmic Pearl
 - Class: Sorceress
 - Cost: 10
+- Extra Argument: CosmicPearlData
 
 This pearl of great power is less of a material object than it is a tangible fold of crystallized probabilities. You can soak it in any water and that water will become equivalent to a T4 ingredient for Alchemy or other magics, and when on your person it buffs Elemental magic by 25%. Or, you can melt the pearl into a solution of molten gold, to disperse it throughout and transmute it into an “Elixir of Many Colors”. In drinking it, you can permanently replace one affinity you possess with any other, or add a new one entirely. A creature can only hold a limit of 4 affinities at any one time. A Warlock with a Soulbound Pearl has 1 use for changing affinities, and keeps the passive benefit.
 

@@ -103,7 +103,7 @@ raceToDeclaration types dlcName race =
                             \r ->
                                 Elm.Case.custom r
                                     types.race.annotation
-                                    [ Elm.Case.branch (types.race.argWith (yassify race.name) [ Elm.Arg.var "aff" ])
+                                    [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff" ])
                                         (\affs ->
                                             Elm.maybe (List.head affs)
                                         )
@@ -132,7 +132,7 @@ raceToDeclaration types dlcName race =
                             \r ->
                                 Elm.Case.custom r
                                     types.race.annotation
-                                    [ Elm.Case.branch (types.race.argWith (yassify race.name) [ Elm.Arg.var "aff1", Elm.Arg.var "aff2" ])
+                                    [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff1", Elm.Arg.var "aff2" ])
                                         (\affs ->
                                             case affs of
                                                 [ aff1, aff2 ] ->

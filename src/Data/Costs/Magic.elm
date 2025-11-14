@@ -11,15 +11,14 @@ import Generated.Race as Race
 import Generated.TypePerk as TypePerk
 import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Quest, Race(..))
 import List.Extra
-import Types exposing (CosmicPearlData, IdKind(..), RankedMagic, RankedPerk)
+import Types exposing (IdKind(..), RankedMagic, RankedPerk, RankedRelic)
 
 
 value :
     { ignoreSorceressBonus : Bool }
     ->
         { a
-            | cosmicPearl : CosmicPearlData
-            , mainRace : Maybe Race
+            | mainRace : Maybe Race
             , races : List Race
             , perks : List RankedPerk
             , factions : List Faction
@@ -29,6 +28,7 @@ value :
             , magic : List RankedMagic
             , capBuild : Bool
             , quests : List Quest
+            , relics : List RankedRelic
         }
     -> Monad Points
 value { ignoreSorceressBonus } model =

@@ -4,6 +4,7 @@ import Ansi.Color
 import Dict exposing (Dict)
 import Dict.Extra
 import Gen.CodeGen.Generate as Generate
+import Generate.Enum exposing (Argument(..))
 import Hex
 import List.Extra
 import List.Nonempty as Nonempty
@@ -221,6 +222,7 @@ type alias Perk =
     , class : String
     , requires : Maybe String
     , isMeta : Bool
+    , arguments : List Argument
     , content : Content ()
     }
 
@@ -238,6 +240,7 @@ perk =
         |> requiredItem "Class" Ok
         |> maybeItem "Requires" Ok
         |> flagItem "Meta"
+        |> manyItems "Extra Argument" (ResultME.combineMap argument)
         |> parseSection
     )
         |= oneOf
@@ -252,6 +255,19 @@ perk =
                 |= many tierParser
                 |= paragraphs False
             ]
+
+
+argument : String -> ResultME String Argument
+argument arg =
+    case String.split " " arg of
+        [ "List", v ] ->
+            Ok (ListArgument v)
+
+        [ v ] ->
+            Ok (ValueArgument v)
+
+        _ ->
+            ResultME.error ("Unrecognized argument: " ++ arg)
 
 
 type Section a
@@ -505,6 +521,7 @@ type alias Relic =
     { name : String
     , classes : List String
     , requires : Maybe String
+    , arguments : List Argument
     , content : Content Never
     }
 
@@ -513,10 +530,11 @@ relic : Parser Relic
 relic =
     (section "##"
         "Relic"
-        (\name classes requires toContent content ->
+        (\name classes requires extraArguments toContent content ->
             { name = name
             , classes = classes
             , requires = requires
+            , arguments = extraArguments
             , content = toContent content
             }
         )
@@ -526,6 +544,7 @@ relic =
             , optionalItem nonexistentKey [] (\_ -> Ok [])
             ]
         |> maybeItem "Requires" Ok
+        |> manyItems "Extra Argument" (ResultME.combineMap argument)
         |> oneOfItems
             [ requiredItem "Cost" (intParser >> Result.map Single)
             , requiredItem "Costs" (intListParser >> Result.map WithCosts)

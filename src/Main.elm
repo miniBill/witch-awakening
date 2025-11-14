@@ -10,7 +10,6 @@ import Dict
 import Element exposing (Element, fill, rgb, width)
 import Element.Font as Font
 import Element.Lazy
-import Generated.Affinity as Affinity
 import Generated.Class as Class
 import Generated.Companion as Companion
 import Generated.Complication as Complication
@@ -201,7 +200,6 @@ emptyModel model =
         , companions = []
         , quests = []
         , relics = []
-        , cosmicPearl = { add = [], change = [] }
     }
 
 
@@ -227,14 +225,6 @@ fixupModel model =
 
                             else
                                 Nothing
-        , cosmicPearl =
-            if List.any (\{ name } -> name == RelicCosmicPearl) model.relics then
-                model.cosmicPearl
-
-            else
-                { add = []
-                , change = []
-                }
         , perks =
             model.perks
                 |> List.filter
@@ -306,7 +296,7 @@ updateOnChoice choice model =
             { model | gameModeDisplay = gameModeDisplay }
 
         ChoiceComplication ( complication, selected ) ->
-            { model | complications = toggle isSameName selected complication model.complications }
+            { model | complications = toggle (onName (==)) selected complication model.complications }
 
         DisplayComplications complicationsDisplay ->
             { model | complicationsDisplay = complicationsDisplay }
@@ -345,13 +335,13 @@ updateOnChoice choice model =
             { model | typePerksDisplay = typePerksDisplay }
 
         ChoiceMagic ( magic, selected ) ->
-            { model | magic = toggle isSameName selected magic model.magic }
+            { model | magic = toggle (onName (==)) selected magic model.magic }
 
         DisplayMagic magicDisplay ->
             { model | magicDisplay = magicDisplay }
 
         ChoicePerk ( perk, selected ) ->
-            { model | perks = toggle isSameName selected perk model.perks }
+            { model | perks = toggle (onName (==)) selected perk model.perks }
 
         DisplayPerks perksDisplay ->
             { model | perksDisplay = perksDisplay }
@@ -375,19 +365,16 @@ updateOnChoice choice model =
             { model | companionsDisplay = companionsDisplay }
 
         ChoiceQuest ( quest, selected ) ->
-            { model | quests = toggle (==) selected quest model.quests }
+            { model | quests = toggle Types.isSameQuest selected quest model.quests }
 
         DisplayQuests questsDisplay ->
             { model | questsDisplay = questsDisplay }
 
         ChoiceRelic ( relic, selected ) ->
-            { model | relics = toggle isSameName selected relic model.relics }
+            { model | relics = toggle (onName Types.isSameRelic) selected relic model.relics }
 
         DisplayRelics relicsDisplay ->
             { model | relicsDisplay = relicsDisplay }
-
-        ChoiceCosmicPearl cosmicPearl ->
-            { model | cosmicPearl = cosmicPearl }
 
         ChoiceCapBuild capBuild ->
             { model | capBuild = capBuild }
@@ -402,9 +389,9 @@ updateOnChoice choice model =
             { model | expandedMenuSections = Set.Extra.toggle label model.expandedMenuSections }
 
 
-isSameName : { a | name : name } -> { a | name : name } -> Bool
-isSameName arg1 arg2 =
-    arg1.name == arg2.name
+onName : (name -> name -> Bool) -> { a | name : name } -> { a | name : name } -> Bool
+onName f arg1 arg2 =
+    f arg1.name arg2.name
 
 
 toUrl : Model key -> String
@@ -469,14 +456,6 @@ toUrl model =
             Relic.toString name ++ String.fromInt cost
         )
         model.relics
-    , list "addAffinity" Affinity.toString model.cosmicPearl.add
-    , list "changeAffinity"
-        (\( from, to ) ->
-            Affinity.toString from
-                ++ "-"
-                ++ Affinity.toString to
-        )
-        model.cosmicPearl.change
     ]
         |> List.concat
         |> Url.Builder.toQuery
@@ -517,8 +496,9 @@ parseUrl navKey url =
         parseMany : String -> (String -> Maybe a) -> List a
         parseMany key parser =
             Dict.get key appUrl.queryParameters
-                |> Maybe.andThen (Maybe.Extra.combineMap parser)
                 |> Maybe.withDefault []
+                |> List.map parser
+                |> Maybe.Extra.values
 
         pair : (String -> Maybe a) -> (a -> Maybe Int -> Maybe b) -> String -> Maybe b
         pair parser builder value =
@@ -606,6 +586,33 @@ parseUrl navKey url =
         factions : List Types.Faction
         factions =
             parseMany "faction" Types.factionFromString
+
+        maybeCosmicPearl : List Types.RankedRelic
+        maybeCosmicPearl =
+            -- Backward compat
+            case
+                ( parseMany "addAffinity" Types.affinityFromString
+                , parseMany "changeAffinity"
+                    (\s ->
+                        case String.split "-" s of
+                            [ from, to ] ->
+                                Maybe.map2 Tuple.pair
+                                    (Types.affinityFromString from)
+                                    (Types.affinityFromString to)
+
+                            _ ->
+                                Nothing
+                    )
+                )
+            of
+                ( [], [] ) ->
+                    []
+
+                ( add, change ) ->
+                    [ { name = RelicCosmicPearl { add = add, change = change }
+                      , cost = 10 * (List.length add + List.length change)
+                      }
+                    ]
     in
     { key = navKey
     , menuOpen = False
@@ -645,25 +652,10 @@ parseUrl navKey url =
     , factionalMagicDisplay = DisplayFull
     , companions = parseMany "companion" Types.companionFromString
     , companionsDisplay = DisplayFull
-    , relics = parseMany "relic" parseRelic
+    , relics = parseMany "relic" parseRelic ++ maybeCosmicPearl
     , relicsDisplay = DisplayFull
     , quests = parseMany "quest" Types.questFromString
     , questsDisplay = DisplayFull
-    , cosmicPearl =
-        { add = parseMany "addAffinity" Types.affinityFromString
-        , change =
-            parseMany "changeAffinity"
-                (\s ->
-                    case String.split "-" s of
-                        [ from, to ] ->
-                            Maybe.map2 Tuple.pair
-                                (Types.affinityFromString from)
-                                (Types.affinityFromString to)
-
-                        _ ->
-                            Nothing
-                )
-        }
     , expandedMenuSections = Set.empty
     , hideDLCs = Set.empty
     , hideMeta = False
@@ -748,7 +740,7 @@ innerView model =
                 , Element.Lazy.lazy3 FactionalMagic.viewFactionalMagics model.hideDLCs model.factionalMagicDisplay model.magic
                 , Element.Lazy.lazy3 Companion.viewCompanions model.hideDLCs model.companionsDisplay model.companions
                 , Element.Lazy.lazy3 Quest.viewQuests model.hideDLCs model.questsDisplay model.quests
-                , Element.Lazy.lazy6 Relic.viewRelics model.hideDLCs model.relicsDisplay model.cosmicPearl model.mainRace model.races model.relics
+                , Element.Lazy.lazy6 Relic.viewRelics model.hideDLCs model.relicsDisplay model.mainRace model.races model.typePerks model.relics
                 ]
             ]
         ]

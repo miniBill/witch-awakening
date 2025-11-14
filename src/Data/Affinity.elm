@@ -1,63 +1,56 @@
-module Data.Affinity exposing (AffinityList, InAffinity(..), affinitiesForRace, defaultList, fromModel, isInAffinity, selectable, toList)
+module Data.Affinity exposing (AffinityList, InAffinity(..), affinitiesForRace, affinitiesForTypePerks, defaultList, fromModel, isInAffinity, selectable, toList)
 
 import Data.Magic as Magic
 import Generated.Affinity as Affinity
 import Generated.Race
-import Generated.Types exposing (Affinity(..), Race(..))
+import Generated.Types exposing (Affinity(..), Race(..), Relic(..))
 import List.Extra
-import Types exposing (CosmicPearlData)
+import Types exposing (RankedRelic)
 
 
 fromModel :
     { a
         | races : List Race
         , mainRace : Maybe Race
-        , cosmicPearl : CosmicPearlData
+        , relics : List RankedRelic
         , typePerks : List Race
     }
     -> AffinityList
-fromModel { races, mainRace, cosmicPearl, typePerks } =
+fromModel model =
     let
-        (AffinityList base) =
-            case ( mainRace, races ) of
+        ( pearlChange, pearlAdd ) =
+            model.relics
+                |> List.Extra.findMap
+                    (\perk ->
+                        case perk.name of
+                            RelicCosmicPearl data ->
+                                Just ( data.change, data.add )
+
+                            _ ->
+                                Nothing
+                    )
+                |> Maybe.withDefault ( [], [] )
+
+        base : List Affinity
+        base =
+            case ( model.mainRace, model.races ) of
                 ( Just race, _ ) ->
-                    affinitiesForRace race
+                    toList (affinitiesForRace race)
 
                 ( Nothing, [ race ] ) ->
-                    affinitiesForRace race
+                    toList (affinitiesForRace race)
 
                 _ ->
-                    defaultList
-
-        fromTypePerk : List Affinity
-        fromTypePerk =
-            [ ( RaceNymph, AffinityMind )
-            , ( RaceEmpusa, AffinityWind )
-            , ( RaceDoll, AffinityMind )
-            , ( RaceFirebird, AffinityLife )
-            , ( RaceMummy, AffinityWater )
-            , ( RaceNyctimene, AffinityLife )
-            , ( RaceShadeglass, AffinityFire )
-            , ( RaceMarid, AffinityAll )
-            , ( RaceCantor, AffinitySoul )
-            ]
-                |> List.filterMap
-                    (\( type_, affinity ) ->
-                        if List.member type_ typePerks then
-                            Just affinity
-
-                        else
-                            Nothing
-                    )
+                    []
 
         afterChange : List Affinity
         afterChange =
             List.foldl
                 (\( from, to ) acc -> to :: List.Extra.remove from acc)
-                base
-                cosmicPearl.change
+                (base ++ toList (affinitiesForTypePerks model.typePerks))
+                pearlChange
     in
-    (afterChange ++ cosmicPearl.add ++ fromTypePerk)
+    (afterChange ++ pearlAdd)
         |> fromList
 
 
@@ -74,6 +67,29 @@ affinitiesForRace race =
         |> List.Extra.find (\{ name } -> name == race)
         |> Maybe.map (\{ affinities } -> fromList affinities)
         |> Maybe.withDefault defaultList
+
+
+affinitiesForTypePerks : List Race -> AffinityList
+affinitiesForTypePerks typePerks =
+    [ ( RaceNymph, AffinityMind )
+    , ( RaceEmpusa, AffinityWind )
+    , ( RaceDoll, AffinityMind )
+    , ( RaceFirebird, AffinityLife )
+    , ( RaceMummy, AffinityWater )
+    , ( RaceNyctimene, AffinityLife )
+    , ( RaceShadeglass, AffinityFire )
+    , ( RaceMarid, AffinityAll )
+    , ( RaceCantor, AffinitySoul )
+    ]
+        |> List.filterMap
+            (\( type_, affinity ) ->
+                if List.member type_ typePerks then
+                    Just affinity
+
+                else
+                    Nothing
+            )
+        |> fromList
 
 
 type AffinityList

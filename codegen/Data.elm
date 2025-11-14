@@ -1,7 +1,6 @@
 module Data exposing (Enums, enums)
 
-import Generate.Enum exposing (Enum, Variant)
-import List.Extra
+import Generate.Enum exposing (Argument(..), Enum, Variant)
 import Parsers
 
 
@@ -59,6 +58,7 @@ enums parsedDLCs =
     , quest =
         buildEnum "Quest" combinedDLC.quests
             |> withImages
+            |> withIsSame
     , race =
         buildEnum "Race" combinedDLC.races
             |> withImages
@@ -66,9 +66,10 @@ enums parsedDLCs =
     , relic =
         buildEnum "Relic" combinedDLC.relics
             |> withImages
-    , size = buildEnum "Size" (buildVariants coreSizes)
+            |> withIsSame
+    , size = buildEnum "Size" (buildVariants sizes)
     , slot =
-        buildEnum "Slot" (buildVariants coreSlots)
+        buildEnum "Slot" (buildVariants slots)
             |> withImages
     }
 
@@ -143,14 +144,23 @@ fromParsed { name, items } =
                     { dlc | magics = variant v.name :: dlc.magics }
 
                 Parsers.DLCPerk v ->
-                    { dlc | perks = variant v.name :: dlc.perks }
+                    let
+                        perk : Variant
+                        perk =
+                            { name = v.name
+                            , arguments = v.arguments
+                            , toStringException = Nothing
+                            , dlc = name
+                            }
+                    in
+                    { dlc | perks = perk :: dlc.perks }
 
                 Parsers.DLCRace v ->
                     let
                         race : Variant
                         race =
                             { name = v.name
-                            , arguments = List.repeat (2 - List.length v.elements) "Affinity"
+                            , arguments = List.repeat (2 - List.length v.elements) (ValueArgument "Affinity")
                             , toStringException = Nothing
                             , dlc = name
                             }
@@ -158,7 +168,16 @@ fromParsed { name, items } =
                     { dlc | races = race :: dlc.races }
 
                 Parsers.DLCRelic v ->
-                    { dlc | relics = variant v.name :: dlc.relics }
+                    let
+                        relic : Variant
+                        relic =
+                            { name = v.name
+                            , arguments = v.arguments
+                            , toStringException = Nothing
+                            , dlc = name
+                            }
+                    in
+                    { dlc | relics = relic :: dlc.relics }
 
                 Parsers.DLCFaction v ->
                     { dlc | factions = variant v.name :: dlc.factions }
@@ -223,16 +242,6 @@ withImages enum =
     { enum | toImage = True }
 
 
-withArguments : String -> List String -> List Variant -> List Variant
-withArguments name arguments enum =
-    List.Extra.updateIf
-        (\variant -> variant.name == name)
-        (\variant ->
-            { variant | arguments = arguments }
-        )
-        enum
-
-
 type alias DLC =
     { affinities : List Variant
     , classes : List Variant
@@ -269,23 +278,15 @@ emptyDLC =
 core : DLC
 core =
     { emptyDLC
-        | perks = corePerks
-        , factions = [ "Independents" ] |> buildVariants
+        | factions = [ "Independents" ] |> buildVariants
     }
 
 
-coreSizes : List String
-coreSizes =
+sizes : List String
+sizes =
     [ "Low", "Medium", "High" ]
 
 
-coreSlots : List String
-coreSlots =
+slots : List String
+slots =
     [ "White", "Folk", "Noble", "Heroic", "Epic" ]
-
-
-corePerks : List Variant
-corePerks =
-    [ "Charge Swap" ]
-        |> buildVariants
-        |> withArguments "Charge Swap" [ "Race" ]

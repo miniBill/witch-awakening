@@ -8,21 +8,21 @@ import Element.Font as Font
 import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Generated.Relic as Relic
-import Generated.Types as Types exposing (Affinity(..), Race, Slot(..))
+import Generated.Types as Types exposing (Affinity(..), CosmicPearlData, Race, Relic(..), Slot(..))
 import List.Extra
 import Set exposing (Set)
 import Theme
-import Types exposing (Choice(..), CosmicPearlData, Display, IdKind(..), RankedRelic)
+import Types exposing (Choice(..), Display, IdKind(..), RankedRelic)
 import View
 import View.Affinity as Affinity
 
 
-viewRelics : Set String -> Display -> CosmicPearlData -> Maybe Race -> List Race -> List RankedRelic -> Element Choice
-viewRelics hideDLC display pearl mainRace races relics =
+viewRelics : Set String -> Display -> Maybe Race -> List Race -> List Race -> List RankedRelic -> Element Choice
+viewRelics hideDLC display mainRace races typePerks relics =
     let
         filtered : List Relic.Details
         filtered =
-            Relic.all
+            Relic.all relics
                 |> View.filterDLC hideDLC
     in
     if List.isEmpty filtered then
@@ -33,7 +33,7 @@ viewRelics hideDLC display pearl mainRace races relics =
             sorted : List (Element Choice)
             sorted =
                 filtered
-                    |> List.filterMap (relicBox mainRace display relics pearl races)
+                    |> List.filterMap (relicBox mainRace display relics races typePerks)
         in
         View.collapsible []
             display
@@ -65,32 +65,32 @@ relicBox :
     Maybe Race
     -> Display
     -> List RankedRelic
-    -> CosmicPearlData
+    -> List Race
     -> List Race
     -> Relic.Details
     -> Maybe (Element Choice)
-relicBox mainRace display selected pearl races ({ name, classes, content, dlc } as relic) =
+relicBox mainRace display relics races typePerks ({ name, classes, content, dlc } as relic) =
     let
         isSelected : Maybe RankedRelic
         isSelected =
-            List.Extra.find (\sel -> sel.name == name) selected
+            List.Extra.find (\sel -> sel.name == name) relics
 
         msg : Maybe Choice
         msg =
-            case ( content, isSelected ) of
-                ( CosmicPearlContent _ _, Just _ ) ->
+            case ( name, content, isSelected ) of
+                ( RelicCosmicPearl _, Single cost _, Nothing ) ->
+                    Just <| ChoiceRelic ( { name = name, cost = cost }, True )
+
+                ( RelicCosmicPearl _, _, Just _ ) ->
                     Nothing
 
-                ( CosmicPearlContent cost _, Nothing ) ->
-                    Just <| ChoiceRelic ( { name = name, cost = cost }, True )
-
-                ( _, Just selectedRelic ) ->
+                ( _, _, Just selectedRelic ) ->
                     Just <| ChoiceRelic ( selectedRelic, False )
 
-                ( Single cost _, Nothing ) ->
+                ( _, Single cost _, Nothing ) ->
                     Just <| ChoiceRelic ( { name = name, cost = cost }, True )
 
-                ( WithChoices _ _, Nothing ) ->
+                ( _, WithChoices _ _, Nothing ) ->
                     Nothing
 
         costs : List Int
@@ -100,10 +100,12 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
                     choices
 
                 Single cost _ ->
-                    [ cost ]
+                    case name of
+                        RelicCosmicPearl _ ->
+                            List.map ((*) cost) (List.range 1 4)
 
-                CosmicPearlContent cost _ ->
-                    List.map ((*) cost) (List.range 1 4)
+                        _ ->
+                            [ cost ]
             )
                 |> List.filter ((/=) 0)
                 |> List.Extra.unique
@@ -205,24 +207,24 @@ relicBox mainRace display selected pearl races ({ name, classes, content, dlc } 
         , content =
             case relic.requires of
                 Nothing ->
-                    viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
+                    viewContent mainRace (isSelected /= Nothing) relics races typePerks relic color
 
                 Just req ->
-                    View.viewRequirements IdKindRelic req :: viewContent mainRace (isSelected /= Nothing) selected pearl races relic color
+                    View.viewRequirements IdKindRelic req :: viewContent mainRace (isSelected /= Nothing) relics races typePerks relic color
         , onPress = msg
         }
 
 
-viewContent : Maybe Race -> Bool -> List RankedRelic -> CosmicPearlData -> List Race -> Relic.Details -> Color -> List (Element Choice)
-viewContent mainRace isSelected selected pearl races { content, name } color =
-    case content of
-        Single _ block ->
+viewContent : Maybe Race -> Bool -> List RankedRelic -> List Race -> List Race -> Relic.Details -> Color -> List (Element Choice)
+viewContent mainRace isSelected relics races typePerks { content, name } color =
+    case ( name, content ) of
+        ( RelicCosmicPearl pearl, Single cost block ) ->
+            viewCosmicPearl mainRace isSelected pearl races typePerks name cost block
+
+        ( _, Single _ block ) ->
             [ Theme.blocks [] IdKindRelic block ]
 
-        CosmicPearlContent cost block ->
-            viewCosmicPearl mainRace isSelected pearl races name cost block
-
-        WithChoices choices before ->
+        ( _, WithChoices choices before ) ->
             let
                 choicesView : List (Element Choice)
                 choicesView =
@@ -243,7 +245,7 @@ viewContent mainRace isSelected selected pearl races { content, name } color =
 
                         isChoiceSelected : Bool
                         isChoiceSelected =
-                            List.member relic selected
+                            List.member relic relics
 
                         attrs : List (Attribute msg)
                         attrs =
@@ -270,12 +272,23 @@ viewCosmicPearl :
     -> Bool
     -> CosmicPearlData
     -> List Race
+    -> List Race
     -> Types.Relic
     -> Int
     -> String
     -> List (Element Choice)
-viewCosmicPearl mainRace isSelected pearl races name cost block =
+viewCosmicPearl mainRace isSelected pearl races typePerks name cost block =
     let
+        toMsg : CosmicPearlData -> Bool -> Choice
+        toMsg newPearl isButtonSelected =
+            ( { name = RelicCosmicPearl newPearl
+              , cost =
+                    cost * (List.length newPearl.add + List.length newPearl.change)
+              }
+            , isButtonSelected
+            )
+                |> ChoiceRelic
+
         swapAffinityRow : Affinity -> Element Choice
         swapAffinityRow from =
             let
@@ -303,15 +316,16 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
 
                             msg : Choice
                             msg =
-                                { pearl
-                                    | change =
-                                        if isButtonSelected then
-                                            removed
+                                toMsg
+                                    { pearl
+                                        | change =
+                                            if isButtonSelected then
+                                                removed
 
-                                        else
-                                            ( from, to ) :: removed
-                                }
-                                    |> ChoiceCosmicPearl
+                                            else
+                                                ( from, to ) :: removed
+                                    }
+                                    isButtonSelected
                         in
                         Affinity.button isButtonSelected msg to
             in
@@ -342,18 +356,19 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
 
                         msg : Choice
                         msg =
-                            { pearl
-                                | add =
-                                    if isButtonSelected then
-                                        removed
+                            toMsg
+                                { pearl
+                                    | add =
+                                        if isButtonSelected then
+                                            removed
 
-                                    else if index == 0 then
-                                        List.Extra.unique <| to :: removed
+                                        else if index == 0 then
+                                            List.Extra.unique <| to :: removed
 
-                                    else
-                                        List.Extra.unique <| removed ++ [ to ]
-                            }
-                                |> ChoiceCosmicPearl
+                                        else
+                                            List.Extra.unique <| removed ++ [ to ]
+                                }
+                                isButtonSelected
                     in
                     Affinity.button isButtonSelected msg to
             in
@@ -366,7 +381,10 @@ viewCosmicPearl mainRace isSelected pearl races name cost block =
 
         swapBlock : Race -> List (Element Choice)
         swapBlock race =
-            List.map swapAffinityRow (Affinity.affinitiesForRace race |> Affinity.toList)
+            List.map swapAffinityRow
+                (Affinity.toList (Affinity.affinitiesForRace race)
+                    ++ Affinity.toList (Affinity.affinitiesForTypePerks typePerks)
+                )
 
         addBlock : List (Element Choice)
         addBlock =

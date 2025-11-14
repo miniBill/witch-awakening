@@ -15,8 +15,8 @@ value model =
 
 
 relicCost : Model key -> RankedRelic -> Monad Int
-relicCost ({ class, cosmicPearl } as model) details =
-    Utils.find "Relic" .name details.name Relic.all Relic.toString
+relicCost ({ class } as model) details =
+    Utils.find "Relic" .name details.name (Relic.all model.relics) Relic.toString
         |> Monad.andThen
             (\relic ->
                 let
@@ -39,11 +39,12 @@ relicCost ({ class, cosmicPearl } as model) details =
 
                     multiplier : Int
                     multiplier =
-                        if details.name == RelicCosmicPearl then
-                            max 1 <| List.length cosmicPearl.add + List.length cosmicPearl.change
+                        case relic.name of
+                            RelicCosmicPearl cosmicPearl ->
+                                max 1 <| List.length cosmicPearl.add + List.length cosmicPearl.change
 
-                        else
-                            1
+                            _ ->
+                                1
                 in
                 (baseCost * multiplier)
                     |> Utils.checkRequirements relic (Relic.toString details.name) model
