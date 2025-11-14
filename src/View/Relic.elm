@@ -1,4 +1,4 @@
-module View.Relic exposing (viewRelics)
+module View.Relic exposing (relicToShortString, viewRelics)
 
 import Color exposing (Color)
 import Data.Affinity as Affinity
@@ -73,15 +73,12 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
     let
         isSelected : Maybe RankedRelic
         isSelected =
-            List.Extra.find (\sel -> sel.name == name) relics
+            List.Extra.find (\sel -> Types.isSameRelic sel.name name) relics
 
         msg : Maybe Choice
         msg =
             case ( name, content, isSelected ) of
-                ( RelicCosmicPearl _, Single cost _, Nothing ) ->
-                    Just <| ChoiceRelic ( { name = name, cost = cost }, True )
-
-                ( RelicCosmicPearl _, _, Just _ ) ->
+                ( RelicCosmicPearl _, _, _ ) ->
                     Nothing
 
                 ( _, _, Just selectedRelic ) ->
@@ -141,8 +138,12 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
         color : Color
         color =
             Color.rgb255 0xF3 0xEA 0x6F
+
+        nameString : String
+        nameString =
+            relicToShortString name
     in
-    Theme.card [ Theme.id IdKindRelic (Relic.toString name) ]
+    Theme.card [ Theme.id IdKindRelic nameString ]
         { display = display
         , forceShow = False
         , glow = color
@@ -202,7 +203,7 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                     ]
                     4
                     Gradient.yellowGradient
-                    (Relic.toString name)
+                    nameString
             ]
         , content =
             case relic.requires of
@@ -213,6 +214,14 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                     View.viewRequirements IdKindRelic req :: viewContent mainRace (isSelected /= Nothing) relics races typePerks relic color
         , onPress = msg
         }
+
+
+relicToShortString : Relic -> String
+relicToShortString name =
+    Relic.toString name
+        |> String.split "-"
+        |> List.take 1
+        |> String.concat
 
 
 viewContent : Maybe Race -> Bool -> List RankedRelic -> List Race -> List Race -> Relic.Details -> Color -> List (Element Choice)
@@ -279,13 +288,13 @@ viewCosmicPearl :
     -> List (Element Choice)
 viewCosmicPearl mainRace isSelected pearl races typePerks name cost block =
     let
-        toMsg : CosmicPearlData -> Bool -> Choice
-        toMsg newPearl isButtonSelected =
+        toMsg : CosmicPearlData -> Choice
+        toMsg newPearl =
             ( { name = RelicCosmicPearl newPearl
               , cost =
                     cost * (List.length newPearl.add + List.length newPearl.change)
               }
-            , isButtonSelected
+            , True
             )
                 |> ChoiceRelic
 
@@ -316,16 +325,15 @@ viewCosmicPearl mainRace isSelected pearl races typePerks name cost block =
 
                             msg : Choice
                             msg =
-                                toMsg
-                                    { pearl
-                                        | change =
-                                            if isButtonSelected then
-                                                removed
+                                { pearl
+                                    | change =
+                                        if isButtonSelected then
+                                            removed
 
-                                            else
-                                                ( from, to ) :: removed
-                                    }
-                                    isButtonSelected
+                                        else
+                                            ( from, to ) :: removed
+                                }
+                                    |> toMsg
                         in
                         Affinity.button isButtonSelected msg to
             in
@@ -356,19 +364,18 @@ viewCosmicPearl mainRace isSelected pearl races typePerks name cost block =
 
                         msg : Choice
                         msg =
-                            toMsg
-                                { pearl
-                                    | add =
-                                        if isButtonSelected then
-                                            removed
+                            { pearl
+                                | add =
+                                    if isButtonSelected then
+                                        removed
 
-                                        else if index == 0 then
-                                            List.Extra.unique <| to :: removed
+                                    else if index == 0 then
+                                        List.Extra.unique <| to :: removed
 
-                                        else
-                                            List.Extra.unique <| removed ++ [ to ]
-                                }
-                                isButtonSelected
+                                    else
+                                        List.Extra.unique <| removed ++ [ to ]
+                            }
+                                |> toMsg
                     in
                     Affinity.button isButtonSelected msg to
             in

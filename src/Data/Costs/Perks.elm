@@ -147,7 +147,7 @@ perkValue model ranked =
 
                     res : { name : String, points : Monad.Value, staticCost : Bool }
                     res =
-                        { name = Perk.toString ranked.name
+                        { name = View.Perk.perkToShortString ranked.name
                         , points = finalCost
                         , staticCost =
                             case perk.content of
@@ -158,7 +158,7 @@ perkValue model ranked =
                                     False
                         }
                 in
-                Utils.checkRequirements perk (Perk.toString ranked.name) model res
+                Utils.checkRequirements perk (View.Perk.perkToShortString ranked.name) model res
             )
 
 

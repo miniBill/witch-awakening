@@ -5,6 +5,7 @@ import Data.Costs.Utils as Utils exposing (Points, zero)
 import Generated.Relic as Relic
 import Generated.Types exposing (Relic(..))
 import Types exposing (IdKind(..), Model, RankedRelic)
+import View.Relic
 
 
 value : Model key -> Monad Points
@@ -16,7 +17,7 @@ value model =
 
 relicCost : Model key -> RankedRelic -> Monad Int
 relicCost ({ class } as model) details =
-    Utils.find "Relic" .name details.name (Relic.all model.relics) Relic.toString
+    Utils.find "Relic" .name details.name (Relic.all model.relics) View.Relic.relicToShortString
         |> Monad.andThen
             (\relic ->
                 let
@@ -49,4 +50,4 @@ relicCost ({ class } as model) details =
                 (baseCost * multiplier)
                     |> Utils.checkRequirements relic (Relic.toString details.name) model
             )
-        |> Monad.withRewardInfo IdKindRelic (Relic.toString details.name)
+        |> Monad.withRewardInfo IdKindRelic (View.Relic.relicToShortString details.name)

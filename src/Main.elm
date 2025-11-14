@@ -273,7 +273,7 @@ toggle isSame selected item list =
 
 updateOnChoice : Choice -> Model key -> Model key
 updateOnChoice choice model =
-    case choice of
+    case Debug.log "choice" choice of
         ChoiceClass class ->
             { model | class = class }
 
