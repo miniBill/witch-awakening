@@ -195,6 +195,7 @@ magicValue :
         , magic : List RankedMagic
         , races : List Race
         , quests : List Quest
+        , perks : List RankedPerk
     }
     -> Affinity.AffinityList
     -> Magic.Details

@@ -7,6 +7,7 @@ import Element.Font as Font
 import Generated.Class as Class
 import Generated.Gradient as Gradient
 import Generated.Magic as Magic
+import Generated.Perk as Perk
 import Generated.Quest as Quest
 import List.Extra
 import Parser
@@ -139,6 +140,9 @@ viewRequirements kind req =
 
                                     Utils.RequiresQuest reqQuest ->
                                         "[" ++ Quest.toString reqQuest ++ "]"
+
+                                    Utils.RequiresPerk reqPerk ->
+                                        "[" ++ Perk.toString reqPerk ++ "]"
                             )
                         |> String.join ", "
             in

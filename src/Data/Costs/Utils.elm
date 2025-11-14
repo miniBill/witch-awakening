@@ -4,11 +4,12 @@ import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad, Value(..))
 import Generated.Class as Class
 import Generated.Magic as Magic
+import Generated.Perk as Perk
 import Generated.Quest as Quest
-import Generated.Types exposing (Class, Magic, Quest)
+import Generated.Types exposing (Class, Magic, Perk, Quest)
 import List.Extra
 import Parser exposing ((|.), (|=), Parser)
-import Types exposing (RankedMagic)
+import Types exposing (RankedMagic, RankedPerk)
 
 
 type alias Points =
@@ -151,6 +152,12 @@ requisiteParser =
             Quest.all
                 |> List.map (\m -> Parser.succeed (RequiresQuest m.name) |. Parser.keyword (Quest.toString m.name))
                 |> Parser.oneOf
+
+        perkParser : Parser Requirement
+        perkParser =
+            Perk.all []
+                |> List.map (\m -> Parser.succeed (RequiresPerk m.name) |. Parser.keyword (Perk.toString m.name))
+                |> Parser.oneOf
     in
     Parser.oneOf
         [ Parser.succeed RequiresMagic
@@ -163,6 +170,7 @@ requisiteParser =
                 ]
         , classParser
         , questParser
+        , perkParser
         ]
 
 
@@ -174,6 +182,7 @@ checkRequirements :
             | class : Maybe Class
             , magic : List RankedMagic
             , quests : List Quest
+            , perks : List RankedPerk
         }
     -> c
     -> Monad c
@@ -216,6 +225,13 @@ checkRequirements details nameString model res =
 
                                                 else
                                                     Err (Quest.toString quest)
+
+                                            RequiresPerk perk ->
+                                                if List.any (\p -> p.name == perk) model.perks then
+                                                    Ok ()
+
+                                                else
+                                                    Err (Perk.toString perk)
                                 in
                                 case check of
                                     Ok a ->
@@ -258,4 +274,5 @@ hasMagicAtRank model requiredName requiredRank =
 type Requirement
     = RequiresMagic Magic Int
     | RequiresClass Class
+    | RequiresPerk Perk
     | RequiresQuest Generated.Types.Quest
