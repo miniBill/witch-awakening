@@ -1,7 +1,7 @@
 module Types exposing (Choice(..), ComplicationKind(..), Display(..), IdKind(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, gainToSlot, idKindToString, nextDisplay)
 
 import Browser exposing (UrlRequest)
-import Generated.Types exposing (Class, Companion, Complication, CosmicPearlData, Faction, GameMode, Magic, Perk, Quest, Race, Relic, Slot(..))
+import Generated.Types exposing (Class, Companion, Complication, Faction, GameMode, Magic, Perk, Quest, Race, Relic, Slot(..))
 import Set exposing (Set)
 
 

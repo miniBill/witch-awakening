@@ -27,6 +27,7 @@ import Generated.Attribution
 import Generated.Types exposing (GameMode(..))
 import List.Extra
 import List.Nonempty
+import Maybe.Extra
 import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), IdKind(..), Model, Msg(..))
@@ -156,7 +157,7 @@ badPyramid magics =
                 Nothing
     in
     [ check5, check4 ]
-        |> List.filterMap identity
+        |> Maybe.Extra.values
 
 
 menuLabel : IdKind -> CostsMonad.Monad Points -> List String -> Element msg

@@ -1,7 +1,7 @@
 module View.Perk exposing (perkToShortString, viewPerks)
 
 import Color exposing (Color)
-import Data.Perk as Perk exposing (Content(..))
+import Data.Perk exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paddingXY, px, rgba, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border

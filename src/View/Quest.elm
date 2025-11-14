@@ -14,6 +14,7 @@ import Generated.Quest as Quest
 import Generated.Slot as Slot
 import Generated.Types as Types exposing (Quest(..), Slot(..))
 import Html.Attributes
+import Maybe.Extra
 import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display(..), IdKind(..))
@@ -39,7 +40,7 @@ viewQuests hideDLC display quests =
                     |> Dict.Extra.groupBy (\{ dlc } -> Maybe.withDefault "" dlc)
                     |> Dict.values
                     |> List.concatMap (List.indexedMap (questBox display quests))
-                    |> List.filterMap identity
+                    |> Maybe.Extra.values
         in
         View.collapsible (Theme.topBackground Image.questIntro)
             display

@@ -27,6 +27,7 @@ import Html exposing (Html)
 import Html.Attributes
 import Html.Events
 import List.Extra
+import Maybe.Extra
 import String.Multiline
 import View.Race
 
@@ -123,7 +124,7 @@ dump model =
                                 |> Maybe.map
                                     (\lines ->
                                         lines
-                                            |> List.filterMap identity
+                                            |> Maybe.Extra.values
                                             |> String.join "\n"
                                     )
 
@@ -233,7 +234,7 @@ dumpRace typePerks details =
            )
 
 
-dumpPerk : Data.Perk.Details -> Maybe (List (Maybe String))
+dumpPerk : Perk.Details -> Maybe (List (Maybe String))
 dumpPerk details =
     let
         ( maybeCost, maybeContent ) =
@@ -478,7 +479,7 @@ dumpCompanion faction companion =
     , Just ""
     , Just (String.Multiline.here companion.description)
     ]
-        |> List.filterMap identity
+        |> Maybe.Extra.values
         |> String.join "\n"
 
 
