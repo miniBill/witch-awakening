@@ -1,6 +1,6 @@
 # Curios
 
-## Relic: Time-Saver Pendant
+## Relic: Timesaver Pendant
 - Class: Academic
 - Cost: 2
 
