@@ -7,10 +7,11 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Class as Class
+import Generated.Faction as Faction
 import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Generated.Magic as Magic
-import Generated.Types as Types exposing (Magic, Slot(..))
+import Generated.Types as Types exposing (Faction, Magic, Slot(..))
 import Html
 import Html.Attributes
 import List.Extra
@@ -303,12 +304,37 @@ magicBox display factional selected index details =
             ]
 
 
-magicImage : { a | name : Magic } -> Element msg
-magicImage { name } =
+magicImage :
+    { a
+        | name : Magic
+        , faction : Maybe Faction
+    }
+    -> Element msg
+magicImage { name, faction } =
     el
         [ height <| Element.minimum 280 fill
         , width <| Element.minimum 280 <| Element.maximum 320 fill
         , Background.image (Types.magicToImage name).src
+        , Element.inFront <|
+            case faction of
+                Nothing ->
+                    Element.none
+
+                Just factionName ->
+                    let
+                        shortName : String
+                        shortName =
+                            Faction.toShortString factionName
+                    in
+                    Theme.gradientTextWrapped
+                        [ Theme.celticHand
+                        , Font.size 64
+                        , width fill
+                        , Element.moveDown 16
+                        ]
+                        4
+                        Gradient.blueGradient
+                        shortName
         ]
         Element.none
 

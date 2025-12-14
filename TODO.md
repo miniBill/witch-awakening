@@ -21,7 +21,6 @@
 
 # Cleanup
 - Deduplicate ALL the things
-- Fix factional magic pictures [faction name overlay]
 - Separate section in menu, and collapsible section, for elementalist magic
 
 # Hard / Long
