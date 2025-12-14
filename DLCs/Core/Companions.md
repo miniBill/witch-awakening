@@ -676,7 +676,7 @@ Was the student Mae lost. Goblin shamanism attempted to turn her into a broodmot
 - Positive: + Extremely adept at wide-area type attacks.
 - Positive: + Abnormally high mana (3x)
 - Negative: - Can be seen squirming with a need to destroy.
-- Negative: - Addictive personality dis
+- Negative: - Addictive personality disorder
 - Mixed: +/- Do NOT take off her collar or let anyone touch it
 - Has: Nova has Firecalling 5, Windkeeping 5, Curses 5, _Charge Swap+ (Draviri), Mana Core, Magical Heart (20p worth)_
 - Quote: _*“What the HELL happened here? Wasn’t there a town here?” “...yes, The Hespatians sent Nova to erase evidence...” - An ORC Agent*_
