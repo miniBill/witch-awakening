@@ -1,7 +1,6 @@
 module View.Faction exposing (viewFaction)
 
 import Color exposing (Color)
-import Data.Faction as Faction
 import Element exposing (Element, alignBottom, alignTop, centerX, column, el, fill, fillPortion, height, inFront, moveDown, paddingXY, rgb, rgba, shrink, spacing, width)
 import Element.Background as Background
 import Element.Border as Border

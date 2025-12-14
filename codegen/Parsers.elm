@@ -556,6 +556,8 @@ relic =
 
 type alias Faction =
     { name : String
+    , shortName : String
+    , collectiveName : String
     , motto : String
     , isHuman : Bool
     , description : String
@@ -572,6 +574,8 @@ faction =
         (\head description location relations factionPerk ->
             { name = head.name
             , motto = head.motto
+            , shortName = head.shortName
+            , collectiveName = head.collectiveName
             , isHuman = head.isHuman
             , description = description
             , location = location
@@ -582,13 +586,17 @@ faction =
         )
         |= (section "##"
                 "Faction"
-                (\name motto isHuman ->
+                (\name motto shortName collectiveName isHuman ->
                     { name = name
                     , motto = motto
+                    , shortName = shortName
+                    , collectiveName = collectiveName
                     , isHuman = isHuman
                     }
                 )
                 |> requiredItem "Motto" Ok
+                |> requiredItem "Short name" Ok
+                |> requiredItem "Collective name" Ok
                 |> optionalItem "Human" False boolParser
                 |> parseSection
            )

@@ -1,13 +1,13 @@
 module View.Quest exposing (viewQuests)
 
 import Color exposing (Color)
-import Data.Faction as Faction
 import Dict
 import Dict.Extra
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, inFront, moveDown, moveLeft, moveRight, moveUp, padding, paddingXY, px, rgb, rgba, shrink, spacing, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Generated.Faction as Faction
 import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Generated.Quest as Quest

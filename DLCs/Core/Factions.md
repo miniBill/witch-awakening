@@ -1,6 +1,8 @@
 # Core
 
 ## Faction: The College of Arcadia
+- Short name: Arcadia
+- Collective name: The Arcadians
 - Motto: Enjoy a slice of life
 
 Registering for college at Arcadia is free to any witch and comes with room and board in one of the dorms. Schedules are self determined with classes you can drop in and out of, and attendance works in time slots throughout the day, not a specific hour. If you miss 10AM, rain check for 2PM, or 10PM. There are classes for any specialization you have access to where you’ll be taught foundational principles and functions for your rank. There are classes for other specializations that exist but weren’t in the cards for your awakening (I can’t write every potentiality after all, third party extensions are encouraged!), which you can sit in for without credit if you want. Non-magic classes also exist; Such as planar theory, cryptozoology, esoteric chemistry, antediluvian mathematics, and more. There’s a very casual atmosphere letting witches move at their own pace. You DO have attendance, but it’s in totality at a the end of a cycle (3 month period). If you miss the day a class is taught, it can be made up within the cycle and no grades are set in stone until the cycle changes. Classes aside, you can expect an overabundance of entertainment and leisure options. Naturally, the arcade is a favorite destination within the town, and the entire town is routed through to the material world with Hex VPN, but by default they rely on their own local network first.
@@ -24,6 +26,8 @@ Take 1 Arcadian companion and 1 from any faction that can reasonably befriend yo
 
 
 ## Faction: Hawthorne Academia
+- Short name: Hawthorne
+- Collective name: Hawthorne
 - Motto: School of Witchcraft and... an Unexpected Amount of Latex
 
 Hawthorne admissions are open to any witch, and is a polar opposite to the College. Witches are tested for aptitude and potential where they will be sorted into Houses of comparable individuals sorted both by personality, and the magic specializations they have access to. Classes are mandatory. Once you complete all classes you have access to, which includes non-magic specialization courses such as physical health, mental health, and spiritual health, alongside social health. Combined the Health courses ensure residents can coexist in Hawthorne and manage discourse. These courses include describing your opinion of your peers, and why, and if you have any suspicions about them that are a danger to the health of other students, themselves, or the Academy. Rules are plentiful and judiciously enforced alongside their own Common Law, being their own nation state. Capital punishment exists, though only for severe violent actions or gross malevolence, and exile for irreconcilable differences is otherwise the Final extreme, otherwise Hawthorne employs a wide array of disciplinarian tactics above and beyond what mortals would consider ethical. Generally discipline is specific to different houses, as houses in part represent personality characteristics, different discipline methods are more or less effective in the different houses. If one house is failing to discipline appropriate, re-evaluations occur and you can be reassigned to a house with different discipline methods. Houses likewise have their own uniforms though they all are approved by the Oversight Board to share certain qualities and colors, generally a degree of formality. The goal? Hawthorne may seem totalitarian, but their purpose is genuineThe excellence of their students, by any means necessary. They drive you to find your limits, and push beyond them to grow above and beyond what you thought you could ever achieve yourself. Your days are scheduled and optimized for you by councilors that have everything about you and your record on file. You _*will*_ succeed at Hawthorne, no matter how many times you stumble along the way towards success. Every failure is a learning experience adding to your growth, with certain discipline measures to remember it.
@@ -43,6 +47,8 @@ Gain a House Uniform as a Garment and Hat, and you will be issued a specially cr
 
 
 ## Faction: The Watchers
+- Short name: Watchers
+- Collective name: The Watchers
 - Motto: Consorting with Angels
 
 Watchers have branches based on every major Abrahamic religion from Judaism to Mormonism, including Islamic faiths. The Watchers get their name from their stance as a third party observing the events playing out at the hands of human faith -- And strange celestial beings as real as Witches already know Demons to be. Through these observations they’ve studied the influences and nature of the divine, and are generally convinced of an overarching theory connecting the Abrahamic traditions, and have come to the conclusion that there _*is*_ a coming apocalypse. Watchers are embedded in religious institutions where they keep their finger on the pulse and catalogue and investigate reports of divine influence and visionary experiences, finding that all religions experience them to different degrees. While some religions revolve around ancient witches and extraplanar entities, Abrahamic faiths interact with a category of beings referred to as Celestials. Watchers learned methods to emulate these beings through magic. They classify them as Pre-Mortal Celestials and Post-Mortal Celestials. Pre-Mortals are like living chariots of rings, eyes, and wings, and are spiritual constructs while Post-Mortals fare humanoid shaped entities with physical forms that can interact with the material world if they chose but bare elements of their prior construct form, rings becoming halos in various designs for example, and may have more extreme body shapes and proportions.
@@ -62,6 +68,8 @@ The gift of the Near-Light emulates the glory of the celestials. It grants feath
 
 
 ## Faction: The Hespatian Coven
+- Short name: Hespatia
+- Collective name: The Hespatians
 - Motto: The original secret cult
 
 The Hespatians are the oldest known coven to still be operating. They’re what many people expect when they hear the phrase “Witch Coven”. They revel in and are the principle origins of all the classic witch tropes as well as cult tropes. From dancing nude around a bonfire under the light of a lunar eclipse, to ritual sacrifices by hooded figures around an altar. The coven is compartmentalized into local families that operate in similar manners but with different focuses and individual practices. They share an overarching framework known by the heads of families where most members don’t know the full scope, only knowing the family name for their local group. This means when one grows too large and destabilizes or gets infiltrated or exposed, only that family burns. Some families readily engage with ritual sacrifice and blood rites, while other families choose to abstain, it doesn’t matter to Hespatia at large, and agents acting for the overall coven are called Specters and Wraiths, who take a family’s specializations in consideration when delivering orders from the Crowns, the central coven acting as a council of seers that pull the strings. Families can include mundane humans, in fact, it’s key to how they operate. It helps establish mortal connections, and establish networks for trafficking and finding willing or unwilling subjects of their rituals. For some things you’d get more out of, or outright need, an unwilling subject, for others a willing subject devoted to the purpose.
@@ -83,6 +91,8 @@ Witches of Hespatia can find themselves visited by a living shadow ushers them i
 
 
 ## Faction: Lunabella
+- Short name: Lunabella
+- Collective name: The Lunabellans
 - Motto: New Olympus
 
 Lunabella’s economy doesn’t involve money, but Reputation and Services, and operate on a framework western humans find alien -- everyone is in a hierarchy of “slaves” up to the king at the top, who is himself considered a slave to the Iron Tablets, a form of unchangeable founding laws that the king himself wrote sometime around 660 AD, which include a responsibility to the health and vitality of Lunabella and its citizenry. Other Founding witches act like a Supreme Court in vetting the King’s actions against the Iron Tablets. There are strong rights centered around the individual, with consequences to masters that mistreat slaves. Who are themselves slaves to someone higher up the food chain. Similar to having a boss who has a boss, who has a boss. And lastly, there are no taxes. Instead, the hierarchies act as a division of labor for upkeep and maintenance of lunabella, and there’s a culture of taking pride in that upkeep and in the wellbeing of slaves under your care. Despite being slaves, social mobility is good as you earn promotions or someone gets demoted. A lack of scarcity means everyone can be provided for and there are constant feasts and events being planned and implemented at every social rung in the ladder and everyone can expect a lot of free time.
@@ -104,6 +114,8 @@ A living horn of plenty, with this perk you can will into existence any nonmagic
 
 
 ## Faction: Alfheimr Alliance
+- Short name: Alfheimr
+- Collective name: Alliance
 - Motto: The Disunited States of the Faewilds
 
 The Alfheimr Alliance is composed of a coalition of faerie nations within what witches on earth tend to know by the Faewilds. Denizens refer to it, generally, as Alfheimr. A world full of wild untamed magics that manifest as readily as rain or storm, and full of an overabundance of life. Hence the Alfheimr Alliance. The Twin Courts, Summer and Winter, are the primary political agents of the realm and most life is associated with one or the other, or interacts with both to play at neutrality at the expense of political weight. The Summer Court sometimes referred to as the Seelie Court, is a regal but rigid coalition of regions and powers that embody Law and Order. Their court is full of ritual, ceremony, rules, and propriety. If you know their labyrinthine rules and customs, you can be confident that you know what you can or can’t do. In theory. Their rules can seem esoteric and strange, while the authority of one’s Lord or Lady over whoever is lower in status is strictly adhered to- Within lawful boundaries. They’re more bureaucratic than their counterpart, with many nobles and courtiers being akin to accountants and lawyers that dress fancy.
@@ -127,6 +139,8 @@ Additionally, whenever you are visually unobserved, you can instantly vanish to 
 
 
 ## Faction: The Outsiders
+- Short name: Outsiders
+- Collective name: Outsiders
 - Motto: Harbingers of What Lies Beyond
 
 If you thought the Hespatians were villainous, Outsiders make them look like antiheroes. The things that some Hespatians merely dabble in, Outsiders actively revel in. Outsiders aren’t simply amoral, but they are actively profane and explicitly evil, no gray area, no nuance, they simply are evil, because sometimes evil people exist, and if they don’t end up in Hespatia, the Outsiders probably found them. They do things that I cannot in good conscience repeat or even suggest, the least of all are the simple expected evils that require high levels of corruption just to conceptualize, and hearing about them can cause high cognito damage to innocent minds -- so imagine the glee of an Outsider in _performing_ such actions on or with the innocent. The library that the ORC mentioned that “made demons weep”, was containing a forbidden archive of captured Outsider texts deep in its vaults after a narrow vote by the council of New Alexandria to elect not to destroy them, and the ORC took it upon themselves. I’m still pissed, but it’s understandable. Infohazards are nothing to scoff at and can bypass warding runes, as it’s not a magical effect, but a part of life, requiring psychosurgery to attempt to mend.
@@ -146,6 +160,8 @@ Your body is augmented into an eldritch state where none of your organs are crit
 
 
 ## Faction: The Four Families
+- Short name: Seasons
+- Collective name: The Seasons
 - Motto: Legendary Blades of Seasons-Four
 
 The Four Families are four great houses that rule the Stackhold, a world adjacent to the Elemental Plane of Water and dangerously close to the void. The Four Families are each individually empires in their own right, fragmenting down along hierarchies where among each empire has its kingdoms, each kingdom has its dukedoms, each dukedom has its baronies and fiefdoms. The Families cooperate together, such that these four empires are themselves one larger global confederation usually with extreme liberties in how various branches of the families self-govern their lands. While they may be kings, queens, and empire, individual territories may operate on different political frameworks while contained under the standard hierarchy. Higher ups usually wont care so long as they get their taxes or a deal, pact, contract, or oath remains in effect. 
@@ -170,6 +186,8 @@ Rather than having a fragment of a legendary blade, you have a fuller *shard*. W
 
 
 ## Faction: The O.R.C.
+- Short name: ORC
+- Collective name: The ORCs / Badges
 - Motto: Occult Research and Containment
 - Human: True
 
@@ -190,6 +208,8 @@ ORC Agents receive the X01-License, the “License to Kill”. This badge pings 
 
 
 ## Faction: Alphazon Industries
+- Short name: Alphazon
+- Collective name: The Alphazonians / Suits
 - Motto: ~* Don’t Be Evil *~
 - Human: True
 

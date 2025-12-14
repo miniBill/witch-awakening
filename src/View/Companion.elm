@@ -2,12 +2,12 @@ module View.Companion exposing (viewCompanions)
 
 import Color exposing (Color)
 import Data.Companion as Companion exposing (MaybeClass(..))
-import Data.Faction as Faction
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, paddingEach, px, shrink, spacing, table, text, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Companion as Companion
+import Generated.Faction as Faction
 import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Generated.Types as Types exposing (Companion, Faction)

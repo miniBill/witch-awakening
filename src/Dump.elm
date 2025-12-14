@@ -3,7 +3,6 @@ module Dump exposing (main)
 import Browser
 import Data.Companion
 import Data.Complication
-import Data.Faction
 import Data.Magic
 import Data.Perk
 import Data.Race

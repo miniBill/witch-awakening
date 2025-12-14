@@ -1,6 +1,8 @@
 # The Element of Darkness
 
 ## Faction: The Lodge
+- Short name: Lodge
+- Collective name: Lodge
 - Motto: Monster Hunters and Mercenaries
 
 The Lodge originated as a guild of witches-for-hire in Constantinople during the twilight years of the Roman empire, serving as bodyguards, court mystics, and monster-hunters for a wide variety of notable figures. In the present day The Lodge serves much the same role, an organization of Witches who hire themselves out to the highest bidder as highly competent guards, advisors, and/or hunters. 
