@@ -354,7 +354,7 @@ dumpRelic relic =
             )
 
 
-dumpFaction : Data.Faction.Details -> List (Maybe String)
+dumpFaction : Faction.Details -> List (Maybe String)
 dumpFaction faction =
     [ Just <| "## Faction: " ++ Faction.toString faction.name
     , item "Motto" identity faction.motto
