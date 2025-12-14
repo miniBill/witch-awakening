@@ -41,3 +41,7 @@
 ## Integration
 - https://fantasio.artstation.com/projects/aBzyR?album_id=1466018
 - Artist: Art Fantasio
+
+## Animism
+- https://www.artstation.com/artwork/9eyaBy
+- Artist: Ross Tran
