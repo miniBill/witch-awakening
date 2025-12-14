@@ -13,3 +13,7 @@
 ## Agent 9s (Original)
 - https://www.artstation.com/artwork/d0kxkW
 - Artist: Z.W. Gu
+
+## Hestia
+- https://www.artstation.com/artwork/2B6JYJ
+- Artist: Samantha Nicolay
