@@ -4,12 +4,14 @@ import Elm
 import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
+import Gen.CodeGen.Generate as Generate
 import Gen.Data.Companion
 import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import List.Extra
 import Parsers exposing (Score(..))
+import ResultME exposing (ResultME)
 import String.Extra
 
 
@@ -19,78 +21,103 @@ type alias CompanionModule =
     }
 
 
-file : TypesModule -> Enum -> List ( Maybe String, Parsers.Companion ) -> Elm.Declare.Module CompanionModule
+file : TypesModule -> Enum -> List ( Maybe String, Parsers.Companion ) -> ResultME Generate.Error (Elm.Declare.Module CompanionModule)
 file types enum dlcCompanions =
-    Elm.Declare.module_ [ "Generated", "Companion" ] CompanionModule
-        |> Elm.Declare.with (all types dlcCompanions)
-        |> Elm.Declare.with (Enum.toString enum)
-        |> Elm.Declare.Extra.withDeclarations (dlcToCompanions types dlcCompanions)
+    Result.map
+        (\allDeclaration ->
+            Elm.Declare.module_ [ "Generated", "Companion" ] CompanionModule
+                |> Elm.Declare.with allDeclaration
+                |> Elm.Declare.with (Enum.toString enum)
+                |> Elm.Declare.Extra.withDeclarations (dlcToCompanions types dlcCompanions)
+        )
+        (all types dlcCompanions)
 
 
-all : TypesModule -> List ( Maybe String, Parsers.Companion ) -> Elm.Declare.Value
+all : TypesModule -> List ( Maybe String, Parsers.Companion ) -> ResultME Generate.Error Elm.Declare.Value
 all types dlcCompanions =
     dlcCompanions
         |> List.Extra.gatherEqualsBy (\( _, companion ) -> companion.faction)
-        |> List.sortBy (\( ( _, { faction } ), _ ) -> factionToOrder faction)
-        |> List.map
-            (\( ( _, { faction } ) as head, tail ) ->
-                Elm.tuple
-                    (Elm.maybe (Maybe.map types.faction.value faction))
-                    ((head :: tail)
-                        |> List.map
-                            (\( _, companion ) ->
-                                Elm.val
-                                    (String.Extra.decapitalize (yassify companion.name))
+        |> ResultME.combineMap
+            (\(( ( _, { faction } ), _ ) as original) ->
+                Result.map (Tuple.pair original) (factionToOrder faction)
+            )
+        |> Result.map
+            (\list ->
+                list
+                    |> List.sortBy Tuple.second
+                    |> List.map
+                        (\( ( ( _, { faction } ) as head, tail ), _ ) ->
+                            Elm.tuple
+                                (Elm.maybe (Maybe.map types.faction.value faction))
+                                ((head :: tail)
+                                    |> List.map
+                                        (\( _, companion ) ->
+                                            Elm.val
+                                                (String.Extra.decapitalize (yassify companion.name))
+                                        )
+                                    |> Elm.list
+                                )
+                        )
+                    |> Elm.list
+                    |> Elm.withType
+                        (Elm.Annotation.list
+                            (Elm.Annotation.tuple
+                                (Elm.Annotation.maybe types.faction.annotation)
+                                (Elm.Annotation.list Gen.Data.Companion.annotation_.details)
                             )
-                        |> Elm.list
-                    )
+                        )
+                    |> Elm.Declare.value "all"
             )
-        |> Elm.list
-        |> Elm.withType
-            (Elm.Annotation.list
-                (Elm.Annotation.tuple
-                    (Elm.Annotation.maybe types.faction.annotation)
-                    (Elm.Annotation.list Gen.Data.Companion.annotation_.details)
-                )
-            )
-        |> Elm.Declare.value "all"
 
 
-factionToOrder : Maybe String -> Int
+factionToOrder : Maybe String -> ResultME Generate.Error Int
 factionToOrder faction =
     case faction of
         Just "The College of Arcadia" ->
-            0
+            Ok 0
 
         Just "Hawthorne Academia" ->
-            1
+            Ok 1
 
         Just "The Watchers" ->
-            2
+            Ok 2
 
         Just "The Hespatian Coven" ->
-            3
+            Ok 3
 
         Just "Lunabella" ->
-            4
+            Ok 4
 
-        Just "AlfheimrAlliance" ->
-            5
+        Just "Alfheimr Alliance" ->
+            Ok 5
+
+        Just "The Lodge" ->
+            Ok 6
+
+        Just "The Lydian Sisterhood" ->
+            Ok 7
+
+        Just "The Seeker's Guild" ->
+            Ok 8
 
         Just "The O.R.C." ->
-            6
+            Ok 1001
 
         Just "Alphazon Industries" ->
-            7
+            Ok 1001
 
         Nothing ->
-            8
+            Ok 2000
 
         Just "The Outsiders" ->
-            9
+            Ok 3000
 
-        _ ->
-            10
+        Just factionName ->
+            -- Ok 500
+            ResultME.error
+                { title = "Unsorted faction"
+                , description = "We don't know the order for " ++ factionName
+                }
 
 
 dlcToCompanions : TypesModule -> List ( Maybe String, Parsers.Companion ) -> List Elm.Declaration
