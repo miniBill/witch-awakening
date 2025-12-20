@@ -233,3 +233,71 @@ Leon is security for planetside missions, making sure his mortal crewmates can d
 - Mixed: +/- Struggles with the temptation to delve into forbidden magic
 - Has: Thalia has Divine 4, Domain 4, Aether 5, Portals 5, Metamagic 5, and Apprenticeship (20 points of Epora's lessons)
 Lysander's sister, though the two are somewhat estranged over Thalia's choice to leave the Sisterhood for the Guild. She's a scientist specializing in planar metaphysics, how realms develop and how exposure to elemental and divine energy shapes their properties. Has a fascination and drive to understand the fundamental nature of the universe that borders on the obsessive.
+
+
+## Companion: Cinnamon
+- Cost: 1
+- Race: Neutral
+- Power: 0
+- Teamwork: 7
+- Sociability: 10
+- Morality: 7
+- Quote: “Hey! Hey! Where are you all headed!? Collecting potion ingredients!? Can I come!?” - Cinnamon
+- Positive: + Adorable, and knows how to use it to his advantage
+- Positive: + Has made friends in several factions
+- Negative: - No opposable thumbs
+- Negative: - Often impatient
+- Mixed: +/- Smarter than he seems, but still as friendly and excitable as you'd expect from a little dog.
+- Has: Cinnamon is immortal (Curses rank 5 + agelessness and slow regeneration), and can be bonded as a familiar
+Cinnamon was an ordinary dog a few decades ago before falling into wild rift, coming out the other side with human intelligence and completely immortal. Since then he's been bouncing around witchdom, tagging along with several different groups at times but never settling anywhere permanently. He's adventurous but not very ambitious, content to go with the flow and see where it takes him.
+
+## Companion: Tabitha "Tabbi" McCalister
+- Cost: 8
+- Race: Neutral
+- Class: Warlock
+- Power: 5
+- Teamwork: 5
+- Sociability: 7
+- Morality: 6
+- Quote: “So the Moonshade clan wants a new lifeshrine guardian, got a really cool new neurotoxin I'm doing for them...” - Tabbi
+- Positive: + Very creative
+- Positive: + Her visceramancy is innate, not linked to Hespatia
+- Negative: - Few compunctions about who she sells to
+- Negative: - No combat experience, relies on her creatures
+- Mixed: +/- Very pure love for things that would horrify most
+- Has: Tabbi has White color magic (Viscera and Nature at R5), Necromancy 3, and Gene Vat
+The heir to a bloodline of life-mages, Tabbi has a passion for fleshcrafting, and has found a niche as a monster-maker for hire. Besides her comissioned creatures, she has a number of private projects, always pushing boundaries and combining traits into stronger creatures. Actually a very bubbly and wholesome person, despite her grizzly interests.
+
+## Companion: Victoria La Rue
+- Cost: 10
+- Race: Kekubi
+- Class: Warlock
+- Power: 8
+- Teamwork: 7
+- Sociability: 4
+- Morality: 2
+- Quote: “If you really need a problem gone, she's your best bet. Just make sure you can pay up” - a client
+- Positive: + Always knows a guy
+- Positive: + Values ambition and initiative
+- Negative: - Always working
+- Negative: - Tends to see relationships as another exploitable resource
+- Mixed: +/- Her respect for you can change greatly depending on whether you impress her
+- Has: Victoria has Covenants 3, Occult 3, Psych 4, Conjuration, Dealmaker, World Globe, Spirit-Nav, and Treasurer's Mint
+One of witchdom's most successful independent brokers, Victoria sits at the center of a vast web of money, favors, and information. Her personal power is actually fairly average, but she's leveraged her services into influence far beyond a typical solo witch. Has many descendants vieing for a place in the dynasty, especially after her most favored daughter disappeared a few decades ago.
+
+## Companion: Elysia
+- Cost: 15
+- Race: Sword
+- Class: Sorceress
+- Power: 1
+- Teamwork: 10
+- Sociability: 4
+- Morality: 8
+- Quote: “The king's blade struck true and the bane of the Jotunlands was no more” - an old Alfheimr epic
+- Positive: + Incredible fighter in both forms
+- Positive: + It's possible to prove yourself worthy
+- Negative: - Only accepts wielders she considers worthy
+- Negative: - Trust issues
+- Mixed: +/- A living legend among witches, she'll attract quite a bit of attention
+- Has: Elysia has Metallurgy 4, Swordsinging 5, Windsong, Memorize, Soul Weapon (sword), Sun Shard, Riftblade
+An ancient blade of legend, Elysia has fought alongside heroes and shaped history many times. Once quite the revolutionary, seeing history repeat itself with new tyrants and some of her own allies corrupted by power caused her to withdraw from magical society. She hasn't taken a wielder since, but now travels the realms as a knight-errant, slaying evil and saving the helpless wherever she goes.
