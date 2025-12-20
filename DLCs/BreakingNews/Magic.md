@@ -72,6 +72,7 @@ Masters of Rulership may have an unlimited number of normal followers with a 100
 
 ## Magic: Vampirism
 - Elements: Necro, Blood + Body
+- Elementalism: True
 - Class: Sorceress
 
 Despite the name, this isn't related to vampires or blood magic. It actually deals with manipulation of necrotic energy, a hollow, hungry force that leeches the life out of whatever it comes into contact with. I should warn you that this specialization tends to attract more power-hungry witches, which has given it a bad reputation in magic circles. It CAN be used for good, don't get me wrong, but you can expect to be a bit mistrusted by default by people who know you have this magic.
