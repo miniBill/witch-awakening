@@ -228,6 +228,7 @@ companionBox display selected ({ name } as companion) =
 
                 Nothing ->
                     Border.width 0
+            , padding 0
             ]
             { label =
                 Element.wrappedRow
