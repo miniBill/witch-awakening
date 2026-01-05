@@ -31,3 +31,11 @@
 ## Sanguine Curse
 - https://x.com/marcelam_arts/status/1429840231746916355/photo/1
 - Artist: Marcela Medeiros
+
+## The Marshmallow Test
+- https://www.deviantart.com/tharal2814/art/Marshmallow-Test-1283310105
+- Artist: Thiago Alencar
+
+## Slow Acting Potion
+- https://www.artstation.com/artwork/yJJPbO
+- Artist: Joshua Cairos
