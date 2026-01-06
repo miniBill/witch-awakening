@@ -210,7 +210,7 @@ It takes decades to gain self-mastery sufficient to force a conscious change, st
 - Threat: 7
 - Conflict: 5
 - Reward: 8
-- Requires: Street Racer.
+- Requires: Street Racer
 
 You’re in the big leagues now. Once every 5 years the Death Race is hosted in a random location anywhere off Earth and there are no limits placed on magic usage, barring only soulstealing or curses that lasts beyond the duration of the race. The caveat is that all participants are hooked up into limiters that regulate mana capacity and mana flow. Instead, you have a series of pellets honed to allow the usage of one magic effect of a given rank. You have 1 Ruby pellet (r5), 3 Sapphire pellets (r4), 9 Emerald pellets (r3), and 20 Citrine pellets (r2), r1 magic is unlimited. Any augmentations to your vehicle is separate & functions normally.
 
