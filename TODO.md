@@ -1,8 +1,6 @@
 # Missing features
-- free Advanced Golemancy ranks from Hexes and Runes
 - Siren type perk missing the possible 1p option
 - Doll type perk multicost: 1-4
-- Don't trigger Hybridize for Amalgams
 - Heirloom halving one specific magic
 - Mark which magic from Magic Talisman
 - Menu doesn't scroll on Chrome
@@ -10,7 +8,7 @@
 - The Lodge perk
 - Finite option for the Compulsion drawback
 - Mark which secondary class you get from the Neutral perk
-- Weird companion classes in Breaking News
+- Weird companion races in Breaking News
 
 # Checks
 - Check all faction perks implementations
