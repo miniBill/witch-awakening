@@ -207,11 +207,13 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 ]
                 costGradient
             , affinity
-                |> List.map Theme.viewAffinity
-                |> List.intersperse (Theme.gradientText 4 Gradient.yellowGradient "OR")
+                |> List.map (\aff -> el [ centerX ] (Theme.viewAffinity aff))
+                |> List.intersperse (el [ centerX ] (Theme.gradientText 4 Gradient.yellowGradient "OR"))
                 |> Theme.column
                     [ moveLeft 8
                     , moveDown 4
+                    , Theme.captureIt
+                    , Font.center
                     ]
             , Theme.column
                 [ centerX

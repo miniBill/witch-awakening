@@ -7,6 +7,7 @@
 
 You have a natural talent for defensive magics. You can create barriers of magical energy the same color as your aura, either a 4 by 4 ft square shield or a 7 ft radius bubble. The bubble resists physical damage like 2 inch thick steel, the shield resists it like the same thickness of mithril. Either can be summoned as fast as you can react, but have a very fast mana drain, they're best used in bursts. With time and materials like a R4 rune, you can create a totem to ward an area up to a 1 mile radius, preventing magical beings from entering without permission or directly affecting the inside with magic (including scrying or portal travel). The effect ends if the totem is destroyed or removed from the original location.
 
+
 ## Perk: Kinesis
 - Element: All
 - Class: Academic
@@ -14,12 +15,14 @@ You have a natural talent for defensive magics. You can create barriers of magic
 
 A simple but versatile form of telekinesis, you can move objects within 60ft of you with as much force and precision as if you were moving them with your hands. You can move multiple objects at once, but doing so requires concentration, just holding things in the air is easy while complex movements require a lot of focus. You can also shoot “magic missiles” of raw kinetic force, which move with the speed of an arrow, hit with the force of a punch, and have a very low mana cost. Often used as a spam attack, or by witches without other combat magic.
 
+
 ## Perk: Telepathic
 - Element: Mind
 - Class: Academic
 - Cost: 6
 
 Your mind is naturally attuned to psychic frequencies. With a few seconds of concentration, you can read the surface thoughts of a single unwarded target that you are looking at. Breaking your focus or line of sight also breaks the connection. However, strong emotions as well as thoughts that are specifically about or directed at you can be automatically read within 30ft, even if you weren't previously aware of that person, though still blocked by warding runes. If you also have Sending (Div rank 0), you can combine it with this ability for two-way mental conversations with targets in your range, including general ideas and impressions as well as verbalized thoughts.
+
 
 ## Perk: Dealmaker
 - Element: Soul
@@ -29,6 +32,7 @@ Your mind is naturally attuned to psychic frequencies. With a few seconds of con
 
 A specialized type of Covenant magic originally pioneered by demons, you have the ability to trade in intangible aspects of a person's being. With the right clause of a contract, you can buy and sell skills, memories, or relationships. You can even trade in souls, you don't get the actual soul until the seller dies, but the contracts of ownership are highly valued by certain entities. You can give anything you acquire to yourself, or keep it in reserve to trade later. This magic only works with direct contracts (not laws), and while you CAN buy focus, might, favor, or power from others you cannot exceed your power cap this way.
 
+
 ## Perk: Esoteric Element
 - Element: All
 - Class: Sorceress
@@ -36,8 +40,117 @@ A specialized type of Covenant magic originally pioneered by demons, you have th
 
 Requires R1+ of any elementalism. Some witches have rare affinities beyond the classic elements. With this perk you can replace an elemental magic you possess with another “element” not covered by an existing specialization. This can be anything as concrete as Acid or Paper, to something as abstract as Luck or Time. You do lose the original elemental magic, and your control of the new element is of a similar power to equivalent-rank elementalism, with broader elements being generally weaker. Use your best judgement, for example a Bone element would be similar to Necromancy's bone control, while R5 Time magic would cap out at 10x acceleration or deceleration of targets or, with preparation, an area up to city size.
 
+
 ## Perk: Clean Slate
 - Class: Warlock
 - Cost: 0
 
 Sometimes, the veil reacts oddly to newly awakened witches, and instead of rewriting records and memories to match their true form, it erases them entirely. As far as the mundane world is concerned, you never existed. The timeline isn't actually changed so don't worry about any butterfly effects, but those affected by the veil will be unable to acknowledge any inconsistencies even if pointed out to them. You could always reintroduce yourself to them, but you'll be starting over as a stranger. On the other hand, you can fully dive into magical society without maintaining a double life, and any loved ones won't miss you.
+
+
+## Perk: Unlikely Inheritance
+- Meta: True
+- Elements: Blood, Nature
+- Class: Warlock
+- Cost: 25
+
+Thanks to some especially convoluted inheritance laws, you are the new rightful ruler of a piece of the Darkened World or Alfheimr. Play through Vampire King ([https://imgchest.com/p/qe4gxdxkyj2] blood discount) or Faerie King ([https://imgchest.com/p/xny8oxow4bl] nature discount). Ignore Vampire's borders. Your realm is about 5000 mi^2 with a population of around 100,000, mostly noncombatant civilians. It will very slowly expand as long as you rule it, or you can annex more territory via a month-long ritual. Your power isn't absolute, but decrees that aren't in conflict with the realm's core laws will generally be followed. Your 'bride' is a political position akin to a second-in-command, only romantic if you want it to be.
+
+
+## Perk: Moon's Blessing
+- Meta: True
+- Element: Earth
+- Class: Sorceress
+- Cost: 15
+
+3 point discount for races with the Beast affinity. Your affinity (or more mundane connection) with the earth has earned you the favor of a lunar spirit. Play through Lycan's Rise [https://imgchest.com/p/ej7m2mjbydl]. Ignore quests. Abilities only apply when in beast form unless specifically stated otherwise. You can pass your lycanthropy on to others, witch or mundane, as described in the transmission section, though warding runes block the spread, as do magical disease cures applied within 24 hours. Converted humans gain the ability to see through the veil, but wantonly spreading your gift on Earth would still be considered a serious masquerade violation.
+
+
+## Perk: Knighthood
+- Meta: True
+- Element: Body
+- Class: Sorceress
+- Cost: 15
+
+Your magic is more physical than most, manifesting as an enhanced body and a set of techniques specialized for combat. Play through MagKnight [https://imgchest.com/p/dl7pz5vpyox]. Armaments may be alternate forms for your mothergifts, gaining the benefits of being soulbound. They may also be merged with the armor and weapon from Soul Warrior if you have both, or may be separate forms for greater versatility. Retainers and Quests may be taken as normal, adjusting details to fit the Witch Awakening setting as needed.
+
+
+## Perk: Old Soul
+- Meta: True
+- Element: Beast
+- Class: Warlock
+- Cost: 6
+
+Usually familiars are spirit beings, but sometimes a witch catches a reincarnating spirit from another world instead. Play through A Mage's Familiar [https://imgchest.com/p/9249z3zk2yn], choosing one witch or wizard focus power and 4 perks to apply to your familiar, or 1 perk and an improved familiar. For another -3p you can pick a second focus power. Your familiar is a former human from a magicless world, so they have human intelligence and the ability to speak to you by default, but are also likely to be more opinionated and might resent being treated like a lackey. If you have the means to give them back a human form, I'm sure they'd greatly appreciate it. Chosen perks (but not focus powers) can be taken as traits for R3 Familiarity.
+
+
+## Perk: Christmas Magic
+- Meta: True
+- Element: Water
+- Class: Sorceress
+- Costs: 6-12-210
+
+4 point discount if you've taken the Save Christmas quest. The witches of the north pole have pioneered some unique magic harnessing what they call Christmas Spirit, a type of energy drawn from a gestalt plane of Water, Life and Soul. You may have a chance to befriend some of these witches, or to learn a few of their tricks for yourself. Play through Savior of Christmas [https://imgchest.com/p/9p4nljxm7nq]. Ignore starting options, instead you can take enchantments for 6 power each or companions for 6 rp each. Note that Witch Awakening lore overrides anything mentioned in Savior of Christmas, so Santa is a normal witch, etc. As a witch, Christmas Spirit effects only apply when you're actively channeling Christmas Magic.
+
+
+## Perk: Apprenticeship (Dravina)
+- Meta: True
+- Elements: Soul
+- Class: Academic
+- Costs: 1-31
+
+You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Dravina. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
+
+
+## Perk: Apprenticeship (Nrie)
+- Meta: True
+- Elements: Life
+- Class: Academic
+- Costs: 1-31
+
+You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Nrie. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
+
+
+## Perk: Apprenticeship (Haria)
+- Meta: True
+- Elements: Fire
+- Class: Academic
+- Costs: 1-33
+
+You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Haria. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
+
+
+## Perk: Apprenticeship (Bael)
+- Meta: True
+- Elements: Beast
+- Class: Academic
+- Costs: 1-33
+
+You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Bael. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
+
+
+## Perk: Apprenticeship (Epora)
+- Meta: True
+- Elements: Mind
+- Class: Academic
+- Costs: 1-33
+
+You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Epora. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
+
+
+## Perk: Apprenticeship (Magnus)
+- Meta: True
+- Elements: Necro
+- Class: Academic
+- Costs: 1-33
+
+You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Magnus. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
+
+
+## Perk: Apprenticeship (Laria)
+- Meta: True
+- Elements: All
+- Class: Academic
+- Costs: 1-33
+
+You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Laria. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
