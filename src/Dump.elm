@@ -261,7 +261,7 @@ dumpPerk details =
         |> Maybe.map
             (\content ->
                 [ Just <| "## Perk: " ++ Perk.toString details.name
-                , item "Element" Affinity.toString details.affinity
+                , item "Elements" (List.map Affinity.toString >> String.join ",") details.affinity
                 , item "Class" Class.toString details.class
                 , flagItem "Meta" details.isMeta
                 , maybeCost
