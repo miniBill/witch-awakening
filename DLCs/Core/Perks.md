@@ -322,7 +322,7 @@ You gain the blessing of a wind spirit, or the wind spirit unlocks an aspect of 
 ## Perk: Broom Beast
 - Element: All
 - Class: Academic
-- Costs: 1, 3, 5, 7, 9
+- Costs: 1-3-9
 
 Your mastery over a broomstick is especially noteworthy. Your broom is like a proper extension of your will. For [1], Whether or not you have ranks in Witchery, you can summon your Rod in the form of a Broomstick near instantaneously to your hand and you can telekinetically command its flight remotely. For another [2], it has the speed of an arrow, up to 250 feet per second. This stacks with broom speed from other sources. You can maneuver it with similar agility to a sportsbike, so do watch out for sharp turns.
 
@@ -353,7 +353,7 @@ Be reborn as a the child of a particular lineage of your choice. You can also or
 - Element: Life
 - Class: Academic
 - Meta: True
-- Costs: 4, 8, 12, 16, 20
+- Costs: 4-8-20
 
 Looks like there’s space available in a special class at Arcadia or Hawthorne. _Neither needs to be our primary faction._ Take the _Summer School cyoa_ [https://imgchest.com/p/m9yxg5j34qn], and swap out any class subject with one Magic Specialization, choosing any teacher and adapt their summary to that magic school. You can replace a teacher with someone from the Companions page with R4+ in that magic. Over the summer, you do not gain Focus, Might, or Favor, but at the end each Magic specialization will be brought to Rank 3 (1 rank per month). You can replace Friends with Companions, who will learn the magic too. This perk costs 4p per magic class you take. You can take this repeatedly for up to 5 magic classes.
 
@@ -405,7 +405,7 @@ Improves your pocketspace. Take _Time Stop Chill Zone_ by Rosanon [https://imgch
 - Element: Soul
 - Class: Academic
 - Meta: True
-- Costs: 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
+- Costs: 6-26
 
 Improve your Rod (Witchery R0+) using _Arcane Focus_ by TroonTC [https://imgchest.com/p/9p4nl5mz7nq] for 6p. The Seal can be incorporated into your existing familiar or be a separate entity (And can be independently augmented by Company or Pet Break if so).
 
@@ -430,7 +430,7 @@ Options that grant or could grant power, such as Armory or Lab Sigma, cannot exc
 - Class: Warlock
 - Meta: True
 - Requires: Familiarity 5
-- Costs: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
+- Costs: 1-24
 
 Your familiar evolves an extraordinarily rare and unique new form it can transform into. Design your familiar’s new form using _Familiars Company by McPuffins88_. [https://imgur.com/a/MhcGxMk]. Ignore the starting points, and instead gain 2 points per Power point you spend on this perk. Anything in Familiars Company overrides anything mentioned by Familiarity, but only applies when in this form. It still keeps its other forms. “Chassis Modifiers” and “Traits” can affect other forms it has at your choice Equipment choices disappear and reappear as it assumes or sheds its form. “New Found Land” is instead a portal to a private realm. “Depths Below” is an ORC operation, and other translations.
 
@@ -439,7 +439,7 @@ Your familiar evolves an extraordinarily rare and unique new form it can transfo
 - Element: Beast
 - Class: Warlock
 - Meta: True
-- Costs: 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
+- Costs: 2-22
 
 Witches with an especially strong familiarity potential can select a magical creature as their familiar (R0+ Familiarity), looks like you might have that potential!
 
@@ -452,7 +452,7 @@ Choose any listed creature for 2 Power per soul point. (So you could choose a Re
 - Element: Life
 - Class: Academic
 - Meta: True
-- Costs: 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28
+- Costs: 6-28
 
 You are or will be the proud owner of a brand new magical shop. Design your shop using your choice of _Magic Item Shop_ by Bliss and Beri [https://imgchest.com/p/5xy2la3z4ld] or _Starfall Cafe_ by Femdo [https://imgchest.com/p/9249jwp87nk]. If you buy this twice, you could do both into a merged shop or separate locations. Or you could buy it to do the same cyoa again with doubled resources / currency, again for a larger shop or for separate shops.
 

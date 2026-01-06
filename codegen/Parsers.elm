@@ -941,16 +941,48 @@ intListParser raw =
             |> String.split ","
             |> Maybe.Extra.combineMap
                 (\piece ->
-                    piece
-                        |> String.trim
-                        |> String.toInt
+                    case String.toInt (String.trim piece) of
+                        Just p ->
+                            Just [ p ]
+
+                        Nothing ->
+                            let
+                                pieces : Maybe (List Int)
+                                pieces =
+                                    piece
+                                        |> String.trim
+                                        |> String.split "-"
+                                        |> Maybe.Extra.combineMap String.toInt
+                            in
+                            case pieces of
+                                Just [] ->
+                                    Nothing
+
+                                Just [ n ] ->
+                                    Just [ n ]
+
+                                Just [ l, h ] ->
+                                    Just (List.range l h)
+
+                                Just [ l, m, h ] ->
+                                    let
+                                        step : Int
+                                        step =
+                                            m - l
+                                    in
+                                    List.range 0 ((h - l) // step)
+                                        |> List.map (\i -> i * step + l)
+                                        |> Just
+
+                                _ ->
+                                    Nothing
                 )
     of
         Nothing ->
             ResultME.error (raw ++ " is not a valid list of numbers")
 
         Just n ->
-            Ok n
+            Ok (List.sort (List.concat n))
 
 
 stringListParser : String -> ResultME String (List String)

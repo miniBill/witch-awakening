@@ -79,7 +79,7 @@ Gain the ability to connect to and seize control of electrical devices. This isn
 - Element: Blood
 - Class: Sorceress
 - Meta: True
-- Costs: 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 38, 40
+- Costs: 20-36, 38, 40
 
 You have been chosen by an ancient and alien god (though not a far god) to serve as its' champion in the bloodhunt, diving through dream realms to purge them of outsider influence, and the bloodmad beasts. Play through _Bloodborne II_ by HelecopterSkeleton [https://imgur.com/a/lnly6oD].
 

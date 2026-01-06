@@ -383,13 +383,13 @@ This masterwork cauldron is prized among potionmakers. These cauldrons are able 
 
 ## Relic: Collection
 - Class: Academic
-- Costs: 1, 2, 3, 4, 5, 6, 7, 8, 9
+- Costs: 1-9
 
 Rather than a relic, I’ll let you have a go at my collection of potions and rune-charmed trinkets, up to Rank 4. -1 per potion, -3 per rune charmed trinket. Limit 3 potions and/or 2 tunes. Cost is totaled as one purchase.
 
 
 ## Relic: Witch Kisses
 - Class: Warlock
-- Costs: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40
+- Costs: 2-4-40
 
 One of the closest things to a standardized currency in witchdom. Any witch can tap into Kisses as a source of mana or as a ritual reagent, spending them for practical purpose giving them intrinsic value. There are Gold, Silver, and Copper kisses. with two sizes each, large and small. Small Coppers are K1 large coppers are K5, small silvers are K25, large silvers are K100. Small golds are K1,000 Large golds are K10,000 “Burning” K25 would max out a novice witch’s Low mana capacity. For each purchase of this “Relic”, you acquire K1,000,000. Repeat purchases are totaled, not separate.
