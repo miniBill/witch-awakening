@@ -206,11 +206,13 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 , moveDown 4
                 ]
                 costGradient
-            , Theme.row
-                [ moveLeft 8
-                , moveDown 4
-                ]
-                (List.map Theme.viewAffinity affinity)
+            , affinity
+                |> List.map Theme.viewAffinity
+                |> List.intersperse (Theme.gradientText 4 Gradient.yellowGradient "OR")
+                |> Theme.column
+                    [ moveLeft 8
+                    , moveDown 4
+                    ]
             , Theme.column
                 [ centerX
                 , paddingXY 64 8
