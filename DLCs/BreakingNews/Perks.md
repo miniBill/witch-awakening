@@ -24,8 +24,8 @@ Your mind is naturally attuned to psychic frequencies. With a few seconds of con
 ## Perk: Dealmaker
 - Element: Soul
 - Class: Warlock
+- Requires: Covenants 1+
 - Cost: 12
-- Requires: Covenants R1+
 
 A specialized type of Covenant magic originally pioneered by demons, you have the ability to trade in intangible aspects of a person's being. With the right clause of a contract, you can buy and sell skills, memories, or relationships. You can even trade in souls, you don't get the actual soul until the seller dies, but the contracts of ownership are highly valued by certain entities. You can give anything you acquire to yourself, or keep it in reserve to trade later. This magic only works with direct contracts (not laws), and while you CAN buy focus, might, favor, or power from others you cannot exceed your power cap this way.
 
