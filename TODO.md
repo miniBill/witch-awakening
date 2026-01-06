@@ -1,8 +1,3 @@
-# Missing checks
-- The Relic: Tome of Restore from the Familiar DLC has a prerequisite of Enchantment (a Magic Discipline for the same DLC), which you did not add to your Interactive yet.
-- you can select the following quests without meeting their requirements: death racer (you need street racer), pack tactics (you need gone feral), and halloween town (you need special delivery).
-- require hybridize for Amalgams, with race - 1
-
 # Missing features
 - free Advanced Golemancy ranks from Hexes and Runes
 - Siren type perk missing the possible 1p option
