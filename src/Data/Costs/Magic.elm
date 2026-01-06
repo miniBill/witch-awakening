@@ -236,62 +236,51 @@ magicValue model affinities magicDetails =
                     inFaction =
                         isInFaction model magicDetails
 
-                    inClass : Bool
-                    inClass =
-                        case magicDetails.class of
-                            Magic.ClassSpecial ->
-                                magicDetails.name == MagicWishcasting && List.any Race.isGenie model.races
-
-                            Magic.ClassOne c ->
-                                model.class == Just c
-
-                            Magic.ClassNone ->
-                                False
-
                     freeRankFromRace : Maybe ( Int, Race )
                     freeRankFromRace =
                         freeRankFromRaceOrTypePerk model magicDetails rankedMagic
 
+                    minRank : Int
+                    minRank =
+                        case freeRankFromRace of
+                            Nothing ->
+                                if magicDetails.name == MagicAdvancedGolemancy then
+                                    let
+                                        ranksIn : Magic -> Int
+                                        ranksIn magic =
+                                            model.magic
+                                                |> List.Extra.findMap
+                                                    (\r ->
+                                                        if r.name == magic then
+                                                            Just r.rank
+
+                                                        else
+                                                            Nothing
+                                                    )
+                                                |> Maybe.withDefault 0
+
+                                        ranksInHexes : Int
+                                        ranksInHexes =
+                                            ranksIn MagicHexes
+
+                                        ranksInRunes : Int
+                                        ranksInRunes =
+                                            ranksIn MagicRunes
+
+                                        freeRanks : Int
+                                        freeRanks =
+                                            (ranksInHexes + ranksInRunes) // 3
+                                    in
+                                    1 + freeRanks
+
+                                else
+                                    1
+
+                            Just ( r, _ ) ->
+                                r + 1
+
                     ( finalCost, rewardPoints ) =
-                        List.range
-                            (case freeRankFromRace of
-                                Nothing ->
-                                    if magicDetails.name == MagicAdvancedGolemancy then
-                                        let
-                                            ranksIn : Magic -> Int
-                                            ranksIn magic =
-                                                model.magic
-                                                    |> List.Extra.findMap
-                                                        (\r ->
-                                                            if r.name == magic then
-                                                                Just r.rank
-
-                                                            else
-                                                                Nothing
-                                                        )
-                                                    |> Maybe.withDefault 0
-
-                                            ranksInHexes : Int
-                                            ranksInHexes =
-                                                ranksIn MagicHexes
-
-                                            ranksInRunes : Int
-                                            ranksInRunes =
-                                                ranksIn MagicRunes
-
-                                            freeRanks : Int
-                                            freeRanks =
-                                                (ranksInHexes + ranksInRunes) // 3
-                                        in
-                                        1 + freeRanks
-
-                                    else
-                                        1
-
-                                Just ( r, _ ) ->
-                                    r + 1
-                            )
-                            rankedMagic.rank
+                        List.range minRank rankedMagic.rank
                             |> List.map
                                 (\rank ->
                                     ( rank
@@ -307,6 +296,19 @@ magicValue model affinities magicDetails =
                             |> List.unzip
                             |> Tuple.mapBoth
                                 (\ps ->
+                                    let
+                                        inClass : Bool
+                                        inClass =
+                                            case magicDetails.class of
+                                                Magic.ClassSpecial ->
+                                                    magicDetails.name == MagicWishcasting && List.any Race.isGenie model.races
+
+                                                Magic.ClassOne c ->
+                                                    model.class == Just c
+
+                                                Magic.ClassNone ->
+                                                    False
+                                    in
                                     ps
                                         |> List.sum
                                         |> classDiscountIf inClass
