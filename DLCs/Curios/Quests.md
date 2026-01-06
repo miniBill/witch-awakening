@@ -44,7 +44,7 @@ Notes:
 - Reward: 2
 A mortal child has been praying to win an upcoming competition. Pretty normal. The weird part is that a high level celestial issued an order to answer those prayers, with cryptic warnings saying this is important. Despite that, the quest is not very dangerous or difficult.
 
-Notes
+Notes:
 + You are free to pick any sport or game, and also why the child is so invested in winning.
 + The child is not directly connected to the magical world and _currently_ has no powers. You can come up with a reason for them to be important. Maybe they show up on a later quest to help you? Maybe as a custom companion?
 + You have a lot of discretion on how to go about this quest. You could tell the child about the witch world, and use your magic to let them win. Just don’t cause harm to innocents or cause a masquerade violation.
