@@ -51,9 +51,7 @@ view magic =
         ( lastY, nodes ) =
             magic
                 |> Dict.Extra.groupBy .rank
-                |> Dict.toList
-                |> List.reverse
-                |> List.foldl viewMagicRank ( 0, [] )
+                |> Dict.foldr viewMagicRank ( 0, [] )
     in
     nodes
         |> (::) styleNode
@@ -65,8 +63,8 @@ view magic =
             ]
 
 
-viewMagicRank : ( Int, List RankedMagic ) -> ( Int, List (Svg Msg) ) -> ( Int, List (Svg Msg) )
-viewMagicRank ( rank, magics ) ( y, acc ) =
+viewMagicRank : Int -> List RankedMagic -> ( Int, List (Svg Msg) ) -> ( Int, List (Svg Msg) )
+viewMagicRank rank magics ( y, acc ) =
     let
         header : Svg msg
         header =
