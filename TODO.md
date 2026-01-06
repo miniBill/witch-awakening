@@ -15,6 +15,7 @@
 - The Lodge perk
 - Finite option for the Compulsion drawback
 - Mark which secondary class you get from the Neutral perk
+- Weird companion classes in Breaking News
 
 # Checks
 - Check all faction perks implementations
