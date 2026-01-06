@@ -147,12 +147,15 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 Single cost _ ->
                     [ cost ]
             )
-                |> List.filter ((/=) 0)
+                |> List.sort
                 |> List.Extra.unique
 
         costToString : Int -> String
         costToString cost =
-            if cost > 0 then
+            if cost == 0 then
+                "0"
+
+            else if cost > 0 then
                 "-" ++ String.fromInt cost
 
             else
@@ -203,11 +206,11 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 , moveDown 4
                 ]
                 costGradient
-            , el
+            , Theme.row
                 [ moveLeft 8
                 , moveDown 4
                 ]
-                (Theme.viewAffinity affinity)
+                (List.map Theme.viewAffinity affinity)
             , Theme.column
                 [ centerX
                 , paddingXY 64 8

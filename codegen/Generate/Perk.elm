@@ -117,7 +117,7 @@ details types =
         |> Elm.Declare.Extra.withField "name" .name types.perk.annotation
         |> Elm.Declare.Extra.withField "class" .class types.class.annotation
         |> Elm.Declare.Extra.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "affinity" .affinity types.affinity.annotation
+        |> Elm.Declare.Extra.withField "affinity" .affinity (Elm.Annotation.list types.affinity.annotation)
         |> Elm.Declare.Extra.withField "isMeta" .isMeta Elm.Annotation.bool
         |> Elm.Declare.Extra.withField "content" .content Gen.Data.Perk.annotation_.content
         |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
@@ -146,7 +146,7 @@ perkToDeclaration types dlcName perk =
             (details types).make
                 { name = types.perk.value perk.name
                 , class = types.class.value perk.class
-                , affinity = types.affinity.value perk.element
+                , affinity = Elm.list (List.map types.affinity.value perk.elements)
                 , isMeta = Elm.bool perk.isMeta
                 , requires = Elm.maybe (Maybe.map Elm.string perk.requires)
                 , content =
@@ -198,7 +198,7 @@ perkToDeclaration types dlcName perk =
                                 (details types).make
                                     { name = Elm.apply (types.perk.value perk.name) [ race ]
                                     , class = types.class.value perk.class
-                                    , affinity = types.affinity.value perk.element
+                                    , affinity = Elm.list (List.map types.affinity.value perk.elements)
                                     , isMeta = Elm.bool perk.isMeta
                                     , requires = Elm.maybe (Maybe.map Elm.string perk.requires)
                                     , content =
