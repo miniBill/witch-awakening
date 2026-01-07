@@ -186,9 +186,17 @@ innerPerkCost ({ class } as model) { name, cost } perk =
         isClass =
             Just perk.class == class
 
+        perkAffinities : Magic.Affinities
+        perkAffinities =
+            if perk.isMeta then
+                Magic.Regular (Types.AffinityMeta :: perk.affinity)
+
+            else
+                Magic.Regular perk.affinity
+
         isInAffinity : InAffinity
         isInAffinity =
-            Affinity.isInAffinity (Magic.Regular perk.affinity) affinities
+            Affinity.isInAffinity perkAffinities affinities
 
         changelingDiff : Int
         changelingDiff =
