@@ -21,7 +21,7 @@ Our faction relations depend greatly on the individual sister, but we generally 
 A leftover from a long ago divine pact, you've been blessed with a Diplomat's gifts. You learn languages unnaturally fast (you could go from zero to fluent in a week), and can detect lies, decried as intentional, literal falsehoods. When you speak the truth yourself, others will usually believe you. Not necessarily agree with you, and paranoid enough people may be unaffected, but most will trust that you're not lying to them. Has the side effect of making your voice very pleasant to listen to. 
 
 
-## Faction: The Seeker's Guild
+## Faction: The Seekers' Guild
 - Short name: Seeker
 - Collective name: The Seekers
 - Motto: Going Where no Witch has Before

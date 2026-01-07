@@ -120,7 +120,7 @@ That's me, the one who recorded this message. My familiar Kiri and I are reporte
 
 
 ## Companion: Heather and Sage
-- Faction: The Seeker's Guild
+- Faction: The Seekers' Guild
 - Cost: 4
 - Race: Gemini-Fire
 - Class: Academic
@@ -139,7 +139,7 @@ Heather (left) and Sage (right) come from a realm heavily influenced by Earth an
 
 
 ## Companion: Fira Swiftriver
-- Faction: The Seeker's Guild
+- Faction: The Seekers' Guild
 - Cost: 15
 - Race: Gnome
 - Has Perk: True
@@ -159,7 +159,7 @@ One of the Guild's foremost engineers, Fira's inventions have a reputation for b
 
 
 ## Companion: Vivian Brooks
-- Faction: The Seeker's Guild
+- Faction: The Seekers' Guild
 - Cost: 8
 - Race: Kekubi
 - Has Perk: True
@@ -179,7 +179,7 @@ Vivian harkens back to the old days of the guild, an intrepid explorer charting 
 
 
 ## Companion: Captain Elara Kareva
-- Faction: The Seeker's Guild
+- Faction: The Seekers' Guild
 - Cost: 8
 - Race: Neutral
 - Class: Warlock
@@ -198,7 +198,7 @@ Once a reknowned negotiator for the Sisterhood, Elara is now the captain of one 
 
 
 ## Companion: Leon Rivera
-- Faction: The Seeker's Guild
+- Faction: The Seekers' Guild
 - Cost: 6
 - Race: Neutral
 - Class: Sorceress
@@ -217,7 +217,7 @@ Leon is security for planetside missions, making sure his mortal crewmates can d
 
 
 ## Companion: Thalia
-- Faction: The Seeker's Guild
+- Faction: The Seekers' Guild
 - Cost: 15
 - Race: Mimi
 - Class: Academic

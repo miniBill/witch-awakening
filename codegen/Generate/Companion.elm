@@ -98,7 +98,7 @@ factionToOrder faction =
         Just "The Lydian Sisterhood" ->
             Ok 7
 
-        Just "The Seeker's Guild" ->
+        Just "The Seekers' Guild" ->
             Ok 8
 
         Just "The O.R.C." ->
