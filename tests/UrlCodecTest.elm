@@ -2,6 +2,14 @@ module UrlCodecTest exposing (roundtrips)
 
 import Expect
 import Fuzz exposing (Fuzzer)
+import Generated.Affinity
+import Generated.Class
+import Generated.Companion
+import Generated.Complication
+import Generated.Faction
+import Generated.GameMode
+import Generated.Magic
+import Generated.Quest
 import Generated.Types
 import Main
 import Set
@@ -60,11 +68,9 @@ modelFuzzer =
 
 classFuzzer : Fuzzer Generated.Types.Class
 classFuzzer =
-    Fuzz.oneOfValues
-        [ Generated.Types.ClassAcademic
-        , Generated.Types.ClassSorceress
-        , Generated.Types.ClassWarlock
-        ]
+    Generated.Class.all
+        |> List.map .name
+        |> Fuzz.oneOfValues
 
 
 raceFuzzer : Fuzzer Generated.Types.Race
@@ -160,37 +166,16 @@ raceFuzzer =
 
 affinityFuzzer : Fuzzer Generated.Types.Affinity
 affinityFuzzer =
-    Fuzz.oneOfValues
-        [ Generated.Types.AffinityAll
-        , Generated.Types.AffinityBeast
-        , Generated.Types.AffinityBlood
-        , Generated.Types.AffinityBody
-        , Generated.Types.AffinityEarth
-        , Generated.Types.AffinityFire
-        , Generated.Types.AffinityLife
-        , Generated.Types.AffinityMetal
-        , Generated.Types.AffinityMind
-        , Generated.Types.AffinityNature
-        , Generated.Types.AffinityNecro
-        , Generated.Types.AffinitySoul
-        , Generated.Types.AffinityWater
-        , Generated.Types.AffinityWind
-        , Generated.Types.AffinityShadows
-        , Generated.Types.AffinityWhispers
-        , Generated.Types.AffinityDreams
-        , Generated.Types.AffinitySilence
-        , Generated.Types.AffinityDivine
-        ]
+    Generated.Affinity.all
+        |> List.map .name
+        |> Fuzz.oneOfValues
 
 
 gameModeFuzzer : Fuzzer Generated.Types.GameMode
 gameModeFuzzer =
-    Fuzz.oneOfValues
-        [ Generated.Types.GameModeStoryArc
-        , Generated.Types.GameModeEarlyBird
-        , Generated.Types.GameModeSkillTree
-        , Generated.Types.GameModeConstellation
-        ]
+    Generated.GameMode.all
+        |> List.map .name
+        |> Fuzz.oneOfValues
 
 
 rankedComplicationFuzzer : Fuzzer Types.RankedComplication
@@ -200,56 +185,9 @@ rankedComplicationFuzzer =
 
 complicationFuzzer : Fuzzer Generated.Types.Complication
 complicationFuzzer =
-    Fuzz.oneOfValues
-        [ Generated.Types.ComplicationBrutality
-        , Generated.Types.ComplicationMasquerade
-        , Generated.Types.ComplicationTrueNames
-        , Generated.Types.ComplicationMonsters
-        , Generated.Types.ComplicationPopulation
-        , Generated.Types.ComplicationBonk
-        , Generated.Types.ComplicationDysfunction
-        , Generated.Types.ComplicationVulnerability
-        , Generated.Types.ComplicationRejection
-        , Generated.Types.ComplicationCrutch
-        , Generated.Types.ComplicationRestriction
-        , Generated.Types.ComplicationHunted
-        , Generated.Types.ComplicationDislikeable
-        , Generated.Types.ComplicationMonsterBait
-        , Generated.Types.ComplicationBlackSwan
-        , Generated.Types.ComplicationSpellSink
-        , Generated.Types.ComplicationLikeADuck
-        , Generated.Types.ComplicationLikeARock
-        , Generated.Types.ComplicationEyeCatcher
-        , Generated.Types.ComplicationSillyGoose
-        , Generated.Types.ComplicationHardLessons
-        , Generated.Types.ComplicationColdHeart
-        , Generated.Types.ComplicationHideous
-        , Generated.Types.ComplicationWitchMark
-        , Generated.Types.ComplicationNemesis
-        , Generated.Types.ComplicationAddiction
-        , Generated.Types.ComplicationSensoryDisability
-        , Generated.Types.ComplicationPhysicalDisability
-        , Generated.Types.ComplicationSensoryShock
-        , Generated.Types.ComplicationAdoringFan
-        , Generated.Types.ComplicationVeryDere
-        , Generated.Types.ComplicationRequirement
-        , Generated.Types.ComplicationUnveiled
-        , Generated.Types.ComplicationNightmares
-        , Generated.Types.ComplicationKryptonite
-        , Generated.Types.ComplicationFitWitch
-        , Generated.Types.ComplicationBranded
-        , Generated.Types.ComplicationNoPrivacy
-        , Generated.Types.ComplicationBloodFeud
-        , Generated.Types.ComplicationMarked
-        , Generated.Types.ComplicationDefeated
-        , Generated.Types.ComplicationFixation
-        , Generated.Types.ComplicationAllNatural
-        , Generated.Types.ComplicationWitchknight
-        , Generated.Types.ComplicationInadequacy
-        , Generated.Types.ComplicationDysphoria
-        , Generated.Types.ComplicationBetrayal
-        , Generated.Types.ComplicationCompulsion
-        ]
+    Generated.Complication.all
+        |> List.map .name
+        |> Fuzz.oneOfValues
 
 
 complicationKindFuzzer : Fuzzer Types.ComplicationKind
@@ -264,72 +202,9 @@ rankedMagicFuzzer =
 
 magicFuzzer : Fuzzer Generated.Types.Magic
 magicFuzzer =
-    Fuzz.oneOfValues
-        [ Generated.Types.MagicDigicasting
-        , Generated.Types.MagicWands
-        , Generated.Types.MagicMinistration
-        , Generated.Types.MagicOccultism
-        , Generated.Types.MagicDominion
-        , Generated.Types.MagicCovenants
-        , Generated.Types.MagicMonstrosity
-        , Generated.Types.MagicGadgetry
-        , Generated.Types.MagicIntegration
-        , Generated.Types.MagicSwordsinging
-        , Generated.Types.MagicAlchemy
-        , Generated.Types.MagicRunes
-        , Generated.Types.MagicCurses
-        , Generated.Types.MagicHexes
-        , Generated.Types.MagicWitchery
-        , Generated.Types.MagicFamiliarity
-        , Generated.Types.MagicNecromancy
-        , Generated.Types.MagicConsortation
-        , Generated.Types.MagicPortals
-        , Generated.Types.MagicDivination
-        , Generated.Types.MagicAethernautics
-        , Generated.Types.MagicFirecalling
-        , Generated.Types.MagicWindkeeping
-        , Generated.Types.MagicWaterworking
-        , Generated.Types.MagicEarthmoving
-        , Generated.Types.MagicNaturalism
-        , Generated.Types.MagicMetamorphosis
-        , Generated.Types.MagicPsychotics
-        , Generated.Types.MagicMetallurgy
-        , Generated.Types.MagicAnimism
-        , Generated.Types.MagicMetamagic
-        , Generated.Types.MagicRulership
-        , Generated.Types.MagicVampirism
-        , Generated.Types.MagicLifeweaving
-        , Generated.Types.MagicVisceramancy
-        , Generated.Types.MagicArachnescence
-        , Generated.Types.MagicWishcasting
-        , Generated.Types.MagicBodyRefinement
-        , Generated.Types.MagicSpiritPuppetry
-        , Generated.Types.MagicShadowSinging
-        , Generated.Types.MagicBlighting
-        , Generated.Types.MagicConcealing
-        , Generated.Types.MagicStellarism
-        , Generated.Types.MagicAugmentation
-        , Generated.Types.MagicSagaCalling
-        , Generated.Types.MagicShapeShifting
-        , Generated.Types.MagicCounterMagic
-        , Generated.Types.MagicConstructs
-        , Generated.Types.MagicManaShaping
-        , Generated.Types.MagicEmpathics
-        , Generated.Types.MagicReinforcement
-        , Generated.Types.MagicKinomancy
-        , Generated.Types.MagicIllusions
-        , Generated.Types.MagicResonance
-        , Generated.Types.MagicCrystalCrafting
-        , Generated.Types.MagicHomunculusCraft
-        , Generated.Types.MagicAdvancedGolemancy
-        , Generated.Types.MagicSpiritWeaving
-        , Generated.Types.MagicPlagues
-        , Generated.Types.MagicEntomism
-        , Generated.Types.MagicWorldShaping
-        , Generated.Types.MagicTheHallowingEcho
-        , Generated.Types.MagicTimewarping
-        , Generated.Types.MagicReaping
-        ]
+    Generated.Magic.all
+        |> List.map .name
+        |> Fuzz.oneOfValues
 
 
 rankedPerkFuzzer : Fuzzer Types.RankedPerk
@@ -457,220 +332,23 @@ perkFuzzer =
 
 factionFuzzer : Fuzzer Generated.Types.Faction
 factionFuzzer =
-    Fuzz.oneOfValues
-        [ Generated.Types.FactionTheCollegeOfArcadia
-        , Generated.Types.FactionHawthorneAcademia
-        , Generated.Types.FactionTheWatchers
-        , Generated.Types.FactionTheHespatianCoven
-        , Generated.Types.FactionLunabella
-        , Generated.Types.FactionAlfheimrAlliance
-        , Generated.Types.FactionTheFourFamilies
-        , Generated.Types.FactionTheOutsiders
-        , Generated.Types.FactionTheORC
-        , Generated.Types.FactionAlphazonIndustries
-        , Generated.Types.FactionTheLydianSisterhood
-        , Generated.Types.FactionTheSeekerSGuild
-        , Generated.Types.FactionTheLodge
-        , Generated.Types.FactionIndependents
-        ]
+    Generated.Faction.all
+        |> List.map .name
+        |> Fuzz.oneOfValues
 
 
 companionFuzzer : Fuzzer Generated.Types.Companion
 companionFuzzer =
-    Fuzz.oneOfValues
-        [ Generated.Types.CompanionRachelPool
-        , Generated.Types.CompanionAnneLaurenchi
-        , Generated.Types.CompanionCandayWesbank
-        , Generated.Types.CompanionTessaMarieKudashov
-        , Generated.Types.CompanionEvelynnPWillowcrane
-        , Generated.Types.CompanionJohnDoe
-        , Generated.Types.CompanionSayaKurosawa
-        , Generated.Types.CompanionFrancescaAstrenichtys
-        , Generated.Types.CompanionElaineAVictorica
-        , Generated.Types.CompanionMaimonadaMajesteim
-        , Generated.Types.CompanionAzurellieaAdMadelline
-        , Generated.Types.CompanionMelissaVincimvitch
-        , Generated.Types.CompanionHannahGrangely
-        , Generated.Types.CompanionElizabellSinclaire
-        , Generated.Types.CompanionAshleyLovenko
-        , Generated.Types.CompanionSylvanneMaeKanzaki
-        , Generated.Types.CompanionLauraDDevonshire
-        , Generated.Types.CompanionCaroline
-        , Generated.Types.CompanionSuzyTheMiasma
-        , Generated.Types.CompanionNorikoDuNichols
-        , Generated.Types.CompanionFrancisIsaacGiovanni
-        , Generated.Types.CompanionIfraAlZahra
-        , Generated.Types.CompanionSariahJSnow
-        , Generated.Types.CompanionClaireBelMontegra
-        , Generated.Types.CompanionSylvarraAsDomonina
-        , Generated.Types.CompanionMadellineLPeach
-        , Generated.Types.CompanionReinaAkatsuki
-        , Generated.Types.CompanionMinnieAndrus
-        , Generated.Types.CompanionLucilleMBright
-        , Generated.Types.CompanionKingDaemianKain
-        , Generated.Types.CompanionWhisper
-        , Generated.Types.CompanionRedMother
-        , Generated.Types.CompanionNova
-        , Generated.Types.CompanionScarlet
-        , Generated.Types.CompanionHuntress
-        , Generated.Types.CompanionMalice
-        , Generated.Types.CompanionDiana
-        , Generated.Types.CompanionCassandra
-        , Generated.Types.CompanionKingCulicarius
-        , Generated.Types.CompanionEinodiaKate
-        , Generated.Types.CompanionPersephone
-        , Generated.Types.CompanionBetildaAraiBuckland
-        , Generated.Types.CompanionNichteYIr
-        , Generated.Types.CompanionAelfflaedNowDaphne
-        , Generated.Types.CompanionVictoriaWatts
-        , Generated.Types.CompanionRichardMaxJohnson
-        , Generated.Types.CompanionBethadonnaRossbaum
-        , Generated.Types.CompanionMirandaQuincy
-        , Generated.Types.CompanionMeganMinosine
-        , Generated.Types.CompanionJaneKitAdams
-        , Generated.Types.CompanionAliciaRedVelvetine
-        , Generated.Types.CompanionJuliaMayCaldwin
-        , Generated.Types.CompanionSamanthaNatPonds
-        , Generated.Types.CompanionJenniferKYoung
-        , Generated.Types.CompanionAgent7Y
-        , Generated.Types.CompanionAgent9s
-        , Generated.Types.CompanionTwinsSaraKara
-        , Generated.Types.CompanionVesuvianelleLalahon
-        , Generated.Types.CompanionAmberOgdenVix
-        , Generated.Types.CompanionXINDollmaker
-        , Generated.Types.CompanionAlexKHalls
-        , Generated.Types.CompanionIsabellaMableOaks
-        , Generated.Types.CompanionEvangelinaRosaCostaval
-        , Generated.Types.CompanionPenelope
-        , Generated.Types.CompanionMandyHunts
-        , Generated.Types.CompanionEskhanderMahabadi
-        , Generated.Types.CompanionExperiment627
-        , Generated.Types.CompanionAugustRoseOBare
-        , Generated.Types.CompanionOpheliaReisha
-        , Generated.Types.CompanionEstherReisha
-        , Generated.Types.CompanionCustom
-        , Generated.Types.CompanionErisJulianariStonefallen
-        , Generated.Types.CompanionTheCaretaker
-        , Generated.Types.CompanionLostQueen
-        , Generated.Types.CompanionGiftFromBeyond
-        , Generated.Types.CompanionAgent9sOriginal
-        , Generated.Types.CompanionPrincessDaelEzraOfCharis
-        , Generated.Types.CompanionAnaphalonGreenwield
-        , Generated.Types.CompanionBriarGracehollow
-        , Generated.Types.CompanionDuchessSaelAstraOfOdalle
-        , Generated.Types.CompanionBeatriceWright
-        , Generated.Types.CompanionSigridJansson
-        , Generated.Types.CompanionHestia
-        , Generated.Types.CompanionVerse
-        , Generated.Types.CompanionLysander
-        , Generated.Types.CompanionSylvieBennet
-        , Generated.Types.CompanionHeatherAndSage
-        , Generated.Types.CompanionFiraSwiftriver
-        , Generated.Types.CompanionVivianBrooks
-        , Generated.Types.CompanionCaptainElaraKareva
-        , Generated.Types.CompanionLeonRivera
-        , Generated.Types.CompanionThalia
-        , Generated.Types.CompanionCinnamon
-        , Generated.Types.CompanionTabithaTabbiMcCalister
-        , Generated.Types.CompanionVictoriaLaRue
-        , Generated.Types.CompanionElysia
-        , Generated.Types.CompanionMasterJara
-        , Generated.Types.CompanionXiaoLiena
-        , Generated.Types.CompanionJin
-        , Generated.Types.CompanionSaraStar
-        , Generated.Types.CompanionRedBetty
-        , Generated.Types.CompanionMayraBroadleaf
-        , Generated.Types.CompanionEmiliaBroadleaf
-        , Generated.Types.CompanionEdwardAshwell
-        , Generated.Types.CompanionMicheleCottantial
-        , Generated.Types.CompanionSaundraAllard
-        , Generated.Types.CompanionBethanyDavina
-        , Generated.Types.CompanionFranciscaUveros
-        , Generated.Types.CompanionIssacAshwell
-        , Generated.Types.CompanionElodieLylou
-        , Generated.Types.CompanionAvelineGrace
-        , Generated.Types.CompanionIngvildDagny
-        , Generated.Types.CompanionRose
-        , Generated.Types.CompanionCathrineZarina
-        , Generated.Types.CompanionLennethRisea
-        , Generated.Types.CompanionGratianusGrantTertullian
-        , Generated.Types.CompanionNazliMojdeh
-        , Generated.Types.CompanionOldArthurHadford
-        , Generated.Types.CompanionHelenCorinna
-        ]
+    Generated.Companion.all
+        |> List.concatMap (\( _, faction ) -> List.map .name faction)
+        |> Fuzz.oneOfValues
 
 
 questFuzzer : Fuzzer Generated.Types.Quest
 questFuzzer =
-    Fuzz.oneOfValues
-        [ Generated.Types.QuestCartTheory
-        , Generated.Types.QuestHouseFire
-        , Generated.Types.QuestDomesticated
-        , Generated.Types.QuestStreetRacer
-        , Generated.Types.QuestPartyAnimal
-        , Generated.Types.QuestGoneFeral
-        , Generated.Types.QuestJustDesserts
-        , Generated.Types.QuestGhostStories
-        , Generated.Types.QuestOnSilverWings
-        , Generated.Types.QuestOnMyMark
-        , Generated.Types.QuestTheMathematician
-        , Generated.Types.QuestPackTactics
-        , Generated.Types.QuestDeathRacer
-        , Generated.Types.QuestBrokenPoint
-        , Generated.Types.QuestNecropolis
-        , Generated.Types.QuestTaintedGrail
-        , Generated.Types.QuestDragonHunt
-        , Generated.Types.QuestSanguineLight
-        , Generated.Types.QuestMadBomber
-        , Generated.Types.QuestDeepWhispers
-        , Generated.Types.QuestHotSprings
-        , Generated.Types.QuestTournamentArc
-        , Generated.Types.QuestInquisition
-        , Generated.Types.QuestPrettyLittleThings
-        , Generated.Types.QuestDarksideCrater
-        , Generated.Types.QuestCourtship
-        , Generated.Types.QuestFragmentsOfSelf
-        , Generated.Types.QuestRipAndTear
-        , Generated.Types.QuestStarCrypt
-        , Generated.Types.QuestDungeoneering
-        , Generated.Types.QuestWitchesGotTalent
-        , Generated.Types.QuestRiseAboveTheClouds
-        , Generated.Types.QuestWatchersInTheOutfield
-        , Generated.Types.QuestFamiliarPlaydate
-        , Generated.Types.QuestAdventureTime
-        , Generated.Types.QuestSpecialDelivery
-        , Generated.Types.QuestSightseeing
-        , Generated.Types.QuestDreamTrial
-        , Generated.Types.QuestPinchOfStardust
-        , Generated.Types.QuestIntroductions
-        , Generated.Types.QuestSpookyStories
-        , Generated.Types.QuestLaundryDay
-        , Generated.Types.QuestDiscountGoods
-        , Generated.Types.QuestFreeMedical
-        , Generated.Types.QuestTheSwimsuitEpisode
-        , Generated.Types.QuestTeaParty
-        , Generated.Types.QuestMoonlitSerenade
-        , Generated.Types.QuestYesTeacher
-        , Generated.Types.QuestLateFees
-        , Generated.Types.QuestVitalLotus
-        , Generated.Types.QuestDistressBeacon
-        , Generated.Types.QuestFamiliarTrouble
-        , Generated.Types.QuestHalloweenTown
-        , Generated.Types.QuestSpaceTentacles
-        , Generated.Types.QuestTimeSlip
-        , Generated.Types.QuestWitchesNInquisition
-        , Generated.Types.QuestMaidenTrain
-        , Generated.Types.QuestBloodstoneChalice
-        , Generated.Types.QuestStargazing
-        , Generated.Types.QuestFaerieKingSCourt
-        , Generated.Types.QuestTentacleParty
-        , Generated.Types.QuestPublicService
-        , Generated.Types.QuestDigitalDeath
-        , Generated.Types.QuestJobBoard
-        , Generated.Types.QuestSaveChristmas
-        , Generated.Types.QuestCelestialCode
-        , Generated.Types.QuestWonderBazaar
-        ]
+    Generated.Quest.all
+        |> List.map .name
+        |> Fuzz.oneOfValues
 
 
 rankedRelicFuzzer : Fuzzer Types.RankedRelic
