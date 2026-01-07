@@ -32,7 +32,7 @@ You’re also now competent in every mundane skill sufficient to compete on a re
 You can keep your current human body or redesign it separately, and you have the ability to do a 1-10 second long transformation sequence that swaps between your human and witch body. As a human you can still see through the Veil like a witch but you can only use Perks with a base cost under 6, Relics, and Rank 1 magic until you transform into your witch form. Your human form _can_ be the opposite sex to your witch form. This can also equip Mothergifts.
 
 - [6] This is the basic version, and costs 6 power
-- [12] For an additional 6 Power, you can instead completely change your Witch Type’s race with your transformation, going between _two witch forms_.
+- [12] For an additional 6 Power, you can instead completely change your Witch Type’s race with your transformation, going between _two witch forms_
 - [18] For 12 more power, each can have separate magic and perk choices.
 
 
