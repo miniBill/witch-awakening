@@ -251,7 +251,7 @@ Lysander's sister, though the two are somewhat estranged over Thalia's choice to
 - Has: Cinnamon is immortal (Curses rank 5 + agelessness and slow regeneration), and can be bonded as a familiar
 Cinnamon was an ordinary dog a few decades ago before falling into wild rift, coming out the other side with human intelligence and completely immortal. Since then he's been bouncing around witchdom, tagging along with several different groups at times but never settling anywhere permanently. He's adventurous but not very ambitious, content to go with the flow and see where it takes him.
 
-## Companion: Tabitha "Tabbi" McCalister
+## Companion: Tabitha “Tabbi” McCalister
 - Cost: 8
 - Race: Neutral
 - Class: Warlock
