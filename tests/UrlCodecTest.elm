@@ -106,6 +106,8 @@ raceFuzzer =
         , Fuzz.constant Generated.Types.RaceMimi
         , Fuzz.constant Generated.Types.RaceSword
         , Fuzz.constant Generated.Types.RaceCantor
+        , Fuzz.constant Generated.Types.RaceGargoyle
+        , Fuzz.constant Generated.Types.RaceAquarian
         , Fuzz.constant Generated.Types.RacePhlegethon
         , Fuzz.constant Generated.Types.RaceMoorwalker
         , Fuzz.constant Generated.Types.RacePhantasm
@@ -174,6 +176,10 @@ affinityFuzzer =
         , Generated.Types.AffinityWater
         , Generated.Types.AffinityWind
         , Generated.Types.AffinityShadows
+        , Generated.Types.AffinityWhispers
+        , Generated.Types.AffinityDreams
+        , Generated.Types.AffinitySilence
+        , Generated.Types.AffinityDivine
         ]
 
 
@@ -268,6 +274,7 @@ magicFuzzer =
         , Generated.Types.MagicMonstrosity
         , Generated.Types.MagicGadgetry
         , Generated.Types.MagicIntegration
+        , Generated.Types.MagicSwordsinging
         , Generated.Types.MagicAlchemy
         , Generated.Types.MagicRunes
         , Generated.Types.MagicCurses
@@ -287,6 +294,10 @@ magicFuzzer =
         , Generated.Types.MagicMetamorphosis
         , Generated.Types.MagicPsychotics
         , Generated.Types.MagicMetallurgy
+        , Generated.Types.MagicAnimism
+        , Generated.Types.MagicMetamagic
+        , Generated.Types.MagicRulership
+        , Generated.Types.MagicVampirism
         , Generated.Types.MagicLifeweaving
         , Generated.Types.MagicVisceramancy
         , Generated.Types.MagicArachnescence
@@ -376,6 +387,27 @@ perkFuzzer =
         , Fuzz.constant Generated.Types.PerkMagicShop
         , Fuzz.constant Generated.Types.PerkKeeper
         , Fuzz.constant Generated.Types.PerkSoulGraft
+        , Fuzz.constant Generated.Types.PerkBarrierWitch
+        , Fuzz.constant Generated.Types.PerkKinesis
+        , Fuzz.constant Generated.Types.PerkTelepathic
+        , Fuzz.constant Generated.Types.PerkDealmaker
+        , Fuzz.constant Generated.Types.PerkEsotericElement
+        , Fuzz.constant Generated.Types.PerkCleanSlate
+        , Fuzz.constant Generated.Types.PerkUnlikelyInheritance
+        , Fuzz.constant Generated.Types.PerkMoonSBlessing
+        , Fuzz.constant Generated.Types.PerkKnighthood
+        , Fuzz.constant Generated.Types.PerkOldSoul
+        , Fuzz.constant Generated.Types.PerkChristmasMagic
+        , Fuzz.constant Generated.Types.PerkApprenticeshipDravina
+        , Fuzz.constant Generated.Types.PerkApprenticeshipNrie
+        , Fuzz.constant Generated.Types.PerkApprenticeshipHaria
+        , Fuzz.constant Generated.Types.PerkApprenticeshipBael
+        , Fuzz.constant Generated.Types.PerkApprenticeshipEpora
+        , Fuzz.constant Generated.Types.PerkApprenticeshipMagnus
+        , Fuzz.constant Generated.Types.PerkApprenticeshipLaria
+        , Fuzz.constant Generated.Types.PerkManaBerry
+        , Fuzz.constant Generated.Types.PerkTheMarshmallowTest
+        , Fuzz.constant Generated.Types.PerkSlowActingPotion
         , Fuzz.constant Generated.Types.PerkFogSight
         , Fuzz.constant Generated.Types.PerkStasis
         , Fuzz.constant Generated.Types.PerkSkimmerDancing
@@ -390,8 +422,12 @@ perkFuzzer =
         , Fuzz.constant Generated.Types.PerkGreaterDragon
         , Fuzz.constant Generated.Types.PerkLavenderExaltation
         , Fuzz.constant Generated.Types.PerkTheMask
+        , Fuzz.constant Generated.Types.PerkInheritance
         , Fuzz.constant Generated.Types.PerkBeastFodder
+        , Fuzz.constant Generated.Types.PerkPotionForgery
+        , Fuzz.constant Generated.Types.PerkMultiFactional
         , Fuzz.constant Generated.Types.PerkCursedLineage
+        , Fuzz.constant Generated.Types.PerkSanguineCurse
         , Fuzz.constant Generated.Types.PerkYouKnowWho
         , Fuzz.constant Generated.Types.PerkSerpentSGaze
         , Fuzz.constant Generated.Types.PerkBabel
@@ -432,6 +468,8 @@ factionFuzzer =
         , Generated.Types.FactionTheOutsiders
         , Generated.Types.FactionTheORC
         , Generated.Types.FactionAlphazonIndustries
+        , Generated.Types.FactionTheLydianSisterhood
+        , Generated.Types.FactionTheSeekerSGuild
         , Generated.Types.FactionTheLodge
         , Generated.Types.FactionIndependents
         ]
@@ -520,6 +558,23 @@ companionFuzzer =
         , Generated.Types.CompanionAnaphalonGreenwield
         , Generated.Types.CompanionBriarGracehollow
         , Generated.Types.CompanionDuchessSaelAstraOfOdalle
+        , Generated.Types.CompanionBeatriceWright
+        , Generated.Types.CompanionSigridJansson
+        , Generated.Types.CompanionHestia
+        , Generated.Types.CompanionVerse
+        , Generated.Types.CompanionLysander
+        , Generated.Types.CompanionSylvieBennet
+        , Generated.Types.CompanionHeatherAndSage
+        , Generated.Types.CompanionFiraSwiftriver
+        , Generated.Types.CompanionVivianBrooks
+        , Generated.Types.CompanionCaptainElaraKareva
+        , Generated.Types.CompanionLeonRivera
+        , Generated.Types.CompanionThalia
+        , Generated.Types.CompanionCinnamon
+        , Generated.Types.CompanionTabithaTabbiMcCalister
+        , Generated.Types.CompanionVictoriaLaRue
+        , Generated.Types.CompanionElysia
+        , Generated.Types.CompanionMasterJara
         , Generated.Types.CompanionXiaoLiena
         , Generated.Types.CompanionJin
         , Generated.Types.CompanionSaraStar
@@ -579,6 +634,8 @@ questFuzzer =
         , Generated.Types.QuestStarCrypt
         , Generated.Types.QuestDungeoneering
         , Generated.Types.QuestWitchesGotTalent
+        , Generated.Types.QuestRiseAboveTheClouds
+        , Generated.Types.QuestWatchersInTheOutfield
         , Generated.Types.QuestFamiliarPlaydate
         , Generated.Types.QuestAdventureTime
         , Generated.Types.QuestSpecialDelivery
@@ -672,6 +729,13 @@ relicFuzzer =
         , Fuzz.constant Generated.Types.RelicHydron
         , Fuzz.constant Generated.Types.RelicCollection
         , Fuzz.constant Generated.Types.RelicWitchKisses
+        , Fuzz.constant Generated.Types.RelicChronalScanner
+        , Fuzz.constant Generated.Types.RelicBindingTablets
+        , Fuzz.constant Generated.Types.RelicRemoteDoll
+        , Fuzz.constant Generated.Types.RelicAFavorOwed
+        , Fuzz.constant Generated.Types.RelicReaperSScythe
+        , Fuzz.constant Generated.Types.RelicStudyHall
+        , Fuzz.constant Generated.Types.RelicTimesaverPendant
         , Fuzz.constant Generated.Types.RelicTrainerBands
         , Fuzz.constant Generated.Types.RelicBlurForm
         , Fuzz.constant Generated.Types.RelicTomeOfRestore
