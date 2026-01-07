@@ -260,6 +260,9 @@ raceToTypePerkImage race =
         RaceGemini _ ->
             Image.typePerkGemini
 
+        RaceSwarm ->
+            Image.typePerkSwarm
+
         _ ->
             Types.raceToImage race
 
