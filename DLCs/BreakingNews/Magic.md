@@ -28,7 +28,7 @@ Masters of animism have the ability to awaken and bind greater anima. Rather tha
 ## Magic: Metamagic
 - Elements: All
 - Class: Academic
-- Faction: The Lydian Sisterhood
+- Faction: The Seekers' Guild
 
 Metamagic is a broad field encompassing various means of shaping the effects of other magic specializations, or raw mana itself. Naturally, most of what a witch can do with it depends on the other types of magic they have access to, but generally speaking it's used to create more complex or precise effects than would be possible with the other specialization on its own. Nowadays it's most famous for the elaborate technomagic creations that can be woven using high-level metamagic, with the Seekers' Guild's realmships being one example.
 
