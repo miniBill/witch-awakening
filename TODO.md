@@ -1,4 +1,5 @@
 # Missing features
+- Implement Summer School
 - Siren type perk missing the possible 1p option
 - Doll type perk multicost: 1-4
 - Heirloom halving one specific magic
