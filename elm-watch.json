@@ -7,6 +7,10 @@
         "Dump": {
             "inputs": ["src/Dump.elm"],
             "output": "build/dump.js"
+        },
+        "ColorWheel": {
+            "inputs": ["src/ColorWheel.elm"],
+            "output": "build/color-wheel.js"
         }
     },
     "port": 16666,
