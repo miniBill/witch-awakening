@@ -9,9 +9,9 @@ import Html.Events
 import Html.Events.Extra.Pointer as Pointer
 import List.Extra
 import Round
-import TypedSvg exposing (circle, defs, linearGradient, stop, svg, text_)
+import TypedSvg exposing (circle, defs, linearGradient, rect, stop, svg, text_)
 import TypedSvg.Attributes exposing (dominantBaseline, fill, id, offset, stopColor, stroke, textAnchor, viewBox)
-import TypedSvg.Attributes.InPx exposing (cx, cy, fontSize, r, strokeWidth, x, y)
+import TypedSvg.Attributes.InPx exposing (cx, cy, fontSize, height, r, strokeWidth, width, x, x1, x2, y, y1, y2)
 import TypedSvg.Core exposing (Attribute, Svg, text)
 import TypedSvg.Types exposing (AnchorAlignment(..), DominantBaseline(..), Paint(..))
 
@@ -49,8 +49,8 @@ update msg model =
             { model | mouse = mouse }
 
 
-width : number
-width =
+svgElementWidth : number
+svgElementWidth =
     800
 
 
@@ -77,7 +77,7 @@ view model =
             |> svg
                 [ viewBox -100 -100 200 200
                 , Html.Attributes.style "border" "1px solid black"
-                , Html.Attributes.style "width" (String.fromFloat width ++ "px")
+                , Html.Attributes.style "width" (String.fromFloat svgElementWidth ++ "px")
                 , Pointer.onLeave (\_ -> Pointer Nothing)
                 , Pointer.onMove (\ev -> ev |> relativePosition |> Just |> Pointer)
                 ]
@@ -90,8 +90,8 @@ relativePosition event =
         ( x, y ) =
             event.pointer.offsetPos
     in
-    ( x / width * 2 - 1
-    , y / width * 2 - 1
+    ( x / svgElementWidth * 2 - 1
+    , y / svgElementWidth * 2 - 1
     )
 
 
@@ -101,44 +101,127 @@ viewPointer pointer =
         Nothing ->
             []
 
-        Just ( x, y ) ->
+        Just ( px, py ) ->
             let
                 h : Float
                 h =
-                    atan2 y x / (pi * 2)
+                    atan2 py px / (pi * 2)
 
                 c : Float
                 c =
-                    sqrt (x ^ 2 + y ^ 2) / 3
+                    sqrt (px ^ 2 + py ^ 2) / 3
 
-                oklch : Oklch
-                oklch =
-                    Oklch.oklch 0.5 c h
+                stopCount : number
+                stopCount =
+                    100
+
+                labelCount : number
+                labelCount =
+                    20
+
+                ( stops, labels ) =
+                    List.range 0 stopCount
+                        |> List.map
+                            (\i ->
+                                let
+                                    l : Float
+                                    l =
+                                        toFloat i / toFloat stopCount
+
+                                    oklch : Oklch
+                                    oklch =
+                                        Oklch.oklch l c h
+
+                                    gradientStop : Svg msg
+                                    gradientStop =
+                                        stop
+                                            [ offset (String.fromFloat (l * 100) ++ "%")
+                                            , oklch
+                                                |> Oklch.toCssString
+                                                |> stopColor
+                                            ]
+                                            []
+
+                                    label : List (Svg msg)
+                                    label =
+                                        if modBy (stopCount // labelCount) i == 0 then
+                                            [ text_
+                                                [ x -80
+                                                , y (l * 180 - 90)
+                                                , fontSize 4
+                                                , dominantBaseline DominantBaselineMiddle
+                                                , textAnchor AnchorMiddle
+                                                ]
+                                                [ oklch
+                                                    |> Oklch.toColor
+                                                    |> colorToHex
+                                                    |> Maybe.withDefault "???"
+                                                    |> text
+                                                ]
+                                            ]
+
+                                        else
+                                            []
+                                in
+                                ( gradientStop, label )
+                            )
+                        |> List.unzip
+
+                gradient : Svg msg
+                gradient =
+                    defs []
+                        [ linearGradient
+                            [ id "pointer-gradient"
+                            , x1 0
+                            , y1 0
+                            , x2 0
+                            , y2 1
+                            ]
+                            stops
+                        ]
             in
-            defs []
-                [ List.range 0 100
-                    |> List.map
-                        (\i ->
-                            let
-                                percent : Float
-                                percent =
-                                    toFloat i
-                            in
-                            stop
-                                [ offset (String.fromFloat percent ++ "%")
-                                , Oklch.oklch (percent / 100) c h
-                                    |> Oklch.toCssString
-                                    |> stopColor
-                                ]
-                                []
-                        )
-                    |> linearGradient [ id "gradient" ]
-                ]
-                :: colorToCircle
-                    [ fill (Reference "gradient")
-                    , r 8
+            gradient
+                :: rect
+                    [ x -100
+                    , y -90
+                    , width 10
+                    , height 180
+                    , fill (Reference "pointer-gradient")
                     ]
-                    oklch
+                    []
+                :: List.concat labels
+                ++ colorToCircle [ r 8 ] (Oklch.oklch 0.5 c h)
+
+
+colorToHex : Color -> Maybe String
+colorToHex color =
+    let
+        rgba : { red : Float, green : Float, blue : Float, alpha : Float }
+        rgba =
+            Color.toRgba color
+
+        f : Float -> Maybe String
+        f v =
+            (v * 255)
+                |> round
+                |> clamp 0 255
+                |> toHexString
+    in
+    Maybe.map3 (\r g b -> r ++ g ++ b) (f rgba.red) (f rgba.green) (f rgba.blue)
+
+
+toHexString : Int -> Maybe String
+toHexString i =
+    let
+        hs : Maybe Char
+        hs =
+            fromHexDigit (i // 16)
+
+        ls : Maybe Char
+        ls =
+            fromHexDigit (modBy 16 i)
+    in
+    Maybe.map2 (\h l -> String.fromList [ h, l ]) hs ls
 
 
 colorStringToCircle : String -> List (Svg msg)
@@ -148,7 +231,7 @@ colorStringToCircle colorString =
             [ text ("Invalid color: " ++ colorString) ]
 
         Just c ->
-            colorToCircle [ fill (Paint c) ] (Oklch.fromColor c)
+            colorToCircle [] (Oklch.fromColor c)
 
 
 colorToCircle : List (Attribute msg) -> Oklch -> List (Svg msg)
@@ -166,6 +249,9 @@ colorToCircle attrs oklch =
         ([ r 5
          , cx circleX
          , cy circleY
+         , Oklch.toColor oklch
+            |> Paint
+            |> fill
          , (if oklch.lightness >= 0.5 then
                 Color.black
 
@@ -224,6 +310,61 @@ toHex h l =
     Maybe.map2 (\hx lx -> hx * 16 + lx)
         (toHexDigit h)
         (toHexDigit l)
+
+
+fromHexDigit : Int -> Maybe Char
+fromHexDigit c =
+    case c of
+        0x00 ->
+            Just '0'
+
+        0x01 ->
+            Just '1'
+
+        0x02 ->
+            Just '2'
+
+        0x03 ->
+            Just '3'
+
+        0x04 ->
+            Just '4'
+
+        0x05 ->
+            Just '5'
+
+        0x06 ->
+            Just '6'
+
+        0x07 ->
+            Just '7'
+
+        0x08 ->
+            Just '8'
+
+        0x09 ->
+            Just '9'
+
+        0x0A ->
+            Just 'a'
+
+        0x0B ->
+            Just 'b'
+
+        0x0C ->
+            Just 'c'
+
+        0x0D ->
+            Just 'd'
+
+        0x0E ->
+            Just 'e'
+
+        0x0F ->
+            Just 'f'
+
+        _ ->
+            Nothing
 
 
 toHexDigit : Char -> Maybe Int
