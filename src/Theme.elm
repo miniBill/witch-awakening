@@ -8,6 +8,7 @@ import Element.Font as Font
 import Element.Input as Input
 import Generated.Affinity as Affinity
 import Generated.Class as Class
+import Generated.Companion as Companion
 import Generated.Gradient as Gradient
 import Generated.Image as Image exposing (Image)
 import Generated.Magic as Magic
@@ -370,6 +371,9 @@ viewPiece expandBadges piece =
 
         Perk perk ->
             viewGenericBadge expandBadges (Types.perkToImage perk) (Perk.toString perk)
+
+        Companion companion ->
+            viewGenericBadge expandBadges (Types.companionToImage companion) (Companion.toString companion)
 
         Race race ->
             viewGenericBadge expandBadges (Types.raceToImage race) (Race.toString race)

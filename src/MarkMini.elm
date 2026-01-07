@@ -42,6 +42,7 @@ type Piece
     | Magic Types.Magic
     | Size Types.Size
     | Quest Types.Quest
+    | Companion Types.Companion
 
 
 type Color
@@ -173,47 +174,7 @@ mainParser =
                 ]
         , Parser.succeed identity
             |. Parser.symbol "{"
-            |= Parser.oneOf
-                [ Parser.succeed Colored
-                    |= Parser.oneOf
-                        ((Parser.succeed ChoiceColor
-                            |. Parser.symbol "choice"
-                         )
-                            :: List.map
-                                (\name ->
-                                    Parser.succeed (SlotColor name)
-                                        |. Parser.symbol (Slot.toString name |> String.toLower)
-                                )
-                                [ SlotFolk
-                                , SlotNoble
-                                , SlotHeroic
-                                , SlotEpic
-                                , SlotWhite
-                                ]
-                            ++ List.map
-                                (\{ name } ->
-                                    Parser.succeed (ClassColor name)
-                                        |. Parser.symbol (Class.toString name |> String.toLower)
-                                )
-                                Class.all
-                            ++ List.map
-                                (\{ name } ->
-                                    Parser.succeed (AffinityColor name)
-                                        |. Parser.symbol (Affinity.toString name |> String.toLower)
-                                )
-                                Affinity.all
-                        )
-                    |. Parser.symbol " "
-                    |= innerParser '}'
-                , Parser.succeed Smol
-                    |. Parser.symbol "smol "
-                    |= innerParser '}'
-                , Parser.succeed RewardPoints
-                    |= Parser.getChompedString
-                        (Parser.chompIf (\c -> Char.isDigit c || c == '-' || c == '+' || c == '/')
-                            |. Parser.chompWhile (\c -> Char.isDigit c || c == '-' || c == '+' || c == '/')
-                        )
-                ]
+            |= parseBraces
             |. Parser.symbol "}"
         , Parser.succeed Text
             |= Parser.getChompedString
@@ -223,6 +184,51 @@ mainParser =
                 )
         ]
         |> many
+
+
+parseBraces : Parser Piece
+parseBraces =
+    Parser.oneOf
+        [ Parser.succeed Colored
+            |= Parser.oneOf
+                ((Parser.succeed ChoiceColor
+                    |. Parser.symbol "choice"
+                 )
+                    :: List.map
+                        (\name ->
+                            Parser.succeed (SlotColor name)
+                                |. Parser.symbol (Slot.toString name |> String.toLower)
+                        )
+                        [ SlotFolk
+                        , SlotNoble
+                        , SlotHeroic
+                        , SlotEpic
+                        , SlotWhite
+                        ]
+                    ++ List.map
+                        (\{ name } ->
+                            Parser.succeed (ClassColor name)
+                                |. Parser.symbol (Class.toString name |> String.toLower)
+                        )
+                        Class.all
+                    ++ List.map
+                        (\{ name } ->
+                            Parser.succeed (AffinityColor name)
+                                |. Parser.symbol (Affinity.toString name |> String.toLower)
+                        )
+                        Affinity.all
+                )
+            |. Parser.symbol " "
+            |= innerParser '}'
+        , Parser.succeed Smol
+            |. Parser.symbol "smol "
+            |= innerParser '}'
+        , Parser.succeed RewardPoints
+            |= Parser.getChompedString
+                (Parser.chompIf (\c -> Char.isDigit c || c == '-' || c == '+' || c == '/')
+                    |. Parser.chompWhile (\c -> Char.isDigit c || c == '-' || c == '+' || c == '/')
+                )
+        ]
 
 
 parseEntity : Parser Piece
@@ -274,6 +280,9 @@ parseSquareBrackets str =
             , \input ->
                 Types.sizeFromString input
                     |> Maybe.map Size
+            , \input ->
+                Types.companionFromString input
+                    |> Maybe.map Companion
             , \input ->
                 if String.startsWith "http" input then
                     Just (Link input)
