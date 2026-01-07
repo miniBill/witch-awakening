@@ -638,6 +638,7 @@ type alias Companion =
     , mixed : List String
     , has : String
     , quote : String
+    , requires : Maybe String
     , description : String
     }
 
@@ -692,6 +693,7 @@ companion =
         |> manyItems "Mixed" Ok
         |> optionalItem "Has" "" Ok
         |> requiredItem "Quote" Ok
+        |> maybeItem "Requires" Ok
         |> parseSection
     )
         |= paragraphs True

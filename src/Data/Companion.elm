@@ -1,26 +1,6 @@
-module Data.Companion exposing (Details, MaybeClass(..), Score(..))
+module Data.Companion exposing (MaybeClass(..), Score(..))
 
-import Generated.Types exposing (Class, Companion, Race)
-
-
-type alias Details =
-    { name : Companion
-    , class : MaybeClass
-    , races : List Race
-    , hasPerk : Bool
-    , cost : Maybe Int
-    , power : Score
-    , teamwork : Score
-    , sociability : Score
-    , morality : Score
-    , quote : String
-    , description : String
-    , positives : List String
-    , negatives : List String
-    , mixed : List String
-    , has : String
-    , dlc : Maybe String
-    }
+import Generated.Types exposing (Class)
 
 
 type MaybeClass

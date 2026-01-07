@@ -242,7 +242,7 @@ Lysander's sister, though the two are somewhat estranged over Thalia's choice to
 - Teamwork: 7
 - Sociability: 10
 - Morality: 7
-- Quote: “Hey! Hey! Where are you all headed!? Collecting potion ingredients!? Can I come!?” - Cinnamon
+- Quote: _*“Hey! Hey! Where are you all headed!? Collecting potion ingredients!? Can I come!?” - Cinnamon*_
 - Positive: + Adorable, and knows how to use it to his advantage
 - Positive: + Has made friends in several factions
 - Negative: - No opposable thumbs
@@ -259,7 +259,7 @@ Cinnamon was an ordinary dog a few decades ago before falling into wild rift, co
 - Teamwork: 5
 - Sociability: 7
 - Morality: 6
-- Quote: “So the Moonshade clan wants a new lifeshrine guardian, got a really cool new neurotoxin I'm doing for them...” - Tabbi
+- Quote: _*“So the Moonshade clan wants a new lifeshrine guardian, got a really cool new neurotoxin I'm doing for them...” - Tabbi*_
 - Positive: + Very creative
 - Positive: + Her visceramancy is innate, not linked to Hespatia
 - Negative: - Few compunctions about who she sells to
@@ -276,7 +276,7 @@ The heir to a bloodline of life-mages, Tabbi has a passion for fleshcrafting, an
 - Teamwork: 7
 - Sociability: 4
 - Morality: 2
-- Quote: “If you really need a problem gone, she's your best bet. Just make sure you can pay up” - a client
+- Quote: _*“If you really need a problem gone, she's your best bet. Just make sure you can pay up” - a client*_
 - Positive: + Always knows a guy
 - Positive: + Values ambition and initiative
 - Negative: - Always working
@@ -293,7 +293,7 @@ One of witchdom's most successful independent brokers, Victoria sits at the cent
 - Teamwork: 10
 - Sociability: 4
 - Morality: 8
-- Quote: “The king's blade struck true and the bane of the Jotunlands was no more” - an old Alfheimr epic
+- Quote: _*“The king's blade struck true and the bane of the Jotunlands was no more” - an old Alfheimr epic*_
 - Positive: + Incredible fighter in both forms
 - Positive: + It's possible to prove yourself worthy
 - Negative: - Only accepts wielders she considers worthy
@@ -301,3 +301,21 @@ One of witchdom's most successful independent brokers, Victoria sits at the cent
 - Mixed: +/- A living legend among witches, she'll attract quite a bit of attention
 - Has: Elysia has Metallurgy 4, Swordsinging 5, Windsong, Memorize, Soul Weapon (sword), Sun Shard, Riftblade
 An ancient blade of legend, Elysia has fought alongside heroes and shaped history many times. Once quite the revolutionary, seeing history repeat itself with new tyrants and some of her own allies corrupted by power caused her to withdraw from magical society. She hasn't taken a wielder since, but now travels the realms as a knight-errant, slaying evil and saving the helpless wherever she goes.
+
+
+## Companion: Pandora
+- Requires: Pandora's Box
+- Cost: 15
+- Race: Swarm
+- Has Perk: True
+- Class: Special
+- Power: 10
+- Teamwork: 5
+- Sociability: 5
+- Morality: 5
+- Quote: _*“The Seekers told me what I did before, though I don't remember. I wonder, do you hate me for it?” - Pandora*_
+- Positive: + Can slowly grow stronger by absorbing other creatures, especially more powerful ones
+- Negative: - Doing so will also weaken her connection to you
+- Mixed: +/- Thanks to inherited memories, considers herself to be an gestalt of everyone she consumes
+- Has: Pandora has the equivalent of R5 Blue magic, Soul Graft (Husk), and Synthetic Hive
+The base form of the Pandora swarm, now a blank slate with little personality beyond a strong curiosity about the world around her. By investing power, you can imprint her with a sense of loyalty to you, and be the one tasked with ensuring she doesn't try to take over the universe again. Over the next few years, she'll develop into an individual shaped by both what she's assimilated, and her own experiences.

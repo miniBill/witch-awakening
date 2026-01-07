@@ -87,4 +87,4 @@ Notes:
 + It could be anyone, be careful who you trust
 
 ### Sidebar
-Alternatively, the lab has a “factory reset” option as well as the kill switch. Taking this route unlocks the reset swarm as a potential companion (see below)
+Alternatively, the lab has a “factory reset” option as well as the kill switch. Taking this route unlocks the reset swarm as a potential companion: [Pandora].

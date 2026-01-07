@@ -10,6 +10,7 @@
 - Finite option for the Compulsion drawback
 - Mark which secondary class you get from the Neutral perk
 - Weird companion races in Breaking News
+- Finish implementing Swarm
 
 # Checks
 - Check all faction perks implementations

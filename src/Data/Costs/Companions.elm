@@ -177,7 +177,7 @@ totalCompanionValue model companions =
     in
     companions
         |> Monad.mapAndSum
-            (\( _, { name, cost } ) ->
+            (\( _, { name, cost } as details ) ->
                 let
                     nameString : String
                     nameString =
@@ -185,7 +185,8 @@ totalCompanionValue model companions =
                 in
                 case Dict.get nameString forFree of
                     Just reason ->
-                        Monad.succeed 0
+                        0
+                            |> Utils.checkRequirements details nameString model
                             |> Monad.withInfo
                                 { label = nameString
                                 , kind = IdKindCompanion
@@ -196,7 +197,8 @@ totalCompanionValue model companions =
                     Nothing ->
                         case cost of
                             Just v ->
-                                Monad.succeed -v
+                                -v
+                                    |> Utils.checkRequirements details nameString model
                                     |> Monad.withPowerInfo IdKindCompanion nameString
 
                             Nothing ->

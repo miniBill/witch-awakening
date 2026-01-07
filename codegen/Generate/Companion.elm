@@ -18,6 +18,7 @@ import String.Extra
 type alias CompanionModule =
     { all : Elm.Expression
     , toString : Elm.Expression -> Elm.Expression
+    , details : Elm.Annotation.Annotation
     }
 
 
@@ -28,6 +29,7 @@ file types enum dlcCompanions =
             Elm.Declare.module_ [ "Generated", "Companion" ] CompanionModule
                 |> Elm.Declare.with allDeclaration
                 |> Elm.Declare.with (Enum.toString enum)
+                |> Elm.Declare.with (details types)
                 |> Elm.Declare.Extra.withDeclarations (dlcToCompanions types dlcCompanions)
         )
         (all types dlcCompanions)
@@ -64,11 +66,60 @@ all types dlcCompanions =
                         (Elm.Annotation.list
                             (Elm.Annotation.tuple
                                 (Elm.Annotation.maybe types.faction.annotation)
-                                (Elm.Annotation.list Gen.Data.Companion.annotation_.details)
+                                (Elm.Annotation.list (details types).annotation)
                             )
                         )
                     |> Elm.Declare.value "all"
             )
+
+
+details :
+    TypesModule
+    ->
+        { annotation : Elm.Annotation.Annotation
+        , declaration : Elm.Declaration
+        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
+        , make :
+            { name : Elm.Expression
+            , class : Elm.Expression
+            , races : Elm.Expression
+            , hasPerk : Elm.Expression
+            , cost : Elm.Expression
+            , power : Elm.Expression
+            , teamwork : Elm.Expression
+            , sociability : Elm.Expression
+            , morality : Elm.Expression
+            , quote : Elm.Expression
+            , description : Elm.Expression
+            , positives : Elm.Expression
+            , negatives : Elm.Expression
+            , mixed : Elm.Expression
+            , has : Elm.Expression
+            , dlc : Elm.Expression
+            , requires : Elm.Expression
+            }
+            -> Elm.Expression
+        }
+details types =
+    Elm.Declare.Extra.customRecord "Details"
+        |> Elm.Declare.Extra.withField "name" .name types.companion.annotation
+        |> Elm.Declare.Extra.withField "class" .class Gen.Data.Companion.annotation_.maybeClass
+        |> Elm.Declare.Extra.withField "races" .races (Elm.Annotation.list types.race.annotation)
+        |> Elm.Declare.Extra.withField "hasPerk" .hasPerk Elm.Annotation.bool
+        |> Elm.Declare.Extra.withField "cost" .cost (Elm.Annotation.maybe Elm.Annotation.int)
+        |> Elm.Declare.Extra.withField "power" .power Gen.Data.Companion.annotation_.score
+        |> Elm.Declare.Extra.withField "teamwork" .teamwork Gen.Data.Companion.annotation_.score
+        |> Elm.Declare.Extra.withField "sociability" .sociability Gen.Data.Companion.annotation_.score
+        |> Elm.Declare.Extra.withField "morality" .morality Gen.Data.Companion.annotation_.score
+        |> Elm.Declare.Extra.withField "quote" .quote Elm.Annotation.string
+        |> Elm.Declare.Extra.withField "description" .description Elm.Annotation.string
+        |> Elm.Declare.Extra.withField "positives" .positives (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.Extra.withField "negatives" .negatives (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.Extra.withField "mixed" .mixed (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.Extra.withField "has" .has Elm.Annotation.string
+        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.Extra.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.Extra.buildCustomRecord
 
 
 factionToOrder : Maybe String -> ResultME Generate.Error Int
@@ -155,7 +206,7 @@ dlcToCompanions types companions =
                                     ]
                                 )
             in
-            Gen.Data.Companion.make_.details
+            (details types).make
                 { name = types.companion.value companion.name
                 , class = class
                 , races =
@@ -191,6 +242,7 @@ dlcToCompanions types companions =
                 , mixed = Elm.list (List.map Elm.string companion.mixed)
                 , has = Elm.string companion.has
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                , requires = Elm.maybe (Maybe.map Elm.string companion.requires)
                 }
                 |> Elm.declaration (yassify companion.name)
                 |> Elm.expose
