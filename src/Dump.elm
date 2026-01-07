@@ -162,7 +162,7 @@ dump model =
                 |> List.filterMap
                     (\( faction, companions ) ->
                         let
-                            filtered : List Data.Companion.Details
+                            filtered : List Companion.Details
                             filtered =
                                 List.filter
                                     (\companion -> companion.dlc == model.dlc)
@@ -373,14 +373,14 @@ dumpFaction faction =
     ]
 
 
-dumpCompanions : Maybe Faction -> List Data.Companion.Details -> String
+dumpCompanions : Maybe Faction -> List Companion.Details -> String
 dumpCompanions faction companions =
     companions
         |> List.map (dumpCompanion faction)
         |> String.join "\n\n\n"
 
 
-dumpCompanion : Maybe Faction -> Data.Companion.Details -> String
+dumpCompanion : Maybe Faction -> Companion.Details -> String
 dumpCompanion faction companion =
     let
         class : Maybe String
