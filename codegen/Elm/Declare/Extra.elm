@@ -1,4 +1,4 @@
-module Elm.Declare.Extra exposing (buildCustomRecord, customRecord, exposeConstructor, withDeclarations, withField, withHelper)
+module Elm.Declare.Extra exposing (CustomRecord, buildCustomRecord, customRecord, exposeConstructor, withDeclarations, withField)
 
 import Elm
 import Elm.Annotation
@@ -8,14 +8,6 @@ import Elm.Declare
 withDeclarations : List Elm.Declaration -> Elm.Declare.Module val -> Elm.Declare.Module val
 withDeclarations declarations module_ =
     { module_ | declarations = List.reverse declarations ++ module_.declarations }
-
-
-withHelper : a -> Elm.Declare.Module (a -> b) -> Elm.Declare.Module b
-withHelper helper module_ =
-    { name = module_.name
-    , declarations = module_.declarations
-    , call = module_.call helper
-    }
 
 
 type alias CustomRecord type_ =

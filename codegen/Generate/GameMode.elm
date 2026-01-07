@@ -51,7 +51,12 @@ gameModeDetails types =
 all : TypesModule -> List ( Maybe String, Parsers.GameMode ) -> Elm.Declare.Value
 all types dlcGameModes =
     dlcGameModes
-        |> List.map (\( _, gameMode ) -> Elm.val (String.Extra.decapitalize (yassify gameMode.name)))
+        |> List.map
+            (\( _, gameMode ) ->
+                yassify gameMode.name
+                    |> String.Extra.decapitalize
+                    |> Elm.val
+            )
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list (gameModeDetails types).annotation)
         |> Elm.Declare.value "all"

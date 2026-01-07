@@ -1,4 +1,4 @@
-module Elm.Op.Extra exposing (..)
+module Elm.Op.Extra exposing (appendsStrings)
 
 import Elm
 import Elm.Op

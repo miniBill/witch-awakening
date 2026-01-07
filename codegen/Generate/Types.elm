@@ -1,4 +1,4 @@
-module Generate.Types exposing (TypesModule, file)
+module Generate.Types exposing (EnumModule, TypesModule, file)
 
 import Data exposing (Enums)
 import Elm

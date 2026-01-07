@@ -1,4 +1,4 @@
-module Generate.Faction exposing (..)
+module Generate.Faction exposing (FactionsModule, file)
 
 import Elm
 import Elm.Annotation
@@ -88,7 +88,9 @@ all types dlcFactions =
         |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.map
             (\( _, faction ) ->
-                Elm.val (String.Extra.decapitalize (yassify faction.name))
+                yassify faction.name
+                    |> String.Extra.decapitalize
+                    |> Elm.val
             )
         |> Elm.list
         |> Gen.List.call_.sortBy

@@ -8,7 +8,7 @@ import Gen.Data.Complication
 import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
-import Parsers exposing (Content(..))
+import Parsers
 import String.Extra
 
 
@@ -30,7 +30,12 @@ all : List ( Maybe String, Parsers.Complication ) -> Elm.Declare.Value
 all dlcComplications =
     dlcComplications
         |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-        |> List.map (\( _, complication ) -> Elm.val (String.Extra.decapitalize (yassify complication.name)))
+        |> List.map
+            (\( _, complication ) ->
+                yassify complication.name
+                    |> String.Extra.decapitalize
+                    |> Elm.val
+            )
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list Gen.Data.Complication.annotation_.details)
         |> Elm.Declare.value "all"

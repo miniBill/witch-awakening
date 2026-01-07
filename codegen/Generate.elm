@@ -132,7 +132,7 @@ toFiles root =
                         Ok ( [ fileContent ], [], [] )
 
                     _ ->
-                        if String.endsWith "_gradient.ppm" fileName then
+                        if String.endsWith Generate.Gradient.suffix fileName then
                             Ok ( [], [ ( fileName, fileContent ) ], [] )
 
                         else if String.endsWith ".md" fileName then

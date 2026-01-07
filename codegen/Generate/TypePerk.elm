@@ -72,7 +72,10 @@ all types dlcRaces =
                     Nothing
 
                 else
-                    Just (Elm.val (String.Extra.decapitalize (yassify race.name)))
+                    yassify race.name
+                        |> String.Extra.decapitalize
+                        |> Elm.val
+                        |> Just
             )
         |> Elm.list
         |> Gen.List.call_.sortBy

@@ -58,7 +58,12 @@ details types =
 all : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Value
 all types dlcClasses =
     dlcClasses
-        |> List.map (\( _, class ) -> Elm.val (String.Extra.decapitalize (yassify class.name)))
+        |> List.map
+            (\( _, class ) ->
+                yassify class.name
+                    |> String.Extra.decapitalize
+                    |> Elm.val
+            )
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list (details types).annotation)
         |> Elm.Declare.value "all"

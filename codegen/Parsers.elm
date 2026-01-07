@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Evil(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), dlc, parseFiles)
+module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Evil(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), parseFiles)
 
 import Ansi.Color
 import Dict exposing (Dict)
@@ -982,7 +982,9 @@ intListParser raw =
             ResultME.error (raw ++ " is not a valid list of numbers")
 
         Just n ->
-            Ok (List.sort (List.concat n))
+            List.concat n
+                |> List.sort
+                |> Ok
 
 
 stringListParser : String -> ResultME String (List String)

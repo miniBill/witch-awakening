@@ -1,4 +1,4 @@
-module Generate.Gradient exposing (gradients)
+module Generate.Gradient exposing (gradients, suffix)
 
 import Elm
 import Gen.CodeGen.Generate as Generate
@@ -15,11 +15,6 @@ gradients files =
 
 gradient : ( String, String ) -> ResultME Generate.Error Elm.Declaration
 gradient ( fileName, content ) =
-    let
-        name : String
-        name =
-            String.dropRight (String.length "_gradient.ppm") fileName
-    in
     case
         content
             |> String.dropLeft 1
@@ -37,6 +32,11 @@ gradient ( fileName, content ) =
             rowsToExpression rows
                 |> Result.map
                     (\expr ->
+                        let
+                            name : String
+                            name =
+                                String.dropRight (String.length suffix) fileName
+                        in
                         expr
                             |> Elm.declaration (name ++ "Gradient")
                             |> Elm.expose
@@ -44,6 +44,11 @@ gradient ( fileName, content ) =
 
         _ ->
             ResultME.error { title = "Invalid file", description = "Could not parse file" }
+
+
+suffix : String
+suffix =
+    "_gradient.ppm"
 
 
 rowsToExpression : List (List Int) -> ResultME Generate.Error Elm.Expression
@@ -59,7 +64,8 @@ parseRow : List Int -> ResultME Generate.Error Elm.Expression
 parseRow row =
     case row of
         [ r, g, b ] ->
-            Ok (Elm.triple (Elm.int r) (Elm.int g) (Elm.int b))
+            Elm.triple (Elm.int r) (Elm.int g) (Elm.int b)
+                |> Ok
 
         _ ->
             ResultME.error

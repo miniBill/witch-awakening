@@ -10,7 +10,7 @@ import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
 import List.Extra
-import Parsers exposing (Score(..))
+import Parsers
 import ResultME exposing (ResultME)
 import String.Extra
 
@@ -52,8 +52,9 @@ all types dlcCompanions =
                                 ((head :: tail)
                                     |> List.map
                                         (\( _, companion ) ->
-                                            Elm.val
-                                                (String.Extra.decapitalize (yassify companion.name))
+                                            yassify companion.name
+                                                |> String.Extra.decapitalize
+                                                |> Elm.val
                                         )
                                     |> Elm.list
                                 )

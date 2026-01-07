@@ -7,7 +7,7 @@ import Elm.Declare.Extra
 import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
-import Parsers exposing (Score(..))
+import Parsers
 import String.Extra
 
 
@@ -110,7 +110,12 @@ all : TypesModule -> List ( Maybe String, Parsers.Quest ) -> Elm.Declare.Value
 all types dlcQuests =
     dlcQuests
         |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-        |> List.map (\( _, quest ) -> Elm.val (String.Extra.decapitalize (yassify quest.name)))
+        |> List.map
+            (\( _, quest ) ->
+                yassify quest.name
+                    |> String.Extra.decapitalize
+                    |> Elm.val
+            )
         |> Elm.list
         |> Elm.withType (Elm.Annotation.list (details types).annotation)
         |> Elm.Declare.value "all"

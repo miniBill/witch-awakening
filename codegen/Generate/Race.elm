@@ -48,12 +48,19 @@ all types dlcRaces =
                 |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
                 |> List.map
                     (\( _, race ) ->
+                        let
+                            simple : Elm.Expression
+                            simple =
+                                yassify race.name
+                                    |> String.Extra.decapitalize
+                                    |> Elm.val
+                        in
                         case race.elements of
                             [ _, _ ] ->
-                                Elm.val (String.Extra.decapitalize (yassify race.name))
+                                simple
 
                             _ ->
-                                Elm.apply (Elm.val (String.Extra.decapitalize (yassify race.name))) [ races ]
+                                Elm.apply simple [ races ]
                     )
                 |> Elm.list
                 |> Gen.List.call_.sortBy
@@ -136,7 +143,8 @@ raceToDeclaration types dlcName race =
                                         (\affs ->
                                             case affs of
                                                 [ aff1, aff2 ] ->
-                                                    Elm.maybe (Just (Elm.tuple aff1 aff2))
+                                                    Just (Elm.tuple aff1 aff2)
+                                                        |> Elm.maybe
 
                                                 _ ->
                                                     Elm.maybe Nothing

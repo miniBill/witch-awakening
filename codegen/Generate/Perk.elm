@@ -17,7 +17,7 @@ import Gen.Types
 import Generate.Enum as Enum exposing (Argument(..), Enum)
 import Generate.Types exposing (TypesModule)
 import Generate.Utils exposing (yassify)
-import Parsers exposing (Content(..))
+import Parsers
 import ResultME exposing (ResultME)
 import String.Extra
 
@@ -56,11 +56,18 @@ all types dlcPerks =
                 |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
                 |> List.map
                     (\( _, perk ) ->
+                        let
+                            simple : Elm.Expression
+                            simple =
+                                yassify perk.name
+                                    |> String.Extra.decapitalize
+                                    |> Elm.val
+                        in
                         if List.isEmpty perk.arguments then
-                            Elm.val (String.Extra.decapitalize (yassify perk.name))
+                            simple
 
                         else
-                            Elm.apply (Elm.val (String.Extra.decapitalize (yassify perk.name))) [ perks ]
+                            Elm.apply simple [ perks ]
                     )
                 |> Elm.list
             )
