@@ -52,13 +52,13 @@ viewTitle allCompact =
                     [ Font.center
                     , Font.size 52
                     ]
-                    [ Theme.gradientText Morpheus 4 Gradient.grayGradient "Heavy Metal"
+                    [ Theme.gradientText Morpheus [] 4 Gradient.grayGradient "Heavy Metal"
                     , text " "
-                    , Theme.gradientText Morpheus 4 Gradient.yellowGradient "&"
+                    , Theme.gradientText Morpheus [] 4 Gradient.yellowGradient "&"
                     , text " "
-                    , Theme.gradientText Morpheus 4 Gradient.orangeGradient "Witch Party"
+                    , Theme.gradientText Morpheus [] 4 Gradient.orangeGradient "Witch Party"
                     , text " "
-                    , Theme.gradientText Morpheus 4 Gradient.yellowGradient "Update"
+                    , Theme.gradientText Morpheus [] 4 Gradient.yellowGradient "Update"
                     ]
                 , paragraph
                     [ alignRight

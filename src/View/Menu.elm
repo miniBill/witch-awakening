@@ -561,22 +561,18 @@ rightPoints kind value =
             else
                 joined
     in
-    rightText kind fullString
+    el
+        [ alignRight
+
+        -- , Theme.captureIt
+        , Font.size 20
+        ]
+        (Theme.blocks [] kind fullString)
 
 
 emptyRowContent : String
 emptyRowContent =
     "[-] {-}"
-
-
-rightText : IdKind -> String -> Element msg
-rightText kind value =
-    el
-        [ alignRight
-        , Theme.captureIt
-        , Font.size 20
-        ]
-        (Theme.blocks [] kind value)
 
 
 capSlider : Model key -> Element Msg

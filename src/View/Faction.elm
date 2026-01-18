@@ -270,12 +270,14 @@ introRow display { name, dlc, motto, images } =
                         Element.none
 
                     Just dlcName ->
-                        el
+                        Theme.gradientTextWrapped CaptureIt
                             [ centerX
                             , Font.size 24
                             , moveDown 4
                             ]
-                            (Theme.gradientText CaptureIt 4 Gradient.purpleGradient dlcName)
+                            4
+                            Gradient.purpleGradient
+                            dlcName
                 )
             ]
             [ img images.image1

@@ -1,4 +1,4 @@
-module Theme exposing (Font(..), backgroundColor, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
+module Theme exposing (Font(..), backgroundColor, blocks, borderColor, borderGlow, button, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -111,19 +111,14 @@ gradientTextSplit font outlineSize gradient value =
             (\word ->
                 word
                     |> String.split "\u{200B}"
-                    |> List.map (\p -> gradientText font outlineSize gradient (p ++ "\u{200B}"))
+                    |> List.map (\p -> gradientText font [] outlineSize gradient (p ++ "\u{200B}"))
             )
         |> List.Extra.intercalate [ text " " ]
 
 
-gradientText : Font -> Float -> List ( Int, Int, Int ) -> String -> Element msg
-gradientText font outlineSize gradient value =
-    let
-        attrs : List (Attribute msg)
-        attrs =
-            fontToAttributes font
-    in
-    el attrs <| Element.html <| gradientTextHtml outlineSize gradient value
+gradientText : Font -> List (Attribute msg) -> Float -> List ( Int, Int, Int ) -> String -> Element msg
+gradientText font attrs outlineSize gradient value =
+    el (fontToAttributes font ++ attrs) <| Element.html <| gradientTextHtml outlineSize gradient value
 
 
 gradientTextHtml : Float -> List ( Int, Int, Int ) -> String -> Html msg
@@ -149,11 +144,6 @@ rgbToString ( r, g, b ) =
         ++ " "
         ++ String.fromInt b
         ++ ")"
-
-
-captureIt : Attribute msg
-captureIt =
-    Font.family [ Font.typeface "Capture It" ]
 
 
 compactBlocks : List (Attribute msg) -> IdKind -> String -> Element msg
@@ -1033,5 +1023,4 @@ viewSize :
 viewSize gradient size =
     Size.toString size
         |> String.replace "Medium" "Med"
-        |> gradientText Morpheus 4 gradient
-        |> el [ Font.size 20 ]
+        |> gradientText Morpheus [ Font.size 20 ] 4 gradient

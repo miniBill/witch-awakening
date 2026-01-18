@@ -136,7 +136,7 @@ elementalIntro =
                     (\c ->
                         c
                             |> String.fromChar
-                            |> Theme.gradientText Morpheus 4 Gradient.blueGradient
+                            |> Theme.gradientText Morpheus [] 4 Gradient.blueGradient
                     )
                 |> Element.wrappedRow
                     [ Font.size 58
@@ -393,8 +393,8 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
 magicTitle : Display -> Magic.Details -> Element msg
 magicTitle display { name, hasRankZero, class, affinities } =
     let
-        common : List (Element msg)
-        common =
+        badges : List (Element msg)
+        badges =
             [ case class of
                 ClassNone ->
                     Element.none
@@ -413,22 +413,25 @@ magicTitle display { name, hasRankZero, class, affinities } =
                         ]
                         Image.badgeSpecial
             , if hasRankZero then
-                el
+                Theme.gradientText Theme.NoFont
                     [ Font.size 48
-                    , moveUp 8
                     , centerY
+                    , moveUp 8
                     ]
-                <|
-                    Theme.gradientText Theme.NoFont 1 Gradient.yellowGradient "★"
+                    1
+                    Gradient.yellowGradient
+                    "★"
 
               else
                 Element.none
             ]
-                ++ (Magic.toString name
-                        |> String.split "-"
-                        |> List.intersperse "-"
-                        |> List.map (Theme.gradientTextWrapped Morpheus [] 4 Gradient.yellowGradient)
-                   )
+
+        nameView : List (Element msg)
+        nameView =
+            Magic.toString name
+                |> String.split "-"
+                |> List.intersperse "-"
+                |> List.map (Theme.gradientText Morpheus [] 4 Gradient.yellowGradient)
 
         affinitiesViews : List (Element msg)
         affinitiesViews =
@@ -444,7 +447,7 @@ magicTitle display { name, hasRankZero, class, affinities } =
         , width fill
         , Theme.centerWrap
         ]
-        (common ++ affinitiesViews)
+        (badges ++ nameView ++ affinitiesViews)
 
 
 viewAffinities : Affinities -> List (Element msg)
@@ -473,20 +476,24 @@ viewAffinities affinities =
                                         (Theme.viewAffinity aff)
                                 )
                             |> List.intersperse
-                                (Theme.gradientText Theme.NoFont 2 Gradient.yellowGradient " + "
-                                    |> el
-                                        [ Font.size 24
-                                        , moveUp 4
-                                        ]
+                                (Theme.gradientText Theme.Morpheus
+                                    [ Font.size 24
+                                    , Element.moveUp 2
+                                    ]
+                                    2
+                                    Gradient.yellowGradient
+                                    " + "
                                 )
                             |> Theme.row []
                     )
                 |> List.intersperse
-                    (Theme.gradientText Theme.NoFont 2 Gradient.yellowGradient " OR "
-                        |> el
-                            [ Font.size 24
-                            , moveDown 4
-                            ]
+                    (Theme.gradientText Theme.Morpheus
+                        [ Font.size 24
+                        , moveDown 4
+                        ]
+                        2
+                        Gradient.yellowGradient
+                        " OR "
                     )
 
 
@@ -534,6 +541,7 @@ viewRank selected { name, class } rankIndex label =
                         ]
                       <|
                         Theme.gradientText CaptureIt
+                            []
                             2
                             Gradient.yellowGradient
                             ("Rank " ++ String.fromInt rank)

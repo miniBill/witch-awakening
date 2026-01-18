@@ -121,13 +121,13 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> Theme.gradientText CaptureIt 4 Gradient.blueGradient
+                    |> Theme.gradientText CaptureIt [] 4 Gradient.blueGradient
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> Theme.gradientText CaptureIt 4 Gradient.blueGradient
+                    |> Theme.gradientText CaptureIt [] 4 Gradient.blueGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -265,7 +265,7 @@ viewContent mainRace isSelected relics races typePerks { content, name } color =
                         ((width <| px 24) :: attrs)
                         { label =
                             String.fromInt cost
-                                |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
+                                |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
                                 |> el [ centerX, centerY ]
                         , onPress = Just <| ChoiceRelic ( relic, not isChoiceSelected )
                         }

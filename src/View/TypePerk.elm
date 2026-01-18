@@ -216,12 +216,12 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                                     (\line ->
                                         line
                                             |> String.join " "
-                                            |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
+                                            |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
                                             |> el [ centerX ]
                                     )
 
                          else
-                            [ Theme.gradientText CaptureIt 4 Gradient.yellowGradient n ]
+                            [ Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient n ]
                         )
             , Types.slotToImage slot
                 |> Theme.image [ width <| px 40 ]

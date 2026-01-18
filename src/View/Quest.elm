@@ -166,6 +166,7 @@ questBox display selected number quest =
                             slotGradient : Element msg
                             slotGradient =
                                 Theme.gradientText CelticHand
+                                    []
                                     4
                                     (case quest.slot of
                                         SlotEpic ->
@@ -185,10 +186,14 @@ questBox display selected number quest =
                           if quest.name == QuestDungeoneering then
                             Element.row [ alignRight, spacing 4 ]
                                 [ "Any"
-                                    |> Theme.gradientText CelticHand 4 Gradient.yellowGradient
+                                    |> Theme.gradientText CelticHand [] 4 Gradient.yellowGradient
                                 , "/"
-                                    |> Theme.gradientText CelticHand 4 Gradient.yellowGradient
-                                    |> el [ Font.size 40, Font.bold ]
+                                    |> Theme.gradientText CelticHand
+                                        [ Font.bold
+                                        , Font.size 40
+                                        ]
+                                        4
+                                        Gradient.yellowGradient
                                 , slotGradient
                                 ]
 
@@ -219,13 +224,13 @@ questBox display selected number quest =
                             ]
                     , (number + 1)
                         |> String.fromInt
-                        |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
+                        |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
                         |> el
                             [ Font.size 28
                             ]
                     , if quest.repeatable then
                         "♻️"
-                            |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
+                            |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
                             |> el
                                 [ Font.size 32
                                 , moveDown 24

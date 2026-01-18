@@ -289,19 +289,28 @@ image { name, races, hasPerk, cost } =
             [ cost
                 |> Maybe.map String.fromInt
                 |> Maybe.withDefault "X"
-                |> Theme.gradientText CaptureIt 4 Gradient.blueGradient
-                |> el
+                |> Theme.gradientText CaptureIt
                     [ alignRight
                     , Font.size 32
                     , moveLeft 8
                     , moveDown 4
                     ]
+                    4
+                    Gradient.blueGradient
             , raceLabel
-                |> List.map (\race -> el [ centerX ] (Theme.gradientText CaptureIt 4 Gradient.yellowGradient race))
+                |> List.map
+                    (\race ->
+                        el [ centerX ]
+                            (Theme.gradientText CaptureIt
+                                [ Font.size 32 ]
+                                4
+                                Gradient.yellowGradient
+                                race
+                            )
+                    )
                 |> Theme.column
                     [ alignBottom
                     , centerX
-                    , Font.size 32
                     ]
             , cost
                 |> Maybe.map Types.gainToSlot
@@ -434,11 +443,13 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                 Element.none
 
             Just dlcName ->
-                el
+                Theme.gradientTextWrapped CaptureIt
                     [ centerX
                     , Font.size 24
                     ]
-                    (Theme.gradientText CaptureIt 4 Gradient.purpleGradient dlcName)
+                    4
+                    Gradient.purpleGradient
+                    dlcName
         , statsTable companion
         , Theme.blocks [ Font.size 14 ] IdKindCompanion quote
         , Theme.blocks [] IdKindCompanion description
@@ -580,15 +591,16 @@ statColumn ranking =
                                 [ padding 0
                                 , inFront <|
                                     el [ width fill, height fill ] <|
-                                        el
-                                            [ centerX
-                                            , centerY
-                                            , Font.italic
-                                            , Element.moveLeft 24
+                                        Theme.gradientText NoFont
+                                            [ Font.italic
                                             , Theme.style "z-index" "1"
+                                            , centerX
+                                            , centerY
+                                            , Element.moveLeft 24
                                             ]
-                                        <|
-                                            Theme.gradientText NoFont 2 Gradient.blueGradient "Special Effect"
+                                            2
+                                            Gradient.blueGradient
+                                            "Special Effect"
                                 ]
 
                               else
