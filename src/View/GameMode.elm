@@ -8,7 +8,7 @@ import Generated.GameMode as GameMode
 import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (GameMode)
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), Display, IdKind(..))
 import View
 
@@ -103,18 +103,16 @@ gameModeBox display selected { name, content } =
         , imageHeight = 400
         , image = Types.gameModeToImage name
         , inFront =
-            [ Theme.gradientTextWrapped
+            [ Theme.gradientTextWrapped CaptureIt
                 [ centerX
-                , Theme.captureIt
                 , moveDown 8
                 , Font.size 28
                 ]
                 4
                 gradient
                 "Game Mode"
-            , Theme.gradientTextWrapped
+            , Theme.gradientTextWrapped CelticHand
                 [ alignBottom
-                , Theme.celticHand
                 , Font.size 32
                 , centerX
                 , moveUp 4

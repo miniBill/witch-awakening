@@ -16,7 +16,7 @@ import Generated.Types as Types exposing (Quest(..), Slot(..))
 import Html.Attributes
 import Maybe.Extra
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
 
@@ -117,7 +117,6 @@ questBox display selected number quest =
                 , inFront =
                     [ Theme.column
                         [ width fill
-                        , Theme.captureIt
                         , case quest.evil of
                             Quest.EvilNo ->
                                 paddingXY 16 8
@@ -125,7 +124,7 @@ questBox display selected number quest =
                             _ ->
                                 paddingXY 64 8
                         ]
-                        [ Theme.gradientTextWrapped
+                        [ Theme.gradientTextWrapped CaptureIt
                             [ Font.size 32
                             , centerX
                             ]
@@ -137,7 +136,7 @@ questBox display selected number quest =
                                 Element.none
 
                             Just dlcName ->
-                                Theme.gradientTextWrapped
+                                Theme.gradientTextWrapped CaptureIt
                                     [ Font.size 24
                                     , centerX
                                     ]
@@ -159,7 +158,7 @@ questBox display selected number quest =
                                 Element.none
 
                             Just faction ->
-                                Theme.gradientTextWrapped
+                                Theme.gradientTextWrapped CelticHand
                                     []
                                     4
                                     Gradient.blueGradient

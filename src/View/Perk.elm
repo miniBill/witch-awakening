@@ -14,7 +14,7 @@ import Generated.Types as Types exposing (Perk(..), Race(..), Slot(..))
 import List.Extra
 import Maybe.Extra
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), Display, IdKind(..), RankedPerk)
 import View
 import View.Race
@@ -208,11 +208,10 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 costGradient
             , affinity
                 |> List.map (\aff -> el [ centerX ] (Theme.viewAffinity aff))
-                |> List.intersperse (el [ centerX ] (Theme.gradientText 4 Gradient.yellowGradient "OR"))
+                |> List.intersperse (el [ centerX, Theme.captureIt ] (Theme.gradientText 4 Gradient.yellowGradient "OR"))
                 |> Theme.column
                     [ moveLeft 8
                     , moveDown 4
-                    , Theme.captureIt
                     , Font.center
                     ]
             , Theme.column
@@ -220,9 +219,8 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 , paddingXY 64 8
                 ]
                 [ if isMeta then
-                    Theme.gradientTextWrapped
+                    Theme.gradientTextWrapped CaptureIt
                         [ centerX
-                        , Theme.captureIt
                         , Font.size 32
                         ]
                         4
@@ -236,9 +234,8 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                         Element.none
 
                     Just dlcName ->
-                        Theme.gradientTextWrapped
+                        Theme.gradientTextWrapped CaptureIt
                             [ centerX
-                            , Theme.captureIt
                             , Font.size 24
                             ]
                             4
@@ -257,9 +254,8 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
 
                 _ ->
                     viewSlot SlotWhite
-            , Theme.gradientTextWrapped
+            , Theme.gradientTextWrapped CelticHand
                 [ alignBottom
-                , Theme.celticHand
                 , Font.size 36
                 , centerX
                 , Font.center

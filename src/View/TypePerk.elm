@@ -8,7 +8,7 @@ import Generated.Image as Image exposing (Image)
 import Generated.TypePerk as TypePerk
 import Generated.Types as Types exposing (Race(..), Slot)
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), Display, IdKind(..))
 import View
 import View.Race
@@ -115,9 +115,8 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
         , imageHeight = 360
         , image = raceToTypePerkImage race
         , inFront =
-            [ Theme.gradientTextWrapped
-                [ Theme.captureIt
-                , case nameLength of
+            [ Theme.gradientTextWrapped CaptureIt
+                [ case nameLength of
                     Short ->
                         Font.size 56
 
@@ -150,9 +149,8 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 6
                 Gradient.yellowGradient
                 raceString
-            , Theme.gradientTextWrapped
+            , Theme.gradientTextWrapped CaptureIt
                 [ alignRight
-                , Theme.captureIt
                 , moveLeft 28
                 , moveDown 16
                 , Font.size 30
@@ -165,9 +163,8 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                     Element.none
 
                 Just dlcName ->
-                    Theme.gradientTextWrapped
+                    Theme.gradientTextWrapped CaptureIt
                         [ centerX
-                        , Theme.captureIt
                         , Font.size 24
                         , moveDown 60
                         ]

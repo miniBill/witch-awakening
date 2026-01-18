@@ -1,4 +1,4 @@
-module Theme exposing (backgroundColor, bebasNeue, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
+module Theme exposing (Font(..), backgroundColor, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -60,10 +60,47 @@ choice value =
     el [ Font.color <| rgb255 0x04 0xD4 0xED ] <| text value
 
 
-gradientTextWrapped : List (Attribute msg) -> Float -> List ( Int, Int, Int ) -> String -> Element msg
-gradientTextWrapped attrs outlineSize gradient value =
+type Font
+    = CaptureIt
+    | CelticHand
+    | BebasNeue
+    | Morpheus
+    | NoFont
+
+
+fontToAttributes : Font -> List (Attribute msg)
+fontToAttributes font =
+    case font of
+        CaptureIt ->
+            [ Font.family [ Font.typeface "Capture It" ]
+            , Element.htmlAttribute (Html.Attributes.style "text-transform" "uppercase")
+            ]
+
+        CelticHand ->
+            [ Font.family [ Font.typeface "Celtic Hand" ] ]
+
+        BebasNeue ->
+            [ Font.family [ Font.typeface "Bebas Neue" ] ]
+
+        Morpheus ->
+            [ Font.family [ Font.typeface "Morpheus" ] ]
+
+        NoFont ->
+            []
+
+
+gradientTextWrapped : Font -> List (Attribute msg) -> Float -> List ( Int, Int, Int ) -> String -> Element msg
+gradientTextWrapped font attrs outlineSize gradient value =
+    let
+        combinedAttrs : List (Attribute msg)
+        combinedAttrs =
+            Element.spacing 1
+                :: centerWrap
+                :: fontToAttributes font
+                ++ attrs
+    in
     gradientTextSplit outlineSize gradient value
-        |> Element.wrappedRow (Element.spacing 1 :: centerWrap :: attrs)
+        |> Element.wrappedRow combinedAttrs
 
 
 gradientTextSplit : Float -> List ( Int, Int, Int ) -> String -> List (Element msg)
@@ -113,11 +150,6 @@ rgbToString ( r, g, b ) =
 celticHand : Attribute msg
 celticHand =
     Font.family [ Font.typeface "Celtic Hand" ]
-
-
-bebasNeue : Attribute msg
-bebasNeue =
-    Font.family [ Font.typeface "Bebas Neue" ]
 
 
 morpheus : Attribute msg

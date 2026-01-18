@@ -7,7 +7,7 @@ import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Html.Attributes
 import List.Extra
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (IdKind(..))
 
 
@@ -16,9 +16,8 @@ viewTitle allCompact =
     let
         mainLogo : Element msg
         mainLogo =
-            Theme.gradientTextWrapped
-                [ Theme.bebasNeue
-                , Theme.centerWrap
+            Theme.gradientTextWrapped BebasNeue
+                [ Theme.centerWrap
                 , centerX
                 , Font.size 160
                 , Element.paddingEach
@@ -117,12 +116,7 @@ viewDLCAttribution dlcAttribution =
         |> String.replace "of " "of\u{00A0}"
         |> String.replace "Of " "Of\u{00A0}"
         |> Theme.gradientTextSplit 4 Gradient.purpleGradient
-        |> List.map
-            (el
-                [ Theme.captureIt
-                , Font.size 20
-                ]
-            )
+        |> List.map (el [ Font.size 20, Theme.captureIt ])
     )
         ++ [ case dlcAttribution.link of
                 Just url ->

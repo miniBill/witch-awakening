@@ -11,7 +11,7 @@ import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (ComplicationCategory(..), Slot(..))
 import List.Extra
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), ComplicationKind(..), Display, IdKind(..), RankedComplication)
 import View
 
@@ -189,8 +189,8 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                         , centerX
                         , moveDown 8
                         ]
-                        [ Theme.gradientTextWrapped
-                            [ centerX, Theme.captureIt ]
+                        [ Theme.gradientTextWrapped CaptureIt
+                            [ centerX ]
                             4
                             gradient
                             (ComplicationCategory.toString c)
@@ -210,9 +210,8 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                     Element.none
 
                 Just dlcName ->
-                    Theme.gradientTextWrapped
+                    Theme.gradientTextWrapped CaptureIt
                         [ centerX
-                        , Theme.captureIt
                         , Font.size 24
                         , case ( category, content ) of
                             ( Just _, WithTiers _ _ _ ) ->
@@ -230,9 +229,8 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                         4
                         Gradient.purpleGradient
                         dlcName
-            , Theme.gradientTextWrapped
+            , Theme.gradientTextWrapped CelticHand
                 [ alignBottom
-                , Theme.celticHand
                 , Font.size 32
                 , centerX
                 , moveUp 4

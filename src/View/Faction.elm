@@ -12,7 +12,7 @@ import Generated.Magic as Magic
 import Generated.Types exposing (Faction)
 import List.Extra
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
 
@@ -215,9 +215,8 @@ viewPerk display factionPerks { name, perk, perkContent, images } =
             , imageHeight = 240
             , image = images.image5
             , inFront =
-                [ Theme.gradientTextWrapped
+                [ Theme.gradientTextWrapped CelticHand
                     [ alignBottom
-                    , Theme.celticHand
                     , Font.size 24
                     , centerX
                     , paddingXY 8 0
@@ -285,18 +284,16 @@ introRow display { name, dlc, motto, images } =
                 [ img images.image2
                 , img images.image3
                 , column [ width fill ]
-                    [ Theme.gradientTextWrapped
+                    [ Theme.gradientTextWrapped CelticHand
                         [ width fill
                         , Font.size 40
-                        , Theme.celticHand
                         ]
                         2
                         Gradient.blueGradient
                         (Faction.toString name)
-                    , Theme.gradientTextWrapped
+                    , Theme.gradientTextWrapped Morpheus
                         [ width fill
                         , Font.size 24
-                        , Theme.morpheus
                         ]
                         2
                         Gradient.yellowGradient
@@ -307,10 +304,9 @@ introRow display { name, dlc, motto, images } =
             ]
 
     else
-        Theme.gradientTextWrapped
+        Theme.gradientTextWrapped CelticHand
             [ width fill
             , Font.size 40
-            , Theme.celticHand
             ]
             2
             Gradient.blueGradient

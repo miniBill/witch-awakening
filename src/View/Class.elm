@@ -7,7 +7,7 @@ import Generated.Class as Class
 import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (Class)
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), Display, IdKind(..))
 import View
 
@@ -99,9 +99,8 @@ classBox display selected { name, dlc, color, content } =
         , imageHeight = 400
         , image = Types.classToImage name
         , inFront =
-            [ Theme.gradientTextWrapped
+            [ Theme.gradientTextWrapped Morpheus
                 [ alignBottom
-                , Theme.morpheus
                 , Font.size 56
                 , centerX
                 , moveUp 10
@@ -114,9 +113,8 @@ classBox display selected { name, dlc, color, content } =
                     Element.none
 
                 Just dlcName ->
-                    Theme.gradientTextWrapped
+                    Theme.gradientTextWrapped CaptureIt
                         [ centerX
-                        , Theme.captureIt
                         , Font.size 24
                         , moveDown 8
                         ]

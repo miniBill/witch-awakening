@@ -11,7 +11,7 @@ import Generated.Relic as Relic
 import Generated.Types as Types exposing (Affinity(..), CosmicPearlData, Race, Relic(..), Slot(..))
 import List.Extra
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), Display, IdKind(..), RankedRelic)
 import View
 import View.Affinity as Affinity
@@ -170,9 +170,8 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                         , width fill
                         ]
                     <|
-                        Theme.gradientTextWrapped
+                        Theme.gradientTextWrapped CaptureIt
                             [ centerX
-                            , Theme.captureIt
                             , Font.size 24
                             , moveDown 12
                             ]
@@ -196,9 +195,8 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                 , width fill
                 ]
               <|
-                Theme.gradientTextWrapped
-                    [ Theme.captureIt
-                    , Font.size 36
+                Theme.gradientTextWrapped CaptureIt
+                    [ Font.size 36
                     , centerX
                     ]
                     4

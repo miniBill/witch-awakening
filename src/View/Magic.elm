@@ -16,7 +16,7 @@ import Html
 import Html.Attributes
 import List.Extra
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), Display(..), IdKind(..), RankedMagic)
 import View
 
@@ -326,9 +326,8 @@ magicImage { name, faction } =
                         shortName =
                             Faction.toShortString factionName
                     in
-                    Theme.gradientTextWrapped
-                        [ Theme.celticHand
-                        , Font.size 64
+                    Theme.gradientTextWrapped CelticHand
+                        [ Font.size 64
                         , width fill
                         , Element.moveDown 16
                         ]
@@ -363,9 +362,8 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
                         Element.none
 
                     Just dlcName ->
-                        Theme.gradientTextWrapped
-                            [ Theme.captureIt
-                            , Font.size 24
+                        Theme.gradientTextWrapped CaptureIt
+                            [ Font.size 24
                             , width fill
                             ]
                             4

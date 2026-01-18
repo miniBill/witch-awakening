@@ -15,7 +15,7 @@ import Html.Attributes
 import Set exposing (Set)
 import Svg
 import Svg.Attributes
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
 import View.Race
@@ -128,9 +128,8 @@ companionSection display companions ( faction, section ) =
                 |> List.map (companionBox display companions)
     in
     if display == DisplayFull then
-        [ Theme.gradientTextWrapped
-            [ Theme.celticHand
-            , Font.size 48
+        [ Theme.gradientTextWrapped CelticHand
+            [ Font.size 48
             , width fill
             ]
             2
@@ -419,7 +418,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                     , Element.htmlAttribute (Html.Attributes.style "visibility" "hidden")
                     , Element.htmlAttribute (Html.Attributes.style "min-width" "0px")
                     ]
-            , Theme.gradientTextWrapped
+            , Theme.gradientTextWrapped Theme.NoFont
                 [ Font.size 36
                 , width fill
                 ]
