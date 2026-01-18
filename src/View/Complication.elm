@@ -148,13 +148,13 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 (List.take 1 gains ++ List.take 1 (List.reverse gains))
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/.../"
-                    |> Theme.gradientText 4 Gradient.yellowGradient
+                    |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
 
             else
                 gains
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/"
-                    |> Theme.gradientText 4 Gradient.yellowGradient
+                    |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -194,7 +194,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                             4
                             gradient
                             (ComplicationCategory.toString c)
-                        , el [ centerX, Theme.captureIt ] gainGradient
+                        , el [ centerX ] gainGradient
                         ]
 
                 Nothing ->
@@ -202,7 +202,6 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                         [ moveDown 16
                         , moveRight 16
                         , Font.size 28
-                        , Theme.captureIt
                         ]
                         gainGradient
             , case dlc of

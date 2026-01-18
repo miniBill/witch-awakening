@@ -50,16 +50,15 @@ viewTitle allCompact =
                 ]
                 [ paragraph
                     [ Font.center
-                    , Theme.morpheus
                     , Font.size 52
                     ]
-                    [ Theme.gradientText 4 Gradient.grayGradient "Heavy Metal"
+                    [ Theme.gradientText Morpheus 4 Gradient.grayGradient "Heavy Metal"
                     , text " "
-                    , Theme.gradientText 4 Gradient.yellowGradient "&"
+                    , Theme.gradientText Morpheus 4 Gradient.yellowGradient "&"
                     , text " "
-                    , Theme.gradientText 4 Gradient.orangeGradient "Witch Party"
+                    , Theme.gradientText Morpheus 4 Gradient.orangeGradient "Witch Party"
                     , text " "
-                    , Theme.gradientText 4 Gradient.yellowGradient "Update"
+                    , Theme.gradientText Morpheus 4 Gradient.yellowGradient "Update"
                     ]
                 , paragraph
                     [ alignRight
@@ -115,8 +114,8 @@ viewDLCAttribution dlcAttribution =
         |> String.replace "the " "the\u{00A0}"
         |> String.replace "of " "of\u{00A0}"
         |> String.replace "Of " "Of\u{00A0}"
-        |> Theme.gradientTextSplit 4 Gradient.purpleGradient
-        |> List.map (el [ Font.size 20, Theme.captureIt ])
+        |> Theme.gradientTextSplit CaptureIt 4 Gradient.purpleGradient
+        |> List.map (el [ Font.size 20 ])
     )
         ++ [ case dlcAttribution.link of
                 Just url ->

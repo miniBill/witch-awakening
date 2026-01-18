@@ -1,4 +1,4 @@
-module Theme exposing (Font(..), backgroundColor, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, celticHand, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, morpheus, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
+module Theme exposing (Font(..), backgroundColor, blocks, borderColor, borderGlow, button, captureIt, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -96,15 +96,14 @@ gradientTextWrapped font attrs outlineSize gradient value =
         combinedAttrs =
             Element.spacing 1
                 :: centerWrap
-                :: fontToAttributes font
-                ++ attrs
+                :: attrs
     in
-    gradientTextSplit outlineSize gradient value
+    gradientTextSplit font outlineSize gradient value
         |> Element.wrappedRow combinedAttrs
 
 
-gradientTextSplit : Float -> List ( Int, Int, Int ) -> String -> List (Element msg)
-gradientTextSplit outlineSize gradient value =
+gradientTextSplit : Font -> Float -> List ( Int, Int, Int ) -> String -> List (Element msg)
+gradientTextSplit font outlineSize gradient value =
     value
         |> String.replace "-" "-\u{200B}"
         |> String.split " "
@@ -112,14 +111,19 @@ gradientTextSplit outlineSize gradient value =
             (\word ->
                 word
                     |> String.split "\u{200B}"
-                    |> List.map (\p -> gradientText outlineSize gradient (p ++ "\u{200B}"))
+                    |> List.map (\p -> gradientText font outlineSize gradient (p ++ "\u{200B}"))
             )
         |> List.Extra.intercalate [ text " " ]
 
 
-gradientText : Float -> List ( Int, Int, Int ) -> String -> Element msg
-gradientText outlineSize gradient value =
-    Element.html <| gradientTextHtml outlineSize gradient value
+gradientText : Font -> Float -> List ( Int, Int, Int ) -> String -> Element msg
+gradientText font outlineSize gradient value =
+    let
+        attrs : List (Attribute msg)
+        attrs =
+            fontToAttributes font
+    in
+    el attrs <| Element.html <| gradientTextHtml outlineSize gradient value
 
 
 gradientTextHtml : Float -> List ( Int, Int, Int ) -> String -> Html msg
@@ -145,16 +149,6 @@ rgbToString ( r, g, b ) =
         ++ " "
         ++ String.fromInt b
         ++ ")"
-
-
-celticHand : Attribute msg
-celticHand =
-    Font.family [ Font.typeface "Celtic Hand" ]
-
-
-morpheus : Attribute msg
-morpheus =
-    Font.family [ Font.typeface "Morpheus" ]
 
 
 captureIt : Attribute msg
@@ -621,11 +615,10 @@ viewSectionTitle toMsg display kind label =
     let
         gradient : String -> List (Element msg)
         gradient t =
-            gradientTextSplit 4 Gradient.blueGradient t
+            gradientTextSplit CelticHand 4 Gradient.blueGradient t
     in
     wrappedRow
-        [ celticHand
-        , Font.size 36
+        [ Font.size 36
         , width fill
         , id kind label
         ]
@@ -1040,8 +1033,5 @@ viewSize :
 viewSize gradient size =
     Size.toString size
         |> String.replace "Medium" "Med"
-        |> gradientText 4 gradient
-        |> el
-            [ morpheus
-            , Font.size 20
-            ]
+        |> gradientText Morpheus 4 gradient
+        |> el [ Font.size 20 ]

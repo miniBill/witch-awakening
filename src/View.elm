@@ -12,7 +12,7 @@ import Generated.Quest as Quest
 import List.Extra
 import Parser
 import Set exposing (Set)
-import Theme
+import Theme exposing (Font(..))
 import Types exposing (Display(..), IdKind)
 
 
@@ -101,8 +101,8 @@ costButton color selected item label =
         ((width <| px 24) :: attrs)
         { label =
             String.fromInt label
-                |> Theme.gradientText 4 Gradient.yellowGradient
-                |> el [ centerX, centerY, Theme.captureIt ]
+                |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
+                |> el [ centerX, centerY ]
         , onPress = Just ( item, not isChoiceSelected )
         }
 

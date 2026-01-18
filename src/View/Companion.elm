@@ -289,21 +289,19 @@ image { name, races, hasPerk, cost } =
             [ cost
                 |> Maybe.map String.fromInt
                 |> Maybe.withDefault "X"
-                |> Theme.gradientText 4 Gradient.blueGradient
+                |> Theme.gradientText CaptureIt 4 Gradient.blueGradient
                 |> el
                     [ alignRight
                     , Font.size 32
-                    , Theme.captureIt
                     , moveLeft 8
                     , moveDown 4
                     ]
             , raceLabel
-                |> List.map (\race -> el [ centerX ] (Theme.gradientText 4 Gradient.yellowGradient race))
+                |> List.map (\race -> el [ centerX ] (Theme.gradientText CaptureIt 4 Gradient.yellowGradient race))
                 |> Theme.column
                     [ alignBottom
                     , centerX
                     , Font.size 32
-                    , Theme.captureIt
                     ]
             , cost
                 |> Maybe.map Types.gainToSlot
@@ -438,10 +436,9 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
             Just dlcName ->
                 el
                     [ centerX
-                    , Theme.captureIt
                     , Font.size 24
                     ]
-                    (Theme.gradientText 4 Gradient.purpleGradient dlcName)
+                    (Theme.gradientText CaptureIt 4 Gradient.purpleGradient dlcName)
         , statsTable companion
         , Theme.blocks [ Font.size 14 ] IdKindCompanion quote
         , Theme.blocks [] IdKindCompanion description
@@ -591,7 +588,7 @@ statColumn ranking =
                                             , Theme.style "z-index" "1"
                                             ]
                                         <|
-                                            Theme.gradientText 2 Gradient.blueGradient "Special Effect"
+                                            Theme.gradientText NoFont 2 Gradient.blueGradient "Special Effect"
                                 ]
 
                               else

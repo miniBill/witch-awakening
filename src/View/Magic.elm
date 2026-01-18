@@ -136,11 +136,10 @@ elementalIntro =
                     (\c ->
                         c
                             |> String.fromChar
-                            |> Theme.gradientText 4 Gradient.blueGradient
+                            |> Theme.gradientText Morpheus 4 Gradient.blueGradient
                     )
                 |> Element.wrappedRow
                     [ Font.size 58
-                    , Theme.morpheus
                     , Theme.style "letter-spacing" ".15em"
                     ]
             , Theme.blocks [] IdKindMagic elementalismIntro
@@ -420,7 +419,7 @@ magicTitle display { name, hasRankZero, class, affinities } =
                     , centerY
                     ]
                 <|
-                    Theme.gradientText 1 Gradient.yellowGradient "★"
+                    Theme.gradientText Theme.NoFont 1 Gradient.yellowGradient "★"
 
               else
                 Element.none
@@ -428,7 +427,7 @@ magicTitle display { name, hasRankZero, class, affinities } =
                 ++ (Magic.toString name
                         |> String.split "-"
                         |> List.intersperse "-"
-                        |> List.concatMap (Theme.gradientTextSplit 4 Gradient.yellowGradient)
+                        |> List.map (Theme.gradientTextWrapped Morpheus [] 4 Gradient.yellowGradient)
                    )
 
         affinitiesViews : List (Element msg)
@@ -440,8 +439,7 @@ magicTitle display { name, hasRankZero, class, affinities } =
                 []
     in
     Theme.wrappedRow
-        [ Theme.morpheus
-        , Font.size 40
+        [ Font.size 40
         , Font.center
         , width fill
         , Theme.centerWrap
@@ -475,7 +473,7 @@ viewAffinities affinities =
                                         (Theme.viewAffinity aff)
                                 )
                             |> List.intersperse
-                                (Theme.gradientText 2 Gradient.yellowGradient " + "
+                                (Theme.gradientText Theme.NoFont 2 Gradient.yellowGradient " + "
                                     |> el
                                         [ Font.size 24
                                         , moveUp 4
@@ -484,7 +482,7 @@ viewAffinities affinities =
                             |> Theme.row []
                     )
                 |> List.intersperse
-                    (Theme.gradientText 2 Gradient.yellowGradient " OR "
+                    (Theme.gradientText Theme.NoFont 2 Gradient.yellowGradient " OR "
                         |> el
                             [ Font.size 24
                             , moveDown 4
@@ -531,12 +529,12 @@ viewRank selected { name, class } rankIndex label =
             { label =
                 column [ width fill ]
                     [ el
-                        [ Theme.captureIt
-                        , Font.size 20
+                        [ Font.size 20
                         , centerX
                         ]
                       <|
-                        Theme.gradientText 2
+                        Theme.gradientText CaptureIt
+                            2
                             Gradient.yellowGradient
                             ("Rank " ++ String.fromInt rank)
                     , Theme.blocks [ width fill ] IdKindMagic label

@@ -167,13 +167,13 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> Theme.gradientText 4 Gradient.yellowGradient
+                    |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> Theme.gradientText 4 Gradient.yellowGradient
+                    |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -201,14 +201,13 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
             [ el
                 [ alignRight
                 , Font.size 32
-                , Theme.captureIt
                 , moveLeft 4
                 , moveDown 4
                 ]
                 costGradient
             , affinity
                 |> List.map (\aff -> el [ centerX ] (Theme.viewAffinity aff))
-                |> List.intersperse (el [ centerX, Theme.captureIt ] (Theme.gradientText 4 Gradient.yellowGradient "OR"))
+                |> List.intersperse (el [ centerX ] (Theme.gradientText CaptureIt 4 Gradient.yellowGradient "OR"))
                 |> Theme.column
                     [ moveLeft 8
                     , moveDown 4

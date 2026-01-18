@@ -148,7 +148,6 @@ questBox display selected number quest =
                         [ alignBottom
                         , width fill
                         , Font.size 28
-                        , Theme.celticHand
                         , spacing 4
                         , paddingXY 8 0
                         , moveUp 64
@@ -166,7 +165,7 @@ questBox display selected number quest =
                         , let
                             slotGradient : Element msg
                             slotGradient =
-                                Theme.gradientText
+                                Theme.gradientText CelticHand
                                     4
                                     (case quest.slot of
                                         SlotEpic ->
@@ -186,9 +185,9 @@ questBox display selected number quest =
                           if quest.name == QuestDungeoneering then
                             Element.row [ alignRight, spacing 4 ]
                                 [ "Any"
-                                    |> Theme.gradientText 4 Gradient.yellowGradient
+                                    |> Theme.gradientText CelticHand 4 Gradient.yellowGradient
                                 , "/"
-                                    |> Theme.gradientText 4 Gradient.yellowGradient
+                                    |> Theme.gradientText CelticHand 4 Gradient.yellowGradient
                                     |> el [ Font.size 40, Font.bold ]
                                 , slotGradient
                                 ]
@@ -220,17 +219,15 @@ questBox display selected number quest =
                             ]
                     , (number + 1)
                         |> String.fromInt
-                        |> Theme.gradientText 4 Gradient.yellowGradient
+                        |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
                         |> el
                             [ Font.size 28
-                            , Theme.captureIt
                             ]
                     , if quest.repeatable then
                         "♻️"
-                            |> Theme.gradientText 4 Gradient.yellowGradient
+                            |> Theme.gradientText CaptureIt 4 Gradient.yellowGradient
                             |> el
                                 [ Font.size 32
-                                , Theme.captureIt
                                 , moveDown 24
                                 , moveRight 24
                                 ]
@@ -481,13 +478,15 @@ introBlock =
         [ width fill
         , spacing <| Theme.rhythm * 2
         ]
-        [ Theme.gradientText 4 Gradient.yellowGradient "Or \"Plot Hooks\""
-            |> el
-                [ Font.size 38
-                , Theme.morpheus
-                , centerX
-                , moveUp 8
-                ]
+        [ Theme.gradientTextWrapped Morpheus
+            [ Font.size 38
+            , Font.center
+            , width fill
+            , moveUp 8
+            ]
+            4
+            Gradient.yellowGradient
+            "Or \"Plot Hooks\""
         , let
             color : Element.Color
             color =
