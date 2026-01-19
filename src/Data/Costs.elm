@@ -1,4 +1,4 @@
-module Data.Costs exposing (startingValue, totalCost)
+module Data.Costs exposing (startingValue, totalValue)
 
 import Data.Costs.Class
 import Data.Costs.Companions
@@ -20,8 +20,8 @@ import Types exposing (IdKind(..), Model)
 -- Total --
 
 
-totalCost : Model key -> Monad Points
-totalCost model =
+totalValue : Model key -> Monad Points
+totalValue model =
     [ Data.Costs.Class.value model
     , startingValue model
     , Data.Costs.Race.value model
@@ -44,13 +44,12 @@ totalCost model =
     , Monad.map Utils.zeroOut (Data.Costs.Complications.powerCap model)
     ]
         |> Utils.combineAndSum
-        |> Monad.map Utils.negate
         |> Monad.andThen
             (\result ->
                 let
                     warningIf : Int -> String -> Monad q -> Monad q
                     warningIf b warning acc =
-                        if b > 0 then
+                        if b < 0 then
                             acc |> Monad.withWarning warning
 
                         else

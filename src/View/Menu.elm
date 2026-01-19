@@ -39,7 +39,7 @@ viewMenu model =
     let
         totalPoints : CostsMonad.Monad Points
         totalPoints =
-            Costs.totalCost model
+            Costs.totalValue model
 
         ( rawWarnings, errors ) =
             case totalPoints of
@@ -170,7 +170,7 @@ menuLabel kind result warnings =
                     let
                         powerString : String
                         powerString =
-                            "[" ++ String.fromInt -value.power ++ "]"
+                            "[" ++ String.fromInt value.power ++ "]"
                     in
                     if value.rewardPoints == 0 then
                         if value.power == 0 then
@@ -190,7 +190,7 @@ menuLabel kind result warnings =
                         let
                             rewardString : String
                             rewardString =
-                                "{" ++ String.fromInt -value.rewardPoints ++ "}"
+                                "{" ++ String.fromInt value.rewardPoints ++ "}"
 
                             bothString : String
                             bothString =
@@ -226,7 +226,6 @@ viewCalculations model power warnings affinities =
                 "Result"
                 model.expandedMenuSections
                 (power
-                    |> CostsMonad.map Costs.negate
                     |> Result.mapError (\_ -> List.Nonempty.singleton "There are errors in the computation")
                 )
                 Nothing

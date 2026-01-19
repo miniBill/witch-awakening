@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Points, Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, combineAndSum, find, hasMagicAtRank, negate, powerToPoints, requisitesParser, rewardPointsToPoints, slotUnsupported, sum, sumPoints, valueToPoints, zero, zeroOut)
+module Data.Costs.Utils exposing (Points, Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, combineAndSum, find, hasMagicAtRank, powerToPoints, requisitesParser, rewardPointsToPoints, slotUnsupported, sum, sumPoints, valueToPoints, zero, zeroOut)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad, Value(..))
@@ -23,11 +23,6 @@ zero =
     { power = 0
     , rewardPoints = 0
     }
-
-
-negate : Points -> Points
-negate p =
-    { p | power = -p.power, rewardPoints = -p.rewardPoints }
 
 
 sum : Points -> Points -> Points
