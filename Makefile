@@ -46,7 +46,7 @@ run: generated/Images.elm
 
 .PHONY: test
 test: generated/Images.elm
-	bunx elm-test-rs --watch --compiler $(which lamdera)
+	bunx elm-test-rs --watch
 
 .PHONY: deploy
 deploy: build
