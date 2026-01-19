@@ -2,7 +2,8 @@ module Data.Costs.Complications exposing (complicationsRawValue, powerCap, value
 
 import Data.Complication as Complication
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils as Utils exposing (Points, zero)
+import Data.Costs.Points as Points exposing (Points)
+import Data.Costs.Utils as Utils
 import Generated.Complication as Complication
 import Generated.Types exposing (GameMode(..))
 import List.Extra
@@ -43,17 +44,17 @@ powerCap model =
         Nothing ->
             model.towardsCap
                 |> Utils.capWithWarning 30 normalCapWarning
-                |> Monad.map (Utils.sum { zero | power = 100 })
+                |> Monad.map (Points.add (Points.fromPower 100))
 
         Just GameModeStoryArc ->
             complicationsRawValue model
                 |> Monad.andThen (Utils.capWithWarning 60 storyArcWarning)
-                |> Monad.map (Utils.sum { zero | power = 150 })
+                |> Monad.map (Points.add (Points.fromPower 150))
 
         Just GameModeEarlyBird ->
             complicationsRawValue model
                 |> Monad.andThen (Utils.capWithWarning 30 earlyBirdWarning)
-                |> Monad.map (Utils.sum { zero | power = 75 })
+                |> Monad.map (Points.add (Points.fromPower 75))
 
         Just GameModeSkillTree ->
             Utils.slotUnsupported
@@ -74,7 +75,7 @@ value model =
                                 |> Utils.capWithWarning 60 storyArcWarning
 
                         else
-                            Monad.succeed zero
+                            Monad.succeed Points.zero
 
                     Just GameModeEarlyBird ->
                         raw
@@ -101,7 +102,9 @@ value model =
 
 complicationsRawValue : Model key -> Monad Int
 complicationsRawValue model =
-    Monad.mapAndSum (complicationValue model) model.complications
+    model.complications
+        |> Monad.combineMap (complicationValue model)
+        |> Monad.map List.sum
 
 
 complicationValue : Model key -> Types.RankedComplication -> Monad Int

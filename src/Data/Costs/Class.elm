@@ -1,7 +1,7 @@
 module Data.Costs.Class exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils exposing (Points, zero)
+import Data.Costs.Points as Points exposing (Points)
 import Generated.Types exposing (Class(..))
 import Types exposing (Model)
 
@@ -12,14 +12,14 @@ value model =
         Just class ->
             case class of
                 ClassWarlock ->
-                    Monad.succeed { zero | rewardPoints = 20 }
+                    Monad.succeed (Points.fromRewardPoints 20)
 
                 ClassAcademic ->
-                    Monad.succeed zero
+                    Monad.succeed Points.zero
 
                 ClassSorceress ->
-                    Monad.succeed zero
+                    Monad.succeed Points.zero
 
         Nothing ->
-            Monad.succeed zero
+            Monad.succeed Points.zero
                 |> Monad.withWarning "You need to select a class"

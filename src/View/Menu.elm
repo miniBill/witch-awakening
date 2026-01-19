@@ -10,11 +10,12 @@ import Data.Costs.Factions
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
 import Data.Costs.Perks
+import Data.Costs.Points as Points exposing (Points)
 import Data.Costs.Quests
 import Data.Costs.Race
 import Data.Costs.Relics
 import Data.Costs.TypePerks
-import Data.Costs.Utils as Costs exposing (Points)
+import Data.Costs.Value as Value
 import Dict exposing (Dict)
 import Dict.Extra
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, height, padding, paragraph, px, rgb, scrollbarY, shrink, text, width)
@@ -436,10 +437,10 @@ row kind label expandedMenuSections result target =
                         ]
                     , el [ alignRight, centerY ] <|
                         case info.value of
-                            CostsMonad.PowerAndRewardPoints power rewardPoints ->
-                                rightPoints kind { rewardPoints = rewardPoints, power = power }
+                            Value.PowerAndRewardPoints points ->
+                                rightPoints kind points
 
-                            CostsMonad.FreeBecause message ->
+                            Value.FreeBecause message ->
                                 Theme.compactBlocks [] kind message
                     ]
             in
@@ -596,7 +597,7 @@ capSlider model =
                     Input.labelAbove [] <|
                         paragraph [ Font.bold ]
                             [ text label
-                            , rightPoints IdKindGameMode <| Costs.powerToPoints -model.towardsCap
+                            , rightPoints IdKindGameMode <| Points.fromPower -model.towardsCap
                             ]
                 , min =
                     (rawComplicationsValue - 30)
@@ -619,7 +620,7 @@ capSlider model =
                 label
                 model.expandedMenuSections
                 (Data.Costs.Complications.complicationsRawValue model
-                    |> CostsMonad.map Costs.powerToPoints
+                    |> CostsMonad.map Points.fromPower
                 )
                 (Just "Game Mode")
 
@@ -639,15 +640,9 @@ relicSlider model =
                 Theme.row []
                     [ paragraph [ Font.bold ]
                         [ text "Convert power into reward points or vice versa"
-                        , let
-                            zero : Points
-                            zero =
-                                Costs.zero
-                          in
-                          rightPoints IdKindRelic
-                            { zero
-                                | power = -model.powerToRewards
-                                , rewardPoints = model.powerToRewards
+                        , rightPoints IdKindRelic
+                            { power = -model.powerToRewards
+                            , rewardPoints = model.powerToRewards
                             }
                         ]
                     ]

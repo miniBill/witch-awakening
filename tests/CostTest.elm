@@ -3,7 +3,8 @@ module CostTest exposing (genieMagicalHeart, magicCosts, perkCosts)
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
 import Data.Costs.Perks
-import Data.Costs.Utils
+import Data.Costs.Points as Points
+import Data.Costs.Value as Value
 import Expect
 import Generated.Types exposing (Affinity(..), Class(..), Faction(..), Magic(..), Perk(..), Quest, Race(..))
 import Test exposing (Test, describe, test)
@@ -64,12 +65,10 @@ sorceressSpider =
     sorceress RaceSpider
 
 
-expectPower : Int -> CostsMonad.Monad Data.Costs.Utils.Points -> Expect.Expectation
+expectPower : Int -> CostsMonad.Monad Points.Points -> Expect.Expectation
 expectPower power value =
     Expect.equal
-        ({ power = power
-         , rewardPoints = 0
-         }
+        (Points.fromPower power
             |> Ok
         )
         (Result.map .value value)
@@ -116,7 +115,7 @@ jackOfAllTest =
             , quests : List Quest
             , relics : List RankedRelic
             }
-        changelingModel = 
+        changelingModel =
             { defaultModel
                 | races = [ RaceChangeling ] -- Body and Mind
                 , mainRace = Just RaceChangeling
@@ -156,8 +155,8 @@ testJack12 label model expected =
     test label <|
         \_ ->
             Data.Costs.Perks.perkValue model jack12
-                |> Result.map (.value >> .points)
-                |> Expect.equal (Ok (CostsMonad.power expected))
+                |> Result.map (.value >> .perkValue >> Value.toPoints)
+                |> Expect.equal (Ok (Points.fromPower expected))
 
 
 genieMagicalHeart : Test
@@ -169,8 +168,8 @@ genieMagicalHeart =
                 { name = PerkMagicalHeart
                 , cost = 20
                 }
-                |> Result.map (.value >> .points)
-                |> Expect.equal (Ok (CostsMonad.power -4))
+                |> Result.map (.value >> .perkValue >> Value.toPoints)
+                |> Expect.equal (Ok (Points.fromPower -4))
 
 
 magicCosts : Test

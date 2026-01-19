@@ -7,11 +7,13 @@ import Data.Costs.Factions
 import Data.Costs.Magic
 import Data.Costs.Monad as Monad exposing (Monad, succeed)
 import Data.Costs.Perks
+import Data.Costs.Points as Points exposing (Points)
 import Data.Costs.Quests
 import Data.Costs.Race
 import Data.Costs.Relics
 import Data.Costs.TypePerks
-import Data.Costs.Utils as Utils exposing (Points, zero)
+import Data.Costs.Utils as Utils
+import Data.Costs.Value as Value
 import Generated.Types exposing (GameMode(..))
 import Types exposing (IdKind(..), Model)
 
@@ -27,10 +29,10 @@ totalValue model =
     , Data.Costs.Race.value model
     , Data.Costs.Complications.value model
     , if model.capBuild then
-        Monad.succeed zero
+        Monad.succeed Points.zero
 
       else
-        -model.towardsCap |> Utils.powerToPoints |> Monad.succeed
+        Points.fromPower -model.towardsCap |> Monad.succeed
     , Data.Costs.TypePerks.value model
     , Data.Costs.Magic.value { ignoreSorceressBonus = False } model
     , Data.Costs.Perks.value model
@@ -43,7 +45,7 @@ totalValue model =
     -- Just grab info and warnings from the power cap
     , Monad.map Utils.zeroOut (Data.Costs.Complications.powerCap model)
     ]
-        |> Utils.combineAndSum
+        |> Monad.combineAndSum
         |> Monad.andThen
             (\result ->
                 let
@@ -74,7 +76,7 @@ totalValue model =
 startingValue : Model key -> Monad Points
 startingValue model =
     startingPower model
-        |> Monad.map Utils.powerToPoints
+        |> Monad.map Points.fromPower
 
 
 startingPower : Model key -> Monad Int
@@ -87,7 +89,7 @@ startingPower model =
                     { label = label
                     , kind = IdKindGameMode
                     , anchor = Just "Game mode"
-                    , value = Monad.power v
+                    , value = Value.fromPower v
                     }
     in
     case model.gameMode of
@@ -117,8 +119,7 @@ startingPower model =
 
 conversion : Model key -> Monad Points
 conversion model =
-    { zero
-        | power = -model.powerToRewards
-        , rewardPoints = model.powerToRewards
+    { power = -model.powerToRewards
+    , rewardPoints = model.powerToRewards
     }
         |> succeed

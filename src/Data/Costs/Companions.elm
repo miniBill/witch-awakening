@@ -2,7 +2,9 @@ module Data.Costs.Companions exposing (value)
 
 import Data.Companion as Companion
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils as Utils exposing (Points)
+import Data.Costs.Points as Points exposing (Points)
+import Data.Costs.Utils as Utils
+import Data.Costs.Value as Value
 import Dict exposing (Dict)
 import Generated.Companion as Companion
 import Generated.Types as Types exposing (Class, Companion, Faction(..), Race)
@@ -185,26 +187,25 @@ totalCompanionValue model companions =
                 in
                 case Dict.get nameString forFree of
                     Just reason ->
-                        0
+                        Points.zero
                             |> Utils.checkRequirements details nameString model
                             |> Monad.withInfo
                                 { label = nameString
                                 , kind = IdKindCompanion
                                 , anchor = Nothing
-                                , value = Monad.FreeBecause reason
+                                , value = Value.FreeBecause reason
                                 }
 
                     Nothing ->
                         case cost of
                             Just v ->
-                                -v
+                                Points.fromPower -v
                                     |> Utils.checkRequirements details nameString model
-                                    |> Monad.withPowerInfo IdKindCompanion nameString
+                                    |> Monad.withPointsInfo IdKindCompanion nameString
 
                             Nothing ->
                                 Monad.error <| "Companion " ++ nameString ++ " does not have a fixed cost"
             )
-        |> Monad.map Utils.rewardPointsToPoints
 
 
 sameClass : Companion.Details -> Maybe Class -> Bool

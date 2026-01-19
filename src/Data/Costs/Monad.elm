@@ -1,5 +1,7 @@
-module Data.Costs.Monad exposing (Info, Monad, Value(..), andThen, combine, combineMap, error, map, map2, map3, mapAndSum, power, rewardPoints, succeed, withInfo, withPowerInfo, withRewardInfo, withWarning, withWarningMaybe)
+module Data.Costs.Monad exposing (Info, Monad, andThen, combine, combineAndSum, combineMap, combineMapAndSum, error, map, map2, map3, mapAndSum, succeed, withInfo, withPointsInfo, withPowerInfo, withRewardInfo, withValueInfo, withWarning, withWarningMaybe)
 
+import Data.Costs.Points as Points exposing (Points)
+import Data.Costs.Value as Value exposing (Value)
 import ResultME exposing (ResultME)
 import Types exposing (IdKind)
 
@@ -10,21 +12,6 @@ type alias Info =
     , anchor : Maybe String
     , value : Value
     }
-
-
-type Value
-    = PowerAndRewardPoints Int Int
-    | FreeBecause String
-
-
-power : Int -> Value
-power p =
-    PowerAndRewardPoints p 0
-
-
-rewardPoints : Int -> Value
-rewardPoints r =
-    PowerAndRewardPoints 0 r
 
 
 type alias Monad a =
@@ -120,10 +107,27 @@ combineMap f list =
         |> combine
 
 
-mapAndSum : (item -> Monad Int) -> List item -> Monad Int
+combineMapAndSum : (a -> Monad Points) -> List a -> Monad Points
+combineMapAndSum f list =
+    list
+        |> List.map f
+        |> combine
+        |> map Points.sum
+
+
+combineAndSum : List (Monad Points) -> Monad Points
+combineAndSum list =
+    list
+        |> combine
+        |> map Points.sum
+
+
+mapAndSum : (item -> Monad Points) -> List item -> Monad Points
 mapAndSum toValue list =
-    combineMap toValue list
-        |> map List.sum
+    list
+        |> List.map toValue
+        |> combine
+        |> map Points.sum
 
 
 withPowerInfo : IdKind -> String -> Monad Int -> Monad Int
@@ -135,7 +139,7 @@ withPowerInfo kind key r =
                     { label = key
                     , kind = kind
                     , anchor = Just key
-                    , value = power v.value
+                    , value = Value.fromPower v.value
                     }
                         :: v.infos
             }
@@ -152,7 +156,41 @@ withRewardInfo kind key r =
                     { label = key
                     , kind = kind
                     , anchor = Just key
-                    , value = rewardPoints v.value
+                    , value = Value.fromRewardPoints v.value
+                    }
+                        :: v.infos
+            }
+        )
+        r
+
+
+withPointsInfo : IdKind -> String -> Monad Points -> Monad Points
+withPointsInfo kind key r =
+    Result.map
+        (\v ->
+            { v
+                | infos =
+                    { label = key
+                    , kind = kind
+                    , anchor = Just key
+                    , value = Value.fromPoints v.value
+                    }
+                        :: v.infos
+            }
+        )
+        r
+
+
+withValueInfo : IdKind -> String -> Monad Value -> Monad Value
+withValueInfo kind key r =
+    Result.map
+        (\v ->
+            { v
+                | infos =
+                    { label = key
+                    , kind = kind
+                    , anchor = Just key
+                    , value = v.value
                     }
                         :: v.infos
             }

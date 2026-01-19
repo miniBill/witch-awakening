@@ -1,7 +1,8 @@
-module Data.Costs.Utils exposing (Points, Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, combineAndSum, find, hasMagicAtRank, powerToPoints, requisitesParser, rewardPointsToPoints, slotUnsupported, sum, sumPoints, valueToPoints, zero, zeroOut)
+module Data.Costs.Utils exposing (Requirement(..), affinityDiscountIf, applyClassBonusToCostIf, applyClassBonusToValueIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported, zeroOut)
 
 import Data.Affinity exposing (InAffinity(..))
-import Data.Costs.Monad as Monad exposing (Monad, Value(..))
+import Data.Costs.Monad as Monad exposing (Monad)
+import Data.Costs.Points as Points exposing (Points)
 import Generated.Class as Class
 import Generated.Magic as Magic
 import Generated.Perk as Perk
@@ -12,65 +13,22 @@ import Parser exposing ((|.), (|=), Parser)
 import Types exposing (RankedMagic, RankedPerk)
 
 
-type alias Points =
-    { power : Int
-    , rewardPoints : Int
-    }
-
-
-zero : Points
-zero =
-    { power = 0
-    , rewardPoints = 0
-    }
-
-
-sum : Points -> Points -> Points
-sum l r =
-    { power = l.power + r.power
-    , rewardPoints = l.rewardPoints + r.rewardPoints
-    }
-
-
-sumPoints : List Points -> Points
-sumPoints =
-    List.foldl sum zero
-
-
-combineAndSum : List (Monad Points) -> Monad Points
-combineAndSum list =
-    list
-        |> Monad.combine
-        |> Monad.map sumPoints
-
-
-valueToPoints : Value -> Points
-valueToPoints v =
-    case v of
-        FreeBecause _ ->
-            zero
-
-        PowerAndRewardPoints p r ->
-            { power = p, rewardPoints = r }
-
-
-rewardPointsToPoints : Int -> Points
-rewardPointsToPoints value =
-    { zero | rewardPoints = value }
-
-
-powerToPoints : Int -> Points
-powerToPoints value =
-    { zero | power = value }
-
-
 zeroOut : Points -> Points
 zeroOut points =
     { points | power = 0, rewardPoints = 0 }
 
 
-applyClassBonusIf : Bool -> Int -> Int
-applyClassBonusIf isClass cost =
+applyClassBonusToValueIf : Bool -> Int -> Int
+applyClassBonusToValueIf isClass cost =
+    if isClass then
+        cost + 2
+
+    else
+        cost
+
+
+applyClassBonusToCostIf : Bool -> Int -> Int
+applyClassBonusToCostIf isClass cost =
     if isClass then
         cost - 2
 
@@ -98,14 +56,12 @@ slotUnsupported =
 capWithWarning : Int -> String -> Int -> Monad Points
 capWithWarning cap warning value =
     if value > cap then
-        { zero
-            | power = cap
-        }
+        Points.fromPower cap
             |> Monad.succeed
             |> Monad.withWarning warning
 
     else
-        { zero | power = value }
+        Points.fromPower value
             |> Monad.succeed
 
 

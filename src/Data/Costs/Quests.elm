@@ -1,7 +1,9 @@
 module Data.Costs.Quests exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils as Utils exposing (Points, zero)
+import Data.Costs.Points as Points exposing (Points)
+import Data.Costs.Utils as Utils
+import Data.Costs.Value as Value
 import Dict
 import Dict.Extra
 import Generated.Quest as Quest
@@ -14,7 +16,7 @@ import Types exposing (IdKind(..), Model)
 value : Model key -> Monad Points
 value model =
     model.quests
-        |> Monad.combineMap (questCost model)
+        |> Monad.combineMap (questValue model)
         |> Monad.andThen
             (\rpsAndSlots ->
                 let
@@ -47,15 +49,18 @@ value model =
                                         check : Int -> Monad ()
                                         check expected =
                                             if count > expected then
-                                                Monad.succeed ()
-                                                    |> Monad.withWarning
-                                                        ("Too many "
+                                                let
+                                                    msg : String
+                                                    msg =
+                                                        "Too many "
                                                             ++ slot
                                                             ++ " quest: expected up to "
                                                             ++ String.fromInt expected
                                                             ++ ", got "
                                                             ++ String.fromInt count
-                                                        )
+                                                in
+                                                Monad.succeed ()
+                                                    |> Monad.withWarning msg
 
                                             else
                                                 Monad.succeed ()
@@ -78,34 +83,34 @@ value model =
                                 )
                 in
                 slotsChecks
-                    |> Monad.map (\_ -> { zero | rewardPoints = List.sum rps })
+                    |> Monad.map (\_ -> Points.sum rps)
             )
 
 
-questCost : Model key -> Quest -> Monad ( Int, Quest.Details )
-questCost model named =
+questValue : Model key -> Quest -> Monad ( Points, Quest.Details )
+questValue model named =
     Utils.find "Quest" .name named Quest.all Quest.toString
         |> Monad.andThen
             (\quest ->
                 let
-                    base : Monad Int
+                    base : Monad Points
                     base =
-                        quest.reward
+                        Points.fromRewardPoints quest.reward
                             |> Utils.checkRequirements quest (Quest.toString named) model
-                            |> Monad.withRewardInfo IdKindQuest (Quest.toString named)
+                            |> Monad.withPointsInfo IdKindQuest (Quest.toString named)
                 in
                 if named == QuestDomesticated && List.member QuestHouseFire model.quests then
                     [ base
-                    , 2
+                    , Points.fromRewardPoints 2
                         |> Monad.succeed
                         |> Monad.withInfo
                             { kind = IdKindQuest
                             , label = "Domesticated + House Fire"
-                            , value = Monad.rewardPoints 2
+                            , value = Value.fromRewardPoints 2
                             , anchor = Just (Quest.toString named)
                             }
                     ]
-                        |> Monad.mapAndSum identity
+                        |> Monad.combineAndSum
                         |> Monad.map (\rp -> ( rp, quest ))
 
                 else

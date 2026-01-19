@@ -2,7 +2,9 @@ module Data.Costs.Perks exposing (perkValue, value)
 
 import Data.Affinity as Affinity exposing (AffinityList, InAffinity)
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils as Utils exposing (Points)
+import Data.Costs.Points exposing (Points)
+import Data.Costs.Utils as Utils
+import Data.Costs.Value as Value exposing (Value)
 import Data.Magic as Magic
 import Data.Perk as Perk
 import Data.Race as Race
@@ -38,12 +40,12 @@ value model =
                             pointsList
                                 |> List.filter (\{ staticCost } -> staticCost)
                                 |> List.Extra.maximumBy
-                                    (\{ points } ->
-                                        case points of
-                                            Monad.PowerAndRewardPoints p r ->
-                                                p + r
+                                    (\item ->
+                                        case item.perkValue of
+                                            Value.PowerAndRewardPoints p ->
+                                                p.power + p.rewardPoints
 
-                                            Monad.FreeBecause _ ->
+                                            Value.FreeBecause _ ->
                                                 -1
                                     )
                                 |> Maybe.map .name
@@ -52,26 +54,27 @@ value model =
                             Nothing
                 in
                 pointsList
-                    |> Monad.combineMap
-                        (\{ name, points } ->
+                    |> Monad.combineMapAndSum
+                        (\item ->
                             let
-                                ( v, raw ) =
-                                    if Just name == freeFromJackOfAll then
-                                        ( Monad.FreeBecause "[Jack-of-All]", Utils.powerToPoints 0 )
+                                maybeFree : Value
+                                maybeFree =
+                                    if Just item.name == freeFromJackOfAll then
+                                        Value.FreeBecause "[Jack-of-All]"
 
                                     else
-                                        ( points, Utils.valueToPoints points )
+                                        item.perkValue
                             in
-                            raw
+                            maybeFree
+                                |> Value.toPoints
                                 |> Monad.succeed
                                 |> Monad.withInfo
-                                    { label = name
+                                    { label = item.name
                                     , kind = IdKindPerk
-                                    , anchor = Just name
-                                    , value = v
+                                    , anchor = Just item.name
+                                    , value = maybeFree
                                     }
                         )
-                    |> Monad.map Utils.sumPoints
             )
 
 
@@ -87,7 +90,7 @@ perkValue :
         , quests : List Quest
     }
     -> RankedPerk
-    -> Monad { name : String, points : Monad.Value, staticCost : Bool }
+    -> Monad { name : String, perkValue : Value, staticCost : Bool }
 perkValue model ranked =
     let
         isGenie : Maybe String
@@ -125,19 +128,19 @@ perkValue model ranked =
                             _ ->
                                 Nothing
 
-                    finalCost : Monad.Value
-                    finalCost =
+                    finalValue : Value
+                    finalValue =
                         case isFree of
                             Just reason ->
-                                Monad.FreeBecause reason
+                                Value.FreeBecause reason
 
                             Nothing ->
-                                Monad.power -(innerPerkCost model ranked perk)
+                                Value.fromPower -(innerPerkCost model ranked perk)
 
-                    res : { name : String, points : Monad.Value, staticCost : Bool }
+                    res : { name : String, perkValue : Value, staticCost : Bool }
                     res =
                         { name = View.Perk.perkToShortString ranked.name
-                        , points = finalCost
+                        , perkValue = finalValue
                         , staticCost =
                             case perk.content of
                                 Perk.Single _ _ ->
@@ -212,5 +215,5 @@ innerPerkCost ({ class } as model) { name, cost } perk =
                     0
     in
     (cost + changelingDiff + apexDiff)
-        |> Utils.applyClassBonusIf isClass
+        |> Utils.applyClassBonusToCostIf isClass
         |> Utils.affinityDiscountIf isInAffinity

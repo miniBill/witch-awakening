@@ -2,7 +2,9 @@ module Data.Costs.Magic exposing (value)
 
 import Data.Affinity as Affinity exposing (AffinityList, InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils as Utils exposing (Points, affinityDiscountIf)
+import Data.Costs.Points exposing (Points)
+import Data.Costs.Utils as Utils exposing (affinityDiscountIf)
+import Data.Costs.Value as Value
 import Data.Magic as Magic
 import Data.Race as Race
 import Dict exposing (Dict)
@@ -148,7 +150,7 @@ value { ignoreSorceressBonus } model =
                                     Just ("Multiple off-affinity elementalism magics are only allowed for Sorceresses. Found: " ++ String.join ", " (List.map .name list))
                 in
                 pointsList
-                    |> List.map
+                    |> Monad.combineMapAndSum
                         (\{ name, rank, power, rewardPoints } ->
                             let
                                 label : String
@@ -165,22 +167,26 @@ value { ignoreSorceressBonus } model =
                                             { label = label
                                             , kind = IdKindMagic
                                             , anchor = Just name
-                                            , value = Monad.FreeBecause reason
+                                            , value = Value.FreeBecause reason
                                             }
 
                                 Nothing ->
-                                    { power = power
-                                    , rewardPoints = rewardPoints
-                                    }
+                                    let
+                                        points : Points
+                                        points =
+                                            { power = power
+                                            , rewardPoints = rewardPoints
+                                            }
+                                    in
+                                    points
                                         |> Monad.succeed
                                         |> Monad.withInfo
                                             { label = label
                                             , kind = IdKindMagic
                                             , anchor = Just name
-                                            , value = Monad.PowerAndRewardPoints power rewardPoints
+                                            , value = Value.PowerAndRewardPoints points
                                             }
                         )
-                    |> Utils.combineAndSum
                     |> Monad.withWarningMaybe offAffinityWarning
                     |> Monad.withWarningMaybe jackOfAllWarning
             )

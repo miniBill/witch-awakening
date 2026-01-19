@@ -1,7 +1,9 @@
 module Data.Costs.Factions exposing (value)
 
 import Data.Costs.Monad as Monad exposing (Monad)
-import Data.Costs.Utils as Utils exposing (Points)
+import Data.Costs.Points as Points exposing (Points)
+import Data.Costs.Utils as Utils
+import Data.Costs.Value as Value
 import Generated.Faction as Faction
 import Types exposing (IdKind(..), Model)
 
@@ -9,22 +11,22 @@ import Types exposing (IdKind(..), Model)
 value : Model key -> Monad Points
 value model =
     let
-        fromFactions : List (Monad Int)
+        fromFactions : List (Monad Points)
         fromFactions =
             case model.factions of
                 [] ->
-                    Monad.succeed 2
-                        |> Monad.withPowerInfo IdKindFaction "Factionless"
+                    Monad.succeed (Points.fromPower 2)
+                        |> Monad.withPointsInfo IdKindFaction "Factionless"
                         |> List.singleton
 
                 _ ->
                     model.factions
-                        |> List.map
+                        |> Monad.combineMap
                             (\name ->
-                                Monad.succeed 0
-                                    |> Monad.withPowerInfo IdKindFaction (Faction.toString name)
+                                Monad.succeed Points.zero
+                                    |> Monad.withPointsInfo IdKindFaction (Faction.toString name)
                             )
-                        |> Monad.mapAndSum identity
+                        |> Monad.map Points.sum
                         |> (if List.length model.factions > 2 then
                                 Monad.withWarning "Cannot take more than two Factions"
 
@@ -33,12 +35,12 @@ value model =
                            )
                         |> List.singleton
 
-        fromPerks : List (Monad Int)
+        fromPerks : List (Monad Points)
         fromPerks =
             case model.factionPerks of
                 [] ->
-                    [ Monad.succeed 2
-                        |> Monad.withPowerInfo IdKindFaction "No faction magic"
+                    [ Monad.succeed (Points.fromPower 2)
+                        |> Monad.withPointsInfo IdKindFaction "No faction magic"
                     ]
 
                 _ ->
@@ -48,12 +50,12 @@ value model =
                                 Utils.find "Faction" .name factionPerk Faction.all Faction.toString
                                     |> Monad.andThen
                                         (\factionDetails ->
-                                            Monad.succeed 0
+                                            Monad.succeed Points.zero
                                                 |> Monad.withInfo
                                                     { kind = IdKindFaction
                                                     , anchor = Just (Faction.toString factionPerk)
                                                     , label = factionDetails.perk
-                                                    , value = Monad.power 0
+                                                    , value = Value.PowerAndRewardPoints Points.zero
                                                     }
                                         )
                             )
@@ -66,5 +68,4 @@ value model =
                         |> List.singleton
     in
     (fromFactions ++ fromPerks)
-        |> Monad.mapAndSum identity
-        |> Monad.map Utils.powerToPoints
+        |> Monad.combineAndSum
