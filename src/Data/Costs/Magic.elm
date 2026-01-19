@@ -3,7 +3,7 @@ module Data.Costs.Magic exposing (InFaction, value)
 import Data.Affinity as Affinity exposing (AffinityList, InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Points exposing (Points)
-import Data.Costs.Utils as Utils exposing (affinityValueDiscountIf)
+import Data.Costs.Utils as Utils exposing (affinityDiscountIf)
 import Data.Costs.Value as Value
 import Data.Magic as Magic
 import Data.Race as Race
@@ -291,7 +291,7 @@ magicValue model affinities magicDetails =
                                 (\rank ->
                                     ( -rank
                                         |> factionValueDiscountIf inFaction
-                                        |> affinityValueDiscountIf inAffinity
+                                        |> affinityDiscountIf inAffinity
                                     , if rankedMagic.name == MagicBodyRefinement && rank >= 3 then
                                         5
 

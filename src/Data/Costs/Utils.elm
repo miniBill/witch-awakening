@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Requirement(..), affinityValueDiscountIf, applyClassBonusToValueIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported, zeroOut)
+module Data.Costs.Utils exposing (Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported, zeroOut)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
@@ -18,8 +18,8 @@ zeroOut points =
     { points | power = 0, rewardPoints = 0 }
 
 
-applyClassBonusToValueIf : Bool -> Int -> Int
-applyClassBonusToValueIf isClass cost =
+applyClassBonusIf : Bool -> Int -> Int
+applyClassBonusIf isClass cost =
     if isClass then
         cost + 2
 
@@ -56,8 +56,8 @@ capWithWarning cap warning value =
             |> Monad.succeed
 
 
-affinityValueDiscountIf : InAffinity -> Int -> Int
-affinityValueDiscountIf inAffinity value =
+affinityDiscountIf : InAffinity -> Int -> Int
+affinityDiscountIf inAffinity value =
     if value >= 0 then
         value
 

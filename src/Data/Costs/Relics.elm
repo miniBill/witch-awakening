@@ -30,7 +30,7 @@ relicValue ({ class } as model) details =
                                 List.member c relic.classes
                 in
                 -details.cost
-                    |> Utils.applyClassBonusToValueIf isClass
+                    |> Utils.applyClassBonusIf isClass
                     |> Points.fromRewardPoints
                     |> Utils.checkRequirements relic (Relic.toString details.name) model
             )

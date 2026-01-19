@@ -215,5 +215,5 @@ innerPerkValue ({ class } as model) { name, cost } perk =
                     0
     in
     (-cost + changelingDiff + apexDiff)
-        |> Utils.applyClassBonusToValueIf isClass
-        |> Utils.affinityValueDiscountIf isInAffinity
+        |> Utils.applyClassBonusIf isClass
+        |> Utils.affinityDiscountIf isInAffinity
