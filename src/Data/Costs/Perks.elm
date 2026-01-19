@@ -135,7 +135,7 @@ perkValue model ranked =
                                 Value.FreeBecause reason
 
                             Nothing ->
-                                Value.fromPower -(innerPerkCost model ranked perk)
+                                Value.fromPower (innerPerkValue model ranked perk)
 
                     res : { name : String, perkValue : Value, staticCost : Bool }
                     res =
@@ -154,7 +154,7 @@ perkValue model ranked =
             )
 
 
-innerPerkCost :
+innerPerkValue :
     { a
         | class : Maybe Class
         , races : List Race
@@ -166,14 +166,14 @@ innerPerkCost :
     -> { name : Perk, cost : Int }
     -> Perk.Details
     -> Int
-innerPerkCost ({ class } as model) { name, cost } perk =
+innerPerkValue ({ class } as model) { name, cost } perk =
     let
         apexDiff : Int
         apexDiff =
             case name of
                 PerkApex ->
                     if List.any (\p -> p.name == PerkHybridize) model.perks then
-                        3 * (List.length model.races - 1)
+                        -3 * (List.length model.races - 1)
 
                     else
                         0
@@ -206,7 +206,7 @@ innerPerkCost ({ class } as model) { name, cost } perk =
             case name of
                 PerkChargeSwap _ ->
                     if List.member RaceChangeling model.races then
-                        -3
+                        3
 
                     else
                         0
@@ -214,6 +214,6 @@ innerPerkCost ({ class } as model) { name, cost } perk =
                 _ ->
                     0
     in
-    (cost + changelingDiff + apexDiff)
-        |> Utils.applyClassBonusToCostIf isClass
-        |> Utils.affinityDiscountIf isInAffinity
+    (-cost + changelingDiff + apexDiff)
+        |> Utils.applyClassBonusToValueIf isClass
+        |> Utils.affinityValueDiscountIf isInAffinity

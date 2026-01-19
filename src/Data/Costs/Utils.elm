@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Requirement(..), affinityDiscountIf, applyClassBonusToCostIf, applyClassBonusToValueIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported, zeroOut)
+module Data.Costs.Utils exposing (Requirement(..), affinityValueDiscountIf, applyClassBonusToValueIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported, zeroOut)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
@@ -22,15 +22,6 @@ applyClassBonusToValueIf : Bool -> Int -> Int
 applyClassBonusToValueIf isClass cost =
     if isClass then
         cost + 2
-
-    else
-        cost
-
-
-applyClassBonusToCostIf : Bool -> Int -> Int
-applyClassBonusToCostIf isClass cost =
-    if isClass then
-        cost - 2
 
     else
         cost
@@ -65,22 +56,23 @@ capWithWarning cap warning value =
             |> Monad.succeed
 
 
-affinityDiscountIf : InAffinity -> Int -> Int
-affinityDiscountIf inAffinity cost =
-    if cost <= 0 then
-        cost
+affinityValueDiscountIf : InAffinity -> Int -> Int
+affinityValueDiscountIf inAffinity value =
+    if value >= 0 then
+        value
 
     else
         case inAffinity of
             DoubleAffinity ->
-                -- We're rounding down the _second_ halving but not the first
-                (cost + 1) // 4
+                -- We're rounding down the _second_ halving but not the first,
+                -- hence why the -1
+                (value - 1) // 4
 
             InAffinity ->
-                (cost + 1) // 2
+                (value - 1) // 2
 
             OffAffinity ->
-                cost
+                value
 
 
 requisiteParser : Parser Requirement

@@ -3,7 +3,7 @@ module Data.Costs.Magic exposing (value)
 import Data.Affinity as Affinity exposing (AffinityList, InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Points exposing (Points)
-import Data.Costs.Utils as Utils exposing (affinityDiscountIf)
+import Data.Costs.Utils as Utils exposing (affinityValueDiscountIf)
 import Data.Costs.Value as Value
 import Data.Magic as Magic
 import Data.Race as Race
@@ -290,8 +290,10 @@ magicValue model affinities magicDetails =
                             |> List.map
                                 (\rank ->
                                     ( rank
-                                        |> factionDiscountIf inFaction
-                                        |> affinityDiscountIf inAffinity
+                                        |> factionCostDiscountIf inFaction
+                                        |> negate
+                                        |> affinityValueDiscountIf inAffinity
+                                        |> negate
                                     , if rankedMagic.name == MagicBodyRefinement && rank >= 3 then
                                         5
 
@@ -317,7 +319,7 @@ magicValue model affinities magicDetails =
                                     in
                                     ps
                                         |> List.sum
-                                        |> classDiscountIf inClass
+                                        |> classCostDiscountIf inClass
                                 )
                                 List.sum
                 in
@@ -448,8 +450,8 @@ isInFaction { factions, factionPerks, typePerks } magicDetails =
                 Nonfactional
 
 
-classDiscountIf : Bool -> Int -> Int
-classDiscountIf inClass cost =
+classCostDiscountIf : Bool -> Int -> Int
+classCostDiscountIf inClass cost =
     if inClass && cost > 0 then
         cost - 2
 
@@ -457,8 +459,8 @@ classDiscountIf inClass cost =
         cost
 
 
-factionDiscountIf : InFaction -> Int -> Int
-factionDiscountIf factionality cost =
+factionCostDiscountIf : InFaction -> Int -> Int
+factionCostDiscountIf factionality cost =
     case factionality of
         OutOfFaction ->
             if cost > 0 then
