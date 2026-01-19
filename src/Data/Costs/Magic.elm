@@ -1,4 +1,4 @@
-module Data.Costs.Magic exposing (value)
+module Data.Costs.Magic exposing (factionValueDiscountIf, value)
 
 import Data.Affinity as Affinity exposing (AffinityList, InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
@@ -289,9 +289,8 @@ magicValue model affinities magicDetails =
                         List.range minRank rankedMagic.rank
                             |> List.map
                                 (\rank ->
-                                    ( rank
-                                        |> factionCostDiscountIf inFaction
-                                        |> negate
+                                    ( -rank
+                                        |> factionValueDiscountIf inFaction
                                         |> affinityValueDiscountIf inAffinity
                                         |> negate
                                     , if rankedMagic.name == MagicBodyRefinement && rank >= 3 then
@@ -459,25 +458,25 @@ classCostDiscountIf inClass cost =
         cost
 
 
-factionCostDiscountIf : InFaction -> Int -> Int
-factionCostDiscountIf factionality cost =
+factionValueDiscountIf : InFaction -> Int -> Int
+factionValueDiscountIf factionality v =
     case factionality of
         OutOfFaction ->
-            if cost > 0 then
-                cost * 2
+            if v < 0 then
+                v * 2
 
             else
-                cost
+                v
 
         Nonfactional ->
-            cost
+            v
 
         InFactionNoPerk ->
-            cost
+            v
 
         InFactionPerk ->
-            if cost > 0 then
-                (cost + 1) // 2
+            if v < 0 then
+                (v - 1) // 2
 
             else
-                cost
+                v
