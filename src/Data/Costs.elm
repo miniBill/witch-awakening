@@ -43,7 +43,7 @@ totalValue model =
     , conversion model
 
     -- Just grab info and warnings from the power cap
-    , Monad.map Utils.zeroOut (Data.Costs.Complications.powerCap model)
+    , Monad.map (\_ -> Points.zero) (Data.Costs.Complications.powerCap model)
     ]
         |> Monad.combineAndSum
         |> Monad.andThen

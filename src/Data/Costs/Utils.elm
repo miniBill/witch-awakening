@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported, zeroOut)
+module Data.Costs.Utils exposing (Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
@@ -11,11 +11,6 @@ import Generated.Types exposing (Class, Magic, Perk, Quest)
 import List.Extra
 import Parser exposing ((|.), (|=), Parser)
 import Types exposing (RankedMagic, RankedPerk)
-
-
-zeroOut : Points -> Points
-zeroOut points =
-    { points | power = 0, rewardPoints = 0 }
 
 
 applyClassBonusIf : Bool -> Int -> Int
