@@ -1,4 +1,4 @@
-module Data.Costs.Magic exposing (factionValueDiscountIf, value)
+module Data.Costs.Magic exposing (InFaction, value)
 
 import Data.Affinity as Affinity exposing (AffinityList, InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
@@ -285,14 +285,13 @@ magicValue model affinities magicDetails =
                             Just ( r, _ ) ->
                                 r + 1
 
-                    ( finalCost, rewardPoints ) =
+                    ( finalValue, rewardPoints ) =
                         List.range minRank rankedMagic.rank
                             |> List.map
                                 (\rank ->
                                     ( -rank
                                         |> factionValueDiscountIf inFaction
                                         |> affinityValueDiscountIf inAffinity
-                                        |> negate
                                     , if rankedMagic.name == MagicBodyRefinement && rank >= 3 then
                                         5
 
@@ -318,14 +317,14 @@ magicValue model affinities magicDetails =
                                     in
                                     ps
                                         |> List.sum
-                                        |> classCostDiscountIf inClass
+                                        |> classValueDiscountIf inClass
                                 )
                                 List.sum
                 in
                 { name = name
                 , rank = rankedMagic.rank
                 , freeRankFromRace = freeRankFromRace
-                , power = -finalCost
+                , power = finalValue
                 , rewardPoints = rewardPoints
                 , isElementalism = magicDetails.isElementalism
                 , inAffinity = inAffinity
@@ -449,13 +448,13 @@ isInFaction { factions, factionPerks, typePerks } magicDetails =
                 Nonfactional
 
 
-classCostDiscountIf : Bool -> Int -> Int
-classCostDiscountIf inClass cost =
-    if inClass && cost > 0 then
-        cost - 2
+classValueDiscountIf : Bool -> Int -> Int
+classValueDiscountIf inClass v =
+    if inClass && v < 0 then
+        v + 2
 
     else
-        cost
+        v
 
 
 factionValueDiscountIf : InFaction -> Int -> Int
