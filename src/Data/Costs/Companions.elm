@@ -199,7 +199,7 @@ totalCompanionValue model companions =
                     Nothing ->
                         case cost of
                             Just v ->
-                                Points.fromPower -v
+                                Points.fromRewardPoints -v
                                     |> Utils.checkRequirements details nameString model
                                     |> Monad.withPointsInfo IdKindCompanion nameString
 
