@@ -3,7 +3,6 @@ module Generate.Complication exposing (file)
 import Elm
 import Elm.Annotation
 import Elm.Declare
-import Elm.Declare.Extra
 import Gen.Data.Complication
 import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
@@ -23,7 +22,7 @@ file types enum dlcComplications =
     Elm.Declare.module_ [ "Generated", "Complication" ] ComplicationModule
         |> Elm.Declare.with (all dlcComplications)
         |> Elm.Declare.with (Enum.toString enum)
-        |> Elm.Declare.Extra.withDeclarations (dlcToComplications types dlcComplications)
+        |> Elm.Declare.withDeclarations (dlcToComplications types dlcComplications)
 
 
 all : List ( Maybe String, Parsers.Complication ) -> Elm.Declare.Value

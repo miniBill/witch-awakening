@@ -39,7 +39,7 @@ file types enum dlcPerks =
                 |> Elm.Declare.with (Enum.toString enum)
                 |> Elm.Declare.with (details types)
                 |> Elm.Declare.with (containsDash types dlcPerks)
-                |> Elm.Declare.Extra.withDeclarations declarations
+                |> Elm.Declare.withDeclarations declarations
         )
         (dlcToPerks types dlcPerks)
 
@@ -105,10 +105,7 @@ containsDash types dlcPerks =
 details :
     TypesModule
     ->
-        { annotation : Elm.Annotation.Annotation
-        , declaration : Elm.Declaration
-        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-        , make :
+        Elm.Declare.Extra.Record
             { name : Elm.Expression
             , class : Elm.Expression
             , affinity : Elm.Expression
@@ -117,18 +114,16 @@ details :
             , content : Elm.Expression
             , dlc : Elm.Expression
             }
-            -> Elm.Expression
-        }
 details types =
-    Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name types.perk.annotation
-        |> Elm.Declare.Extra.withField "class" .class types.class.annotation
-        |> Elm.Declare.Extra.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "affinity" .affinity (Elm.Annotation.list types.affinity.annotation)
-        |> Elm.Declare.Extra.withField "isMeta" .isMeta Elm.Annotation.bool
-        |> Elm.Declare.Extra.withField "content" .content Gen.Data.Perk.annotation_.content
-        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.buildCustomRecord
+    Elm.Declare.record "Details"
+        |> Elm.Declare.withField "name" .name types.perk.annotation
+        |> Elm.Declare.withField "class" .class types.class.annotation
+        |> Elm.Declare.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.withField "affinity" .affinity (Elm.Annotation.list types.affinity.annotation)
+        |> Elm.Declare.withField "isMeta" .isMeta Elm.Annotation.bool
+        |> Elm.Declare.withField "content" .content Gen.Data.Perk.annotation_.content
+        |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.buildRecord
 
 
 dlcToPerks : TypesModule -> List ( Maybe String, Parsers.Perk ) -> ResultME Generate.Error (List Elm.Declaration)

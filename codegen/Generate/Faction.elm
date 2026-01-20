@@ -35,16 +35,13 @@ file types image enum dlcFactions =
         |> Elm.Declare.with (toCollectiveName types dlcFactions)
         |> Elm.Declare.with (details types)
         |> Elm.Declare.with images
-        |> Elm.Declare.Extra.withDeclarations (dlcToFactions types image dlcFactions)
+        |> Elm.Declare.withDeclarations (dlcToFactions types image dlcFactions)
 
 
 details :
     TypesModule
     ->
-        { annotation : Elm.Annotation.Annotation
-        , declaration : Elm.Declaration
-        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-        , make :
+        Elm.Declare.Extra.Record
             { name : Elm.Expression
             , motto : Elm.Expression
             , isHuman : Elm.Expression
@@ -56,21 +53,19 @@ details :
             , dlc : Elm.Expression
             , images : Elm.Expression
             }
-            -> Elm.Expression
-        }
 details types =
-    Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name types.faction.annotation
-        |> Elm.Declare.Extra.withField "motto" .motto Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "isHuman" .isHuman Elm.Annotation.bool
-        |> Elm.Declare.Extra.withField "description" .description Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "location" .location Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "relations" .relations Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "perk" .perk Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "perkContent" .perkContent Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "images" .images images.annotation
-        |> Elm.Declare.Extra.buildCustomRecord
+    Elm.Declare.record "Details"
+        |> Elm.Declare.withField "name" .name types.faction.annotation
+        |> Elm.Declare.withField "motto" .motto Elm.Annotation.string
+        |> Elm.Declare.withField "isHuman" .isHuman Elm.Annotation.bool
+        |> Elm.Declare.withField "description" .description Elm.Annotation.string
+        |> Elm.Declare.withField "location" .location Elm.Annotation.string
+        |> Elm.Declare.withField "relations" .relations Elm.Annotation.string
+        |> Elm.Declare.withField "perk" .perk Elm.Annotation.string
+        |> Elm.Declare.withField "perkContent" .perkContent Elm.Annotation.string
+        |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.withField "images" .images images.annotation
+        |> Elm.Declare.buildRecord
 
 
 images : Elm.Declare.Annotation

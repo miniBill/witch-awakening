@@ -29,30 +29,25 @@ file types enum dlcClasses =
         |> Elm.Declare.with (toColor types dlcClasses)
         |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.with (details types)
-        |> Elm.Declare.Extra.withDeclarations (dlcToClasses types dlcClasses)
+        |> Elm.Declare.withDeclarations (dlcToClasses types dlcClasses)
 
 
 details :
     TypesModule
     ->
-        { annotation : Elm.Annotation.Annotation
-        , declaration : Elm.Declaration
-        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-        , make :
+        Elm.Declare.Extra.Record
             { content : Elm.Expression
             , color : Elm.Expression
             , dlc : Elm.Expression
             , name : Elm.Expression
             }
-            -> Elm.Expression
-        }
 details types =
-    Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name types.class.annotation
-        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "color" .color Gen.Color.annotation_.color
-        |> Elm.Declare.Extra.withField "content" .content Elm.Annotation.string
-        |> Elm.Declare.Extra.buildCustomRecord
+    Elm.Declare.record "Details"
+        |> Elm.Declare.withField "name" .name types.class.annotation
+        |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.withField "color" .color Gen.Color.annotation_.color
+        |> Elm.Declare.withField "content" .content Elm.Annotation.string
+        |> Elm.Declare.buildRecord
 
 
 all : TypesModule -> List ( Maybe String, Parsers.Class ) -> Elm.Declare.Value

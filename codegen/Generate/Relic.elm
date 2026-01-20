@@ -40,7 +40,7 @@ file types enum dlcRelics =
                 |> Elm.Declare.with (all types dlcRelics)
                 |> Elm.Declare.with (Enum.toString enum)
                 |> Elm.Declare.with (details types)
-                |> Elm.Declare.Extra.withDeclarations declarations
+                |> Elm.Declare.withDeclarations declarations
         )
         (dlcToRelics types dlcRelics)
 
@@ -77,26 +77,21 @@ all types dlcRelics =
 details :
     TypesModule
     ->
-        { annotation : Elm.Annotation.Annotation
-        , declaration : Elm.Declaration
-        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-        , make :
+        Elm.Declare.Extra.Record
             { content : Elm.Expression
             , dlc : Elm.Expression
             , requires : Elm.Expression
             , classes : Elm.Expression
             , name : Elm.Expression
             }
-            -> Elm.Expression
-        }
 details types =
-    Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name types.relic.annotation
-        |> Elm.Declare.Extra.withField "classes" .classes (Elm.Annotation.list types.class.annotation)
-        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "content" .content Gen.Data.Relic.annotation_.content
-        |> Elm.Declare.Extra.buildCustomRecord
+    Elm.Declare.record "Details"
+        |> Elm.Declare.withField "name" .name types.relic.annotation
+        |> Elm.Declare.withField "classes" .classes (Elm.Annotation.list types.class.annotation)
+        |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.withField "content" .content Gen.Data.Relic.annotation_.content
+        |> Elm.Declare.buildRecord
 
 
 dlcToRelics : TypesModule -> List ( Maybe String, Parsers.Relic ) -> ResultME Generate.Error (List Elm.Declaration)

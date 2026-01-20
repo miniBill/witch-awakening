@@ -30,7 +30,7 @@ file types enum dlcCompanions =
                 |> Elm.Declare.with allDeclaration
                 |> Elm.Declare.with (Enum.toString enum)
                 |> Elm.Declare.with (details types)
-                |> Elm.Declare.Extra.withDeclarations (dlcToCompanions types dlcCompanions)
+                |> Elm.Declare.withDeclarations (dlcToCompanions types dlcCompanions)
         )
         (all types dlcCompanions)
 
@@ -76,10 +76,7 @@ all types dlcCompanions =
 details :
     TypesModule
     ->
-        { annotation : Elm.Annotation.Annotation
-        , declaration : Elm.Declaration
-        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-        , make :
+        Elm.Declare.Extra.Record
             { name : Elm.Expression
             , class : Elm.Expression
             , races : Elm.Expression
@@ -98,28 +95,26 @@ details :
             , dlc : Elm.Expression
             , requires : Elm.Expression
             }
-            -> Elm.Expression
-        }
 details types =
-    Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name types.companion.annotation
-        |> Elm.Declare.Extra.withField "class" .class Gen.Data.Companion.annotation_.maybeClass
-        |> Elm.Declare.Extra.withField "races" .races (Elm.Annotation.list types.race.annotation)
-        |> Elm.Declare.Extra.withField "hasPerk" .hasPerk Elm.Annotation.bool
-        |> Elm.Declare.Extra.withField "cost" .cost (Elm.Annotation.maybe Elm.Annotation.int)
-        |> Elm.Declare.Extra.withField "power" .power Gen.Data.Companion.annotation_.score
-        |> Elm.Declare.Extra.withField "teamwork" .teamwork Gen.Data.Companion.annotation_.score
-        |> Elm.Declare.Extra.withField "sociability" .sociability Gen.Data.Companion.annotation_.score
-        |> Elm.Declare.Extra.withField "morality" .morality Gen.Data.Companion.annotation_.score
-        |> Elm.Declare.Extra.withField "quote" .quote Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "description" .description Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "positives" .positives (Elm.Annotation.list Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "negatives" .negatives (Elm.Annotation.list Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "mixed" .mixed (Elm.Annotation.list Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "has" .has Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.buildCustomRecord
+    Elm.Declare.record "Details"
+        |> Elm.Declare.withField "name" .name types.companion.annotation
+        |> Elm.Declare.withField "class" .class Gen.Data.Companion.annotation_.maybeClass
+        |> Elm.Declare.withField "races" .races (Elm.Annotation.list types.race.annotation)
+        |> Elm.Declare.withField "hasPerk" .hasPerk Elm.Annotation.bool
+        |> Elm.Declare.withField "cost" .cost (Elm.Annotation.maybe Elm.Annotation.int)
+        |> Elm.Declare.withField "power" .power Gen.Data.Companion.annotation_.score
+        |> Elm.Declare.withField "teamwork" .teamwork Gen.Data.Companion.annotation_.score
+        |> Elm.Declare.withField "sociability" .sociability Gen.Data.Companion.annotation_.score
+        |> Elm.Declare.withField "morality" .morality Gen.Data.Companion.annotation_.score
+        |> Elm.Declare.withField "quote" .quote Elm.Annotation.string
+        |> Elm.Declare.withField "description" .description Elm.Annotation.string
+        |> Elm.Declare.withField "positives" .positives (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.withField "negatives" .negatives (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.withField "mixed" .mixed (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.withField "has" .has Elm.Annotation.string
+        |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.buildRecord
 
 
 factionToOrder : Maybe String -> ResultME Generate.Error Int

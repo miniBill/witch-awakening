@@ -6,7 +6,6 @@ import Elm.Annotation
 import Elm.Arg
 import Elm.Case
 import Elm.Declare
-import Elm.Declare.Extra
 import Elm.Op
 import Gen.Maybe
 import Gen.Parser
@@ -180,7 +179,7 @@ enumToDeclarations moduleName images enum =
                 inner : Elm.Declare.Module ((String -> List (Elm.Arg Elm.Expression) -> Elm.Arg (List Elm.Expression)) -> EnumModule)
                 inner =
                     Elm.Declare.module_ moduleName (EnumModule valueFrom)
-                        |> Elm.Declare.Extra.withDeclarations [ Elm.docs ("# " ++ enum.name) ]
+                        |> Elm.Declare.withDeclarations [ Elm.docs ("# " ++ enum.name) ]
                         |> Elm.Declare.with type_
                         |> Elm.Declare.with (parserDeclaration config enum)
                         |> Elm.Declare.with (fromStringDeclaration config enum)
@@ -190,10 +189,11 @@ enumToDeclarations moduleName images enum =
             , call = inner.call argWith
             }
 
+        withToImage : Elm.Declare.Module EnumModule
         withToImage =
             if enum.toImage then
                 common
-                    |> Elm.Declare.Extra.withDeclarations
+                    |> Elm.Declare.withDeclarations
                         [ (toImageDeclaration images config enum).declaration
                             |> Elm.expose
                         ]
@@ -203,7 +203,7 @@ enumToDeclarations moduleName images enum =
     in
     if enum.isSame then
         withToImage
-            |> Elm.Declare.Extra.withDeclarations
+            |> Elm.Declare.withDeclarations
                 [ (isSameDeclaration config enum).declaration
                     |> Elm.expose
                 ]

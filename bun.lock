@@ -6,7 +6,7 @@
       "name": "witch-awakening",
       "devDependencies": {
         "elm": "^0.19.1-6",
-        "elm-codegen": "^0.6.1",
+        "elm-codegen": "^0.6.3",
         "elm-format": "^0.8.8",
         "elm-review": "^2.13.5",
         "elm-test-rs": "^3.0.1-0",
@@ -701,7 +701,7 @@
 
     "elm": ["elm@0.19.1-6", "", { "optionalDependencies": { "@elm_binaries/darwin_arm64": "0.19.1-0", "@elm_binaries/darwin_x64": "0.19.1-0", "@elm_binaries/linux_x64": "0.19.1-0", "@elm_binaries/win32_x64": "0.19.1-0" }, "bin": { "elm": "bin/elm" } }, "sha512-mKYyierHICPdMx/vhiIacdPmTPnh889gjHOZ75ZAoCxo3lZmSWbGP8HMw78wyctJH0HwvTmeKhlYSWboQNYPeQ=="],
 
-    "elm-codegen": ["elm-codegen@0.6.1", "", { "dependencies": { "chalk": "^4.1.1", "chokidar": "^3.5.1", "commander": "^8.3.0", "node-elm-compiler": "^5.0.6" }, "bin": { "elm-codegen": "bin/elm-codegen" } }, "sha512-mbVmK4fqW+wtYzTZhJSuT42KrQZMRTueYerCvo09sO5v7QdDGw3qeG/rL1vLH0q2GJF44lXhyBo4lv6azSBOQQ=="],
+    "elm-codegen": ["elm-codegen@0.6.3", "", { "dependencies": { "chalk": "^4.1.1", "chokidar": "^3.5.1", "commander": "^8.3.0", "node-elm-compiler": "^5.0.6" }, "bin": { "elm-codegen": "bin/elm-codegen" } }, "sha512-X9S7ltwF78gjOmL5Rl79sMszMJlsBh44VwSXBgUah8vkobkRog2yfyMmMzyZmac/hzoRTP6Z98FFJY4A/xtUpQ=="],
 
     "elm-format": ["elm-format@0.8.8", "", { "optionalDependencies": { "@avh4/elm-format-darwin-arm64": "0.8.8-1", "@avh4/elm-format-darwin-x64": "0.8.8-1", "@avh4/elm-format-linux-arm64": "0.8.8-1", "@avh4/elm-format-linux-x64": "0.8.8-1", "@avh4/elm-format-win32-x64": "0.8.8-1" }, "bin": { "elm-format": "bin/elm-format" } }, "sha512-OJYUtVnepuy8UZdnL5OCjSxUY5+dIGP2NdWTB6icxVVOOH0b8MpJIijTPsGW+ztnv9yzSoTK0dhCuVDh+AGhNQ=="],
 

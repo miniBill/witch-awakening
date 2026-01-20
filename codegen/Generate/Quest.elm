@@ -41,16 +41,13 @@ file types enum dlcQuests =
         |> Elm.Declare.with (details types)
         |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.with evil
-        |> Elm.Declare.Extra.withDeclarations (dlcToQuests types dlcQuests)
+        |> Elm.Declare.withDeclarations (dlcToQuests types dlcQuests)
 
 
 details :
     TypesModule
     ->
-        { annotation : Elm.Annotation.Annotation
-        , declaration : Elm.Declaration
-        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-        , make :
+        Elm.Declare.Extra.Record
             { name : Elm.Expression
             , evil : Elm.Expression
             , repeatable : Elm.Expression
@@ -65,24 +62,22 @@ details :
             , sidebars : Elm.Expression
             , dlc : Elm.Expression
             }
-            -> Elm.Expression
-        }
 details types =
-    Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name types.quest.annotation
-        |> Elm.Declare.Extra.withField "evil" .evil evil.annotation
-        |> Elm.Declare.Extra.withField "repeatable" .repeatable Elm.Annotation.bool
-        |> Elm.Declare.Extra.withField "slot" .slot types.slot.annotation
-        |> Elm.Declare.Extra.withField "faction" .faction (Elm.Annotation.maybe types.faction.annotation)
-        |> Elm.Declare.Extra.withField "threat" .threat (Elm.Annotation.maybe Elm.Annotation.int)
-        |> Elm.Declare.Extra.withField "conflict" .conflict (Elm.Annotation.maybe Elm.Annotation.int)
-        |> Elm.Declare.Extra.withField "reward" .reward Elm.Annotation.int
-        |> Elm.Declare.Extra.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "description" .description Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "notes" .notes (Elm.Annotation.list Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "sidebars" .sidebars (Elm.Annotation.list Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.buildCustomRecord
+    Elm.Declare.record "Details"
+        |> Elm.Declare.withField "name" .name types.quest.annotation
+        |> Elm.Declare.withField "evil" .evil evil.annotation
+        |> Elm.Declare.withField "repeatable" .repeatable Elm.Annotation.bool
+        |> Elm.Declare.withField "slot" .slot types.slot.annotation
+        |> Elm.Declare.withField "faction" .faction (Elm.Annotation.maybe types.faction.annotation)
+        |> Elm.Declare.withField "threat" .threat (Elm.Annotation.maybe Elm.Annotation.int)
+        |> Elm.Declare.withField "conflict" .conflict (Elm.Annotation.maybe Elm.Annotation.int)
+        |> Elm.Declare.withField "reward" .reward Elm.Annotation.int
+        |> Elm.Declare.withField "requires" .requires (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.withField "description" .description Elm.Annotation.string
+        |> Elm.Declare.withField "notes" .notes (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.withField "sidebars" .sidebars (Elm.Annotation.list Elm.Annotation.string)
+        |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.buildRecord
 
 
 type alias Evil a =

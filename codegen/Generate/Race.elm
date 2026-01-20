@@ -5,7 +5,6 @@ import Elm.Annotation
 import Elm.Arg
 import Elm.Case
 import Elm.Declare
-import Elm.Declare.Extra
 import Gen.CodeGen.Generate as Generate
 import Gen.Data.Race
 import Gen.List
@@ -31,7 +30,7 @@ file types enum dlcRaces =
             Elm.Declare.module_ [ "Generated", "Race" ] RacesModule
                 |> Elm.Declare.with (all types dlcRaces)
                 |> Elm.Declare.with (Enum.toString enum)
-                |> Elm.Declare.Extra.withDeclarations declarations
+                |> Elm.Declare.withDeclarations declarations
         )
         (dlcToRaces types dlcRaces)
 

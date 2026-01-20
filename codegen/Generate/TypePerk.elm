@@ -31,17 +31,14 @@ file types dlcRaces =
                 Elm.Declare.module_ [ "Generated", "TypePerk" ] TypePerksModule
                     |> Elm.Declare.with (all types dlcRaces)
                     |> Elm.Declare.with (details types)
-                    |> Elm.Declare.Extra.withDeclarations declarations
+                    |> Elm.Declare.withDeclarations declarations
             )
 
 
 details :
     TypesModule
     ->
-        { annotation : Elm.Annotation.Annotation
-        , declaration : Elm.Declaration
-        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-        , make :
+        Elm.Declare.Extra.Record
             { content : Elm.Expression
             , cost : Elm.Expression
             , dlc : Elm.Expression
@@ -49,17 +46,15 @@ details :
             , race : Elm.Expression
             , name : Elm.Expression
             }
-            -> Elm.Expression
-        }
 details types =
-    Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "race" .race types.race.annotation
-        |> Elm.Declare.Extra.withField "name" .name (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "gain" .gain (Elm.Annotation.list Gen.Types.annotation_.rankedMagic)
-        |> Elm.Declare.Extra.withField "cost" .cost Elm.Annotation.int
-        |> Elm.Declare.Extra.withField "content" .content Elm.Annotation.string
-        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.buildCustomRecord
+    Elm.Declare.record "Details"
+        |> Elm.Declare.withField "race" .race types.race.annotation
+        |> Elm.Declare.withField "name" .name (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.withField "gain" .gain (Elm.Annotation.list Gen.Types.annotation_.rankedMagic)
+        |> Elm.Declare.withField "cost" .cost Elm.Annotation.int
+        |> Elm.Declare.withField "content" .content Elm.Annotation.string
+        |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.buildRecord
 
 
 all : TypesModule -> List ( Maybe String, Parsers.Race ) -> Elm.Declare.Value
@@ -118,6 +113,7 @@ perkToDeclaration :
     -> ResultME Generate.Error Elm.Declaration
 perkToDeclaration types dlcName race perk =
     let
+        gainResult : ResultME Generate.Error Elm.Expression
         gainResult =
             case perk.gain of
                 Nothing ->
@@ -129,6 +125,7 @@ perkToDeclaration types dlcName race perk =
                         |> ResultME.combineMap
                             (\rawPiece ->
                                 let
+                                    parsed : Maybe Elm.Expression
                                     parsed =
                                         case rawPiece |> String.trim |> String.split " " of
                                             [ pieceNameString, pieceValueString ] ->

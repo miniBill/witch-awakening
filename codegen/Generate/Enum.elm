@@ -5,7 +5,6 @@ import Elm.Annotation
 import Elm.Arg
 import Elm.Case
 import Elm.Declare
-import Elm.Declare.Extra
 import Elm.Op.Extra
 import Gen.List
 import Gen.String
@@ -129,4 +128,4 @@ toAnnotation enum =
                     |> Elm.variantWith (enum.name ++ Utils.yassify variant.name)
             )
         |> Elm.Declare.customType enum.name
-        |> Elm.Declare.Extra.exposeConstructor
+        |> Elm.Declare.exposeConstructor

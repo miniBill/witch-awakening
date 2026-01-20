@@ -4,7 +4,6 @@ import Dict
 import Elm
 import Elm.Annotation
 import Elm.Declare
-import Elm.Declare.Extra
 import Gen.Data.Magic
 import Generate.Enum as Enum exposing (Enum)
 import Generate.Types exposing (TypesModule)
@@ -24,7 +23,7 @@ file types enum dlcMagics =
     Elm.Declare.module_ [ "Generated", "Magic" ] MagicModule
         |> Elm.Declare.with (all dlcMagics)
         |> Elm.Declare.with (Enum.toString enum)
-        |> Elm.Declare.Extra.withDeclarations (dlcToMagics types dlcMagics)
+        |> Elm.Declare.withDeclarations (dlcToMagics types dlcMagics)
 
 
 all : List ( Maybe String, Parsers.Magic ) -> Elm.Declare.Value

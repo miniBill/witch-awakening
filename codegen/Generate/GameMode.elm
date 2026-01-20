@@ -24,28 +24,23 @@ file types enum dlcGameModes =
         |> Elm.Declare.with (all types dlcGameModes)
         |> Elm.Declare.with (gameModeDetails types)
         |> Elm.Declare.with (Enum.toString enum)
-        |> Elm.Declare.Extra.withDeclarations (dlcToGameModes types dlcGameModes)
+        |> Elm.Declare.withDeclarations (dlcToGameModes types dlcGameModes)
 
 
 gameModeDetails :
     TypesModule
     ->
-        { annotation : Elm.Annotation.Annotation
-        , declaration : Elm.Declaration
-        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-        , make :
+        Elm.Declare.Extra.Record
             { content : Elm.Expression
             , dlc : Elm.Expression
             , name : Elm.Expression
             }
-            -> Elm.Expression
-        }
 gameModeDetails types =
-    Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name types.gameMode.annotation
-        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.withField "content" .content Elm.Annotation.string
-        |> Elm.Declare.Extra.buildCustomRecord
+    Elm.Declare.record "Details"
+        |> Elm.Declare.withField "name" .name types.gameMode.annotation
+        |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.withField "content" .content Elm.Annotation.string
+        |> Elm.Declare.buildRecord
 
 
 all : TypesModule -> List ( Maybe String, Parsers.GameMode ) -> Elm.Declare.Value

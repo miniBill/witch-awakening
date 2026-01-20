@@ -57,7 +57,7 @@ file sizesList =
                         )
                     )
                     |> Elm.Declare.with imageType
-                    |> Elm.Declare.Extra.withDeclarations (addGroups declarations)
+                    |> Elm.Declare.withDeclarations (addGroups declarations)
             )
 
 
@@ -175,22 +175,14 @@ addGroups declarations =
         |> List.map Elm.expose
 
 
-imageType :
-    { annotation : Elm.Annotation.Annotation
-    , declaration : Elm.Declaration
-    , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-    , make : { src : Elm.Expression, height : Elm.Expression, width : Elm.Expression } -> Elm.Expression
-    }
+imageType : Elm.Declare.Extra.Record { src : Elm.Expression, height : Elm.Expression, width : Elm.Expression }
 imageType =
-    let
-        inner =
-            Elm.Declare.Extra.customRecord "Image"
-                |> Elm.Declare.Extra.withField "width" .width Elm.Annotation.int
-                |> Elm.Declare.Extra.withField "height" .height Elm.Annotation.int
-                |> Elm.Declare.Extra.withField "src" .src Elm.Annotation.string
-                |> Elm.Declare.Extra.buildCustomRecord
-    in
-    { inner | declaration = Elm.withDocumentation "Image data" inner.declaration }
+    Elm.Declare.record "Image"
+        |> Elm.Declare.withField "width" .width Elm.Annotation.int
+        |> Elm.Declare.withField "height" .height Elm.Annotation.int
+        |> Elm.Declare.withField "src" .src Elm.Annotation.string
+        |> Elm.Declare.buildRecord
+        |> Elm.Declare.withDocumentation "Image data"
 
 
 imageGroupParser : Parser ( String, Int )

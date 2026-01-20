@@ -11,7 +11,7 @@
             "elm/parser": "1.1.0",
             "elm/regex": "1.0.0",
             "elmcraft/core-extra": "2.2.0",
-            "mdgriffith/elm-codegen": "5.2.0",
+            "mdgriffith/elm-codegen": "6.0.1",
             "mgold/elm-nonempty-list": "4.2.0",
             "miniBill/elm-parser-error-extra": "1.0.0",
             "pithub/elm-parser-bug-workaround": "1.0.0",

@@ -30,7 +30,7 @@ file types enum dlcAffinities =
         |> Elm.Declare.with (Enum.toString enum)
         |> Elm.Declare.with (isSelectable types dlcAffinities)
         |> Elm.Declare.with (details types)
-        |> Elm.Declare.Extra.withDeclarations (dlcToAffinities types dlcAffinities)
+        |> Elm.Declare.withDeclarations (dlcToAffinities types dlcAffinities)
 
 
 all : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> Elm.Declare.Value
@@ -78,20 +78,15 @@ toColor types dlcAffinities =
 details :
     TypesModule
     ->
-        { annotation : Elm.Annotation.Annotation
-        , declaration : Elm.Declaration
-        , internal : Elm.Declare.Internal Elm.Annotation.Annotation
-        , make :
+        Elm.Declare.Extra.Record
             { name : Elm.Expression
             , dlc : Elm.Expression
             }
-            -> Elm.Expression
-        }
 details types =
-    Elm.Declare.Extra.customRecord "Details"
-        |> Elm.Declare.Extra.withField "name" .name types.affinity.annotation
-        |> Elm.Declare.Extra.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.Extra.buildCustomRecord
+    Elm.Declare.record "Details"
+        |> Elm.Declare.withField "name" .name types.affinity.annotation
+        |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
+        |> Elm.Declare.buildRecord
 
 
 dlcToAffinities : TypesModule -> List ( Maybe String, Parsers.Affinity ) -> List Elm.Declaration
