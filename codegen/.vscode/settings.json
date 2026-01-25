@@ -1,9 +1,10 @@
 {
-    "cSpell.words": [
-        "Alfheimr",
-        "Alphazon",
-        "Elementalism",
-        "Hespatian",
-        "Lunabella"
-    ]
+  "cSpell.words": [
+    "Alfheimr",
+    "Alphazon",
+    "Elementalism",
+    "Hespatian",
+    "Lunabella"
+  ],
+  "elmLS.elmFormatPath": "elm-format"
 }
