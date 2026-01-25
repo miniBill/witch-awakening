@@ -12,7 +12,7 @@ public/Badge/*.png
 public/raw
 public/originals
 generated
-
+out
 
 # Local Netlify folder
 .netlify
