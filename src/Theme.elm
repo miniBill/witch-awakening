@@ -1,4 +1,4 @@
-module Theme exposing (Font(..), backgroundColor, blocks, borderColor, borderGlow, button, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewSize, wrappedRow)
+module Theme exposing (Font(..), backgroundColor, blocks, borderColor, borderGlow, button, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewGenericBadge, viewSize, wrappedRow)
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -437,6 +437,15 @@ gradientTextSpan font outlineSize gradient value =
 
 viewGenericBadge : Bool -> Image -> String -> List (Html msg)
 viewGenericBadge expandBadges source title =
+    let
+        cutTitle : String
+        cutTitle =
+            if String.endsWith "-" title then
+                String.slice 0 -1 title
+
+            else
+                title
+    in
     [ Html.div
         [ Html.Attributes.style "width" "30px"
         , Html.Attributes.style "display" "inline-block"
@@ -445,11 +454,11 @@ viewGenericBadge expandBadges source title =
         , Html.Attributes.style "background-size" "cover"
         , Html.Attributes.style "background-image"
             ("url(\"" ++ source.src ++ "\")")
-        , Html.Attributes.title title
+        , Html.Attributes.title cutTitle
         ]
         []
     , if expandBadges then
-        Html.text ("\u{00A0}" ++ title)
+        Html.text ("\u{00A0}" ++ cutTitle)
 
       else
         Html.text ""

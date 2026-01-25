@@ -1,5 +1,5 @@
 # Missing features
-- Implement Summer School
+
 - Siren type perk missing the possible 1p option
 - Doll type perk multicost: 1-4
 - Heirloom halving one specific magic
@@ -12,13 +12,16 @@
 - Weird companion races in Breaking News
 
 # Checks
+
 - Check all faction perks implementations
 
 # Cleanup
+
 - Deduplicate ALL the things
 - Separate section in menu, and collapsible section, for elementalist magic
 
 # Hard / Long
+
 - An extra little box on that says how much that option will actually move your point total if you take it right now
 - Art credit (include typefaces)
 - Cap vs initial build on the ~same page

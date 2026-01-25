@@ -353,6 +353,7 @@ Be reborn as a the child of a particular lineage of your choice. You can also or
 - Element: Life
 - Class: Academic
 - Meta: True
+- Extra Argument: List Magic
 - Costs: 4-8-20
 
 Looks like there’s space available in a special class at Arcadia or Hawthorne. _Neither needs to be our primary faction._ Take the _Summer School cyoa_ [https://imgchest.com/p/m9yxg5j34qn], and swap out any class subject with one Magic Specialization, choosing any teacher and adapt their summary to that magic school. You can replace a teacher with someone from the Companions page with R4+ in that magic. Over the summer, you do not gain Focus, Might, or Favor, but at the end each Magic specialization will be brought to Rank 3 (1 rank per month). You can replace Friends with Companions, who will learn the magic too. This perk costs 4p per magic class you take. You can take this repeatedly for up to 5 magic classes.

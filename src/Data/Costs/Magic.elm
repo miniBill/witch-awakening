@@ -9,6 +9,7 @@ import Data.Magic as Magic
 import Data.Race as Race
 import Dict exposing (Dict)
 import Generated.Magic as Magic
+import Generated.Perk as Perk
 import Generated.Race as Race
 import Generated.TypePerk as TypePerk
 import Generated.Types exposing (Class(..), Faction(..), Magic(..), Perk(..), Quest, Race(..))
@@ -106,9 +107,27 @@ value { ignoreSorceressBonus } model =
                                 )
                             |> Dict.fromList
 
+                    freeFromSummerSchool : Dict String String
+                    freeFromSummerSchool =
+                        pointsList
+                            |> List.filterMap
+                                (\magic ->
+                                    magic.freeRankFromSummerSchool
+                                        |> Maybe.andThen
+                                            (\freeRank ->
+                                                if magic.rank <= freeRank then
+                                                    Just ( magic.name, "[" ++ Perk.toString (PerkSummerSchool []) ++ "]" )
+
+                                                else
+                                                    Nothing
+                                            )
+                                )
+                            |> Dict.fromList
+
                     free : Dict String String
                     free =
                         Dict.union freeFromClass freeFromRace
+                            |> Dict.union freeFromSummerSchool
 
                     jackOfAllWarning : Maybe String
                     jackOfAllWarning =
@@ -211,6 +230,7 @@ magicValue :
                 { name : String
                 , rank : Int
                 , freeRankFromRace : Maybe ( Int, Race )
+                , freeRankFromSummerSchool : Maybe Int
                 , power : Int
                 , rewardPoints : Int
                 , isElementalism : Bool
@@ -246,10 +266,27 @@ magicValue model affinities magicDetails =
                     freeRankFromRace =
                         freeRankFromRaceOrTypePerk model magicDetails rankedMagic
 
+                    freeRankFromSummerSchool : Maybe Int
+                    freeRankFromSummerSchool =
+                        List.Extra.findMap
+                            (\perk ->
+                                case perk.name of
+                                    PerkSummerSchool magics ->
+                                        if List.member rankedMagic.name magics then
+                                            Just 3
+
+                                        else
+                                            Nothing
+
+                                    _ ->
+                                        Nothing
+                            )
+                            model.perks
+
                     minRank : Int
                     minRank =
-                        case freeRankFromRace of
-                            Nothing ->
+                        case ( freeRankFromRace, freeRankFromSummerSchool ) of
+                            ( Nothing, Nothing ) ->
                                 if magicDetails.name == MagicAdvancedGolemancy then
                                     let
                                         ranksIn : Magic -> Int
@@ -282,8 +319,14 @@ magicValue model affinities magicDetails =
                                 else
                                     1
 
-                            Just ( r, _ ) ->
+                            ( Just ( r, _ ), Nothing ) ->
                                 r + 1
+
+                            ( Nothing, Just s ) ->
+                                s + 1
+
+                            ( Just ( r, _ ), Just s ) ->
+                                max r s + 1
 
                     ( finalValue, rewardPoints ) =
                         List.range minRank rankedMagic.rank
@@ -324,6 +367,7 @@ magicValue model affinities magicDetails =
                 { name = name
                 , rank = rankedMagic.rank
                 , freeRankFromRace = freeRankFromRace
+                , freeRankFromSummerSchool = freeRankFromSummerSchool
                 , power = finalValue
                 , rewardPoints = rewardPoints
                 , isElementalism = magicDetails.isElementalism

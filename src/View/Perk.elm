@@ -1,6 +1,7 @@
 module View.Perk exposing (perkToShortString, viewPerks)
 
 import Color exposing (Color)
+import Data.Magic as Magic
 import Data.Perk exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, el, fill, height, moveDown, moveLeft, moveUp, paddingXY, px, rgba, spacing, text, width)
 import Element.Background as Background
@@ -8,9 +9,11 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Gradient as Gradient
 import Generated.Image as Image
+import Generated.Magic as Magic
 import Generated.Perk as Perk
 import Generated.Race
-import Generated.Types as Types exposing (Perk(..), Race(..), Slot(..))
+import Generated.Types as Types exposing (Magic, Perk(..), Race(..), Slot(..))
+import Html
 import List.Extra
 import Maybe.Extra
 import Set exposing (Set)
@@ -73,6 +76,9 @@ isOverlong : Perk.Details -> Bool
 isOverlong { name } =
     case name of
         PerkChargeSwap _ ->
+            True
+
+        PerkSummerSchool _ ->
             True
 
         _ ->
@@ -368,9 +374,94 @@ viewContent mainRace races color perks { content, name } =
                             ++ [ Theme.blocks [] IdKindPerk after ]
 
         WithCosts costs before ->
-            List.map (Element.map ChoicePerk) <|
-                View.costButtons "Cost" color perks IdKindPerk before costs <|
-                    \_ cost -> { name = name, cost = cost }
+            case name of
+                PerkSummerSchool magics ->
+                    List.map (Element.map ChoicePerk) <|
+                        viewSummerSchool color before magics
+
+                _ ->
+                    List.map (Element.map ChoicePerk) <|
+                        View.costButtons "Cost" color perks IdKindPerk before costs <|
+                            \_ cost -> { name = name, cost = cost }
+
+
+viewSummerSchool : Color -> String -> List Magic -> List (Element ( RankedPerk, Bool ))
+viewSummerSchool color before magics =
+    let
+        viewMagicButton : Magic.Details -> Element ( RankedPerk, Bool )
+        viewMagicButton magic =
+            let
+                len : Int
+                len =
+                    List.length magics
+
+                selected : Bool
+                selected =
+                    List.member magic.name magics
+
+                full : Bool
+                full =
+                    len >= 5
+
+                onPress : Maybe ( RankedPerk, Bool )
+                onPress =
+                    if selected then
+                        ( { name = PerkSummerSchool (List.Extra.remove magic.name magics)
+                          , cost = 4 * (len - 1)
+                          }
+                        , len > 1
+                        )
+                            |> Just
+
+                    else if not full then
+                        ( { name = PerkSummerSchool (magic.name :: magics)
+                          , cost = 4 * (len + 1)
+                          }
+                        , True
+                        )
+                            |> Just
+
+                    else
+                        Nothing
+            in
+            Theme.button
+                (if selected then
+                    [ Theme.backgroundColor color ]
+
+                 else if full then
+                    [ Theme.backgroundColor Color.gray ]
+
+                 else
+                    []
+                )
+                { onPress = onPress
+                , label =
+                    Theme.row []
+                        [ Element.html <|
+                            Html.div [] <|
+                                Theme.viewGenericBadge False
+                                    (Types.magicToImage magic.name)
+                                    (Magic.toString magic.name)
+                        , Element.text (" " ++ Magic.toString magic.name)
+                        ]
+                }
+    in
+    [ Theme.blocks [] IdKindPerk before
+    , Magic.all
+        |> List.sortBy
+            (\magic ->
+                if magic.faction /= Nothing then
+                    3
+
+                else if magic.isElementalism then
+                    2
+
+                else
+                    1
+            )
+        |> List.map viewMagicButton
+        |> Theme.wrappedRow []
+    ]
 
 
 racePicker : String -> (Maybe Race -> Choice) -> Color -> Maybe Race -> List Race -> List (Element Choice)
