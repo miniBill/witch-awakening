@@ -227,6 +227,61 @@ perkToDeclaration types dlcName perk =
                 )
                 |> Ok
 
+        [ ListArgument "Magic" ] ->
+            Elm.fn (Elm.Arg.varWith "perks" (Elm.Annotation.list Gen.Types.annotation_.rankedPerk))
+                (\perks ->
+                    Elm.Let.letIn identity
+                        |> Elm.Let.value "magics"
+                            (Gen.List.Extra.call_.findMap
+                                (Elm.fn (Elm.Arg.var "per") <|
+                                    \p ->
+                                        Elm.Case.custom (p |> Elm.get "name")
+                                            types.perk.annotation
+                                            [ Elm.Case.branch (types.perk.argWith perk.name [ Elm.Arg.var "magics" ])
+                                                (\magics ->
+                                                    Elm.maybe (List.head magics)
+                                                )
+                                            , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
+                                            ]
+                                )
+                                perks
+                                |> Elm.Op.pipe
+                                    (Elm.functionReduced "magics"
+                                        (Gen.Maybe.withDefault (Elm.list []))
+                                    )
+                            )
+                        |> Elm.Let.withBody
+                            (\magics ->
+                                (details types).make
+                                    { name = Elm.apply (types.perk.value perk.name) [ magics ]
+                                    , class = types.class.value perk.class
+                                    , affinity = Elm.list (List.map types.affinity.value perk.elements)
+                                    , isMeta = Elm.bool perk.isMeta
+                                    , requires = Elm.maybe (Maybe.map Elm.string perk.requires)
+                                    , content =
+                                        case perk.content of
+                                            Parsers.Single cost description ->
+                                                Gen.Data.Perk.make_.single (Elm.int cost) (Elm.string description)
+
+                                            Parsers.WithCosts costs description ->
+                                                Gen.Data.Perk.make_.withCosts (Elm.list (List.map Elm.int costs)) (Elm.string description)
+
+                                            Parsers.WithChoices () before choices after ->
+                                                Gen.Data.Perk.make_.withChoices
+                                                    (Elm.string before)
+                                                    (choices
+                                                        |> List.map
+                                                            (\( choice, cost ) -> Elm.tuple (Elm.string choice) (Elm.int cost))
+                                                        |> Elm.list
+                                                    )
+                                                    (Elm.string after)
+                                    , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
+                                    }
+                            )
+                        |> Elm.withType (details types).annotation
+                )
+                |> Ok
+
         _ ->
             ResultME.error
                 { title = "Error parsing perks file"
