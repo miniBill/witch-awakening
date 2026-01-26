@@ -73,29 +73,46 @@ affinityDiscountIf inAffinity value =
 requisiteParser : Parser Requirement
 requisiteParser =
     let
+        options :
+            (name -> res)
+            -> (name -> String)
+            -> List { kind | name : name }
+            -> Parser res
+        options variant toString list =
+            list
+                |> List.map
+                    (\m ->
+                        let
+                            nameString : String
+                            nameString =
+                                toString m.name
+                        in
+                        Parser.succeed (variant m.name)
+                            |. Parser.keyword
+                                (if String.endsWith "-" nameString then
+                                    String.slice 0 -1 nameString
+
+                                 else
+                                    nameString
+                                )
+                    )
+                |> Parser.oneOf
+
         magicParser : Parser Magic
         magicParser =
-            Magic.all
-                |> List.map (\m -> Parser.succeed m.name |. Parser.keyword (Magic.toString m.name))
-                |> Parser.oneOf
+            options identity Magic.toString Magic.all
 
         classParser : Parser Requirement
         classParser =
-            Class.all
-                |> List.map (\m -> Parser.succeed (RequiresClass m.name) |. Parser.keyword (Class.toString m.name))
-                |> Parser.oneOf
+            options RequiresClass Class.toString Class.all
 
         questParser : Parser Requirement
         questParser =
-            Quest.all
-                |> List.map (\m -> Parser.succeed (RequiresQuest m.name) |. Parser.keyword (Quest.toString m.name))
-                |> Parser.oneOf
+            options RequiresQuest Quest.toString Quest.all
 
         perkParser : Parser Requirement
         perkParser =
-            Perk.all []
-                |> List.map (\m -> Parser.succeed (RequiresPerk m.name) |. Parser.keyword (Perk.toString m.name))
-                |> Parser.oneOf
+            options RequiresPerk Perk.toString (Perk.all [])
     in
     Parser.oneOf
         [ Parser.succeed RequiresMagic

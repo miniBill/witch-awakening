@@ -250,7 +250,7 @@ perkFuzzer =
         , Fuzz.constant Generated.Types.PerkBroomBeast
         , Fuzz.constant Generated.Types.PerkIsekaiWorlds
         , Fuzz.constant Generated.Types.PerkIsekaiHeritage
-        , Fuzz.constant Generated.Types.PerkSummerSchool
+        , Fuzz.map Generated.Types.PerkSummerSchool (Fuzz.list magicFuzzer)
         , Fuzz.constant Generated.Types.PerkMagicalHeart
         , Fuzz.constant Generated.Types.PerkMiniaturization
         , Fuzz.constant Generated.Types.PerkSoulWarrior
