@@ -7,7 +7,7 @@ import Generated.Class as Class
 import Generated.Magic as Magic
 import Generated.Perk as Perk
 import Generated.Quest as Quest
-import Generated.Types exposing (Class, Magic, Perk, Quest)
+import Generated.Types as Types exposing (Class, Magic, Perk, Quest)
 import List.Extra
 import Parser exposing ((|.), (|=), Parser)
 import Types exposing (RankedMagic, RankedPerk)
@@ -182,7 +182,7 @@ checkRequirements details nameString model res =
                                                     Err (Quest.toString quest)
 
                                             RequiresPerk perk ->
-                                                if List.any (\p -> p.name == perk) model.perks then
+                                                if List.any (\p -> Types.isSamePerk p.name perk) model.perks then
                                                     Ok ()
 
                                                 else
@@ -230,4 +230,4 @@ type Requirement
     = RequiresMagic Magic Int
     | RequiresClass Class
     | RequiresPerk Perk
-    | RequiresQuest Generated.Types.Quest
+    | RequiresQuest Types.Quest

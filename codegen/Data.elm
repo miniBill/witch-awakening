@@ -55,6 +55,7 @@ enums parsedDLCs =
     , perk =
         buildEnum "Perk" combinedDLC.perks
             |> withImages
+            |> withIsSame
     , quest =
         buildEnum "Quest" combinedDLC.quests
             |> withImages
