@@ -28,100 +28,6 @@ parseUrl navKey url =
         appUrl =
             AppUrl.fromUrl url
 
-        pair : (String -> Maybe a) -> (a -> Maybe Int -> Maybe b) -> String -> Maybe b
-        pair parser builder value =
-            let
-                ( after, before ) =
-                    value
-                        |> String.toList
-                        |> List.reverse
-                        |> List.Extra.span (\c -> Char.isDigit c || c == '-')
-                        |> Tuple.mapBoth List.reverse List.reverse
-            in
-            (parser <| String.fromList before)
-                |> Maybe.andThen
-                    (\parsed ->
-                        let
-                            number : Maybe Int
-                            number =
-                                String.toInt (String.fromList after)
-                        in
-                        builder parsed number
-                    )
-
-        parseComplication : String -> Maybe Types.RankedComplication
-        parseComplication =
-            pair Types.complicationFromString <|
-                \name maybeTier ->
-                    { name = name
-                    , kind =
-                        maybeTier
-                            |> Maybe.map Types.Tiered
-                            |> Maybe.withDefault
-                                Types.Nontiered
-                    }
-                        |> Just
-
-        parseMagic : String -> Maybe Types.RankedMagic
-        parseMagic =
-            pair Types.magicFromString <|
-                \magic maybeRank ->
-                    maybeRank
-                        |> Maybe.map
-                            (\rank ->
-                                { name = magic
-                                , rank = rank
-                                }
-                            )
-
-        parsePerk : String -> Maybe Types.RankedPerk
-        parsePerk =
-            withCost
-                (\raw ->
-                    if String.startsWith "Charge Swap" raw && not (String.contains "-" raw) then
-                        Types.perkFromString (raw ++ "-Neutral")
-
-                    else
-                        Types.perkFromString raw
-                )
-
-        parseRelic : String -> Maybe Types.RankedRelic
-        parseRelic value =
-            if String.startsWith "Cosmic Pearl" value then
-                let
-                    ( after, before ) =
-                        value
-                            |> String.toList
-                            |> List.reverse
-                            |> List.Extra.span Char.isDigit
-                            |> Tuple.mapBoth
-                                (List.reverse >> String.fromList)
-                                (List.reverse >> String.fromList)
-                in
-                Maybe.map2
-                    (\name cost ->
-                        { name = name
-                        , cost = cost
-                        }
-                    )
-                    (Types.relicFromString before)
-                    (String.toInt after)
-
-            else
-                withCost Types.relicFromString value
-
-        withCost : (String -> Maybe a) -> String -> Maybe { name : a, cost : Int }
-        withCost fromString =
-            pair fromString <|
-                \name maybeCost ->
-                    maybeCost
-                        |> Maybe.map
-                            (\cost ->
-                                { name = name
-                                , cost = cost
-                                }
-                            )
-
         parseBool : String -> Bool
         parseBool key =
             parseOne key appUrl stringToBool
@@ -135,32 +41,6 @@ parseUrl navKey url =
         factions : List Types.Faction
         factions =
             parseMany "faction" appUrl Types.factionFromString
-
-        maybeCosmicPearl : List Types.RankedRelic
-        maybeCosmicPearl =
-            -- Backward compat
-            case
-                ( parseMany "addAffinity" appUrl Types.affinityFromString
-                , parseMany "changeAffinity" appUrl <|
-                    \s ->
-                        case String.split "-" s of
-                            [ from, to ] ->
-                                Maybe.map2 Tuple.pair
-                                    (Types.affinityFromString from)
-                                    (Types.affinityFromString to)
-
-                            _ ->
-                                Nothing
-                )
-            of
-                ( [], [] ) ->
-                    []
-
-                ( add, change ) ->
-                    [ { name = RelicCosmicPearl { add = add, change = change }
-                      , cost = 10 * (List.length add + List.length change)
-                      }
-                    ]
     in
     { key = navKey
     , menuOpen = False
@@ -200,7 +80,7 @@ parseUrl navKey url =
     , factionalMagicDisplay = DisplayFull
     , companions = parseMany "companion" appUrl Types.companionFromString
     , companionsDisplay = DisplayFull
-    , relics = parseMany "relic" appUrl parseRelic ++ maybeCosmicPearl
+    , relics = parseMany "relic" appUrl parseRelic ++ maybeCosmicPearl appUrl
     , relicsDisplay = DisplayFull
     , quests = parseMany "quest" appUrl Types.questFromString
     , questsDisplay = DisplayFull
@@ -208,6 +88,100 @@ parseUrl navKey url =
     , hideDLCs = Set.empty
     , hideMeta = False
     }
+
+
+parseComplication : String -> Maybe Types.RankedComplication
+parseComplication =
+    parsePair Types.complicationFromString <|
+        \name maybeTier ->
+            { name = name
+            , kind =
+                maybeTier
+                    |> Maybe.map Types.Tiered
+                    |> Maybe.withDefault
+                        Types.Nontiered
+            }
+                |> Just
+
+
+parseMagic : String -> Maybe Types.RankedMagic
+parseMagic =
+    parsePair Types.magicFromString <|
+        \magic maybeRank ->
+            maybeRank
+                |> Maybe.map
+                    (\rank ->
+                        { name = magic
+                        , rank = rank
+                        }
+                    )
+
+
+parsePerk : String -> Maybe Types.RankedPerk
+parsePerk =
+    withCost <|
+        \raw ->
+            if String.startsWith "Charge Swap" raw && not (String.contains "-" raw) then
+                Types.perkFromString (raw ++ "-Neutral")
+
+            else
+                Types.perkFromString raw
+
+
+parseRelic : String -> Maybe Types.RankedRelic
+parseRelic value =
+    if String.startsWith "Cosmic Pearl" value then
+        let
+            ( before, after ) =
+                stringSpanReverse Char.isDigit value
+        in
+        Maybe.map2 Types.RankedRelic
+            (Types.relicFromString before)
+            (String.toInt after)
+
+    else
+        withCost Types.relicFromString value
+
+
+parsePair : (String -> Maybe a) -> (a -> Maybe Int -> Maybe b) -> String -> Maybe b
+parsePair parser builder value =
+    let
+        ( before, after ) =
+            stringSpanReverse (\c -> Char.isDigit c || c == '-') value
+    in
+    parser before
+        |> Maybe.andThen
+            (\parsed ->
+                builder parsed (String.toInt after)
+            )
+
+
+withCost : (String -> Maybe a) -> String -> Maybe { name : a, cost : Int }
+withCost fromString =
+    parsePair fromString <|
+        \name maybeCost ->
+            maybeCost
+                |> Maybe.map
+                    (\cost ->
+                        { name = name
+                        , cost = cost
+                        }
+                    )
+
+
+stringSpanReverse : (Char -> Bool) -> String -> ( String, String )
+stringSpanReverse f string =
+    string
+        |> String.toList
+        |> spanReverse f
+        |> Tuple.mapBoth String.fromList String.fromList
+
+
+spanReverse : (a -> Bool) -> List a -> ( List a, List a )
+spanReverse f list =
+    ( List.Extra.dropWhileRight f list
+    , List.Extra.takeWhileRight f list
+    )
 
 
 parseOne : String -> AppUrl -> (String -> Maybe a) -> Maybe a
@@ -239,6 +213,33 @@ stringToBool bool =
 
         _ ->
             Nothing
+
+
+maybeCosmicPearl : AppUrl -> List Types.RankedRelic
+maybeCosmicPearl appUrl =
+    -- Backward compat
+    case
+        ( parseMany "addAffinity" appUrl Types.affinityFromString
+        , parseMany "changeAffinity" appUrl <|
+            \s ->
+                case String.split "-" s of
+                    [ from, to ] ->
+                        Maybe.map2 Tuple.pair
+                            (Types.affinityFromString from)
+                            (Types.affinityFromString to)
+
+                    _ ->
+                        Nothing
+        )
+    of
+        ( [], [] ) ->
+            []
+
+        ( add, change ) ->
+            [ { name = RelicCosmicPearl { add = add, change = change }
+              , cost = 10 * (List.length add + List.length change)
+              }
+            ]
 
 
 toUrl : Model key -> String
