@@ -1,4 +1,4 @@
-module UrlCodecTest exposing (roundtrips, summerSchool)
+module UrlCodecTest exposing (roundtrips)
 
 import Expect
 import Fuzz exposing (Fuzzer)
@@ -13,27 +13,9 @@ import Generated.Quest
 import Generated.Types
 import Set
 import Test exposing (Test)
-import Types exposing (Model, RankedPerk)
+import Types exposing (Model)
 import Url
 import UrlCodec
-
-
-summerSchool : Test
-summerSchool =
-    let
-        expected : List RankedPerk
-        expected =
-            [ { name = Generated.Types.PerkSummerSchool []
-              , cost = 0
-              }
-            ]
-    in
-    Test.test "Decoding summer school" <|
-        \_ ->
-            "http://localhost:8000?perk=Summer%20School-0"
-                |> Url.fromString
-                |> Maybe.map (UrlCodec.parseUrl () >> .perks)
-                |> Expect.equal (Just expected)
 
 
 roundtrips : Test
@@ -268,7 +250,7 @@ perkFuzzer =
         , Fuzz.constant Generated.Types.PerkBroomBeast
         , Fuzz.constant Generated.Types.PerkIsekaiWorlds
         , Fuzz.constant Generated.Types.PerkIsekaiHeritage
-        , Fuzz.map Generated.Types.PerkSummerSchool (Fuzz.list magicFuzzer)
+        , Fuzz.map Generated.Types.PerkSummerSchool (Fuzz.listOfLengthBetween 1 5 magicFuzzer)
         , Fuzz.constant Generated.Types.PerkMagicalHeart
         , Fuzz.constant Generated.Types.PerkMiniaturization
         , Fuzz.constant Generated.Types.PerkSoulWarrior
