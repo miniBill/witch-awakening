@@ -28,36 +28,22 @@ summerSchool =
               }
             ]
     in
-    Test.only <|
-        Test.test "Decoding summer school" <|
-            \_ ->
-                "http://localhost:8000?perk=Summer%20School-0"
-                    |> Url.fromString
-                    |> Maybe.map (UrlCodec.parseUrl () >> .perks)
-                    |> Expect.equal (Just expected)
+    Test.test "Decoding summer school" <|
+        \_ ->
+            "http://localhost:8000?perk=Summer%20School-0"
+                |> Url.fromString
+                |> Maybe.map (UrlCodec.parseUrl () >> .perks)
+                |> Expect.equal (Just expected)
 
 
 roundtrips : Test
 roundtrips =
     Test.fuzz modelFuzzer "URL encoding/decoding roundtrips" <|
         \model ->
-            let
-                parsed : Maybe (Model ())
-                parsed =
-                    ("http://localhost:8000" ++ UrlCodec.toUrl model)
-                        |> Url.fromString
-                        |> Maybe.map (UrlCodec.parseUrl ())
-            in
-            if parsed == Just model then
-                Expect.pass
-
-            else
-                let
-                    _ =
-                        Debug.log "url" (UrlCodec.toUrl model)
-                in
-                parsed
-                    |> Expect.equal (Just model)
+            ("http://localhost:8000" ++ UrlCodec.toUrl model)
+                |> Url.fromString
+                |> Maybe.map (UrlCodec.parseUrl ())
+                |> Expect.equal (Just model)
 
 
 modelFuzzer : Fuzzer (Model ())
