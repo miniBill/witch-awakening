@@ -12,7 +12,7 @@ import Generated.Perk as Perk
 import Generated.Quest as Quest
 import Generated.Race as Race
 import Generated.Relic as Relic
-import Generated.Types as Types exposing (Relic(..))
+import Generated.Types as Types exposing (Perk(..), Relic(..))
 import List.Extra
 import Maybe.Extra
 import Set
@@ -123,6 +123,9 @@ parsePerk =
         \raw ->
             if String.startsWith "Charge Swap" raw && not (String.contains "-" raw) then
                 Types.perkFromString (raw ++ "-Neutral")
+
+            else if raw == "Summer School" then
+                Just (PerkSummerSchool [])
 
             else
                 Types.perkFromString raw
