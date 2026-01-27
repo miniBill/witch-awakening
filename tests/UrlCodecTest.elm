@@ -1,4 +1,4 @@
-module UrlCodecTest exposing (roundtrips)
+module UrlCodecTest exposing (roundtrips, summerSchool)
 
 import Expect
 import Fuzz exposing (Fuzzer)
@@ -11,21 +11,53 @@ import Generated.GameMode
 import Generated.Magic
 import Generated.Quest
 import Generated.Types
-import Main
 import Set
 import Test exposing (Test)
-import Types exposing (Model)
+import Types exposing (Model, RankedPerk)
 import Url
+import UrlCodec
+
+
+summerSchool : Test
+summerSchool =
+    let
+        expected : List RankedPerk
+        expected =
+            [ { name = Generated.Types.PerkSummerSchool []
+              , cost = 0
+              }
+            ]
+    in
+    Test.only <|
+        Test.test "Decoding summer school" <|
+            \_ ->
+                "http://localhost:8000?perk=Summer%20School-0"
+                    |> Url.fromString
+                    |> Maybe.map (UrlCodec.parseUrl () >> .perks)
+                    |> Expect.equal (Just expected)
 
 
 roundtrips : Test
 roundtrips =
     Test.fuzz modelFuzzer "URL encoding/decoding roundtrips" <|
         \model ->
-            ("http://localhost:8000" ++ Main.toUrl model)
-                |> Url.fromString
-                |> Maybe.map (Main.parseUrl ())
-                |> Expect.equal (Just model)
+            let
+                parsed : Maybe (Model ())
+                parsed =
+                    ("http://localhost:8000" ++ UrlCodec.toUrl model)
+                        |> Url.fromString
+                        |> Maybe.map (UrlCodec.parseUrl ())
+            in
+            if parsed == Just model then
+                Expect.pass
+
+            else
+                let
+                    _ =
+                        Debug.log "url" (UrlCodec.toUrl model)
+                in
+                parsed
+                    |> Expect.equal (Just model)
 
 
 modelFuzzer : Fuzzer (Model ())
