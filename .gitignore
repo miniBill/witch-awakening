@@ -13,6 +13,8 @@ public/raw
 public/originals
 generated
 out
+hashes
+media
 
 # Local Netlify folder
 .netlify
