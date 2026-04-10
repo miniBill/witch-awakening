@@ -1,0 +1,9 @@
+{
+    "license": "BSD-3-Clause",
+    "devDependencies": {
+        "elm-pages": "^3.3.4"
+    },
+    "scripts": {
+        "start": "bunx elm-pages run elm-build/src/Build.elm --input ../public --build ../hashes --output ../media"
+    }
+}
