@@ -1039,13 +1039,13 @@ oneOfItems options (Section s) =
                             Ok v ->
                                 Ok v
 
-                            Err eacc ->
+                            Err errAcc ->
                                 case e.parser n d of
                                     Ok v ->
                                         Ok v
 
                                     Err ee ->
-                                        Err (Nonempty.toList ee ++ eacc)
+                                        Err (Nonempty.toList ee ++ errAcc)
                     )
                     (Err [])
                     mapped
