@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Requirement(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported)
+module Data.Costs.Utils exposing (Requisite(..), Requisites(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
@@ -70,7 +70,7 @@ affinityDiscountIf inAffinity value =
                 value
 
 
-requisiteParser : Parser Requirement
+requisiteParser : Parser Requisite
 requisiteParser =
     let
         options :
@@ -102,15 +102,15 @@ requisiteParser =
         magicParser =
             options identity Magic.toString Magic.all
 
-        classParser : Parser Requirement
+        classParser : Parser Requisite
         classParser =
             options RequiresClass Class.toString Class.all
 
-        questParser : Parser Requirement
+        questParser : Parser Requisite
         questParser =
             options RequiresQuest Quest.toString Quest.all
 
-        perkParser : Parser Requirement
+        perkParser : Parser Requisite
         perkParser =
             options RequiresPerk Perk.toString (Perk.all [])
     in
@@ -118,10 +118,14 @@ requisiteParser =
         [ Parser.succeed RequiresMagic
             |= magicParser
             |. Parser.spaces
-            |= Parser.int
-            |. Parser.oneOf
-                [ Parser.succeed () |. Parser.symbol "+"
-                , Parser.succeed ()
+            |= Parser.oneOf
+                [ Parser.succeed identity
+                    |= Parser.int
+                    |. Parser.oneOf
+                        [ Parser.succeed () |. Parser.symbol "+"
+                        , Parser.succeed ()
+                        ]
+                , Parser.succeed 1
                 ]
         , classParser
         , questParser
@@ -150,71 +154,139 @@ checkRequirements details nameString model res =
             case Parser.run requisitesParser req of
                 Err _ ->
                     Monad.succeed res
-                        |> Monad.withWarning ("Failed to parse requisite for " ++ nameString ++ ": " ++ req)
+                        |> Monad.withWarning ("Failed to parse requisites for " ++ nameString ++ ": " ++ req)
 
                 Ok requisites ->
-                    requisites
-                        |> Monad.combineMap
-                            (\requisite ->
-                                let
-                                    check : Result String ()
-                                    check =
-                                        case requisite of
-                                            RequiresMagic requiredName requiredRank ->
-                                                if hasMagicAtRank model requiredName requiredRank then
-                                                    Ok ()
+                    let
+                        missingRequisites : Requisites -> List String
+                        missingRequisites rqs =
+                            case rqs of
+                                RequiresAllOf ands ->
+                                    List.concatMap missingRequisites ands
 
-                                                else
-                                                    Err (Magic.toString requiredName ++ " " ++ String.fromInt requiredRank)
+                                RequiresAnyOf [] ->
+                                    []
 
-                                            RequiresClass class ->
-                                                if model.class == Just class then
-                                                    Ok ()
+                                RequiresAnyOf (h :: t) ->
+                                    List.foldl
+                                        (\e a ->
+                                            if List.isEmpty a then
+                                                a
 
-                                                else
-                                                    Err (Class.toString class)
+                                            else
+                                                missingRequisites e
+                                        )
+                                        (missingRequisites h)
+                                        t
 
-                                            RequiresQuest quest ->
-                                                if List.member quest model.quests then
-                                                    Ok ()
+                                Requires requisite ->
+                                    let
+                                        check : Result String ()
+                                        check =
+                                            checkRequisite model requisite
+                                    in
+                                    case check of
+                                        Ok _ ->
+                                            []
 
-                                                else
-                                                    Err (Quest.toString quest)
+                                        Err e ->
+                                            [ e ]
+                    in
+                    case missingRequisites requisites of
+                        [] ->
+                            Monad.succeed res
 
-                                            RequiresPerk perk ->
-                                                if List.any (\p -> Types.isSamePerk p.name perk) model.perks then
-                                                    Ok ()
+                        [ missing ] ->
+                            Monad.succeed res
+                                |> Monad.withWarning
+                                    ("Missing requisite for "
+                                        ++ nameString
+                                        ++ ": "
+                                        ++ missing
+                                    )
 
-                                                else
-                                                    Err (Perk.toString perk)
-                                in
-                                case check of
-                                    Ok a ->
-                                        Monad.succeed a
-
-                                    Err e ->
-                                        Monad.succeed ()
-                                            |> Monad.withWarning
-                                                ("Missing requisite for "
-                                                    ++ nameString
-                                                    ++ ": "
-                                                    ++ e
-                                                )
-                            )
-                        |> Monad.map (\_ -> res)
+                        missing ->
+                            Monad.succeed res
+                                |> Monad.withWarning
+                                    ("Missing requisites for "
+                                        ++ nameString
+                                        ++ ": "
+                                        ++ String.join ", " missing
+                                    )
 
 
-requisitesParser : Parser (List Requirement)
+checkRequisite :
+    { model
+        | class : Maybe Class
+        , magic : List RankedMagic
+        , quests : List Quest
+        , perks : List RankedPerk
+    }
+    -> Requisite
+    -> Result String ()
+checkRequisite model requisite =
+    case requisite of
+        RequiresMagic requiredName requiredRank ->
+            if hasMagicAtRank model requiredName requiredRank then
+                Ok ()
+
+            else
+                Err (Magic.toString requiredName ++ " " ++ String.fromInt requiredRank)
+
+        RequiresClass class ->
+            if model.class == Just class then
+                Ok ()
+
+            else
+                Err (Class.toString class)
+
+        RequiresQuest quest ->
+            if List.member quest model.quests then
+                Ok ()
+
+            else
+                Err (Quest.toString quest)
+
+        RequiresPerk perk ->
+            if List.any (\p -> Types.isSamePerk p.name perk) model.perks then
+                Ok ()
+
+            else
+                Err (Perk.toString perk)
+
+
+type Requisites
+    = RequiresAllOf (List Requisites)
+    | RequiresAnyOf (List Requisites)
+    | Requires Requisite
+
+
+requisitesParser : Parser Requisites
 requisitesParser =
+    (Parser.sequence
+        { start = ""
+        , end = ""
+        , trailing = Parser.Forbidden
+        , spaces = Parser.spaces
+        , item = requisiteDisjunctionParser
+        , separator = ","
+        }
+        |> Parser.map RequiresAllOf
+    )
+        |. Parser.end
+
+
+requisiteDisjunctionParser : Parser Requisites
+requisiteDisjunctionParser =
     Parser.sequence
         { start = ""
         , end = ""
         , trailing = Parser.Forbidden
         , spaces = Parser.spaces
-        , item = requisiteParser
-        , separator = ","
+        , item = requisiteParser |> Parser.map Requires
+        , separator = "or"
         }
-        |. Parser.end
+        |> Parser.map RequiresAnyOf
 
 
 hasMagicAtRank : { a | magic : List RankedMagic } -> Magic -> Int -> Bool
@@ -226,7 +298,7 @@ hasMagicAtRank model requiredName requiredRank =
         model.magic
 
 
-type Requirement
+type Requisite
     = RequiresMagic Magic Int
     | RequiresClass Class
     | RequiresPerk Perk

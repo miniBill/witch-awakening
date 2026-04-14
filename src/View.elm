@@ -1,7 +1,7 @@
 module View exposing (collapsible, costButtons, filterDLC, viewRequirements)
 
 import Color exposing (Color)
-import Data.Costs.Utils as Utils
+import Data.Costs.Utils as Utils exposing (Requisites)
 import Element exposing (Attribute, Element, centerX, centerY, el, fill, px, spacing, text, width)
 import Element.Font as Font
 import Generated.Class as Class
@@ -126,27 +126,34 @@ viewRequirements kind req =
     case Parser.run Utils.requisitesParser req of
         Ok requisites ->
             let
-                requisitesString : String
-                requisitesString =
-                    requisites
-                        |> List.map
-                            (\requisite ->
-                                case requisite of
-                                    Utils.RequiresClass reqClass ->
-                                        "[" ++ Class.toString reqClass ++ "] " ++ Class.toString reqClass
+                go : Requisites -> String
+                go rqs =
+                    case rqs of
+                        Utils.Requires requisite ->
+                            case requisite of
+                                Utils.RequiresClass reqClass ->
+                                    "[" ++ Class.toString reqClass ++ "] " ++ Class.toString reqClass
 
-                                    Utils.RequiresMagic reqMagic rank ->
-                                        "[" ++ Magic.toString reqMagic ++ "] " ++ String.fromInt rank
+                                Utils.RequiresMagic reqMagic rank ->
+                                    "[" ++ Magic.toString reqMagic ++ "] " ++ String.fromInt rank
 
-                                    Utils.RequiresQuest reqQuest ->
-                                        "[" ++ Quest.toString reqQuest ++ "]"
+                                Utils.RequiresQuest reqQuest ->
+                                    "[" ++ Quest.toString reqQuest ++ "]"
 
-                                    Utils.RequiresPerk reqPerk ->
-                                        "[" ++ Perk.toString reqPerk ++ "]"
-                            )
-                        |> String.join ", "
+                                Utils.RequiresPerk reqPerk ->
+                                    "[" ++ Perk.toString reqPerk ++ "]"
+
+                        Utils.RequiresAllOf and ->
+                            and
+                                |> List.map go
+                                |> String.join ", "
+
+                        Utils.RequiresAnyOf or ->
+                            or
+                                |> List.map go
+                                |> String.join " or "
             in
-            Theme.blocks [] kind ("_Requires " ++ requisitesString ++ "._")
+            Theme.blocks [] kind ("_Requires " ++ go requisites ++ "._")
 
         Err _ ->
             Theme.blocks [] kind ("_Requires " ++ req ++ "._")
