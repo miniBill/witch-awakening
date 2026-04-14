@@ -369,6 +369,7 @@ parseSection (Section i) =
                 |. spaces
             )
         |. keyword i.name
+        |. Parser.commit ()
         |. spaces
         |. symbol ":"
         |. spaces
