@@ -349,6 +349,18 @@ Be reborn as a the child of a particular lineage of your choice. You can also or
 - [8] 8p: *Royalty / Merchant Lord*: Born to a highly successful royal bloodline or a rockefeller-like head of an international trade company.
 
 
+## Perk: Mirror Mirror
+- Elements: Water, Metal
+- Class: Academic
+- Requires: Waterworking or Metallurgy
+- Cost: 15
+
+Your Ice based uses of Water magics or your _Metallurgy_ can take on a mirror-like finish.
+Your mirrors can reflect ally spell or general magic effects that lack physicality, meaning energy based or direct effects like a curse, but wont do anything to a hurled boulder or snapping vine.
+Effective at trapping teleporters.
+If used for Harmony magic or Fusion magic with magics that produce light, the result is further empowered to be thrice as potent. If you have [Portals], any mirror surface you created can behave as a portal to any other within your Gateway range based on rank. If you have [Crystallize], your [Earthmoving] can create and use crystals, which share the function as described for mirrors.
+
+
 ## Perk: Summer School
 - Element: Life
 - Class: Academic
