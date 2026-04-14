@@ -292,8 +292,8 @@ section key name ctor =
         }
 
 
-requiredItem : String -> (String -> ResultME String a) -> Section (a -> b) -> Section b
-requiredItem key parser (Section i) =
+withItem : String -> Section (a -> b) -> (Maybe (List String) -> ResultME String a) -> Section b
+withItem key (Section i) parser =
     Section
         { key = i.key
         , name = i.name
@@ -301,64 +301,54 @@ requiredItem key parser (Section i) =
             \n dict ->
                 ResultME.map2 identity
                     (i.parser n dict)
-                    (case Dict.get key dict of
-                        Just [ value ] ->
-                            parser value
-
-                        Just [] ->
-                            ResultME.error ("Missing required property: " ++ key)
-
-                        Just (_ :: _ :: _) ->
-                            ResultME.error ("Multiple values for property: " ++ key)
-
-                        Nothing ->
-                            ResultME.error ("Missing required property: " ++ key)
-                    )
+                    (parser <| Dict.get key dict)
         , items = Set.insert key i.items
         }
+
+
+requiredItem : String -> (String -> ResultME String a) -> Section (a -> b) -> Section b
+requiredItem key parser i =
+    withItem key i <|
+        \v ->
+            case v of
+                Just [ value ] ->
+                    parser value
+
+                Just [] ->
+                    ResultME.error ("Missing required property: " ++ key)
+
+                Just (_ :: _ :: _) ->
+                    ResultME.error ("Multiple values for property: " ++ key)
+
+                Nothing ->
+                    ResultME.error ("Missing required property: " ++ key)
 
 
 optionalItem : String -> a -> (String -> ResultME String a) -> Section (a -> b) -> Section b
-optionalItem key default parser (Section i) =
-    Section
-        { key = i.key
-        , name = i.name
-        , parser =
-            \n dict ->
-                Result.map2 identity
-                    (i.parser n dict)
-                    (case Dict.get key dict of
-                        Just [ value ] ->
-                            parser value
+optionalItem key default parser i =
+    withItem key i <|
+        \v ->
+            case v of
+                Just [ value ] ->
+                    parser value
 
-                        Just [] ->
-                            Ok default
+                Just [] ->
+                    Ok default
 
-                        Just (_ :: _ :: _) ->
-                            ResultME.error ("Multiple values for property: " ++ key)
+                Just (_ :: _ :: _) ->
+                    ResultME.error ("Multiple values for property: " ++ key)
 
-                        Nothing ->
-                            Ok default
-                    )
-        , items = Set.insert key i.items
-        }
+                Nothing ->
+                    Ok default
 
 
 manyItems : String -> (List String -> ResultME String a) -> Section (a -> b) -> Section b
-manyItems key parser (Section i) =
-    Section
-        { key = i.key
-        , name = i.name
-        , parser =
-            \n dict ->
-                Result.map2 identity
-                    (i.parser n dict)
-                    (Dict.get key dict
-                        |> Maybe.withDefault []
-                        |> parser
-                    )
-        , items = Set.insert key i.items
-        }
+manyItems key parser i =
+    withItem key i <|
+        \v ->
+            v
+                |> Maybe.withDefault []
+                |> parser
 
 
 maybeItem : String -> (String -> ResultME String a) -> Section (Maybe a -> b) -> Section b
