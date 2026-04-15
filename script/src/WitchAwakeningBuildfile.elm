@@ -249,7 +249,7 @@ imagesElmFile list =
                                     else
                                         processedImageToDeclaration processedFile
                                 )
-                            |> (::) standardFormats.declaration
+                            |> (::) Buildfile.standardFormats.declaration
                             |> (::) getSizesDeclaration.declaration
                             |> (::) toSources.declaration
                             |> (::) (toPicture.declaration |> Elm.expose)
@@ -438,40 +438,6 @@ getSizesDeclaration =
             )
 
 
-standardFormats :
-    { list : List { format : Elm.Expression, extension : String }
-    , declaration : Elm.Declaration
-    , value : Elm.Expression
-    }
-standardFormats =
-    let
-        list : List { format : Elm.Expression, extension : String }
-        list =
-            [ { format = Gen.Html.Source.make_.jPEG_XL, extension = "jxl" }
-            , { format = Gen.Html.Source.make_.aVIF, extension = "avif" }
-            , { format = Gen.Html.Source.make_.webP, extension = "webp" }
-            , { format = Gen.Html.Source.make_.jPEG, extension = "jpg" }
-            ]
-
-        declaration : Elm.Declare.Value
-        declaration =
-            list
-                |> List.map
-                    (\{ format, extension } ->
-                        Elm.record
-                            [ ( "format", format )
-                            , ( "extension", Elm.string extension )
-                            ]
-                    )
-                |> Elm.list
-                |> Elm.Declare.value "standardFormats"
-    in
-    { list = list
-    , declaration = declaration.declaration
-    , value = declaration.value
-    }
-
-
 processedImageToDeclaration :
     HashedFileWith { a | width : Int, height : Int }
     -> Elm.Declaration
@@ -642,7 +608,7 @@ toPicture =
         )
         (Elm.record
             [ ( "sources"
-              , standardFormats.value
+              , Buildfile.standardFormats.value
                     |> Gen.List.call_.map
                         (Elm.functionReduced "format"
                             (toSources.call
