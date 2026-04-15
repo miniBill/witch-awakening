@@ -27,7 +27,7 @@ toTask =
         , debug = False
         , buildDirectory = Path.path "../build/elm-build"
         , outputName = Path.path "../build/dist"
-        , removeStale = False
+        , removeStale = True
         , jobs = Nothing
         , hashKind = Hash.Fast
         }

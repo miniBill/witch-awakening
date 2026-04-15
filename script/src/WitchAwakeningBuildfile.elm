@@ -68,24 +68,22 @@ getInputs config =
         |> BackendTask.andThen
             (\found ->
                 let
-                    sorted : List String
-                    sorted =
-                        List.sort found
+                    ( gradients, notGradients ) =
+                        found
+                            |> List.sort
+                            |> List.partition (String.endsWith Generate.Gradient.suffix)
                 in
                 BackendTask.map2 Inputs
-                    (sorted
+                    (notGradients
                         |> List.Extra.removeWhen
                             (\p ->
                                 String.contains "/raw/" p
                                     || String.contains "/originals/" p
-                                    || String.endsWith Generate.Gradient.suffix p
                             )
                         |> List.map Path.path
                         |> BuildTask.inputs
                     )
-                    (sorted
-                        |> List.filter
-                            (\p -> String.endsWith Generate.Gradient.suffix p)
+                    (gradients
                         |> List.map Path.path
                         |> BuildTask.inputs
                     )
@@ -98,7 +96,13 @@ type T4 a b c d
 
 buildAction : { config | inputDirectory : Path } -> Inputs -> BuildTask FileOrDirectory
 buildAction config inputs =
-    BuildTask.andThen2 (\g i -> BuildTask.combineInto (g :: i))
+    BuildTask.andThen2
+        (\gradients i ->
+            BuildTask.combineInto
+                ((gradients :: i.generated)
+                    ++ i.other
+                )
+        )
         (buildGradients config inputs.gradients)
         (buildImages config inputs.images)
 
@@ -126,13 +130,17 @@ buildGradients config inputs =
         )
         inputs
     <| \declarations ->
-    Elm.codegen (Elm.file [ "Images", "Gradients" ] declarations)
+    Elm.codegen (Elm.file [ "Gradient" ] declarations)
 
 
 buildImages :
     { config | inputDirectory : Path }
     -> List ( Path, BuildTask FileOrDirectory )
-    -> BuildTask (List { filename : Path, hash : FileOrDirectory })
+    ->
+        BuildTask
+            { generated : List { filename : Path, hash : FileOrDirectory }
+            , other : List { filename : Path, hash : FileOrDirectory }
+            }
 buildImages config inputs =
     let
         inputSize : Int
@@ -173,11 +181,12 @@ buildImages config inputs =
     in
     BuildTask.map4
         (\imagesElm fontsElm imageSizes public ->
-            [ { filename = Path.path "generated/Images.elm", hash = imagesElm }
-            , fontsElm
-            , { filename = Path.path "image-sizes", hash = imageSizes }
-            , { filename = Path.path "public", hash = public }
-            ]
+            { generated = [ imagesElm, fontsElm ]
+            , other =
+                [ { filename = Path.path "image-sizes", hash = imageSizes }
+                , { filename = Path.path "public", hash = public }
+                ]
+            }
         )
         (imagesElmFile processedFiles)
         (Elm.codegen (fontsElmFile fontFiles))
@@ -265,7 +274,7 @@ fontsElmFile files =
         |> Elm.file [ "Fonts" ]
 
 
-imagesElmFile : List ProcessedFile -> BuildTask FileOrDirectory
+imagesElmFile : List ProcessedFile -> BuildTask { filename : Path, hash : FileOrDirectory }
 imagesElmFile list =
     list
         |> List.filterMap
@@ -319,6 +328,7 @@ imagesElmFile list =
                 Do.writeFile file.contents <| \hash ->
                 Elm.format hash
             )
+        |> BuildTask.map (\hash -> { filename = Path.path "generated/Images.elm", hash = hash })
 
 
 encodeProcessedFiles :
