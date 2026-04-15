@@ -72,7 +72,6 @@ getInputs config =
                     ( gradients, notGradients ) =
                         found
                             |> List.sort
-                            |> Debug.log "all"
                             |> List.partition (String.endsWith Generate.Gradient.suffix)
                 in
                 BackendTask.map2 Inputs
