@@ -26,6 +26,7 @@ import Gen.List
 import Gen.String
 import Generate
 import Generate.Gradient
+import Generate.Image
 import List.Extra
 import List.Nonempty
 import Maybe.Extra
@@ -187,21 +188,42 @@ buildImages config inputs =
                 |> BuildTask.combineInto
                 |> BuildTask.withPrefix ("[" ++ String.fromInt inputSize ++ "/" ++ String.fromInt inputSize ++ "]")
     in
-    BuildTask.map5
-        (\imagesElm fontsElm imageSizes public dlcs ->
-            { generated = [ imagesElm, fontsElm ]
+    BuildTask.map4
+        (\fontsElm imageSizes public ( imagesElm, dlcs ) ->
+            { generated = [ imagesElm.file, fontsElm ]
             , other =
                 [ { filename = Path.path "image-sizes", hash = imageSizes }
                 , { filename = Path.path "public", hash = public }
                 ]
-                    ++ Generate.dlcToFiles (Parsers.combineDLCs dlcs)
+                    ++ dlcs
             }
         )
-        (imagesElmFile processedFiles)
         (Elm.codegen (fontsElmFile fontFiles))
         (imagesSizesFile imageFiles)
         publicFolder
-        dlcFiles
+        (BuildTask.andThen
+            (\imagesElm ->
+                let
+                    generateTask : BuildTask (List Elm.File)
+                    generateTask =
+                        dlcFiles
+                            |> Parsers.combineDLCs
+                            |> Generate.dlcToFiles imagesElm.module_
+                            |> Result.mapError
+                                (\errors ->
+                                    errors
+                                        |> List.Nonempty.toList
+                                        |> List.map .description
+                                        |> String.join ", "
+                                )
+                            |> BuildTask.fromResult
+                in
+                BuildTask.do generateTask <| \generated ->
+                Do.all Elm.codegen generated <| \dlcs ->
+                BuildTask.succeed ( imagesElm, dlcs )
+            )
+            (imagesElmFile processedFiles)
+        )
 
 
 asImage :
@@ -309,7 +331,13 @@ fontsElmFile files =
         |> Elm.file [ "Fonts" ]
 
 
-imagesElmFile : List ProcessedFile -> BuildTask { filename : Path, hash : FileOrDirectory }
+imagesElmFile :
+    List ProcessedFile
+    ->
+        BuildTask
+            { module_ : Generate.Image.ImageModule
+            , file : { filename : Path, hash : FileOrDirectory }
+            }
 imagesElmFile list =
     list
         |> List.filterMap
@@ -366,7 +394,27 @@ imagesElmFile list =
                 Do.writeFile file.contents <| \hash ->
                 Elm.format hash
             )
-        |> BuildTask.map (\hash -> { filename = Path.path "generated/Images.elm", hash = hash })
+        |> BuildTask.map
+            (\hash ->
+                let
+                    annotation =
+                        Gen.Html.annotation_.html (Elm.Annotation.var "msg")
+
+                    module_ =
+                        { image = annotation
+                        , valueFrom =
+                            \name ->
+                                Elm.value
+                                    { importFrom = [ "Images" ]
+                                    , name = name
+                                    , annotation = Just annotation
+                                    }
+                        }
+                in
+                { module_ = module_
+                , file = { filename = Path.path "generated/Images.elm", hash = hash }
+                }
+            )
 
 
 encodeProcessedFiles :
@@ -515,7 +563,12 @@ processFile config total index ( path, copyFile ) =
             BuildTask.succeed Nothing
 
         Just "md" ->
-            doDlc ()
+            if Path.filename path == "attribution.md" then
+                -- Ignore
+                BuildTask.succeed Nothing
+
+            else
+                doDlc ()
 
         Just "css" ->
             BuildTask.do copyFile <| \hash ->
