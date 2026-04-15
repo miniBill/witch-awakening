@@ -41,35 +41,34 @@ all types dlcRaces =
         (Elm.Arg.varWith "races"
             (Elm.Annotation.list types.race.annotation)
         )
-    <|
-        \races ->
-            dlcRaces
-                |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-                |> List.map
-                    (\( _, race ) ->
-                        let
-                            simple : Elm.Expression
-                            simple =
-                                yassify race.name
-                                    |> String.Extra.decapitalize
-                                    |> Elm.val
-                        in
-                        case race.elements of
-                            [ _, _ ] ->
-                                simple
+    <| \races ->
+    dlcRaces
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
+        |> List.map
+            (\( _, race ) ->
+                let
+                    simple : Elm.Expression
+                    simple =
+                        yassify race.name
+                            |> String.Extra.decapitalize
+                            |> Elm.val
+                in
+                case race.elements of
+                    [ _, _ ] ->
+                        simple
 
-                            _ ->
-                                Elm.apply simple [ races ]
-                    )
-                |> Elm.list
-                |> Gen.List.call_.sortBy
-                    (Elm.fn
-                        (Elm.Arg.record identity
-                            |> Elm.Arg.field "dlc"
-                        )
-                        (\dlc -> Gen.Maybe.withDefault (Elm.string "") dlc)
-                    )
-                |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
+                    _ ->
+                        Elm.apply simple [ races ]
+            )
+        |> Elm.list
+        |> Gen.List.call_.sortBy
+            (Elm.fn
+                (Elm.Arg.record identity
+                    |> Elm.Arg.field "dlc"
+                )
+                (\dlc -> Gen.Maybe.withDefault (Elm.string "") dlc)
+            )
+        |> Elm.withType (Elm.Annotation.list Gen.Data.Race.annotation_.details)
 
 
 dlcToRaces : TypesModule -> List ( Maybe String, Parsers.Race ) -> ResultME Generate.Error (List Elm.Declaration)
@@ -105,16 +104,15 @@ raceToDeclaration types dlcName race =
             Elm.fn (Elm.Arg.varWith "affinities" (Elm.Annotation.list types.race.annotation))
                 (\affinities ->
                     Gen.Data.Race.call_.withVariantAffinity1
-                        (Elm.fn (Elm.Arg.var "r") <|
-                            \r ->
-                                Elm.Case.custom r
-                                    types.race.annotation
-                                    [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff" ])
-                                        (\affs ->
-                                            Elm.maybe (List.head affs)
-                                        )
-                                    , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
-                                    ]
+                        (Elm.fn (Elm.Arg.var "r") <| \r ->
+                        Elm.Case.custom r
+                            types.race.annotation
+                            [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff" ])
+                                (\affs ->
+                                    Elm.maybe (List.head affs)
+                                )
+                            , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
+                            ]
                         )
                         (Elm.record
                             [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.race.value race.name) [ aff ] )
@@ -134,22 +132,21 @@ raceToDeclaration types dlcName race =
             Elm.fn (Elm.Arg.varWith "affinities" (Elm.Annotation.list types.race.annotation))
                 (\affinities ->
                     Gen.Data.Race.call_.withVariantAffinity2
-                        (Elm.fn (Elm.Arg.var "r") <|
-                            \r ->
-                                Elm.Case.custom r
-                                    types.race.annotation
-                                    [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff1", Elm.Arg.var "aff2" ])
-                                        (\affs ->
-                                            case affs of
-                                                [ aff1, aff2 ] ->
-                                                    Just (Elm.tuple aff1 aff2)
-                                                        |> Elm.maybe
+                        (Elm.fn (Elm.Arg.var "r") <| \r ->
+                        Elm.Case.custom r
+                            types.race.annotation
+                            [ Elm.Case.branch (types.race.argWith race.name [ Elm.Arg.var "aff1", Elm.Arg.var "aff2" ])
+                                (\affs ->
+                                    case affs of
+                                        [ aff1, aff2 ] ->
+                                            Just (Elm.tuple aff1 aff2)
+                                                |> Elm.maybe
 
-                                                _ ->
-                                                    Elm.maybe Nothing
-                                        )
-                                    , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
-                                    ]
+                                        _ ->
+                                            Elm.maybe Nothing
+                                )
+                            , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
+                            ]
                         )
                         (Elm.record
                             [ ( "name", Elm.functionReduced "aff" <| \aff -> Elm.apply (types.race.value race.name) [ aff ] )

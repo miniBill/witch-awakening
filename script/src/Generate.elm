@@ -138,8 +138,7 @@ toFiles root =
                             Ok
                                 ( []
                                 , []
-                                , [ { folder = folder
-                                    , filename = fileName
+                                , [ { path = Path.path fileName
                                     , content = fileContent
                                     }
                                   ]
@@ -165,6 +164,16 @@ toFiles root =
                                 )
                                 (List.concatMap Triple.Extra.second list
                                     |> Generate.Gradient.gradients
+                                    |> Result.mapError
+                                        (\description ->
+                                            Nonempty.singleton
+                                                { title = "Error generating gradients"
+                                                , description =
+                                                    description
+                                                        |> Nonempty.toList
+                                                        |> String.join "\n"
+                                                }
+                                        )
                                 )
                                 (List.concatMap Triple.Extra.third list
                                     |> Parsers.parseFiles

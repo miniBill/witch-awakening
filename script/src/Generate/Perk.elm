@@ -50,56 +50,54 @@ all types dlcPerks =
         (Elm.Arg.varWith "perks"
             (Elm.Annotation.list Gen.Types.annotation_.rankedPerk)
         )
-    <|
-        \perks ->
-            (dlcPerks
-                |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-                |> List.map
-                    (\( _, perk ) ->
-                        let
-                            simple : Elm.Expression
-                            simple =
-                                yassify perk.name
-                                    |> String.Extra.decapitalize
-                                    |> Elm.val
-                        in
-                        if List.isEmpty perk.arguments then
-                            simple
+    <| \perks ->
+    (dlcPerks
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
+        |> List.map
+            (\( _, perk ) ->
+                let
+                    simple : Elm.Expression
+                    simple =
+                        yassify perk.name
+                            |> String.Extra.decapitalize
+                            |> Elm.val
+                in
+                if List.isEmpty perk.arguments then
+                    simple
 
-                        else
-                            Elm.apply simple [ perks ]
-                    )
-                |> Elm.list
+                else
+                    Elm.apply simple [ perks ]
             )
-                |> Gen.List.call_.sortBy
-                    (Elm.fn
-                        (Elm.Arg.record identity
-                            |> Elm.Arg.field "dlc"
-                        )
-                        (\dlc -> Gen.Maybe.withDefault (Elm.string "") dlc)
-                    )
-                |> Elm.withType (Elm.Annotation.list (details types).annotation)
+        |> Elm.list
+    )
+        |> Gen.List.call_.sortBy
+            (Elm.fn
+                (Elm.Arg.record identity
+                    |> Elm.Arg.field "dlc"
+                )
+                (\dlc -> Gen.Maybe.withDefault (Elm.string "") dlc)
+            )
+        |> Elm.withType (Elm.Annotation.list (details types).annotation)
 
 
 containsDash : TypesModule -> List ( Maybe String, Parsers.Perk ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
 containsDash types dlcPerks =
     Elm.Declare.fn "containsDash"
         (Elm.Arg.varWith "perk" types.perk.annotation)
-    <|
-        \perk ->
-            dlcPerks
-                |> List.map
-                    (\( _, dlcPerk ) ->
-                        ( dlcPerk.name
-                        , List.map (\_ -> Elm.Arg.ignore) dlcPerk.arguments
-                        )
-                    )
-                |> List.map
-                    (\( name, args ) ->
-                        Elm.Case.branch (types.perk.argWith name args)
-                            (\_ -> Elm.bool (String.contains "-" name))
-                    )
-                |> Elm.Case.custom perk types.perk.annotation
+    <| \perk ->
+    dlcPerks
+        |> List.map
+            (\( _, dlcPerk ) ->
+                ( dlcPerk.name
+                , List.map (\_ -> Elm.Arg.ignore) dlcPerk.arguments
+                )
+            )
+        |> List.map
+            (\( name, args ) ->
+                Elm.Case.branch (types.perk.argWith name args)
+                    (\_ -> Elm.bool (String.contains "-" name))
+            )
+        |> Elm.Case.custom perk types.perk.annotation
 
 
 details :
@@ -178,16 +176,15 @@ perkToDeclaration types dlcName perk =
                     Elm.Let.letIn identity
                         |> Elm.Let.value "race"
                             (Gen.List.Extra.call_.findMap
-                                (Elm.fn (Elm.Arg.var "per") <|
-                                    \p ->
-                                        Elm.Case.custom (p |> Elm.get "name")
-                                            types.perk.annotation
-                                            [ Elm.Case.branch (types.perk.argWith perk.name [ Elm.Arg.var "race" ])
-                                                (\race ->
-                                                    Elm.maybe (List.head race)
-                                                )
-                                            , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
-                                            ]
+                                (Elm.fn (Elm.Arg.var "per") <| \p ->
+                                Elm.Case.custom (p |> Elm.get "name")
+                                    types.perk.annotation
+                                    [ Elm.Case.branch (types.perk.argWith perk.name [ Elm.Arg.var "race" ])
+                                        (\race ->
+                                            Elm.maybe (List.head race)
+                                        )
+                                    , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
+                                    ]
                                 )
                                 perks
                                 |> Elm.Op.pipe
@@ -233,16 +230,15 @@ perkToDeclaration types dlcName perk =
                     Elm.Let.letIn identity
                         |> Elm.Let.value "magics"
                             (Gen.List.Extra.call_.findMap
-                                (Elm.fn (Elm.Arg.var "per") <|
-                                    \p ->
-                                        Elm.Case.custom (p |> Elm.get "name")
-                                            types.perk.annotation
-                                            [ Elm.Case.branch (types.perk.argWith perk.name [ Elm.Arg.var "magics" ])
-                                                (\magics ->
-                                                    Elm.maybe (List.head magics)
-                                                )
-                                            , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
-                                            ]
+                                (Elm.fn (Elm.Arg.var "per") <| \p ->
+                                Elm.Case.custom (p |> Elm.get "name")
+                                    types.perk.annotation
+                                    [ Elm.Case.branch (types.perk.argWith perk.name [ Elm.Arg.var "magics" ])
+                                        (\magics ->
+                                            Elm.maybe (List.head magics)
+                                        )
+                                    , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
+                                    ]
                                 )
                                 perks
                                 |> Elm.Op.pipe

@@ -51,27 +51,26 @@ all types dlcRelics =
         (Elm.Arg.varWith "relics"
             (Elm.Annotation.list Gen.Types.annotation_.rankedRelic)
         )
-    <|
-        \relics ->
-            dlcRelics
-                |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-                |> List.map
-                    (\( _, relic ) ->
-                        let
-                            simple : Elm.Expression
-                            simple =
-                                yassify relic.name
-                                    |> String.Extra.decapitalize
-                                    |> Elm.val
-                        in
-                        if List.isEmpty relic.arguments then
-                            simple
+    <| \relics ->
+    dlcRelics
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
+        |> List.map
+            (\( _, relic ) ->
+                let
+                    simple : Elm.Expression
+                    simple =
+                        yassify relic.name
+                            |> String.Extra.decapitalize
+                            |> Elm.val
+                in
+                if List.isEmpty relic.arguments then
+                    simple
 
-                        else
-                            Elm.apply simple [ relics ]
-                    )
-                |> Elm.list
-                |> Elm.withType (Elm.Annotation.list (details types).annotation)
+                else
+                    Elm.apply simple [ relics ]
+            )
+        |> Elm.list
+        |> Elm.withType (Elm.Annotation.list (details types).annotation)
 
 
 details :
@@ -137,16 +136,15 @@ relicToDeclaration types dlcName relic =
                     Elm.Let.letIn identity
                         |> Elm.Let.value "pearlData"
                             (Gen.List.Extra.call_.findMap
-                                (Elm.fn (Elm.Arg.var "relic") <|
-                                    \r ->
-                                        Elm.Case.custom (r |> Elm.get "name")
-                                            types.relic.annotation
-                                            [ Elm.Case.branch (types.relic.argWith relic.name [ Elm.Arg.var "data" ])
-                                                (\data ->
-                                                    Elm.maybe (List.head data)
-                                                )
-                                            , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
-                                            ]
+                                (Elm.fn (Elm.Arg.var "relic") <| \r ->
+                                Elm.Case.custom (r |> Elm.get "name")
+                                    types.relic.annotation
+                                    [ Elm.Case.branch (types.relic.argWith relic.name [ Elm.Arg.var "data" ])
+                                        (\data ->
+                                            Elm.maybe (List.head data)
+                                        )
+                                    , Elm.Case.branch Elm.Arg.ignore (\_ -> Elm.maybe Nothing)
+                                    ]
                                 )
                                 relics
                                 |> Elm.Op.pipe

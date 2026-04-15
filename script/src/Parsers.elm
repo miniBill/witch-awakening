@@ -1,4 +1,4 @@
-module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Evil(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), parseFiles)
+module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Evil(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), combineDLCs, parseDLC, parseFiles)
 
 import Ansi.Color
 import Dict exposing (Dict)
@@ -12,6 +12,7 @@ import Maybe.Extra
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, sequence, spaces, succeed, symbol)
 import Parser.Error exposing (DeadEnd)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
+import Path exposing (Path)
 import Regex
 import ResultME exposing (ResultME)
 import Set exposing (Set)
@@ -39,8 +40,25 @@ type DLCItem
     | DLCFaction Faction
 
 
-parseFiles : List { folder : String, filename : String, content : String } -> ResultME Generate.Error (List DLC)
+parseFiles : List { path : Path, content : String } -> ResultME Generate.Error (List DLC)
 parseFiles inputs =
+    inputs
+        |> ResultME.combineMap
+            (\v ->
+                parseDLC v
+                    |> Result.mapError
+                        (\message ->
+                            { title = "Could not parse file"
+                            , description = message
+                            }
+                        )
+                    |> ResultME.fromResult
+            )
+        |> ResultME.map combineDLCs
+
+
+combineDLCs : List DLC -> List DLC
+combineDLCs dlcList =
     let
         join : (DLC -> Maybe String) -> List DLC -> Maybe String
         join prop list =
@@ -51,42 +69,33 @@ parseFiles inputs =
                 filtered ->
                     Just (String.join ", " filtered)
     in
-    inputs
-        |> ResultME.combineMap parseDLC
-        |> Result.map
-            (\dlcList ->
-                dlcList
-                    |> Dict.Extra.groupBy (\{ name } -> Maybe.withDefault "" name)
-                    |> Dict.foldl
-                        (\name grouped acc ->
-                            { name =
-                                if String.isEmpty name then
-                                    Nothing
+    dlcList
+        |> Dict.Extra.groupBy (\{ name } -> Maybe.withDefault "" name)
+        |> Dict.foldl
+            (\name grouped acc ->
+                { name =
+                    if String.isEmpty name then
+                        Nothing
 
-                                else
-                                    Just name
-                            , author = join .author grouped
-                            , link = join .link grouped
-                            , items = List.concatMap .items grouped
-                            }
-                                :: acc
-                        )
-                        []
+                    else
+                        Just name
+                , author = join .author grouped
+                , link = join .link grouped
+                , items = List.concatMap .items grouped
+                }
+                    :: acc
             )
+            []
 
 
-parseDLC : { folder : String, filename : String, content : String } -> ResultME Generate.Error DLC
-parseDLC { folder, filename, content } =
+parseDLC : { path : Path, content : String } -> Result String DLC
+parseDLC { path, content } =
     case Parser.run dlc content of
         Ok parsed ->
             Ok parsed
 
         Err deadEnds ->
-            ResultME.error
-                { title = "Error parsing DLC file"
-                , description =
-                    "Could not parse " ++ folder ++ "/" ++ filename ++ "\n\n" ++ errorToString content deadEnds
-                }
+            Err ("Could not parse " ++ Path.toString path ++ "\n\n" ++ errorToString content deadEnds)
 
 
 errorToString : String -> List (DeadEnd {} Parser.Problem) -> String

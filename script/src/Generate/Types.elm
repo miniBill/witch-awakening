@@ -121,16 +121,15 @@ cosmicPearlDataParser =
 
 listParser : Elm.Declare.Function (Elm.Expression -> Elm.Expression)
 listParser =
-    Elm.Declare.fn "listParser" (Elm.Arg.var "parser") <|
-        \parser ->
-            Gen.Parser.sequence
-                { start = ""
-                , end = ""
-                , separator = ","
-                , spaces = Gen.Parser.succeed Elm.unit
-                , item = parser
-                , trailing = Gen.Parser.make_.forbidden |> Elm.withType Gen.Parser.annotation_.trailing
-                }
+    Elm.Declare.fn "listParser" (Elm.Arg.var "parser") <| \parser ->
+    Gen.Parser.sequence
+        { start = ""
+        , end = ""
+        , separator = ","
+        , spaces = Gen.Parser.succeed Elm.unit
+        , item = parser
+        , trailing = Gen.Parser.make_.forbidden |> Elm.withType Gen.Parser.annotation_.trailing
+        }
 
 
 type alias EnumModule =

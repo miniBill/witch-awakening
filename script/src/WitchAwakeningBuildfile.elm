@@ -24,10 +24,12 @@ import Gen.Html.Picture
 import Gen.Html.Source
 import Gen.List
 import Gen.String
+import Generate
 import Generate.Gradient
 import List.Extra
 import List.Nonempty
 import Maybe.Extra
+import Parsers exposing (DLC)
 import Path exposing (Path)
 import String.Extra
 
@@ -40,6 +42,7 @@ type ProcessedFile
     | ProcessedCss (HashedFileWith {})
     | ProcessedSvg (HashedFileWith { width : Int, height : Int })
     | ProcessedFont (HashedFileWith Font.Data)
+    | ProcessedDLC (HashedFileWith { data : DLC })
 
 
 type alias HashedFileWith a =
@@ -170,6 +173,9 @@ buildImages config inputs =
         imageFiles =
             List.filterMap asImage processedFiles
 
+        dlcFiles =
+            List.filterMap asDLC processedFiles
+
         publicFolder : BuildTask FileOrDirectory
         publicFolder =
             Do.writeFile (Font.toCssFile fontFiles) <| \fontsCssHash ->
@@ -181,19 +187,21 @@ buildImages config inputs =
                 |> BuildTask.combineInto
                 |> BuildTask.withPrefix ("[" ++ String.fromInt inputSize ++ "/" ++ String.fromInt inputSize ++ "]")
     in
-    BuildTask.map4
-        (\imagesElm fontsElm imageSizes public ->
+    BuildTask.map5
+        (\imagesElm fontsElm imageSizes public dlcs ->
             { generated = [ imagesElm, fontsElm ]
             , other =
                 [ { filename = Path.path "image-sizes", hash = imageSizes }
                 , { filename = Path.path "public", hash = public }
                 ]
+                    ++ Generate.dlcToFiles (Parsers.combineDLCs dlcs)
             }
         )
         (imagesElmFile processedFiles)
         (Elm.codegen (fontsElmFile fontFiles))
         (imagesSizesFile imageFiles)
         publicFolder
+        dlcFiles
 
 
 asImage :
@@ -217,12 +225,37 @@ asImage file =
         ProcessedFont _ ->
             Nothing
 
+        ProcessedDLC _ ->
+            Nothing
+
 
 asFont : ProcessedFile -> Maybe (HashedFileWith Font.Data)
 asFont file =
     case file of
         ProcessedFont data ->
             Just data
+
+        ProcessedImage _ ->
+            Nothing
+
+        ProcessedCss _ ->
+            Nothing
+
+        ProcessedSvg _ ->
+            Nothing
+
+        ProcessedDLC _ ->
+            Nothing
+
+
+asDLC : ProcessedFile -> Maybe DLC
+asDLC file =
+    case file of
+        ProcessedDLC { data } ->
+            Just data
+
+        ProcessedFont _ ->
+            Nothing
 
         ProcessedImage _ ->
             Nothing
@@ -305,6 +338,9 @@ imagesElmFile list =
 
                     ProcessedFont _ ->
                         Nothing
+
+                    ProcessedDLC _ ->
+                        Nothing
             )
         |> Unsafe.named "imagesElmFile"
             encodeProcessedFiles
@@ -380,6 +416,9 @@ processedFileToFileList file =
         ProcessedFont data ->
             [ extract data ]
 
+        ProcessedDLC data ->
+            [ extract data ]
+
 
 processFile : { config | inputDirectory : Path } -> Int -> Int -> ( Path, BuildTask FileOrDirectory ) -> BuildTask (Maybe ProcessedFile)
 processFile config total index ( path, copyFile ) =
@@ -432,6 +471,18 @@ processFile config total index ( path, copyFile ) =
                 |> ProcessedFont
                 |> Just
                 |> BuildTask.succeed
+
+        doDlc () =
+            BuildTask.do copyFile <| \hash ->
+            BuildTask.withFile hash <| \content ->
+            BuildTask.do (BuildTask.fromResult (Parsers.parseDLC { path = path, content = content })) <| \parsed ->
+            { data = parsed
+            , filename = relative
+            , hash = hash
+            }
+                |> ProcessedDLC
+                |> Just
+                |> BuildTask.succeed
     in
     (case Path.extension path of
         Just "webp" ->
@@ -464,8 +515,7 @@ processFile config total index ( path, copyFile ) =
             BuildTask.succeed Nothing
 
         Just "md" ->
-            -- Ignore
-            BuildTask.succeed Nothing
+            doDlc ()
 
         Just "css" ->
             BuildTask.do copyFile <| \hash ->

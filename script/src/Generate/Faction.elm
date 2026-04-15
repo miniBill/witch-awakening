@@ -101,49 +101,47 @@ all types dlcFactions =
 
 toShortString : TypesModule -> List ( Maybe String, Parsers.Faction ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
 toShortString types dlcFactions =
-    Elm.Declare.fn "toShortString" (Elm.Arg.var "faction") <|
-        \factionArg ->
-            dlcFactions
-                |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-                |> List.map
-                    (\( _, faction ) ->
-                        Elm.Case.branch (types.faction.argWith faction.name []) (\_ -> Elm.string faction.shortName)
-                    )
-                |> (\l ->
-                        l
-                            ++ [ Elm.Case.branch (types.faction.argWith "Independents" []) (\_ -> Elm.string "Independents") ]
-                   )
-                |> Elm.Case.custom factionArg types.faction.annotation
+    Elm.Declare.fn "toShortString" (Elm.Arg.var "faction") <| \factionArg ->
+    dlcFactions
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
+        |> List.map
+            (\( _, faction ) ->
+                Elm.Case.branch (types.faction.argWith faction.name []) (\_ -> Elm.string faction.shortName)
+            )
+        |> (\l ->
+                l
+                    ++ [ Elm.Case.branch (types.faction.argWith "Independents" []) (\_ -> Elm.string "Independents") ]
+           )
+        |> Elm.Case.custom factionArg types.faction.annotation
 
 
 toCollectiveName : TypesModule -> List ( Maybe String, Parsers.Faction ) -> Elm.Declare.Function (Elm.Expression -> Elm.Expression)
 toCollectiveName types dlcFactions =
-    Elm.Declare.fn "toCollectiveName" (Elm.Arg.var "faction") <|
-        \factionArg ->
-            dlcFactions
-                |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
-                |> List.map
-                    (\( _, faction ) ->
-                        Elm.Case.branch
-                            (Elm.Arg.customType "Just" identity
-                                |> Elm.Arg.item (types.faction.argWith faction.name [])
-                            )
-                        <|
-                            \_ -> Elm.string faction.collectiveName
+    Elm.Declare.fn "toCollectiveName" (Elm.Arg.var "faction") <| \factionArg ->
+    dlcFactions
+        |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
+        |> List.map
+            (\( _, faction ) ->
+                Elm.Case.branch
+                    (Elm.Arg.customType "Just" identity
+                        |> Elm.Arg.item (types.faction.argWith faction.name [])
                     )
-                |> (\l ->
-                        l
-                            ++ [ Elm.Case.branch
-                                    (Elm.Arg.customType "Just" identity
-                                        |> Elm.Arg.item (types.faction.argWith "Independents" [])
-                                    )
-                                 <|
-                                    \_ -> Elm.string "Independents / Other"
-                               , Elm.Case.branch (Elm.Arg.customType "Nothing" ()) <|
-                                    \_ -> Elm.string "Independents / Other"
-                               ]
-                   )
-                |> Elm.Case.custom factionArg (Elm.Annotation.maybe types.faction.annotation)
+                <|
+                    \_ -> Elm.string faction.collectiveName
+            )
+        |> (\l ->
+                l
+                    ++ [ Elm.Case.branch
+                            (Elm.Arg.customType "Just" identity
+                                |> Elm.Arg.item (types.faction.argWith "Independents" [])
+                            )
+                         <|
+                            \_ -> Elm.string "Independents / Other"
+                       , Elm.Case.branch (Elm.Arg.customType "Nothing" ()) <|
+                            \_ -> Elm.string "Independents / Other"
+                       ]
+           )
+        |> Elm.Case.custom factionArg (Elm.Annotation.maybe types.faction.annotation)
 
 
 dlcToFactions : TypesModule -> ImageModule -> List ( Maybe String, Parsers.Faction ) -> List Elm.Declaration

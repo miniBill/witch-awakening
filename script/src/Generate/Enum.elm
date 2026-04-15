@@ -70,38 +70,37 @@ toString enum =
                                 variant.arguments
                             )
                     )
-                <|
-                    \vals ->
-                        (variantString
-                            :: List.map2
-                                (\arg val ->
-                                    case arg of
-                                        ValueArgument i ->
-                                            Elm.apply
-                                                (Elm.value
-                                                    { importFrom = [ "Generated", i ]
-                                                    , name = "toString"
-                                                    , annotation = Nothing
-                                                    }
-                                                )
-                                                [ val ]
+                <| \vals ->
+                (variantString
+                    :: List.map2
+                        (\arg val ->
+                            case arg of
+                                ValueArgument i ->
+                                    Elm.apply
+                                        (Elm.value
+                                            { importFrom = [ "Generated", i ]
+                                            , name = "toString"
+                                            , annotation = Nothing
+                                            }
+                                        )
+                                        [ val ]
 
-                                        ListArgument i ->
-                                            val
-                                                |> Gen.List.call_.map
-                                                    (Elm.value
-                                                        { importFrom = [ "Generated", i ]
-                                                        , name = "toString"
-                                                        , annotation = Nothing
-                                                        }
-                                                    )
-                                                |> Gen.String.call_.join (Elm.string ",")
-                                )
-                                variant.arguments
-                                vals
+                                ListArgument i ->
+                                    val
+                                        |> Gen.List.call_.map
+                                            (Elm.value
+                                                { importFrom = [ "Generated", i ]
+                                                , name = "toString"
+                                                , annotation = Nothing
+                                                }
+                                            )
+                                        |> Gen.String.call_.join (Elm.string ",")
                         )
-                            |> List.intersperse (Elm.string "-")
-                            |> Elm.Op.Extra.appendsStrings
+                        variant.arguments
+                        vals
+                )
+                    |> List.intersperse (Elm.string "-")
+                    |> Elm.Op.Extra.appendStrings
         in
         enum.variants
             |> List.map variantToBranch

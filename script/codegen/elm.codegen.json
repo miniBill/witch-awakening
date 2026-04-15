@@ -5,8 +5,12 @@
             "elm/core": "1.0.5",
             "elm/parser": "1.1.0",
             "avh4/elm-color": "1.0.0",
-            "elmcraft/core-extra": "2.2.0"
+            "elmcraft/core-extra": "2.2.0",
+            "miniBill/elm-picture": "1.0.0",
+            "elm/html": "1.0.1"
         },
-        "local": ["../src"]
+        "local": [
+            "../src"
+        ]
     }
 }
