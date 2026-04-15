@@ -1,20 +1,21 @@
-module Generate.Gradient exposing (gradients, suffix)
+module Generate.Gradient exposing (gradient, gradients, suffix)
 
 import Elm
 import Gen.CodeGen.Generate as Generate
 import List.Extra
+import Path exposing (Path)
 import ResultME exposing (ResultME)
 
 
-gradients : List ( String, String ) -> ResultME Generate.Error Elm.File
+gradients : List { path : Path, content : String } -> ResultME String Elm.File
 gradients files =
     files
         |> ResultME.combineMap gradient
         |> Result.map (Elm.file [ "Generated", "Gradient" ])
 
 
-gradient : ( String, String ) -> ResultME Generate.Error Elm.Declaration
-gradient ( fileName, content ) =
+gradient : { path : Path, content : String } -> ResultME String Elm.Declaration
+gradient { path, content } =
     case
         content
             |> String.dropLeft 1
@@ -35,7 +36,7 @@ gradient ( fileName, content ) =
                         let
                             name : String
                             name =
-                                String.dropRight (String.length suffix) fileName
+                                String.dropRight (String.length suffix) (Path.toString path)
                         in
                         expr
                             |> Elm.declaration (name ++ "Gradient")
@@ -43,7 +44,7 @@ gradient ( fileName, content ) =
                     )
 
         _ ->
-            ResultME.error { title = "Invalid file", description = "Could not parse file" }
+            ResultME.error "Could not parse file"
 
 
 suffix : String
@@ -51,7 +52,7 @@ suffix =
     "_gradient.ppm"
 
 
-rowsToExpression : List (List Int) -> ResultME Generate.Error Elm.Expression
+rowsToExpression : List (List Int) -> ResultME String Elm.Expression
 rowsToExpression rows =
     rows
         |> List.concat
@@ -60,7 +61,7 @@ rowsToExpression rows =
         |> Result.map Elm.list
 
 
-parseRow : List Int -> ResultME Generate.Error Elm.Expression
+parseRow : List Int -> ResultME String Elm.Expression
 parseRow row =
     case row of
         [ r, g, b ] ->
@@ -68,10 +69,11 @@ parseRow row =
                 |> Ok
 
         _ ->
-            ResultME.error
-                { title = "Invalid row"
-                , description =
+            let
+                msg : String
+                msg =
                     "Row \""
                         ++ String.join " " (List.map String.fromInt row)
                         ++ "\" is not valid"
-                }
+            in
+            ResultME.error msg

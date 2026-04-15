@@ -23,7 +23,9 @@ import Gen.Html.Picture
 import Gen.Html.Source
 import Gen.List
 import Gen.String
+import Generate.Gradient
 import List.Extra
+import List.Nonempty
 import Maybe.Extra
 import Path exposing (Path)
 import String.Extra
@@ -46,7 +48,13 @@ type alias HashedFileWith a =
     }
 
 
-getInputs : { a | inputDirectory : Path } -> BackendTask FatalError (List ( Path, BuildTask FileOrDirectory ))
+type alias Inputs =
+    { images : List ( Path, BuildTask FileOrDirectory )
+    , gradients : List ( Path, BuildTask FileOrDirectory )
+    }
+
+
+getInputs : { a | inputDirectory : Path } -> BackendTask FatalError Inputs
 getInputs config =
     Glob.fromStringWithOptions
         (let
@@ -59,11 +67,28 @@ getInputs config =
         (Path.toString config.inputDirectory ++ "/**")
         |> BackendTask.andThen
             (\found ->
-                found
-                    |> List.sort
-                    |> List.Extra.removeWhen (\p -> String.contains "/raw/" p || String.contains "/originals/" p)
-                    |> List.map Path.path
-                    |> BuildTask.inputs
+                let
+                    sorted : List String
+                    sorted =
+                        List.sort found
+                in
+                BackendTask.map2 Inputs
+                    (sorted
+                        |> List.Extra.removeWhen
+                            (\p ->
+                                String.contains "/raw/" p
+                                    || String.contains "/originals/" p
+                                    || String.endsWith Generate.Gradient.suffix p
+                            )
+                        |> List.map Path.path
+                        |> BuildTask.inputs
+                    )
+                    (sorted
+                        |> List.filter
+                            (\p -> String.endsWith Generate.Gradient.suffix p)
+                        |> List.map Path.path
+                        |> BuildTask.inputs
+                    )
             )
 
 
@@ -71,8 +96,44 @@ type T4 a b c d
     = T4 a b c d
 
 
-buildAction : { config | inputDirectory : Path } -> List ( Path, BuildTask FileOrDirectory ) -> BuildTask FileOrDirectory
+buildAction : { config | inputDirectory : Path } -> Inputs -> BuildTask FileOrDirectory
 buildAction config inputs =
+    BuildTask.andThen2 (\g i -> BuildTask.combineInto (g :: i))
+        (buildGradients config inputs.gradients)
+        (buildImages config inputs.images)
+
+
+buildGradients : { config | inputDirectory : Path } -> List ( Path, BuildTask FileOrDirectory ) -> BuildTask { filename : Path, hash : FileOrDirectory }
+buildGradients config inputs =
+    Do.all
+        (\( path, file ) ->
+            BuildTask.do file <| \gradient ->
+            BuildTask.withFile gradient <| \content ->
+            case
+                Generate.Gradient.gradient
+                    { path = path
+                    , content = content
+                    }
+            of
+                Ok result ->
+                    BuildTask.succeed result
+
+                Err errs ->
+                    errs
+                        |> List.Nonempty.toList
+                        |> String.join ", "
+                        |> BuildTask.fail
+        )
+        inputs
+    <| \declarations ->
+    Elm.codegen (Elm.file [ "Images", "Gradients" ] declarations)
+
+
+buildImages :
+    { config | inputDirectory : Path }
+    -> List ( Path, BuildTask FileOrDirectory )
+    -> BuildTask (List { filename : Path, hash : FileOrDirectory })
+buildImages config inputs =
     let
         inputSize : Int
         inputSize =
@@ -107,21 +168,21 @@ buildAction config inputs =
              }
                 :: List.concatMap processedFileToFileList processedFiles
             )
-                |> BuildTask.combine
+                |> BuildTask.combineInto
                 |> BuildTask.withPrefix ("[" ++ String.fromInt inputSize ++ "/" ++ String.fromInt inputSize ++ "]")
     in
-    Do.map4 T4
+    BuildTask.map4
+        (\imagesElm fontsElm imageSizes public ->
+            [ { filename = Path.path "generated/Images.elm", hash = imagesElm }
+            , fontsElm
+            , { filename = Path.path "image-sizes", hash = imageSizes }
+            , { filename = Path.path "public", hash = public }
+            ]
+        )
         (imagesElmFile processedFiles)
         (Elm.codegen (fontsElmFile fontFiles))
         (imagesSizesFile imageFiles)
         publicFolder
-    <| \(T4 imagesElm fontsElm imageSizes public) ->
-    BuildTask.combine
-        [ { filename = Path.path "generated/Images.elm", hash = imagesElm }
-        , fontsElm
-        , { filename = Path.path "image-sizes", hash = imageSizes }
-        , { filename = Path.path "public", hash = public }
-        ]
 
 
 asImage :

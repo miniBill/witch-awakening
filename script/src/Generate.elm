@@ -28,6 +28,7 @@ import Generate.Types
 import Json.Decode exposing (Decoder, Value)
 import List.Nonempty as Nonempty
 import Parsers
+import Path
 import ResultME exposing (ResultME)
 import Triple.Extra
 
@@ -124,7 +125,14 @@ toFiles root =
 
                     _ ->
                         if String.endsWith Generate.Gradient.suffix fileName then
-                            Ok ( [], [ ( fileName, fileContent ) ], [] )
+                            Ok
+                                ( []
+                                , [ { path = Path.path fileName
+                                    , content = fileContent
+                                    }
+                                  ]
+                                , []
+                                )
 
                         else if String.endsWith ".md" fileName then
                             Ok ( [], [], [ ( folder, fileName, fileContent ) ] )
