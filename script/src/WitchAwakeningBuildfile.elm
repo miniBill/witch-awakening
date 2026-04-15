@@ -153,7 +153,13 @@ asFont file =
         ProcessedFont data ->
             Just data
 
-        _ ->
+        ProcessedImage _ ->
+            Nothing
+
+        ProcessedCss _ ->
+            Nothing
+
+        ProcessedSvg _ ->
             Nothing
 
 
@@ -245,7 +251,7 @@ imagesElmFile list =
                                         processedImageToDeclaration processedFile
                                 )
                             |> (::) standardFormats.declaration
-                            |> (::) getSizes_.declaration
+                            |> (::) getSizesDeclaration.declaration
                             |> (::) toSources.declaration
                             |> (::) (toPicture.declaration |> Elm.expose)
                             |> Elm.file [ "Images" ]
@@ -399,6 +405,7 @@ processFile config total index ( path, copyFile ) =
             in
             BuildTask.each sizeData.sizes doResize
 
+        font : () -> BuildTask (Maybe ProcessedFile)
         font () =
             BuildTask.do copyFile <| \hash ->
             BuildTask.map
@@ -498,8 +505,8 @@ getSizes width =
     go 1 []
 
 
-getSizes_ : Elm.Declare.Function (Elm.Expression -> Elm.Expression)
-getSizes_ =
+getSizesDeclaration : Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+getSizesDeclaration =
     Elm.Declare.fn "getSizes" (Elm.Arg.varWith "width" Elm.Annotation.int) <| \width ->
     Elm.Let.letIn identity
         |> Elm.Let.fn2 "go"
@@ -669,6 +676,7 @@ toVariableName path =
             else
                 dir ++ "/" ++ Path.filenameWithoutExtension path
 
+        stripLeadingUnderscores : String -> String
         stripLeadingUnderscores i =
             if String.startsWith "_" i then
                 stripLeadingUnderscores (String.dropLeft 1 i)
@@ -697,7 +705,7 @@ toSources =
             )
         )
     <| \base originalWidth config ->
-    getSizes_.call originalWidth
+    getSizesDeclaration.call originalWidth
         |> Gen.List.call_.map
             (Elm.fn (Elm.Arg.varWith "w" Elm.Annotation.int) <| \w ->
             Elm.record
