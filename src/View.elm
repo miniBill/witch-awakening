@@ -134,6 +134,9 @@ viewRequirements kind req =
                                 Utils.RequiresClass reqClass ->
                                     "[" ++ Class.toString reqClass ++ "] " ++ Class.toString reqClass
 
+                                Utils.RequiresMagic reqMagic 1 ->
+                                    "[" ++ Magic.toString reqMagic ++ "]"
+
                                 Utils.RequiresMagic reqMagic rank ->
                                     "[" ++ Magic.toString reqMagic ++ "] " ++ String.fromInt rank
 
