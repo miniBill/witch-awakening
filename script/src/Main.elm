@@ -19,14 +19,14 @@ toTask =
     let
         input : { inputDirectory : Path }
         input =
-            { inputDirectory = Path.path "../public" }
+            { inputDirectory = Path.path "../media" }
     in
     Build.toTask
         { getInputs = WitchAwakeningBuildfile.getInputs input
         , buildAction = WitchAwakeningBuildfile.buildAction input
         , debug = False
-        , buildDirectory = Path.path "../hashes"
-        , outputName = Path.path "../media"
+        , buildDirectory = Path.path "../build"
+        , outputName = Path.path "../dist"
         , removeStale = True
         , jobs = Nothing
         , hashKind = Hash.Fast
