@@ -25,9 +25,9 @@ toTask =
         { getInputs = WitchAwakeningBuildfile.getInputs input
         , buildAction = WitchAwakeningBuildfile.buildAction input
         , debug = False
-        , buildDirectory = Path.path "../build"
-        , outputName = Path.path "../dist"
-        , removeStale = True
+        , buildDirectory = Path.path "../build/elm-build"
+        , outputName = Path.path "../build/dist"
+        , removeStale = False
         , jobs = Nothing
         , hashKind = Hash.Fast
         }
