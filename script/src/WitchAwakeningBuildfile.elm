@@ -9,6 +9,7 @@ import BuildTask.Font as Font
 import BuildTask.Image as Image
 import BuildTask.Unsafe as Unsafe
 import BuildTask.Unsafe.Do as Do
+import Buildfile
 import Elm
 import Elm.Annotation
 import Elm.Arg
@@ -325,135 +326,63 @@ processFile config total index ( path, copyFile ) =
                 ++ String.fromInt total
                 ++ "]"
 
-        image : String -> BuildTask (Maybe ProcessedFile)
-        image originalExtension =
-            BuildTask.do copyFile <| \copied ->
-            BuildTask.do (Image.stripMetadata copied) <| \stripped ->
-            BuildTask.do (Image.getSize stripped) <| \sizeFile ->
-            Do.withFile sizeFile parseSizeFile <| \sizeData ->
-            Do.each standardFormats.list (convertAndResize ( stripped, originalExtension ) sizeData) <| \converted ->
-            BuildTask.succeed
-                ({ original =
-                    { width = sizeData.width
-                    , height = sizeData.height
-                    , filename = relative
-                    , hash = stripped
-                    }
-                 , converted = List.concat converted
-                 }
-                    |> ProcessedImage
-                    |> Just
-                )
-
-        parseSizeFile : String -> BuildTask { width : Int, height : Int, sizes : List Int }
-        parseSizeFile sizeString =
-            case String.split " " sizeString |> List.map String.toInt of
-                [ Just width, Just height ] ->
-                    let
-                        sizes : List Int
-                        sizes =
-                            getSizes width
-                    in
-                    BuildTask.succeed
-                        { width = width
-                        , height = height
-                        , sizes = sizes
-                        }
-
-                _ ->
-                    let
-                        msg : String
-                        msg =
-                            "Could not parse size file: " ++ Json.Encode.encode 0 (Json.Encode.string sizeString)
-                    in
-                    BuildTask.fail msg
-
-        convertAndResize :
-            ( FileOrDirectory, String )
-            ->
-                { width : Int
-                , height : Int
-                , sizes : List Int
-                }
-            -> { a | extension : String }
-            -> BuildTask (List (HashedFileWith { width : Int }))
-        convertAndResize ( stripped, originalExtension ) sizeData { extension } =
-            let
-                convertedFilename : Path
-                convertedFilename =
-                    Path.replaceExtensionWith extension relative
-            in
-            convertTo extension ( stripped, originalExtension ) <| \converted ->
-            let
-                doResize : Int -> BuildTask (HashedFileWith { width : Int })
-                doResize w =
-                    (if w == sizeData.width then
-                        BuildTask.succeed converted
-
-                     else
-                        Unsafe.pipeThrough "magick" [ "-", "-resize", String.fromInt w ++ "x" ++ String.fromInt sizeData.height, "-" ] converted
-                    )
-                        |> BuildTask.map
-                            (\resized ->
-                                { width = w
-                                , filename =
-                                    convertedFilename
-                                        |> Path.appendToFilename ("-" ++ String.fromInt w)
-                                , hash = resized
-                                }
-                            )
-            in
-            BuildTask.each sizeData.sizes doResize
-
-        font : () -> BuildTask (Maybe ProcessedFile)
-        font () =
+        doImage : () -> BuildTask (Maybe ProcessedFile)
+        doImage () =
             BuildTask.do copyFile <| \hash ->
-            BuildTask.map
-                (\fontData ->
-                    Just
-                        (ProcessedFont
-                            { style = fontData.style
-                            , weight = fontData.weight
-                            , family = fontData.family
-                            , filename = relative
-                            , hash = hash
-                            }
-                        )
-                )
-                (Font.parse hash)
+            BuildTask.do (Buildfile.image relative hash) <| \data ->
+            data
+                |> ProcessedImage
+                |> Just
+                |> BuildTask.succeed
+
+        doSvg : () -> BuildTask (Maybe ProcessedFile)
+        doSvg () =
+            BuildTask.do copyFile <| \hash ->
+            BuildTask.do (Image.getSvgSize hash) <| \size ->
+            { filename = relative
+            , hash = hash
+            , width = size.width
+            , height = size.height
+            }
+                |> ProcessedSvg
+                |> Just
+                |> BuildTask.succeed
+
+        doFont : () -> BuildTask (Maybe ProcessedFile)
+        doFont () =
+            BuildTask.do copyFile <| \hash ->
+            BuildTask.do (Font.parse hash) <| \fontData ->
+            { style = fontData.style
+            , weight = fontData.weight
+            , family = fontData.family
+            , filename = relative
+            , hash = hash
+            }
+                |> ProcessedFont
+                |> Just
+                |> BuildTask.succeed
     in
     (case Path.extension path of
         Just "webp" ->
-            image "webp"
+            doImage ()
 
         Just "jpg" ->
-            image "jpg"
+            doImage ()
 
         Just "jpeg" ->
-            image "jpeg"
+            doImage ()
 
         Just "png" ->
-            image "png"
+            doImage ()
 
         Just "ttf" ->
-            font ()
+            doFont ()
 
         Just "otf" ->
-            font ()
+            doFont ()
 
         Just "svg" ->
-            BuildTask.do copyFile <| \hash ->
-            BuildTask.do (Image.getSvgSize hash) <| \size ->
-            BuildTask.succeed
-                (Just
-                    (ProcessedSvg
-                        { filename = relative
-                        , hash = hash
-                        , width = size.width
-                        , height = size.height
-                        }
-                    )
-                )
+            doSvg ()
 
         Just "zip" ->
             -- Ignore
