@@ -446,22 +446,24 @@ viewGenericBadge expandBadges source title =
             else
                 title
     in
-    [ Html.div
-        [ Html.Attributes.style "width" "30px"
-        , Html.Attributes.style "display" "inline-block"
-        , Html.Attributes.style "height" "30px"
-        , Html.Attributes.style "border-radius" "30px"
-        , Html.Attributes.style "background-size" "cover"
-        , Html.Attributes.style "background-image"
-            ("url(\"" ++ source.src ++ "\")")
-        , Html.Attributes.title cutTitle
-        ]
-        []
-    , if expandBadges then
-        Html.text ("\u{00A0}" ++ cutTitle)
+    [ Html.span [ Html.Attributes.style "white-space" "nowrap" ]
+        [ Html.div
+            [ Html.Attributes.style "width" "30px"
+            , Html.Attributes.style "display" "inline-block"
+            , Html.Attributes.style "height" "30px"
+            , Html.Attributes.style "border-radius" "30px"
+            , Html.Attributes.style "background-size" "cover"
+            , Html.Attributes.style "background-image"
+                ("url(\"" ++ source.src ++ "\")")
+            , Html.Attributes.title cutTitle
+            ]
+            []
+        , if expandBadges then
+            Html.text (" " ++ cutTitle)
 
-      else
-        Html.text ""
+          else
+            Html.text ""
+        ]
     ]
 
 
