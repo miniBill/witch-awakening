@@ -356,9 +356,23 @@ Be reborn as a the child of a particular lineage of your choice. You can also or
 - Cost: 15
 
 Your Ice based uses of Water magics or your _Metallurgy_ can take on a mirror-like finish.
+
 Your mirrors can reflect ally spell or general magic effects that lack physicality, meaning energy based or direct effects like a curse, but wont do anything to a hurled boulder or snapping vine.
+
 Effective at trapping teleporters.
+
 If used for Harmony magic or Fusion magic with magics that produce light, the result is further empowered to be thrice as potent. If you have [Portals], any mirror surface you created can behave as a portal to any other within your Gateway range based on rank. If you have [Crystallize], your [Earthmoving] can create and use crystals, which share the function as described for mirrors.
+
+
+## Perk: Augmented Witchflame
+- Element: Fire
+- Class: Sorceress
+- Requires: Witchflame
+- Cost: 12
+
+You may now alter the color of your flames freely rather than picking one. For extra mana cost, your flames may be multiple colors at once.
+
+The color of your fire is not just cosmetic, but you can make your flames convey alternative elemental effects rather than “burn”. Your flames may Freeze, Shock, Corrode, Necrotize, Poison, or so on, so long as you have a relevant affinity, Elementalism, or [Augmented Poisoner] or [Augmented Energized]. This effects [Firecalling], with all your uses of [Firecalling] now also counting as [Witchfire] without any additional steps, unless you choose otherwise. The effects are considered natural once cast, should your flames naturally spread into antimagic fields.
 
 
 ## Perk: Summer School
