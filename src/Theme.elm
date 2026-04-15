@@ -445,26 +445,39 @@ viewGenericBadge expandBadges source title =
 
             else
                 title
-    in
-    [ Html.span [ Html.Attributes.style "white-space" "nowrap" ]
-        [ Html.div
-            [ Html.Attributes.style "width" "30px"
-            , Html.Attributes.style "display" "inline-block"
-            , Html.Attributes.style "height" "30px"
-            , Html.Attributes.style "border-radius" "30px"
-            , Html.Attributes.style "background-size" "cover"
-            , Html.Attributes.style "background-image"
-                ("url(\"" ++ source.src ++ "\")")
-            , Html.Attributes.title cutTitle
-            ]
-            []
-        , if expandBadges then
-            Html.text (" " ++ cutTitle)
 
-          else
-            Html.text ""
-        ]
-    ]
+        badgeImage : Html msg
+        badgeImage =
+            Html.div
+                [ Html.Attributes.style "width" "30px"
+                , Html.Attributes.style "display" "inline-block"
+                , Html.Attributes.style "height" "30px"
+                , Html.Attributes.style "border-radius" "30px"
+                , Html.Attributes.style "background-size" "cover"
+                , Html.Attributes.style "background-image"
+                    ("url(\"" ++ source.src ++ "\")")
+                , Html.Attributes.title cutTitle
+                ]
+                []
+    in
+    if expandBadges then
+        case String.split " " cutTitle of
+            [] ->
+                [ badgeImage ]
+
+            h :: t ->
+                [ Html.span [ Html.Attributes.style "white-space" "nowrap" ]
+                    [ badgeImage
+                    , Html.text (" " ++ h)
+                    ]
+                , t
+                    |> List.map (\p -> " " ++ p)
+                    |> String.concat
+                    |> Html.text
+                ]
+
+    else
+        [ badgeImage ]
 
 
 viewAffinityBadge : Affinity -> Html msg
