@@ -571,9 +571,9 @@ toSources =
             (Elm.fn (Elm.Arg.varWith "w" Elm.Annotation.int) <| \w ->
             Elm.record
                 [ ( "url"
-                  , Elm.Op.Extra.appends
-                        base
-                        [ Elm.string "-"
+                  , Elm.Op.Extra.appendStrings
+                        [ base
+                        , Elm.string "-"
                         , Gen.String.call_.fromInt w
                         , Elm.string "."
                         , Elm.get "extension" config
