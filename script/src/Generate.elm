@@ -1,4 +1,4 @@
-module Generate exposing (main)
+module Generate exposing (init)
 
 {-| -}
 
@@ -30,15 +30,6 @@ import List.Nonempty as Nonempty
 import Parsers
 import ResultME exposing (ResultME)
 import Triple.Extra
-
-
-main : Program Value () ()
-main =
-    Platform.worker
-        { init = init
-        , update = \_ model -> ( model, Cmd.none )
-        , subscriptions = \_ -> Sub.none
-        }
 
 
 init : Value -> ( (), Cmd () )
