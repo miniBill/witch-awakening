@@ -372,7 +372,7 @@ If used for Harmony magic or Fusion magic with magics that produce light, the re
 
 Acquire a 6th sense for poisonous materials and a passive “Appraise” effect identifying how materials may be used for poison, if at all. Using your poison control you can casually and perfectly extract all poisonous compounds from a natural material like a mushroom.
 
-If you have a poison handy, you may consume it with your mana to charge any magical effect you next produce with that poison. Such as if you Hex or Curse someone, it could also convey the poison, or if you used [Naturalism] to create or manipulate a plant, that plant can become poisonous with that same poison, which can be used to get more poison out of it than you put in. Your use of [Naturalism] in general may keep a record of all poisons used. 
+If you have a poison handy, you may consume it with your mana to charge any magical effect you next produce with that poison. Such as if you Hex or Curse someone, it could also convey the poison, or if you used [Naturalism] to create or manipulate a plant, that plant can become poisonous with that same poison, which can be used to get more poison out of it than you put in. Your use of [Naturalism] in general may keep a record of all poisons used.
 
 
 ## Perk: Augmented Witchflame
@@ -383,7 +383,20 @@ If you have a poison handy, you may consume it with your mana to charge any magi
 
 You may now alter the color of your flames freely rather than picking one. For extra mana cost, your flames may be multiple colors at once.
 
-The color of your fire is not just cosmetic, but you can make your flames convey alternative elemental effects rather than “burn”. Your flames may Freeze, Shock, Corrode, Necrotize, Poison, or so on, so long as you have a relevant affinity, Elementalism, or [Augmented Poisoner] or [Augmented Energized]. This effects [Firecalling], with all your uses of [Firecalling] now also counting as [Witchfire] without any additional steps, unless you choose otherwise. The effects are considered natural once cast, should your flames naturally spread into antimagic fields.
+The color of your fire is not just cosmetic, but you can make your flames convey alternative elemental effects rather than “burn”. Your flames may Freeze, Shock, Corrode, Necrotize, Poison, or so on, so long as you have a relevant affinity, Elementalism, or [Augmented Poisoner] or [Augmented Energized]. This effects [Firecalling], with all your uses of [Firecalling] now also counting as [Witchflame] without any additional steps, unless you choose otherwise. The effects are considered natural once cast, should your flames naturally spread into antimagic fields.
+
+
+## Perk: Augmented Energized
+- Element: Wind
+- Class: Sorceress
+- Requires: Energized
+- Cost: 12
+
+You may alter the color of your electricity as you please. The color of your lightning alters the behavior of the electricity in how it interacts with the nervous system, influencing the nature of the electrical stimulation and emotional state of the target.
+
+For example, you may create red lightning which has amplified pair and mentally induces terror. You could create pink lightning which does no damage at all and causes pleasure, mentally inducing arousal. A cobalt blue lightning may amplify adrenaline, and make the brain operate faster. A green bolt may induce lethargy.
+
+This affects your [Windkeeping] lightning, and the wind effects themselves may be charged as though you touched them with [Energized]. 
 
 
 ## Perk: Summer School
