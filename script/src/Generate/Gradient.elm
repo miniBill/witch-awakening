@@ -44,12 +44,12 @@ gradient { path, content } =
                     )
 
         _ ->
-            ResultME.error "Could not parse file"
+            ResultME.error ("Could not parse file " ++ Path.toString path)
 
 
 suffix : String
 suffix =
-    "_gradient.ppm"
+    "_gradient.png"
 
 
 rowsToExpression : List (List Int) -> ResultME String Elm.Expression
