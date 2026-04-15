@@ -143,7 +143,7 @@ buildGradients config inputs =
         )
         inputs
     <| \declarations ->
-    Elm.codegen (Elm.file [ "Gradient" ] declarations)
+    Elm.codegen (Elm.file [ "Generated", "Gradient" ] declarations)
 
 
 buildImages :
@@ -396,7 +396,7 @@ imagesElmFile list =
                             |> (::) getSizesDeclaration.declaration
                             |> (::) toSources.declaration
                             |> (::) (toPicture.declaration |> Elm.expose)
-                            |> Elm.file [ "Images" ]
+                            |> Elm.file Generate.Image.moduleName
                 in
                 Do.writeFile file.contents <| \hash ->
                 Elm.format hash
@@ -412,14 +412,14 @@ imagesElmFile list =
                         , valueFrom =
                             \name ->
                                 Elm.value
-                                    { importFrom = [ "Images" ]
+                                    { importFrom = Generate.Image.moduleName
                                     , name = name
                                     , annotation = Just annotation
                                     }
                         }
                 in
                 { module_ = module_
-                , file = { filename = Path.path "generated/Images.elm", hash = hash }
+                , file = { filename = Path.path "generated/Generated/Image.elm", hash = hash }
                 }
             )
 

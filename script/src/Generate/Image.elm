@@ -1,4 +1,4 @@
-module Generate.Image exposing (ImageModule, file, valueFrom)
+module Generate.Image exposing (ImageModule, file, moduleName, valueFrom)
 
 import Dict
 import Dict.Extra
