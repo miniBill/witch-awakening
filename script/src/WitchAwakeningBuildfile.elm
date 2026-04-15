@@ -8,6 +8,7 @@ import BuildTask.Elm as Elm
 import BuildTask.Font as Font
 import BuildTask.Image as Image
 import BuildTask.Unsafe as Unsafe
+import BuildTask.Unsafe.Do
 import Buildfile
 import Elm
 import Elm.Annotation
@@ -71,6 +72,7 @@ getInputs config =
                     ( gradients, notGradients ) =
                         found
                             |> List.sort
+                            |> Debug.log "all"
                             |> List.partition (String.endsWith Generate.Gradient.suffix)
                 in
                 BackendTask.map2 Inputs
@@ -111,8 +113,9 @@ buildGradients : { config | inputDirectory : Path } -> List ( Path, BuildTask Fi
 buildGradients config inputs =
     Do.all
         (\( path, file ) ->
-            BuildTask.do file <| \gradient ->
-            BuildTask.withFile gradient <| \content ->
+            BuildTask.do file <| \gradientPng ->
+            BuildTask.Unsafe.Do.pipeThrough "magick" [ "-", "-compress", "none", "ppm:-" ] gradientPng <| \gradientPpm ->
+            BuildTask.withFile gradientPpm <| \content ->
             case
                 Generate.Gradient.gradient
                     { path = path
