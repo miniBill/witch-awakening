@@ -8,7 +8,6 @@ import BuildTask.Elm as Elm
 import BuildTask.Font as Font
 import BuildTask.Image as Image
 import BuildTask.Unsafe as Unsafe
-import BuildTask.Unsafe.Do as Do
 import Buildfile
 import Elm
 import Elm.Annotation
@@ -24,7 +23,6 @@ import Gen.Html.Picture
 import Gen.Html.Source
 import Gen.List
 import Gen.String
-import Json.Encode
 import List.Extra
 import Maybe.Extra
 import Path exposing (Path)
@@ -415,25 +413,6 @@ minSize =
     50
 
 
-getSizes : Int -> List Int
-getSizes width =
-    let
-        go : Int -> List Int -> List Int
-        go factor acc =
-            let
-                w : Int
-                w =
-                    width // factor
-            in
-            if w >= minSize then
-                go (factor * 2) (w :: acc)
-
-            else
-                List.reverse acc
-    in
-    go 1 []
-
-
 getSizesDeclaration : Elm.Declare.Function (Elm.Expression -> Elm.Expression)
 getSizesDeclaration =
     Elm.Declare.fn "getSizes" (Elm.Arg.varWith "width" Elm.Annotation.int) <| \width ->
@@ -457,19 +436,6 @@ getSizesDeclaration =
                 go (Elm.int 1) (Elm.list [])
                     |> Elm.withType (Elm.Annotation.list Elm.Annotation.int)
             )
-
-
-convertTo :
-    String
-    -> ( FileOrDirectory, String )
-    -> (FileOrDirectory -> BuildTask a)
-    -> BuildTask a
-convertTo format ( cached, originalExtension ) k =
-    if originalExtension == format then
-        k cached
-
-    else
-        Do.pipeThrough "magick" [ "-", format ++ ":-" ] cached k
 
 
 standardFormats :
