@@ -1,4 +1,4 @@
-module Generate exposing (init)
+module Generate exposing (dlcToFiles, init)
 
 {-| -}
 
@@ -135,7 +135,15 @@ toFiles root =
                                 )
 
                         else if String.endsWith ".md" fileName then
-                            Ok ( [], [], [ ( folder, fileName, fileContent ) ] )
+                            Ok
+                                ( []
+                                , []
+                                , [ { folder = folder
+                                    , filename = fileName
+                                    , content = fileContent
+                                    }
+                                  ]
+                                )
 
                         else
                             ResultME.error

@@ -39,7 +39,7 @@ type DLCItem
     | DLCFaction Faction
 
 
-parseFiles : List ( String, String, String ) -> ResultME Generate.Error (List DLC)
+parseFiles : List { folder : String, filename : String, content : String } -> ResultME Generate.Error (List DLC)
 parseFiles inputs =
     let
         join : (DLC -> Maybe String) -> List DLC -> Maybe String
@@ -75,8 +75,8 @@ parseFiles inputs =
             )
 
 
-parseDLC : ( String, String, String ) -> ResultME Generate.Error DLC
-parseDLC ( folder, filename, content ) =
+parseDLC : { folder : String, filename : String, content : String } -> ResultME Generate.Error DLC
+parseDLC { folder, filename, content } =
     case Parser.run dlc content of
         Ok parsed ->
             Ok parsed
@@ -308,47 +308,44 @@ withItem key (Section i) parser =
 
 requiredItem : String -> (String -> ResultME String a) -> Section (a -> b) -> Section b
 requiredItem key parser i =
-    withItem key i <|
-        \v ->
-            case v of
-                Just [ value ] ->
-                    parser value
+    withItem key i <| \v ->
+    case v of
+        Just [ value ] ->
+            parser value
 
-                Just [] ->
-                    ResultME.error ("Missing required property: " ++ key)
+        Just [] ->
+            ResultME.error ("Missing required property: " ++ key)
 
-                Just (_ :: _ :: _) ->
-                    ResultME.error ("Multiple values for property: " ++ key)
+        Just (_ :: _ :: _) ->
+            ResultME.error ("Multiple values for property: " ++ key)
 
-                Nothing ->
-                    ResultME.error ("Missing required property: " ++ key)
+        Nothing ->
+            ResultME.error ("Missing required property: " ++ key)
 
 
 optionalItem : String -> a -> (String -> ResultME String a) -> Section (a -> b) -> Section b
 optionalItem key default parser i =
-    withItem key i <|
-        \v ->
-            case v of
-                Just [ value ] ->
-                    parser value
+    withItem key i <| \v ->
+    case v of
+        Just [ value ] ->
+            parser value
 
-                Just [] ->
-                    Ok default
+        Just [] ->
+            Ok default
 
-                Just (_ :: _ :: _) ->
-                    ResultME.error ("Multiple values for property: " ++ key)
+        Just (_ :: _ :: _) ->
+            ResultME.error ("Multiple values for property: " ++ key)
 
-                Nothing ->
-                    Ok default
+        Nothing ->
+            Ok default
 
 
 manyItems : String -> (List String -> ResultME String a) -> Section (a -> b) -> Section b
 manyItems key parser i =
-    withItem key i <|
-        \v ->
-            v
-                |> Maybe.withDefault []
-                |> parser
+    withItem key i <| \v ->
+    v
+        |> Maybe.withDefault []
+        |> parser
 
 
 maybeItem : String -> (String -> ResultME String a) -> Section (Maybe a -> b) -> Section b

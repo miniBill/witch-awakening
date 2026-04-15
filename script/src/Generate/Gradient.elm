@@ -36,7 +36,7 @@ gradient { path, content } =
                         let
                             name : String
                             name =
-                                String.dropRight (String.length suffix) (Path.toString path)
+                                String.dropRight (String.length suffix) (Path.filename path)
                         in
                         expr
                             |> Elm.declaration (name ++ "Gradient")
