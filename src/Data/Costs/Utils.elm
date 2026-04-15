@@ -1,4 +1,4 @@
-module Data.Costs.Utils exposing (Requisite(..), Requisites(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequirements, find, hasMagicAtRank, requisitesParser, slotUnsupported)
+module Data.Costs.Utils exposing (Requisite(..), Requisites(..), affinityDiscountIf, applyClassBonusIf, capWithWarning, checkRequisites, find, hasMagicAtRank, requisitesParser, slotUnsupported)
 
 import Data.Affinity exposing (InAffinity(..))
 import Data.Costs.Monad as Monad exposing (Monad)
@@ -133,7 +133,7 @@ requisiteParser =
         ]
 
 
-checkRequirements :
+checkRequisites :
     { a | requires : Maybe String }
     -> String
     ->
@@ -145,7 +145,7 @@ checkRequirements :
         }
     -> c
     -> Monad c
-checkRequirements details nameString model res =
+checkRequisites details nameString model res =
     case details.requires of
         Nothing ->
             Monad.succeed res

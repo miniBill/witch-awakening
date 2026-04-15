@@ -208,7 +208,7 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                     viewContent mainRace isSelected relics races typePerks relic color
 
                 Just req ->
-                    View.viewRequirements IdKindRelic req :: viewContent mainRace isSelected relics races typePerks relic color
+                    View.viewRequisites IdKindRelic req :: viewContent mainRace isSelected relics races typePerks relic color
         , onPress = msg
         }
 

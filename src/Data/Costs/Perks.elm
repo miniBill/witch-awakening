@@ -150,7 +150,7 @@ perkValue model ranked =
                                     False
                         }
                 in
-                Utils.checkRequirements perk (View.Perk.perkToShortString ranked.name) model res
+                Utils.checkRequisites perk (View.Perk.perkToShortString ranked.name) model res
             )
 
 

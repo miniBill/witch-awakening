@@ -32,6 +32,6 @@ relicValue ({ class } as model) details =
                 -details.cost
                     |> Utils.applyClassBonusIf isClass
                     |> Points.fromRewardPoints
-                    |> Utils.checkRequirements relic (Relic.toString details.name) model
+                    |> Utils.checkRequisites relic (Relic.toString details.name) model
             )
         |> Monad.withPointsInfo IdKindRelic (View.Relic.relicToShortString details.name)

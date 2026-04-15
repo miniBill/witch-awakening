@@ -377,7 +377,7 @@ magicValue model affinities magicDetails =
                             Nothing ->
                                 -- If you get it free from your race it usually
                                 -- doesn't require the normal prerequisites
-                                Utils.checkRequirements magicDetails name model
+                                Utils.checkRequisites magicDetails name model
 
                             Just _ ->
                                 Monad.succeed

@@ -247,7 +247,7 @@ questBox display selected number quest =
                             Element.none
 
                         Just req ->
-                            View.viewRequirements IdKindQuest req
+                            View.viewRequisites IdKindQuest req
                     , Theme.blocks
                         [ Element.htmlAttribute (Html.Attributes.class "compact")
                         , spacing 4

@@ -188,7 +188,7 @@ totalCompanionValue model companions =
                 case Dict.get nameString forFree of
                     Just reason ->
                         Points.zero
-                            |> Utils.checkRequirements details nameString model
+                            |> Utils.checkRequisites details nameString model
                             |> Monad.withInfo
                                 { label = nameString
                                 , kind = IdKindCompanion
@@ -200,7 +200,7 @@ totalCompanionValue model companions =
                         case cost of
                             Just v ->
                                 Points.fromRewardPoints -v
-                                    |> Utils.checkRequirements details nameString model
+                                    |> Utils.checkRequisites details nameString model
                                     |> Monad.withPointsInfo IdKindCompanion nameString
 
                             Nothing ->

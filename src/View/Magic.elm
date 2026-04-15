@@ -374,7 +374,7 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
                             Element.none
 
                         Just req ->
-                            View.viewRequirements IdKindMagic req
+                            View.viewRequisites IdKindMagic req
                     )
                         :: Theme.blocks [] IdKindMagic description
                         :: List.indexedMap

@@ -96,7 +96,7 @@ questValue model named =
                     base : Monad Points
                     base =
                         Points.fromRewardPoints quest.reward
-                            |> Utils.checkRequirements quest (Quest.toString named) model
+                            |> Utils.checkRequisites quest (Quest.toString named) model
                             |> Monad.withPointsInfo IdKindQuest (Quest.toString named)
                 in
                 if named == QuestDomesticated && List.member QuestHouseFire model.quests then
