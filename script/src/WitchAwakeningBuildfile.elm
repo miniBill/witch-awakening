@@ -61,20 +61,27 @@ type alias Inputs =
 
 getInputs : { a | inputDirectory : Path } -> BackendTask FatalError Inputs
 getInputs config =
-    Glob.fromStringWithOptions
-        (let
-            defaultOptions : Glob.Options
-            defaultOptions =
-                Glob.defaultOptions
-         in
-         { defaultOptions | include = Glob.OnlyFiles }
-        )
-        (Path.toString config.inputDirectory ++ "/**")
+    let
+        glob : String -> BackendTask error (List String)
+        glob path =
+            Glob.fromStringWithOptions
+                (let
+                    defaultOptions : Glob.Options
+                    defaultOptions =
+                        Glob.defaultOptions
+                 in
+                 { defaultOptions | include = Glob.OnlyFiles }
+                )
+                path
+    in
+    BackendTask.map2 Tuple.pair
+        (glob (Path.toString config.inputDirectory ++ "/**"))
+        (glob "../DLCs/**")
         |> BackendTask.andThen
-            (\found ->
+            (\( found1, found2 ) ->
                 let
                     ( gradients, notGradients ) =
-                        found
+                        (found1 ++ found2)
                             |> List.sort
                             |> List.partition (String.endsWith Generate.Gradient.suffix)
                 in
