@@ -364,6 +364,17 @@ Effective at trapping teleporters.
 If used for Harmony magic or Fusion magic with magics that produce light, the result is further empowered to be thrice as potent. If you have [Portals], any mirror surface you created can behave as a portal to any other within your Gateway range based on rank. If you have [Crystallize], your [Earthmoving] can create and use crystals, which share the function as described for mirrors.
 
 
+## Perk: Augmented Poisoner
+- Element: Nature
+- Class: Warlock
+- Requires: Poisoner
+- Cost: 12
+
+Acquire a 6th sense for poisonous materials and a passive “Appraise” effect identifying how materials may be used for poison, if at all. Using your poison control you can casually and perfectly extract all poisonous compounds from a natural material like a mushroom.
+
+If you have a poison handy, you may consume it with your mana to charge any magical effect you next produce with that poison. Such as if you Hex or Curse someone, it could also convey the poison, or if you used [Naturalism] to create or manipulate a plant, that plant can become poisonous with that same poison, which can be used to get more poison out of it than you put in. Your use of [Naturalism] in general may keep a record of all poisons used. 
+
+
 ## Perk: Augmented Witchflame
 - Element: Fire
 - Class: Sorceress
