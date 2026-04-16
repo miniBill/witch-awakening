@@ -59,7 +59,7 @@ viewFaction hideDLC display factions factionPerks =
                     ]
             , Element.row
                 [ width fill
-                , Background.image Image.factionHumansIntro1.src
+                , Theme.backgroundImage Image.factionHumansIntro1
                 , width fill
                 ]
                 [ el [ width fill, Element.paddingEach { left = 32, bottom = 64, top = 200, right = 32 } ] <|
@@ -253,11 +253,11 @@ introRow :
 introRow display { name, dlc, motto, images } =
     let
         img : Image -> Element msg
-        img { src } =
+        img src =
             el
                 [ width <| Element.minimum 100 fill
                 , height <| Element.minimum 300 fill
-                , Background.image ("public/" ++ src)
+                , Theme.backgroundImage src
                 ]
                 Element.none
     in

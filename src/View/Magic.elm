@@ -231,10 +231,7 @@ costTable =
                         , Html.Attributes.colspan 2
                         , textAlign "center"
                         ]
-                        [ Html.img
-                            [ Html.Attributes.src (Types.slotToImage slot).src ]
-                            []
-                        ]
+                        [ Theme.img [] (Types.slotToImage slot) ]
             in
             Html.tr
                 [ padding
@@ -313,7 +310,7 @@ magicImage { name, faction } =
     el
         [ height <| Element.minimum 280 fill
         , width <| Element.minimum 280 <| Element.maximum 320 fill
-        , Background.image (Types.magicToImage name).src
+        , Theme.backgroundImage (Types.magicToImage name)
         , Element.inFront <|
             case faction of
                 Nothing ->

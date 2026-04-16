@@ -414,7 +414,7 @@ innerView model =
     Theme.column
         [ width fill
         , Font.color <| rgb 1 1 1
-        , Theme.style "background" ("url(" ++ Image.pattern.src ++ ")")
+        , Theme.style "background" (Theme.toUrlFunction Image.pattern)
         ]
         [ Intro.viewTitle allCompact
         , if allCompact then
@@ -424,7 +424,7 @@ innerView model =
             Intro.viewIntro
         , Theme.column
             [ width fill
-            , Theme.style "border-image-source" ("url(" ++ Image.border.src ++ ")")
+            , Theme.style "border-image-source" (Theme.toUrlFunction Image.border)
             , Theme.style "border-image-slice" "60 30 0"
             , Theme.style "border-image-width" "60px 30px 0"
             , Theme.style "border-image-repeat" "space round"

@@ -147,7 +147,7 @@ viewMagic name x y =
         , TypedSvg.Attributes.InPx.y y
         , TypedSvg.Attributes.InPx.width 1
         , TypedSvg.Attributes.InPx.height 1
-        , TypedSvg.Attributes.xlinkHref (Types.magicToImage name).src
+        , TypedSvg.Attributes.xlinkHref ("public/" ++ (Types.magicToImage name).src)
         , TypedSvg.Attributes.preserveAspectRatio (Align ScaleMid ScaleMid) Slice
         ]
         []

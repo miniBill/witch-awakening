@@ -1,4 +1,4 @@
-module Theme exposing (Font(..), backgroundColor, blocks, borderColor, borderGlow, button, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewGenericBadge, viewSize, wrappedRow)
+module Theme exposing (Font(..), backgroundColor, backgroundImage, blocks, borderColor, borderGlow, button, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, img, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, toUrlFunction, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewGenericBadge, viewSize, wrappedRow)
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -6,6 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Fonts
 import Generated.Affinity as Affinity
 import Generated.Class as Class
 import Generated.Companion as Companion
@@ -72,18 +73,18 @@ fontToAttributes : Font -> List (Attribute msg)
 fontToAttributes font =
     case font of
         CaptureIt ->
-            [ Font.family [ Font.typeface "Capture It" ]
+            [ Element.htmlAttribute Fonts.capture_it
             , Element.htmlAttribute (Html.Attributes.style "text-transform" "uppercase")
             ]
 
         CelticHand ->
-            [ Font.family [ Font.typeface "Celtic Hand" ] ]
+            [ Element.htmlAttribute Fonts.celticHand ]
 
         BebasNeue ->
-            [ Font.family [ Font.typeface "Bebas Neue" ] ]
+            [ Element.htmlAttribute Fonts.bebas_Neue ]
 
         Morpheus ->
-            [ Font.family [ Font.typeface "Morpheus" ] ]
+            [ Element.htmlAttribute Fonts.morpheus ]
 
         NoFont ->
             []
@@ -353,10 +354,7 @@ viewPiece expandBadges piece =
             ]
 
         Slot slot ->
-            [ Html.img
-                [ Html.Attributes.src (Types.slotToImage slot).src ]
-                []
-            ]
+            [ img [] (Types.slotToImage slot) ]
 
         Warning ->
             [ Html.span
@@ -383,7 +381,7 @@ viewPiece expandBadges piece =
             [ viewAffinityBadge affinity ]
 
         Class class ->
-            [ Html.img [ Html.Attributes.src (classToBadge class).src ] [] ]
+            [ img [] (classToBadge class) ]
 
         Perk perk ->
             viewGenericBadge expandBadges (Types.perkToImage perk) (Perk.toString perk)
@@ -454,8 +452,7 @@ viewGenericBadge expandBadges source title =
                 , Html.Attributes.style "height" "30px"
                 , Html.Attributes.style "border-radius" "30px"
                 , Html.Attributes.style "background-size" "cover"
-                , Html.Attributes.style "background-image"
-                    ("url(\"public/" ++ source.src ++ "\")")
+                , Html.Attributes.style "background-image" (toUrlFunction source)
                 , Html.Attributes.title cutTitle
                 ]
                 []
@@ -835,7 +832,7 @@ card attrs config =
                 content =
                     [ el
                         (Border.rounded cardRoundness
-                            :: Background.image ("public/" ++ config.image.src)
+                            :: backgroundImage config.image
                             :: imageSizeAttrs
                             ++ List.map Element.inFront config.inFront
                             ++ config.imageAttrs
@@ -932,8 +929,8 @@ classToBadge class =
 
 
 topBackground : Image -> List (Element.Attribute msg)
-topBackground { src } =
-    [ style "background-image" <| "url(\"public/" ++ src ++ "\")"
+topBackground img_ =
+    [ style "background-image" <| toUrlFunction img_
     , style "background-repeat" "no-repeat"
     , style "background-position" "top"
     , style "background-size" "100%"
@@ -972,9 +969,8 @@ viewClasses w classes =
                         to =
                             String.fromInt (sector * (i + 1))
                     in
-                    Html.img
-                        [ Html.Attributes.src (classToBadge class).src
-                        , Html.Attributes.style "mask-image"
+                    img
+                        [ Html.Attributes.style "mask-image"
                             ("conic-gradient("
                                 ++ String.join ", "
                                     [ "transparent " ++ from ++ "deg"
@@ -986,7 +982,7 @@ viewClasses w classes =
                             )
                         , Html.Attributes.style "width" (String.fromInt w ++ "px")
                         ]
-                        []
+                        (classToBadge class)
                         |> Element.html
                         |> Element.inFront
             in
@@ -1048,3 +1044,18 @@ viewSize gradient size =
     Size.toString size
         |> String.replace "Medium" "Med"
         |> gradientText Morpheus [ Font.size 20 ] 4 gradient
+
+
+toUrlFunction : Image -> String
+toUrlFunction { src } =
+    "url(\"public/" ++ src ++ "\")"
+
+
+backgroundImage : Image -> Element.Attribute msg
+backgroundImage { src } =
+    Background.image ("public/" ++ src)
+
+
+img : List (Html.Attribute msg) -> Image -> Html msg
+img attrs { src } =
+    Html.img (Html.Attributes.src ("public/" ++ src) :: attrs) []

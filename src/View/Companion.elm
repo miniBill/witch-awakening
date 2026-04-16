@@ -329,8 +329,7 @@ image { name, races, hasPerk, cost } =
                 , topRight = 0
                 , bottomRight = 0
                 }
-            :: Background.image
-                (Types.companionToImage name).src
+            :: Theme.backgroundImage (Types.companionToImage name)
             :: List.map Element.inFront inFront
         )
         Element.none

@@ -33,7 +33,7 @@ viewTypePerks hideDLC witchRaces display typePerks =
                     |> List.filterMap (typePerkBox witchRaces display typePerks)
         in
         View.collapsible
-            [ Theme.style "background-image" <| "url(\"" ++ Image.typePerkBackground.src ++ "\"), url(\"" ++ Image.typePerkBottomBackground.src ++ "\")"
+            [ Theme.style "background-image" <| Theme.toUrlFunction Image.typePerkBackground ++ ", " ++ Theme.toUrlFunction Image.typePerkBottomBackground
             , Theme.style "background-repeat" "no-repeat, no-repeat"
             , Theme.style "background-position" "top, bottom"
             , Theme.style "background-size" "100%, 100%"
