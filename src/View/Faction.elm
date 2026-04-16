@@ -257,7 +257,7 @@ introRow display { name, dlc, motto, images } =
             el
                 [ width <| Element.minimum 100 fill
                 , height <| Element.minimum 300 fill
-                , Background.image src
+                , Background.image ("public/" ++ src)
                 ]
                 Element.none
     in

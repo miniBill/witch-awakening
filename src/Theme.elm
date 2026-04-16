@@ -50,7 +50,7 @@ rounded =
 image : List (Attribute msg) -> Image -> Element msg
 image attrs { src } =
     Element.image attrs
-        { src = src
+        { src = "public/" ++ src
         , description = ""
         }
 
@@ -455,7 +455,7 @@ viewGenericBadge expandBadges source title =
                 , Html.Attributes.style "border-radius" "30px"
                 , Html.Attributes.style "background-size" "cover"
                 , Html.Attributes.style "background-image"
-                    ("url(\"" ++ source.src ++ "\")")
+                    ("url(\"public/" ++ source.src ++ "\")")
                 , Html.Attributes.title cutTitle
                 ]
                 []
@@ -835,7 +835,7 @@ card attrs config =
                 content =
                     [ el
                         (Border.rounded cardRoundness
-                            :: Background.image config.image.src
+                            :: Background.image ("public/" ++ config.image.src)
                             :: imageSizeAttrs
                             ++ List.map Element.inFront config.inFront
                             ++ config.imageAttrs
@@ -933,7 +933,7 @@ classToBadge class =
 
 topBackground : Image -> List (Element.Attribute msg)
 topBackground { src } =
-    [ style "background-image" <| "url(\"" ++ src ++ "\")"
+    [ style "background-image" <| "url(\"public/" ++ src ++ "\")"
     , style "background-repeat" "no-repeat"
     , style "background-position" "top"
     , style "background-size" "100%"
