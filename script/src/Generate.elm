@@ -1,11 +1,10 @@
-module Generate exposing (dlcToFiles, init)
+module Generate exposing (dlcToFiles)
 
 {-| -}
 
-import Dict
 import Elm
 import Elm.Declare
-import Gen.CodeGen.Generate as Generate exposing (Directory)
+import Gen.CodeGen.Generate as Generate
 import Generate.Affinity
 import Generate.Attribution exposing (DLCAttribution)
 import Generate.Class
@@ -14,7 +13,6 @@ import Generate.Complication
 import Generate.ComplicationCategory
 import Generate.Faction
 import Generate.GameMode
-import Generate.Gradient
 import Generate.Image exposing (ImageModule)
 import Generate.Magic
 import Generate.Perk
@@ -25,161 +23,8 @@ import Generate.Size
 import Generate.Slot
 import Generate.TypePerk
 import Generate.Types
-import Json.Decode exposing (Decoder, Value)
-import List.Nonempty as Nonempty
 import Parsers
-import Path
 import ResultME exposing (ResultME)
-import Triple.Extra
-
-
-init : Value -> ( (), Cmd () )
-init flags =
-    case Json.Decode.decodeValue directoryDecoder flags of
-        Ok input ->
-            ( ()
-            , case toFiles input of
-                Ok result ->
-                    Cmd.batch <|
-                        List.map Generate.info result.info
-                            ++ [ Generate.files result.files ]
-
-                Err errors ->
-                    Generate.error (Nonempty.toList errors)
-            )
-
-        Err e ->
-            ( ()
-            , Generate.error
-                [ { title = "Error decoding flags"
-                  , description = Json.Decode.errorToString e
-                  }
-                ]
-            )
-
-
-directoryDecoder : Decoder Directory
-directoryDecoder =
-    Json.Decode.lazy
-        (\_ ->
-            Json.Decode.oneOf
-                [ Json.Decode.map Ok Json.Decode.string
-                , Json.Decode.map Err directoryDecoder
-                ]
-                |> Json.Decode.dict
-                |> Json.Decode.map
-                    (\entries ->
-                        entries
-                            |> Dict.foldl
-                                (\name entry ( dirAcc, fileAcc ) ->
-                                    case entry of
-                                        Ok file ->
-                                            ( dirAcc, ( name, file ) :: fileAcc )
-
-                                        Err directory ->
-                                            ( ( name, directory ) :: dirAcc, fileAcc )
-                                )
-                                ( [], [] )
-                            |> (\( dirAcc, fileAcc ) ->
-                                    Generate.Directory
-                                        { directories = Dict.fromList dirAcc
-                                        , files = Dict.fromList fileAcc
-                                        }
-                               )
-                    )
-        )
-
-
-toFiles :
-    Directory
-    -> ResultME Generate.Error { info : List String, files : List Elm.File }
-toFiles root =
-    let
-        go : String -> Directory -> List ( String, String, String )
-        go folder (Generate.Directory { files, directories }) =
-            List.map
-                (\( fileName, fileContent ) ->
-                    ( folder, fileName, fileContent )
-                )
-                (Dict.toList files)
-                ++ List.concatMap
-                    (\( directoryName, dir ) ->
-                        go
-                            (if String.isEmpty folder then
-                                directoryName
-
-                             else
-                                folder ++ "/" ++ directoryName
-                            )
-                            dir
-                    )
-                    (Dict.toList directories)
-    in
-    go "" root
-        |> ResultME.combineMap
-            (\( _, fileName, fileContent ) ->
-                case fileName of
-                    "sizes" ->
-                        Ok ( [ fileContent ], [], [] )
-
-                    _ ->
-                        if String.endsWith Generate.Gradient.suffix fileName then
-                            Ok
-                                ( []
-                                , [ { path = Path.path fileName
-                                    , content = fileContent
-                                    }
-                                  ]
-                                , []
-                                )
-
-                        else if String.endsWith ".md" fileName then
-                            Ok
-                                ( []
-                                , []
-                                , [ { path = Path.path fileName
-                                    , content = fileContent
-                                    }
-                                  ]
-                                )
-
-                        else
-                            ResultME.error
-                                { title = "Unexpected file"
-                                , description = "File " ++ fileName ++ " unexpected, don’t know how to handle it"
-                                }
-            )
-        |> Result.andThen
-            (\list ->
-                List.concatMap Triple.Extra.first list
-                    |> Generate.Image.file
-                    |> Result.andThen
-                        (\image ->
-                            ResultME.map2
-                                (\gradientsFile dlcFiles ->
-                                    { info = []
-                                    , files = gradientsFile :: Elm.Declare.toFile image :: dlcFiles
-                                    }
-                                )
-                                (List.concatMap Triple.Extra.second list
-                                    |> Generate.Gradient.gradients
-                                    |> Result.mapError
-                                        (\description ->
-                                            Nonempty.singleton
-                                                { title = "Error generating gradients"
-                                                , description =
-                                                    description
-                                                        |> Nonempty.toList
-                                                        |> String.join "\n"
-                                                }
-                                        )
-                                )
-                                (List.concatMap Triple.Extra.third list
-                                    |> Parsers.parseFiles
-                                    |> ResultME.andThen (dlcToFiles image.call)
-                                )
-                        )
-            )
 
 
 dlcToFiles : ImageModule -> List Parsers.DLC -> ResultME Generate.Error (List Elm.File)

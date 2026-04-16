@@ -18,6 +18,7 @@ import Elm.Let
 import Elm.Op
 import Elm.Op.Extra
 import FatalError exposing (FatalError)
+import Gen.CodeGen.Generate
 import Gen.Html
 import Gen.Html.Attributes
 import Gen.Html.Picture
@@ -191,20 +192,8 @@ buildImages config inputs =
                 |> BuildTask.combineInto
                 |> BuildTask.withPrefix ("[" ++ String.fromInt inputSize ++ "/" ++ String.fromInt inputSize ++ "]")
     in
-    BuildTask.map4
-        (\fontsElm imageSizes public ( imagesElm, dlcs ) ->
-            { generated = [ imagesElm.file, fontsElm ]
-            , other =
-                [ { filename = Path.path "image-sizes", hash = imageSizes }
-                , { filename = Path.path "public", hash = public }
-                ]
-                    ++ dlcs
-            }
-        )
-        (Elm.codegen (fontsElmFile fontFiles))
-        (imagesSizesFile imageFiles)
-        publicFolder
-        (BuildTask.andThen
+    imagesElmFile processedFiles
+        |> BuildTask.andThen
             (\imagesElm ->
                 let
                     generateTask : BuildTask (List Elm.File)
@@ -225,8 +214,19 @@ buildImages config inputs =
                 Do.all Elm.codegen generated <| \dlcs ->
                 BuildTask.succeed ( imagesElm, dlcs )
             )
-            (imagesElmFile processedFiles)
-        )
+        |> BuildTask.map4
+            (\fontsElm imageSizes public ( imagesElm, dlcs ) ->
+                { generated = [ imagesElm.file, fontsElm ]
+                , other =
+                    [ { filename = Path.path "image-sizes", hash = imageSizes }
+                    , { filename = Path.path "public", hash = public }
+                    ]
+                        ++ dlcs
+                }
+            )
+            (Elm.codegen (fontsElmFile fontFiles))
+            (imagesSizesFile imageFiles)
+            publicFolder
 
 
 asImage :
@@ -342,84 +342,73 @@ imagesElmFile :
             , file : { filename : Path, hash : FileOrDirectory }
             }
 imagesElmFile list =
-    list
-        |> List.filterMap
-            (\processedFile ->
-                case processedFile of
-                    ProcessedImage { original } ->
-                        Just
-                            { svg = False
-                            , filename = original.filename
-                            , hash = original.hash
-                            , width = original.width
-                            , height = original.height
-                            }
-
-                    ProcessedSvg original ->
-                        Just
-                            { svg = True
-                            , filename = original.filename
-                            , hash = original.hash
-                            , width = original.width
-                            , height = original.height
-                            }
-
-                    ProcessedCss _ ->
-                        Nothing
-
-                    ProcessedFont _ ->
-                        Nothing
-
-                    ProcessedDLC _ ->
-                        Nothing
-            )
-        |> Unsafe.named "imagesElmFile"
-            encodeProcessedFiles
-            (\processedFiles ->
-                let
-                    file : Elm.File
-                    file =
-                        processedFiles
-                            |> List.map
-                                (\processedFile ->
-                                    if processedFile.svg then
-                                        processedSvgToDeclaration processedFile
-
-                                    else
-                                        processedImageToDeclaration processedFile
-                                )
-                            |> (::) Buildfile.standardFormats.declaration
-                            |> (::) getSizesDeclaration.declaration
-                            |> (::) toSources.declaration
-                            |> (::) (toPicture.declaration |> Elm.expose)
-                            |> Elm.file Generate.Image.moduleName
-                in
-                Do.writeFile file.contents <| \hash ->
-                Elm.format hash
-            )
-        |> BuildTask.map
-            (\hash ->
-                let
-                    annotation : Elm.Annotation.Annotation
-                    annotation =
-                        Gen.Html.annotation_.html (Elm.Annotation.var "msg")
-
-                    module_ : Generate.Image.ImageModule
-                    module_ =
-                        { image = annotation
-                        , valueFrom =
-                            \name ->
-                                Elm.value
-                                    { importFrom = Generate.Image.moduleName
-                                    , name = name
-                                    , annotation = Just annotation
-                                    }
+    let
+        asImage_ :
+            ProcessedFile
+            ->
+                Maybe
+                    { svg : Bool
+                    , filename : Path
+                    , hash : FileOrDirectory
+                    , width : Int
+                    , height : Int
+                    }
+        asImage_ processedFile =
+            case processedFile of
+                ProcessedImage { original } ->
+                    Just
+                        { svg = False
+                        , filename = original.filename
+                        , hash = original.hash
+                        , width = original.width
+                        , height = original.height
                         }
-                in
-                { module_ = module_
-                , file = { filename = Path.path "generated/Generated/Image.elm", hash = hash }
-                }
-            )
+
+                ProcessedSvg original ->
+                    Just
+                        { svg = True
+                        , filename = original.filename
+                        , hash = original.hash
+                        , width = original.width
+                        , height = original.height
+                        }
+
+                ProcessedCss _ ->
+                    Nothing
+
+                ProcessedFont _ ->
+                    Nothing
+
+                ProcessedDLC _ ->
+                    Nothing
+
+        imagesList : List { svg : Bool, filename : Path, hash : FileOrDirectory, width : Int, height : Int }
+        imagesList =
+            List.filterMap asImage_ list
+
+        errorsToString : List.Nonempty.Nonempty Gen.CodeGen.Generate.Error -> String
+        errorsToString errors =
+            errors
+                |> List.Nonempty.toList
+                |> List.map .description
+                |> String.join ", "
+    in
+    BuildTask.do
+        (Generate.Image.file imagesList
+            |> Result.mapError errorsToString
+            |> BuildTask.fromResult
+        )
+    <| \module_ ->
+    BuildTask.do (Elm.codegen (Elm.Declare.toFile module_)) <| \file ->
+    let
+        annotation : Elm.Annotation.Annotation
+        annotation =
+            Elm.Annotation.named Generate.Image.moduleName "Image"
+    in
+    { module_ = module_.call
+    , file = file
+    }
+        |> BuildTask.succeed
 
 
 encodeProcessedFiles :

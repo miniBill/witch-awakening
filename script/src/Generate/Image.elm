@@ -1,5 +1,6 @@
 module Generate.Image exposing (ImageModule, file, moduleName, valueFrom)
 
+import BuildTask exposing (FileOrDirectory)
 import Dict
 import Dict.Extra
 import Elm
@@ -7,7 +8,9 @@ import Elm.Annotation
 import Elm.Declare
 import Elm.Declare.Extra
 import Gen.CodeGen.Generate as Generate
+import Generate.Utils exposing (yassify)
 import Parser exposing ((|.), (|=), Parser)
+import Path exposing (Path)
 import ResultME exposing (ResultME)
 import String.Extra
 import Triple.Extra
@@ -24,37 +27,23 @@ moduleName =
     [ "Generated", "Image" ]
 
 
-file : List String -> ResultME Generate.Error (Elm.Declare.Module ImageModule)
+file : List { svg : Bool, width : Int, height : Int, filename : Path, hash : FileOrDirectory } -> ResultME Generate.Error (Elm.Declare.Module ImageModule)
 file sizesList =
     sizesList
-        |> List.concatMap String.lines
-        |> List.filter (\line -> not (String.isEmpty line))
-        |> ResultME.combineMap
-            (\line ->
-                case String.split " " line of
-                    filePath :: "PNG" :: size :: _ ->
-                        fromLine filePath size
-
-                    filePath :: "WEBP" :: size :: _ ->
-                        fromLine filePath size
-
-                    _ ->
-                        ResultME.error
-                            { title = "Wrong line"
-                            , description = "Wrong line: " ++ line
-                            }
-            )
+        |> ResultME.combineMap fileToDeclaration
         |> Result.map
             (\declarations ->
                 Elm.Declare.module_ moduleName
-                    (ImageModule
-                        (\name ->
-                            Elm.value
-                                { name = name
-                                , importFrom = moduleName
-                                , annotation = Just (Elm.Annotation.named moduleName "Image")
-                                }
-                        )
+                    (\image ->
+                        { valueFrom =
+                            \name ->
+                                Elm.value
+                                    { name = name
+                                    , importFrom = moduleName
+                                    , annotation = Just image
+                                    }
+                        , image = image
+                        }
                     )
                     |> Elm.Declare.with imageType
                     |> Elm.Declare.withDeclarations (addGroups declarations)
@@ -69,65 +58,48 @@ type alias ImageData =
     }
 
 
-fromLine : String -> String -> ResultME Generate.Error ImageData
-fromLine filePath size =
+fileToDeclaration : { svg : Bool, width : Int, height : Int, filename : Path, hash : FileOrDirectory } -> ResultME Generate.Error ImageData
+fileToDeclaration ({ filename, width, height } as data) =
     let
-        fileName : Maybe String
-        fileName =
-            filePath
-                |> String.split "/"
-                |> List.drop 1
-                |> List.take 2
-                |> String.concat
-                |> String.split "."
-                |> List.head
+        name : String
+        name =
+            Path.toString (Path.directory filename)
+                ++ "/"
+                ++ Path.filenameWithoutExtension filename
+                |> yassify
+
+        declaration : Elm.Declaration
+        declaration =
+            [ ( "width", Elm.int width )
+            , ( "height", Elm.int height )
+            , ( "src", Elm.string (Path.toString filename) )
+            ]
+                |> Elm.record
+                |> Elm.withType imageType.annotation
+                |> Elm.declaration name
+
+        section : String
+        section =
+            name
+                |> String.Extra.humanize
+                |> String.split " "
+                |> List.take 1
+                |> String.join " "
     in
-    case
-        ( fileName
-        , List.map String.toInt <| String.split "x" size
-        )
-    of
-        ( Just name, [ Just width, Just height ] ) ->
-            let
-                declaration : Elm.Declaration
-                declaration =
-                    [ ( "width", Elm.int width )
-                    , ( "height", Elm.int height )
-                    , ( "src", Elm.string filePath )
-                    ]
-                        |> Elm.record
-                        |> Elm.withType (Elm.Annotation.named [] "Image")
-                        |> Elm.declaration name
-
-                section : String
-                section =
-                    name
-                        |> String.Extra.humanize
-                        |> String.split " "
-                        |> List.take 1
-                        |> String.join " "
-            in
-            { name = name
-            , section = section
-            , declaration = declaration
-            , group =
-                Parser.run imageGroupParser name
-                    |> Result.toMaybe
-                    |> Maybe.map
-                        (\( groupName, indexInGroup ) ->
-                            { name = groupName
-                            , index = indexInGroup
-                            }
-                        )
-            }
-                |> Ok
-
-        _ ->
-            ResultME.error
-                { title = "Unexpected size"
-                , description =
-                    "Unexpected size: " ++ size
-                }
+    { name = name
+    , section = section
+    , declaration = declaration
+    , group =
+        Parser.run imageGroupParser name
+            |> Result.toMaybe
+            |> Maybe.map
+                (\( groupName, indexInGroup ) ->
+                    { name = groupName
+                    , index = indexInGroup
+                    }
+                )
+    }
+        |> Ok
 
 
 addGroups : List ImageData -> List Elm.Declaration

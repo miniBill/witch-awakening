@@ -1,16 +1,9 @@
-module Generate.Gradient exposing (gradient, gradients, suffix)
+module Generate.Gradient exposing (gradient, suffix)
 
 import Elm
 import List.Extra
 import Path exposing (Path)
 import ResultME exposing (ResultME)
-
-
-gradients : List { path : Path, content : String } -> ResultME String Elm.File
-gradients files =
-    files
-        |> ResultME.combineMap gradient
-        |> Result.map (Elm.file [ "Generated", "Gradient" ])
 
 
 gradient : { path : Path, content : String } -> ResultME String Elm.Declaration
