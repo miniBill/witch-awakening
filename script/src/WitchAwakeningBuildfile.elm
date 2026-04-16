@@ -178,6 +178,7 @@ buildImages config inputs =
         imageFiles =
             List.filterMap asImage processedFiles
 
+        dlcFiles : List DLC
         dlcFiles =
             List.filterMap asDLC processedFiles
 
