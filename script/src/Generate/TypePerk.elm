@@ -63,14 +63,15 @@ all types dlcRaces =
         |> List.sortBy (\( dlc, _ ) -> Maybe.withDefault "" dlc)
         |> List.filterMap
             (\( _, race ) ->
-                if race.perk == Nothing then
-                    Nothing
+                case race.perk of
+                    Nothing ->
+                        Nothing
 
-                else
-                    yassify race.name
-                        |> String.Extra.decapitalize
-                        |> Elm.val
-                        |> Just
+                    Just _ ->
+                        yassify race.name
+                            |> String.Extra.decapitalize
+                            |> Elm.val
+                            |> Just
             )
         |> Elm.list
         |> Gen.List.call_.sortBy
@@ -165,7 +166,7 @@ perkToDeclaration types dlcName race perk =
                             [ _ ] ->
                                 Elm.apply (types.race.value race.name) [ types.affinity.value "All" ]
 
-                            _ ->
+                            _ :: _ :: _ ->
                                 types.race.value race.name
                     , name = Elm.maybe (Maybe.map Elm.string perk.name)
                     , gain = gain

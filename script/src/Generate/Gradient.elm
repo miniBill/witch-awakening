@@ -1,7 +1,6 @@
 module Generate.Gradient exposing (gradient, gradients, suffix)
 
 import Elm
-import Gen.CodeGen.Generate as Generate
 import List.Extra
 import Path exposing (Path)
 import ResultME exposing (ResultME)

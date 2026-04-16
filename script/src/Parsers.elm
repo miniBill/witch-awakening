@@ -13,7 +13,7 @@ import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedSt
 import Parser.Error exposing (DeadEnd)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
 import Path exposing (Path)
-import Regex
+import Regex exposing (Regex)
 import ResultME exposing (ResultME)
 import Set exposing (Set)
 
@@ -66,7 +66,7 @@ combineDLCs dlcList =
                 [] ->
                     Nothing
 
-                filtered ->
+                (_ :: _) as filtered ->
                     Just (String.join ", " filtered)
     in
     dlcList
@@ -570,7 +570,7 @@ type alias Faction =
 
 faction : Parser Faction
 faction =
-    Parser.succeed
+    succeed
         (\head description location relations factionPerk ->
             { name = head.name
             , motto = head.motto
@@ -780,7 +780,7 @@ quest =
            )
         |= paragraphs True
         |= many
-            (Parser.succeed identity
+            (succeed identity
                 |. sectionHeader "###" "Sidebar"
                 |= paragraphs True
             )
@@ -881,8 +881,8 @@ many inner =
 paragraphs : Bool -> Parser String
 paragraphs acceptList =
     many (paragraph acceptList)
-        |> Parser.getChompedString
-        |> Parser.map
+        |> getChompedString
+        |> map
             (\chomped ->
                 chomped
                     |> String.trim
@@ -890,7 +890,7 @@ paragraphs acceptList =
             )
 
 
-commentRegex : Regex.Regex
+commentRegex : Regex
 commentRegex =
     Regex.fromString "<!--.*-->"
         |> Maybe.withDefault Regex.never
@@ -900,7 +900,7 @@ paragraph : Bool -> Parser ()
 paragraph acceptList =
     Parser.chompIf (\c -> (acceptList || c /= '-') && c /= '#')
         |. chompUntilEndOrAfter "\n"
-        |. Parser.spaces
+        |. spaces
 
 
 boolParser : String -> ResultME String Bool

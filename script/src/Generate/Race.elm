@@ -162,7 +162,7 @@ raceToDeclaration types dlcName race =
                 )
                 |> Ok
 
-        _ ->
+        _ :: _ :: _ :: _ ->
             ResultME.error
                 { title = "Error parsing races file"
                 , description = "Unexpected elements list, expected at most two"

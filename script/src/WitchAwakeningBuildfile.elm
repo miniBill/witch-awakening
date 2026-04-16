@@ -102,10 +102,6 @@ getInputs config =
             )
 
 
-type T4 a b c d
-    = T4 a b c d
-
-
 buildAction : { config | inputDirectory : Path } -> Inputs -> BuildTask FileOrDirectory
 buildAction config inputs =
     BuildTask.andThen2
@@ -115,12 +111,12 @@ buildAction config inputs =
                     ++ i.other
                 )
         )
-        (buildGradients config inputs.gradients)
+        (buildGradients inputs.gradients)
         (buildImages config inputs.images)
 
 
-buildGradients : { config | inputDirectory : Path } -> List ( Path, BuildTask FileOrDirectory ) -> BuildTask { filename : Path, hash : FileOrDirectory }
-buildGradients config inputs =
+buildGradients : List ( Path, BuildTask FileOrDirectory ) -> BuildTask { filename : Path, hash : FileOrDirectory }
+buildGradients inputs =
     Do.all
         (\( path, file ) ->
             BuildTask.do file <| \gradientPng ->
@@ -404,9 +400,11 @@ imagesElmFile list =
         |> BuildTask.map
             (\hash ->
                 let
+                    annotation : Elm.Annotation.Annotation
                     annotation =
                         Gen.Html.annotation_.html (Elm.Annotation.var "msg")
 
+                    module_ : Generate.Image.ImageModule
                     module_ =
                         { image = annotation
                         , valueFrom =
@@ -570,12 +568,12 @@ processFile config total index ( path, copyFile ) =
             BuildTask.succeed Nothing
 
         Just "md" ->
-            if Path.filename path == "attribution.md" then
-                -- Ignore
-                BuildTask.succeed Nothing
+            case Path.filename path of
+                "attribution.md" ->
+                    BuildTask.succeed Nothing
 
-            else
-                doDlc ()
+                _ ->
+                    doDlc ()
 
         Just "css" ->
             BuildTask.do copyFile <| \hash ->

@@ -58,7 +58,7 @@ init flags =
             )
 
 
-directoryDecoder : Decoder Generate.Directory
+directoryDecoder : Decoder Directory
 directoryDecoder =
     Json.Decode.lazy
         (\_ ->
@@ -70,9 +70,8 @@ directoryDecoder =
                 |> Json.Decode.map
                     (\entries ->
                         entries
-                            |> Dict.toList
-                            |> List.foldl
-                                (\( name, entry ) ( dirAcc, fileAcc ) ->
+                            |> Dict.foldl
+                                (\name entry ( dirAcc, fileAcc ) ->
                                     case entry of
                                         Ok file ->
                                             ( dirAcc, ( name, file ) :: fileAcc )
@@ -96,7 +95,7 @@ toFiles :
     -> ResultME Generate.Error { info : List String, files : List Elm.File }
 toFiles root =
     let
-        go : String -> Generate.Directory -> List ( String, String, String )
+        go : String -> Directory -> List ( String, String, String )
         go folder (Generate.Directory { files, directories }) =
             List.map
                 (\( fileName, fileContent ) ->
@@ -118,7 +117,7 @@ toFiles root =
     in
     go "" root
         |> ResultME.combineMap
-            (\( folder, fileName, fileContent ) ->
+            (\( _, fileName, fileContent ) ->
                 case fileName of
                     "sizes" ->
                         Ok ( [ fileContent ], [], [] )

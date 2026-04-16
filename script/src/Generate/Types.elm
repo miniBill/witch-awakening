@@ -44,7 +44,7 @@ file images dlcList =
         moduleName =
             [ "Generated", "Types" ]
 
-        enums : Data.Enums
+        enums : Enums
         enums =
             Data.enums dlcList
 

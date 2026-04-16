@@ -67,12 +67,12 @@ config =
     [ Docs.ReviewAtDocs.rule
     , Derive.rule True []
     , Docs.ReviewLinksAndSections.rule
-    , EqualsCaseable.forbid EqualsCaseable.Everywhere
+    , EqualsCaseable.forbid EqualsCaseable.InIf
     , HtmlToElm.rule
     , LimitAliasedRecordSize.rule (20 |> LimitAliasedRecordSize.maxRecordSize)
     , NoBooleanCase.rule
     , NoBrokenParserFunctions.rule
-    , NoCatchAllForSpecificRemainingPatterns.rule { onlyReportCatchAllIfEquivalentToSinglePattern = False }
+    , NoCatchAllForSpecificRemainingPatterns.rule { onlyReportCatchAllIfEquivalentToSinglePattern = True }
     , NoConfusingPrefixOperator.rule
     , NoDebug.Log.rule |> Rule.ignoreErrorsForDirectories [ "tests/" ]
     , NoDebug.TodoOrToString.rule |> Rule.ignoreErrorsForDirectories [ "tests/" ]
@@ -112,7 +112,7 @@ config =
     , Validate.Regexes.rule
     , VariablesBetweenCaseOf.AccessInCases.forbid
     ]
-        |> List.map (Rule.ignoreErrorsForDirectories [ "elm-build" ])
+        |> List.map (Rule.ignoreErrorsForDirectories [ "elm-build", "codegen" ])
 
 
 pipelineConfig : List (ReviewPipelineStyles.PipelineRule ())
