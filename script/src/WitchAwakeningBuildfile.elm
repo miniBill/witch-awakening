@@ -460,7 +460,7 @@ processedFileToFileList file =
             [ extract data ]
 
         ProcessedDLC data ->
-            [ extract data ]
+            []
 
 
 processFile : { config | inputDirectory : Path } -> Int -> Int -> ( Path, BuildTask FileOrDirectory ) -> BuildTask (Maybe ProcessedFile)
