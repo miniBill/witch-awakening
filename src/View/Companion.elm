@@ -3,7 +3,6 @@ module View.Companion exposing (viewCompanions)
 import Color exposing (Color)
 import Data.Companion as Companion exposing (MaybeClass(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, centerY, column, el, fill, fillPortion, height, inFront, moveDown, moveLeft, moveRight, padding, paddingEach, px, shrink, spacing, table, text, width)
-import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Companion as Companion

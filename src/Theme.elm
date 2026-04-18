@@ -9,7 +9,6 @@ import Element.Input as Input
 import Generated.Affinity as Affinity
 import Generated.Class as Class
 import Generated.Companion as Companion
-import Generated.Fonts as Fonts
 import Generated.Gradient as Gradient
 import Generated.Image as Image exposing (Image)
 import Generated.Magic as Magic

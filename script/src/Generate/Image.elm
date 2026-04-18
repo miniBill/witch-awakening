@@ -59,7 +59,7 @@ type alias ImageData =
 
 
 fileToDeclaration : { svg : Bool, width : Int, height : Int, filename : Path, hash : FileOrDirectory } -> ResultME Generate.Error ImageData
-fileToDeclaration ({ filename, width, height } as data) =
+fileToDeclaration { filename, width, height } =
     let
         name : String
         name =

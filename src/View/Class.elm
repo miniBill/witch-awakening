@@ -1,10 +1,9 @@
 module View.Class exposing (viewClass)
 
-import Element exposing (Element, alignBottom, centerX, fill, moveDown, moveUp, spacing, width)
+import Element exposing (Element, alignBottom, centerX, fill, moveDown, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Class as Class
-import Generated.Fonts as Fonts
 import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (Class)
 import Set exposing (Set)

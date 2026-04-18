@@ -1,4 +1,4 @@
-module View.GradientText exposing (Font(..), default, fontToAttributes, html, rgbToString, span, split, text, wrapped)
+module View.GradientText exposing (Font(..), default, html, span, split, text, wrapped)
 
 import Element exposing (Attribute, Element)
 import Generated.Fonts as Fonts
@@ -80,7 +80,7 @@ text :
         }
     -> String
     -> Element msg
-text attrs ({ font, outlineSize, gradient } as config) str =
+text attrs config str =
     html [] config str
         |> Element.html
         |> Element.el attrs

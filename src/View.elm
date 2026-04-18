@@ -5,7 +5,6 @@ import Data.Costs.Utils as Utils exposing (Requisites)
 import Element exposing (Attribute, Element, centerX, centerY, el, fill, px, spacing, text, width)
 import Element.Font as Font
 import Generated.Class as Class
-import Generated.Gradient as Gradient
 import Generated.Magic as Magic
 import Generated.Perk as Perk
 import Generated.Quest as Quest
