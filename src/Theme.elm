@@ -316,7 +316,8 @@ viewPiece expandBadges piece =
             [ Size.toString size
                 |> String.replace "Medium" "Med"
                 |> GradientText.span
-                    { font = GradientText.Morpheus
+                    { font = Just GradientText.Morpheus
+                    , fontSize = Nothing
                     , outlineSize = 4
                     , gradient = Gradient.blueGradient
                     }
@@ -332,7 +333,8 @@ viewPiece expandBadges piece =
 
         RewardPoints value ->
             [ GradientText.span
-                { font = GradientText.CaptureIt
+                { font = Just GradientText.CaptureIt
+                , fontSize = Nothing
                 , outlineSize = 4
                 , gradient = Gradient.blueGradient
                 }
@@ -544,7 +546,8 @@ viewSectionTitle toMsg display kind label =
         gradient : String -> List (Element msg)
         gradient t =
             GradientText.split
-                { font = GradientText.CelticHand
+                { font = Just GradientText.CelticHand
+                , fontSize = Nothing
                 , outlineSize = 4
                 , gradient = Gradient.blueGradient
                 }
@@ -965,8 +968,9 @@ viewSize :
 viewSize gradient size =
     Size.toString size
         |> String.replace "Medium" "Med"
-        |> GradientText.text [ Font.size 20 ]
-            { font = GradientText.Morpheus
+        |> GradientText.text []
+            { font = Just GradientText.Morpheus
+            , fontSize = Just 20
             , outlineSize = 4
             , gradient = gradient
             }

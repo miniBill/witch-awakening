@@ -111,10 +111,7 @@ classBox display selected { name, dlc, color, content } =
                         , Font.size 24
                         , moveDown 8
                         ]
-                        { font = GradientText.CaptureIt
-                        , outlineSize = 4
-                        , gradient = Gradient.purpleGradient
-                        }
+                        GradientText.dlc
                         dlcName
             ]
         , content = [ Theme.blocks [] IdKindClass content ]
@@ -128,11 +125,11 @@ className name =
         Types.ClassMagician ->
             GradientText.wrapped
                 [ alignBottom
-                , Font.size 56
                 , centerX
                 , moveDown 8
                 ]
-                { font = GradientText.SFTechnodelight
+                { font = Just GradientText.SFTechnodelight
+                , fontSize = Just 56
                 , outlineSize = 4
                 , gradient = Gradient.magicianGradient
                 }
@@ -141,11 +138,11 @@ className name =
         Types.ClassSorceress ->
             GradientText.wrapped
                 [ alignBottom
-                , Font.size 56
                 , centerX
                 , moveDown 4
                 ]
-                { font = GradientText.StarDust
+                { font = Just GradientText.StarDust
+                , fontSize = Just 56
                 , outlineSize = 4
                 , gradient = Gradient.yellowGradient
                 }
@@ -154,11 +151,11 @@ className name =
         _ ->
             GradientText.wrapped
                 [ alignBottom
-                , Font.size 56
                 , centerX
                 , moveDown 4
                 ]
-                { font = GradientText.Morpheus
+                { font = Just GradientText.Morpheus
+                , fontSize = Just 56
                 , outlineSize = 4
                 , gradient = Gradient.yellowGradient
                 }

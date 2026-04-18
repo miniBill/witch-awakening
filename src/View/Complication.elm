@@ -192,7 +192,8 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                         ]
                         [ GradientText.wrapped
                             [ centerX ]
-                            { font = GradientText.CaptureIt
+                            { font = Just GradientText.CaptureIt
+                            , fontSize = Nothing
                             , outlineSize = 4
                             , gradient = gradient
                             }
@@ -228,18 +229,15 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                             ( Nothing, _ ) ->
                                 moveDown 18
                         ]
-                        { font = GradientText.CaptureIt
-                        , outlineSize = 4
-                        , gradient = Gradient.purpleGradient
-                        }
+                        GradientText.dlc
                         dlcName
             , GradientText.wrapped
                 [ alignBottom
-                , Font.size 32
                 , centerX
                 , moveUp 4
                 ]
-                { font = GradientText.CelticHand
+                { font = Just GradientText.CelticHand
+                , fontSize = Just 32
                 , outlineSize = 4
                 , gradient = gradient
                 }

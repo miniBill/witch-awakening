@@ -123,7 +123,8 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                     |> List.map costToString
                     |> String.join "/.../"
                     |> GradientText.text []
-                        { font = GradientText.CaptureIt
+                        { font = Just GradientText.CaptureIt
+                        , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.blueGradient
                         }
@@ -133,7 +134,8 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                     |> List.map costToString
                     |> String.join "/"
                     |> GradientText.text []
-                        { font = GradientText.CaptureIt
+                        { font = Just GradientText.CaptureIt
+                        , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.blueGradient
                         }
@@ -183,10 +185,7 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                             , Font.size 24
                             , moveDown 12
                             ]
-                            { font = GradientText.CaptureIt
-                            , outlineSize = 4
-                            , gradient = Gradient.purpleGradient
-                            }
+                            GradientText.dlc
                             dlcName
             , Theme.viewClasses 40 classes
                 |> el [ Element.alignBottom ]

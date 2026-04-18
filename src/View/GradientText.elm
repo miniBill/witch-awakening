@@ -1,4 +1,4 @@
-module View.GradientText exposing (Font(..), default, html, span, split, text, wrapped)
+module View.GradientText exposing (Font(..), default, dlc, html, span, split, text, wrapped)
 
 import Element exposing (Attribute, Element)
 import Generated.Fonts as Fonts
@@ -15,30 +15,35 @@ type Font
     | Morpheus
     | SFTechnodelight
     | StarDust
-    | NoFont
 
 
-default :
-    { font : Font
+type alias Config =
+    { font : Maybe Font
+    , fontSize : Maybe Int
     , outlineSize : Float
     , gradient : List ( Int, Int, Int )
     }
+
+
+default : Config
 default =
-    { font = CaptureIt
+    { font = Just CaptureIt
+    , fontSize = Nothing
     , outlineSize = 4
     , gradient = Gradient.yellowGradient
     }
 
 
-wrapped :
-    List (Attribute msg)
-    ->
-        { font : Font
-        , outlineSize : Float
-        , gradient : List ( Int, Int, Int )
-        }
-    -> String
-    -> Element msg
+dlc : Config
+dlc =
+    { font = Just CaptureIt
+    , fontSize = Just 24
+    , outlineSize = 4
+    , gradient = Gradient.purpleGradient
+    }
+
+
+wrapped : List (Attribute msg) -> Config -> String -> Element msg
 wrapped attrs config str =
     let
         combinedAttrs : List (Attribute msg)
@@ -51,13 +56,7 @@ wrapped attrs config str =
         |> Element.wrappedRow combinedAttrs
 
 
-split :
-    { font : Font
-    , outlineSize : Float
-    , gradient : List ( Int, Int, Int )
-    }
-    -> String
-    -> List (Element msg)
+split : Config -> String -> List (Element msg)
 split config str =
     str
         |> String.replace "-" "-\u{200B}"
@@ -71,41 +70,30 @@ split config str =
         |> List.Extra.intercalate [ Element.text " " ]
 
 
-text :
-    List (Attribute msg)
-    ->
-        { font : Font
-        , outlineSize : Float
-        , gradient : List ( Int, Int, Int )
-        }
-    -> String
-    -> Element msg
+text : List (Attribute msg) -> Config -> String -> Element msg
 text attrs config str =
     html [] config str
         |> Element.html
         |> Element.el attrs
 
 
-span :
-    { font : Font
-    , gradient : List ( Int, Int, Int )
-    , outlineSize : Float
-    }
-    -> String
-    -> Html msg
+span : Config -> String -> Html msg
 span config value =
-    html [ Html.Attributes.style "font-size" "20px" ] config value
+    html
+        []
+        { config
+            | fontSize =
+                case config.fontSize of
+                    Just _ ->
+                        config.fontSize
 
-
-html :
-    List (Html.Attribute msg)
-    ->
-        { font : Font
-        , gradient : List ( Int, Int, Int )
-        , outlineSize : Float
+                    Nothing ->
+                        Just 20
         }
-    -> String
-    -> Html msg
+        value
+
+
+html : List (Html.Attribute msg) -> Config -> String -> Html msg
 html attrs config str =
     Html.span
         ([ Html.Attributes.class "outlined"
@@ -116,6 +104,13 @@ html attrs config str =
             |> (\joined -> "--text-stroke: " ++ String.fromFloat config.outlineSize ++ "px #000; --background: linear-gradient(to bottom, " ++ joined ++ ")")
             |> Html.Attributes.attribute "style"
          ]
+            ++ (case config.fontSize of
+                    Nothing ->
+                        []
+
+                    Just fontSize ->
+                        [ Html.Attributes.style "font-size" (String.fromInt fontSize ++ "px") ]
+               )
             ++ fontToAttributes config.font
             ++ attrs
         )
@@ -133,30 +128,30 @@ rgbToString ( r, g, b ) =
         ++ ")"
 
 
-fontToAttributes : Font -> List (Html.Attribute msg)
+fontToAttributes : Maybe Font -> List (Html.Attribute msg)
 fontToAttributes font =
     case font of
-        CaptureIt ->
+        Just CaptureIt ->
             [ Fonts.captureIt
             , Html.Attributes.style "text-transform" "uppercase"
             ]
 
-        CelticHand ->
+        Just CelticHand ->
             [ Fonts.celticHand ]
 
-        BebasNeue ->
+        Just BebasNeue ->
             [ Fonts.bebasNeue ]
 
-        Morpheus ->
+        Just Morpheus ->
             [ Fonts.morpheus ]
 
-        SFTechnodelight ->
+        Just SFTechnodelight ->
             [ Fonts.sFTechnodelight ]
 
-        StarDust ->
+        Just StarDust ->
             [ Fonts.starDust
             , Html.Attributes.style "text-transform" "uppercase"
             ]
 
-        NoFont ->
+        Nothing ->
             []

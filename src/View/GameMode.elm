@@ -84,10 +84,6 @@ gameModeBox display selected { name, content } =
             else
                 Just name
 
-        gradient : List ( Int, Int, Int )
-        gradient =
-            Gradient.purpleGradient
-
         color : Color
         color =
             Theme.colors.gameMode
@@ -107,22 +103,22 @@ gameModeBox display selected { name, content } =
             [ GradientText.wrapped
                 [ centerX
                 , moveDown 8
-                , Font.size 28
                 ]
-                { font = GradientText.CaptureIt
+                { font = Just GradientText.CaptureIt
+                , fontSize = Just 28
                 , outlineSize = 4
-                , gradient = gradient
+                , gradient = Gradient.purpleGradient
                 }
                 "Game Mode"
             , GradientText.wrapped
                 [ alignBottom
-                , Font.size 32
                 , centerX
                 , moveUp 4
                 ]
-                { font = GradientText.CelticHand
+                { font = Just GradientText.CelticHand
+                , fontSize = Just 32
                 , outlineSize = 4
-                , gradient = gradient
+                , gradient = Gradient.purpleGradient
                 }
                 (GameMode.toString name)
             ]

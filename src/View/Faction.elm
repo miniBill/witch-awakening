@@ -218,11 +218,11 @@ viewPerk display factionPerks { name, perk, perkContent, images } =
             , inFront =
                 [ GradientText.wrapped
                     [ alignBottom
-                    , Font.size 24
                     , centerX
                     , paddingXY 8 0
                     ]
-                    { font = GradientText.CelticHand
+                    { font = Just GradientText.CelticHand
+                    , fontSize = Just 24
                     , outlineSize = 3
                     , gradient = Gradient.blueGradient
                     }
@@ -278,10 +278,7 @@ introRow display { name, dlc, motto, images } =
                             , Font.size 24
                             , moveDown 4
                             ]
-                            { font = GradientText.CaptureIt
-                            , outlineSize = 4
-                            , gradient = Gradient.purpleGradient
-                            }
+                            GradientText.dlc
                             dlcName
                 )
             ]
@@ -291,19 +288,17 @@ introRow display { name, dlc, motto, images } =
                 , img images.image3
                 , column [ width fill ]
                     [ GradientText.wrapped
-                        [ width fill
-                        , Font.size 40
-                        ]
-                        { font = GradientText.CelticHand
+                        [ width fill ]
+                        { font = Just GradientText.CelticHand
+                        , fontSize = Just 40
                         , outlineSize = 2
                         , gradient = Gradient.blueGradient
                         }
                         (Faction.toString name)
                     , GradientText.wrapped
-                        [ width fill
-                        , Font.size 24
-                        ]
-                        { font = GradientText.Morpheus
+                        [ width fill ]
+                        { font = Just GradientText.Morpheus
+                        , fontSize = Just 24
                         , outlineSize = 2
                         , gradient = Gradient.yellowGradient
                         }
@@ -315,10 +310,9 @@ introRow display { name, dlc, motto, images } =
 
     else
         GradientText.wrapped
-            [ width fill
-            , Font.size 40
-            ]
-            { font = GradientText.CelticHand
+            [ width fill ]
+            { font = Just GradientText.CelticHand
+            , fontSize = Just 40
             , outlineSize = 2
             , gradient = Gradient.blueGradient
             }

@@ -243,10 +243,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                             [ centerX
                             , Font.size 24
                             ]
-                            { font = GradientText.CaptureIt
-                            , outlineSize = 4
-                            , gradient = Gradient.purpleGradient
-                            }
+                            GradientText.dlc
                             dlcName
                 ]
             , Theme.classToBadge class
@@ -263,12 +260,12 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                     viewSlot SlotWhite
             , GradientText.wrapped
                 [ alignBottom
-                , Font.size 36
                 , centerX
                 , Font.center
                 , Element.paddingXY 32 0
                 ]
-                { font = GradientText.CelticHand
+                { font = Just GradientText.CelticHand
+                , fontSize = Just 36
                 , outlineSize = 4
                 , gradient = Gradient.blueGradient
                 }

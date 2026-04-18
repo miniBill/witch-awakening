@@ -129,10 +129,10 @@ companionSection display companions ( faction, section ) =
     in
     if display == DisplayFull then
         [ GradientText.wrapped
-            [ Font.size 48
-            , width fill
+            [ width fill
             ]
-            { font = GradientText.CelticHand
+            { font = Just GradientText.CelticHand
+            , fontSize = Just 48
             , outlineSize = 2
             , gradient = Gradient.yellowGradient
             }
@@ -293,11 +293,11 @@ image { name, races, hasPerk, cost } =
                 |> Maybe.withDefault "X"
                 |> GradientText.text
                     [ alignRight
-                    , Font.size 32
                     , moveLeft 8
                     , moveDown 4
                     ]
-                    { font = GradientText.CaptureIt
+                    { font = Just GradientText.CaptureIt
+                    , fontSize = Just 32
                     , outlineSize = 4
                     , gradient = Gradient.blueGradient
                     }
@@ -428,10 +428,10 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                     , Element.htmlAttribute (Html.Attributes.style "min-width" "0px")
                     ]
             , GradientText.wrapped
-                [ Font.size 36
-                , width fill
+                [ width fill
                 ]
-                { font = GradientText.NoFont
+                { font = Nothing
+                , fontSize = Just 36
                 , outlineSize = 4
                 , gradient = Gradient.yellowGradient
                 }
@@ -451,10 +451,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                     [ centerX
                     , Font.size 24
                     ]
-                    { font = GradientText.CaptureIt
-                    , outlineSize = 4
-                    , gradient = Gradient.purpleGradient
-                    }
+                    GradientText.dlc
                     dlcName
         , statsTable companion
         , Theme.blocks [ Font.size 14 ] IdKindCompanion quote
@@ -604,7 +601,8 @@ statColumn ranking =
                                             , centerY
                                             , Element.moveLeft 24
                                             ]
-                                            { font = GradientText.NoFont
+                                            { font = Nothing
+                                            , fontSize = Nothing
                                             , outlineSize = 2
                                             , gradient = Gradient.blueGradient
                                             }

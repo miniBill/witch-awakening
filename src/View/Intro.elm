@@ -20,7 +20,6 @@ viewTitle allCompact =
             GradientText.wrapped
                 [ Theme.centerWrap
                 , centerX
-                , Font.size 140
                 , Element.paddingEach
                     { top = Theme.rhythm * 2
                     , bottom = 0
@@ -29,7 +28,8 @@ viewTitle allCompact =
                     }
                 , Element.htmlAttribute (Html.Attributes.style "overflow" "clip")
                 ]
-                { font = GradientText.BebasNeue
+                { font = Just GradientText.BebasNeue
+                , fontSize = Just 140
                 , outlineSize = 8
                 , gradient = Gradient.titleGradient
                 }
@@ -76,28 +76,32 @@ viewTitle allCompact =
                     , Font.size 52
                     ]
                     [ GradientText.text []
-                        { font = GradientText.Morpheus
+                        { font = Just GradientText.Morpheus
+                        , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.orangeGradient
                         }
                         "Blade"
                     , text " "
                     , GradientText.text []
-                        { font = GradientText.Morpheus
+                        { font = Just GradientText.Morpheus
+                        , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.grayGradient
                         }
                         "&"
                     , text " "
                     , GradientText.text []
-                        { font = GradientText.Morpheus
+                        { font = Just GradientText.Morpheus
+                        , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.blueGradient
                         }
                         "Grace"
                     , text " "
                     , GradientText.text []
-                        { font = GradientText.Morpheus
+                        { font = Just GradientText.Morpheus
+                        , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.grayGradient
                         }
@@ -157,11 +161,7 @@ viewDLCAttribution dlcAttribution =
         |> String.replace "the " "the\u{00A0}"
         |> String.replace "of " "of\u{00A0}"
         |> String.replace "Of " "Of\u{00A0}"
-        |> GradientText.split
-            { font = GradientText.CaptureIt
-            , outlineSize = 4
-            , gradient = Gradient.purpleGradient
-            }
+        |> GradientText.split GradientText.dlc
         |> List.map (el [ Font.size 20 ])
     )
         ++ [ case dlcAttribution.link of

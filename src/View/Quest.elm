@@ -140,10 +140,7 @@ questBox display selected number quest =
                                     [ Font.size 24
                                     , centerX
                                     ]
-                                    { font = GradientText.CaptureIt
-                                    , outlineSize = 4
-                                    , gradient = Gradient.purpleGradient
-                                    }
+                                    GradientText.dlc
                                     dlcName
                         ]
                     , Element.row
@@ -159,9 +156,9 @@ questBox display selected number quest =
                                 Element.none
 
                             Just faction ->
-                                GradientText.wrapped
-                                    []
-                                    { font = GradientText.CelticHand
+                                GradientText.wrapped []
+                                    { font = Just GradientText.CelticHand
+                                    , fontSize = Nothing
                                     , outlineSize = 4
                                     , gradient = Gradient.blueGradient
                                     }
@@ -169,9 +166,9 @@ questBox display selected number quest =
                         , let
                             slotGradient : Element msg
                             slotGradient =
-                                GradientText.text
-                                    []
-                                    { font = GradientText.CelticHand
+                                GradientText.text []
+                                    { font = Just GradientText.CelticHand
+                                    , fontSize = Nothing
                                     , outlineSize = 4
                                     , gradient =
                                         case quest.slot of
@@ -192,18 +189,17 @@ questBox display selected number quest =
                           if quest.name == QuestDungeoneering then
                             Element.row [ alignRight, spacing 4 ]
                                 [ "Any"
-                                    |> GradientText.text
-                                        []
-                                        { font = GradientText.CelticHand
+                                    |> GradientText.text []
+                                        { font = Just GradientText.CelticHand
+                                        , fontSize = Nothing
                                         , outlineSize = 4
                                         , gradient = Gradient.yellowGradient
                                         }
                                 , "/"
                                     |> GradientText.text
-                                        [ Font.bold
-                                        , Font.size 40
-                                        ]
-                                        { font = GradientText.CelticHand
+                                        [ Font.bold ]
+                                        { font = Just GradientText.CelticHand
+                                        , fontSize = Just 40
                                         , outlineSize = 4
                                         , gradient = Gradient.yellowGradient
                                         }
@@ -497,12 +493,12 @@ introBlock =
         , spacing <| Theme.rhythm * 2
         ]
         [ GradientText.wrapped
-            [ Font.size 38
-            , Font.center
+            [ Font.center
             , width fill
             , moveUp 8
             ]
-            { font = GradientText.Morpheus
+            { font = Just GradientText.Morpheus
+            , fontSize = Just 38
             , outlineSize = 4
             , gradient = Gradient.yellowGradient
             }

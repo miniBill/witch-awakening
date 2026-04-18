@@ -119,15 +119,6 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
             [ GradientText.wrapped
                 [ case nameLength of
                     Short ->
-                        Font.size 56
-
-                    Average ->
-                        Font.size 46
-
-                    Long ->
-                        Font.size 40
-                , case nameLength of
-                    Short ->
                         moveLeft 0
 
                     Average ->
@@ -147,7 +138,17 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 , centerX
                 , paddingXY 30 0
                 ]
-                { font = GradientText.CaptureIt
+                { font = Just GradientText.CaptureIt
+                , fontSize =
+                    case nameLength of
+                        Short ->
+                            Just 56
+
+                        Average ->
+                            Just 46
+
+                        Long ->
+                            Just 40
                 , outlineSize = 6
                 , gradient = Gradient.yellowGradient
                 }
@@ -156,9 +157,9 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 [ alignRight
                 , moveLeft 28
                 , moveDown 16
-                , Font.size 30
                 ]
-                { font = GradientText.CaptureIt
+                { font = Just GradientText.CaptureIt
+                , fontSize = Just 30
                 , outlineSize = 6
                 , gradient = Gradient.yellowGradient
                 }
@@ -173,10 +174,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                         , Font.size 24
                         , moveDown 60
                         ]
-                        { font = GradientText.CaptureIt
-                        , outlineSize = 4
-                        , gradient = Gradient.purpleGradient
-                        }
+                        GradientText.dlc
                         dlcName
             , case name of
                 Nothing ->

@@ -82,17 +82,18 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
         , inFront =
             [ GradientText.wrapped
                 [ alignTop
-                , if String.length shortName > 10 then
-                    Font.size 46
-
-                  else if String.length shortName > 8 then
-                    Font.size 52
-
-                  else
-                    Font.size 56
                 , centerX
                 ]
-                { font = GradientText.CaptureIt
+                { font = Just GradientText.CaptureIt
+                , fontSize =
+                    if String.length shortName > 10 then
+                        Just 46
+
+                    else if String.length shortName > 8 then
+                        Just 52
+
+                    else
+                        Just 56
                 , outlineSize = 6
                 , gradient = Gradient.yellowGradient
                 }
@@ -104,13 +105,9 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                 Just dlcName ->
                     GradientText.wrapped
                         [ centerX
-                        , Font.size 24
                         , moveDown 60
                         ]
-                        { font = GradientText.CaptureIt
-                        , outlineSize = 4
-                        , gradient = Gradient.purpleGradient
-                        }
+                        GradientText.dlc
                         dlcName
             ]
         , content =
