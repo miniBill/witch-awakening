@@ -1,13 +1,24 @@
 module Generate.Image exposing (ImageModule, file, moduleName, valueFrom)
 
 import BuildTask exposing (FileOrDirectory)
+import Buildfile
 import Dict
 import Dict.Extra
 import Elm
 import Elm.Annotation
+import Elm.Arg
 import Elm.Declare
 import Elm.Declare.Extra
+import Elm.Let
+import Elm.Op
+import Elm.Op.Extra
 import Gen.CodeGen.Generate as Generate
+import Gen.Html
+import Gen.Html.Attributes
+import Gen.Html.Picture
+import Gen.Html.Source
+import Gen.List
+import Gen.String
 import Generate.Utils exposing (yassify)
 import Parser exposing ((|.), (|=), Parser)
 import Path exposing (Path)
@@ -19,6 +30,7 @@ import Triple.Extra
 type alias ImageModule =
     { valueFrom : String -> Elm.Expression
     , image : Elm.Annotation.Annotation
+    , toPicture : Elm.Expression -> Elm.Expression -> Elm.Expression
     }
 
 
@@ -34,7 +46,7 @@ file sizesList =
         |> Result.map
             (\declarations ->
                 Elm.Declare.module_ moduleName
-                    (\image ->
+                    (\image toPicture_ ->
                         { valueFrom =
                             \name ->
                                 Elm.value
@@ -43,9 +55,14 @@ file sizesList =
                                     , annotation = Just image
                                     }
                         , image = image
+                        , toPicture = toPicture_
                         }
                     )
                     |> Elm.Declare.with imageType
+                    |> Elm.Declare.with toPicture
+                    |> Elm.Declare.withUnexposed toSources
+                    |> Elm.Declare.withUnexposed getSizesDeclaration
+                    |> Elm.Declare.withUnexposed Buildfile.standardFormats
                     |> Elm.Declare.withDeclarations (addGroups declarations)
             )
 
@@ -183,3 +200,113 @@ valueFrom name =
         , name = name
         , annotation = Nothing
         }
+
+
+minSize : number
+minSize =
+    50
+
+
+getSizesDeclaration : Elm.Declare.Function (Elm.Expression -> Elm.Expression)
+getSizesDeclaration =
+    Elm.Declare.fn "getSizes" (Elm.Arg.varWith "width" Elm.Annotation.int) <| \width ->
+    Elm.Let.letIn identity
+        |> Elm.Let.fn2 "go"
+            (Elm.Arg.varWith "factor" Elm.Annotation.int)
+            (Elm.Arg.varWith "acc" (Elm.Annotation.list Elm.Annotation.int))
+            (\factor acc ->
+                Elm.Let.letIn identity
+                    |> Elm.Let.value "w" (Elm.Op.intDivide width factor)
+                    |> Elm.Let.withBody
+                        (\w ->
+                            Elm.ifThen (Elm.Op.gte w (Elm.int minSize))
+                                (Elm.apply (Elm.val "go") [ Elm.Op.multiply factor (Elm.int 2), Elm.Op.cons w acc ])
+                                (Gen.List.call_.reverse acc)
+                        )
+                    |> Elm.withType (Elm.Annotation.list Elm.Annotation.int)
+            )
+        |> Elm.Let.withBody
+            (\go ->
+                go (Elm.int 1) (Elm.list [])
+                    |> Elm.withType (Elm.Annotation.list Elm.Annotation.int)
+            )
+
+
+toPicture : Elm.Declare.Function (Elm.Expression -> Elm.Expression -> Elm.Expression)
+toPicture =
+    Elm.Declare.fn2 "toPicture"
+        (Elm.Arg.varWith "attrs"
+            (Elm.Annotation.list (Gen.Html.annotation_.attribute (Elm.Annotation.var "msg")))
+        )
+        (Elm.Arg.varWith "image" imageType.annotation)
+    <| \attrs image ->
+    Gen.Html.Picture.call_.picture
+        (Elm.Op.cons
+            (Gen.Html.Attributes.call_.width (image |> Elm.get "width"))
+            (Elm.Op.cons
+                (Gen.Html.Attributes.call_.height (image |> Elm.get "height"))
+                attrs
+            )
+        )
+        (Elm.record
+            [ ( "sources"
+              , Buildfile.standardFormats.value
+                    |> Gen.List.call_.map
+                        (Elm.functionReduced "format"
+                            (toSources.call
+                                image
+                            )
+                        )
+              )
+            , ( "src", Elm.Op.append (Elm.string "public/") (image |> Elm.get "src") )
+            , ( "alt", Elm.maybe Nothing )
+            ]
+        )
+        |> Elm.withType (Gen.Html.annotation_.html (Elm.Annotation.var "msg"))
+
+
+toSources : Elm.Declare.Function (Elm.Expression -> Elm.Expression -> Elm.Expression)
+toSources =
+    Elm.Declare.fn2 "toSources"
+        (Elm.Arg.varWith "image" imageType.annotation)
+        (Elm.Arg.varWith "config"
+            (Elm.Annotation.record
+                [ ( "extension", Elm.Annotation.string )
+                , ( "format", Gen.Html.Source.annotation_.imageType )
+                ]
+            )
+        )
+    <| \image config ->
+    Elm.Let.letIn identity
+        |> Elm.Let.value "base"
+            (image
+                |> Elm.get "src"
+                |> Gen.String.call_.split (Elm.string ".")
+                |> Gen.List.call_.reverse
+                |> Gen.List.call_.drop (Elm.int 1)
+                |> Gen.List.call_.reverse
+                |> Gen.String.call_.join (Elm.string ".")
+            )
+        |> Elm.Let.withBody
+            (\base ->
+                getSizesDeclaration.call (image |> Elm.get "width")
+                    |> Gen.List.call_.map
+                        (Elm.fn (Elm.Arg.varWith "w" Elm.Annotation.int) <| \w ->
+                        Elm.record
+                            [ ( "url"
+                              , Elm.Op.Extra.appendStrings
+                                    [ Elm.string "public/"
+                                    , base
+                                    , Elm.string "-"
+                                    , Gen.String.call_.fromInt w
+                                    , Elm.string "."
+                                    , Elm.get "extension" config
+                                    ]
+                              )
+                            , ( "width", Elm.maybe (Just w) )
+                            ]
+                        )
+                    |> Gen.Html.Source.call_.fromImagesAndWidths
+                    |> Gen.Html.Source.withType (Elm.get "format" config)
+            )
+        |> Elm.withType (Gen.Html.Source.annotation_.source Gen.Html.Source.annotation_.withWidths)

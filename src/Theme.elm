@@ -49,11 +49,14 @@ rounded =
 
 
 image : List (Attribute msg) -> Image -> Element msg
-image attrs { src } =
-    Element.image attrs
-        { src = "public/" ++ src
-        , description = ""
-        }
+image attrs src =
+    Image.toPicture
+        [ Html.Attributes.style "width" "100%"
+        , Html.Attributes.style "height" "auto"
+        ]
+        src
+        |> Element.html
+        |> el attrs
 
 
 choice : String -> Element msg

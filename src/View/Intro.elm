@@ -179,7 +179,7 @@ viewDLCAttribution dlcAttribution =
 viewIntro : Element msg
 viewIntro =
     Theme.wrappedRow [ Element.paddingXY 16 0 ]
-        [ Theme.image [ width <| Element.minimum 200 fill ] Image.penelope
+        [ Theme.image [ width <| Element.minimum 200 fill ] Image.introLeftPenelope
         , Theme.blocks [ width <| Element.minimum 200 <| fillPortion 2 ] IdKindGameMode mainIntro
         ]
 
