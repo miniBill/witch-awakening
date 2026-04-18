@@ -360,7 +360,7 @@ magicValue model affinities magicDetails =
                                     in
                                     ps
                                         |> List.sum
-                                        |> classValueDiscountIf inClass
+                                        |> Utils.applyClassBonusIf inClass
                                 )
                                 List.sum
                 in
@@ -490,15 +490,6 @@ isInFaction { factions, factionPerks, typePerks } magicDetails =
 
             Nothing ->
                 Nonfactional
-
-
-classValueDiscountIf : Bool -> Int -> Int
-classValueDiscountIf inClass v =
-    if inClass && v < 0 then
-        v + 2
-
-    else
-        v
 
 
 factionValueDiscountIf : InFaction -> Int -> Int
