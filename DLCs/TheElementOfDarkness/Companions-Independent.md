@@ -3,7 +3,7 @@
 ## Companion: Mayra Broadleaf
 - Cost: 4
 - Race: Dryad
-- Class: Academic
+- Class: Magician
 - Quote: _*“Here’s your order: one Phoenix feather shed this morning, five ounces of refrigerated manticore venom, and one pound of warg fur collected fresh from Mr. Floofles” - An average day of business for Mayra.*_
 - Positive: + Trades in monster and mythical creature parts and produce (all harvested humanely)
 - Positive: + Pets of all kinds, cute, cuddly, fluffy...
@@ -118,7 +118,7 @@ Bethany Davina was nearly the victim of a monster-attack, and had it not been fo
 - Cost: 8
 - Race: Orc
 - Has Perk: True
-- Class: Academic
+- Class: Magician
 - Quote: _*“From the moment I understood the weakness of my flesh I’ve found myself craving the strength and certainty of mythril” - Francisca.*_
 - Has: Francisca has Augmentation 5, Metallurgy 5, Runes 4, Advanced Golemancy 3, and several high-end prostheses
 - Positive: + A master of her craft

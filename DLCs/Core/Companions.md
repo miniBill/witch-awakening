@@ -2,7 +2,7 @@
 
 ## Companion: Rachel Pool
 - Faction: The College of Arcadia
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Cost: 4
 - Power: 5
@@ -24,7 +24,7 @@ Rachel is very introverted and socially awkward, she grew up largely alone witho
 
 ## Companion: Anne Laurenchi
 - Faction: The College of Arcadia
-- Class: Academic
+- Class: Magician
 - Race: Sylph
 - Has Perk: True
 - Cost: 4
@@ -85,12 +85,12 @@ Goes by “Wess”, to avoid people calling her “Candy” which rubs her the w
 - Has: Tess has Potions 3, Hexes 4, has a _Hydron_
 - Quote: _\*Unintelligible shrieking\*_ _*“WHO TURNED MY BROOM INTO A F%#$^ TENTACLE MONSTER!” - An Arcadian student.*_
 
-Tess is a bit of a nonviolent delinquent. She first awakened as a witch out of anger when she inadvertently hexed her human school bully into a slug, being a Warlock rather than an Academic, things are more instinctual and primal for her rather than well understood, and is somewhat easily annoyed, can trigger reactionary hexes with stray impulses, giving her a bad rep, but is cunning and personable when she wants to be and gets along when she needs to.
+Tess is a bit of a nonviolent delinquent. She first awakened as a witch out of anger when she inadvertently hexed her human school bully into a slug, being a Warlock rather than a Magician, things are more instinctual and primal for her rather than well understood, and is somewhat easily annoyed, can trigger reactionary hexes with stray impulses, giving her a bad rep, but is cunning and personable when she wants to be and gets along when she needs to.
 
 
 ## Companion: Evelynn P. Willowcrane
 - Faction: The College of Arcadia
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Cost: 2
 - Power: 4
@@ -133,7 +133,7 @@ John is a very uncommon male witch... And rarer still: A Changeling. He can’t 
 
 ## Companion: Saya Kurosawa
 - Faction: The College of Arcadia
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Cost: 8
 - Power: 8
@@ -171,7 +171,7 @@ Fran is a retired Hawthorne professor who has taken to Arcadia, where she was a 
 
 ## Companion: Elaine A. Victorica
 - Faction: The College of Arcadia
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Has Perk: True
 - Cost: 10
@@ -229,7 +229,7 @@ A Dwarf-Lilin girl who’s strive for power took her across the aether and to he
 
 ## Companion: Melissa Vincimvitch
 - Faction: The College of Arcadia
-- Class: Academic
+- Class: Magician
 - Race: Daeva
 - Cost: 15
 - Power: 2
@@ -249,7 +249,7 @@ Melissa, “Liz” or Lisa to some, is a librarian of the *Vincimvitch* family�
 
 ## Companion: Hannah Grangely
 - Faction: Hawthorne Academia
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Cost: 6
 - Power: 5
@@ -337,7 +337,7 @@ If Willpower is a shield, Determination is the sword, the active driving force t
 
 ## Companion: Laura D. Devonshire
 - Faction: Hawthorne Academia
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Has Perk: True
 - Cost: 8
@@ -377,7 +377,7 @@ Carol is a dangerous combination of Aurai and a chatterbox halfling mimi. To kee
 
 ## Companion: Suzy the Miasma
 - Faction: Hawthorne Academia
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Cost: 10
 - Power: 5
@@ -397,7 +397,7 @@ Suzy is a poison specialist alchemist that always has multiple projects ongoing.
 
 ## Companion: Noriko du Nichols
 - Faction: Hawthorne Academia
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Cost: 15
 - Power: 3
@@ -456,7 +456,7 @@ Ifra grew up Muslim and managed to live a full life until the old age of 83 when
 
 ## Companion: Sariah J. Snow
 - Faction: The Watchers
-- Class: Academic
+- Class: Magician
 - Race: Nymph
 - Has Perk: True
 - Cost: 8
@@ -577,7 +577,7 @@ Minnie is a brand new soul to this aether, she’s reincarnated from another wor
 
 ## Companion: Lucille M. Bright
 - Faction: The Hespatian Coven
-- Class: Academic
+- Class: Magician
 - Race: Lilin
 - Cost: 6
 - Power: 5
@@ -644,7 +644,7 @@ Whisper is a high ranking Wraith of Hespatia and a prolific serial killer and ri
 
 ## Companion: Red Mother
 - Faction: The Hespatian Coven
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Cost: 8
 - Power: 6
@@ -789,7 +789,7 @@ Used to be a renown oracle and her spat with Culicarius stuck in the rumor mill 
 
 ## Companion: King Culicarius
 - Faction: Lunabella
-- Class: Academic
+- Class: Magician
 - Race: Daeva
 - Has Perk: True
 - Cost: 15
@@ -810,7 +810,7 @@ The King of Lunabella and an ancient male Daeva that inspired the myth of Apollo
 
 ## Companion: Einodia - Kate
 - Faction: Lunabella
-- Class: Academic
+- Class: Magician
 - Race: Daeva
 - Cost: 15
 - Power: 1
@@ -831,7 +831,7 @@ Also goes by Kate, Kate is the lich founder of Lunabella, but she has no interes
 
 ## Companion: Persephone
 - Faction: Lunabella
-- Class: Academic
+- Class: Magician
 - Race: Daeva
 - Has Perk: True
 - Cost: 12
@@ -852,7 +852,7 @@ Persephone is the younger sister of Penelope, though a few years are nothing com
 
 ## Companion: Betilda Arai Buckland
 - Faction: Lunabella
-- Class: Academic
+- Class: Magician
 - Race: Doll
 - Cost: 10
 - Power: 5
@@ -967,7 +967,7 @@ Bethadonna is a domestic goddess that radiates warmth and a motherly presence in
 
 ## Companion: Miranda Quincy
 - Faction: The O.R.C.
-- Class: Academic
+- Class: Magician
 - Race: Erinyes
 - Has Perk: True
 - Cost: 8
@@ -1206,7 +1206,7 @@ Vix was always a speed demon, a wild child that started racing tricycles at six 
 
 ## Companion: XIN: Dollmaker
 - Faction: Alphazon Industries
-- Class: Academic
+- Class: Magician
 - Race: Taura
 - Cost: 12
 - Power: 6
@@ -1519,7 +1519,7 @@ The original body of 9s. During a mission, Nines infiltrated an unexpected Outsi
 
 ## Companion: Princess Dael’ezra of Charis
 - Faction: Alfheimr Alliance
-- Class: Academic
+- Class: Magician
 - Race: Elf
 - Has Perk: True
 - Cost: 8
@@ -1540,7 +1540,7 @@ The second oldest of 12 daughters of an Alfheimr queendom the size of Poland, he
 
 ## Companion: Anaphalon Greenwield
 - Faction: Alfheimr Alliance
-- Class: Academic
+- Class: Magician
 - Race: Siren
 - Cost: 12
 - Power: 4

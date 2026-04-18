@@ -1,7 +1,7 @@
 # Core
 
 ## Magic: Alchemy
-- Class: Academic
+- Class: Magician
 - Elements: Water, Nature, Life
 
 Or “Potions”, a classic magic employed by witches, many would say particularly iconic. I’ll provide you a large, cast iron cauldron and stirrer, plus a big electric hotplate (For modem witches with no chimneys). You can sell potions to people, but be careful to ensure that they’re seen as a mumbo-jumbo unscientific remedy by most people I recommend selling it as homeopathic natural medicine that would ruin profit margins if it were widespread. Sprinkle some extra conspiracy about how the government could kill you if they spread the secret, which isn’t entirely untrue in your case. So long as you don’t hand out more outlandish potions you should be fine.
@@ -35,7 +35,7 @@ Arch potions are made from very rare ingredients such as dragon’s blood, angel
 
 
 ## Magic: Runes
-- Class: Academic
+- Class: Magician
 - Elements: Soul, Mind, Metal
 
 Also known as _*“charms”*_, or _*“Enchantment”*_. A rune is a special word or phrase of power concentrated into a symbol that echos its meaning through spiritual channels that run deep into the fabric that holds reality together. Fragments of a dialect based on the First Language, possessing a sliver of that authority over the reality that we know. Simply knowing of a rune isn’t enough to utilize it, but requires practice to deeply harmonize your own contemplations to achieve understanding of that rune. To utilize runes, Witches prepare a ritual circle on which they place an item they wish to inscribe the rune onto, or placing the ritual circle on a surface around where you want to inscribe it, along with the necessary reagents to invoke the rune in question, and then place the rune on the item in some manner. Sewing, engraving, staining, or so on. The enchantment only lasts as long as the rune itself physically does, so more permanent methods of application are preferred. The ritual takes 1 minute, 10 minutes, 100 minutes, 1000 minutes, and 10000 minutes to complete, respective to rank. Rituals can be paused and continued, *and use 4x equivalent ingredients to a potion of its rank in the ritual process.* 75% of the ritual time can be passive, such as letting incense bum out, or gold dust to slowly melt into the item being enchanted, or other ritual elements not directly associated with the object, but such as performing a separate sub-ritual to harvest an ingredient or combine two ingredients into a necessary one.
@@ -122,7 +122,7 @@ Also known as _*“Transmutation”*_, these spells transform something into som
 
 
 ## Magic: Witchery
-- Class: Academic
+- Class: Magician
 - Elements: All
 - Has rank zero: True
 
@@ -219,7 +219,7 @@ _*As a Dalihlah*_, you can breed fusion demons: Demons with the traits of any tw
 
 
 ## Magic: Portals
-- Class: Academic
+- Class: Magician
 - Elements: Life, Nature, Mind
 
 The magic of portals is sometimes called gatekeeping, planeswalking, or helldiving. By default, all witches are able to see most basic level hidden portals or rifts, and can enter them where normal mundane humans would pass through most as though it weren’t there, oblivious, sometimes experiencing vertigo or deja vu. Portals can be hidden anywhere in any number of forms with three main archetypes; Portkeys, which are objects spatially bound to another location that act like a ferry shifting between locations at regular or random intervals. Gateways, which are arches or door frames enchanted to act as a portal when triggered. And Rifts, which are wounds in timespace cut through by a witch on demand, or anomalous natural events. Rifts open as fast as you can complete its outline. Their outer edges are the sharpest “objects” known to witchdom.
@@ -307,7 +307,7 @@ _*Foresight*_ can extend to 3 seconds ahead and includes tactile information, su
 
 
 ## Magic: Aethernautics
-- Class: Academic
+- Class: Magician
 - Elements: All
 
 Aethernautics is the magical studies of cosmological principles, planar physics, and spatial It’s field of magic used to safely explore the aether as well as long employed by astrologists and astronomers since ancient times to better glen insights from the stars above. Its utility in exploring space rather than the aether is a relatively more recent phenomenon, as space proves more difficult to navigate than the aether.

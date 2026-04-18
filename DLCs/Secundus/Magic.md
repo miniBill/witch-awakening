@@ -1,7 +1,7 @@
 # Secundus
 
 ## Magic: Body Refinement
-- Class: Academic
+- Class: Magician
 - Elements: Body, Nature, Mind
 
 An old, old magical practice centered around refining the vessel of the soul itself into a mystical treasure. This is done through the circulation of magic through one’s body in conjunction with the ingestion of various increasingly expensive elixirs. As a result you will gain innate abilities similar to those found in Relics.

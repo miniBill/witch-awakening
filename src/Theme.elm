@@ -918,8 +918,8 @@ complicationCategoryToGradient category =
 classToBadge : Class -> Image
 classToBadge class =
     case class of
-        ClassAcademic ->
-            Image.badgeAcademic
+        ClassMagician ->
+            Image.badgeMagician
 
         ClassSorceress ->
             Image.badgeSorceress

@@ -819,6 +819,7 @@ complication =
 
 type alias Class =
     { name : String
+    , synonym : Maybe String
     , color : Int
     , description : String
     }
@@ -827,6 +828,7 @@ type alias Class =
 class : Parser Class
 class =
     (section "##" "Class" Class
+        |> maybeItem "Synonym" Ok
         |> requiredItem "Color" hexParser
         |> parseSection
     )

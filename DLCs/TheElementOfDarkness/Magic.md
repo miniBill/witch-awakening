@@ -92,7 +92,7 @@ At rank 4 your __Emanate__ will now cause the muscles of those affected to spasm
 At rank 5 the effects of __Emanate__ will linger for several minutes after exposure. You can now __Forge__ Starlight into Stellarite, a very tough yet flexible celestial metal with several interesting properties. Stellarite begins as fairly lightweight, but it’s weight can be increased or decreased by channelling mana through it. In addition, a damaged or deformed Stellarite item will repair itself while starlight is shining upon it. Stellarite is a darker metal that can come in any colour that stars shine. You are now able to channel a __Starlight Aspect__, for 15 seconds you will be intangible and completely immune to magic, and you will instantly refill your mana reserves. This ability can only be used once before needing to be recharged, and can be recharged by meditating under starlight for four or more hours. While __Under Starlight__, __Starlight Aspect__ will instead last one minute.
 
 ## Magic: Augmentation
-- Class: Academic
+- Class: Magician
 - Elements: Shadows, Blood, Metal
 - Elementalism: False
 
@@ -116,7 +116,7 @@ At rank 5 your __Augments__ can now grant any one effect from rank 5 magic you k
 
 ## Magic: Saga-Calling
 - Elements: Shadows, Soul, Wind
-- Class: Academic
+- Class: Magician
 - Elementalism: False
 
 There is power in stories, and Saga-Calling is the magic that will allow you to tap into this power. This school of magic will allow you to draw upon stories to manifest a wide array of effects and abilities, depending on the nature of the story you draw upon. Any story can qualify for use in Saga-Calling, but some are impractical. The better know a story is, the less mana it will require to use for your this magic (using an ancient fable known widely for a millennium would require minimal mana, whereas using someone’s fan-fiction that has been ready by five people and is only remembered by two would drain your magic reserves very rapidly). 

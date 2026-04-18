@@ -7,7 +7,7 @@
 - Conflict: 6
 - Reward: 10
 
-HO HO HO-lee, shit. Is that Santa’s sleigh? BEING CHASED BY A HECKIN DRAGON? Whoa Santa is jacked. Santa Claus is a male Academic Daeva and head of his own minor faction of elves, changelings, sprites, and gnomes hidden in a sub-plane overlaying the North Pole. He used to deliver presents to everyone in Europe and was expanding until the Masquerade shut his operations down until he shifted gears in how he operates, now he works by more subtly providing gifts that can be excused as natural, coincidental, or lucky breaks all through the Christmas season, and actual presents to magical families. But someone is trying to kidnap him!
+HO HO HO-lee, shit. Is that Santa’s sleigh? BEING CHASED BY A HECKIN DRAGON? Whoa Santa is jacked. Santa Claus is a male Magician Daeva and head of his own minor faction of elves, changelings, sprites, and gnomes hidden in a sub-plane overlaying the North Pole. He used to deliver presents to everyone in Europe and was expanding until the Masquerade shut his operations down until he shifted gears in how he operates, now he works by more subtly providing gifts that can be excused as natural, coincidental, or lucky breaks all through the Christmas season, and actual presents to magical families. But someone is trying to kidnap him!
 
 Notes:
 + Santa will be abducted somehow and you’re a witness, green clad elves need your help tracking down the culprit! Santa is very capable, being an ancient witch with a unique time based perk, so you’ll need help to take on whoever could possibly beat him!

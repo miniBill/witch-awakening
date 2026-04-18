@@ -36,7 +36,7 @@ An unusual knack which allows one to carry their voice on the wind. This ability
 
 ## Perk: Scroll-making
 - Element: All
-- Class: Academic
+- Class: Magician
 - Cost: 10
 
 Learn to create scrolls with a one-time use elemental spell built into them. Making a scroll costs three times as much mana as using the spell would normally cost, but once created, can be used by anyone. Whoever holds the scroll instinctively knows what magic is contained within it, and how to use it. Be warned, scrolls can be used by a mundane human, and losing track of one could easily lead to a masquerade violation.
@@ -52,7 +52,7 @@ Ever heard one of those stories where some great evil is sealed away for one tho
 
 ## Perk: Magic Muffins and cursed cookies
 - Element: Body
-- Class: Academic
+- Class: Magician
 - Cost: 2
 
 Learn to imbue magics and potions you know into the food you make. Create a cake that heals, or a batch of cookies that cure hangovers. Fae are particularly notorious for utilizing this in conjunction with covenant magics.
@@ -68,7 +68,7 @@ Monsters just seem so much more... docile around you. With most monsters having 
 
 ## Perk: Technomancy
 - Element: Metal
-- Class: Academic
+- Class: Magician
 - Requires: Digicasting 3+
 - Cost: 8
 
@@ -107,7 +107,7 @@ You've found a collection of rare necromantic tomes, play through _Necromancer_ 
 
 ## Perk: Fiends and Fire
 - Element: Fire
-- Class: Academic
+- Class: Magician
 - Meta: True
 - Cost: 10
 
@@ -116,7 +116,7 @@ For one dreadful night, the masquerade is shattered. Monsters swarm across the a
 
 ## Perk: The Dark Zone
 - Element: Mind
-- Class: Academic
+- Class: Magician
 - Meta: True
 - Cost: 10
 

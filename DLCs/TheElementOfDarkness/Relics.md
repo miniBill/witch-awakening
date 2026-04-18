@@ -23,7 +23,7 @@ Usually made of mythril (though you may provide other materials for a smith to u
 
 
 ## Relic: Gem Blade
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 A beautiful blade made of a single solid piece of crystal, and much heavier than it looks, a gem blade is a highly valuable asset for any aspiring battle-mage. While it is tough enough to be used in combat, its real value is in its ability to store mana thanks to an internal expanded space that greatly increases its volume. Each Gem Blade is capable of storing as much mana as a [High] storage capacity witch, and once someone has put mana into it, that person becomes the only one who will be able to draw mana from the Gem blade.
@@ -37,14 +37,14 @@ A Mansion Seed is the seed of a rather unique type of tree that, once planted, c
 
 
 ## Relic: Book of Blooms
-- Class: Academic
+- Class: Magician
 - Cost: 4
 
 The book of blooms is an enchanted book that offers a random assortment of seeds each day. Refreshing at dawn, the book of blooms will contain detailed information on a dozen random species of plant (both magical and mundane). By channelling your mana into the book while it is open to the illustration of one of the plants you can cause the book of blooms to create seeds for that species of plant. Roughly one out of four plants the books shows you will be magical, and any plant shown will be suitable for the environment you find yourself in (assuming any plants can grow there. If you are in a completely inhospitable environment, the book will just continue showing you plants from the most recent suitable environment it was in). The book of blooms is capable of showing you plants from other worlds, but these will be rarer.
 
 
 ## Relic: Clockwork Creature
-- Class: Academic
+- Class: Magician
 - Cost: 2
 
 The Clockwork Creatures are the work of a master golemancer/necromancer with a soft spot for animals. Each golem is custom-made for a terminally ill or elderly animal, and once Creature passes away, they will be re-summoned into their brand new and ageless body (complete with full range of senses, naturally). If you have a beloved pet you cannot bear to live without you may have a golem prepared for them so that they might be brought back. Alternatively, you may apply to adopt a Clockwork Creature who does not yet have a home. Note: despite being artificial, the golem bodies can be made to have soft fur/scales/whatever else covers their body, and are always made so that the resident soul can feel and appreciate pats.

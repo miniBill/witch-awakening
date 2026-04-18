@@ -401,7 +401,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                     Theme.viewClasses 32 [ c ]
 
                 ClassAny ->
-                    Theme.viewClasses 32 [ Types.ClassSorceress, Types.ClassWarlock, Types.ClassAcademic ]
+                    Theme.viewClasses 32 [ Types.ClassSorceress, Types.ClassWarlock, Types.ClassMagician ]
 
                 ClassNone ->
                     Element.none

@@ -2,7 +2,7 @@
 
 ## Perk: Barrier Witch
 - Element: All
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 You have a natural talent for defensive magics. You can create barriers of magical energy the same color as your aura, either a 4 by 4 ft square shield or a 7 ft radius bubble. The bubble resists physical damage like 2 inch thick steel, the shield resists it like the same thickness of mithril. Either can be summoned as fast as you can react, but have a very fast mana drain, they're best used in bursts. With time and materials like a R4 rune, you can create a totem to ward an area up to a 1 mile radius, preventing magical beings from entering without permission or directly affecting the inside with magic (including scrying or portal travel). The effect ends if the totem is destroyed or removed from the original location.
@@ -10,7 +10,7 @@ You have a natural talent for defensive magics. You can create barriers of magic
 
 ## Perk: Kinesis
 - Element: All
-- Class: Academic
+- Class: Magician
 - Cost: 4
 
 A simple but versatile form of telekinesis, you can move objects within 60ft of you with as much force and precision as if you were moving them with your hands. You can move multiple objects at once, but doing so requires concentration, just holding things in the air is easy while complex movements require a lot of focus. You can also shoot “magic missiles” of raw kinetic force, which move with the speed of an arrow, hit with the force of a punch, and have a very low mana cost. Often used as a spam attack, or by witches without other combat magic.
@@ -18,7 +18,7 @@ A simple but versatile form of telekinesis, you can move objects within 60ft of 
 
 ## Perk: Telepathic
 - Element: Mind
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 Your mind is naturally attuned to psychic frequencies. With a few seconds of concentration, you can read the surface thoughts of a single unwarded target that you are looking at. Breaking your focus or line of sight also breaks the connection. However, strong emotions as well as thoughts that are specifically about or directed at you can be automatically read within 30ft, even if you weren't previously aware of that person, though still blocked by warding runes. If you also have Sending (Div rank 0), you can combine it with this ability for two-way mental conversations with targets in your range, including general ideas and impressions as well as verbalized thoughts.
@@ -96,7 +96,7 @@ Usually familiars are spirit beings, but sometimes a witch catches a reincarnati
 ## Perk: Apprenticeship (Dravina)
 - Meta: True
 - Elements: Soul
-- Class: Academic
+- Class: Magician
 - Costs: 1-31
 
 You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Dravina. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
@@ -105,7 +105,7 @@ You have the opportunity to study under a more experienced witch and learn some 
 ## Perk: Apprenticeship (Nrie)
 - Meta: True
 - Elements: Life
-- Class: Academic
+- Class: Magician
 - Costs: 1-31
 
 You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Nrie. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
@@ -114,7 +114,7 @@ You have the opportunity to study under a more experienced witch and learn some 
 ## Perk: Apprenticeship (Haria)
 - Meta: True
 - Elements: Fire
-- Class: Academic
+- Class: Magician
 - Costs: 1-33
 
 You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Haria. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
@@ -123,7 +123,7 @@ You have the opportunity to study under a more experienced witch and learn some 
 ## Perk: Apprenticeship (Bael)
 - Meta: True
 - Elements: Beast
-- Class: Academic
+- Class: Magician
 - Costs: 1-33
 
 You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Bael. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
@@ -132,7 +132,7 @@ You have the opportunity to study under a more experienced witch and learn some 
 ## Perk: Apprenticeship (Epora)
 - Meta: True
 - Elements: Mind
-- Class: Academic
+- Class: Magician
 - Costs: 1-33
 
 You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Epora. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
@@ -141,7 +141,7 @@ You have the opportunity to study under a more experienced witch and learn some 
 ## Perk: Apprenticeship (Magnus)
 - Meta: True
 - Elements: Necro
-- Class: Academic
+- Class: Magician
 - Costs: 1-33
 
 You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Magnus. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.
@@ -150,7 +150,7 @@ You have the opportunity to study under a more experienced witch and learn some 
 ## Perk: Apprenticeship (Laria)
 - Meta: True
 - Elements: All
-- Class: Academic
+- Class: Magician
 - Costs: 1-33
 
 You have the opportunity to study under a more experienced witch and learn some of their magic. Play through A Witch's Apprentice [https://imgchest.com/p/md7oeo8d4p6] picking Laria. Ignore starting points, instead gain 1 point per power you invest in this perk. Apprenticeships take the actual years described, with roughly the time commitment of a full-time job. If you take their final spell you can also take them as a companion for free.

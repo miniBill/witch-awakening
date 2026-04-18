@@ -2,7 +2,7 @@
 
 ## Companion: Xiao Liena
 - Full name: Xiao Liena 肖列娜
-- Class: Academic
+- Class: Magician
 - Race: Neutral
 - Cost: 8
 - Power: 10

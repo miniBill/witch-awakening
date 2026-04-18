@@ -1,7 +1,7 @@
 # Breaking News
 
 ## Relic: Chronal Scanner
-- Class: Academic
+- Class: Magician
 - Cost: 12
 
 These coveted devices are the closet thing in Witchdom to a time machine. It works by scanning the area in a 5-mile radius and skimming back along the timeline to create a Domain bubble housing an interactive illusion of the area at some point in the past. The illusion isn't real, but IS accurate, you can't bring anything out but you could take a book off the shelf of a long-lost library and read its actual contents. Diverging too far from the “canon” course of events can introduce inaccuracies, however, especially if you use magic to do so. A Rank 5 mana infusion would let you go back up to a week but there is theoretically no limit to how far back it could scan given enough mana.
@@ -31,7 +31,7 @@ You've helped a mid-high ranking member of one of the witch factions out of a ti
 This scythe's blade is unnaturally cold to the touch and seems to drink in the light around it. An opponent hit by this weapon is slowed down by 5%, stacking multiplicatively. By infusing a strike with Rank 3 mana, you can strike with 3x speed, and the scythe will subtly guide itself toward vital areas. With R5 mana, you can become ethereal for 5 minutes, the scythe remains physical but you retain the ability to hold it. If you have ranks in Vampirism, killing a creature with this empowers you as though you had drained that creature to death, instantly and regardless of warding runes.
 
 ## Relic: Study Hall
-- Class: Academic
+- Class: Magician
 - Cost: 15
 
-This unassuming building has an powerful greater anima of learning bonded to it, reshaping its interior to create an ideal environment for learning magic. If you are an Academic, the inside will manifest as a library filled with books on magical theory, if you are a Sorceress it instead resembles a gym and arena for hands-on magic training. In addition to a number of automated features and small magical conveniences, studying or training here causes you to gain Focus or Might 5x faster, up to a maximum of 10 per day. Any mundane skills that are learned or practiced here also improve much faster, as though the student had a talent rune.
+This unassuming building has an powerful greater anima of learning bonded to it, reshaping its interior to create an ideal environment for learning magic. If you are a Magician, the inside will manifest as a library filled with books on magical theory, if you are a Sorceress it instead resembles a gym and arena for hands-on magic training. In addition to a number of automated features and small magical conveniences, studying or training here causes you to gain Focus or Might 5x faster, up to a maximum of 10 per day. Any mundane skills that are learned or practiced here also improve much faster, as though the student had a talent rune.

@@ -1,7 +1,7 @@
 # The Element of Darkness
 
 ## Perk: You-Know-Who
-- Class: Academic
+- Class: Magician
 - Element: Shadows
 - Cost: 4
 
@@ -25,7 +25,7 @@ You gain the ability to understand and be understood by any being capable of spe
 
 
 ## Perk: Dark Vision
-- Class: Academic
+- Class: Magician
 - Element: Shadows
 - Cost: 2
 
@@ -57,7 +57,7 @@ With this perk you can now trust in the shadows to guide you: when walking in co
 
 
 ## Perk: Forbidden Knowledge
-- Class: Academic
+- Class: Magician
 - Element: Shadows
 - Cost: 5
 

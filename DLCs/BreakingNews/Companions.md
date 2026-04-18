@@ -103,7 +103,7 @@ Lysander is a divine emissary, a longtime agent of a god of death and fate. He w
 - Faction: The Lydian Sisterhood
 - Cost: 10
 - Race: Neutral
-- Class: Academic
+- Class: Magician
 - Power: 8
 - Teamwork: 7
 - Sociability: 8
@@ -123,7 +123,7 @@ That's me, the one who recorded this message. My familiar Kiri and I are reporte
 - Faction: The Seekers' Guild
 - Cost: 4
 - Race: Gemini-Fire
-- Class: Academic
+- Class: Magician
 - Power: 10
 - Teamwork: 8
 - Sociability: 9
@@ -143,7 +143,7 @@ Heather (left) and Sage (right) come from a realm heavily influenced by Earth an
 - Cost: 15
 - Race: Gnome
 - Has Perk: True
-- Class: Academic
+- Class: Magician
 - Power: 1
 - Teamwork: 8
 - Sociability: 7
@@ -220,7 +220,7 @@ Leon is security for planetside missions, making sure his mortal crewmates can d
 - Faction: The Seekers' Guild
 - Cost: 15
 - Race: Mimi
-- Class: Academic
+- Class: Magician
 - Power: 5
 - Teamwork: 6
 - Sociability: 8

@@ -1,6 +1,7 @@
 module Data exposing (Enums, enums)
 
 import Generate.Enum exposing (Argument(..), Enum, Variant)
+import Maybe.Extra
 import Parsers
 
 
@@ -83,9 +84,10 @@ withIsSame enum =
 fromParsed : Parsers.DLC -> DLC
 fromParsed { name, items } =
     let
-        variant : String -> Variant
-        variant variantName =
+        variant : String -> Maybe String -> Variant
+        variant variantName synonym =
             { name = variantName
+            , synonyms = Maybe.Extra.toList synonym
             , arguments = []
             , toStringException = Nothing
             , dlc = name
@@ -95,60 +97,65 @@ fromParsed { name, items } =
         (\item dlc ->
             case item of
                 Parsers.DLCAffinity v ->
-                    { dlc
-                        | affinities =
+                    let
+                        affinity : Variant
+                        affinity =
                             { name = v.name
+                            , synonyms = []
                             , arguments = []
                             , dlc = name
                             , toStringException = v.symbol
                             }
-                                :: dlc.affinities
-                    }
+                    in
+                    { dlc | affinities = affinity :: dlc.affinities }
 
                 Parsers.DLCClass v ->
-                    { dlc | classes = variant v.name :: dlc.classes }
+                    { dlc | classes = variant v.name v.synonym :: dlc.classes }
 
                 Parsers.DLCGameMode v ->
-                    { dlc | gameModes = variant v.name :: dlc.gameModes }
+                    { dlc | gameModes = variant v.name Nothing :: dlc.gameModes }
 
                 Parsers.DLCCompanion v ->
-                    { dlc
-                        | companions =
+                    let
+                        companion : Variant
+                        companion =
                             { name = v.name
+                            , synonyms = []
                             , arguments = []
                             , dlc = name
                             , toStringException = v.fullName
                             }
-                                :: dlc.companions
-                    }
+                    in
+                    { dlc | companions = companion :: dlc.companions }
 
                 Parsers.DLCQuest v ->
-                    { dlc | quests = variant v.name :: dlc.quests }
+                    { dlc | quests = variant v.name Nothing :: dlc.quests }
 
                 Parsers.DLCComplication v ->
                     { dlc
-                        | complications = variant v.name :: dlc.complications
+                        | complications = variant v.name Nothing :: dlc.complications
                         , complicationCategories =
                             case v.category of
                                 Just category ->
-                                    if List.member (variant category) dlc.complicationCategories then
+                                    if List.member (variant category Nothing) dlc.complicationCategories then
                                         dlc.complicationCategories
 
                                     else
-                                        variant category :: dlc.complicationCategories
+                                        variant category Nothing :: dlc.complicationCategories
 
                                 Nothing ->
                                     dlc.complicationCategories
                     }
 
                 Parsers.DLCMagic v ->
-                    { dlc | magics = variant v.name :: dlc.magics }
+                    { dlc | magics = variant v.name Nothing :: dlc.magics }
 
                 Parsers.DLCPerk v ->
                     let
                         perk : Variant
                         perk =
                             { name = v.name
+                            , synonyms = []
                             , arguments = v.arguments
                             , toStringException = Nothing
                             , dlc = name
@@ -161,6 +168,7 @@ fromParsed { name, items } =
                         race : Variant
                         race =
                             { name = v.name
+                            , synonyms = []
                             , arguments = List.repeat (2 - List.length v.elements) (ValueArgument "Affinity")
                             , toStringException = Nothing
                             , dlc = name
@@ -173,6 +181,7 @@ fromParsed { name, items } =
                         relic : Variant
                         relic =
                             { name = v.name
+                            , synonyms = []
                             , arguments = v.arguments
                             , toStringException = Nothing
                             , dlc = name
@@ -181,7 +190,7 @@ fromParsed { name, items } =
                     { dlc | relics = relic :: dlc.relics }
 
                 Parsers.DLCFaction v ->
-                    { dlc | factions = variant v.name :: dlc.factions }
+                    { dlc | factions = variant v.name Nothing :: dlc.factions }
         )
         emptyDLC
         items
@@ -230,6 +239,7 @@ buildVariants variants =
         toVariant : String -> Variant
         toVariant variant =
             { name = variant
+            , synonyms = []
             , arguments = []
             , toStringException = Nothing
             , dlc = Nothing

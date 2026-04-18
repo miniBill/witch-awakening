@@ -10,7 +10,7 @@ You can see through fog, clouds, rain, and other precipitation (though not smoke
 
 ## Perk: Stasis
 - Element: Necro
-- Class: Academic
+- Class: Magician
 - Cost: 3
 
 You can prevent material from rotting. This requires renewal every few days, taking a minute for something the size of a corpse or a backpack’s worth of food, or can be made automatic for a Witchery 3+ pocket dimension or Dominion 2+ reality bubble.
@@ -42,7 +42,7 @@ You have a sonar sense for any body of water you’re in contact with. You have 
 
 ## Perk: Absolute Zero Momentum
 - Element: Water
-- Class: Academic
+- Class: Magician
 - Cost: 8
 
 You can harness the power of cold to completely arrest the momentum of objects. Affecting spells costs mana, somewhat less than it takes to cast them but scaling with power. Spells without a physical component (e.g. Curses, Psychotics) are unaffected.
@@ -58,7 +58,7 @@ You can tunnel through earth or stone, traveling at a slow walking pace. You can
 
 ## Perk: Aspicio Mori
 - Element: Necro
-- Class: Academic
+- Class: Magician
 - Cost: 16
 
 Looking closely at a living being, you can see the most efficient way you could kill it using the capabilities you have available. This is slower and harder to see if they are protected by active magical effects, and does not take into account allies, spells that they may cast or have cast on them, or magic which is within your theoretical but unrealized capabilities, though it does include race traits and all perks.
@@ -78,7 +78,7 @@ If personally procreating, or present to assist with others who are, you can man
 
 ## Perk: Technopath
 - Element: Metal
-- Class: Academic
+- Class: Magician
 - Cost: 10
 
 Your magic moves easily through computer networks and electronic systems, and spells to allow your senses to do the same come naturally to you, in whatever medium you try. Convey mental effects through a text forum, destructive ones through a building’s wiring, etc. Note: High risk of masquerade violations.

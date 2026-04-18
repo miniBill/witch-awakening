@@ -8,7 +8,7 @@ I thought I lost you! So that’s where I left it... A-anyways when these bands 
 
 
 ## Relic: Blur Form
-- Classes: Sorceress, Academic
+- Classes: Sorceress, Magician
 - Cost: 4
 
 This potion, when ingested, modifies your true form with physical traits of another witch, such as an Oread’s ears, or a Doll’s skin. The potions works by having a base of easy enough to get tier 3 ingredients, and the DNA of a witch that the form will be blurred towards. Somebody with rank 3 in potions can tailor make them, allowing specific parts to be gained, otherwise the potions will only have a general effect.
@@ -17,11 +17,11 @@ For [6] power, you get this recipe. I will accept [1] power to make any kind you
 
 
 ## Relic: Tome of Restore
-- Class: Academic
+- Class: Magician
 - Cost: 3
-- Requires: Academic, Runes 1
+- Requires: Magician, Runes 1
 
-This tome contains the enchantment rune for restore, also known as the healing one. But a smart witch can use it for so much more. And in case you haven’t realized it yet, this rune would allow you to achieve, if somewhat annoying, immortality, so long as you can use the rune. Of course, many factions would love to add this to their collection, and since I want make sure these are actually used and not locked up in a dusty vault, I have one big restriction, *only an academic class witch with some rank in enchantment can buy this*. In return, I have this on heavy discount for that special witch.
+This tome contains the enchantment rune for restore, also known as the healing one. But a smart witch can use it for so much more. And in case you haven’t realized it yet, this rune would allow you to achieve, if somewhat annoying, immortality, so long as you can use the rune. Of course, many factions would love to add this to their collection, and since I want make sure these are actually used and not locked up in a dusty vault, I have one big restriction, *only a magician class witch with some rank in enchantment can buy this*. In return, I have this on heavy discount for that special witch.
 
 
 ## Relic: Cursed Cards

@@ -1,7 +1,7 @@
 # The Library
 
 ## Magic: Counter-Magic
-- Class: Academic
+- Class: Magician
 - Elements: All
 - Has rank zero: True
 
@@ -28,7 +28,7 @@ At rank 5 you are now able to seal someone’s magic, preventing them from being
 
 
 ## Magic: Constructs
-- Class: Academic
+- Class: Magician
 - Elements: All
 
 "When it comes to defending against such things as fireballs, bolts of lightnings, howling gales, and pitchforks thrown by an angry mob, I cannot recommend constructs highly enough".
@@ -177,7 +177,7 @@ At rank 5 your illusions can fool magical senses as well, can be a kilometer acr
 
 
 ## Magic: Resonance
-- Class: Academic
+- Class: Magician
 - Elements: Water, Fire, Mind
 
 "Resonance is a school of magic I'm somewhat conflicted on, on the one hand students will often use it to make some of the most distracting and irritating noises imaginable, but on the other hand the ability to suppress sound is very handy for a librarian".
@@ -254,12 +254,12 @@ At rank 5 you are able to grow a __Homunculus__, a body to your exact specificat
 
 
 ## Magic: Advanced Golemancy
-- Class: Academic
+- Class: Magician
 - Elements: Body, Earth, Life
 
 "You may have noticed that I have a number of charming little golems flittering about the place, I don't think I could keep this labyrinth of a library in any semblance of order without them".
 
-Based on Hexes, Advanced Golemancy is as much an academic profession as it is a magic school. Dedicated golemancers create highly intricate magical servants out of inanimate matter, using a variety of methods and means to add various effects and abilities to their creations.
+Based on Hexes, Advanced Golemancy is as much a magician profession as it is a magic school. Dedicated golemancers create highly intricate magical servants out of inanimate matter, using a variety of methods and means to add various effects and abilities to their creations.
 
 You do not require any other schools of magic to learn Advanced Golemancy, but some schools certainly help. For every 3 ranks of [Hexes] or [Runes] that you possess gain a free rank in golemancy (for example, if you had [Hexes] 2 and [Runes] 1 you would get 1 free level in Advanced Golemancy).
 
@@ -361,7 +361,7 @@ At rank 5 your __Command__ reaches out to 1 kilometer away, and you can __Store_
 
 
 ## Magic: World-Shaping
-- Class: Academic
+- Class: Magician
 - Elements: Wind, Water, Nature
 
 "One of the professors here used to use World-shaping to maintain a tropical beach house down in Antarctica. I remember she was very grumpy when she had to move it into a pocket dimension after the mundanes started exploring down there".
@@ -459,16 +459,16 @@ The problem with Reaping, aside from the fact that it incentives wanton murder, 
 Some witches have had success with using reaping only at lower ranks, but there is always the temptation, the whisper at the back of their mind, to learn to draw out just a little bit more...
 
 ### Rank 1
-At rank 1 reaping will award it's practitioners with one {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every sapient being they kill. At this rank reaping is an itch in the back of your mind, a slight desire to draw ever more strength from battle. You will feel the urge to learn more reaping, but it will only get worse from here. 
+At rank 1 reaping will award it's practitioners with one {magician _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every sapient being they kill. At this rank reaping is an itch in the back of your mind, a slight desire to draw ever more strength from battle. You will feel the urge to learn more reaping, but it will only get worse from here. 
 
 ### Rank 2
-At rank 2 reaping awards 3 {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every sapient being they murder. Reaping is now roughly as addictive as sugar, which might not sound to bad to those who have never tried to cut sugar out of their diet, but it's not as easy as you might imagine.
+At rank 2 reaping awards 3 {magician _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every sapient being they murder. Reaping is now roughly as addictive as sugar, which might not sound to bad to those who have never tried to cut sugar out of their diet, but it's not as easy as you might imagine.
 
 ### Rank 3
-At rank 3 reaping awards 6 {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every death of a sapient they cause to die, and is roughly as habit forming and hard to quit as alcohol. Expect any withdrawals to be uncomfortable. 
+At rank 3 reaping awards 6 {magician _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every death of a sapient they cause to die, and is roughly as habit forming and hard to quit as alcohol. Expect any withdrawals to be uncomfortable. 
 
 ### Rank 4
-At rank 4 reaping awards 10 {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every sapient life brought to an end. At this stage reaping is roughly as habit forming and difficult to quit as tobacco. Practitioners also unlock the ability to __Drain__ magical talent from their victims (every time you kill another witch there is a 1/50 chance of learning one rank of a magic that they have a higher rank in than you). 
+At rank 4 reaping awards 10 {magician _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} for every sapient life brought to an end. At this stage reaping is roughly as habit forming and difficult to quit as tobacco. Practitioners also unlock the ability to __Drain__ magical talent from their victims (every time you kill another witch there is a 1/50 chance of learning one rank of a magic that they have a higher rank in than you). 
 
 ### Rank 5
-At the fifth rank of reaping practitioners are awarded with 20 {academic _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} per murder, and __Drain__ has a 1/10 chance. Reaping is now as addictive and difficult to quit as heroin, without help you wont be able to resist the urge to kill, not for long. It is widely agreed that anyone who learns this rank of reaping is either a complete fool or an utter monster.
+At the fifth rank of reaping practitioners are awarded with 20 {magician _*Focus*_}/{sorceress _*Might*_}/{warlock _*Favour*_} per murder, and __Drain__ has a 1/10 chance. Reaping is now as addictive and difficult to quit as heroin, without help you wont be able to resist the urge to kill, not for long. It is widely agreed that anyone who learns this rank of reaping is either a complete fool or an utter monster.

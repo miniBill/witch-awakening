@@ -22,6 +22,7 @@ type alias Enum =
 
 type alias Variant =
     { name : String
+    , synonyms : List String
     , arguments : List Argument
     , dlc : Maybe String
     , toStringException : Maybe String

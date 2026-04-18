@@ -47,7 +47,7 @@ Asa a Witch you may repair your mask if its damaged or broken. This will require
 
 
 ## Perk: Inheritance
-- Class: Academic
+- Class: Magician
 - Element: Mind
 - Meta: True
 - Cost: 15
@@ -72,7 +72,7 @@ This is specific to your pocket dimension however you may perform this on anothe
 
 
 ## Perk: Potion Forgery
-- Class: Academic
+- Class: Magician
 - Element: Water
 - Cost: 4
 

@@ -15,7 +15,7 @@ With Ministration, you can consult your celestial summons for cryptic insights t
 
 ## Perk: Jack-of-All
 - Element: Mind
-- Class: Academic
+- Class: Magician
 
 "Oh. Looks like I was wrong about the rank 5 magic". You lose the ability to take any magic to rank 5. In return, you gain either
 
@@ -27,7 +27,7 @@ You’re also now competent in every mundane skill sufficient to compete on a re
 
 ## Perk: Transformation Sequence
 - Element: All
-- Class: Academic
+- Class: Magician
 
 You can keep your current human body or redesign it separately, and you have the ability to do a 1-10 second long transformation sequence that swaps between your human and witch body. As a human you can still see through the Veil like a witch but you can only use Perks with a base cost under 6, Relics, and Rank 1 magic until you transform into your witch form. Your human form _can_ be the opposite sex to your witch form. This can also equip Mothergifts.
 
@@ -64,7 +64,7 @@ You passively emanate an electric aura that fills the air with a harmless sense 
 
 ## Perk: Conjuration
 - Element: All
-- Class: Academic
+- Class: Magician
 - Requires: Consortation 1+
 - Cost: 6
 
@@ -85,7 +85,7 @@ If you don’t want to be male but just want the twig ’n berries for some fun,
 
 ## Perk: Prestidigitation
 - Element: All
-- Class: Academic
+- Class: Magician
 - Cost: 2
 
 A universalist bag of magic tricks, the magician’s toolkit.
@@ -137,7 +137,7 @@ By this same token, they’re immune to chemical or magical attempts to make the
 
 ## Perk: Third Eye
 - Element: Soul
-- Class: Academic
+- Class: Magician
 - Cost: 4
 
 Witches normally have an unseen third eye, it’s how we see spirits. Some achieve a second awakening of this eye, allowing them to see auras possessed by all lifeforms and spirits. Every witch has a unique aura, but an aura will retain some constants regardless of shape or mood that can be used as a more secure fingerprint for ID left by magic use in an area, or on their person. Seeing an aura can also accurately read the emotional state of the creature.
@@ -155,7 +155,7 @@ Some witches have this power to manifest these creatures made of jelly-like spir
 
 ## Perk: Hat Trick
 - Element: All
-- Class: Academic
+- Class: Magician
 - Cost: 4
 
 Greatly enhances the mothergift of Witchery, allowing telekinetic control over the Garment, Hat, and Rod irrespective of difference or line of sight.
@@ -236,7 +236,7 @@ Think Taskmaster from those Marvel books a lot of humans love. Perfect execution
 
 ## Perk: Maid Hand
 - Element: Mind
-- Class: Academic
+- Class: Magician
 - Cost: 4
 
 Create psychological constructs, manifest as unseen telekinetic masses. Each construct acts as an _unseen servant_ capable of autonomously handling basic acts of service compared to a minimally competent maid or butler that’s responsive to commands and orders that it will continue to act out until you stop it, tell it to do something else, or it meets a requirement such as a time or condition. You are always aware of where your constructs. are despite being invisible even to spirit sight, but you can provide them with clothes that they can fill out as though they had a human shape. Maximum number of 3 + ranks in Hexes and Psychotics.
@@ -244,7 +244,7 @@ Create psychological constructs, manifest as unseen telekinetic masses. Each con
 
 ## Perk: Hot Swap
 - Element: Metal
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 Your witchery is capable of adapting itself to any weapon (rod) and armor or helmet (garment and hat) that you have stored in your pocketspace. when you call your mothergifts, you can call any armor/clothing, or weapon you have within it. It is treated as being your gift, but you can’t alter its appearance. In addition, whenever you unsummon your mothergift you can immediately resummon it in the same instance, dynamically replacing unsummoned parts with a new summon as you change from one outfit/armor to another. The equipment you possess can still be broken or damaged as normal and would require normal repairs unlike your actual mothergifts.
@@ -279,7 +279,7 @@ Originated by a male witch, _John Moses Browning_, you can ritually bond with a 
 
 ## Perk: Levitation
 - Element: All
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 Your relationship with space is pretty relative. You can move yourself omnidirectionally through space as though moving reality relative to you rather than moving your body itself. You’d appear to levitate as you wish and never need to touch the ground again You can disconnect any object you touch to be severed from the effects of gravity and it would remain as you last left it unless acted upon by another force, though acting as though it had notable friction to slow itself or resist wind. You “fly” at up to 25mph, as casual to you as a light jog. If you have Witchery, you add your potential speed if you were to use your broomstick, though you need not actually use it to gain speed.
@@ -321,7 +321,7 @@ You gain the blessing of a wind spirit, or the wind spirit unlocks an aspect of 
 
 ## Perk: Broom Beast
 - Element: All
-- Class: Academic
+- Class: Magician
 - Costs: 1-3-9
 
 Your mastery over a broomstick is especially noteworthy. Your broom is like a proper extension of your will. For [1], Whether or not you have ranks in Witchery, you can summon your Rod in the form of a Broomstick near instantaneously to your hand and you can telekinetically command its flight remotely. For another [2], it has the speed of an arrow, up to 250 feet per second. This stacks with broom speed from other sources. You can maneuver it with similar agility to a sportsbike, so do watch out for sharp turns.
@@ -351,7 +351,7 @@ Be reborn as a the child of a particular lineage of your choice. You can also or
 
 ## Perk: Mirror Mirror
 - Elements: Water, Metal
-- Class: Academic
+- Class: Magician
 - Requires: Waterworking or Metallurgy
 - Cost: 15
 
@@ -401,7 +401,7 @@ This affects your [Windkeeping] lightning, and the wind effects themselves may b
 
 ## Perk: Summer School
 - Element: Life
-- Class: Academic
+- Class: Magician
 - Meta: True
 - Extra Argument: List Magic
 - Costs: 4-8-20
@@ -454,7 +454,7 @@ Improves your pocketspace. Take _Time Stop Chill Zone_ by Rosanon [https://imgch
 
 ## Perk: Improved Rod
 - Element: Soul
-- Class: Academic
+- Class: Magician
 - Meta: True
 - Costs: 6-26
 
@@ -465,7 +465,7 @@ Using your improved Rod, you are able to create Cantrips via Cantrip CYOA. [http
 
 ## Perk: Witch... hut?
 - Element: Life
-- Class: Academic
+- Class: Magician
 - Meta: True
 - Cost: 15
 
@@ -501,7 +501,7 @@ Choose any listed creature for 2 Power per soul point. (So you could choose a Re
 
 ## Perk: Magic Shop
 - Element: Life
-- Class: Academic
+- Class: Magician
 - Meta: True
 - Costs: 6-28
 
@@ -512,7 +512,7 @@ Instead of locations presented by those cyoas, you can if you wish, choose any l
 
 ## Perk: Keeper
 - Element: Life
-- Class: Academic
+- Class: Magician
 - Meta: True
 - Costs: 15, 20, 30, 45, 60, 75, 90, 105, 120, 135, 150
 

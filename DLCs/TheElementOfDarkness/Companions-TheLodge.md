@@ -2,7 +2,7 @@
 
 ## Companion: Elodie Lylou
 - Faction: The Lodge
-- Class: Academic
+- Class: Magician
 - Races: Luxal, Shadeglass
 - Cost: 4
 - Power: 2
@@ -84,7 +84,7 @@ As a career bodyguard working for her cabal since the late 1600s, Rose is one of
 - Faction: The Lodge
 - Cost: 6
 - Race: Neutral
-- Class: Academic
+- Class: Magician
 - Quote: _*“Let me show you the world of Zabathina, I helped save them from a wandering demon-lord years ago and I still get the celebrity treatment” -Cathrine*_
 - Positive: + Can show you incredible wonders on distant worlds
 - Positive: + Excellent book recommendations, will let you borrow from her personal library
@@ -124,7 +124,7 @@ Lenneth is a storied Lodge member who has done it all in her time, and now spend
 - Faction: The Lodge
 - Cost: 15
 - Race: Daeva
-- Class: Academic
+- Class: Magician
 - Quote: _*“Hmf, not bad, keep it up.” - Grant, trying to hide how thrilled he was to see his student’s brilliant use of elementalism.*_
 - Has: Grant has Firecalling 5, Windkeeping 4, and Earthmoving 4, and a _Sunshard_.
 - Positive: + More experience teaching new witches than you’re likely to find anywhere else

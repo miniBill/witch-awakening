@@ -2,7 +2,7 @@
 
 
 ## Magic: Digicasting
-- Class: Academic
+- Class: Magician
 - Faction: The College of Arcadia
 - Elements: Soul, Mind, Life
 
@@ -25,7 +25,7 @@ At rank 5, you can digitize yourself in the real world at-will, adopting a form 
 
 
 ## Magic: Wands
-- Class: Academic
+- Class: Magician
 - Faction: Hawthorne Academia
 - Elements: All
 
@@ -130,7 +130,7 @@ When you return, the scythe merges with you, leaving you shadowed or void-black.
 
 
 ## Magic: Dominion
-- Class: Academic
+- Class: Magician
 - Faction: Lunabella
 - Elements: Nature, Earth, Wind
 - Has rank zero: True

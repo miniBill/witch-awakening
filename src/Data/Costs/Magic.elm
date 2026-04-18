@@ -76,12 +76,12 @@ value { ignoreSorceressBonus } model =
                                         Nothing ->
                                             Dict.empty
 
-                            Just ClassAcademic ->
+                            Just ClassMagician ->
                                 if model.capBuild then
                                     pointsList
                                         |> List.sortBy .power
                                         |> List.take 2
-                                        |> List.map (\magic -> ( magic.name, "[Academic]" ))
+                                        |> List.map (\magic -> ( magic.name, "[Magician]" ))
                                         |> Dict.fromList
 
                                 else

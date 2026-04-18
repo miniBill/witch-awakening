@@ -1,7 +1,7 @@
 # Core
 
 ## Relic: HexVPN
-- Class: Academic
+- Class: Magician
 - Cost: 2
 
 The ultimate in secure internet access. HexVPN routes your internet traffic through a literal blackbox. The ominous hovering black cube with fractal engravings completely masks your connection in ways mortal VPNs can’t; Your traffic won’t even be seen or register as a request, and it allows you to access any public website that would otherwise have a paywall. No more sharing netflix accounts, and no region locks, rocking 666 TB/s up and down.
@@ -64,7 +64,7 @@ The book of the woeful dead. Using this, you can combine the disciplines of Necr
 
 
 ## Relic: Alchemist Stone
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 A ruby gem that can bond with your rod (Witchery), to augment it with a transmutation catalyst that acts as a reusable medium for using Hexes. Begins as a Rank 1 medium, you can upgrade it to let it work as a higher rank medium by letting it absorb 1 ton of materials of the higher rank. It can also store any amount of Kisses to use for magic, such as Alchemy, and Runes.
@@ -144,7 +144,7 @@ This adamantine tower shield can adjust its size from a dinner plate to up to tw
 
 
 ## Relic: Alchemist Stash
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 This set of belts, garters, and threads allows you to store potions and similar sized items beneath skirts, dresses, or simply in cloaks. Any item stored in the Alchemist’s Stash can instantly be called to your hand with no delay, appearing in the blink of an eye When not visible, the items leave no distortion on the clothing, neither do they clank, weigh you down, or are they felt, as though they were not there at all until you lift the hem or otherwise reveal them. They can’t be damaged when not visible. If you have Witchery, these can integrate with your mothergifts and appear when your garment is called. Stored potions are 20% more effective.
@@ -192,7 +192,7 @@ The magic it possess can be any magic specialization, with no penalty or restric
 
 
 ## Relic: Treasurer’s Mint
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 Your very own proper Kiss Mint, a small cube which expands into a room sized chamber within which a large treasure chest can be the focus of the ritual to mint a new Kiss. Instead of minting a single kiss, a 10 minute ritual will mint the entire chest full of Kisses, provided you have a chest full of small copper coins. 5 chests of small coppers can be transmuted into a chest of large coppers. 5 chests of large coppers produce a chest of small silvers. 4 chests of small silvers produce a chest of large silvers, 10 chests of large silvers produce a chest of small golds, of which 10 produce a chest of large golds. You can skip steps by performing an equivalent ritual time using an equivalent quantity of initial materials.
@@ -226,7 +226,7 @@ Basic riftblades look like mirrors The blade can still be shattered as described
 
 
 ## Relic: Life Record
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 These somewhat dangerous keys are often destroyed on sight by Hawthorne and the ORC, while the Watchers, Hespatians, and Alphazons would kill to acquire them. This key lets you tap any manner of depiction of a target individual to enter the Index of Everything, specifically the All Archive wing in a research center, though you can’t leave it to go anywhere else in the archive.
@@ -256,7 +256,7 @@ Long crude iron spikes that are infused with the immortality curse. A being pier
 
 
 ## Relic: Secret Elixir
-- Class: Academic
+- Class: Magician
 - Cost: 12
 
 A very illusive potion, the creation process known by Alphazon executives and Hespatian Crowns. You will come across one. Drinking the full bottle, tiny as it is, imbues you with the ability to craft the potion yourself if you have Potions 5. A single drop is an undetectable, untraceable poison that causes death in a completely random manner in a random time within 1 month. 2 drops will make a person turn inside out. 3 drops will sever a witch’s ability to use magic, or undo the effects... Or make a human a witch with a random witch type and 3d20 Power they’ll grow into. 12 drops per bottle.
@@ -273,7 +273,7 @@ This pearl of great power is less of a material object than it is a tangible fol
 
 
 ## Relic: Witch Deck
-- Class: Academic
+- Class: Magician
 - Cost: 6
 
 You have a deck of 60 blank cards that can be used by having a witch or other supernatural entity sign the card and provide a drop of blood or rough equivalent. In doing so, you can now summon a complete duplicate of that entity using the card, once per 24hr until dismissed or destroyed/slain, only one instance of the same entity at a time. The entity in turn if ever slain in a way that would have been permanent (or first regardless of other methods if they choose), can hijack the next instance you use that card (which will have a golden glow on it) in order to return to return to life but under your control for 24hrs. You can sign a card yourself to spawn a duplicate you. Personalities remain intact but memories aren’t.
@@ -305,7 +305,7 @@ Fortunately, the inking / painting process is more cost efficient than classical
 
 
 ## Relic: Spell Bullets
-- Class: Academic
+- Class: Magician
 - Cost: 4
 
 A special arcane reloading bench allows you to use 1 Kiss, to produce magic bullets patterned after any other bullet.
@@ -325,7 +325,7 @@ Relics of witch involvement during the World Wars, in a parallel conflict referr
 
 
 ## Relic: Witch Pistol
-- Class: Academic
+- Class: Magician
 - Cost: 4
 
 You have a particular form of wand in the shape -- roughly – of a pistol. This can be a Master Wand if you possess that perk. It can be separate from or it can be a form of your Rod. You can buy this again for spare wand-pistols, (though they all count as the same master wand). They can be loaded with Spell Bullets, disappearing into the wand when pressed against it. By default, the wands can shoot energetic projectiles comparable to a 9mm With infinite ammo. Or you can forgo a second pistol to upgrade the caliber of the base projectile. 9mm - .45 - 225 - .50. Using the wand you can extend the range of your magic by 300m by changing the origin of the spell to on-hit, likely with increased projectile velocity vs the normal spell’s own.
@@ -375,14 +375,14 @@ This jagged prism of light appears as a 2 dimensional reverse silhouette of ligh
 
 
 ## Relic: Hydron
-- Class: Academic
+- Class: Magician
 - Cost: 2
 
 This masterwork cauldron is prized among potionmakers. These cauldrons are able to brew six different potions within the same pot all at once by pouring or inserting separate ingredients in through the six different “heads” adorning the cauldron, Shared ingredients like water can go in through the main opening. The six heads can be lowered down and opened/closed to pour that batch of potion out like a nozzle. By starting with an empty hydron, you can pour functional potions into the heads to mix the potions into a singular potion with the effects of all at once distilled into a single vial.
 
 
 ## Relic: Collection
-- Class: Academic
+- Class: Magician
 - Costs: 1-9
 
 Rather than a relic, I’ll let you have a go at my collection of potions and rune-charmed trinkets, up to Rank 4. -1 per potion, -3 per rune charmed trinket. Limit 3 potions and/or 2 tunes. Cost is totaled as one purchase.

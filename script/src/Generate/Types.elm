@@ -334,13 +334,22 @@ fromStringDeclaration { lowerName, type_ } { name, variants } =
         (if isEnum variants then
             Elm.Case.string value
                 { cases =
-                    List.map
+                    List.concatMap
                         (\variant ->
-                            ( variant.toStringException
-                                |> Maybe.withDefault variant.name
-                                |> String.replace "\"" "\\\""
-                            , Gen.Maybe.make_.just <| Elm.val <| name ++ yassify variant.name
-                            )
+                            let
+                                base : ( String, Elm.Expression )
+                                base =
+                                    ( variant.toStringException
+                                        |> Maybe.withDefault variant.name
+                                        |> String.replace "\"" "\\\""
+                                    , justCtor
+                                    )
+
+                                justCtor : Elm.Expression
+                                justCtor =
+                                    Gen.Maybe.make_.just <| Elm.val <| name ++ yassify variant.name
+                            in
+                            base :: List.map (\synonym -> ( String.replace "\"" "\\\"" synonym, justCtor )) variant.synonyms
                         )
                         variants
                 , otherwise = Gen.Maybe.make_.nothing

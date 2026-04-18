@@ -74,7 +74,7 @@ The world is shifted towards a degree of _lewdity_, you can determine for yourse
 
 
 ## Complication: Vulnerability
-- Class: Academic
+- Class: Magician
 
 Choose one serious Weakness. Weakness bypasses Affinity resistances, negating it.
 
@@ -93,7 +93,7 @@ Familiars aren’t affected.
 
 
 ## Complication: Crutch
-- Class: Academic
+- Class: Magician
 - Gain: 4
 
 You can’t use magic on your own, you have to rely on a specially prepared magical medium; Wands, Staves, Tomes, Crystal Balls, Decks of arcana cards, and so on. Without a medium, you cannot use magic.
@@ -123,7 +123,7 @@ Something about you rubs people the wrong way, it’s harder to find wholesome t
 
 
 ## Complication: Monster Bait
-- Class: Academic
+- Class: Magician
 - Gain: 4
 
 Something about your awakened soul is like a siren’s call to monstrous entities. Different monsters may be after you for and per witch type. Monster encounters greatly increased.
@@ -153,7 +153,7 @@ If Sylph, you’d actively float like a helium balloon.
 
 
 ## Complication: Like a rock
-- Class: Academic
+- Class: Magician
 - Gain: 2
 
 You’re twice as heavy, and sink through water as though it were air, yet move through it twice as slow as though walking through jello. Not incompatible with duck. With both, you’ll be lightweight to enemies, heavy otherwise, and sink in water.
@@ -169,14 +169,14 @@ In short, anything you do to draw attention to yourself draws significantly more
 
 
 ## Complication: Silly Goose
-- Class: Academic
+- Class: Magician
 - Gains: 1, 2
 
 Your true form is younger than normal, anywhere between 6 and 14, but on top of that it’s abnormally hard for people to take you seriously. You tend to melt hearts when they see you and it seems to dumb people down, similar to seeing a really adorable kitten and instinctively talking down, magnified a few times. They’re generally dismissive with presumption that you’re being imaginative, or mistaken about something. If it’s any consolation, they’ll likewise resist believing you did something wrong, depending, You are more excitable and do have an overactive imagination. For [1] instead of [2], you can have the age curse only. Persistent.
 
 
 ## Complication: Hard Lessons
-- Class: Academic
+- Class: Magician
 - Gain: 8
 
 Magic just refuses to “click” fo you, struggling harder to learn or train your magic, or keep managing to do something to displease your patron, the effect is the same: You have half the rate of Power gain from your witch type, and once you cement the ability in question, you still take longer to get the hang of actually utilizing the magic properly, requiring more practical practice before at full efficiency.
@@ -220,7 +220,7 @@ You have an addiction of some form. You cannot go more than a week without it wi
 
 
 ## Complication: Sensory Disability
-- Class: Academic
+- Class: Magician
 - Gains: 2, 4, 5, 6, 7, 9, 10, 12, 15
 
 You have a sense that doesn’t function properly. Any of the 5 senses. Compared to sight; You’d be very nearsighted and have to squint to read normal sized text from around 1ft Hearing would mean you’d not notice someone whispering 5ft away, and their casual speaking volume would be muffled. With scent, you can only faintly smell something directly under your nose. With touch, you feel only about 10% the pleasure or pain someone else would and wouldn’t notice a squirrel climbing up your leg, and you’d only faintly feel a cat digging its claws into your back. Stepping on a Lego would be tolerable. With taste, you only taste extremes, So you might have to enjoy food in other ways like with heat or texture, or very oversaturated flavors. For 5p, you’re completely missing a sense instead.
@@ -229,7 +229,7 @@ Can take up to 3 times.
 
 
 ## Complication: Physical Disability
-- Class: Academic
+- Class: Magician
 - Gains: 2, 4, 6, 8
 
 For some reason your true form is missing a limb as a core part of your identity, your true form is a manifestation of the reality of your being, so it’s a little more important than that.
@@ -293,7 +293,7 @@ Normally the veil would hide unnatural features while something like a guy becom
 
 
 ## Complication: Nightmares
-- Class: Academic
+- Class: Magician
 - Gain: 6
 
 You’ll have a split soul torn between our universe, and a mundane universe where magic doesn’t exist. When you sleep, which you’ll require at regular intervals regardless of magic or perks, (At least once a week) you’ll “Wake” in the other world, an alt-Earth where Soviet Russia conquered the world as the first to develop nukes. If you aren’t useful to society, you’re considered a parasite... and are suspicion for past ramblings about the other world and magic prior to you “waking up”. Try not to end up lobotomized and turned into an automata slave, which can happen for a variety of causes, including accusations of anti-Party conspiracy or an officer’s word Whenever you die, you relive it again from the point you originally entered it to do it all over.
@@ -348,7 +348,7 @@ I’m not doing this for free, the process I devised incorporates a slave crest 
 
 
 ## Complication: No Privacy
-- Class: Academic
+- Class: Magician
 - Gain: 8
 
 I’ve been under a lot of scrutiny lately, there’s a good chance that some bad actors are watching me right now and by performing this ritual, it will advertise your witch awakening across open channels. All your information about you will be leaked, they’ll know everything about you on quite the intimate level. They’ll see everything that you select in this process, from my perspective, a third person perspective, seeing your face and body. Knowing your weaknesses and strengths, your magic, what quests are in your future, and what factions you’re likely to interact with later. On the plus side, your allies will be closer, but so will your enemies, and they’ll know where you are for the first week.
@@ -373,7 +373,7 @@ The bounty will make your life very chaotic to slowly taper off after months or 
 
 
 ## Complication: Defeated
-- Class: Academic
+- Class: Magician
 - Gain: 6
 
 You’re fate-bound to suffer a major defeat at some point and you’ll be at the mercy of your enemy for some amount of time, until they will decide to kill you in a predestined death. What is not predestined, is whether they interrupt your method of cheating death. Whatever your method they will at least ensure that you do die, so an Immortality Curse would be overcome for example. You’ll want to make preparations and plans such that your method of cheating death can be preserved or recovered from the scene and into safe hands, such as having Companions steal your body back, or intercepting your dryad’s seed or draviri egg for example. This could occur during a Quest, without failing the quest.
@@ -405,7 +405,7 @@ You’re not actually a witch, you’re a _Witchknight_. A true witch who might 
 
 
 ## Complication: Inadequacy
-- Class: Academic
+- Class: Magician
 - Gain: 2
 
 No matter how objectively powerful or capable you may be, you will be plagued with imposter syndrome, feeling like you don’t belong, that you’re nothing special and that others would be better suited to any given situation you find yourself. You’ll always suggest others take the role you’d be best at and try to stick to the back or cheer another on, only stepping in if others insist but you’ll still doubt yourself all along the way. Won? A fluke.
@@ -414,7 +414,7 @@ You’ll never feel like you’re good enough, at least not until you find someo
 
 
 ## Complication: Dysphoria
-- Class: Academic
+- Class: Magician
 - Gain: 2
 
 The changes brought on by awakening click in your brain in the wrong way, cementing the idea in your head that this body is alien to you, that this isn’t right. Who is that in the mirror?

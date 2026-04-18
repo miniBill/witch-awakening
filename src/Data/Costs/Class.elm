@@ -14,7 +14,7 @@ value model =
                 ClassWarlock ->
                     Monad.succeed (Points.fromRewardPoints 20)
 
-                ClassAcademic ->
+                ClassMagician ->
                     Monad.succeed Points.zero
 
                 ClassSorceress ->

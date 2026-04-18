@@ -10,7 +10,7 @@ This ability used to be really common in the faewild. It works similar to mintin
 
 ## Perk: The Marshmallow Test
 - Element: Mind
-- Class: Academic
+- Class: Magician
 - Cost: 4
 
 From the moment you acquire this perk you gain Focus/Might/Favor twice as fastâ€¦ until you actually use those on any power or reward points, meaning that you can stockpile Focus/Might/Favor and even use them on a temporary ranked magic boost, but the moment you convert Focus/Might/Favor or even Reward Points into Power points you lose the boost this perk gives you. You also may still spend Reward Points from Quests on Relics and Companions.
@@ -18,7 +18,7 @@ From the moment you acquire this perk you gain Focus/Might/Favor twice as fastâ€
 
 ## Perk: Slow Acting Potion
 - Element: Body
-- Class: Academic 
+- Class: Magician 
 - Requires: Alchemy 2+
 - Cost: 3
 
