@@ -28,6 +28,7 @@ import Gen.String
 import Generate
 import Generate.Gradient
 import Generate.Image
+import Generate.Utils as Utils
 import List.Extra
 import List.Nonempty
 import Maybe.Extra
@@ -330,7 +331,7 @@ fontsElmFile files =
         |> List.Extra.unique
         |> List.map
             (\family ->
-                Elm.declaration (String.replace " " "_" family) (Gen.Html.Attributes.style "font-family" family)
+                Elm.declaration (Utils.yassify family) (Gen.Html.Attributes.style "font-family" family)
                     |> Elm.expose
             )
         |> Elm.file [ "Generated", "Fonts" ]
