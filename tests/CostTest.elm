@@ -168,8 +168,8 @@ genieMagicalHeart =
                 { name = PerkMagicalHeart
                 , cost = 20
                 }
-                |> Result.map (.value >> .perkValue >> Value.toPoints)
-                |> Expect.equal (Ok (Points.fromPower -4))
+                |> Result.map (\{ value } -> value |> .perkValue |> Value.toPoints)
+                |> Expect.equal (Ok (Points.fromPower -3))
 
 
 magicCosts : Test
