@@ -333,7 +333,7 @@ fontsElmFile files =
                 Elm.declaration (String.replace " " "_" family) (Gen.Html.Attributes.style "font-family" family)
                     |> Elm.expose
             )
-        |> Elm.file [ "Fonts" ]
+        |> Elm.file [ "Generated", "Fonts" ]
 
 
 imagesElmFile :
