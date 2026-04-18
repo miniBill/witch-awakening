@@ -5,6 +5,7 @@
         "elm-pages": "^3.3.4"
     },
     "scripts": {
-        "start": "bunx elm-pages run src/Main.elm"
+        "start": "bunx elm-pages run src/Main.elm",
+        "watch": "watchexec -c -w elm-build/src -w src -w ../DLCs -w ../media 'bun start'"
     }
 }
