@@ -2,6 +2,7 @@
 .PHONY: build
 build:
 	(cd script; bun start)
+	chmod -R a=rwX out || true
 	rm -rf out
 	mkdir -p out
 	mkdir -p out/public
@@ -10,6 +11,7 @@ build:
 	cp -r index.html favicon.ico favicon out
 	cp -r public/* out/public
 	cp build/main.js out/build
+	chmod -R a=rX out
 
 .PHONY: run
 run:
