@@ -73,7 +73,7 @@ fontToAttributes : Font -> List (Attribute msg)
 fontToAttributes font =
     case font of
         CaptureIt ->
-            [ Element.htmlAttribute Fonts.capture_it
+            [ Element.htmlAttribute Fonts.captureIt
             , Element.htmlAttribute (Html.Attributes.style "text-transform" "uppercase")
             ]
 
@@ -81,7 +81,7 @@ fontToAttributes font =
             [ Element.htmlAttribute Fonts.celticHand ]
 
         BebasNeue ->
-            [ Element.htmlAttribute Fonts.bebas_Neue ]
+            [ Element.htmlAttribute Fonts.bebasNeue ]
 
         Morpheus ->
             [ Element.htmlAttribute Fonts.morpheus ]
