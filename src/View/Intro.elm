@@ -38,7 +38,27 @@ viewTitle allCompact =
     else
         Theme.column
             [ width fill ]
-            [ mainLogo
+            [ paragraph [ Theme.padding, Font.center ]
+                [ text "This interactive is in the process of being updated to "
+                , Element.newTabLink [ Font.underline ]
+                    { url = "https://old.reddit.com/r/makeyourchoice/comments/1sjh0cb/witch_awakening_update_4_blade_grace/"
+                    , label = text "version 4"
+                    }
+                , text ". Version 3.5 will be permanently available "
+                , Element.newTabLink [ Font.underline ]
+                    { url = "https://witch-awakening-v3.5.taglialegne.it"
+                    , label = text "here"
+                    }
+                , text "."
+                ]
+            , paragraph [ Theme.padding, Font.center ]
+                [ text "Saves from v3.5 should be compatible with v4, if not feel free to message me "
+                , Element.newTabLink [ Font.underline ]
+                    { url = "https://old.reddit.com/user/cmt_miniBill/"
+                    , label = text " on reddit."
+                    }
+                ]
+            , mainLogo
             , Theme.column
                 [ centerX
                 , Element.paddingEach
@@ -52,13 +72,13 @@ viewTitle allCompact =
                     [ Font.center
                     , Font.size 52
                     ]
-                    [ Theme.gradientText Morpheus [] 4 Gradient.grayGradient "Heavy Metal"
+                    [ Theme.gradientText Morpheus [] 4 Gradient.orangeGradient "Blade"
                     , text " "
-                    , Theme.gradientText Morpheus [] 4 Gradient.yellowGradient "&"
+                    , Theme.gradientText Morpheus [] 4 Gradient.grayGradient "&"
                     , text " "
-                    , Theme.gradientText Morpheus [] 4 Gradient.orangeGradient "Witch Party"
+                    , Theme.gradientText Morpheus [] 4 Gradient.blueGradient "Grace"
                     , text " "
-                    , Theme.gradientText Morpheus [] 4 Gradient.yellowGradient "Update"
+                    , Theme.gradientText Morpheus [] 4 Gradient.grayGradient "Update"
                     ]
                 , paragraph
                     [ alignRight
