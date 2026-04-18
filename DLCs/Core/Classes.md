@@ -14,9 +14,9 @@ Any option marked with the {magician *blue*} icon has a flat cost reduction of -
 
 *Advantage*: General use magic and classics. Magicians favor mixed bags like Potions, Runes, and Portals.
 
-Any magic marked with blue used by a magician produces twice the yield or is half as time consuming, mana draining, or tiresome to use. Two potions for the price of one, two runes for the price of one, etc.
+Any magic marked with {magician blue} used by a magician produces twice the yield or is half as time consuming, mana draining, or tiresome to use. Two potions for the price of one, two runes for the price of one, etc.
 
-Any duration of a blue marked magic effect applied by you, to you or to another, lasts twice as long.
+Any duration of a {magician blue} marked magic effect applied by you, to you or to another, lasts twice as long.
 
 For example, double the duration of a temporary potion.
 
@@ -26,11 +26,16 @@ A magician can study to master any two schools of magic for free, but takes time
 ## Class: Sorceress
 - Color: ff0000
 
-Sorceresses are inherently imbued with magic as natural extensions of their will so they tend to be more in tune with their bodies and grow through tactile training. They’re naturals but tend to have less of a tangible understanding of how and why magic works or interesting implications of magical theory. Fireballs go boom, ain’t gotta explain sheit. Sorceresses gain 1 {sorceress _*Might*_} for every day in which they averaged 1 hour of straining practice, 2 for 4 hours. You can use Might to buy a Power point for 10 Might. This cost increases by 10 Might per purchase. (10, 20, 30, etc)
+*Sorceresses* are inherently imbued with magic as natural extensions of their will so they tend to be more in tune with their bodies and grow through tactile training. They’re naturals but tend to have less of a tangible understanding of how and why magic works or interesting implications of magical theory. Fireballs go boom, ain’t gotta explain sheit.
 
-__Start with [30] power__. Player sorceresses eventually cap out at [100] _power_ before other factors like complications. Any option marked with the {sorceress *red*} icon has a flat cost reduction of -2 Power to its price, which can reduce it to 0, or become a gain of 1 point, or complications give 2 more power. This applies only once per option. Once per Magic specialization, once per perk, etc, and always applies first.
+Sorceresses gain 1 {sorceress _*Might*_} for every day in which they averaged 1 hour of straining practice, 2 for 4 hours. You can use Might to buy a Power point for 10 Might. This cost increases by 10 Might per purchase. (10, 20, 30, etc)
 
-*Advantage*: Inner power and direct combat usage. Sorceresses favor direct magic like Elementalist magic. They are not limited by affinity when buying elementalist magics of affinities they do not have, and one that matches their affinities can be taken for free.
+__Start with [30] power__. Player sorceresses eventually cap out at [100] _power_ before other factors like complications.
+
+Any option marked with the {sorceress *red*} icon has a flat cost reduction of -2 Power to its price, which can reduce it to 0, or become a gain of 1 point, or complications give 2 more power. This applies only once per option, and always applies after other discounts.
+
+*Advantage*: Inner power and direct combat usage.
+Sorceresses favor direct magic like Elementalist magic. They are not limited by affinity when buying elementalist magics of affinities they do not have, and one that matches their affinities can be taken for free.
 
 Sorceresses have stronger and more unique auras that are like beacons to anyone who can detect them. This aura can color any elemental magic the sorceress uses, such as white flames, gold stone, black water, or prismatic wind. This includes Naturalism. If they choose to use colored elementalism, then that magic is 50% more damaging, with 50% larger areas of effect and range.
 
@@ -38,10 +43,17 @@ Sorceresses have stronger and more unique auras that are like beacons to anyone 
 ## Class: Warlock
 - Color: 19ad00
 
-Warlocks are endowed with power from some third party. Their power can’t be taken back afterward anymore than such an entity might be capable of stealing power from any other witch. Instead of studying, or training, they spend time in service, partnership, employ, or worship to a patron. They grow by gaining with their patron(s), by doing quests, the Warlock gains {warlock _*Favor*_} equal to the Reward value of the quest, Warlocks can trade Favor 1-1 directly for Power due to the scarcity, being dependent on Quests. A Warlock can continue to do quests without a quest slot, but doing so offers no rewards except Favor.
+Warlocks are endowed with power from some third party. Their power can’t be taken back afterward anymore than such an entity might be capable of stealing power from any other witch. Instead of studying, or training, they spend time in service, partnership, employ, or worship of a patron.
 
-__Start with [30] power__. Player warlocks eventually cap out at [100] _power_ before other factors like complications. Any option marked with the {warlock *green* }icon has a flat cost reduction of -2 Power to its price, which can reduce it to 0, or become a gain of 1 point, or complications give 2 more power. This applies only once per option. Once per Magic specialization, once per perk, etc, and always applies first.
+They grow by gaining {warlock _*Favor*_} with their patron(s), by doing quests, the Warlock gains Favor equal to the Reward value of the quest. Warlocks can trade Favor 1-1 directly for Power due to the scarcity, being dependent on Quests. A Warlock can continue to do quests without a quest slot, but doing so offers no rewards except Favor.
 
-*Advantage*: Darker and external magics, Relic usage. Warlocks favor indirect power like Hexes and Curses. They have a personalized brand they can mark on any relic they own or willing creature. They always know the location of one of their marks and when anyone else touches it, and a stronger sensation like an alarm if any harm comes to it. Branded creatures can be affected by the warlock’s magic at any distance and the mark can be the target of things such as scrying even if the warlock doesn’t know where it is.
+__Start with [30] power__. Player warlocks eventually cap out at [100] _power_ before other factors like complications.
 
-Warlocks can immediately start with {20} Reward Points to purchase relics that are infused in their own soul, summoned the same way as Mothergifts. (See Witchery)
+Any option marked with the {warlock *green*} icon has a flat cost reduction of -2 Power to its price, which can reduce it to 0, or become a gain of 1 point, or complications give 2 more power. This applies only once per option, and always applies after other discounts.
+
+
+*Advantage*: Darker and external magics, Relic usage. Warlocks favor indirect power like Hexes and Curses.
+
+They have a personalized brand they can mark on any relic they own or willing creatures. They always know the location of one of their marks and can target it from anywhere.
+
+Warlocks have {20} points worth of free Reward Points to spend on purchasing Relics, which are Soulbound for free. Any class that buys Relics with Power Soulbinds the relics, making them summoned at-will. Warlocks can soulbind additional relics that they purchased with RP by investing [1] power on top of its RP cost.
