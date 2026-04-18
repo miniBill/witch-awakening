@@ -3,7 +3,6 @@ module View.GameMode exposing (viewGameMode)
 import Color exposing (Color)
 import Element exposing (Element, alignBottom, alignTop, centerX, fill, moveDown, moveUp, spacing, width)
 import Element.Border as Border
-import Element.Font as Font
 import Generated.GameMode as GameMode
 import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (GameMode)
