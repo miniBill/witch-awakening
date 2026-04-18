@@ -271,7 +271,15 @@ requisitesParser =
         , item = requisiteDisjunctionParser
         , separator = ","
         }
-        |> Parser.map RequiresAllOf
+        |> Parser.map
+            (\r ->
+                case r of
+                    [ s ] ->
+                        s
+
+                    _ ->
+                        RequiresAllOf r
+            )
     )
         |. Parser.end
 
@@ -286,7 +294,15 @@ requisiteDisjunctionParser =
         , item = requisiteParser |> Parser.map Requires
         , separator = "or"
         }
-        |> Parser.map RequiresAnyOf
+        |> Parser.map
+            (\r ->
+                case r of
+                    [ s ] ->
+                        s
+
+                    _ ->
+                        RequiresAnyOf r
+            )
 
 
 hasMagicAtRank : { a | magic : List RankedMagic } -> Magic -> Int -> Bool
