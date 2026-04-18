@@ -149,21 +149,13 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 (List.take 1 gains ++ List.take 1 (List.reverse gains))
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/.../"
-                    |> GradientText.text []
-                        { font = GradientText.CaptureIt
-                        , outlineSize = 4
-                        , gradient = Gradient.yellowGradient
-                        }
+                    |> GradientText.text [] GradientText.default
 
             else
                 gains
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/"
-                    |> GradientText.text []
-                        { font = GradientText.CaptureIt
-                        , outlineSize = 4
-                        , gradient = Gradient.yellowGradient
-                        }
+                    |> GradientText.text [] GradientText.default
 
         viewSlot : Slot -> Element msg
         viewSlot slot =

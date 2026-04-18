@@ -308,10 +308,7 @@ image { name, races, hasPerk, cost } =
                         el [ centerX ]
                             (GradientText.text
                                 [ Font.size 32 ]
-                                { font = GradientText.CaptureIt
-                                , outlineSize = 4
-                                , gradient = Gradient.yellowGradient
-                                }
+                                GradientText.default
                                 race
                             )
                     )

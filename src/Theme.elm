@@ -324,21 +324,11 @@ viewPiece expandBadges piece =
             ]
 
         Star ->
-            [ GradientText.span
-                { font = GradientText.CaptureIt
-                , outlineSize = 4
-                , gradient = Gradient.yellowGradient
-                }
-                "★"
+            [ GradientText.span GradientText.default "★"
             ]
 
         Power value ->
-            [ GradientText.span
-                { font = GradientText.CaptureIt
-                , outlineSize = 4
-                , gradient = Gradient.yellowGradient
-                }
-                value
+            [ GradientText.span GradientText.default value
             ]
 
         RewardPoints value ->
