@@ -283,8 +283,8 @@ magicValue model affinities magicDetails =
                             )
                             model.perks
 
-                    minRank : Int
-                    minRank =
+                    freeRank : Int
+                    freeRank =
                         case ( freeRankFromRace, freeRankFromSummerSchool ) of
                             ( Nothing, Nothing ) ->
                                 if magicDetails.name == MagicAdvancedGolemancy then
@@ -329,7 +329,7 @@ magicValue model affinities magicDetails =
                                 max r s + 1
 
                     ( finalValue, rewardPoints ) =
-                        List.range minRank rankedMagic.rank
+                        List.range freeRank rankedMagic.rank
                             |> List.map
                                 (\rank ->
                                     ( -rank
