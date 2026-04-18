@@ -13,10 +13,11 @@ import Generated.Race as Race
 import Generated.Types as Types exposing (Affinity(..), Race(..), Size)
 import List.Extra
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), Display, IdKind(..))
 import View
 import View.Affinity as Affinity
+import View.GradientText as GradientText
 
 
 viewRace : Set String -> Display -> List Race -> Element Choice
@@ -79,7 +80,7 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
         , imageHeight = 600
         , image = Types.raceToImage name
         , inFront =
-            [ Theme.gradientTextWrapped CaptureIt
+            [ GradientText.wrapped
                 [ alignTop
                 , if String.length shortName > 10 then
                     Font.size 46
@@ -91,21 +92,25 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                     Font.size 56
                 , centerX
                 ]
-                6
-                Gradient.yellowGradient
+                { font = GradientText.CaptureIt
+                , outlineSize = 6
+                , gradient = Gradient.yellowGradient
+                }
                 shortName
             , case dlc of
                 Nothing ->
                     Element.none
 
                 Just dlcName ->
-                    Theme.gradientTextWrapped CaptureIt
+                    GradientText.wrapped
                         [ centerX
                         , Font.size 24
                         , moveDown 60
                         ]
-                        4
-                        Gradient.purpleGradient
+                        { font = GradientText.CaptureIt
+                        , outlineSize = 4
+                        , gradient = Gradient.purpleGradient
+                        }
                         dlcName
             ]
         , content =

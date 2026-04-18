@@ -16,9 +16,10 @@ import Html
 import Html.Attributes
 import List.Extra
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), Display(..), IdKind(..), RankedMagic)
 import View
+import View.GradientText as GradientText exposing (Font(..))
 
 
 viewMagics : Set String -> Display -> List RankedMagic -> Element Choice
@@ -136,7 +137,11 @@ elementalIntro =
                     (\c ->
                         c
                             |> String.fromChar
-                            |> Theme.gradientText Morpheus [] 4 Gradient.blueGradient
+                            |> GradientText.text []
+                                { font = Morpheus
+                                , outlineSize = 4
+                                , gradient = Gradient.blueGradient
+                                }
                     )
                 |> Element.wrappedRow
                     [ Font.size 58
@@ -239,7 +244,13 @@ costTable =
                 , Html.Attributes.style "color" "white"
                 ]
                 (Html.td [ textAlign "center" ]
-                    [ Theme.gradientTextHtml 1 Gradient.yellowGradient "Slot costs" ]
+                    [ GradientText.html []
+                        { font = GradientText.NoFont
+                        , outlineSize = 1
+                        , gradient = Gradient.yellowGradient
+                        }
+                        "Slot costs"
+                    ]
                     :: List.map viewSlot [ SlotWhite, SlotFolk, SlotNoble, SlotHeroic, SlotEpic ]
                 )
 
@@ -322,13 +333,15 @@ magicImage { name, faction } =
                         shortName =
                             Faction.toShortString factionName
                     in
-                    Theme.gradientTextWrapped CelticHand
+                    GradientText.wrapped
                         [ Font.size 64
                         , width fill
                         , Element.moveDown 16
                         ]
-                        4
-                        Gradient.blueGradient
+                        { font = GradientText.CelticHand
+                        , outlineSize = 4
+                        , gradient = Gradient.blueGradient
+                        }
                         shortName
         ]
         Element.none
@@ -358,12 +371,14 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
                         Element.none
 
                     Just dlcName ->
-                        Theme.gradientTextWrapped CaptureIt
+                        GradientText.wrapped
                             [ Font.size 24
                             , width fill
                             ]
-                            4
-                            Gradient.purpleGradient
+                            { font = GradientText.CaptureIt
+                            , outlineSize = 4
+                            , gradient = Gradient.purpleGradient
+                            }
                             dlcName
                 , Theme.column [ height fill, Theme.padding ] <|
                     (case details.requires of
@@ -410,13 +425,15 @@ magicTitle display { name, hasRankZero, class, affinities } =
                         ]
                         Image.badgeSpecial
             , if hasRankZero then
-                Theme.gradientText Theme.NoFont
+                GradientText.text
                     [ Font.size 48
                     , centerY
                     , moveUp 8
                     ]
-                    1
-                    Gradient.yellowGradient
+                    { font = GradientText.NoFont
+                    , outlineSize = 1
+                    , gradient = Gradient.yellowGradient
+                    }
                     "★"
 
               else
@@ -428,7 +445,13 @@ magicTitle display { name, hasRankZero, class, affinities } =
             Magic.toString name
                 |> String.split "-"
                 |> List.intersperse "-"
-                |> List.map (Theme.gradientText Morpheus [] 4 Gradient.yellowGradient)
+                |> List.map
+                    (GradientText.text []
+                        { font = Morpheus
+                        , outlineSize = 4
+                        , gradient = Gradient.yellowGradient
+                        }
+                    )
 
         affinitiesViews : List (Element msg)
         affinitiesViews =
@@ -473,23 +496,27 @@ viewAffinities affinities =
                                         (Theme.viewAffinity aff)
                                 )
                             |> List.intersperse
-                                (Theme.gradientText Theme.Morpheus
+                                (GradientText.text
                                     [ Font.size 24
                                     , Element.moveUp 2
                                     ]
-                                    2
-                                    Gradient.yellowGradient
+                                    { font = GradientText.Morpheus
+                                    , outlineSize = 2
+                                    , gradient = Gradient.yellowGradient
+                                    }
                                     " + "
                                 )
                             |> Theme.row []
                     )
                 |> List.intersperse
-                    (Theme.gradientText Theme.Morpheus
+                    (GradientText.text
                         [ Font.size 24
                         , moveDown 4
                         ]
-                        2
-                        Gradient.yellowGradient
+                        { font = GradientText.Morpheus
+                        , outlineSize = 2
+                        , gradient = Gradient.yellowGradient
+                        }
                         " OR "
                     )
 
@@ -537,10 +564,11 @@ viewRank selected { name, class } rankIndex label =
                         , centerX
                         ]
                       <|
-                        Theme.gradientText CaptureIt
-                            []
-                            2
-                            Gradient.yellowGradient
+                        GradientText.text []
+                            { font = GradientText.CaptureIt
+                            , outlineSize = 2
+                            , gradient = Gradient.yellowGradient
+                            }
                             ("Rank " ++ String.fromInt rank)
                     , Theme.blocks [ width fill ] IdKindMagic label
                     ]

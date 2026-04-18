@@ -15,9 +15,10 @@ import Html.Attributes
 import Set exposing (Set)
 import Svg
 import Svg.Attributes
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
+import View.GradientText as GradientText
 import View.Race
 
 
@@ -128,12 +129,14 @@ companionSection display companions ( faction, section ) =
                 |> List.map (companionBox display companions)
     in
     if display == DisplayFull then
-        [ Theme.gradientTextWrapped CelticHand
+        [ GradientText.wrapped
             [ Font.size 48
             , width fill
             ]
-            2
-            Gradient.yellowGradient
+            { font = GradientText.CelticHand
+            , outlineSize = 2
+            , gradient = Gradient.yellowGradient
+            }
             (Faction.toCollectiveName faction ++ ":")
         , boxes
             |> Theme.wrappedRow
@@ -289,22 +292,26 @@ image { name, races, hasPerk, cost } =
             [ cost
                 |> Maybe.map String.fromInt
                 |> Maybe.withDefault "X"
-                |> Theme.gradientText CaptureIt
+                |> GradientText.text
                     [ alignRight
                     , Font.size 32
                     , moveLeft 8
                     , moveDown 4
                     ]
-                    4
-                    Gradient.blueGradient
+                    { font = GradientText.CaptureIt
+                    , outlineSize = 4
+                    , gradient = Gradient.blueGradient
+                    }
             , raceLabel
                 |> List.map
                     (\race ->
                         el [ centerX ]
-                            (Theme.gradientText CaptureIt
+                            (GradientText.text
                                 [ Font.size 32 ]
-                                4
-                                Gradient.yellowGradient
+                                { font = GradientText.CaptureIt
+                                , outlineSize = 4
+                                , gradient = Gradient.yellowGradient
+                                }
                                 race
                             )
                     )
@@ -424,12 +431,14 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                     , Element.htmlAttribute (Html.Attributes.style "visibility" "hidden")
                     , Element.htmlAttribute (Html.Attributes.style "min-width" "0px")
                     ]
-            , Theme.gradientTextWrapped Theme.NoFont
+            , GradientText.wrapped
                 [ Font.size 36
                 , width fill
                 ]
-                4
-                Gradient.yellowGradient
+                { font = GradientText.NoFont
+                , outlineSize = 4
+                , gradient = Gradient.yellowGradient
+                }
                 (Companion.toString name)
             , classBadge
                 |> el
@@ -442,12 +451,14 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
                 Element.none
 
             Just dlcName ->
-                Theme.gradientTextWrapped CaptureIt
+                GradientText.wrapped
                     [ centerX
                     , Font.size 24
                     ]
-                    4
-                    Gradient.purpleGradient
+                    { font = GradientText.CaptureIt
+                    , outlineSize = 4
+                    , gradient = Gradient.purpleGradient
+                    }
                     dlcName
         , statsTable companion
         , Theme.blocks [ Font.size 14 ] IdKindCompanion quote
@@ -590,15 +601,17 @@ statColumn ranking =
                                 [ padding 0
                                 , inFront <|
                                     el [ width fill, height fill ] <|
-                                        Theme.gradientText NoFont
+                                        GradientText.text
                                             [ Font.italic
                                             , Theme.style "z-index" "1"
                                             , centerX
                                             , centerY
                                             , Element.moveLeft 24
                                             ]
-                                            2
-                                            Gradient.blueGradient
+                                            { font = GradientText.NoFont
+                                            , outlineSize = 2
+                                            , gradient = Gradient.blueGradient
+                                            }
                                             "Special Effect"
                                 ]
 

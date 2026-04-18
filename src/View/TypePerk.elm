@@ -8,9 +8,10 @@ import Generated.Image as Image exposing (Image)
 import Generated.TypePerk as TypePerk
 import Generated.Types as Types exposing (Race(..), Slot)
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), Display, IdKind(..))
 import View
+import View.GradientText as GradientText
 import View.Race
 
 
@@ -115,7 +116,7 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
         , imageHeight = 360
         , image = raceToTypePerkImage race
         , inFront =
-            [ Theme.gradientTextWrapped CaptureIt
+            [ GradientText.wrapped
                 [ case nameLength of
                     Short ->
                         Font.size 56
@@ -146,30 +147,36 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 , centerX
                 , paddingXY 30 0
                 ]
-                6
-                Gradient.yellowGradient
+                { font = GradientText.CaptureIt
+                , outlineSize = 6
+                , gradient = Gradient.yellowGradient
+                }
                 raceString
-            , Theme.gradientTextWrapped CaptureIt
+            , GradientText.wrapped
                 [ alignRight
                 , moveLeft 28
                 , moveDown 16
                 , Font.size 30
                 ]
-                6
-                Gradient.yellowGradient
+                { font = GradientText.CaptureIt
+                , outlineSize = 6
+                , gradient = Gradient.yellowGradient
+                }
                 (String.fromInt -cost)
             , case dlc of
                 Nothing ->
                     Element.none
 
                 Just dlcName ->
-                    Theme.gradientTextWrapped CaptureIt
+                    GradientText.wrapped
                         [ centerX
                         , Font.size 24
                         , moveDown 60
                         ]
-                        4
-                        Gradient.purpleGradient
+                        { font = GradientText.CaptureIt
+                        , outlineSize = 4
+                        , gradient = Gradient.purpleGradient
+                        }
                         dlcName
             , case name of
                 Nothing ->
@@ -216,12 +223,12 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                                     (\line ->
                                         line
                                             |> String.join " "
-                                            |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
+                                            |> GradientText.text [] GradientText.default
                                             |> el [ centerX ]
                                     )
 
                          else
-                            [ Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient n ]
+                            [ GradientText.text [] GradientText.default n ]
                         )
             , Types.slotToImage slot
                 |> Theme.image [ width <| px 40 ]

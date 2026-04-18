@@ -11,10 +11,11 @@ import Generated.Relic as Relic
 import Generated.Types as Types exposing (Affinity(..), CosmicPearlData, Race, Relic(..), Slot(..))
 import List.Extra
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), Display, IdKind(..), RankedRelic)
 import View
 import View.Affinity as Affinity
+import View.GradientText as GradientText
 
 
 viewRelics : Set String -> Display -> Maybe Race -> List Race -> List Race -> List RankedRelic -> Element Choice
@@ -121,13 +122,21 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> Theme.gradientText CaptureIt [] 4 Gradient.blueGradient
+                    |> GradientText.text []
+                        { font = GradientText.CaptureIt
+                        , outlineSize = 4
+                        , gradient = Gradient.blueGradient
+                        }
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> Theme.gradientText CaptureIt [] 4 Gradient.blueGradient
+                    |> GradientText.text []
+                        { font = GradientText.CaptureIt
+                        , outlineSize = 4
+                        , gradient = Gradient.blueGradient
+                        }
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -169,13 +178,15 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                         , width fill
                         ]
                     <|
-                        Theme.gradientTextWrapped CaptureIt
+                        GradientText.wrapped
                             [ centerX
                             , Font.size 24
                             , moveDown 12
                             ]
-                            4
-                            Gradient.purpleGradient
+                            { font = GradientText.CaptureIt
+                            , outlineSize = 4
+                            , gradient = Gradient.purpleGradient
+                            }
                             dlcName
             , Theme.viewClasses 40 classes
                 |> el [ Element.alignBottom ]
@@ -194,12 +205,11 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                 , width fill
                 ]
               <|
-                Theme.gradientTextWrapped CaptureIt
+                GradientText.wrapped
                     [ Font.size 36
                     , centerX
                     ]
-                    4
-                    Gradient.yellowGradient
+                    GradientText.default
                     nameString
             ]
         , content =
@@ -265,7 +275,7 @@ viewContent mainRace isSelected relics races typePerks { content, name } color =
                         ((width <| px 24) :: attrs)
                         { label =
                             String.fromInt cost
-                                |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
+                                |> GradientText.text [] GradientText.default
                                 |> el [ centerX, centerY ]
                         , onPress = Just <| ChoiceRelic ( relic, not isChoiceSelected )
                         }

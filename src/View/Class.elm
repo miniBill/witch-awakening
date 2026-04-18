@@ -8,9 +8,10 @@ import Generated.Fonts as Fonts
 import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (Class)
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), Display, IdKind(..))
 import View
+import View.GradientText as GradientText
 
 
 viewClass : Set String -> Display -> Maybe Class -> Element Choice
@@ -106,13 +107,15 @@ classBox display selected { name, dlc, color, content } =
                     Element.none
 
                 Just dlcName ->
-                    Theme.gradientTextWrapped CaptureIt
+                    GradientText.wrapped
                         [ centerX
                         , Font.size 24
                         , moveDown 8
                         ]
-                        4
-                        Gradient.purpleGradient
+                        { font = GradientText.CaptureIt
+                        , outlineSize = 4
+                        , gradient = Gradient.purpleGradient
+                        }
                         dlcName
             ]
         , content = [ Theme.blocks [] IdKindClass content ]
@@ -124,37 +127,40 @@ className : Class -> Element (Maybe Class)
 className name =
     case name of
         Types.ClassMagician ->
-            Theme.gradientTextWrapped
-                (case name of
-                    Types.ClassMagician ->
-                        SFTechnodelight
-
-                    _ ->
-                        Morpheus
-                )
+            GradientText.wrapped
                 [ alignBottom
                 , Font.size 56
                 , centerX
-                , moveUp 10
+                , moveDown 8
                 ]
-                4
-                Gradient.magicianGradient
+                { font = GradientText.SFTechnodelight
+                , outlineSize = 4
+                , gradient = Gradient.magicianGradient
+                }
+                (Class.toString name)
+
+        Types.ClassSorceress ->
+            GradientText.wrapped
+                [ alignBottom
+                , Font.size 56
+                , centerX
+                , moveDown 4
+                ]
+                { font = GradientText.StarDust
+                , outlineSize = 4
+                , gradient = Gradient.yellowGradient
+                }
                 (Class.toString name)
 
         _ ->
-            Theme.gradientTextWrapped
-                (case name of
-                    Types.ClassMagician ->
-                        SFTechnodelight
-
-                    _ ->
-                        Morpheus
-                )
+            GradientText.wrapped
                 [ alignBottom
                 , Font.size 56
                 , centerX
-                , moveUp 10
+                , moveDown 4
                 ]
-                4
-                Gradient.yellowGradient
+                { font = GradientText.Morpheus
+                , outlineSize = 4
+                , gradient = Gradient.yellowGradient
+                }
                 (Class.toString name)

@@ -12,8 +12,9 @@ import Generated.Quest as Quest
 import List.Extra
 import Parser
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Display(..), IdKind)
+import View.GradientText as GradientText
 
 
 collapsible :
@@ -101,7 +102,11 @@ costButton color selected item label =
         ((width <| px 24) :: attrs)
         { label =
             String.fromInt label
-                |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
+                |> GradientText.text []
+                    { font = GradientText.CaptureIt
+                    , outlineSize = 4
+                    , gradient = Gradient.yellowGradient
+                    }
                 |> el [ centerX, centerY ]
         , onPress = Just ( item, not isChoiceSelected )
         }

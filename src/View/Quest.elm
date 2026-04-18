@@ -16,9 +16,10 @@ import Generated.Types as Types exposing (Quest(..), Slot(..))
 import Html.Attributes
 import Maybe.Extra
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
+import View.GradientText as GradientText
 
 
 viewQuests : Set String -> Display -> List Quest -> Element Choice
@@ -124,24 +125,25 @@ questBox display selected number quest =
                             _ ->
                                 paddingXY 64 8
                         ]
-                        [ Theme.gradientTextWrapped CaptureIt
+                        [ GradientText.wrapped
                             [ Font.size 32
                             , centerX
                             ]
-                            4
-                            Gradient.yellowGradient
+                            GradientText.default
                             nameString
                         , case quest.dlc of
                             Nothing ->
                                 Element.none
 
                             Just dlcName ->
-                                Theme.gradientTextWrapped CaptureIt
+                                GradientText.wrapped
                                     [ Font.size 24
                                     , centerX
                                     ]
-                                    4
-                                    Gradient.purpleGradient
+                                    { font = GradientText.CaptureIt
+                                    , outlineSize = 4
+                                    , gradient = Gradient.purpleGradient
+                                    }
                                     dlcName
                         ]
                     , Element.row
@@ -157,43 +159,54 @@ questBox display selected number quest =
                                 Element.none
 
                             Just faction ->
-                                Theme.gradientTextWrapped CelticHand
+                                GradientText.wrapped
                                     []
-                                    4
-                                    Gradient.blueGradient
+                                    { font = GradientText.CelticHand
+                                    , outlineSize = 4
+                                    , gradient = Gradient.blueGradient
+                                    }
                                     (Faction.toShortString faction)
                         , let
                             slotGradient : Element msg
                             slotGradient =
-                                Theme.gradientText CelticHand
+                                GradientText.text
                                     []
-                                    4
-                                    (case quest.slot of
-                                        SlotEpic ->
-                                            Gradient.epicGradient
+                                    { font = GradientText.CelticHand
+                                    , outlineSize = 4
+                                    , gradient =
+                                        case quest.slot of
+                                            SlotEpic ->
+                                                Gradient.epicGradient
 
-                                        SlotHeroic ->
-                                            Gradient.heroicGradient
+                                            SlotHeroic ->
+                                                Gradient.heroicGradient
 
-                                        SlotNoble ->
-                                            Gradient.nobleGradient
+                                            SlotNoble ->
+                                                Gradient.nobleGradient
 
-                                        _ ->
-                                            Gradient.blueGradient
-                                    )
+                                            _ ->
+                                                Gradient.blueGradient
+                                    }
                                     (Slot.toString quest.slot)
                           in
                           if quest.name == QuestDungeoneering then
                             Element.row [ alignRight, spacing 4 ]
                                 [ "Any"
-                                    |> Theme.gradientText CelticHand [] 4 Gradient.yellowGradient
+                                    |> GradientText.text
+                                        []
+                                        { font = GradientText.CelticHand
+                                        , outlineSize = 4
+                                        , gradient = Gradient.yellowGradient
+                                        }
                                 , "/"
-                                    |> Theme.gradientText CelticHand
+                                    |> GradientText.text
                                         [ Font.bold
                                         , Font.size 40
                                         ]
-                                        4
-                                        Gradient.yellowGradient
+                                        { font = GradientText.CelticHand
+                                        , outlineSize = 4
+                                        , gradient = Gradient.yellowGradient
+                                        }
                                 , slotGradient
                                 ]
 
@@ -224,13 +237,13 @@ questBox display selected number quest =
                             ]
                     , (number + 1)
                         |> String.fromInt
-                        |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
+                        |> GradientText.text [] GradientText.default
                         |> el
                             [ Font.size 28
                             ]
                     , if quest.repeatable then
                         "♻️"
-                            |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
+                            |> GradientText.text [] GradientText.default
                             |> el
                                 [ Font.size 32
                                 , moveDown 24
@@ -483,14 +496,16 @@ introBlock =
         [ width fill
         , spacing <| Theme.rhythm * 2
         ]
-        [ Theme.gradientTextWrapped Morpheus
+        [ GradientText.wrapped
             [ Font.size 38
             , Font.center
             , width fill
             , moveUp 8
             ]
-            4
-            Gradient.yellowGradient
+            { font = GradientText.Morpheus
+            , outlineSize = 4
+            , gradient = Gradient.yellowGradient
+            }
             "Or \"Plot Hooks\""
         , let
             color : Element.Color

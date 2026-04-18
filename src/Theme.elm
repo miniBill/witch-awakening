@@ -1,4 +1,4 @@
-module Theme exposing (Font(..), backgroundColor, backgroundImage, blocks, borderColor, borderGlow, button, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, gradientText, gradientTextHtml, gradientTextSplit, gradientTextWrapped, id, image, img, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, toUrlFunction, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewGenericBadge, viewSize, wrappedRow)
+module Theme exposing (backgroundColor, backgroundImage, blocks, borderColor, borderGlow, button, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, id, image, img, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, toUrlFunction, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewGenericBadge, viewSize, wrappedRow)
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
@@ -26,6 +26,7 @@ import Parser exposing ((|.))
 import String.Extra
 import String.Multiline
 import Types exposing (Display(..), IdKind)
+import View.GradientText as GradientText
 
 
 rhythm : number
@@ -59,96 +60,6 @@ image attrs { src } =
 choice : String -> Element msg
 choice value =
     el [ Font.color <| rgb255 0x04 0xD4 0xED ] <| text value
-
-
-type Font
-    = CaptureIt
-    | CelticHand
-    | BebasNeue
-    | Morpheus
-    | SFTechnodelight
-    | NoFont
-
-
-fontToAttributes : Font -> List (Attribute msg)
-fontToAttributes font =
-    case font of
-        CaptureIt ->
-            [ Element.htmlAttribute Fonts.captureIt
-            , Element.htmlAttribute (Html.Attributes.style "text-transform" "uppercase")
-            ]
-
-        CelticHand ->
-            [ Element.htmlAttribute Fonts.celticHand ]
-
-        BebasNeue ->
-            [ Element.htmlAttribute Fonts.bebasNeue ]
-
-        Morpheus ->
-            [ Element.htmlAttribute Fonts.morpheus ]
-
-        SFTechnodelight ->
-            [ Element.htmlAttribute Fonts.sFTechnodelight ]
-
-        NoFont ->
-            []
-
-
-gradientTextWrapped : Font -> List (Attribute msg) -> Float -> List ( Int, Int, Int ) -> String -> Element msg
-gradientTextWrapped font attrs outlineSize gradient value =
-    let
-        combinedAttrs : List (Attribute msg)
-        combinedAttrs =
-            Element.spacing 1
-                :: centerWrap
-                :: attrs
-    in
-    gradientTextSplit font outlineSize gradient value
-        |> Element.wrappedRow combinedAttrs
-
-
-gradientTextSplit : Font -> Float -> List ( Int, Int, Int ) -> String -> List (Element msg)
-gradientTextSplit font outlineSize gradient value =
-    value
-        |> String.replace "-" "-\u{200B}"
-        |> String.split " "
-        |> List.map
-            (\word ->
-                word
-                    |> String.split "\u{200B}"
-                    |> List.map (\p -> gradientText font [] outlineSize gradient (p ++ "\u{200B}"))
-            )
-        |> List.Extra.intercalate [ text " " ]
-
-
-gradientText : Font -> List (Attribute msg) -> Float -> List ( Int, Int, Int ) -> String -> Element msg
-gradientText font attrs outlineSize gradient value =
-    el (fontToAttributes font ++ attrs) <| Element.html <| gradientTextHtml outlineSize gradient value
-
-
-gradientTextHtml : Float -> List ( Int, Int, Int ) -> String -> Html msg
-gradientTextHtml outlineSize gradient value =
-    Html.span
-        [ Html.Attributes.class "outlined"
-        , Html.Attributes.attribute "data-text" value
-        , gradient
-            |> List.map rgbToString
-            |> String.join ", "
-            |> (\joined -> "--text-stroke: " ++ String.fromFloat outlineSize ++ "px #000; --background: linear-gradient(to bottom, " ++ joined ++ ")")
-            |> Html.Attributes.attribute "style"
-        ]
-        [ Html.text value ]
-
-
-rgbToString : ( Int, Int, Int ) -> String
-rgbToString ( r, g, b ) =
-    "rgb("
-        ++ String.fromInt r
-        ++ " "
-        ++ String.fromInt g
-        ++ " "
-        ++ String.fromInt b
-        ++ ")"
 
 
 compactBlocks : List (Attribute msg) -> IdKind -> String -> Element msg
@@ -405,17 +316,39 @@ viewPiece expandBadges piece =
         Size size ->
             [ Size.toString size
                 |> String.replace "Medium" "Med"
-                |> gradientTextSpan "Morpheus" 4 Gradient.blueGradient
+                |> GradientText.span
+                    { font = GradientText.Morpheus
+                    , outlineSize = 4
+                    , gradient = Gradient.blueGradient
+                    }
             ]
 
         Star ->
-            [ gradientTextSpan "Capture It" 4 Gradient.yellowGradient "★" ]
+            [ GradientText.span
+                { font = GradientText.CaptureIt
+                , outlineSize = 4
+                , gradient = Gradient.yellowGradient
+                }
+                "★"
+            ]
 
         Power value ->
-            [ gradientTextSpan "Capture It" 4 Gradient.yellowGradient value ]
+            [ GradientText.span
+                { font = GradientText.CaptureIt
+                , outlineSize = 4
+                , gradient = Gradient.yellowGradient
+                }
+                value
+            ]
 
         RewardPoints value ->
-            [ gradientTextSpan "Capture It" 4 Gradient.blueGradient value ]
+            [ GradientText.span
+                { font = GradientText.CaptureIt
+                , outlineSize = 4
+                , gradient = Gradient.blueGradient
+                }
+                value
+            ]
 
         Kisses value ->
             [ Html.span []
@@ -426,15 +359,6 @@ viewPiece expandBadges piece =
 
         LineBreak ->
             [ Html.br [] [] ]
-
-
-gradientTextSpan : String -> Float -> List ( Int, Int, Int ) -> String -> Html msg
-gradientTextSpan font outlineSize gradient value =
-    Html.span
-        [ Html.Attributes.style "font-family" ("\"" ++ font ++ "\"")
-        , Html.Attributes.style "font-size" "20px"
-        ]
-        [ gradientTextHtml outlineSize gradient value ]
 
 
 viewGenericBadge : Bool -> Image -> String -> List (Html msg)
@@ -630,7 +554,12 @@ viewSectionTitle toMsg display kind label =
     let
         gradient : String -> List (Element msg)
         gradient t =
-            gradientTextSplit CelticHand 4 Gradient.blueGradient t
+            GradientText.split
+                { font = GradientText.CelticHand
+                , outlineSize = 4
+                , gradient = Gradient.blueGradient
+                }
+                t
     in
     wrappedRow
         [ Font.size 36
@@ -1047,7 +976,11 @@ viewSize :
 viewSize gradient size =
     Size.toString size
         |> String.replace "Medium" "Med"
-        |> gradientText Morpheus [ Font.size 20 ] 4 gradient
+        |> GradientText.text [ Font.size 20 ]
+            { font = GradientText.Morpheus
+            , outlineSize = 4
+            , gradient = gradient
+            }
 
 
 toUrlFunction : Image -> String

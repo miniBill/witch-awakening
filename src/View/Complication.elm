@@ -11,9 +11,10 @@ import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (ComplicationCategory(..), Slot(..))
 import List.Extra
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), ComplicationKind(..), Display, IdKind(..), RankedComplication)
 import View
+import View.GradientText as GradientText
 
 
 viewComplications : Set String -> Display -> List RankedComplication -> Element Choice
@@ -148,13 +149,21 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 (List.take 1 gains ++ List.take 1 (List.reverse gains))
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/.../"
-                    |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
+                    |> GradientText.text []
+                        { font = GradientText.CaptureIt
+                        , outlineSize = 4
+                        , gradient = Gradient.yellowGradient
+                        }
 
             else
                 gains
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/"
-                    |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
+                    |> GradientText.text []
+                        { font = GradientText.CaptureIt
+                        , outlineSize = 4
+                        , gradient = Gradient.yellowGradient
+                        }
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -189,10 +198,12 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                         , centerX
                         , moveDown 8
                         ]
-                        [ Theme.gradientTextWrapped CaptureIt
+                        [ GradientText.wrapped
                             [ centerX ]
-                            4
-                            gradient
+                            { font = GradientText.CaptureIt
+                            , outlineSize = 4
+                            , gradient = gradient
+                            }
                             (ComplicationCategory.toString c)
                         , el [ centerX ] gainGradient
                         ]
@@ -209,7 +220,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                     Element.none
 
                 Just dlcName ->
-                    Theme.gradientTextWrapped CaptureIt
+                    GradientText.wrapped
                         [ centerX
                         , Font.size 24
                         , case ( category, content ) of
@@ -225,17 +236,21 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                             ( Nothing, _ ) ->
                                 moveDown 18
                         ]
-                        4
-                        Gradient.purpleGradient
+                        { font = GradientText.CaptureIt
+                        , outlineSize = 4
+                        , gradient = Gradient.purpleGradient
+                        }
                         dlcName
-            , Theme.gradientTextWrapped CelticHand
+            , GradientText.wrapped
                 [ alignBottom
                 , Font.size 32
                 , centerX
                 , moveUp 4
                 ]
-                4
-                gradient
+                { font = GradientText.CelticHand
+                , outlineSize = 4
+                , gradient = gradient
+                }
                 (Complication.toString name)
             ]
     in

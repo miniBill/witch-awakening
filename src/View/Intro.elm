@@ -7,8 +7,9 @@ import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Html.Attributes
 import List.Extra
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (IdKind(..))
+import View.GradientText as GradientText
 
 
 viewTitle : Bool -> Element msg
@@ -16,7 +17,7 @@ viewTitle allCompact =
     let
         mainLogo : Element msg
         mainLogo =
-            Theme.gradientTextWrapped BebasNeue
+            GradientText.wrapped
                 [ Theme.centerWrap
                 , centerX
                 , Font.size 140
@@ -28,8 +29,10 @@ viewTitle allCompact =
                     }
                 , Element.htmlAttribute (Html.Attributes.style "overflow" "clip")
                 ]
-                8
-                Gradient.titleGradient
+                { font = GradientText.BebasNeue
+                , outlineSize = 8
+                , gradient = Gradient.titleGradient
+                }
                 "Wit\u{200B}ch Awa\u{200B}ken\u{200B}ing 4"
     in
     if allCompact then
@@ -72,13 +75,33 @@ viewTitle allCompact =
                     [ Font.center
                     , Font.size 52
                     ]
-                    [ Theme.gradientText Morpheus [] 4 Gradient.orangeGradient "Blade"
+                    [ GradientText.text []
+                        { font = GradientText.Morpheus
+                        , outlineSize = 4
+                        , gradient = Gradient.orangeGradient
+                        }
+                        "Blade"
                     , text " "
-                    , Theme.gradientText Morpheus [] 4 Gradient.grayGradient "&"
+                    , GradientText.text []
+                        { font = GradientText.Morpheus
+                        , outlineSize = 4
+                        , gradient = Gradient.grayGradient
+                        }
+                        "&"
                     , text " "
-                    , Theme.gradientText Morpheus [] 4 Gradient.blueGradient "Grace"
+                    , GradientText.text []
+                        { font = GradientText.Morpheus
+                        , outlineSize = 4
+                        , gradient = Gradient.blueGradient
+                        }
+                        "Grace"
                     , text " "
-                    , Theme.gradientText Morpheus [] 4 Gradient.grayGradient "Update"
+                    , GradientText.text []
+                        { font = GradientText.Morpheus
+                        , outlineSize = 4
+                        , gradient = Gradient.grayGradient
+                        }
+                        "Update"
                     ]
                 , paragraph
                     [ alignRight
@@ -134,7 +157,11 @@ viewDLCAttribution dlcAttribution =
         |> String.replace "the " "the\u{00A0}"
         |> String.replace "of " "of\u{00A0}"
         |> String.replace "Of " "Of\u{00A0}"
-        |> Theme.gradientTextSplit CaptureIt 4 Gradient.purpleGradient
+        |> GradientText.split
+            { font = GradientText.CaptureIt
+            , outlineSize = 4
+            , gradient = Gradient.purpleGradient
+            }
         |> List.map (el [ Font.size 20 ])
     )
         ++ [ case dlcAttribution.link of

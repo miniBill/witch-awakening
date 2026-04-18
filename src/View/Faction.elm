@@ -12,9 +12,10 @@ import Generated.Magic as Magic
 import Generated.Types exposing (Faction)
 import List.Extra
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), Display(..), IdKind(..))
 import View
+import View.GradientText as GradientText
 
 
 viewFaction : Set String -> Display -> List Faction -> List Faction -> Element Choice
@@ -215,14 +216,16 @@ viewPerk display factionPerks { name, perk, perkContent, images } =
             , imageHeight = 240
             , image = images.image5
             , inFront =
-                [ Theme.gradientTextWrapped CelticHand
+                [ GradientText.wrapped
                     [ alignBottom
                     , Font.size 24
                     , centerX
                     , paddingXY 8 0
                     ]
-                    3
-                    Gradient.blueGradient
+                    { font = GradientText.CelticHand
+                    , outlineSize = 3
+                    , gradient = Gradient.blueGradient
+                    }
                     perk
                 ]
             , content =
@@ -270,13 +273,15 @@ introRow display { name, dlc, motto, images } =
                         Element.none
 
                     Just dlcName ->
-                        Theme.gradientTextWrapped CaptureIt
+                        GradientText.wrapped
                             [ centerX
                             , Font.size 24
                             , moveDown 4
                             ]
-                            4
-                            Gradient.purpleGradient
+                            { font = GradientText.CaptureIt
+                            , outlineSize = 4
+                            , gradient = Gradient.purpleGradient
+                            }
                             dlcName
                 )
             ]
@@ -285,19 +290,23 @@ introRow display { name, dlc, motto, images } =
                 [ img images.image2
                 , img images.image3
                 , column [ width fill ]
-                    [ Theme.gradientTextWrapped CelticHand
+                    [ GradientText.wrapped
                         [ width fill
                         , Font.size 40
                         ]
-                        2
-                        Gradient.blueGradient
+                        { font = GradientText.CelticHand
+                        , outlineSize = 2
+                        , gradient = Gradient.blueGradient
+                        }
                         (Faction.toString name)
-                    , Theme.gradientTextWrapped Morpheus
+                    , GradientText.wrapped
                         [ width fill
                         , Font.size 24
                         ]
-                        2
-                        Gradient.yellowGradient
+                        { font = GradientText.Morpheus
+                        , outlineSize = 2
+                        , gradient = Gradient.yellowGradient
+                        }
                         motto
                     ]
                 ]
@@ -305,12 +314,14 @@ introRow display { name, dlc, motto, images } =
             ]
 
     else
-        Theme.gradientTextWrapped CelticHand
+        GradientText.wrapped
             [ width fill
             , Font.size 40
             ]
-            2
-            Gradient.blueGradient
+            { font = GradientText.CelticHand
+            , outlineSize = 2
+            , gradient = Gradient.blueGradient
+            }
             (Faction.toString name)
 
 

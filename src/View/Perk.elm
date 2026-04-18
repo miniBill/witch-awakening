@@ -17,9 +17,10 @@ import Html
 import List.Extra
 import Maybe.Extra
 import Set exposing (Set)
-import Theme exposing (Font(..))
+import Theme
 import Types exposing (Choice(..), Display, IdKind(..), RankedPerk)
 import View
+import View.GradientText as GradientText
 import View.Race
 
 
@@ -173,13 +174,13 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
+                    |> GradientText.text [] GradientText.default
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient
+                    |> GradientText.text [] GradientText.default
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -213,7 +214,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 costGradient
             , affinity
                 |> List.map (\aff -> el [ centerX ] (Theme.viewAffinity aff))
-                |> List.intersperse (el [ centerX ] (Theme.gradientText CaptureIt [] 4 Gradient.yellowGradient "OR"))
+                |> List.intersperse (el [ centerX ] (GradientText.text [] GradientText.default "OR"))
                 |> Theme.column
                     [ moveLeft 8
                     , moveDown 4
@@ -224,12 +225,11 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 , paddingXY 64 8
                 ]
                 [ if isMeta then
-                    Theme.gradientTextWrapped CaptureIt
+                    GradientText.wrapped
                         [ centerX
                         , Font.size 32
                         ]
-                        4
-                        Gradient.yellowGradient
+                        GradientText.default
                         "META"
 
                   else
@@ -239,12 +239,14 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                         Element.none
 
                     Just dlcName ->
-                        Theme.gradientTextWrapped CaptureIt
+                        GradientText.wrapped
                             [ centerX
                             , Font.size 24
                             ]
-                            4
-                            Gradient.purpleGradient
+                            { font = GradientText.CaptureIt
+                            , outlineSize = 4
+                            , gradient = Gradient.purpleGradient
+                            }
                             dlcName
                 ]
             , Theme.classToBadge class
@@ -259,15 +261,17 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
 
                 _ ->
                     viewSlot SlotWhite
-            , Theme.gradientTextWrapped CelticHand
+            , GradientText.wrapped
                 [ alignBottom
                 , Font.size 36
                 , centerX
                 , Font.center
                 , Element.paddingXY 32 0
                 ]
-                4
-                Gradient.blueGradient
+                { font = GradientText.CelticHand
+                , outlineSize = 4
+                , gradient = Gradient.blueGradient
+                }
                 nameString
             ]
         , content =
