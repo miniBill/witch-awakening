@@ -4,13 +4,23 @@
 - Synonym: Academic
 - Color: 1a77ff
 
-*Magicians*, sometimes called _academics_ are studious and focus easily on tasks, while training and studying to further their magic. Their thorough approach to magic tends to be slower if you want to have a life outside of studies, but the most rewarding as they comprehend in more depth and their growth is in their own hands, advancing as slow or fast as the time and effort they put in. Magicians gain 1 {magician _*Focus*_} for every day in which they averaged 4 hours of study, 2 for 8 hours. You can use focus to buy a Power point for 10 Focus. This cost increases by 10 Focus per purchase. (10, 20, 30, etc)
+*Magicians*, sometimes called _academics_, are the scholarly spellcaster, they have a gift for magic but must study to improve their magic. Their thorough approach to magic tends to be slower if you want to have a life outside of study, but the most rewarding as they comprehend in more depth and their growth is in their own hands, advancing as slow or fast as time allows. Magicians gain 1 {magician _*Focus*_} for every day in which they averaged 4 hours of study, 2 for 8 hours. You can use focus to buy a Power point for 10 Focus. This cost increases by 10 Focus per purchase. (10, 20, 30, etc).
 
-__Start with [30] power__. Player magicians eventually cap out at [100] _power_ before other factors like complications. Any option marked with the {magician *blue*} icon has a flat cost reduction of -2 Power to its price, which can reduce it to 0, or become a gain of 1 point, or complications give 2 more power. This applies only once per option. Once per Magic specialization, once per perk, etc, and always applies first.
 
-*Advantage*: General use magic and classics. Magicians favor mixed bags like Potions, Runes, and Portals. Any magic marked with blue used by a magician produces twice the yield or is half as time consuming, mana draining, or tiresome to use. Two potions for the price of one, two runes for the price of one, ect. Any duration of a blue marked magic effect applied by you, to you or to another, lasts twice as long For example, double the duration of a temporary potion.
+__Start with [30] power__. Player magicians eventually cap out at [100] _power_ before other factors like complications.
 
-An Magician can study to master any two schools of magic for free, but takes time to learn equal to if you were saving the power to buy it, but no Power is spent.
+Any option marked with the {magician *blue*} icon has a flat cost reduction of -2 Power to its price, which can reduce it to 0, or become a gain of 1 point, or complications give 2 more power. This applies only once per option, and always applies after other discounts.
+
+
+*Advantage*: General use magic and classics. Magicians favor mixed bags like Potions, Runes, and Portals.
+
+Any magic marked with blue used by a magician produces twice the yield or is half as time consuming, mana draining, or tiresome to use. Two potions for the price of one, two runes for the price of one, etc.
+
+Any duration of a blue marked magic effect applied by you, to you or to another, lasts twice as long.
+
+For example, double the duration of a temporary potion.
+
+A magician can study to master any two schools of magic for free, but takes time to learn equal to if you were saving the power to buy it, but no Power is spent.
 
 
 ## Class: Sorceress
