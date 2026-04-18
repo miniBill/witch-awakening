@@ -19,7 +19,7 @@ viewTitle allCompact =
             Theme.gradientTextWrapped BebasNeue
                 [ Theme.centerWrap
                 , centerX
-                , Font.size 160
+                , Font.size 140
                 , Element.paddingEach
                     { top = Theme.rhythm * 2
                     , bottom = 0
@@ -30,7 +30,7 @@ viewTitle allCompact =
                 ]
                 8
                 Gradient.titleGradient
-                "Wit\u{200B}ch Awa\u{200B}ken\u{200B}ing"
+                "Wit\u{200B}ch Awa\u{200B}ken\u{200B}ing 4"
     in
     if allCompact then
         mainLogo
