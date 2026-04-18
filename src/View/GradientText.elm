@@ -1,4 +1,4 @@
-module View.GradientText exposing (Font(..), default, dlc, html, span, split, text, wrapped)
+module View.GradientText exposing (Config, Font(..), default, dlc, html, span, split, text, wrapped)
 
 import Element exposing (Attribute, Element)
 import Generated.Fonts as Fonts
@@ -15,6 +15,7 @@ type Font
     | Morpheus
     | SFTechnodelight
     | StarDust
+    | MirageGothic
 
 
 type alias Config =
@@ -151,6 +152,10 @@ fontToAttributes font =
         Just StarDust ->
             [ Fonts.starDust
             , Html.Attributes.style "text-transform" "uppercase"
+            ]
+
+        Just MirageGothic ->
+            [ Fonts.mirageGothic
             ]
 
         Nothing ->

@@ -6,6 +6,7 @@ import Element.Font as Font
 import Generated.Class as Class
 import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (Class)
+import Html.Attributes
 import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display, IdKind(..))
@@ -140,23 +141,34 @@ className name =
                 [ alignBottom
                 , centerX
                 , moveDown 4
+                , Element.htmlAttribute (Html.Attributes.style "text-shadow" "rgba(255, 17, 0, 0.9) 0px 0px 39px")
                 ]
                 { font = Just GradientText.StarDust
                 , fontSize = Just 56
                 , outlineSize = 4
-                , gradient = Gradient.yellowGradient
+                , gradient =
+                    [ ( 251, 247, 222 )
+                    , ( 233, 213, 139 )
+                    ]
                 }
                 (Class.toString name)
 
-        _ ->
+        Types.ClassWarlock ->
             GradientText.wrapped
                 [ alignBottom
                 , centerX
-                , moveDown 4
+                , moveDown 20
                 ]
-                { font = Just GradientText.Morpheus
-                , fontSize = Just 56
-                , outlineSize = 4
-                , gradient = Gradient.yellowGradient
+                { font = Just GradientText.MirageGothic
+                , fontSize = Just 96
+                , outlineSize = 6
+                , gradient =
+                    [ ( 207, 207, 207 )
+                    , ( 120, 120, 120 )
+                    ]
                 }
                 (Class.toString name)
+
+
+
+-- Wizard -> MTG
