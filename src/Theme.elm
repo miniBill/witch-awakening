@@ -66,6 +66,7 @@ type Font
     | CelticHand
     | BebasNeue
     | Morpheus
+    | SFTechnodelight
     | NoFont
 
 
@@ -85,6 +86,9 @@ fontToAttributes font =
 
         Morpheus ->
             [ Element.htmlAttribute Fonts.morpheus ]
+
+        SFTechnodelight ->
+            [ Element.htmlAttribute Fonts.sFTechnodelight ]
 
         NoFont ->
             []

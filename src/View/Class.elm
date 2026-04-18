@@ -4,6 +4,7 @@ import Element exposing (Element, alignBottom, centerX, fill, moveDown, moveUp, 
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Class as Class
+import Generated.Fonts as Fonts
 import Generated.Gradient as Gradient
 import Generated.Types as Types exposing (Class)
 import Set exposing (Set)
@@ -99,15 +100,7 @@ classBox display selected { name, dlc, color, content } =
         , imageHeight = 400
         , image = Types.classToImage name
         , inFront =
-            [ Theme.gradientTextWrapped Morpheus
-                [ alignBottom
-                , Font.size 56
-                , centerX
-                , moveUp 10
-                ]
-                4
-                Gradient.yellowGradient
-                (Class.toString name)
+            [ className name
             , case dlc of
                 Nothing ->
                     Element.none
@@ -125,3 +118,43 @@ classBox display selected { name, dlc, color, content } =
         , content = [ Theme.blocks [] IdKindClass content ]
         , onPress = Just msg
         }
+
+
+className : Class -> Element (Maybe Class)
+className name =
+    case name of
+        Types.ClassMagician ->
+            Theme.gradientTextWrapped
+                (case name of
+                    Types.ClassMagician ->
+                        SFTechnodelight
+
+                    _ ->
+                        Morpheus
+                )
+                [ alignBottom
+                , Font.size 56
+                , centerX
+                , moveUp 10
+                ]
+                4
+                Gradient.magicianGradient
+                (Class.toString name)
+
+        _ ->
+            Theme.gradientTextWrapped
+                (case name of
+                    Types.ClassMagician ->
+                        SFTechnodelight
+
+                    _ ->
+                        Morpheus
+                )
+                [ alignBottom
+                , Font.size 56
+                , centerX
+                , moveUp 10
+                ]
+                4
+                Gradient.yellowGradient
+                (Class.toString name)
