@@ -132,7 +132,7 @@ wizardBorder =
     , Border.width 8
     , Theme.borderColor (Color.rgba 0 0 0 0)
     , [ Theme.toUrlFunction Image.classWizard
-      , "conic-gradient(orange, white, #97f, green, #97f, white, orange, green, orange) "
+      , "conic-gradient( #ffc282, #fc8161, #fff, #9992ff, #98e586, #9b91fd, #fff, #fd8161, #ffc684, #97e184, #ffc282)"
       ]
         |> String.join ", "
         |> Theme.style "background-image"
