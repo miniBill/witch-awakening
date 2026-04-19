@@ -1,7 +1,7 @@
 module View.Class exposing (viewClass)
 
 import Color
-import Element exposing (Element, alignBottom, centerX, fill, moveDown, spacing, width)
+import Element exposing (Attribute, Element, alignBottom, centerX, fill, moveDown, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Class as Class
@@ -103,26 +103,7 @@ classBox display selected { name, dlc, color, content } =
                     ]
 
                 Nothing ->
-                    -- Wizard
-                    [ Element.padding 0
-                    , Border.width 8
-                    , Theme.borderColor (Color.rgba 0 0 0 0)
-                    , [ Theme.toUrlFunction Image.classWizard
-                      , "conic-gradient(orange, white, #97f, green, #97f, white, orange, green, orange) "
-                      ]
-                        |> String.join ", "
-                        |> Theme.style "background-image"
-                    , [ "cover"
-                      , "auto"
-                      ]
-                        |> String.join ", "
-                        |> Theme.style "background-size"
-                    , [ "padding-box"
-                      , "border-box"
-                      ]
-                        |> String.join ", "
-                        |> Theme.style "background-origin"
-                    ]
+                    wizardBorder
         , imageHeight = 400
         , image = Types.classToImage name
         , inFront =
@@ -143,6 +124,29 @@ classBox display selected { name, dlc, color, content } =
         , content = [ Theme.blocks [] IdKindClass content ]
         , onPress = Just msg
         }
+
+
+wizardBorder : List (Attribute msg)
+wizardBorder =
+    [ Element.padding 0
+    , Border.width 8
+    , Theme.borderColor (Color.rgba 0 0 0 0)
+    , [ Theme.toUrlFunction Image.classWizard
+      , "conic-gradient(orange, white, #97f, green, #97f, white, orange, green, orange) "
+      ]
+        |> String.join ", "
+        |> Theme.style "background-image"
+    , [ "cover"
+      , "auto"
+      ]
+        |> String.join ", "
+        |> Theme.style "background-size"
+    , [ "padding-box"
+      , "border-box"
+      ]
+        |> String.join ", "
+        |> Theme.style "background-origin"
+    ]
 
 
 className : Class -> Element (Maybe Class)
