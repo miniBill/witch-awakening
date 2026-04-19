@@ -133,24 +133,26 @@ classBadge class =
 
 wizardBorder : List (Attribute msg)
 wizardBorder =
+    let
+        stops : List String
+        stops =
+            [ "#98e586"
+            , "#ffc282"
+            , "#fc8161"
+            , "#fff"
+            , "#9b91fd"
+            , "#9b91fd"
+            , "#97e184"
+            ]
+    in
     [ Element.padding 0
     , Border.width 8
     , Theme.borderColor (Color.rgba 0 0 0 0)
-    , [ Theme.toUrlFunction Image.classWizard
-      , "conic-gradient( #ffc282, #fc8161, #fff, #9992ff, #98e586, #9b91fd, #fff, #fd8161, #ffc684, #97e184, #ffc282)"
-      ]
-        |> String.join ", "
+    , "linear-gradient(135deg,"
+        ++ String.join ", " stops
+        ++ ")"
         |> Theme.style "background-image"
-    , [ "cover"
-      , "auto"
-      ]
-        |> String.join ", "
-        |> Theme.style "background-size"
-    , [ "padding-box"
-      , "border-box"
-      ]
-        |> String.join ", "
-        |> Theme.style "background-origin"
+    , Theme.style "background-origin" "border-box"
     ]
 
 
