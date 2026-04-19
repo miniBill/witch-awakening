@@ -456,10 +456,10 @@ innerView model =
                 , Element.Lazy.lazy3 GameMode.viewGameMode model.hideDLCs model.gameModeDisplay model.gameMode
                 , Element.Lazy.lazy3 Complications.viewComplications model.hideDLCs model.complicationsDisplay model.complications
                 , Element.Lazy.lazy4 TypePerk.viewTypePerks model.hideDLCs model.races model.typePerksDisplay model.typePerks
-                , Element.Lazy.lazy3 Magic.viewMagics model.hideDLCs model.magicDisplay model.magic
+                , Element.Lazy.lazy4 Magic.viewMagics model.device model.hideDLCs model.magicDisplay model.magic
                 , Element.Lazy.lazy6 Perk.viewPerks model.hideDLCs model.hideMeta model.perksDisplay model.mainRace model.races model.perks
                 , Element.Lazy.lazy4 Faction.viewFaction model.hideDLCs model.factionDisplay model.factions model.factionPerks
-                , Element.Lazy.lazy3 FactionalMagic.viewFactionalMagics model.hideDLCs model.factionalMagicDisplay model.magic
+                , Element.Lazy.lazy4 FactionalMagic.viewFactionalMagics model.device model.hideDLCs model.factionalMagicDisplay model.magic
                 , Element.Lazy.lazy3 Companion.viewCompanions model.hideDLCs model.companionsDisplay model.companions
                 , Element.Lazy.lazy3 Quest.viewQuests model.hideDLCs model.questsDisplay model.quests
                 , Element.Lazy.lazy6 Relic.viewRelics model.hideDLCs model.relicsDisplay model.mainRace model.races model.typePerks model.relics

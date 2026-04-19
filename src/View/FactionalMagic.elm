@@ -1,7 +1,7 @@
 module View.FactionalMagic exposing (viewFactionalMagics)
 
 import Data.Magic as Magic
-import Element exposing (Element, centerX, fill, width)
+import Element exposing (Device, Element, centerX, fill, width)
 import Generated.Magic
 import Set exposing (Set)
 import Theme
@@ -10,8 +10,8 @@ import View
 import View.Magic as Magic
 
 
-viewFactionalMagics : Set String -> Display -> List RankedMagic -> Element Choice
-viewFactionalMagics hideDLC display selected =
+viewFactionalMagics : Device -> Set String -> Display -> List RankedMagic -> Element Choice
+viewFactionalMagics device hideDLC display selected =
     let
         filtered : List Magic.Details
         filtered =
@@ -27,7 +27,7 @@ viewFactionalMagics hideDLC display selected =
             boxes : Element ( RankedMagic, Bool )
             boxes =
                 filtered
-                    |> List.indexedMap (Magic.magicBox display True selected)
+                    |> List.indexedMap (Magic.magicBox device display True selected)
                     |> Theme.column []
         in
         View.collapsible []

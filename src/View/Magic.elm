@@ -2,7 +2,7 @@ module View.Magic exposing (magicBox, maybeClassToColor, viewMagics)
 
 import Color exposing (Color)
 import Data.Magic as Magic exposing (Affinities(..), MaybeClass(..))
-import Element exposing (Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveUp, px, rgb, rgba, width)
+import Element exposing (Device, Element, centerX, centerY, column, el, fill, fillPortion, height, moveDown, moveUp, px, rgb, rgba, width)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -22,8 +22,8 @@ import View
 import View.GradientText as GradientText
 
 
-viewMagics : Set String -> Display -> List RankedMagic -> Element Choice
-viewMagics hideDLC display selected =
+viewMagics : Device -> Set String -> Display -> List RankedMagic -> Element Choice
+viewMagics device hideDLC display selected =
     let
         filtered : List Magic.Details
         filtered =
@@ -62,12 +62,12 @@ viewMagics hideDLC display selected =
                 slotDescription
             , filtered
                 |> List.Extra.removeWhen .isElementalism
-                |> List.indexedMap (magicBox display False selected)
+                |> List.indexedMap (magicBox device display False selected)
                 |> Theme.column []
             , elementalIntro
             , filtered
                 |> List.filter .isElementalism
-                |> List.indexedMap (magicBox display False selected)
+                |> List.indexedMap (magicBox device display False selected)
                 |> Theme.column []
             ]
             [ filtered
@@ -79,7 +79,7 @@ viewMagics hideDLC display selected =
                         else
                             0
                     )
-                |> List.indexedMap (magicBox display False selected)
+                |> List.indexedMap (magicBox device display False selected)
                 |> Theme.column []
             ]
 
@@ -290,25 +290,26 @@ costTable =
 
 
 magicBox :
-    Display
+    Device
+    -> Display
     -> Bool
     -> List RankedMagic
     -> Int
     -> Magic.Details
     -> Element ( RankedMagic, Bool )
-magicBox display factional selected index details =
+magicBox device display factional selected index details =
     if display == DisplayCompact && List.all (\sel -> sel.name /= details.name) selected then
         Element.none
 
-    else if modBy 2 index == 0 || factional then
+    else if modBy 2 index == 0 || factional || device.class == Element.Phone then
         Theme.wrappedRow [ Theme.id IdKindMagic (Magic.toString details.name) ]
             [ magicImage details
-            , viewContent display selected details
+            , viewContent device display selected details
             ]
 
     else
         Theme.wrappedRow [ Theme.id IdKindMagic (Magic.toString details.name) ]
-            [ viewContent display selected details
+            [ viewContent device display selected details
             , magicImage details
             ]
 
@@ -349,8 +350,8 @@ magicImage { name, faction } =
         Element.none
 
 
-viewContent : Display -> List RankedMagic -> Magic.Details -> Element ( RankedMagic, Bool )
-viewContent display selected ({ name, description, ranks, dlc } as details) =
+viewContent : Device -> Display -> List RankedMagic -> Magic.Details -> Element ( RankedMagic, Bool )
+viewContent device display selected ({ name, description, ranks, dlc } as details) =
     let
         isSelected : Maybe RankedMagic
         isSelected =
@@ -367,7 +368,7 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
                 , Background.color (rgba 0.1 0.1 0.1 0.8)
                 , Theme.rounded
                 ]
-                [ magicTitle display details
+                [ magicTitle device display details
                 , case dlc of
                     Nothing ->
                         Element.none
@@ -401,8 +402,8 @@ viewContent display selected ({ name, description, ranks, dlc } as details) =
         }
 
 
-magicTitle : Display -> Magic.Details -> Element msg
-magicTitle display { name, hasRankZero, class, affinities } =
+magicTitle : Device -> Display -> Magic.Details -> Element msg
+magicTitle device display { name, hasRankZero, class, affinities } =
     let
         badges : List (Element msg)
         badges =
@@ -445,7 +446,12 @@ magicTitle display { name, hasRankZero, class, affinities } =
                 |> String.split "-"
                 |> List.intersperse "-"
                 |> List.map
-                    (GradientText.text []
+                    ((if device.class == Element.Phone then
+                        GradientText.wrapped []
+
+                      else
+                        GradientText.text []
+                     )
                         { font = Just GradientText.Morpheus
                         , fontSize = Nothing
                         , outlineSize = 4
