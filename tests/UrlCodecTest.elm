@@ -1,4 +1,4 @@
-module UrlCodecTest exposing (roundtrips)
+module UrlCodecTest exposing (academicToMagician, roundtrips)
 
 import Element
 import Expect
@@ -27,6 +27,24 @@ roundtrips =
                 |> Url.fromString
                 |> Maybe.map (UrlCodec.parseUrl () model.device)
                 |> Expect.equal (Just model)
+
+
+academicToMagician : Test
+academicToMagician =
+    Test.test "Academic gets parsed as Magician" <|
+        \_ ->
+            "http://localhost:8000?class=Academic"
+                |> Url.fromString
+                |> Maybe.andThen
+                    (\url ->
+                        (UrlCodec.parseUrl ()
+                            { class = Element.Phone
+                            , orientation = Element.Portrait
+                            }
+                            url
+                        ).class
+                    )
+                |> Expect.equal (Just Generated.Types.ClassMagician)
 
 
 modelFuzzer : Fuzzer (Model ())
