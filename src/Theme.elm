@@ -754,28 +754,34 @@ card attrs config =
                         width <| Element.minimum 300 <| Element.maximum 400 fill
                     ]
 
-                imageSizeAttrs : List (Attribute msg)
+                imageSizeAttrs : List (Html.Attribute msg)
                 imageSizeAttrs =
                     if compact then
-                        [ width <| Element.maximum (config.imageHeight * 3 // 2) fill
-                        , height <| Element.minimum config.imageHeight fill
+                        [ Html.Attributes.style "max-width" (String.fromInt (config.imageHeight * 3 // 2) ++ "px")
+                        , Html.Attributes.style "width" "100%"
+                        , Html.Attributes.style "min-height" (String.fromInt config.imageHeight ++ "px")
                         ]
 
                     else
-                        [ height <| px config.imageHeight
-                        , width fill
+                        [ Html.Attributes.style "height" (String.fromInt config.imageHeight ++ "px")
+                        , Html.Attributes.style "width" "100%"
                         ]
 
                 content : List (Element msg)
                 content =
-                    [ el
-                        (Border.rounded cardRoundness
-                            :: backgroundImage config.image
-                            :: imageSizeAttrs
-                            ++ List.map Element.inFront config.inFront
-                            ++ config.imageAttrs
+                    [ Image.toPicture
+                        (imageSizeAttrs
+                            ++ [ Html.Attributes.style "object-fit" "cover"
+                               , Html.Attributes.style "border-radius" (String.fromInt cardRoundness ++ "px")
+                               ]
                         )
-                        Element.none
+                        config.image
+                        |> Element.html
+                        |> el
+                            (Border.rounded cardRoundness
+                                :: width fill
+                                :: List.map Element.inFront config.inFront
+                            )
                     , column
                         [ padding
                         , height fill
@@ -893,8 +899,8 @@ viewClasses w classes =
             Element.none
 
         [ c ] ->
-            classToBadge c
-                |> image [ width <| px w ]
+            image [ width <| px w ]
+                (classToBadge c)
 
         _ ->
             let
@@ -1005,5 +1011,10 @@ backgroundImage { src } =
 
 
 img : List (Html.Attribute msg) -> Image -> Html msg
-img attrs { src } =
-    Html.img (Html.Attributes.src ("public/" ++ src) :: attrs) []
+img attrs src =
+    Image.toPicture
+        (Html.Attributes.style "width" (String.fromInt src.width ++ "px")
+            :: Html.Attributes.style "height" "auto"
+            :: attrs
+        )
+        src
