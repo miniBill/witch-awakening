@@ -781,6 +781,7 @@ card attrs config =
                             (Border.rounded cardRoundness
                                 :: width fill
                                 :: List.map Element.inFront config.inFront
+                                ++ config.imageAttrs
                             )
                     , column
                         [ padding
