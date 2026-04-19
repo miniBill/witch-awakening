@@ -461,19 +461,24 @@ type InFaction
 
 isInFaction :
     { a
-        | factions : List Faction
+        | races : List Race
+        , factions : List Faction
         , factionPerks : List Faction
         , typePerks : List Race
     }
     -> Magic.Details
     -> InFaction
-isInFaction { factions, factionPerks, typePerks } magicDetails =
+isInFaction { races, factions, factionPerks, typePerks } magicDetails =
     if
         (List.member RaceSpider typePerks && magicDetails.name == MagicArachnescence)
+            || (List.member RaceMothid typePerks && magicDetails.name == MagicArachnescence)
             || (List.member RaceCyborg typePerks && magicDetails.name == MagicGadgetry)
             || (List.member RaceCyborg typePerks && magicDetails.name == MagicIntegration)
     then
         InFactionPerk
+
+    else if List.member RaceMothid races && magicDetails.name == MagicArachnescence then
+        InFactionNoPerk
 
     else
         case magicDetails.faction of
