@@ -220,6 +220,7 @@ viewDLCAttribution dlcAttribution =
 viewIntro : Device -> Element msg
 viewIntro device =
     let
+        central : Element msg
         central =
             Theme.blocks
                 [ width fill
