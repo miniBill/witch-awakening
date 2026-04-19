@@ -1,5 +1,6 @@
 module UrlCodecTest exposing (roundtrips)
 
+import Element
 import Expect
 import Fuzz exposing (Fuzzer)
 import Generated.Affinity
@@ -24,7 +25,7 @@ roundtrips =
         \model ->
             ("http://localhost:8000" ++ UrlCodec.toUrl model)
                 |> Url.fromString
-                |> Maybe.map (UrlCodec.parseUrl ())
+                |> Maybe.map (UrlCodec.parseUrl () model.device)
                 |> Expect.equal (Just model)
 
 
@@ -32,6 +33,7 @@ modelFuzzer : Fuzzer (Model ())
 modelFuzzer =
     Fuzz.constant Model
         |> Fuzz.andMap Fuzz.unit
+        |> Fuzz.andMap deviceFuzzer
         |> Fuzz.andMap Fuzz.bool
         |> Fuzz.andMap Fuzz.int
         |> Fuzz.andMap Fuzz.int
@@ -64,6 +66,23 @@ modelFuzzer =
         |> Fuzz.andMap (Fuzz.constant Set.empty)
         |> Fuzz.andMap (Fuzz.constant Set.empty)
         |> Fuzz.andMap (Fuzz.constant False)
+
+
+deviceFuzzer : Fuzzer Element.Device
+deviceFuzzer =
+    Fuzz.map2 Element.Device
+        deviceClassFuzzer
+        orientationFuzzer
+
+
+deviceClassFuzzer : Fuzzer Element.DeviceClass
+deviceClassFuzzer =
+    Fuzz.oneOfValues [ Element.Phone, Element.Tablet, Element.Desktop, Element.BigDesktop ]
+
+
+orientationFuzzer : Fuzzer Element.Orientation
+orientationFuzzer =
+    Fuzz.oneOfValues [ Element.Portrait, Element.Landscape ]
 
 
 classFuzzer : Fuzzer Generated.Types.Class
