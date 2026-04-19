@@ -226,26 +226,37 @@ html attrs str =
                 , fontSize = Nothing
                 }
                 attrs
-    in
-    Html.span
-        (fontToAttributes config.font
-            ++ (case config.fontSize of
-                    Nothing ->
-                        []
 
-                    Just px ->
-                        [ Html.Attributes.style "font-size" (String.fromInt px ++ "px") ]
-               )
-            ++ [ Html.Attributes.class "outlined"
-               , Html.Attributes.attribute "data-text" str
-               , config.gradient
-                    |> List.map rgbToString
-                    |> String.join ", "
-                    |> (\joined -> "--text-stroke: " ++ String.fromFloat config.outlineSize ++ "px #000; --background: linear-gradient(to bottom, " ++ joined ++ ")")
-                    |> Html.Attributes.attribute "style"
-               ]
-        )
-        [ Html.text str ]
+        style : String
+        style =
+            [ "--text-stroke: "
+                ++ String.fromFloat config.outlineSize
+                ++ "px #000"
+            , "--background: linear-gradient(to bottom, "
+                ++ (config.gradient
+                        |> List.map rgbToString
+                        |> String.join ", "
+                   )
+                ++ ")"
+            ]
+                |> String.join "; "
+    in
+    Html.span [ Html.Attributes.attribute "style" style ]
+        [ Html.span
+            (fontToAttributes config.font
+                ++ (case config.fontSize of
+                        Nothing ->
+                            []
+
+                        Just px ->
+                            [ Html.Attributes.style "font-size" (String.fromInt px ++ "px") ]
+                   )
+                ++ [ Html.Attributes.class "outlined"
+                   , Html.Attributes.attribute "data-text" str
+                   ]
+            )
+            [ Html.text str ]
+        ]
 
 
 rgbToString : ( Int, Int, Int ) -> String
