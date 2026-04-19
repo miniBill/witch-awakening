@@ -4,7 +4,6 @@ import Color
 import Element exposing (Attribute, Element, alignBottom, centerX, el, fill, moveDown, spacing, width)
 import Element.Border as Border
 import Generated.Class as Class
-import Generated.Image as Image
 import Generated.Types as Types exposing (Class)
 import Set exposing (Set)
 import Theme
