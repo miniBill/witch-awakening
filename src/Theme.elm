@@ -56,7 +56,7 @@ image attrs src =
         ]
         src
         |> Element.html
-        |> el attrs
+        |> el (width (px src.width) :: attrs)
 
 
 choice : String -> Element msg
