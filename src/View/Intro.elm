@@ -28,8 +28,8 @@ viewTitleAndIntro device allCompact =
                     , left = Theme.rhythm * 2
                     , right = Theme.rhythm * 2
                     }
-                , Element.htmlAttribute (Html.Attributes.style "overflow" "clip")
-                , Element.htmlAttribute (Html.Attributes.style "word-spacing" "1em")
+                , Theme.style "overflow" "clip"
+                , Theme.style "word-spacing" "1em"
                 ]
                 { font = Just GradientText.BebasNeue
                 , fontSize = Just 140
@@ -136,7 +136,7 @@ viewBackground device =
                         , Theme.image
                             [ width fill
                             , centerY
-                            , Element.htmlAttribute (Html.Attributes.style "opacity" "0.9")
+                            , Theme.style "opacity" "0.9"
                             ]
                             Image.introRightPenelope
                         ]

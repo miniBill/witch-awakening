@@ -584,6 +584,7 @@ maybeClassToColor class =
     case class of
         ClassOne c ->
             Class.toColor c
+                |> Maybe.withDefault Color.white
 
         ClassSpecial ->
             Theme.colors.epic

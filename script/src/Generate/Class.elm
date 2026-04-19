@@ -45,7 +45,7 @@ details types =
     Elm.Declare.record "Details"
         |> Elm.Declare.withField "name" .name types.class.annotation
         |> Elm.Declare.withField "dlc" .dlc (Elm.Annotation.maybe Elm.Annotation.string)
-        |> Elm.Declare.withField "color" .color Gen.Color.annotation_.color
+        |> Elm.Declare.withField "color" .color (Elm.Annotation.maybe Gen.Color.annotation_.color)
         |> Elm.Declare.withField "content" .content Elm.Annotation.string
         |> Elm.Declare.buildRecord
 

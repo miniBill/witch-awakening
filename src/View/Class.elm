@@ -1,5 +1,6 @@
 module View.Class exposing (viewClass)
 
+import Color
 import Element exposing (Element, alignBottom, centerX, fill, moveDown, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
@@ -92,11 +93,16 @@ classBox display selected { name, dlc, color, content } =
     Theme.card [ Theme.id IdKindClass (Class.toString name) ]
         { display = display
         , forceShow = selected == Nothing
-        , glow = color
+        , glow = color |> Maybe.withDefault Color.white
         , isSelected = isSelected
         , imageAttrs =
             [ Border.width 8
-            , Theme.borderColor color
+            , case color of
+                Just c ->
+                    Theme.borderColor c
+
+                Nothing ->
+                    Theme.style "" ""
             ]
         , imageHeight = 400
         , image = Types.classToImage name
@@ -122,54 +128,90 @@ classBox display selected { name, dlc, color, content } =
 
 className : Class -> Element (Maybe Class)
 className name =
+    let
+        default :
+            { fontSize : Maybe Int
+            , outlineSize : Maybe Float
+            }
+        default =
+            { fontSize = Nothing
+            , outlineSize = Nothing
+            }
+
+        go :
+            GradientText.Font
+            -> List (Element.Attribute msg)
+            ->
+                { fontSize : Maybe Int
+                , outlineSize : Maybe Float
+                }
+            -> List ( Int, Int, Int )
+            -> Element msg
+        go font attrs config gradient =
+            GradientText.wrapped
+                (alignBottom
+                    :: centerX
+                    :: attrs
+                )
+                { font = Just font
+                , fontSize =
+                    config.fontSize
+                        |> Maybe.withDefault 56
+                        |> Just
+                , outlineSize =
+                    config.outlineSize
+                        |> Maybe.withDefault 4
+                , gradient = gradient
+                }
+                (Class.toString name)
+    in
     case name of
         Types.ClassMagician ->
-            GradientText.wrapped
-                [ alignBottom
-                , centerX
-                , moveDown 8
-                ]
-                { font = Just GradientText.SFTechnodelight
-                , fontSize = Just 56
-                , outlineSize = 4
-                , gradient = Gradient.magicianGradient
-                }
-                (Class.toString name)
+            go GradientText.SFTechnodelight
+                [ moveDown 8 ]
+                default
+                Gradient.magicianGradient
 
         Types.ClassSorceress ->
-            GradientText.wrapped
-                [ alignBottom
-                , centerX
-                , moveDown 4
-                , Element.htmlAttribute (Html.Attributes.style "text-shadow" "rgba(255, 17, 0, 0.9) 0px 0px 39px")
+            go GradientText.StarDust
+                [ moveDown 4
+                , Theme.style "text-shadow" "rgba(255, 17, 0, 0.9) 0px 0px 39px"
                 ]
-                { font = Just GradientText.StarDust
-                , fontSize = Just 56
-                , outlineSize = 4
-                , gradient =
-                    [ ( 251, 247, 222 )
-                    , ( 233, 213, 139 )
-                    ]
-                }
-                (Class.toString name)
+                default
+                [ ( 251, 247, 222 )
+                , ( 233, 213, 139 )
+                ]
 
         Types.ClassWarlock ->
-            GradientText.wrapped
-                [ alignBottom
-                , centerX
-                , moveDown 20
-                ]
-                { font = Just GradientText.MirageGothic
-                , fontSize = Just 96
-                , outlineSize = 6
-                , gradient =
-                    [ ( 207, 207, 207 )
-                    , ( 120, 120, 120 )
-                    ]
+            go GradientText.MirageGothic
+                [ moveDown 20 ]
+                { fontSize = Just 96
+                , outlineSize = Just 6
                 }
-                (Class.toString name)
+                [ ( 207, 207, 207 )
+                , ( 120, 120, 120 )
+                ]
 
+        Types.ClassWizard ->
+            go GradientText.MagicTheGathering
+                [ moveDown 30 ]
+                { fontSize = Just 96
+                , outlineSize = Just 6
+                }
+                [ ( 100, 200, 100 )
+                , ( 100, 100, 255 )
+                , ( 255, 255, 255 )
+                , ( 200, 0, 0 )
+                , ( 200, 100, 0 )
+                , ( 100, 100, 200 )
+                ]
 
-
--- Wizard -> MTG
--- Slayer -> Andalus
+        Types.ClassSlayer ->
+            go GradientText.Andalus
+                [ moveDown 20 ]
+                { fontSize = Just 96
+                , outlineSize = Just 6
+                }
+                [ ( 255, 206, 40 )
+                , ( 176, 108, 27 )
+                ]

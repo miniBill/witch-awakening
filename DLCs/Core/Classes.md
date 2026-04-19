@@ -57,3 +57,38 @@ Any option marked with the {warlock *green*} icon has a flat cost reduction of -
 They have a personalized brand they can mark on any relic they own or willing creatures. They always know the location of one of their marks and can target it from anywhere.
 
 Warlocks have {20} points worth of free Reward Points to spend on purchasing Relics, which are Soulbound for free. Any class that buys Relics with Power Soulbinds the relics, making them summoned at-will. Warlocks can soulbind additional relics that they purchased with RP by investing [1] power on top of its RP cost.
+
+
+## Class: Wizard
+
+*WARNING: IMPLEMENTATION INCOMPLETE*
+
+*WIZARDS*, officially not a kind of Witch - if you were male you do not have to buy the cheap perk to stay that way- Instead, You must buy that perk with the prefix "No-" to be female. The rare male witches of the traditional three may get called wizards now and then, but you may be a True Wizard. There will usually only be 1 True Wizard alive at any given time but shenanigans can fudge that.
+
+You have the growth methods of {magician *FOCUS*}, {sorceress *MIGHT*}, and {warlock *FAVOR*} at the expense that a Wizard requires magical implements in order to use magic, effectively having the Crutch complication inherent, and all True Wizards must be human - They must choose Neutral as their primary race, but may still buy Hybridize.
+
+A wizard is a “prepared spellcaster”, in order to use magic they acquire “spell components” related to the Class and the Affinities associated with the magic. Components are not consumed, and can be reused. This is separate from the magic implement, but components can be “Baked in” to one.
+
+
+__Start with [20] power__. Player Wizards eventually cap out at [110] power before other factors like complications.
+
+The Wizard benefits from all class discounts.
+
+*Advantage*: An allrounder with a wide breath of talents.
+The Wizard may also start with a Soulbound Heirloom relic. The Heirloom is how you can use the mothergifts of a witch, their preferred shape will always be a wizardly robe, hat, staff. Wizards are able to trace “Leylines” & erect Wizard Towers with pointed roofs that tap into it, usually at “places of power” where multiple leylines intersect. PoPs usually naturally draw in intelligent life so many will have civilization or ruins. While in a connected Wizard Tower, all your magic is doubled in range, area, dmg, duration, as well as your charge rate.
+
+
+## Class: Slayer
+- Color: #3e3e3e
+
+*WARNING: IMPLEMENTATION INCOMPLETE*
+
+*SLAYERS* are also not officially a kind of witch either, they may be male without requiring a perk, or female unlike wizard. Slayers are known to be witch-hunters. They do not naturally possess a spark of magic, by they have the slayerforce with which they can grow in Power to acquire perks and everything but Magics, with exception for Alchemy, Runes, Hexes, and Faction magics.
+
+A slayer who is sufficiently close with a witch and has a thread of fate linking them, may access her mana and use magic that she has. In practice, this means your COMPANIONS become a catalogue for your magic spellcasting but they must be nearby in order to access them.
+
+You may still take a non-human Race, and you only gain charge by taking Mana from slain magic creatures or borrowed from Companions. They lack a growth method but may acquire power from quests in which they slay magical creatures, as per a warlock, but don't have “Favor”. They can “upcast” by taking Growth from others.
+
+__Start with [20] power__. Player Slayers eventually cap out at [110] power before other factors like complications. They don't have Class or Affinity discounts, instead they can copy one discount per companion, Class or Affinity.
+
+*Advantage*: Slayers are drawn by Fate itself to slay evil or troublemaking magical creatures, including witches and rogue minor deities. They in effect have protagonist level plot armor and if there is any way to defeat a creature, the Slayer will sooner or later stumble on it based on that creature's competence and fate resistance - you will still die if you get lazy or cocky, but - The Slayer is also considerably more likely to escape a lethal situation with their life, even if it may result in a painful road-to-recovery story arc.

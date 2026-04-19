@@ -5,7 +5,7 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Points as Points exposing (Points)
 import Data.Costs.Utils as Utils
 import Generated.Complication as Complication
-import Generated.Types exposing (GameMode(..))
+import Generated.Types exposing (Class(..), GameMode(..))
 import List.Extra
 import Types exposing (ComplicationKind(..), IdKind(..), Model)
 
@@ -40,21 +40,34 @@ normalCapWarning =
 
 powerCap : Model key -> Monad Points
 powerCap model =
+    let
+        wizardSlayerBonus : Int
+        wizardSlayerBonus =
+            case model.class of
+                Just ClassWizard ->
+                    10
+
+                Just ClassSlayer ->
+                    10
+
+                _ ->
+                    0
+    in
     case model.gameMode of
         Nothing ->
             model.towardsCap
                 |> Utils.capWithWarning 30 normalCapWarning
-                |> Monad.map (Points.add (Points.fromPower 100))
+                |> Monad.map (Points.add (Points.fromPower (100 + wizardSlayerBonus)))
 
         Just GameModeStoryArc ->
             complicationsRawValue model
                 |> Monad.andThen (Utils.capWithWarning 60 storyArcWarning)
-                |> Monad.map (Points.add (Points.fromPower 150))
+                |> Monad.map (Points.add (Points.fromPower (150 + wizardSlayerBonus)))
 
         Just GameModeEarlyBird ->
             complicationsRawValue model
                 |> Monad.andThen (Utils.capWithWarning 30 earlyBirdWarning)
-                |> Monad.map (Points.add (Points.fromPower 75))
+                |> Monad.map (Points.add (Points.fromPower (75 + wizardSlayerBonus)))
 
         Just GameModeSkillTree ->
             Utils.slotUnsupported

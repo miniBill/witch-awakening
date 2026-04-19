@@ -20,6 +20,12 @@ value model =
                 ClassSorceress ->
                     Monad.succeed Points.zero
 
+                ClassWizard ->
+                    Monad.succeed Points.zero
+
+                ClassSlayer ->
+                    Monad.succeed Points.zero
+
         Nothing ->
             Monad.succeed Points.zero
                 |> Monad.withWarning "You need to select a class"

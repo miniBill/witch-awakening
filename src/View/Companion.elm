@@ -424,8 +424,8 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
             [ classBadge
                 |> el
                     [ paddingEach { left = 24, top = 0, right = 0, bottom = 0 }
-                    , Element.htmlAttribute (Html.Attributes.style "visibility" "hidden")
-                    , Element.htmlAttribute (Html.Attributes.style "min-width" "0px")
+                    , Theme.style "visibility" "hidden"
+                    , Theme.style "min-width" "0px"
                     ]
             , GradientText.wrapped
                 [ width fill

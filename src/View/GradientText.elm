@@ -17,6 +17,8 @@ type Font
     | StarDust
     | MirageGothic
     | Mortis
+    | MagicTheGathering
+    | Andalus
 
 
 type alias Config =
@@ -156,12 +158,16 @@ fontToAttributes font =
             ]
 
         Just MirageGothic ->
-            [ Fonts.mirageGothic
-            ]
+            [ Fonts.mirageGothic ]
 
         Just Mortis ->
-            [ Fonts.mortis
-            ]
+            [ Fonts.mortis ]
+
+        Just MagicTheGathering ->
+            [ Fonts.magicTheGathering ]
+
+        Just Andalus ->
+            [ Fonts.andalus ]
 
         Nothing ->
             []

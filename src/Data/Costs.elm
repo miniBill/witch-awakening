@@ -14,7 +14,7 @@ import Data.Costs.Relics
 import Data.Costs.TypePerks
 import Data.Costs.Utils as Utils
 import Data.Costs.Value as Value
-import Generated.Types exposing (GameMode(..))
+import Generated.Types exposing (Class(..), GameMode(..))
 import Types exposing (IdKind(..), Model)
 
 
@@ -82,6 +82,18 @@ startingValue model =
 startingPower : Model key -> Monad Int
 startingPower model =
     let
+        wizardSlayerBonus : Int
+        wizardSlayerBonus =
+            case model.class of
+                Just ClassWizard ->
+                    10
+
+                Just ClassSlayer ->
+                    10
+
+                _ ->
+                    0
+
         withGameModeInfo : String -> Int -> Monad Int
         withGameModeInfo label v =
             succeed v
@@ -95,13 +107,13 @@ startingPower model =
     case model.gameMode of
         Just GameModeStoryArc ->
             if model.capBuild then
-                withGameModeInfo "Story Arc (cap)" 150
+                withGameModeInfo "Story Arc (cap)" (150 + wizardSlayerBonus)
 
             else
-                withGameModeInfo "Story Arc" 10
+                withGameModeInfo "Story Arc" (10 - wizardSlayerBonus)
 
         Just GameModeEarlyBird ->
-            withGameModeInfo "Early Bird" 75
+            withGameModeInfo "Early Bird" (75 + wizardSlayerBonus)
 
         Just GameModeSkillTree ->
             Utils.slotUnsupported
@@ -111,10 +123,10 @@ startingPower model =
 
         Nothing ->
             if model.capBuild then
-                withGameModeInfo "Normal game mode (cap)" 100
+                withGameModeInfo "Normal game mode (cap)" (100 + wizardSlayerBonus)
 
             else
-                withGameModeInfo "Normal game mode" 30
+                withGameModeInfo "Normal game mode" (30 - wizardSlayerBonus)
 
 
 conversion : Model key -> Monad Points

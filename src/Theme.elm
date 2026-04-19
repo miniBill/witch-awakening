@@ -208,7 +208,12 @@ viewPiece expandBadges piece =
                     colored colors.choice
 
                 MarkMini.ClassColor class ->
-                    colored <| Class.toColor class
+                    case Class.toColor class of
+                        Just c ->
+                            colored c
+
+                        Nothing ->
+                            rainbowText (List.concatMap (viewPiece expandBadges) children)
 
                 MarkMini.SlotColor slot ->
                     colored <| slotToColor slot
@@ -353,6 +358,17 @@ viewPiece expandBadges piece =
 
         LineBreak ->
             [ Html.br [] [] ]
+
+
+rainbowText : List (Html msg) -> List (Html msg)
+rainbowText children =
+    [ Html.span
+        [ Html.Attributes.style "background-image" "linear-gradient(lime,teal,white,red,yellow,green)"
+        , Html.Attributes.style "color" "transparent"
+        , Html.Attributes.style "background-clip" "text"
+        ]
+        children
+    ]
 
 
 viewGenericBadge : Bool -> Image -> String -> List (Html msg)
@@ -854,6 +870,12 @@ classToBadge class =
 
         ClassWarlock ->
             Image.badgeWarlock
+
+        ClassWizard ->
+            Image.badgeWizard
+
+        ClassSlayer ->
+            Image.badgeSlayer
 
 
 topBackground : Image -> List (Element.Attribute msg)
