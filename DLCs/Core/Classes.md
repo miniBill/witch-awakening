@@ -63,7 +63,7 @@ Warlocks have {20} points worth of free Reward Points to spend on purchasing Rel
 
 *WARNING: IMPLEMENTATION INCOMPLETE*
 
-*WIZARDS*, officially not a kind of Witch - if you were male you do not have to buy the cheap perk to stay that way- Instead, You must buy that perk with the prefix "No-" to be female. The rare male witches of the traditional three may get called wizards now and then, but you may be a True Wizard. There will usually only be 1 True Wizard alive at any given time but shenanigans can fudge that.
+*WIZARDS*, officially not a kind of Witch - if you were male you do not have to buy the cheap perk to stay that way- Instead, You must buy that perk with the prefix “No-” to be female. The rare male witches of the traditional three may get called wizards now and then, but you may be a True Wizard. There will usually only be 1 True Wizard alive at any given time but shenanigans can fudge that.
 
 You have the growth methods of {magician *FOCUS*}, {sorceress *MIGHT*}, and {warlock *FAVOR*} at the expense that a Wizard requires magical implements in order to use magic, effectively having the Crutch complication inherent, and all True Wizards must be human - They must choose Neutral as their primary race, but may still buy Hybridize.
 
