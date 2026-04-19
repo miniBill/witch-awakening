@@ -228,14 +228,7 @@ html attrs str =
                 attrs
     in
     Html.span
-        ([ Html.Attributes.class "outlined"
-         , Html.Attributes.attribute "data-text" str
-         , config.gradient
-            |> List.map rgbToString
-            |> String.join ", "
-            |> (\joined -> "--text-stroke: " ++ String.fromFloat config.outlineSize ++ "px #000; --background: linear-gradient(to bottom, " ++ joined ++ ")")
-            |> Html.Attributes.attribute "style"
-         ]
+        (fontToAttributes config.font
             ++ (case config.fontSize of
                     Nothing ->
                         []
@@ -243,7 +236,14 @@ html attrs str =
                     Just px ->
                         [ Html.Attributes.style "font-size" (String.fromInt px ++ "px") ]
                )
-            ++ fontToAttributes config.font
+            ++ [ Html.Attributes.class "outlined"
+               , Html.Attributes.attribute "data-text" str
+               , config.gradient
+                    |> List.map rgbToString
+                    |> String.join ", "
+                    |> (\joined -> "--text-stroke: " ++ String.fromFloat config.outlineSize ++ "px #000; --background: linear-gradient(to bottom, " ++ joined ++ ")")
+                    |> Html.Attributes.attribute "style"
+               ]
         )
         [ Html.text str ]
 
