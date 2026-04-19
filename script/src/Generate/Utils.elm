@@ -1,4 +1,4 @@
-module Generate.Utils exposing (color, yassify)
+module Generate.Utils exposing (Color(..), color, yassify)
 
 import Bitwise
 import Elm exposing (Expression)
@@ -17,8 +17,12 @@ yassify str =
         |> String.Extra.classify
 
 
-color : Int -> Expression
-color c =
+type Color
+    = Color Int
+
+
+color : Color -> Expression
+color (Color c) =
     Gen.Color.rgb255
         (c |> Bitwise.shiftRightBy 16)
         (c |> Bitwise.shiftRightBy 8 |> modBy 256)

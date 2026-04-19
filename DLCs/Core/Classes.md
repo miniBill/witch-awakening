@@ -2,7 +2,7 @@
 
 ## Class: Magician
 - Synonym: Academic
-- Color: 1a77ff
+- Color: #1a77ff
 
 *Magicians*, sometimes called _academics_, are the scholarly spellcaster, they have a gift for magic but must study to improve their magic. Their thorough approach to magic tends to be slower if you want to have a life outside of study, but the most rewarding as they comprehend in more depth and their growth is in their own hands, advancing as slow or fast as time allows. Magicians gain 1 {magician _*Focus*_} for every day in which they averaged 4 hours of study, 2 for 8 hours. You can use focus to buy a Power point for 10 Focus. This cost increases by 10 Focus per purchase. (10, 20, 30, etc).
 
@@ -24,7 +24,7 @@ A magician can study to master any two schools of magic for free, but takes time
 
 
 ## Class: Sorceress
-- Color: ff0000
+- Color: #ff0000
 
 *Sorceresses* are inherently imbued with magic as natural extensions of their will so they tend to be more in tune with their bodies and grow through tactile training. They’re naturals but tend to have less of a tangible understanding of how and why magic works or interesting implications of magical theory. Fireballs go boom, ain’t gotta explain sheit.
 
@@ -41,9 +41,9 @@ Sorceresses have stronger and more unique auras that are like beacons to anyone 
 
 
 ## Class: Warlock
-- Color: 19ad00
+- Color: #19ad00
 
-Warlocks are endowed with power from some third party. Their power can’t be taken back afterward anymore than such an entity might be capable of stealing power from any other witch. Instead of studying, or training, they spend time in service, partnership, employ, or worship of a patron.
+*Warlocks* are endowed with power from some third party. Their power can’t be taken back afterward anymore than such an entity might be capable of stealing power from any other witch. Instead of studying, or training, they spend time in service, partnership, employ, or worship of a patron.
 
 They grow by gaining {warlock _*Favor*_} with their patron(s), by doing quests, the Warlock gains Favor equal to the Reward value of the quest. Warlocks can trade Favor 1-1 directly for Power due to the scarcity, being dependent on Quests. A Warlock can continue to do quests without a quest slot, but doing so offers no rewards except Favor.
 

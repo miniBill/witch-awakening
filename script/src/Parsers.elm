@@ -4,6 +4,7 @@ import Ansi.Color
 import Dict exposing (Dict)
 import Dict.Extra
 import Generate.Enum exposing (Argument(..))
+import Generate.Utils exposing (Color(..))
 import Hex
 import List.Extra
 import List.Nonempty as Nonempty
@@ -482,7 +483,7 @@ resultToParser result =
 
 type alias Affinity =
     { name : String
-    , color : Int
+    , color : Color
     , rainbow : Bool
     , selectable : Bool
     , symbol : Maybe String
@@ -492,7 +493,7 @@ type alias Affinity =
 affinity : Parser Affinity
 affinity =
     section "##" "Affinity" Affinity
-        |> requiredItem "Color" hexParser
+        |> requiredItem "Color" colorParser
         |> flagItem "Rainbow"
         |> optionalItem "Selectable" True boolParser
         |> maybeItem "Symbol" Ok
@@ -802,7 +803,7 @@ complication =
 type alias Class =
     { name : String
     , synonym : Maybe String
-    , color : Int
+    , color : Maybe Color
     , description : String
     }
 
@@ -811,7 +812,7 @@ class : Parser Class
 class =
     (section "##" "Class" Class
         |> maybeItem "Synonym" Ok
-        |> requiredItem "Color" hexParser
+        |> maybeItem "Color" colorParser
         |> parseSection
     )
         |= paragraphs True
@@ -900,11 +901,22 @@ boolParser raw =
             ResultME.error (neither ++ " is not a valid boolean")
 
 
-hexParser : String -> ResultME String Int
-hexParser raw =
-    Hex.fromString (String.toLower raw)
-        |> Result.mapError (\e -> raw ++ " is not a valid hex number: " ++ e)
+colorParser : String -> ResultME String Color
+colorParser raw =
+    let
+        cut : String
+        cut =
+            if String.startsWith "#" raw then
+                String.dropLeft 1 raw
+
+            else
+                raw
+    in
+    String.toLower cut
+        |> Hex.fromString
+        |> Result.mapError (\e -> cut ++ " is not a valid color: " ++ e)
         |> ResultME.fromResult
+        |> Result.map Color
 
 
 intParser : String -> ResultME String Int

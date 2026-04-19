@@ -75,7 +75,7 @@ toColor types dlcClasses =
                         Elm.Case.branch
                             (types.class.argWith classData.name [])
                             (\_ ->
-                                Utils.color classData.color
+                                Elm.maybe (Maybe.map Utils.color classData.color)
                             )
                     )
                 |> Elm.Case.custom class types.class.annotation
@@ -89,7 +89,7 @@ dlcToClasses types classes =
             (details types).make
                 { name = types.class.value class.name
                 , dlc = Elm.maybe (Maybe.map Elm.string dlcName)
-                , color = Utils.color class.color
+                , color = Elm.maybe (Maybe.map Utils.color class.color)
                 , content = Elm.string class.description
                 }
                 |> Elm.declaration (yassify class.name)
