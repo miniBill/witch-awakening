@@ -491,8 +491,7 @@ viewAffinities affinities =
                                 )
                             |> List.intersperse
                                 (GradientText.text
-                                    [ Element.moveUp 2
-                                    ]
+                                    [ Element.moveUp 2 ]
                                     [ GradientText.morpheus
                                     , GradientText.fontSize 24
                                     , GradientText.outlineSize 2
@@ -503,8 +502,7 @@ viewAffinities affinities =
                     )
                 |> List.intersperse
                     (GradientText.text
-                        [ moveDown 4
-                        ]
+                        [ moveDown 4 ]
                         [ GradientText.morpheus
                         , GradientText.fontSize 24
                         , GradientText.outlineSize 2

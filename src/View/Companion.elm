@@ -302,9 +302,8 @@ image { name, races, hasPerk, cost } =
                 |> List.map
                     (\race ->
                         el [ centerX ]
-                            (GradientText.text
-                                [ Font.size 32 ]
-                                []
+                            (GradientText.text []
+                                [ GradientText.fontSize 32 ]
                                 race
                             )
                     )
