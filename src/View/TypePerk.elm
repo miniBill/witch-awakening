@@ -258,6 +258,9 @@ raceToTypePerkImage race =
         RaceSwarm ->
             Image.typePerkSwarm
 
+        RaceMothid ->
+            Image.typePerkMothid
+
         _ ->
             Types.raceToImage race
 
