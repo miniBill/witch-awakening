@@ -1,7 +1,7 @@
 module View.Class exposing (viewClass)
 
 import Color
-import Element exposing (Attribute, Element, alignBottom, centerX, fill, moveDown, spacing, width)
+import Element exposing (Attribute, Element, alignBottom, centerX, el, fill, moveDown, spacing, width)
 import Element.Border as Border
 import Generated.Class as Class
 import Generated.Image as Image
@@ -105,7 +105,8 @@ classBox display selected { name, dlc, color, content } =
         , imageHeight = 400
         , image = Types.classToImage name
         , inFront =
-            [ className name
+            [ classBadge name
+            , className name
             , case dlc of
                 Nothing ->
                     Element.none
@@ -121,6 +122,13 @@ classBox display selected { name, dlc, color, content } =
         , content = [ Theme.blocks [] IdKindClass content ]
         , onPress = Just msg
         }
+
+
+classBadge : Class -> Element (Maybe Class)
+classBadge class =
+    Theme.classToBadge class
+        |> Theme.image []
+        |> el [ Element.padding 18 ]
 
 
 wizardBorder : List (Attribute msg)
