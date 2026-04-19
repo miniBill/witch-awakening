@@ -115,7 +115,6 @@ classBox display selected { name, dlc, color, content } =
                 Just dlcName ->
                     GradientText.wrapped
                         [ centerX
-                        , Font.size 24
                         , moveDown 8
                         ]
                         GradientText.dlc
@@ -162,79 +161,72 @@ className name =
             }
 
         go :
-            GradientText.Font
-            -> List (Element.Attribute msg)
-            ->
-                { fontSize : Maybe Int
-                , outlineSize : Maybe Float
-                }
-            -> List ( Int, Int, Int )
+            List (Element.Attribute msg)
+            -> List GradientText.Attribute
             -> Element msg
-        go font attrs config gradient =
+        go attrs config =
             GradientText.wrapped
                 (alignBottom
                     :: centerX
                     :: attrs
                 )
-                { font = Just font
-                , fontSize =
-                    config.fontSize
-                        |> Maybe.withDefault 56
-                        |> Just
-                , outlineSize =
-                    config.outlineSize
-                        |> Maybe.withDefault 4
-                , gradient = gradient
-                }
+                (GradientText.fontSize 56 :: config)
                 (Class.toString name)
     in
     case name of
         Types.ClassMagician ->
-            go GradientText.SFTechnodelight
+            go
                 [ moveDown 8 ]
-                default
-                Gradient.magicianGradient
+                [ GradientText.sFTechnodelight
+                , GradientText.magicianGradient
+                ]
 
         Types.ClassSorceress ->
-            go GradientText.StarDust
-                [ moveDown 4
-                , Theme.style "text-shadow" "rgba(255, 17, 0, 0.9) 0px 0px 39px"
-                ]
-                default
-                [ ( 251, 247, 222 )
-                , ( 233, 213, 139 )
+            go
+                [ moveDown 4, Theme.style "text-shadow" "rgba(255, 17, 0, 0.9) 0px 0px 39px" ]
+                [ GradientText.starDust
+                , GradientText.gradient
+                    [ ( 251, 247, 222 )
+                    , ( 233, 213, 139 )
+                    ]
                 ]
 
         Types.ClassWarlock ->
-            go GradientText.MirageGothic
+            go
                 [ moveDown 20 ]
-                { fontSize = Just 96
-                , outlineSize = Just 6
-                }
-                [ ( 207, 207, 207 )
-                , ( 120, 120, 120 )
+                [ GradientText.mirageGothic
+                , GradientText.fontSize 96
+                , GradientText.outlineSize 6
+                , GradientText.gradient
+                    [ ( 207, 207, 207 )
+                    , ( 120, 120, 120 )
+                    ]
                 ]
 
         Types.ClassWizard ->
-            go GradientText.MagicTheGathering
+            go
                 [ moveDown 30 ]
-                { fontSize = Just 96
-                , outlineSize = Just 6
-                }
-                [ ( 100, 200, 100 )
-                , ( 100, 100, 255 )
-                , ( 255, 255, 255 )
-                , ( 200, 0, 0 )
-                , ( 200, 100, 0 )
-                , ( 100, 100, 200 )
+                [ GradientText.magicTheGathering
+                , GradientText.fontSize 96
+                , GradientText.outlineSize 6
+                , GradientText.gradient
+                    [ ( 100, 200, 100 )
+                    , ( 100, 100, 255 )
+                    , ( 255, 255, 255 )
+                    , ( 200, 0, 0 )
+                    , ( 200, 100, 0 )
+                    , ( 100, 100, 200 )
+                    ]
                 ]
 
         Types.ClassSlayer ->
-            go GradientText.Andalus
+            go
                 [ moveDown 20 ]
-                { fontSize = Just 96
-                , outlineSize = Just 6
-                }
-                [ ( 255, 206, 40 )
-                , ( 176, 108, 27 )
+                [ GradientText.andalus
+                , GradientText.fontSize 96
+                , GradientText.outlineSize 6
+                , GradientText.gradient
+                    [ ( 255, 206, 40 )
+                    , ( 176, 108, 27 )
+                    ]
                 ]

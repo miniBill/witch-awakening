@@ -221,11 +221,11 @@ viewPerk display factionPerks { name, perk, perkContent, images } =
                     , centerX
                     , paddingXY 8 0
                     ]
-                    { font = Just GradientText.CelticHand
-                    , fontSize = Just 24
-                    , outlineSize = 3
-                    , gradient = Gradient.blueGradient
-                    }
+                    [ GradientText.celticHand
+                    , GradientText.fontSize 24
+                    , GradientText.outlineSize 3
+                    , GradientText.blueGradient
+                    ]
                     perk
                 ]
             , content =
@@ -289,19 +289,18 @@ introRow display { name, dlc, motto, images } =
                 , column [ width fill ]
                     [ GradientText.wrapped
                         [ width fill ]
-                        { font = Just GradientText.CelticHand
-                        , fontSize = Just 40
-                        , outlineSize = 2
-                        , gradient = Gradient.blueGradient
-                        }
+                        [ GradientText.celticHand
+                        , GradientText.fontSize 40
+                        , GradientText.outlineSize 2
+                        , GradientText.blueGradient
+                        ]
                         (Faction.toString name)
                     , GradientText.wrapped
                         [ width fill ]
-                        { font = Just GradientText.Morpheus
-                        , fontSize = Just 24
-                        , outlineSize = 2
-                        , gradient = Gradient.yellowGradient
-                        }
+                        [ GradientText.morpheus
+                        , GradientText.fontSize 24
+                        , GradientText.outlineSize 2
+                        ]
                         motto
                     ]
                 ]
@@ -311,11 +310,11 @@ introRow display { name, dlc, motto, images } =
     else
         GradientText.wrapped
             [ width fill ]
-            { font = Just GradientText.CelticHand
-            , fontSize = Just 40
-            , outlineSize = 2
-            , gradient = Gradient.blueGradient
-            }
+            [ GradientText.celticHand
+            , GradientText.fontSize 40
+            , GradientText.outlineSize 2
+            , GradientText.blueGradient
+            ]
             (Faction.toString name)
 
 

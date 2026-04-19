@@ -138,31 +138,26 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                 , centerX
                 , paddingXY 30 0
                 ]
-                { font = Just GradientText.CaptureIt
-                , fontSize =
-                    case nameLength of
-                        Short ->
-                            Just 56
+                [ case nameLength of
+                    Short ->
+                        GradientText.fontSize 56
 
-                        Average ->
-                            Just 46
+                    Average ->
+                        GradientText.fontSize 46
 
-                        Long ->
-                            Just 40
-                , outlineSize = 6
-                , gradient = Gradient.yellowGradient
-                }
+                    Long ->
+                        GradientText.fontSize 40
+                , GradientText.outlineSize 6
+                ]
                 raceString
             , GradientText.wrapped
                 [ alignRight
                 , moveLeft 28
                 , moveDown 16
                 ]
-                { font = Just GradientText.CaptureIt
-                , fontSize = Just 30
-                , outlineSize = 6
-                , gradient = Gradient.yellowGradient
-                }
+                [ GradientText.fontSize 30
+                , GradientText.outlineSize 6
+                ]
                 (String.fromInt -cost)
             , case dlc of
                 Nothing ->
@@ -221,12 +216,12 @@ typePerkBox witchRaces display selected { name, race, cost, content, dlc } =
                                     (\line ->
                                         line
                                             |> String.join " "
-                                            |> GradientText.text [] GradientText.default
+                                            |> GradientText.text [] []
                                             |> el [ centerX ]
                                     )
 
                          else
-                            [ GradientText.text [] GradientText.default n ]
+                            [ GradientText.text [] [] n ]
                         )
             , Types.slotToImage slot
                 |> Theme.image [ width <| px 40 ]

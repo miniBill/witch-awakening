@@ -1,4 +1,4 @@
-module View.GradientText exposing (Config, Font(..), default, dlc, html, span, split, text, wrapped)
+module View.GradientText exposing (Attribute(..), Font(..), andalus, bebasNeue, blueGradient, captureIt, celticHand, dlc, fontSize, fontToAttributes, gradient, grayGradient, html, magicTheGathering, magicianGradient, mirageGothic, morpheus, mortis, noFont, orangeGradient, outlineSize, purpleGradient, rgbToString, sFTechnodelight, span, split, starDust, text, titleGradient, wrapped)
 
 import Element exposing (Attribute, Element)
 import Generated.Fonts as Fonts
@@ -6,6 +6,27 @@ import Generated.Gradient as Gradient
 import Html exposing (Html)
 import Html.Attributes
 import List.Extra
+
+
+
+-- Types --
+
+
+type Attribute
+    = OutlineSize Float
+    | Font (Maybe Font)
+    | FontSize Int
+    | Gradient (List ( Int, Int, Int ))
+
+
+fontSize : Int -> Attribute
+fontSize =
+    FontSize
+
+
+outlineSize : Float -> Attribute
+outlineSize s =
+    OutlineSize s
 
 
 type Font
@@ -21,36 +42,124 @@ type Font
     | Andalus
 
 
-type alias Config =
-    { font : Maybe Font
-    , fontSize : Maybe Int
-    , outlineSize : Float
-    , gradient : List ( Int, Int, Int )
-    }
+
+-- Fonts --
 
 
-default : Config
-default =
-    { font = Just CaptureIt
-    , fontSize = Nothing
-    , outlineSize = 4
-    , gradient = Gradient.yellowGradient
-    }
+noFont : Attribute
+noFont =
+    Font Nothing
 
 
-dlc : Config
+captureIt : Attribute
+captureIt =
+    Font (Just CaptureIt)
+
+
+celticHand : Attribute
+celticHand =
+    Font (Just CelticHand)
+
+
+bebasNeue : Attribute
+bebasNeue =
+    Font (Just BebasNeue)
+
+
+morpheus : Attribute
+morpheus =
+    Font (Just Morpheus)
+
+
+sFTechnodelight : Attribute
+sFTechnodelight =
+    Font (Just SFTechnodelight)
+
+
+starDust : Attribute
+starDust =
+    Font (Just StarDust)
+
+
+mirageGothic : Attribute
+mirageGothic =
+    Font (Just MirageGothic)
+
+
+mortis : Attribute
+mortis =
+    Font (Just Mortis)
+
+
+magicTheGathering : Attribute
+magicTheGathering =
+    Font (Just MagicTheGathering)
+
+
+andalus : Attribute
+andalus =
+    Font (Just Andalus)
+
+
+
+-- Gradients --
+
+
+gradient : List ( Int, Int, Int ) -> Attribute
+gradient g =
+    Gradient g
+
+
+blueGradient : Attribute
+blueGradient =
+    Gradient Gradient.blueGradient
+
+
+purpleGradient : Attribute
+purpleGradient =
+    Gradient Gradient.purpleGradient
+
+
+orangeGradient : Attribute
+orangeGradient =
+    Gradient Gradient.orangeGradient
+
+
+grayGradient : Attribute
+grayGradient =
+    Gradient Gradient.grayGradient
+
+
+titleGradient : Attribute
+titleGradient =
+    Gradient Gradient.titleGradient
+
+
+magicianGradient : Attribute
+magicianGradient =
+    Gradient Gradient.magicianGradient
+
+
+
+-- Presets --
+
+
+dlc : List Attribute
 dlc =
-    { font = Just CaptureIt
-    , fontSize = Just 24
-    , outlineSize = 4
-    , gradient = Gradient.purpleGradient
-    }
+    [ captureIt
+    , fontSize 24
+    , purpleGradient
+    ]
 
 
-wrapped : List (Attribute msg) -> Config -> String -> Element msg
+
+-- Usage --
+
+
+wrapped : List (Element.Attribute msg) -> List Attribute -> String -> Element msg
 wrapped attrs config str =
     let
-        combinedAttrs : List (Attribute msg)
+        combinedAttrs : List (Element.Attribute msg)
         combinedAttrs =
             Element.spacing 1
                 :: Element.htmlAttribute (Html.Attributes.class "centerWrap")
@@ -60,8 +169,8 @@ wrapped attrs config str =
         |> Element.wrappedRow combinedAttrs
 
 
-split : Config -> String -> List (Element msg)
-split config str =
+split : List Attribute -> String -> List (Element msg)
+split attrs str =
     str
         |> String.replace "-" "-\u{200B}"
         |> String.split " "
@@ -69,36 +178,52 @@ split config str =
             (\word ->
                 word
                     |> String.split "\u{200B}"
-                    |> List.map (\p -> text [] config (p ++ "\u{200B}"))
+                    |> List.map (\p -> text [] attrs (p ++ "\u{200B}"))
             )
         |> List.Extra.intercalate [ Element.text " " ]
 
 
-text : List (Attribute msg) -> Config -> String -> Element msg
+text : List (Element.Attribute msg) -> List Attribute -> String -> Element msg
 text attrs config str =
     html [] config str
         |> Element.html
         |> Element.el attrs
 
 
-span : Config -> String -> Html msg
-span config value =
+span : List Attribute -> String -> Html msg
+span attrs value =
     html
         []
-        { config
-            | fontSize =
-                case config.fontSize of
-                    Just _ ->
-                        config.fontSize
-
-                    Nothing ->
-                        Just 20
-        }
+        (fontSize 20 :: attrs)
         value
 
 
-html : List (Html.Attribute msg) -> Config -> String -> Html msg
-html attrs config str =
+html : List (Html.Attribute msg) -> List Attribute -> String -> Html msg
+html htmlAttrs attrs str =
+    let
+        config =
+            List.foldl
+                (\attr acc ->
+                    case attr of
+                        Font font ->
+                            { acc | font = font }
+
+                        OutlineSize size ->
+                            { acc | outlineSize = size }
+
+                        FontSize size ->
+                            { acc | fontSize = Just size }
+
+                        Gradient g ->
+                            { acc | gradient = g }
+                )
+                { font = Just CaptureIt
+                , gradient = Gradient.yellowGradient
+                , outlineSize = 4
+                , fontSize = Nothing
+                }
+                attrs
+    in
     Html.span
         ([ Html.Attributes.class "outlined"
          , Html.Attributes.attribute "data-text" str
@@ -112,11 +237,11 @@ html attrs config str =
                     Nothing ->
                         []
 
-                    Just fontSize ->
-                        [ Html.Attributes.style "font-size" (String.fromInt fontSize ++ "px") ]
+                    Just px ->
+                        [ Html.Attributes.style "font-size" (String.fromInt px ++ "px") ]
                )
             ++ fontToAttributes config.font
-            ++ attrs
+            ++ htmlAttrs
         )
         [ Html.text str ]
 

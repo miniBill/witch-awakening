@@ -324,28 +324,24 @@ viewPiece expandBadges piece =
             [ Size.toString size
                 |> String.replace "Medium" "Med"
                 |> GradientText.span
-                    { font = Just GradientText.Morpheus
-                    , fontSize = Nothing
-                    , outlineSize = 4
-                    , gradient = Gradient.blueGradient
-                    }
+                    [ GradientText.morpheus
+                    , GradientText.blueGradient
+                    ]
             ]
 
         Star ->
-            [ GradientText.span GradientText.default "★"
+            [ GradientText.span [] "★"
             ]
 
         Power value ->
-            [ GradientText.span GradientText.default value
+            [ GradientText.span [] value
             ]
 
         RewardPoints value ->
             [ GradientText.span
-                { font = Just GradientText.CaptureIt
-                , fontSize = Nothing
-                , outlineSize = 4
-                , gradient = Gradient.blueGradient
-                }
+                [ GradientText.captureIt
+                , GradientText.blueGradient
+                ]
                 value
             ]
 
@@ -565,11 +561,9 @@ viewSectionTitle toMsg display kind label =
         gradient : String -> List (Element msg)
         gradient t =
             GradientText.split
-                { font = Just GradientText.CelticHand
-                , fontSize = Nothing
-                , outlineSize = 4
-                , gradient = Gradient.blueGradient
-                }
+                [ GradientText.celticHand
+                , GradientText.blueGradient
+                ]
                 t
     in
     wrappedRow
@@ -994,11 +988,10 @@ viewSize gradient size =
     Size.toString size
         |> String.replace "Medium" "Med"
         |> GradientText.text []
-            { font = Just GradientText.Morpheus
-            , fontSize = Just 20
-            , outlineSize = 4
-            , gradient = gradient
-            }
+            [ GradientText.morpheus
+            , GradientText.fontSize 20
+            , GradientText.gradient gradient
+            ]
 
 
 toUrlFunction : Image -> String

@@ -30,11 +30,11 @@ viewTitleAndIntro device allCompact =
                 , Theme.style "overflow" "clip"
                 , Theme.style "word-spacing" "1em"
                 ]
-                { font = Just GradientText.BebasNeue
-                , fontSize = Just 140
-                , outlineSize = 8
-                , gradient = Gradient.titleGradient
-                }
+                [ GradientText.bebasNeue
+                , GradientText.fontSize 140
+                , GradientText.outlineSize 8
+                , GradientText.titleGradient
+                ]
                 "Witch Awa\u{200B}ken\u{200B}ing 4"
     in
     if allCompact then
@@ -182,35 +182,27 @@ viewSubtitle =
         , Font.size 52
         ]
         [ GradientText.text []
-            { font = Just GradientText.Mortis
-            , fontSize = Nothing
-            , outlineSize = 4
-            , gradient = Gradient.orangeGradient
-            }
+            [ GradientText.mortis
+            , GradientText.orangeGradient
+            ]
             "Blade"
         , text " "
         , GradientText.text []
-            { font = Just GradientText.Mortis
-            , fontSize = Nothing
-            , outlineSize = 4
-            , gradient = Gradient.grayGradient
-            }
+            [ GradientText.mortis
+            , GradientText.grayGradient
+            ]
             "&"
         , text " "
         , GradientText.text []
-            { font = Just GradientText.Mortis
-            , fontSize = Nothing
-            , outlineSize = 4
-            , gradient = Gradient.blueGradient
-            }
+            [ GradientText.mortis
+            , GradientText.blueGradient
+            ]
             "Grace"
         , text " "
         , GradientText.text []
-            { font = Just GradientText.Mortis
-            , fontSize = Nothing
-            , outlineSize = 4
-            , gradient = Gradient.grayGradient
-            }
+            [ GradientText.mortis
+            , GradientText.grayGradient
+            ]
             "Update"
         ]
 

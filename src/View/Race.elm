@@ -84,19 +84,16 @@ raceBox display selected { name, tank, affinities, charge, content, dlc } =
                 [ alignTop
                 , centerX
                 ]
-                { font = Just GradientText.CaptureIt
-                , fontSize =
-                    if String.length shortName > 10 then
-                        Just 46
+                [ if String.length shortName > 10 then
+                    GradientText.fontSize 46
 
-                    else if String.length shortName > 8 then
-                        Just 52
+                  else if String.length shortName > 8 then
+                    GradientText.fontSize 52
 
-                    else
-                        Just 56
-                , outlineSize = 6
-                , gradient = Gradient.yellowGradient
-                }
+                  else
+                    GradientText.fontSize 56
+                , GradientText.outlineSize 6
+                ]
                 shortName
             , case dlc of
                 Nothing ->

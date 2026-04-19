@@ -149,13 +149,13 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 (List.take 1 gains ++ List.take 1 (List.reverse gains))
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/.../"
-                    |> GradientText.text [] GradientText.default
+                    |> GradientText.text [] []
 
             else
                 gains
                     |> List.map (\gain -> "+" ++ String.fromInt gain)
                     |> String.join "/"
-                    |> GradientText.text [] GradientText.default
+                    |> GradientText.text [] []
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -192,11 +192,7 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                         ]
                         [ GradientText.wrapped
                             [ centerX ]
-                            { font = Just GradientText.CaptureIt
-                            , fontSize = Nothing
-                            , outlineSize = 4
-                            , gradient = gradient
-                            }
+                            [ GradientText.gradient gradient ]
                             (ComplicationCategory.toString c)
                         , el [ centerX ] gainGradient
                         ]
@@ -236,11 +232,10 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 , centerX
                 , moveUp 4
                 ]
-                { font = Just GradientText.CelticHand
-                , fontSize = Just 32
-                , outlineSize = 4
-                , gradient = gradient
-                }
+                [ GradientText.celticHand
+                , GradientText.fontSize 32
+                , GradientText.gradient gradient
+                ]
                 (Complication.toString name)
             ]
     in

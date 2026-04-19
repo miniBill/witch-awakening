@@ -101,7 +101,7 @@ costButton color selected item label =
         ((width <| px 24) :: attrs)
         { label =
             String.fromInt label
-                |> GradientText.text [] GradientText.default
+                |> GradientText.text [] []
                 |> el [ centerX, centerY ]
         , onPress = Just ( item, not isChoiceSelected )
         }

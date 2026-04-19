@@ -131,11 +131,10 @@ companionSection display companions ( faction, section ) =
         [ GradientText.wrapped
             [ width fill
             ]
-            { font = Just GradientText.CelticHand
-            , fontSize = Just 48
-            , outlineSize = 2
-            , gradient = Gradient.yellowGradient
-            }
+            [ GradientText.celticHand
+            , GradientText.fontSize 48
+            , GradientText.outlineSize 2
+            ]
             (Faction.toCollectiveName faction ++ ":")
         , boxes
             |> Theme.wrappedRow
@@ -296,18 +295,16 @@ image { name, races, hasPerk, cost } =
                     , moveLeft 8
                     , moveDown 4
                     ]
-                    { font = Just GradientText.CaptureIt
-                    , fontSize = Just 32
-                    , outlineSize = 4
-                    , gradient = Gradient.blueGradient
-                    }
+                    [ GradientText.fontSize 32
+                    , GradientText.blueGradient
+                    ]
             , raceLabel
                 |> List.map
                     (\race ->
                         el [ centerX ]
                             (GradientText.text
                                 [ Font.size 32 ]
-                                GradientText.default
+                                []
                                 race
                             )
                     )
@@ -430,11 +427,9 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
             , GradientText.wrapped
                 [ width fill
                 ]
-                { font = Nothing
-                , fontSize = Just 36
-                , outlineSize = 4
-                , gradient = Gradient.yellowGradient
-                }
+                [ GradientText.noFont
+                , GradientText.fontSize 36
+                ]
                 (Companion.toString name)
             , classBadge
                 |> el
@@ -601,11 +596,10 @@ statColumn ranking =
                                             , centerY
                                             , Element.moveLeft 24
                                             ]
-                                            { font = Nothing
-                                            , fontSize = Nothing
-                                            , outlineSize = 2
-                                            , gradient = Gradient.blueGradient
-                                            }
+                                            [ GradientText.noFont
+                                            , GradientText.outlineSize 2
+                                            , GradientText.blueGradient
+                                            ]
                                             "Special Effect"
                                 ]
 

@@ -122,23 +122,13 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> GradientText.text []
-                        { font = Just GradientText.CaptureIt
-                        , fontSize = Nothing
-                        , outlineSize = 4
-                        , gradient = Gradient.blueGradient
-                        }
+                    |> GradientText.text [] [ GradientText.blueGradient ]
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> GradientText.text []
-                        { font = Just GradientText.CaptureIt
-                        , fontSize = Nothing
-                        , outlineSize = 4
-                        , gradient = Gradient.blueGradient
-                        }
+                    |> GradientText.text [] [ GradientText.blueGradient ]
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -208,7 +198,7 @@ relicBox mainRace display relics races typePerks ({ name, classes, content, dlc 
                     [ Font.size 36
                     , centerX
                     ]
-                    GradientText.default
+                    []
                     nameString
             ]
         , content =
@@ -274,7 +264,7 @@ viewContent mainRace isSelected relics races typePerks { content, name } color =
                         ((width <| px 24) :: attrs)
                         { label =
                             String.fromInt cost
-                                |> GradientText.text [] GradientText.default
+                                |> GradientText.text [] []
                                 |> el [ centerX, centerY ]
                         , onPress = Just <| ChoiceRelic ( relic, not isChoiceSelected )
                         }

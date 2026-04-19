@@ -138,11 +138,9 @@ elementalIntro =
                         c
                             |> String.fromChar
                             |> GradientText.text []
-                                { font = Just GradientText.Morpheus
-                                , fontSize = Nothing
-                                , outlineSize = 4
-                                , gradient = Gradient.blueGradient
-                                }
+                                [ GradientText.morpheus
+                                , GradientText.blueGradient
+                                ]
                     )
                 |> Element.wrappedRow
                     [ Font.size 58
@@ -246,11 +244,9 @@ costTable =
                 ]
                 (Html.td [ textAlign "center" ]
                     [ GradientText.html []
-                        { font = Nothing
-                        , fontSize = Nothing
-                        , outlineSize = 1
-                        , gradient = Gradient.yellowGradient
-                        }
+                        [ GradientText.noFont
+                        , GradientText.outlineSize 1
+                        ]
                         "Slot costs"
                     ]
                     :: List.map viewSlot [ SlotWhite, SlotFolk, SlotNoble, SlotHeroic, SlotEpic ]
@@ -340,11 +336,10 @@ magicImage { name, faction } =
                         [ width fill
                         , Element.moveDown 16
                         ]
-                        { font = Just GradientText.CelticHand
-                        , fontSize = Just 64
-                        , outlineSize = 4
-                        , gradient = Gradient.blueGradient
-                        }
+                        [ GradientText.celticHand
+                        , GradientText.fontSize 64
+                        , GradientText.blueGradient
+                        ]
                         shortName
         ]
         Element.none
@@ -429,11 +424,10 @@ magicTitle device display { name, hasRankZero, class, affinities } =
                     [ centerY
                     , moveUp 8
                     ]
-                    { font = Nothing
-                    , fontSize = Just 48
-                    , outlineSize = 1
-                    , gradient = Gradient.yellowGradient
-                    }
+                    [ GradientText.noFont
+                    , GradientText.fontSize 48
+                    , GradientText.outlineSize 1
+                    ]
                     "★"
 
               else
@@ -446,17 +440,11 @@ magicTitle device display { name, hasRankZero, class, affinities } =
                 |> String.split "-"
                 |> List.intersperse "-"
                 |> List.map
-                    ((if device.class == Element.Phone then
-                        GradientText.wrapped []
+                    (if device.class == Element.Phone then
+                        GradientText.wrapped [] [ GradientText.morpheus ]
 
-                      else
-                        GradientText.text []
-                     )
-                        { font = Just GradientText.Morpheus
-                        , fontSize = Nothing
-                        , outlineSize = 4
-                        , gradient = Gradient.yellowGradient
-                        }
+                     else
+                        GradientText.text [] [ GradientText.morpheus ]
                     )
 
         affinitiesViews : List (Element msg)
@@ -505,11 +493,10 @@ viewAffinities affinities =
                                 (GradientText.text
                                     [ Element.moveUp 2
                                     ]
-                                    { font = Just GradientText.Morpheus
-                                    , fontSize = Just 24
-                                    , outlineSize = 2
-                                    , gradient = Gradient.yellowGradient
-                                    }
+                                    [ GradientText.morpheus
+                                    , GradientText.fontSize 24
+                                    , GradientText.outlineSize 2
+                                    ]
                                     " + "
                                 )
                             |> Theme.row []
@@ -518,11 +505,10 @@ viewAffinities affinities =
                     (GradientText.text
                         [ moveDown 4
                         ]
-                        { font = Just GradientText.Morpheus
-                        , fontSize = Just 24
-                        , outlineSize = 2
-                        , gradient = Gradient.yellowGradient
-                        }
+                        [ GradientText.morpheus
+                        , GradientText.fontSize 24
+                        , GradientText.outlineSize 2
+                        ]
                         " OR "
                     )
 
@@ -567,11 +553,9 @@ viewRank selected { name, class } rankIndex label =
                 column [ width fill ]
                     [ el [ centerX ] <|
                         GradientText.text []
-                            { font = Just GradientText.CaptureIt
-                            , fontSize = Just 20
-                            , outlineSize = 2
-                            , gradient = Gradient.yellowGradient
-                            }
+                            [ GradientText.fontSize 20
+                            , GradientText.outlineSize 2
+                            ]
                             ("Rank " ++ String.fromInt rank)
                     , Theme.blocks [ width fill ] IdKindMagic label
                     ]

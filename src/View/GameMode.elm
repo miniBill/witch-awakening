@@ -103,22 +103,19 @@ gameModeBox display selected { name, content } =
                 [ centerX
                 , moveDown 8
                 ]
-                { font = Just GradientText.CaptureIt
-                , fontSize = Just 28
-                , outlineSize = 4
-                , gradient = Gradient.purpleGradient
-                }
+                [ GradientText.fontSize 28
+                , GradientText.purpleGradient
+                ]
                 "Game Mode"
             , GradientText.wrapped
                 [ alignBottom
                 , centerX
                 , moveUp 4
                 ]
-                { font = Just GradientText.CelticHand
-                , fontSize = Just 32
-                , outlineSize = 4
-                , gradient = Gradient.purpleGradient
-                }
+                [ GradientText.celticHand
+                , GradientText.fontSize 32
+                , GradientText.purpleGradient
+                ]
                 (GameMode.toString name)
             ]
         , content = [ Theme.blocks [] IdKindGameMode content ]

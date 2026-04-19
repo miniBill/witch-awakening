@@ -174,13 +174,13 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 (List.take 1 costs ++ List.take 1 (List.reverse costs))
                     |> List.map costToString
                     |> String.join "/.../"
-                    |> GradientText.text [] GradientText.default
+                    |> GradientText.text [] []
 
             else
                 costs
                     |> List.map costToString
                     |> String.join "/"
-                    |> GradientText.text [] GradientText.default
+                    |> GradientText.text [] []
 
         viewSlot : Slot -> Element msg
         viewSlot slot =
@@ -214,7 +214,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 costGradient
             , affinity
                 |> List.map (\aff -> el [ centerX ] (Theme.viewAffinity aff))
-                |> List.intersperse (el [ centerX ] (GradientText.text [] GradientText.default "OR"))
+                |> List.intersperse (el [ centerX ] (GradientText.text [] [] "OR"))
                 |> Theme.column
                     [ moveLeft 8
                     , moveDown 4
@@ -229,7 +229,7 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                         [ centerX
                         , Font.size 32
                         ]
-                        GradientText.default
+                        []
                         "META"
 
                   else
@@ -264,11 +264,10 @@ perkBox display selected mainRace races ({ name, affinity, class, content, isMet
                 , Font.center
                 , Element.paddingXY 32 0
                 ]
-                { font = Just GradientText.CelticHand
-                , fontSize = Just 36
-                , outlineSize = 4
-                , gradient = Gradient.blueGradient
-                }
+                [ GradientText.celticHand
+                , GradientText.fontSize 36
+                , GradientText.blueGradient
+                ]
                 nameString
             ]
         , content =

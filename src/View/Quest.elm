@@ -129,7 +129,7 @@ questBox display selected number quest =
                             [ Font.size 32
                             , centerX
                             ]
-                            GradientText.default
+                            []
                             nameString
                         , case quest.dlc of
                             Nothing ->
@@ -157,52 +157,42 @@ questBox display selected number quest =
 
                             Just faction ->
                                 GradientText.wrapped []
-                                    { font = Just GradientText.CelticHand
-                                    , fontSize = Nothing
-                                    , outlineSize = 4
-                                    , gradient = Gradient.blueGradient
-                                    }
+                                    [ GradientText.celticHand
+                                    , GradientText.blueGradient
+                                    ]
                                     (Faction.toShortString faction)
                         , let
                             slotGradient : Element msg
                             slotGradient =
                                 GradientText.text []
-                                    { font = Just GradientText.CelticHand
-                                    , fontSize = Nothing
-                                    , outlineSize = 4
-                                    , gradient =
-                                        case quest.slot of
-                                            SlotEpic ->
-                                                Gradient.epicGradient
+                                    [ GradientText.celticHand
+                                    , case quest.slot of
+                                        SlotEpic ->
+                                            GradientText.gradient Gradient.epicGradient
 
-                                            SlotHeroic ->
-                                                Gradient.heroicGradient
+                                        SlotHeroic ->
+                                            GradientText.gradient Gradient.heroicGradient
 
-                                            SlotNoble ->
-                                                Gradient.nobleGradient
+                                        SlotNoble ->
+                                            GradientText.gradient Gradient.nobleGradient
 
-                                            _ ->
-                                                Gradient.blueGradient
-                                    }
+                                        _ ->
+                                            GradientText.gradient Gradient.blueGradient
+                                    ]
                                     (Slot.toString quest.slot)
                           in
                           if quest.name == QuestDungeoneering then
                             Element.row [ alignRight, spacing 4 ]
                                 [ "Any"
                                     |> GradientText.text []
-                                        { font = Just GradientText.CelticHand
-                                        , fontSize = Nothing
-                                        , outlineSize = 4
-                                        , gradient = Gradient.yellowGradient
-                                        }
+                                        [ GradientText.celticHand
+                                        ]
                                 , "/"
                                     |> GradientText.text
                                         [ Font.bold ]
-                                        { font = Just GradientText.CelticHand
-                                        , fontSize = Just 40
-                                        , outlineSize = 4
-                                        , gradient = Gradient.yellowGradient
-                                        }
+                                        [ GradientText.celticHand
+                                        , GradientText.fontSize 40
+                                        ]
                                 , slotGradient
                                 ]
 
@@ -233,16 +223,12 @@ questBox display selected number quest =
                             ]
                     , (number + 1)
                         |> String.fromInt
-                        |> GradientText.text [] GradientText.default
-                        |> el
-                            [ Font.size 28
-                            ]
+                        |> GradientText.text [] [ GradientText.fontSize 28 ]
                     , if quest.repeatable then
                         "♻️"
-                            |> GradientText.text [] GradientText.default
+                            |> GradientText.text [] [ GradientText.fontSize 32 ]
                             |> el
-                                [ Font.size 32
-                                , moveDown 24
+                                [ moveDown 24
                                 , moveRight 24
                                 ]
 
@@ -497,11 +483,9 @@ introBlock =
             , width fill
             , moveUp 8
             ]
-            { font = Just GradientText.Morpheus
-            , fontSize = Just 38
-            , outlineSize = 4
-            , gradient = Gradient.yellowGradient
-            }
+            [ GradientText.morpheus
+            , GradientText.fontSize 38
+            ]
             "Or \"Plot Hooks\""
         , let
             color : Element.Color
