@@ -772,7 +772,7 @@ card attrs config =
                     [ Image.toPicture
                         (imageSizeAttrs
                             ++ [ Html.Attributes.style "object-fit" "cover"
-                               , Html.Attributes.style "border-radius" (String.fromInt cardRoundness ++ "px")
+                               , Html.Attributes.style "border-radius" (String.fromInt (cardRoundness - 8) ++ "px")
                                ]
                         )
                         config.image
