@@ -269,7 +269,7 @@ viewSize attrs image gradient size =
     Theme.viewSize gradient size
         |> el
             ([ Font.size 20
-             , Element.onLeft <| Theme.image [ moveUp 10 ] image
+             , Element.onLeft <| Theme.image [ moveUp 20 ] image
              ]
                 ++ attrs
             )
