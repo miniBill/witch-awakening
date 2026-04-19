@@ -4,6 +4,7 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Points as Points exposing (Points)
 import Data.Costs.Utils as Utils
 import Generated.Relic as Relic
+import Generated.Types as Types
 import Types exposing (IdKind(..), Model, RankedRelic)
 import View.Relic
 
@@ -25,6 +26,9 @@ relicValue ({ class } as model) details =
                         case class of
                             Nothing ->
                                 False
+
+                            Just Types.ClassWizard ->
+                                not (List.isEmpty relic.classes)
 
                             Just c ->
                                 List.member c relic.classes

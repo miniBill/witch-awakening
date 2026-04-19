@@ -209,11 +209,7 @@ menuLabel kind result warnings =
     children
         |> List.map
             (\s ->
-                if String.isEmpty s then
-                    Element.none
-
-                else
-                    Theme.blocks [ centerX, centerY ] kind ("{center} " ++ s)
+                Theme.blocks [ centerX, centerY ] kind ("{center} " ++ s)
             )
         |> Theme.row [ centerX, centerY ]
 

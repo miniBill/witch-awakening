@@ -187,7 +187,7 @@ innerPerkValue ({ class } as model) { name, cost } perk =
 
         isClass : Bool
         isClass =
-            Just perk.class == class
+            Just perk.class == class || class == Just Types.ClassWizard
 
         perkAffinities : Magic.Affinities
         perkAffinities =

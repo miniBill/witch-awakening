@@ -353,7 +353,7 @@ magicValue model affinities magicDetails =
                                                     magicDetails.name == MagicWishcasting && List.any Race.isGenie model.races
 
                                                 Magic.ClassOne c ->
-                                                    model.class == Just c
+                                                    model.class == Just c || model.class == Just Generated.Types.ClassWizard
 
                                                 Magic.ClassNone ->
                                                     False

@@ -162,7 +162,7 @@ complicationValue model complication =
                         let
                             bonus : Int
                             bonus =
-                                if details.class /= Nothing && details.class == model.class then
+                                if details.class /= Nothing && (details.class == model.class || model.class == Just Generated.Types.ClassWizard) then
                                     2
 
                                 else

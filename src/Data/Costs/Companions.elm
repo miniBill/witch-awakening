@@ -212,7 +212,7 @@ sameClass : Companion.Details -> Maybe Class -> Bool
 sameClass companion maybeClass =
     case companion.class of
         Companion.ClassOne class_ ->
-            Just class_ == maybeClass
+            Just class_ == maybeClass || maybeClass == Just Types.ClassWizard
 
         Companion.ClassAny ->
             True

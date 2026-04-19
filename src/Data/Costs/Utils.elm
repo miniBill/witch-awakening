@@ -234,7 +234,7 @@ checkRequisite model requisite =
                 Err (Magic.toString requiredName ++ " " ++ String.fromInt requiredRank)
 
         RequiresClass class ->
-            if model.class == Just class then
+            if model.class == Just class || model.class == Just Types.ClassWizard then
                 Ok ()
 
             else
