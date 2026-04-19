@@ -25,4 +25,4 @@ test:
 
 .PHONY: deploy
 deploy: build
-	rsync -avi --no-times out/ witch-awakening.taglialegne.it:/var/www/witch-awakening.taglialegne.it
+	rsync -ai --no-times out/ witch-awakening.taglialegne.it:/var/www/witch-awakening.taglialegne.it
