@@ -185,21 +185,18 @@ split attrs str =
 
 text : List (Element.Attribute msg) -> List Attribute -> String -> Element msg
 text attrs config str =
-    html [] config str
+    html config str
         |> Element.html
         |> Element.el attrs
 
 
 span : List Attribute -> String -> Html msg
 span attrs value =
-    html
-        []
-        (fontSize 20 :: attrs)
-        value
+    html (fontSize 20 :: attrs) value
 
 
-html : List (Html.Attribute msg) -> List Attribute -> String -> Html msg
-html htmlAttrs attrs str =
+html : List Attribute -> String -> Html msg
+html attrs str =
     let
         config :
             { font : Maybe Font
@@ -247,7 +244,6 @@ html htmlAttrs attrs str =
                         [ Html.Attributes.style "font-size" (String.fromInt px ++ "px") ]
                )
             ++ fontToAttributes config.font
-            ++ htmlAttrs
         )
         [ Html.text str ]
 

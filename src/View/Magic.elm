@@ -242,7 +242,7 @@ costTable =
                 , Html.Attributes.style "color" "white"
                 ]
                 (Html.td [ textAlign "center" ]
-                    [ GradientText.html []
+                    [ GradientText.html
                         [ GradientText.noFont
                         , GradientText.outlineSize 1
                         ]
