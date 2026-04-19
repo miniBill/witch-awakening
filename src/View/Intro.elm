@@ -44,7 +44,7 @@ viewTitleAndIntro device allCompact =
     else
         Element.column
             [ width fill
-            , Element.behindContent viewBackground
+            , Element.behindContent (viewBackground device)
             ]
             [ Element.column
                 [ width fill, Theme.backgroundColor (Color.rgba 0 0 0 0.5) ]
@@ -114,28 +114,41 @@ viewTitleAndIntro device allCompact =
             ]
 
 
-viewBackground : Element msg
-viewBackground =
-    Theme.image
-        [ width fill
-        , Element.inFront
-            (Theme.row [ height fill ]
-                [ Theme.image
-                    [ width fill
-                    , alignTop
-                    ]
-                    Image.introLeftPenelope
-                , el [ width (fillPortion 3) ] Element.none
-                , Theme.image
-                    [ width fill
-                    , centerY
-                    , Element.htmlAttribute (Html.Attributes.style "opacity" "0.9")
-                    ]
-                    Image.introRightPenelope
+viewBackground : Device -> Element msg
+viewBackground device =
+    case device.class of
+        Element.Phone ->
+            Theme.image
+                [ width fill ]
+                Image.introLeftPenelope
+
+        _ ->
+            Theme.image
+                [ width fill
+                , Element.inFront
+                    (Theme.row []
+                        [ Theme.image
+                            [ height fill
+                            , width fill
+                            , alignTop
+                            ]
+                            Image.introLeftPenelope
+                        , el [ width (fillPortion 2) ] Element.none
+                        ]
+                    )
+                , Element.inFront
+                    (Theme.row [ height fill ]
+                        [ el [ width (fillPortion 3) ] Element.none
+                        , Theme.image
+                            [ width fill
+                            , centerY
+                            , Element.htmlAttribute (Html.Attributes.style "opacity" "0.9")
+                            ]
+                            Image.introRightPenelope
+                        ]
+                    )
                 ]
-            )
-        ]
-        Image.introMiddle
+                Image.introMiddle
 
 
 viewUpdateBanner : List (Element msg)
@@ -263,9 +276,9 @@ viewIntro device =
 
         _ ->
             Theme.row [ Element.paddingXY 16 0 ]
-                [ el [ width (Element.maximum 200 fill) ] Element.none
+                [ el [ width (Element.maximum 100 fill) ] Element.none
                 , central
-                , el [ width (Element.maximum 200 fill) ] Element.none
+                , el [ width (Element.maximum 100 fill) ] Element.none
                 ]
 
 
