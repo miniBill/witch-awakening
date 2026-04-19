@@ -3,6 +3,7 @@ module Data.Costs.Relics exposing (value)
 import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Points as Points exposing (Points)
 import Data.Costs.Utils as Utils
+import Data.Costs.Value as Value
 import Generated.Relic as Relic
 import Generated.Types as Types
 import Types exposing (IdKind(..), Model, RankedRelic)
@@ -21,21 +22,37 @@ relicValue ({ class } as model) details =
         |> Monad.andThen
             (\relic ->
                 let
-                    isClass : Bool
-                    isClass =
-                        case class of
-                            Nothing ->
-                                False
-
-                            Just Types.ClassWizard ->
-                                not (List.isEmpty relic.classes)
-
-                            Just c ->
-                                List.member c relic.classes
+                    nameKey : String
+                    nameKey =
+                        View.Relic.relicToShortString details.name
                 in
-                -details.cost
-                    |> Utils.applyClassBonusIf isClass
-                    |> Points.fromRewardPoints
-                    |> Utils.checkRequisites relic (Relic.toString details.name) model
+                if relic.name == Types.RelicHeirloom && class == Just Types.ClassWizard then
+                    Points.zero
+                        |> Monad.succeed
+                        |> Monad.withInfo
+                            { label = nameKey
+                            , kind = IdKindRelic
+                            , anchor = Just nameKey
+                            , value = Value.FreeBecause "[Wizard]"
+                            }
+
+                else
+                    let
+                        isClass : Bool
+                        isClass =
+                            case class of
+                                Nothing ->
+                                    False
+
+                                Just Types.ClassWizard ->
+                                    not (List.isEmpty relic.classes)
+
+                                Just c ->
+                                    List.member c relic.classes
+                    in
+                    -details.cost
+                        |> Utils.applyClassBonusIf isClass
+                        |> Points.fromRewardPoints
+                        |> Utils.checkRequisites relic (Relic.toString details.name) model
+                        |> Monad.withPointsInfo IdKindRelic nameKey
             )
-        |> Monad.withPointsInfo IdKindRelic (View.Relic.relicToShortString details.name)
