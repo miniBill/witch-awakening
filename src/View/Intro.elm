@@ -7,7 +7,6 @@ import Element.Font as Font
 import Generated.Attribution
 import Generated.Gradient as Gradient
 import Generated.Image as Image
-import Html.Attributes
 import List.Extra
 import Theme
 import Types exposing (IdKind(..))

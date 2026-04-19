@@ -318,4 +318,4 @@ type Requisite
     = RequiresMagic Magic Int
     | RequiresClass Class
     | RequiresPerk Perk
-    | RequiresQuest Types.Quest
+    | RequiresQuest Quest
