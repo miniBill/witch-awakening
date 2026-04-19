@@ -16,6 +16,7 @@ type Font
     | SFTechnodelight
     | StarDust
     | MirageGothic
+    | Mortis
 
 
 type alias Config =
@@ -156,6 +157,10 @@ fontToAttributes font =
 
         Just MirageGothic ->
             [ Fonts.mirageGothic
+            ]
+
+        Just Mortis ->
+            [ Fonts.mortis
             ]
 
         Nothing ->

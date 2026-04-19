@@ -76,7 +76,7 @@ viewTitle allCompact =
                     , Font.size 52
                     ]
                     [ GradientText.text []
-                        { font = Just GradientText.Morpheus
+                        { font = Just GradientText.Mortis
                         , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.orangeGradient
@@ -84,7 +84,7 @@ viewTitle allCompact =
                         "Blade"
                     , text " "
                     , GradientText.text []
-                        { font = Just GradientText.Morpheus
+                        { font = Just GradientText.Mortis
                         , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.grayGradient
@@ -92,7 +92,7 @@ viewTitle allCompact =
                         "&"
                     , text " "
                     , GradientText.text []
-                        { font = Just GradientText.Morpheus
+                        { font = Just GradientText.Mortis
                         , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.blueGradient
@@ -100,7 +100,7 @@ viewTitle allCompact =
                         "Grace"
                     , text " "
                     , GradientText.text []
-                        { font = Just GradientText.Morpheus
+                        { font = Just GradientText.Mortis
                         , fontSize = Nothing
                         , outlineSize = 4
                         , gradient = Gradient.grayGradient
