@@ -6,8 +6,8 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Class as Class
 import Generated.Gradient as Gradient
+import Generated.Image as Image
 import Generated.Types as Types exposing (Class)
-import Html.Attributes
 import Set exposing (Set)
 import Theme
 import Types exposing (Choice(..), Display, IdKind(..))
@@ -96,14 +96,33 @@ classBox display selected { name, dlc, color, content } =
         , glow = color |> Maybe.withDefault Color.white
         , isSelected = isSelected
         , imageAttrs =
-            [ Border.width 8
-            , case color of
+            case color of
                 Just c ->
-                    Theme.borderColor c
+                    [ Border.width 8
+                    , Theme.borderColor c
+                    ]
 
                 Nothing ->
-                    Theme.style "" ""
-            ]
+                    -- Wizard
+                    [ Element.padding 0
+                    , Border.width 8
+                    , Theme.borderColor (Color.rgba 0 0 0 0)
+                    , [ Theme.toUrlFunction Image.classWizard
+                      , "conic-gradient(orange, white, #97f, green, #97f, white, orange, green, orange) "
+                      ]
+                        |> String.join ", "
+                        |> Theme.style "background-image"
+                    , [ "cover"
+                      , "auto"
+                      ]
+                        |> String.join ", "
+                        |> Theme.style "background-size"
+                    , [ "padding-box"
+                      , "border-box"
+                      ]
+                        |> String.join ", "
+                        |> Theme.style "background-origin"
+                    ]
         , imageHeight = 400
         , image = Types.classToImage name
         , inFront =
