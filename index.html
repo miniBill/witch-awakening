@@ -30,6 +30,10 @@
         <script>
             Elm.Main.init({
                 node: document.querySelector("main"),
+                flags: {
+                    width: document.documentElement.clientWidth,
+                    height: document.documentElement.clientHeight,
+                },
             });
         </script>
     </body>

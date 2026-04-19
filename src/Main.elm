@@ -40,7 +40,9 @@ import View.TypePerk as TypePerk
 
 
 type alias Flags =
-    {}
+    { height : Float
+    , width : Float
+    }
 
 
 main : Program Flags (Model Nav.Key) Msg
@@ -55,9 +57,15 @@ main =
         }
 
 
-init : flags -> Url.Url -> Nav.Key -> ( Model Nav.Key, Cmd Msg )
-init _ url key =
-    ( UrlCodec.parseUrl key url
+init : Flags -> Url.Url -> Nav.Key -> ( Model Nav.Key, Cmd Msg )
+init size url key =
+    ( UrlCodec.parseUrl key
+        (Element.classifyDevice
+            { width = floor size.width
+            , height = floor size.height
+            }
+        )
+        url
     , Cmd.none
     )
 
@@ -108,6 +116,17 @@ update msg model =
                             (element.y - Theme.rhythm)
                     )
                 |> Task.attempt (\_ -> Nop)
+            )
+
+        Resized w h ->
+            ( { model
+                | device =
+                    Element.classifyDevice
+                        { width = w
+                        , height = h
+                        }
+              }
+            , Cmd.none
             )
 
         CompactAll ->
@@ -416,12 +435,7 @@ innerView model =
         , Font.color <| rgb 1 1 1
         , Theme.style "background" (Theme.toUrlFunction Image.pattern)
         ]
-        [ Intro.viewTitle allCompact
-        , if allCompact then
-            Element.none
-
-          else
-            Intro.viewIntro
+        [ Intro.viewTitleAndIntro model.device allCompact
         , Theme.column
             [ width fill
             , Theme.style "border-image-source" (Theme.toUrlFunction Image.border)
@@ -457,7 +471,10 @@ innerView model =
 
 subscriptions : Model key -> Sub Msg
 subscriptions _ =
-    Browser.Events.onKeyUp keyDecoder
+    Sub.batch
+        [ Browser.Events.onKeyUp keyDecoder
+        , Browser.Events.onResize Resized
+        ]
 
 
 keyDecoder : JD.Decoder Msg

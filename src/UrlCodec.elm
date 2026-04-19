@@ -2,6 +2,7 @@ module UrlCodec exposing (parseUrl, toUrl)
 
 import AppUrl exposing (AppUrl)
 import Dict
+import Element exposing (Device)
 import Generated.Class as Class
 import Generated.Companion as Companion
 import Generated.Complication as Complication
@@ -21,8 +22,8 @@ import Url exposing (Url)
 import Url.Builder exposing (QueryParameter)
 
 
-parseUrl : key -> Url -> Model key
-parseUrl navKey url =
+parseUrl : key -> Device -> Url -> Model key
+parseUrl navKey device url =
     let
         appUrl : AppUrl
         appUrl =
@@ -43,6 +44,7 @@ parseUrl navKey url =
             parseMany "faction" appUrl Types.factionFromString
     in
     { key = navKey
+    , device = device
     , menuOpen = False
     , towardsCap = parseInt "towardsCap"
     , capBuild = parseBool "capBuild"

@@ -1,6 +1,7 @@
 module Types exposing (Choice(..), ComplicationKind(..), Display(..), IdKind(..), Model, Msg(..), RankedComplication, RankedMagic, RankedPerk, RankedRelic, complicationKindToString, gainToSlot, idKindToString, nextDisplay)
 
 import Browser exposing (UrlRequest)
+import Element exposing (Device)
 import Generated.Types exposing (Class, Companion, Complication, Faction, GameMode, Magic, Perk, Quest, Race, Relic, Slot(..))
 import Set exposing (Set)
 
@@ -18,6 +19,7 @@ type Msg
     | HideMeta Bool
     | Reset
     | Nop
+    | Resized Int Int
 
 
 type Choice
@@ -54,6 +56,7 @@ type Choice
 
 type alias Model key =
     { key : key
+    , device : Device
     , capBuild : Bool
     , towardsCap : Int
     , powerToRewards : Int

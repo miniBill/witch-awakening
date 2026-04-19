@@ -1,6 +1,8 @@
-module View.Intro exposing (viewIntro, viewTitle)
+module View.Intro exposing (viewTitleAndIntro)
 
-import Element exposing (Element, alignRight, centerX, el, fill, fillPortion, newTabLink, paragraph, text, width)
+import Color
+import Element exposing (Device, Element, alignRight, centerX, el, fill, newTabLink, paragraph, text, width)
+import Element.Background as Background
 import Element.Font as Font
 import Generated.Attribution
 import Generated.Gradient as Gradient
@@ -12,14 +14,14 @@ import Types exposing (IdKind(..))
 import View.GradientText as GradientText
 
 
-viewTitle : Bool -> Element msg
-viewTitle allCompact =
+viewTitleAndIntro : Device -> Bool -> Element msg
+viewTitleAndIntro device allCompact =
     let
         mainLogo : Element msg
         mainLogo =
             GradientText.wrapped
                 [ Theme.centerWrap
-                , centerX
+                , width fill
                 , Element.paddingEach
                     { top = Theme.rhythm * 2
                     , bottom = 0
@@ -27,121 +29,160 @@ viewTitle allCompact =
                     , right = Theme.rhythm * 2
                     }
                 , Element.htmlAttribute (Html.Attributes.style "overflow" "clip")
+                , Element.htmlAttribute (Html.Attributes.style "word-spacing" "1em")
                 ]
                 { font = Just GradientText.BebasNeue
                 , fontSize = Just 140
                 , outlineSize = 8
                 , gradient = Gradient.titleGradient
                 }
-                "Wit\u{200B}ch Awa\u{200B}ken\u{200B}ing 4"
+                "Witch Awa\u{200B}ken\u{200B}ing 4"
     in
     if allCompact then
         mainLogo
 
     else
-        Theme.column
-            [ width fill ]
-            [ paragraph [ Theme.padding, Font.center ]
-                [ text "This interactive is in the process of being updated to "
-                , Element.newTabLink [ Font.underline ]
-                    { url = "https://old.reddit.com/r/makeyourchoice/comments/1sjh0cb/witch_awakening_update_4_blade_grace/"
-                    , label = text "version 4"
-                    }
-                , text ". Version 3.5 will be permanently available "
-                , Element.newTabLink [ Font.underline ]
-                    { url = "https://witch-awakening-v3.5.taglialegne.it"
-                    , label = text "here"
-                    }
-                , text "."
-                ]
-            , paragraph [ Theme.padding, Font.center ]
-                [ text "Saves from v3.5 should be compatible with v4, if not feel free to message me "
-                , Element.newTabLink [ Font.underline ]
-                    { url = "https://old.reddit.com/user/cmt_miniBill/"
-                    , label = text " on reddit."
-                    }
-                ]
-            , mainLogo
-            , Theme.column
-                [ centerX
-                , Element.paddingEach
-                    { left = Theme.rhythm
-                    , top = 0
-                    , right = Theme.rhythm
-                    , bottom = Theme.rhythm * 2
-                    }
-                ]
-                [ paragraph
-                    [ Font.center
-                    , Font.size 52
+        Element.column
+            [ width fill
+            , Element.behindContent
+                (Theme.row []
+                    [ Theme.image [ width fill ] Image.introLeftPenelope
+                    , el [ width fill ] Element.none
                     ]
-                    [ GradientText.text []
-                        { font = Just GradientText.Mortis
-                        , fontSize = Nothing
-                        , outlineSize = 4
-                        , gradient = Gradient.orangeGradient
-                        }
-                        "Blade"
-                    , text " "
-                    , GradientText.text []
-                        { font = Just GradientText.Mortis
-                        , fontSize = Nothing
-                        , outlineSize = 4
-                        , gradient = Gradient.grayGradient
-                        }
-                        "&"
-                    , text " "
-                    , GradientText.text []
-                        { font = Just GradientText.Mortis
-                        , fontSize = Nothing
-                        , outlineSize = 4
-                        , gradient = Gradient.blueGradient
-                        }
-                        "Grace"
-                    , text " "
-                    , GradientText.text []
-                        { font = Just GradientText.Mortis
-                        , fontSize = Nothing
-                        , outlineSize = 4
-                        , gradient = Gradient.grayGradient
-                        }
-                        "Update"
-                    ]
-                , paragraph
-                    [ alignRight
-                    , Font.alignLeft
-                    , Font.size 14
-                    , Element.paddingEach { left = 12, top = 0, right = 0, bottom = 0 }
-                    ]
-                    [ Theme.choice "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
-                    ]
-                , paragraph
-                    [ Font.alignRight
-                    , width fill
-                    , Font.size 14
-                    , Font.underline
-                    , Element.paddingEach { left = 0, top = 0, right = 0, bottom = Theme.rhythm }
-                    ]
-                    [ newTabLink []
-                        { label = Theme.choice "By OutrageousBears"
-                        , url = "https://old.reddit.com/user/OutrageousBears"
-                        }
-                    ]
-                , paragraph
-                    [ Font.alignRight
-                    , width fill
-                    , Font.size 14
-                    , Element.spacing Theme.rhythm
-                    ]
-                    (text "With DLCs: "
-                        :: (Generated.Attribution.all
-                                |> List.sortBy .name
-                                |> List.map viewDLCAttribution
-                                |> List.Extra.intercalate [ text ", " ]
-                           )
-                    )
-                ]
+                )
             ]
+            [ Element.column
+                [ width fill, Theme.backgroundColor (Color.rgba 0 0 0 0.5) ]
+                [ paragraph
+                    [ Theme.padding
+                    , Font.center
+                    ]
+                    [ text "This interactive is in the process of being updated to "
+                    , Element.newTabLink [ Font.underline ]
+                        { url = "https://old.reddit.com/r/makeyourchoice/comments/1sjh0cb/witch_awakening_update_4_blade_grace/"
+                        , label = text "version 4"
+                        }
+                    , text ". Version 3.5 will be permanently available "
+                    , Element.newTabLink [ Font.underline ]
+                        { url = "https://witch-awakening-v3.5.taglialegne.it"
+                        , label = text "here"
+                        }
+                    , text "."
+                    ]
+                , paragraph
+                    [ Theme.padding
+                    , Font.center
+                    ]
+                    [ text "Saves from v3.5 should be compatible with v4, if not feel free to message me "
+                    , Element.newTabLink [ Font.underline ]
+                        { url = "https://old.reddit.com/user/cmt_miniBill/"
+                        , label = text " on reddit."
+                        }
+                    ]
+                ]
+            , Theme.column
+                [ width fill
+                , Background.gradient
+                    { angle = pi
+                    , steps =
+                        [ Theme.colorToElmUi (Color.rgba 0 0 0 0.5)
+                        , Theme.colorToElmUi (Color.rgba 0 0 0 0)
+                        ]
+                    }
+                ]
+                [ mainLogo
+                , Theme.column
+                    [ centerX
+                    , Element.paddingEach
+                        { left = Theme.rhythm
+                        , top = 0
+                        , right = Theme.rhythm
+                        , bottom = Theme.rhythm * 2
+                        }
+                    ]
+                    [ viewSubtitle
+                    , paragraph
+                        [ alignRight
+                        , Font.alignLeft
+                        , Font.size 14
+                        , Element.paddingEach { left = 12, top = 0, right = 0, bottom = 0 }
+                        ]
+                        [ Theme.choice "TL;DR? You should be able to navigate this cyoa reading only blue text if you see a text wall. Not counting option descriptions, of course."
+                        ]
+                    , paragraph
+                        [ Font.alignRight
+                        , width fill
+                        , Font.size 14
+                        , Font.underline
+                        , Element.paddingEach { left = 0, top = 0, right = 0, bottom = Theme.rhythm }
+                        ]
+                        [ newTabLink []
+                            { label = Theme.choice "By OutrageousBears"
+                            , url = "https://old.reddit.com/user/OutrageousBears"
+                            }
+                        ]
+                    , paragraph
+                        [ case device.class of
+                            Element.Phone ->
+                                Font.alignLeft
+
+                            _ ->
+                                Font.alignRight
+                        , width fill
+                        , Font.size 14
+                        , Element.spacing Theme.rhythm
+                        ]
+                        (text "With DLCs: "
+                            :: (Generated.Attribution.all
+                                    |> List.sortBy .name
+                                    |> List.map viewDLCAttribution
+                                    |> List.Extra.intercalate [ text ", " ]
+                               )
+                        )
+                    ]
+                ]
+            , viewIntro device
+            ]
+
+
+viewSubtitle : Element msg
+viewSubtitle =
+    paragraph
+        [ Font.center
+        , Font.size 52
+        ]
+        [ GradientText.text []
+            { font = Just GradientText.Mortis
+            , fontSize = Nothing
+            , outlineSize = 4
+            , gradient = Gradient.orangeGradient
+            }
+            "Blade"
+        , text " "
+        , GradientText.text []
+            { font = Just GradientText.Mortis
+            , fontSize = Nothing
+            , outlineSize = 4
+            , gradient = Gradient.grayGradient
+            }
+            "&"
+        , text " "
+        , GradientText.text []
+            { font = Just GradientText.Mortis
+            , fontSize = Nothing
+            , outlineSize = 4
+            , gradient = Gradient.blueGradient
+            }
+            "Grace"
+        , text " "
+        , GradientText.text []
+            { font = Just GradientText.Mortis
+            , fontSize = Nothing
+            , outlineSize = 4
+            , gradient = Gradient.grayGradient
+            }
+            "Update"
+        ]
 
 
 viewDLCAttribution :
@@ -176,12 +217,31 @@ viewDLCAttribution dlcAttribution =
            ]
 
 
-viewIntro : Element msg
-viewIntro =
-    Theme.wrappedRow [ Element.paddingXY 16 0 ]
-        [ Theme.image [ width <| Element.minimum 200 fill ] Image.introLeftPenelope
-        , Theme.blocks [ width <| Element.minimum 200 <| fillPortion 2 ] IdKindGameMode mainIntro
-        ]
+viewIntro : Device -> Element msg
+viewIntro device =
+    let
+        central =
+            Theme.blocks
+                [ width fill
+                , Theme.backgroundColor (Color.rgba 0 0 0 0.75)
+                , Theme.rounded
+                , Theme.padding
+                ]
+                IdKindGameMode
+                mainIntro
+    in
+    case device.class of
+        Element.Phone ->
+            Theme.row [ Element.paddingXY 16 0 ]
+                [ central
+                ]
+
+        _ ->
+            Theme.row [ Element.paddingXY 16 0 ]
+                [ el [ width (Element.maximum 200 fill) ] Element.none
+                , central
+                , el [ width (Element.maximum 200 fill) ] Element.none
+                ]
 
 
 mainIntro : String
