@@ -1,7 +1,7 @@
 module View.Intro exposing (viewTitleAndIntro)
 
 import Color
-import Element exposing (Device, Element, alignBottom, alignRight, alignTop, centerX, centerY, el, fill, fillPortion, height, newTabLink, paragraph, text, width)
+import Element exposing (Device, Element, alignRight, alignTop, centerX, centerY, el, fill, fillPortion, height, newTabLink, paragraph, text, width)
 import Element.Background as Background
 import Element.Font as Font
 import Generated.Attribution
