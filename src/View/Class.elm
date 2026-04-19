@@ -172,3 +172,4 @@ className name =
 
 
 -- Wizard -> MTG
+-- Slayer -> Andalus
