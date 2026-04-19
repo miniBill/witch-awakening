@@ -60,12 +60,12 @@ parseRow row =
             Elm.triple (Elm.int r) (Elm.int g) (Elm.int b)
                 |> Ok
 
-        _ ->
+        other ->
             let
                 msg : String
                 msg =
                     "Row \""
-                        ++ String.join " " (List.map String.fromInt row)
+                        ++ String.join " " (List.map String.fromInt other)
                         ++ "\" is not valid"
             in
             ResultME.error msg

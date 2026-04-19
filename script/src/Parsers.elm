@@ -1,9 +1,8 @@
-module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Evil(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), combineDLCs, parseDLC, parseFiles)
+module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Evil(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), combineDLCs, parseDLC)
 
 import Ansi.Color
 import Dict exposing (Dict)
 import Dict.Extra
-import Gen.CodeGen.Generate as Generate
 import Generate.Enum exposing (Argument(..))
 import Hex
 import List.Extra
@@ -38,23 +37,6 @@ type DLCItem
     | DLCPerk Perk
     | DLCRelic Relic
     | DLCFaction Faction
-
-
-parseFiles : List { path : Path, content : String } -> ResultME Generate.Error (List DLC)
-parseFiles inputs =
-    inputs
-        |> ResultME.combineMap
-            (\v ->
-                parseDLC v
-                    |> Result.mapError
-                        (\message ->
-                            { title = "Could not parse file"
-                            , description = message
-                            }
-                        )
-                    |> ResultME.fromResult
-            )
-        |> ResultME.map combineDLCs
 
 
 combineDLCs : List DLC -> List DLC
@@ -180,7 +162,7 @@ type alias Race =
 race : Parser Race
 race =
     (section "##" "Race" Race
-        |> requiredItem "Elements" (stringListParser >> Result.map (List.Extra.remove "!"))
+        |> requiredItem "Elements" (\e -> e |> stringListParser |> Result.map (List.Extra.remove "!"))
         |> requiredItem "Mana capacity" Ok
         |> requiredItem "Mana rate" Ok
         |> parseSection
@@ -546,8 +528,8 @@ relic =
         |> maybeItem "Requires" Ok
         |> manyItems "Extra Argument" (ResultME.combineMap argument)
         |> oneOfItems
-            [ requiredItem "Cost" (intParser >> Result.map Single)
-            , requiredItem "Costs" (intListParser >> Result.map WithCosts)
+            [ requiredItem "Cost" (\r -> r |> intParser |> Result.map Single)
+            , requiredItem "Costs" (\r -> r |> intListParser |> Result.map WithCosts)
             ]
         |> parseSection
     )
@@ -914,8 +896,8 @@ boolParser raw =
         "False" ->
             Ok False
 
-        _ ->
-            ResultME.error (raw ++ " is not a valid boolean")
+        neither ->
+            ResultME.error (neither ++ " is not a valid boolean")
 
 
 hexParser : String -> ResultME String Int

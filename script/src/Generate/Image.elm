@@ -1,4 +1,4 @@
-module Generate.Image exposing (ImageModule, file, moduleName, valueFrom)
+module Generate.Image exposing (ImageModule, file, valueFrom)
 
 import BuildTask exposing (FileOrDirectory)
 import Buildfile

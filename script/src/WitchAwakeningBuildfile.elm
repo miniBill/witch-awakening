@@ -7,24 +7,13 @@ import BuildTask.Do as Do
 import BuildTask.Elm as Elm
 import BuildTask.Font as Font
 import BuildTask.Image as Image
-import BuildTask.Unsafe as Unsafe
 import BuildTask.Unsafe.Do
 import Buildfile
 import Elm
-import Elm.Annotation
-import Elm.Arg
 import Elm.Declare
-import Elm.Let
-import Elm.Op
-import Elm.Op.Extra
 import FatalError exposing (FatalError)
 import Gen.CodeGen.Generate
-import Gen.Html
 import Gen.Html.Attributes
-import Gen.Html.Picture
-import Gen.Html.Source
-import Gen.List
-import Gen.String
 import Generate
 import Generate.Gradient
 import Generate.Image
@@ -34,7 +23,6 @@ import List.Nonempty
 import Maybe.Extra
 import Parsers exposing (DLC)
 import Path exposing (Path)
-import String.Extra
 
 
 type ProcessedFile
@@ -403,39 +391,10 @@ imagesElmFile list =
         )
     <| \module_ ->
     BuildTask.do (Elm.codegen (Elm.Declare.toFile module_)) <| \file ->
-    let
-        annotation : Elm.Annotation.Annotation
-        annotation =
-            Elm.Annotation.named Generate.Image.moduleName "Image"
-    in
     { module_ = module_.call
     , file = file
     }
         |> BuildTask.succeed
-
-
-encodeProcessedFiles :
-    List
-        { svg : Bool
-        , filename : Path
-        , hash : FileOrDirectory
-        , width : Int
-        , height : Int
-        }
-    -> { files : List FileOrDirectory, additionalData : List String }
-encodeProcessedFiles processedFiles =
-    let
-        ( files, additionalData ) =
-            processedFiles
-                |> List.map
-                    (\{ filename, hash } ->
-                        -- CORRECTNESS: if svg, width or height change then hash
-                        -- will change too so we don't need to track them separately
-                        ( hash, Path.toString filename )
-                    )
-                |> List.unzip
-    in
-    { files = files, additionalData = additionalData }
 
 
 processedFileToFileList : ProcessedFile -> List { filename : Path, hash : FileOrDirectory }
@@ -461,7 +420,7 @@ processedFileToFileList file =
         ProcessedFont data ->
             [ extract data ]
 
-        ProcessedDLC data ->
+        ProcessedDLC _ ->
             []
 
 
@@ -517,6 +476,7 @@ processFile config total index ( path, copyFile ) =
                 |> Just
                 |> BuildTask.succeed
 
+        doDlc : () -> BuildTask (Maybe ProcessedFile)
         doDlc () =
             BuildTask.do copyFile <| \hash ->
             BuildTask.withFile hash <| \content ->
@@ -579,70 +539,3 @@ processFile config total index ( path, copyFile ) =
             ("Processing " ++ Path.toString path)
             ("Processed  " ++ Path.toString path)
         |> BuildTask.withPrefix prefix
-
-
-processedSvgToDeclaration :
-    HashedFileWith { a | width : Int, height : Int }
-    -> Elm.Declaration
-processedSvgToDeclaration original =
-    let
-        name : String
-        name =
-            toVariableName original.filename
-
-        attrsAnnotation : Elm.Annotation.Annotation
-        attrsAnnotation =
-            Elm.Annotation.list (Gen.Html.annotation_.attribute (Elm.Annotation.var "msg"))
-    in
-    Elm.declaration name
-        (Elm.fn
-            (Elm.Arg.varWith "attrs" attrsAnnotation)
-            (\attrs ->
-                Gen.Html.call_.img
-                    (Elm.Op.cons (Gen.Html.Attributes.src (Path.toString original.filename))
-                        (Elm.Op.cons (Gen.Html.Attributes.width original.width)
-                            (Elm.Op.cons (Gen.Html.Attributes.height original.height)
-                                attrs
-                            )
-                        )
-                    )
-                    (Elm.list [])
-            )
-            |> Elm.withType
-                (Elm.Annotation.function
-                    [ attrsAnnotation ]
-                    (Gen.Html.annotation_.html (Elm.Annotation.var "msg"))
-                )
-        )
-        |> Elm.expose
-
-
-toVariableName : Path -> String
-toVariableName path =
-    let
-        dir : String
-        dir =
-            Path.toString (Path.directory path)
-
-        nameWithoutExtension : String
-        nameWithoutExtension =
-            if String.isEmpty dir then
-                Path.filenameWithoutExtension path
-
-            else
-                dir ++ "/" ++ Path.filenameWithoutExtension path
-
-        stripLeadingUnderscores : String -> String
-        stripLeadingUnderscores i =
-            if String.startsWith "_" i then
-                stripLeadingUnderscores (String.dropLeft 1 i)
-
-            else
-                i
-    in
-    nameWithoutExtension
-        |> String.replace "/" "_"
-        |> String.replace " " "_"
-        |> String.replace "-" "_"
-        |> stripLeadingUnderscores
-        |> String.Extra.decapitalize

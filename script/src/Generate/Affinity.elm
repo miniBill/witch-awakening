@@ -109,5 +109,5 @@ affinityToVarName affinity =
         "All" ->
             "all_"
 
-        _ ->
-            String.Extra.decapitalize (yassify affinity)
+        other ->
+            String.Extra.decapitalize (yassify other)
