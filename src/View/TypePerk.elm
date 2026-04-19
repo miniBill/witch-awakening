@@ -261,6 +261,9 @@ raceToTypePerkImage race =
         RaceMothid ->
             Image.typePerkMothid
 
+        RaceNovid ->
+            Image.typePerkNovid
+
         _ ->
             Types.raceToImage race
 

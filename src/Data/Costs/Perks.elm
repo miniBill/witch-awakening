@@ -100,6 +100,14 @@ perkValue model ranked =
 
             else
                 Nothing
+
+        isNovid : Maybe String
+        isNovid =
+            if List.member RaceNovid model.races then
+                Just "[Novid]"
+
+            else
+                Nothing
     in
     Utils.find "Perk" .name ranked.name (Perk.all model.perks) View.Perk.perkToShortString
         |> Monad.andThen
@@ -124,6 +132,9 @@ perkValue model ranked =
 
                             PerkFullSteamAhead ->
                                 freeIfHasMagicAtRank MagicWaterworking 3
+
+                            PerkLevitation ->
+                                isNovid
 
                             _ ->
                                 Nothing

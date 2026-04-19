@@ -405,26 +405,33 @@ freeRankFromRaceOrTypePerk :
     -> Maybe ( Int, Race )
 freeRankFromRaceOrTypePerk model magicDetails rankedMagic =
     let
-        asGenie : Maybe Race
-        asGenie =
-            List.Extra.find Race.isGenie model.races
+        fromGenie : Maybe ( Int, Race )
+        fromGenie =
+            case List.Extra.find Race.isGenie model.races of
+                Just genie ->
+                    if
+                        (magicDetails.dlc == Nothing)
+                            || (magicDetails.faction /= Nothing && magicDetails.class /= Magic.ClassNone)
+                    then
+                        -- Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free
+                        Just ( 2, genie )
+
+                    else
+                        Nothing
+
+                Nothing ->
+                    Nothing
     in
-    case
-        asGenie
-    of
-        Just race ->
-            if
-                (magicDetails.dlc == Nothing)
-                    || (magicDetails.faction /= Nothing && magicDetails.class /= Magic.ClassNone)
-            then
-                -- Genies all have rank 2 in every core & faction magic, and Prestidigitation & Conjuration free
-                Just ( 2, race )
+    case fromGenie of
+        Just result ->
+            Just result
+
+        Nothing ->
+            if List.member RaceNovid model.races && magicDetails.name == MagicAethernautics then
+                Just ( 3, RaceNovid )
 
             else
                 fromTypePerk model rankedMagic.name
-
-        Nothing ->
-            fromTypePerk model rankedMagic.name
 
 
 fromTypePerk : { a | typePerks : List Race } -> Magic -> Maybe ( Int, Race )
@@ -477,7 +484,10 @@ isInFaction { races, factions, factionPerks, typePerks } magicDetails =
     then
         InFactionPerk
 
-    else if List.member RaceMothid races && magicDetails.name == MagicArachnescence then
+    else if
+        (List.member RaceMothid races && magicDetails.name == MagicArachnescence)
+            || (List.member RaceNovid typePerks && magicDetails.name == MagicWishcasting)
+    then
         InFactionNoPerk
 
     else

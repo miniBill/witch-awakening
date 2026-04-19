@@ -162,3 +162,20 @@ __Mothids draw Mana__ from Atmosphere. Mothids build silken nests with structura
 - Cost: 8
 
 Mothids can normally compact and enhance their webbing into “structural webbing” that's light and hard like bone. More powerful Mothids with this perk are able to further refine their silk until it forms a material as light and ethereal as aerogel, as hard as diamond, but as shatterproof as springsteel. They have no height limit on how tall they can build their manaspires, able to construct a space elevator if they wished to. One such spire capable of tapping space will provide passive High charge. The Mothid can now learn [Arachnescence] at half cost stacking with affinity.
+
+
+## Race: Novid
+- Elements: Life, All
+- Mana capacity: Low
+- Mana rate: Low
+
+Novids have bodies composed of luminous plasma emulating the human form. Their “blood” or “insides” are like hot wax while their skin is just comfortably warm. When angered, they heat up to searing temps.
+The only part of their body not starstuff-plasma, is a metal “Brand” in their face that acts as a medium for their soul and form control. A slain Novid can reform from this brand given exposure to sun/starlight for 3 days, else the brand can be reforged with the Novid in mind. New Novids are made by intense _smooching_ sparking a baby novid drawing a fragment from each brand to form two “eyes” that eventually merge.
+They emit light comparable to torchlight, and have no biological needs. Healing effects work on them as though they were a human. They have [Aethernautics] R3 and the *Levitation* perk inherently as a species.
+__Novids draw Mana__ from Starlight, having a Low charge if few stars are visible, Medium charge on a good clear night a reasonable distance from a city, and High charge when there's almost no light pollution. The Sun itself during daylight will provide Medium.
+
+### Perk
+- Cost: 8
+
+Some Novids aren't ordinary stars, but are _Wishing Stars_. You can access _Wishcasting_, but it can only be used on behalf of those who "make a wish upon a star" and only in baby or witchling form- You also retain access to your baby-novid form as a floating star-like shape the size of a teddy bear. This form triples the speed of your *Levitation*.
+*For an additional [8]*, you may gain META access to _Simple Witchy Starlight_, having a Starling-Witchling form tertiary to your baby-Novid and adult-Novid form, gaining Maturation for free. Both your Witchling and Adult forms look like a Novid however, unless you take FORMS abilities to alter it, or other magics here. Maturation's buff only applies to Witchy Starlight content.
