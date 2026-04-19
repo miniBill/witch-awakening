@@ -3,9 +3,7 @@ module View.Class exposing (viewClass)
 import Color
 import Element exposing (Attribute, Element, alignBottom, centerX, fill, moveDown, spacing, width)
 import Element.Border as Border
-import Element.Font as Font
 import Generated.Class as Class
-import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Generated.Types as Types exposing (Class)
 import Set exposing (Set)
@@ -151,15 +149,6 @@ wizardBorder =
 className : Class -> Element (Maybe Class)
 className name =
     let
-        default :
-            { fontSize : Maybe Int
-            , outlineSize : Maybe Float
-            }
-        default =
-            { fontSize = Nothing
-            , outlineSize = Nothing
-            }
-
         go :
             List (Element.Attribute msg)
             -> List GradientText.Attribute

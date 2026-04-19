@@ -5,7 +5,6 @@ import Element exposing (Attribute, Device, Element, alignRight, alignTop, cente
 import Element.Background as Background
 import Element.Font as Font
 import Generated.Attribution
-import Generated.Gradient as Gradient
 import Generated.Image as Image
 import List.Extra
 import Theme

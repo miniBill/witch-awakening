@@ -6,7 +6,6 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Faction as Faction
-import Generated.Gradient as Gradient
 import Generated.Image as Image exposing (Image)
 import Generated.Magic as Magic
 import Generated.Types exposing (Faction)

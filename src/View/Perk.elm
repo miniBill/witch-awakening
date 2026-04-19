@@ -7,7 +7,6 @@ import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, e
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Generated.Magic as Magic
 import Generated.Perk as Perk

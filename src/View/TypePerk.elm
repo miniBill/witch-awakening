@@ -3,7 +3,6 @@ module View.TypePerk exposing (viewTypePerks)
 import Color
 import Element exposing (Element, alignBottom, alignRight, centerX, el, fill, moveDown, moveLeft, moveUp, paddingXY, px, rgb, spacing, width)
 import Element.Font as Font
-import Generated.Gradient as Gradient
 import Generated.Image as Image exposing (Image)
 import Generated.TypePerk as TypePerk
 import Generated.Types as Types exposing (Race(..), Slot)

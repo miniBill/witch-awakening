@@ -7,7 +7,6 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Companion as Companion
 import Generated.Faction as Faction
-import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Generated.Types as Types exposing (Companion, Faction)
 import Html.Attributes

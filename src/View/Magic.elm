@@ -8,7 +8,6 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Class as Class
 import Generated.Faction as Faction
-import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Generated.Magic as Magic
 import Generated.Types as Types exposing (Faction, Magic, Slot(..))

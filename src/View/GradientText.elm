@@ -1,4 +1,4 @@
-module View.GradientText exposing (Attribute(..), Font(..), andalus, bebasNeue, blueGradient, captureIt, celticHand, dlc, fontSize, fontToAttributes, gradient, grayGradient, html, magicTheGathering, magicianGradient, mirageGothic, morpheus, mortis, noFont, orangeGradient, outlineSize, purpleGradient, rgbToString, sFTechnodelight, span, split, starDust, text, titleGradient, wrapped)
+module View.GradientText exposing (Attribute, Font, andalus, bebasNeue, blueGradient, captureIt, celticHand, dlc, fontSize, gradient, grayGradient, html, magicTheGathering, magicianGradient, mirageGothic, morpheus, mortis, noFont, orangeGradient, outlineSize, purpleGradient, sFTechnodelight, span, split, starDust, text, titleGradient, wrapped)
 
 import Element exposing (Attribute, Element)
 import Generated.Fonts as Fonts
@@ -201,6 +201,12 @@ span attrs value =
 html : List (Html.Attribute msg) -> List Attribute -> String -> Html msg
 html htmlAttrs attrs str =
     let
+        config :
+            { font : Maybe Font
+            , outlineSize : Float
+            , fontSize : Maybe Int
+            , gradient : List ( Int, Int, Int )
+            }
         config =
             List.foldl
                 (\attr acc ->

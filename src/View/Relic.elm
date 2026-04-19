@@ -5,7 +5,6 @@ import Data.Affinity as Affinity
 import Data.Relic exposing (Content(..))
 import Element exposing (Attribute, Element, alignBottom, alignRight, centerX, centerY, el, fill, height, moveDown, moveLeft, px, spacing, text, width)
 import Element.Font as Font
-import Generated.Gradient as Gradient
 import Generated.Image as Image
 import Generated.Relic as Relic
 import Generated.Types as Types exposing (Affinity(..), CosmicPearlData, Race, Relic(..), Slot(..))
