@@ -145,3 +145,20 @@ __Geminai draw Mana__ from Pairing, the more in synch the two halves are in mind
 Geminai with this type perk have even stronger bonds, capable of trading their consciousness and their half of their soul to trade places between their Egos (however minimal or great they may be divergent), or they can swap entirely as though teleporting. Gemini share a mental bond to feel the other’s emotional state, senses, & intention such that they can act as a whole, or they can fully communicate telepathically, each hearing the mental dialogue of the other if they “raise their voice”, or both parties can tighten the connection to hear their passive internal dialogue entirely as though speaking out loud to oneself near the other.
 
 Nothing can sever this connection, short of death.
+
+
+## Race: Mothid
+- Elements: Life, Wind
+- Mana capacity: High
+- Mana rate: Low
+
+Moth-humanoids, having feather antennae, with "fluffy" tufts and plumage. Their wings are somewhere between feathery and fluffy. Coloration varies but their sclera is always black. Their limbs have glove or thigh-high chitin plating that may stem from the shoulder/hip or elbow/knee, adorning their four arms and two legs.
+They produce thousands of small eggs which hatch fluffy caterpillars that become large furry maned moths, of which some grow cat-sized of which only some mature into a full Mothid eventually.
+They are able to produce silk from their limbs, the same fine soft silk that makes up their "fur" and hair. They can naturally learn *Arachnescence*. When using it, they replace spider references with moths. Their *evil* eyes are wing markings, though may also have spare eyes. A Mothid may create a cocoon from which it will be reborn if it dies, embedding a special egg within it.
+<u>Mothids draw Mana</u> from *atmosphere*.
+Mothids build silken nests with structural webbing, from which they reach for extra verticality by building tall spiraling spires,
+
+### Perk
+- Cost: 8
+
+Mothids can normally compact and enhance their webbing into "structural webbing" that's light and hard like bone. More powerful Mothids with this perk are able to further refine their silk until it forms a material as light and ethereal as aerogel, as hard as diamond, but as shatterproof as springsteel. They have no height limit on how tall they can build their manaspires, able to construct a space elevator if they wished to. One such spire capable of tapping space will provide passive High charge. The Mothid can now learn *Arachnescence* at half cost stacking with affinity.
