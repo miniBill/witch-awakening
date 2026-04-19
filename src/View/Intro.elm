@@ -1,7 +1,7 @@
 module View.Intro exposing (viewTitleAndIntro)
 
 import Color
-import Element exposing (Device, Element, alignRight, alignTop, centerX, centerY, el, fill, fillPortion, height, newTabLink, paragraph, text, width)
+import Element exposing (Attribute, Device, Element, alignRight, alignTop, centerX, centerY, el, fill, fillPortion, height, newTabLink, paragraph, text, width)
 import Element.Background as Background
 import Element.Font as Font
 import Generated.Attribution
@@ -51,13 +51,7 @@ viewTitleAndIntro device allCompact =
                 viewUpdateBanner
             , Theme.column
                 [ width fill
-                , Background.gradient
-                    { angle = pi
-                    , steps =
-                        [ Theme.colorToElmUi (Color.rgba 0 0 0 0.5)
-                        , Theme.colorToElmUi (Color.rgba 0 0 0 0)
-                        ]
-                    }
+                , Theme.backgroundColor (Color.rgba 0 0 0 0.5)
                 ]
                 [ mainLogo
                 , Theme.column
@@ -267,15 +261,32 @@ viewIntro device =
                 ]
                 IdKindGameMode
                 mainIntro
+
+        attrs : List (Attribute msg)
+        attrs =
+            [ Element.paddingXY 16 0
+            , Background.gradient
+                { angle = pi
+                , steps =
+                    [ Theme.colorToElmUi (Color.rgba 0 0 0 0.5)
+                    , Theme.colorToElmUi (Color.rgba 0 0 0 0)
+                    , Theme.colorToElmUi (Color.rgba 0 0 0 0)
+                    , Theme.colorToElmUi (Color.rgba 0 0 0 0)
+                    , Theme.colorToElmUi (Color.rgba 0 0 0 0)
+                    , Theme.colorToElmUi (Color.rgba 0 0 0 0)
+                    , Theme.colorToElmUi (Color.rgba 0 0 0 0)
+                    ]
+                }
+            ]
     in
     case device.class of
         Element.Phone ->
-            Theme.row [ Element.paddingXY 16 0 ]
+            Theme.row attrs
                 [ central
                 ]
 
         _ ->
-            Theme.row [ Element.paddingXY 16 0 ]
+            Theme.row attrs
                 [ el [ width (Element.maximum 100 fill) ] Element.none
                 , central
                 , el [ width (Element.maximum 100 fill) ] Element.none
