@@ -150,6 +150,7 @@ colors :
     , noble : Color
     , speech : Color
     , white : Color
+    , worldDriver : Color
     , worldShift : Color
     }
 colors =
@@ -181,6 +182,7 @@ colors =
     , noble = Color.rgb255 0x14 0xE6 0x02
     , speech = Color.rgb255 0xF8 0x80 0x00
     , white = Color.white
+    , worldDriver = Color.rgb255 0xFF 0x29 0x00
     , worldShift = Color.rgb255 0x6E 0xD3 0x2A
     }
 
@@ -772,7 +774,7 @@ card attrs config =
                     [ Image.toPicture
                         (imageSizeAttrs
                             ++ [ Html.Attributes.style "object-fit" "cover"
-                               , Html.Attributes.style "border-radius" (String.fromInt (cardRoundness - 8) ++ "px")
+                               , Html.Attributes.style "border-radius" (String.fromInt (cardRoundness - 4) ++ "px")
                                ]
                         )
                         config.image
@@ -852,12 +854,18 @@ complicationCategoryToColor category =
         ComplicationCategoryWorldShift ->
             colors.worldShift
 
+        ComplicationCategoryWorldDriver ->
+            colors.worldDriver
+
 
 complicationCategoryToGradient : ComplicationCategory -> List ( Int, Int, Int )
 complicationCategoryToGradient category =
     case category of
         ComplicationCategoryWorldShift ->
             Gradient.greenGradient
+
+        ComplicationCategoryWorldDriver ->
+            Gradient.redGradient
 
 
 classToBadge : Class -> Image
