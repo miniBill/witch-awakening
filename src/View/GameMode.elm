@@ -140,17 +140,18 @@ slotDescription =
     - (noble) {noble *NOBLE*} slots are a green token.
     - (heroic) {heroic *HEROIC*} slots use a gold token.
     - (epic) {epic *EPIC*} slots use a purple token.
-    - (white) {white White} tokens are for variable options granting or requiring slots of a custom value based on the Power granted or required of the option in question, can use multiple slots per individual segments of a variable option, like each 4p class of Summer School.
+    - (white) {white White} tokens are for variable options granting or requiring slots of a custom value based on the Power granted or required of the option in question, can use multiple slots per individual segments of a variable option, like each [4] class of Summer School.
 
-    *Folk* = 1-4p. *Noble* = 5-8p. *Heroic* = 9-12p. *Epic* = 13+.
+    {folk *Folk*} = [1] [-] [4]. {noble *Noble*} = [5] [-] [8]. {heroic *Heroic*} = [9] [-] [12]. {epic *Epic*} = [13] [-] [20].
 
     You can also use this to break down any slot gains from sources that may have given you power later on.
 
-    _*Complications*_ are marked with a dot of the type that complication grants.
+    _*Complications*_ are marked with a dot of the type that complication grants. You can combine 2 slots of the same color gained from complication for 1 slots of the next tier of slot.
+    
+    Ex.: {folk 2 (folk)} ➡️ {noble 1 (noble)}, {heroic 2 (heroic)} ➡️ {epic 1 (epic)}.
 
-    In _Constellation_ mode, complication dots can be stacked or broken down like Skill Tree is capable of doing.
+    *Options with a cost of [0]* or less that would normally be free as a result of your class, can be treated as a (white) “Free” slot.
 
-    In _Skill Tree mode_, you can reserve the slots from complications for later use.
+    In either slot modes, doing quests grants you a slot equal to the tier of the quest, which can be used only on Relics or Companions, or things that say they can be bought with RP.
 
-    *Options with a cost of 0* or less that would normally be free as a result of your class, can be treated as a white token “Free” slot.
     """
