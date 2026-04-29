@@ -77,6 +77,17 @@ _Normally divine entities only really interact with Witchdom when sought out, or
 - [5] The Gods are entirely free to influence the world to the same capacity as a Witch could, the only caveat being they can’t directly act against individuals who haven’t offended them in some way, and even then only at highest power within a Witch’s scope (Up to R6). For full power, they’d have to be in their domain, or the subject submits to the god
 
 
+## Complication: Practical Magic
+- Tiered: True
+- Category: World shift
+
+Normally you are free to interpret how Magic is actually cast and what that looks like. Now, magic will gain thematic ties.
+
+- [2] Using magic will always cause a visible “Magic Circle” effect to appear. These circles can be identify the effects in use and be re-invoked to ID things later
+- [4] Magic will always also require a gesture and a vocal chant save for rare exceptions. The more powerful the effect compared to your rank, the longer the chant. A Rank 5 Witch could use Rank 1 spells with only a basic relevant gesture, like pointing
+- [8] Magic will require mediums of invocation specifically relevant to the Affinities involved in the magic. To use Firecalling would require a match, charcoal, or a holy symbol of a fire deity. Materials will usually be consumed in proportion to rank, but Holy Symbols aren’t consumed
+
+
 ## Complication: Dysfunction
 - Class: Sorceress
 - Gain: 12
