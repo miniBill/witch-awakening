@@ -340,7 +340,7 @@ magicValue model affinities magicDetails =
                             ( Just ( r, _ ), Just s ) ->
                                 max r s + 1
 
-                    ( finalValue, rewardPoints ) =
+                    ( finalValues, rewardPoints ) =
                         List.range 1 rankedMagic.rank
                             |> List.map
                                 (\rank ->
@@ -359,20 +359,16 @@ magicValue model affinities magicDetails =
                                     )
                                 )
                             |> List.unzip
-                            |> Tuple.mapBoth
-                                (\ps ->
-                                    ps
-                                        |> List.sum
-                                        |> Utils.applyClassBonusIf inClass
-                                )
-                                List.sum
                 in
                 { name = name
                 , rank = rankedMagic.rank
                 , freeRankFromRace = freeRankFromRace
                 , freeRankFromSummerSchool = freeRankFromSummerSchool
-                , power = finalValue
-                , rewardPoints = rewardPoints
+                , power =
+                    finalValues
+                        |> List.sum
+                        |> Utils.applyClassBonusIf inClass
+                , rewardPoints = List.sum rewardPoints
                 , isElementalism = magicDetails.isElementalism
                 , inAffinity = inAffinity
                 }
