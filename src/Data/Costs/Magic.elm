@@ -247,6 +247,18 @@ magicValue model affinities magicDetails =
                     name =
                         Magic.toString rankedMagic.name
 
+                    inClass : Bool
+                    inClass =
+                        case magicDetails.class of
+                            Magic.ClassSpecial ->
+                                magicDetails.name == MagicWishcasting && List.any Race.isGenie model.races
+
+                            Magic.ClassOne c ->
+                                model.class == Just c || model.class == Just Generated.Types.ClassWizard
+
+                            Magic.ClassNone ->
+                                False
+
                     inAffinity : Affinity.InAffinity
                     inAffinity =
                         if
@@ -329,12 +341,16 @@ magicValue model affinities magicDetails =
                                 max r s + 1
 
                     ( finalValue, rewardPoints ) =
-                        List.range freeRank rankedMagic.rank
+                        List.range 1 rankedMagic.rank
                             |> List.map
                                 (\rank ->
-                                    ( -rank
-                                        |> factionValueDiscountIf inFaction
-                                        |> affinityDiscountIf inAffinity
+                                    ( if rank < freeRank then
+                                        0
+
+                                      else
+                                        -rank
+                                            |> factionValueDiscountIf inFaction
+                                            |> affinityDiscountIf inAffinity
                                     , if rankedMagic.name == MagicBodyRefinement && rank >= 3 then
                                         5
 
@@ -345,19 +361,6 @@ magicValue model affinities magicDetails =
                             |> List.unzip
                             |> Tuple.mapBoth
                                 (\ps ->
-                                    let
-                                        inClass : Bool
-                                        inClass =
-                                            case magicDetails.class of
-                                                Magic.ClassSpecial ->
-                                                    magicDetails.name == MagicWishcasting && List.any Race.isGenie model.races
-
-                                                Magic.ClassOne c ->
-                                                    model.class == Just c || model.class == Just Generated.Types.ClassWizard
-
-                                                Magic.ClassNone ->
-                                                    False
-                                    in
                                     ps
                                         |> List.sum
                                         |> Utils.applyClassBonusIf inClass

@@ -1,4 +1,4 @@
-module CostTest exposing (genieMagicalHeart, magicCosts, perkCosts)
+module CostTest exposing (genieMagicalHeart, magicCosts, perkCosts, testRPFromFreeBodyRefinement)
 
 import Data.Costs.Magic
 import Data.Costs.Monad as CostsMonad
@@ -68,10 +68,15 @@ sorceressSpider =
 expectPower : Int -> CostsMonad.Monad Points.Points -> Expect.Expectation
 expectPower power value =
     Expect.equal
-        (Points.fromPower power
-            |> Ok
-        )
-        (Result.map .value value)
+        (Ok power)
+        (Result.map (\v -> v.value.power) value)
+
+
+expectRewardPoints : Int -> CostsMonad.Monad Points.Points -> Expect.Expectation
+expectRewardPoints rewardPoints value =
+    Expect.equal
+        (Ok rewardPoints)
+        (Result.map (\v -> v.value.rewardPoints) value)
 
 
 perkCosts : Test
@@ -228,3 +233,19 @@ testRanks model label magic one two three four five =
                             |> expectPower -expected
             )
         |> describe label
+
+
+testRPFromFreeBodyRefinement : Test
+testRPFromFreeBodyRefinement =
+    test "If Body Refinement is got for free from Summer School it still gives RPs" <|
+        \_ ->
+            Data.Costs.Magic.value { ignoreSorceressBonus = True }
+                { sorceressDryad
+                    | perks =
+                        [ { name = PerkSummerSchool [ MagicBodyRefinement ]
+                          , cost = 0
+                          }
+                        ]
+                    , magic = [ { name = MagicBodyRefinement, rank = 4 } ]
+                }
+                |> expectRewardPoints 10
