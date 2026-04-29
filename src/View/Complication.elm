@@ -2,7 +2,7 @@ module View.Complication exposing (viewComplications)
 
 import Color exposing (Color)
 import Data.Complication as Complication exposing (Content(..))
-import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, height, moveDown, moveRight, moveUp, px, spacing, width)
+import Element exposing (Attribute, Element, alignBottom, alignRight, alignTop, centerX, el, fill, fillPortion, height, moveDown, moveRight, moveUp, px, spacing, width)
 import Element.Border as Border
 import Element.Font as Font
 import Generated.Complication as Complication
@@ -42,6 +42,9 @@ viewComplications hideDLC display complications =
             isWorldShift complication =
                 case complication.category of
                     Just ComplicationCategoryWorldShift ->
+                        True
+
+                    Just ComplicationCategoryWorldDriver ->
                         True
 
                     Nothing ->
@@ -238,8 +241,27 @@ complicationBox display selected ({ name, class, category, content, dlc } as com
                 ]
                 (Complication.toString name)
             ]
+
+        categoryAttrs : List (Attribute msg)
+        categoryAttrs =
+            case category of
+                Just ComplicationCategoryWorldDriver ->
+                    case display of
+                        Types.DisplayFull ->
+                            [ width <| Element.minimum 500 <| Element.maximum 800 (fillPortion 2)
+                            ]
+
+                        Types.DisplayCompact ->
+                            [ width <| Element.minimum 500 (fillPortion 2)
+                            ]
+
+                        Types.DisplayCollapsed ->
+                            []
+
+                _ ->
+                    []
     in
-    Theme.card [ Theme.id IdKindComplication (Complication.toString name) ]
+    Theme.card (Theme.id IdKindComplication (Complication.toString name) :: categoryAttrs)
         { display = display
         , forceShow = False
         , glow = color

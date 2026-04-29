@@ -5,7 +5,7 @@ import Data.Costs.Monad as Monad exposing (Monad)
 import Data.Costs.Points as Points exposing (Points)
 import Data.Costs.Utils as Utils
 import Generated.Complication as Complication
-import Generated.Types exposing (Class(..), GameMode(..))
+import Generated.Types exposing (Class(..), ComplicationCategory(..), GameMode(..))
 import List.Extra
 import Types exposing (ComplicationKind(..), IdKind(..), Model)
 
@@ -111,6 +111,30 @@ value model =
                                 |> Utils.capWithWarning 30 normalInitialWarning
                                 |> Monad.map (\p -> { p | power = raw })
             )
+        |> Monad.withWarningMaybe (checkWorldDrivers model)
+
+
+checkWorldDrivers : Model key -> Maybe String
+checkWorldDrivers model =
+    let
+        worldDriversCount : Int
+        worldDriversCount =
+            List.Extra.count isWorldDriver model.complications
+
+        isWorldDriver : Types.RankedComplication -> Bool
+        isWorldDriver complication =
+            case List.Extra.find (\{ name } -> name == complication.name) Complication.all of
+                Nothing ->
+                    False
+
+                Just details ->
+                    details.category == Just ComplicationCategoryWorldDriver
+    in
+    if worldDriversCount > 1 then
+        Just "You can only select a single World Driver"
+
+    else
+        Nothing
 
 
 complicationsRawValue : Model key -> Monad Int

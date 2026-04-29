@@ -77,6 +77,22 @@ _Normally divine entities only really interact with Witchdom when sought out, or
 - [5] The Gods are entirely free to influence the world to the same capacity as a Witch could, the only caveat being they can’t directly act against individuals who haven’t offended them in some way, and even then only at highest power within a Witch’s scope (Up to R6). For full power, they’d have to be in their domain, or the subject submits to the god
 
 
+## Complication: Blood of Olympus
+- Category: World driver
+- Gain: 0
+
+The world is fundamentally shifted on a deeper level, in order to better reflect the mythologies of old- namely replicating Greek *Mythology, “Witches” are instead... _gods_*, and the greek gods are real, power scaled around Rank 3, with Zeus, Poseidon, and Hades effectively being Rank 8 while Dionysus, Hephaestus, or Apollo _(Ignoring Culicarius being an “inspiration for” the story of Apollo)_ would be more like Rank 6. Meaning the player character can effectively count themselves as a high tier god equal among the pantheon though not sufficient to usurp it. _Demigods_ would be figures with few abilities relevant to a godparent, though those individual features might punch up towards Rank 5.
+
+There is no limitation like Pop5 on magic ownership, _but Ranks 5+ should generally be reserved for gods of a relevant domain_. The Masquerade still works, *the world is very similar to the _Percy Jackson_ series, _blending it with Witchlore seen in this cyoa_* though roughly translating “witch” themes to “god” themes. Other mythological pantheons may exist similarly powerscaled & translated to this CYOA, but preexisting gods (“Thor”) may bend rules to have special effects unique to them.
+
+
+## Complication: Soul of Cultivation
+- Category: World driver
+- Gain: 0
+
+The world is fundamentally shifted- in order to reflect the _*general concept of a Cultivation IP*_. The world is more martial and spiritual. The “Ranks” demonstrated in Witchdom are even more tangible as part of a broader _*cultivation ladder*_. “Witches” are “Cultivators” who work through various methods to raise their ranking, growing their potential. In addition to a Class's growth method, you might find there are more stages of “Soft caps” where you need to seek means to _*“Breakthrough” until the next cap*_. There is no longer an innate rank of “potential”, all witches (cultivators) are just at their various rankings and could breakthrough to grow further up to the same hard-cap as the Player. Your full build represents your _*maximum potential within the scope of the CYOA*_, even without Story Mode you'll slowly progress through the rankings with highest rank stuff going first then everything else staggering in behind it as your highest ranked stuff levels up. _*You may imagine general physical “attributes” scaling with your highest ranked magic*_, so your body grows with your max rank, and all have built in resistances to lower ranks.
+
+
 ## Complication: Practical Magic
 - Tiered: True
 - Category: World shift
