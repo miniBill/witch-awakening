@@ -267,6 +267,9 @@ raceToTypePerkImage race =
         RaceMechanoid ->
             Image.typePerkMechanoid
 
+        RaceWunimal ->
+            Image.typePerkWunimal
+
         _ ->
             Types.raceToImage race
 

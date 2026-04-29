@@ -200,3 +200,18 @@ Some mechanoids will have a visible glow, such as in the eyes or visor or “LED
 Laserborn mechanoids can shoot lasers from their eyes/visor, or eye-like laser diodes. Choose 3 non-eye diodes, such as having one on the chest and in the palms or finger tips.
 
 These lasers match the raw damage potential of up to the mecha's highest ranking magic available to it, else just equating to the damage of mundane small arms. Mana is spent to match.
+
+
+## Race: Wunimal
+- Elements: Mind, Beast
+- Mana capacity: High
+- Mana rate: Low
+
+Wunimals are wondrous animals that acquired a spark of magic that augmented them with true consciousness and generally supports their elevated existence and ability to stand on two legs. A wunimal can be based on any animal, and appears indistinguishable if they choose not to wear anything and not walk upright, though most feel as much or more aversion to doing so as a human would, being equally deemed a “nudist” if they chose to, and view it as somewhat degrading to walk on all fours. Wunimals always age the same as their base animal, but any slain or dead-from-natural-causes wunimal can be reborn from any similar looking member of their same animal species if it is given the wunimal's name and treated as though it were the wunimal, and it being made reality. This can be done before the wunimal dies, giving an animal their name and treating it like the sapient one, dressing it up, then should the wunimal die, the animal becomes wunimal.
+__Wunimals draw Mana__ from Tomfoolery, being absurd. They have a minor passive charge simply for existing as a talking upright animal in human clothes but also generate mana when expressing quirks or using absurd language like “skallywag”, or playing a caricature of a role.
+
+### Perk
+- Cost: 8
+
+Wonderfactor isn't limited just to mammals! Some rare wunimals may be wondrous variants of dinosaurs! This effect seems to be altered by the general public consciousness, so you may see both feathered and featherless variants of the same dinosaur. Because dinosaurs are even more absurd than talking animals, Dinowunders charge rate changes to High.
+If you don't wish to be a dinosaur, you can elect to just have High charge and can choose cryptid animals without supernatural abilities, such as a Jackalope or Winged Monkey.
