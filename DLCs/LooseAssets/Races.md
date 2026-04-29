@@ -179,3 +179,24 @@ __Novids draw Mana__ from Starlight, having a Low charge if few stars are visibl
 
 Some Novids aren't ordinary stars, but are _Wishing Stars_. You can access _Wishcasting_, but it can only be used on behalf of those who "make a wish upon a star" and only in baby or witchling form- You also retain access to your baby-novid form as a floating star-like shape the size of a teddy bear. This form triples the speed of your *Levitation*.
 *For an additional [8]*, you may gain META access to _Simple Witchy Starlight_, having a Starling-Witchling form tertiary to your baby-Novid and adult-Novid form, gaining Maturation for free. Both your Witchling and Adult forms look like a Novid however, unless you take FORMS abilities to alter it, or other magics here. Maturation's buff only applies to Witchy Starlight content.
+
+
+## Race: Mechanoid
+- Elements: Metal, Mind
+- Mana capacity: Low
+- Mana rate: Low
+
+Fully robotic lifeforms born from dedicated will of a master artisan with a bit of wonderfactor imbuing them with life and a spark of magic. Mana sustains their life though they can “consume” electricity, and can eat metal, for pleasure and bodily maintenance akin to nutrition. When not in danger their steel-chrome skin can be as pliable as a real body, but as hard as proper metal plating if it would take damage or if the fullborg is on edge, or abandons humanity. Mechanoid lifeforms can emulate all aspects of life translated into a robo format, and are even capable of repro-duction to produce more synthetic lifeforms with no “Species” boundaries.
+
+Mechanoid are fully immortal. If slain, repair.
+
+__Mechanoid draw Mana__ from Data, deriving power from information in a literal sense. Every little bit of new information gives some small amount of charge, while learning important secrets or mysteries of the world can overwhelm their mana capacity for a moment. Requiring new information, fullborgs are often an extreme of adventurous or lazy with internet access.
+
+### Perk
+- Cost: 8
+
+Some mechanoids will have a visible glow, such as in the eyes or visor or “LED” points. These mechanoids are easily identified as being Laserborn. Laserborn gain the Life Affinity with a High Mana Capacity and also gain a secondary Low charge based on light absorption.
+
+Laserborn mechanoids can shoot lasers from their eyes/visor, or eye-like laser diodes. Choose 3 non-eye diodes, such as having one on the chest and in the palms or finger tips.
+
+These lasers match the raw damage potential of up to the mecha's highest ranking magic available to it, else just equating to the damage of mundane small arms. Mana is spent to match.

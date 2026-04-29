@@ -80,6 +80,7 @@ affinitiesForTypePerks typePerks =
     , ( RaceShadeglass, AffinityFire )
     , ( RaceMarid, AffinityAll )
     , ( RaceCantor, AffinitySoul )
+    , ( RaceMechanoid, AffinityLife )
     ]
         |> List.filterMap
             (\( type_, affinity ) ->
