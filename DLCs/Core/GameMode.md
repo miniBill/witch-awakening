@@ -1,7 +1,7 @@
 # Core
 
 ## Game Mode: Story Arc
-Your Starting Power is reduced to 10 points, which cannot be increased with complications. Instead, your Power Cap is increased to [150], and Complications can increase your Power Cap by up to +[60].
+Your Starting Power is reduced to [10], which cannot be increased with complications. Instead, your Power Cap is increased to [150], and Complications can increase your Power Cap by up to [+60].
 
 You cannot start with a magic at more than Rank 3 or perks worth more than 6p before discounts, but they unlock at milestones.
 
@@ -13,7 +13,7 @@ This means that in your build you’d incorporate Quests and mention the passage
 ## Game Mode: Early Bird
 Incompatible with _Story Arc_. Rather than start less and end more, you get it all over with from the get go.
 
-Your Power Cap matches your Starting Power, but your *Starting Power is increased to [75]*. This means that what you start with is what you get, only acquiring companions and relics via quests later on. Simplifies things greatly, removing growth methods. _You can still benefit from *complications*_ increasing starting power, so up to _+[30]_, but not even wishes will grant you any additional power points once you start.
+Your Power Cap matches your Starting Power, but your *Starting Power is increased to [75]*. This means that what you start with is what you get, only acquiring companions and relics via quests later on. Simplifies things greatly, removing growth methods. _You can still benefit from *complications*_ increasing starting power, so up to _[+30]_, but not even wishes will grant you any additional power points once you start.
 
 You can store power for later use if you so wish to do so, to simulate natural growth at your own rate, though you can do that after buying too.
 
