@@ -66,6 +66,17 @@ The world is shifted towards a degree of _lewdity_, you can determine for yourse
 - [3] Almost all ads are explicit. Hide-the-pickle is as common as a handshake or hug and an expected norm or you’re seen as a strange prude for not engaging with it. Pass once? Maybe an off day. Repeatedly? Okay something is suspicious
 
 
+## Complication: God Games
+- Tiered: True
+- Category: World shift
+
+_Normally divine entities only really interact with Witchdom when sought out, or you make yourself a problem._
+
+- [1] Gods will sometimes be drawn to acts within their “domains”, within areas they have influence over, and act according to their personality as such up to short of directly influencing things
+- [2] They can directly influence the world in areas relevant to them provided there is some kind of initial cause, such as killing a sacred animal, or spitting on an icon, harming a follower, etc
+- [5] The Gods are entirely free to influence the world to the same capacity as a Witch could, the only caveat being they can’t directly act against individuals who haven’t offended them in some way, and even then only at highest power within a Witch’s scope (Up to R6). For full power, they’d have to be in their domain, or the subject submits to the god
+
+
 ## Complication: Dysfunction
 - Class: Sorceress
 - Gain: 12
