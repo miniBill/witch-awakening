@@ -453,9 +453,9 @@ innerView model =
                 ]
                 [ Element.Lazy.lazy3 Class.viewClass model.hideDLCs model.classDisplay model.class
                 , Element.Lazy.lazy3 Race.viewRace model.hideDLCs model.raceDisplay model.races
+                , Element.Lazy.lazy4 TypePerk.viewTypePerks model.hideDLCs model.races model.typePerksDisplay model.typePerks
                 , Element.Lazy.lazy3 GameMode.viewGameMode model.hideDLCs model.gameModeDisplay model.gameMode
                 , Element.Lazy.lazy3 Complications.viewComplications model.hideDLCs model.complicationsDisplay model.complications
-                , Element.Lazy.lazy4 TypePerk.viewTypePerks model.hideDLCs model.races model.typePerksDisplay model.typePerks
                 , Element.Lazy.lazy4 Magic.viewMagics model.device model.hideDLCs model.magicDisplay model.magic
                 , Element.Lazy.lazy6 Perk.viewPerks model.hideDLCs model.hideMeta model.perksDisplay model.mainRace model.races model.perks
                 , Element.Lazy.lazy4 Faction.viewFaction model.hideDLCs model.factionDisplay model.factions model.factionPerks

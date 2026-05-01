@@ -257,10 +257,10 @@ viewCalculations model power warnings affinities =
             , ( "Switch", capBuildSwitch model )
             , keyedRow IdKindClass "Class" model.expandedMenuSections (Data.Costs.Class.value model) <| Just "True Form - Class"
             , keyedRow IdKindRace "Race" model.expandedMenuSections (Data.Costs.Race.value model) <| Just "True Form - Race"
+            , keyedRow IdKindTypePerk "Type perks" model.expandedMenuSections (Data.Costs.TypePerks.value model) Nothing
             , keyedRow IdKindGameMode "Starting power" model.expandedMenuSections (Costs.startingValue model) <| Just "Game Mode"
             , keyedRow IdKindComplication "Complications" model.expandedMenuSections (Data.Costs.Complications.value model) Nothing
             , ( "Cap Slider", capSlider model )
-            , keyedRow IdKindTypePerk "Type perks" model.expandedMenuSections (Data.Costs.TypePerks.value model) Nothing
             , keyedRow IdKindMagic "Magic" model.expandedMenuSections (Data.Costs.Magic.value { ignoreSorceressBonus = False } model) <| Just "The Magic"
             , magicPyramidRow model
             , keyedRow IdKindPerk "Perks" model.expandedMenuSections (Data.Costs.Perks.value model) Nothing
