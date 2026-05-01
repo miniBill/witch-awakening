@@ -280,7 +280,7 @@ perkFuzzer =
         , Fuzz.constant Generated.Types.PerkBloodWitch
         , Fuzz.constant Generated.Types.PerkGunwitch
         , Fuzz.constant Generated.Types.PerkLevitation
-        , Fuzz.constant Generated.Types.PerkIsekaid
+        , Fuzz.constant Generated.Types.PerkIsekaiD
         , Fuzz.constant Generated.Types.PerkHeritage
         , Fuzz.constant Generated.Types.PerkMagicFriendship
         , Fuzz.constant Generated.Types.PerkWindsong
