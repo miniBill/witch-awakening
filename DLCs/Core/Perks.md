@@ -286,6 +286,7 @@ Your relationship with space is pretty relative. You can move yourself omnidirec
 
 
 ## Perk: Isekai'd
+- Synonym: Isekaid
 - Element: Life
 - Class: Warlock
 - Cost: 4

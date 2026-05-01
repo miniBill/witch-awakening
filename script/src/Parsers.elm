@@ -211,6 +211,7 @@ race =
 type alias Perk =
     { name : String
     , elements : List String
+    , synonym : Maybe String 
     , class : String
     , requires : Maybe String
     , isMeta : Bool
@@ -229,9 +230,10 @@ perk : Parser Perk
 perk =
     (section "##"
         "Perk"
-        (\name element elements -> Perk name (elements |> Maybe.withDefault element))
+        (\name   element elements -> Perk name   (elements |> Maybe.withDefault element))
         |> manyItems "Element" Ok
         |> maybeItem "Elements" stringListParser
+        |> maybeItem "Synonym" Ok
         |> requiredItem "Class" Ok
         |> maybeItem "Requires" Ok
         |> flagItem "Meta"

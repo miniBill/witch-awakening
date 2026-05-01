@@ -155,7 +155,7 @@ fromParsed { name, items } =
                         perk : Variant
                         perk =
                             { name = v.name
-                            , synonyms = []
+                            , synonyms = Maybe.Extra.toList v.synonym
                             , arguments = v.arguments
                             , toStringException = Nothing
                             , dlc = name
