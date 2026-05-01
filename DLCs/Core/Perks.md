@@ -285,7 +285,7 @@ Originated by a male witch, _John Moses Browning_, you can ritually bond with a 
 Your relationship with space is pretty relative. You can move yourself omnidirectionally through space as though moving reality relative to you rather than moving your body itself. You’d appear to levitate as you wish and never need to touch the ground again You can disconnect any object you touch to be severed from the effects of gravity and it would remain as you last left it unless acted upon by another force, though acting as though it had notable friction to slow itself or resist wind. You “fly” at up to 25mph, as casual to you as a light jog. If you have Witchery, you add your potential speed if you were to use your broomstick, though you need not actually use it to gain speed.
 
 
-## Perk: Isekaid
+## Perk: Isekai'd
 - Element: Life
 - Class: Warlock
 - Cost: 4
