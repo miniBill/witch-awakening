@@ -1,3 +1,6 @@
+# V4
+Metamorphosis is not an elementalism anymore
+
 # Missing features
 
 - Siren type perk missing the possible 1p option
