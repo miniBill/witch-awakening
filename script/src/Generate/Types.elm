@@ -225,27 +225,32 @@ type alias Config =
 parserDeclaration : Config -> Enum -> Elm.Declare.Value
 parserDeclaration { lowerName, type_ } { name, variants } =
     variants
-        |> List.map
+        |> List.concatMap
             (\variant ->
                 let
-                    start : Elm.Expression
-                    start =
+                    string : String
+                    string =
+                        variant.toStringException
+                            |> Maybe.withDefault variant.name
+                            |> String.replace "\"" "\\\""
+
+                    start : String -> Elm.Expression
+                    start synonym =
                         Gen.Parser.succeed (Elm.val <| name ++ yassify variant.name)
-                            |> skip
-                                (variant.toStringException
-                                    |> Maybe.withDefault variant.name
-                                    |> String.replace "\"" "\\\""
-                                    |> Gen.Parser.symbol
-                                )
+                            |> skip (Gen.Parser.symbol synonym)
+
+                    fragment : String -> Elm.Expression
+                    fragment synonym =
+                        List.foldl
+                            (\arg acc ->
+                                acc
+                                    |> skip (Gen.Parser.symbol "-")
+                                    |> keep (argToParser arg)
+                            )
+                            (start synonym)
+                            variant.arguments
                 in
-                List.foldl
-                    (\arg acc ->
-                        acc
-                            |> skip (Gen.Parser.symbol "-")
-                            |> keep (argToParser arg)
-                    )
-                    start
-                    variant.arguments
+                List.map (\synonym -> fragment synonym) (string :: variant.synonyms)
             )
         |> Gen.Parser.oneOf
         |> Elm.withType (Gen.Parser.annotation_.parser type_)
