@@ -90,7 +90,7 @@ There is no limitation like Pop5 on magic ownership, _but Ranks 5+ should genera
 - Category: World driver
 - Gain: 0
 
-The world is fundamentally shifted- in order to reflect the _*general concept of a Cultivation IP*_. The world is more martial and spiritual. The “Ranks” demonstrated in Witchdom are even more tangible as part of a broader _*cultivation ladder*_. “Witches” are “Cultivators” who work through various methods to raise their ranking, growing their potential. In addition to a Class's growth method, you might find there are more stages of “Soft caps” where you need to seek means to _*“Breakthrough” until the next cap*_. There is no longer an innate rank of “potential”, all witches (cultivators) are just at their various rankings and could breakthrough to grow further up to the same hard-cap as the Player. Your full build represents your _*maximum potential within the scope of the CYOA*_, even without Story Mode you'll slowly progress through the rankings with highest rank stuff going first then everything else staggering in behind it as your highest ranked stuff levels up. _*You may imagine general physical “attributes” scaling with your highest ranked magic*_, so your body grows with your max rank, and all have built in resistances to lower ranks.
+The world is fundamentally shifted- in order to reflect the _*general concept of a Cultivation IP*_. The world is more martial and spiritual. The “Ranks” demonstrated in Witchdom are even more tangible as part of a broader _*cultivation ladder*_. “Witches” are “Cultivators” who work through various methods to raise their ranking, growing their potential. In addition to a Class’s growth method, you might find there are more stages of “Soft caps” where you need to seek means to _*“Breakthrough” until the next cap*_. There is no longer an innate rank of “potential”, all witches (cultivators) are just at their various rankings and could breakthrough to grow further up to the same hard-cap as the Player. Your full build represents your _*maximum potential within the scope of the CYOA*_, even without Story Mode you’ll slowly progress through the rankings with highest rank stuff going first then everything else staggering in behind it as your highest ranked stuff levels up. _*You may imagine general physical “attributes” scaling with your highest ranked magic*_, so your body grows with your max rank, and all have built in resistances to lower ranks.
 
 
 ## Complication: Practical Magic
@@ -482,3 +482,88 @@ Somewhat of an advanced case of Addiction, you will have a particular compulsion
 - [8] *Common*: [8] you’re likely to run into your compulsion multiple times a day
 
 - *Finite*: -50% Your compulsion is a finite exposure of things you only do once. Example: To eat every pie you see vs Eat every NEW type of pie you see.
+
+
+## Complication: Isekai Fates
+- Class: Sorceress
+- Gain: 6
+
+In your awakening process you’ll experience a time crunch in which you live out an Isekai life.
+However, it’s not a power trip isekai, it’s a death run timeline and you’re living with just your pre-awakening human capabilities.
+
+You awaken only once you die, at which point you *Regress* to repeat it, but now with your Awakened witch capabilities and foreknowledge. Once you “win” however you define it in this second timeline, you’ll wake up, fully awakened as a Witch.
+
+You’re guaranteed not to die soon, but will live at least into your 20s experiencing a life worse than pre-Hogwarts Harry Potter, or the life of various misunderstood “Villainess” protagonists in their tragic pre-regression life before the main story.
+
+
+## Complication: Wild Magic
+- Class: Magician
+- Gain: 6
+
+The spark of magic within you is especially wild and difficult to control. Magic effects can occur around you relevant to what magics you possess, but performed without your input and can be directly contrary to your wishes, but influenced by your personality. The more callous you are, the more vicious your wild magic surges may be. Imagine your subconscious mind, acting on its own with key personality traits exaggerated with no capacity to feel shame or recognize social cues. This still expends your Mana as normal. So long as you don’t have self-destructive tendencies, at least the magic won’t harm you, and can autonomously act to protect you. But it’s not very good at understanding what’s a threat...
+
+
+## Complication: Curse Power
+- Class: Warlock
+- Gain: 12
+
+Your magic stems from a dark-seed, a spark born from one of the layers of Hell. While not Outsiders and inherently hostile to existence, demons are still demons after all.
+
+The more you deplete your Mana reserve, the more vulnerable you become to possession by a hostile demon or devil entity seeded within your mana itself.
+
+Your magic will pain you to use, but is many times more painful to others. Including healing or buff effects.
+
+If you are slain, the evil entity will gain control of your body until your method of resurrection can be employed, which they will avoid but you can reverse the possession via mana depletion similar to them possessing you.
+You may take [Visceramancy] without its prerequisite quest.
+
+
+## Complication: Patronage
+- Class: Warlock
+- Gain: 8
+
+You are required to take a Patron. Your magic stems from this patron, who outright granted you your Awakening.
+
+If you offend your Patron’s Laws you may experience backlash relevant to their domains, and should you ever deliberately act against their values you may lose the ability to use any Active magic effects, keeping only Passive effects. If you ever betray your Patron outright, you are liable to lose your Awakening.
+
+You are granted their Tier 3 benefits without having to do their Quests first, but you must do them eventually.
+
+If your Patron is good, you may take [Lifeweaving] without its prerequisite quest.
+
+Incompatible with [Curse Power] unless an evil patron.
+
+
+## Complication: Folk Binding
+- Class: Magician
+- Gains: 2-4-20
+
+You have a deeply rooted enchantment ingrained in your soul. That of a Folk Binding such as afflicts many supernatural creatures. You’re physically incapable of acting against the binding.
+
+{center} *+2 per Binding taken.*
+
+- Cannot tell a lie.
+- Cannot harm a creature who has done you no wrong.
+- Cannot cross private thresholds uninvited.
+- Cannot cross running water.
+- Must always return any favor done to you, as soon as possible.
+- Cannot break Masquerade.
+- Cannot act to harm someone if they speak your name.
+- Cannot break a deal.
+- Cannot break salt-lines.
+- Cannot speak the name of anyone that doesn’t speak yours.
+
+
+## Complication: Deep Roots
+- Class: Sorceress
+- Gain: 4
+
+In addition to any real bonds you have, you’ll retroactively receive additional or replacement bonds, whether entirely new or a revised timeline with an existing relation. Friends, Family, Romance, Children. Not ALL your bonds will be effected, just enough to gain deep roots in mortal society.
+
+These bonds will be strong with love and care as you choose to idealize but the bond will be reinforced regardless of your personal temperament: You will care about them irreplaceably.
+
+You physically cannot by any means break the Masquerade to them directly or indirectly.
+
+They cannot leave the Mortal World, nor its basic society.
+
+You cannot abandon them.
+
+They require your protection from hidden supernatural threats.

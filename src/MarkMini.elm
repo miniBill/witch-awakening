@@ -43,6 +43,7 @@ type Piece
     | Size Types.Size
     | Quest Types.Quest
     | Companion Types.Companion
+    | Complication Types.Complication
 
 
 type Color
@@ -283,6 +284,9 @@ parseSquareBrackets str =
             , \input ->
                 Types.companionFromString input
                     |> Maybe.map Companion
+            , \input ->
+                Types.complicationFromString input
+                    |> Maybe.map Complication
             , \input ->
                 if String.startsWith "http" input then
                     Just (Link input)

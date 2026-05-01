@@ -9,6 +9,7 @@ import Element.Input as Input
 import Generated.Affinity as Affinity
 import Generated.Class as Class
 import Generated.Companion as Companion
+import Generated.Complication as Complication
 import Generated.Gradient as Gradient
 import Generated.Image as Image exposing (Image)
 import Generated.Magic as Magic
@@ -318,6 +319,9 @@ viewPiece expandBadges piece =
 
         Quest quest ->
             viewGenericBadge expandBadges (Types.questToImage quest) (Quest.toString quest)
+
+        Complication complication ->
+            viewGenericBadge expandBadges (Types.complicationToImage complication) (Complication.toString complication)
 
         Magic magic ->
             viewGenericBadge expandBadges (Types.magicToImage magic) (Magic.toString magic)
