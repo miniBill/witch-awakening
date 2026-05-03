@@ -32,6 +32,7 @@ viewCompanions hideDLC display companions =
                             filteredCompanions : List Companion.Details
                             filteredCompanions =
                                 View.filterDLC hideDLC factionCompanions
+                                    |> List.sortBy (\{ dlc } -> Maybe.withDefault "" dlc)
                         in
                         if List.isEmpty filteredCompanions then
                             Nothing
