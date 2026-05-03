@@ -316,32 +316,32 @@ magicImage :
     }
     -> Element msg
 magicImage { name, faction } =
-    el
-        [ height <| Element.minimum 280 fill
-        , width <| Element.minimum 280 <| Element.maximum 320 fill
-        , Theme.backgroundImage (Types.magicToImage name)
-        , Element.inFront <|
-            case faction of
-                Nothing ->
-                    Element.none
+    Types.magicToImage name
+        |> Theme.sidePicture
+        |> el
+            [ height <| Element.minimum 280 fill
+            , width <| Element.minimum 280 <| Element.maximum 320 fill
+            , Element.inFront <|
+                case faction of
+                    Nothing ->
+                        Element.none
 
-                Just factionName ->
-                    let
-                        shortName : String
-                        shortName =
-                            Faction.toShortString factionName
-                    in
-                    GradientText.wrapped
-                        [ width fill
-                        , Element.moveDown 16
-                        ]
-                        [ GradientText.celticHand
-                        , GradientText.fontSize 64
-                        , GradientText.blueGradient
-                        ]
-                        shortName
-        ]
-        Element.none
+                    Just factionName ->
+                        let
+                            shortName : String
+                            shortName =
+                                Faction.toShortString factionName
+                        in
+                        GradientText.wrapped
+                            [ width fill
+                            , Element.moveDown 16
+                            ]
+                            [ GradientText.celticHand
+                            , GradientText.fontSize 64
+                            , GradientText.blueGradient
+                            ]
+                            shortName
+            ]
 
 
 viewContent : Device -> Display -> List RankedMagic -> Magic.Details -> Element ( RankedMagic, Bool )

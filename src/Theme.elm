@@ -1,11 +1,11 @@
 module Theme exposing
     ( row, column, wrappedRow, doubleColumn
     , rhythm, cardRoundness
-    , button, maybeButton, img, image, slider, card
+    , button, maybeButton, img, image, sidePicture, slider, card
     , blocks, compactBlocks, collapsibleBlocks
     , classToBadge, triangleDown, triangleRight, viewAffinity, viewClasses, viewGenericBadge, viewSize
     , padding, rounded, spacing, centerWrap
-    , backgroundColor, backgroundImage, borderColor, borderGlow, choice, colors, colorToBackground, colorToElmUi, complicationCategoryToColor, complicationCategoryToGradient, fontColor, topBackground
+    , backgroundColor, borderColor, borderGlow, choice, colors, colorToBackground, colorToElmUi, complicationCategoryToColor, complicationCategoryToGradient, fontColor, topBackground
     , id, style, toUrlFunction
     )
 
@@ -15,7 +15,7 @@ module Theme exposing
 
 @docs rhythm, cardRoundness
 
-@docs button, maybeButton, img, image, slider, card
+@docs button, maybeButton, img, image, sidePicture, slider, card
 
 @docs blocks, compactBlocks, collapsibleBlocks
 
@@ -23,7 +23,7 @@ module Theme exposing
 
 @docs padding, rounded, spacing, centerWrap
 
-@docs backgroundColor, backgroundImage, borderColor, borderGlow, choice, colors, colorToBackground, colorToElmUi, complicationCategoryToColor, complicationCategoryToGradient, fontColor, topBackground
+@docs backgroundColor, borderColor, borderGlow, choice, colors, colorToBackground, colorToElmUi, complicationCategoryToColor, complicationCategoryToGradient, fontColor, topBackground
 
 @docs id, style, toUrlFunction
 
@@ -49,6 +49,7 @@ import Generated.Size as Size
 import Generated.Types as Types exposing (Affinity(..), Class(..), ComplicationCategory(..), Size, Slot(..))
 import Html exposing (Html)
 import Html.Attributes
+import Html.Source
 import List.Extra
 import MarkMini exposing (Block(..), Piece(..))
 import Parser exposing ((|.))
@@ -87,6 +88,32 @@ image attrs src =
         src
         |> Element.html
         |> el (width (px src.width) :: attrs)
+
+
+sidePicture : Image -> Element msg
+sidePicture src =
+    Html.node "picture"
+        [ Html.Attributes.style "display" "flex"
+        , Html.Attributes.style "flex" "1 0 0"
+        , Html.Attributes.style "overflow" "clip"
+        ]
+        (List.map
+            (\f ->
+                f
+                    |> Image.toSources src
+                    |> Html.Source.toHtml
+            )
+            Image.standardFormats
+            ++ [ Html.img
+                    [ Html.Attributes.src ("public/" ++ src.src)
+                    , Html.Attributes.style "object-fit" "cover"
+                    , Html.Attributes.style "width" "100%"
+                    , Html.Attributes.style "flex" "1 0 0"
+                    ]
+                    []
+               ]
+        )
+        |> Element.html
 
 
 choice : String -> Element msg
@@ -1045,11 +1072,6 @@ viewSize gradient size =
 toUrlFunction : Image -> String
 toUrlFunction { src } =
     "url(\"public/" ++ src ++ "\")"
-
-
-backgroundImage : Image -> Element.Attribute msg
-backgroundImage { src } =
-    Background.image ("public/" ++ src)
 
 
 img : List (Html.Attribute msg) -> Image -> Html msg

@@ -59,7 +59,7 @@ viewFaction hideDLC display factions factionPerks =
                     ]
             , Element.row
                 [ width fill
-                , Theme.backgroundImage Image.factionHumansIntro1
+                , Element.behindContent (Theme.sidePicture Image.factionHumansIntro1)
                 , width fill
                 ]
                 [ el [ width fill, Element.paddingEach { left = 32, bottom = 64, top = 200, right = 32 } ] <|
@@ -259,9 +259,9 @@ introRow display { name, dlc, motto, images } =
             el
                 [ width <| Element.minimum 100 fill
                 , height <| Element.minimum 300 fill
-                , Theme.backgroundImage src
+                , Theme.style "overflow" "clip"
                 ]
-                Element.none
+                (Theme.sidePicture src)
     in
     if display == DisplayFull then
         Theme.wrappedRow
