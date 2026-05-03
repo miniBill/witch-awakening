@@ -2,7 +2,7 @@
 
 ## Companion: Doctor Onward
 - Faction: Outward Bound
-- Class: Academic
+- Class: Magician
 - Races: Dictum+, Neutral
 - Cost: 15
 - Power: 1
@@ -66,7 +66,7 @@ Ellie has absolutely no head for research and says she's 'barely a witch'; she r
 
 ## Companion: James Wagner
 - Faction: Outward Bound
-- Class: Academic
+- Class: Magician
 - Race: Elf
 - Cost: 8
 - Power: 6
