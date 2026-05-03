@@ -147,6 +147,9 @@ factionToOrder faction =
         Just "The Seekers' Guild" ->
             Ok 8
 
+        Just "Outward Bound" ->
+            Ok 9
+
         Just "The O.R.C." ->
             Ok 1001
 
