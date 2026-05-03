@@ -1,4 +1,33 @@
-module Theme exposing (backgroundColor, backgroundImage, blocks, borderColor, borderGlow, button, card, cardRoundness, centerWrap, choice, classToBadge, collapsibleBlocks, colorToBackground, colorToElmUi, colors, column, compactBlocks, complicationCategoryToColor, complicationCategoryToGradient, doubleColumn, fontColor, id, image, img, maybeButton, padding, rhythm, rounded, row, slider, spacing, style, toUrlFunction, topBackground, triangleDown, triangleRight, viewAffinity, viewClasses, viewGenericBadge, viewSize, wrappedRow)
+module Theme exposing
+    ( row, column, wrappedRow, doubleColumn
+    , rhythm, cardRoundness
+    , button, maybeButton, img, image, slider, card
+    , blocks, compactBlocks, collapsibleBlocks
+    , classToBadge, triangleDown, triangleRight, viewAffinity, viewClasses, viewGenericBadge, viewSize
+    , padding, rounded, spacing, centerWrap
+    , backgroundColor, backgroundImage, borderColor, borderGlow, choice, colors, colorToBackground, colorToElmUi, complicationCategoryToColor, complicationCategoryToGradient, fontColor, topBackground
+    , id, style, toUrlFunction
+    )
+
+{-|
+
+@docs row, column, wrappedRow, doubleColumn
+
+@docs rhythm, cardRoundness
+
+@docs button, maybeButton, img, image, slider, card
+
+@docs blocks, compactBlocks, collapsibleBlocks
+
+@docs classToBadge, triangleDown, triangleRight, viewAffinity, viewClasses, viewGenericBadge, viewSize
+
+@docs padding, rounded, spacing, centerWrap
+
+@docs backgroundColor, backgroundImage, borderColor, borderGlow, choice, colors, colorToBackground, colorToElmUi, complicationCategoryToColor, complicationCategoryToGradient, fontColor, topBackground
+
+@docs id, style, toUrlFunction
+
+-}
 
 import Color exposing (Color)
 import Element exposing (Attribute, Element, Length, centerY, el, fill, height, px, rgb, rgb255, shrink, text, width)
