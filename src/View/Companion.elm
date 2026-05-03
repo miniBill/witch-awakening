@@ -7,9 +7,11 @@ import Element.Border as Border
 import Element.Font as Font
 import Generated.Companion as Companion
 import Generated.Faction as Faction
-import Generated.Image as Image
+import Generated.Image as Image exposing (Image)
 import Generated.Types as Types exposing (Companion, Faction)
+import Html
 import Html.Attributes
+import Html.Source
 import Set exposing (Set)
 import Svg
 import Svg.Attributes
@@ -318,20 +320,43 @@ image { name, races, hasPerk, cost } =
                 |> Theme.image [ width <| px 40 ]
                 |> el [ moveRight 4 ]
             ]
+
+        img : Image
+        img =
+            Types.companionToImage name
     in
-    el
-        (width (Element.minimum 200 fill)
-            :: height (Element.minimum 200 fill)
-            :: Border.roundEach
-                { topLeft = Theme.cardRoundness
-                , bottomLeft = Theme.cardRoundness
-                , topRight = 0
-                , bottomRight = 0
-                }
-            :: Theme.backgroundImage (Types.companionToImage name)
-            :: List.map Element.inFront inFront
+    Html.node "picture"
+        [ Html.Attributes.style "display" "flex"
+        , Html.Attributes.style "flex" "1 0 0"
+        ]
+        (List.map
+            (\f ->
+                Image.toSources img f
+                    |> Html.Source.toHtml
+            )
+            Image.standardFormats
+            ++ [ Html.img
+                    [ Html.Attributes.src ("public/" ++ img.src)
+                    , Html.Attributes.style "object-fit" "cover"
+                    , Html.Attributes.style "width" "100%"
+                    , Html.Attributes.style "flex" "1 0 0"
+                    ]
+                    []
+               ]
         )
-        Element.none
+        |> Element.html
+        |> List.singleton
+        |> column
+            (width (Element.minimum 200 fill)
+                :: height (Element.minimum 200 fill)
+                :: Border.roundEach
+                    { topLeft = Theme.cardRoundness
+                    , bottomLeft = Theme.cardRoundness
+                    , topRight = 0
+                    , bottomRight = 0
+                    }
+                :: List.map Element.inFront inFront
+            )
 
 
 content : Companion.Details -> Element msg
