@@ -11,6 +11,7 @@
         "elm-review": "^2.13.5",
         "elm-test-rs": "^3.0.2-0",
         "elm-watch": "^2.0.0-beta.12",
+        "lamdera": "0.19.1-1.3.2",
         "netlify-cli": "^25.0.1",
       },
     },
@@ -212,6 +213,16 @@
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.9", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.0.3", "@jridgewell/sourcemap-codec": "^1.4.10" } }, "sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ=="],
+
+    "@lamdera/compiler-darwin-arm64": ["@lamdera/compiler-darwin-arm64@0.19.1-1.3.2", "", { "os": "darwin", "cpu": "arm64" }, "sha512-O2AJi3RMuh7V562bSfS0A/xVify1Y26oATAPbkZZRTZ78AIUrOHWYPEpxnE3GnUODMosTDZ52Svt4uh+YaydYg=="],
+
+    "@lamdera/compiler-darwin-x64": ["@lamdera/compiler-darwin-x64@0.19.1-1.3.2", "", { "os": "darwin", "cpu": "x64" }, "sha512-/IKfkWdlp3N5tg6KgOQBeRWnfZTHTgN9PEreRI8xrq/wr7PIE7uvku4iRaoTXgiXsJAldqeWEdK8g+Pw0zbU6Q=="],
+
+    "@lamdera/compiler-linux-arm64": ["@lamdera/compiler-linux-arm64@0.19.1-1.3.2", "", { "os": "linux", "cpu": "arm64" }, "sha512-/Jxt6zTxswvG2uzVaEy+3LbuDYcvN6BtzF5GXKVKr3A/tmpUu7UsltFoaHhQppzFbhS6bvnfSiRpIz35zeupDQ=="],
+
+    "@lamdera/compiler-linux-x64": ["@lamdera/compiler-linux-x64@0.19.1-1.3.2", "", { "os": "linux", "cpu": "x64" }, "sha512-XezqJGzuu80ciTCnEasAwu+g/GJyTrk5R9NTvm456IqxpfQwxIqZUis6vAF1oMpeVvzUZ8phJZWaHoqS6hyk8A=="],
+
+    "@lamdera/compiler-win32-x64": ["@lamdera/compiler-win32-x64@0.19.1-1.3.2", "", { "os": "win32", "cpu": "x64" }, "sha512-t/J3H3U6AZxAvdfB3XiH9ABcDSaNFoHF8tx2UKlgvn0yTV6azxrZanpsrmijDvdr038ktlVw7WFkiclxSST8CQ=="],
 
     "@lukeed/ms": ["@lukeed/ms@2.0.2", "", {}, "sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA=="],
 
@@ -1158,6 +1169,8 @@
     "ky": ["ky@1.10.0", "", {}, "sha512-YRPCzHEWZffbfvmRrfwa+5nwBHwZuYiTrfDX0wuhGBPV0pA/zCqcOq93MDssON/baIkpYbvehIX5aLpMxrRhaA=="],
 
     "lambda-local": ["lambda-local@2.2.0", "", { "dependencies": { "commander": "^10.0.1", "dotenv": "^16.3.1", "winston": "^3.10.0" }, "bin": { "lambda-local": "build/cli.js" } }, "sha512-bPcgpIXbHnVGfI/omZIlgucDqlf4LrsunwoKue5JdZeGybt8L6KyJz2Zu19ffuZwIwLj2NAI2ZyaqNT6/cetcg=="],
+
+    "lamdera": ["lamdera@0.19.1-1.3.2", "", { "optionalDependencies": { "@lamdera/compiler-darwin-arm64": "0.19.1-1.3.2", "@lamdera/compiler-darwin-x64": "0.19.1-1.3.2", "@lamdera/compiler-linux-arm64": "0.19.1-1.3.2", "@lamdera/compiler-linux-x64": "0.19.1-1.3.2", "@lamdera/compiler-win32-x64": "0.19.1-1.3.2" }, "bin": { "lamdera": "bin/lamdera" } }, "sha512-0uCCfyKXNYdWcOwoztIXcPBh7mPZJWmDZ16rDCxrZbgqXdJ8AU7tg/P5W5oFgbUaTGXGfPi/GZk01tTyn/ugMg=="],
 
     "latest-version": ["latest-version@9.0.0", "", { "dependencies": { "package-json": "^10.0.0" } }, "sha512-7W0vV3rqv5tokqkBAFV1LbR7HPOWzXQDpDgEuib/aJ1jsZZx6x3c2mBI+TJhJzOhkGeaLbCKEHXEXLfirtG2JA=="],
 

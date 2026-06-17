@@ -30,4 +30,5 @@ toTask =
         , removeStale = True
         , jobs = Nothing
         , hashKind = Hash.Fast
+        , check = False
         }
