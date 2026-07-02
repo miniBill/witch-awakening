@@ -12,7 +12,7 @@
         "**/wrap-ansi": "^7.0.0"
     },
     "scripts": {
-        "start": "make run",
+        "start": "watchexec -c -w DLCs -w codegen -o signal 'make run'",
         "build": "make build",
         "test": "make test"
     },

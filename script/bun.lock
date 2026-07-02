@@ -4,8 +4,8 @@
   "workspaces": {
     "": {
       "devDependencies": {
-        "elm-codegen": "latest",
-        "elm-pages": "latest",
+        "elm-codegen": "^0.6.3",
+        "elm-pages": "^3.5.1",
       },
     },
   },
