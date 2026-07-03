@@ -12,9 +12,9 @@
         "**/wrap-ansi": "^7.0.0"
     },
     "scripts": {
-        "start": "bun --parallel watchexec-script elm-watch:hot",
+        "start": "bun --parallel build:watch elm-watch:hot",
         "elm-watch:hot": "elm-watch hot",
-        "watchexec-script": "watchexec -c --ignore-nothing -o signal -w media -w DLCs -w script/src 'cd script; bun start; touch ../src/Main.elm'",
+        "build:watch": "watchexec -c --ignore-nothing -o signal -w media -w DLCs -w script/src 'cd script; bun start; touch ../src/Main.elm'",
         "build": "make build",
         "test": "make test"
     },
