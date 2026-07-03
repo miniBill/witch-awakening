@@ -416,7 +416,7 @@ content ({ name, quote, class, description, positives, mixed, negatives, has, dl
         , width <| Element.minimum 200 <| fillPortion 2
         ]
         [ Theme.wrappedRow
-            [ width fill, Theme.centerWrap ]
+            [ width fill, Theme.centerWrap, Border.widthEach { left = 0, right = 0, top = 0, bottom = 1 } ]
             [ classBadge
                 |> el
                     [ paddingEach { left = 24, top = 0, right = 0, bottom = 0 }
