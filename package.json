@@ -14,7 +14,7 @@
     "scripts": {
         "start": "bun --parallel watchexec-script elm-watch:hot",
         "elm-watch:hot": "elm-watch hot",
-        "watchexec-script": "watchexec -c -w DLCs -w script/src 'cd script; bun start'",
+        "watchexec-script": "watchexec -c -w media -w DLCs -w script/src 'cd script; bun start'",
         "build": "make build",
         "test": "make test"
     },
