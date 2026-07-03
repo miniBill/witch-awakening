@@ -1597,3 +1597,84 @@ As a child, little elven girl was offered to appease the terms of a covenant mad
 - Quote: _*“Sael’astra must be having a bad week, it’s been constant overcast” - new guy “I wouldn’t worry about it, happens every month.” - a local*_
 
 A well liked public figure of the Winter Court. She isn’t high in the ranks, but she’s a minor duchess of a city-state in the far north of the Albion region, but she isn’t around a lot, regulating a lot of the politics and management to her sister, who lacks political weight but is good at logistics and keeping people happy, while Sael’astra can deal with the Courts, and protect the city with her magical talent.
+
+
+## Companion: M8tr1x
+- Cost: 12
+- Class: Warlock
+- Race: Mechanoid
+- Power: 6
+- Teamwork: 10
+- Sociability: 10
+- Morality: 6
+- Positive: + “Knows a guy”.
+- Positive: + Can help you “get in”.
+- Negative: - Almost always occupied.
+- Negative: - Exhausting to be around.
+- Mixed: +/- To walk with her is to walk in a world full of social etiquettes and expectations, and it’s easy to get burned.
+- Quote: _*“The candle that burns the brightest, dies the fastest...” - ominous scrawl in Matrix’s penthouse apartment.*_
+
+M8tr1x is a high class socialite that runs through various upper class hollywood and financial circles. You might think a chrome lady would stand out until you remember the masquerade exists, where in practice only those who know of the supernatural notice anything different about her so it becomes more like a calling card. She has an incredible way with words and insight into character and conversation.
+
+M8 has Digi 3, Metal 4, Familiar 4, Covenant 4, Portal 5, Suggestion, Fascinate, Prestidigitation, Windsong.
+
+
+## Companion: Françoise Hopps
+- Cost: 12
+- Class: Magician
+- Races: Oread, Mimi
+- Has Perk: True
+- Power: 8
+- Teamwork: 7
+- Sociability: 8
+- Morality: 6
+- Positive: + VERY well traveled.
+- Positive: + French accent.
+- Negative: - Hyperfixates.
+- Negative: - Talks too fast for many.
+- Mixed: +/- Her fixations tend to mean that once she decides to do something she’ll do it or spin out for days trying.
+- Quote: _*“A red rabbit girl? YEAH I saw her! She was here for 3 days bouncing around like she was late for something.” - Deco Resident*_
+
+A Hawthorne dropout who learned enough to get started then went off on her own, never sticking around in one spot for more than a few weeks. Her wanderlust is almost a mania, like something is calling out to her but with no direction. Just the drive to move. She has been to every non-criminal faction hub and dozens of realms. Tends to go back and forth between Alfheimr and Stackhold a lot.
+
+Hop has Aether 4, Divine 4, Portal 4, Witch 5, Wand 5, Witch...Hut?, Broom Beast, HexVPN, Improved Rod.
+
+
+## Companion: D4n93r54URU2
+- Cost: 8
+- Class: Magician
+- Races: Wunimal, Mechanoid
+- Has Perk: True
+- Power: 8
+- Teamwork: 4
+- Sociability: 1
+- Morality: 5
+- Positive: + Very sincere and honest.
+- Positive: + A good and giving friend.
+- Negative: - Ever see a robot dinosaur sweat?
+- Negative: - Well, at least on the internet.
+- Mixed: +/- He’s not actually opposed to the world and stuff, he’s just shy and followed the path of least resistance.
+- Quote: _*“D..4..n9... Dan... Danger... five...four... SAUR! Dangersaurus!?”* \*Nervous sweat\* *- D4n trying to get a date with a business card.*_
+
+Dangersaurus’s origins is an enigma, nobody knows where he came from and it’s not clear if he likes it that way or doesn’t know himself. He’s a Hikikomori, a shut-in, hardcore full time internet denizen living under layers of isolation, except for his one weakness: He ventures out once a year to purchase a large supply of Pumpkin Spice snacks every November, & make his 1 attempt at being social for the year.
+
+D4n has Digi 3, Divine 4, Witch 5, Comfy Pocket, Witch...Hut?, Miniaturization, HexVPN.
+
+
+## Companion: Cherry Bombadbomb
+- Cost: 8
+- Class: Magician
+- Power: 7
+- Teamwork: 4
+- Sociability: 6
+- Morality: 5
+- Positive: + Highly skilled alchemist.
+- Positive: + Charitable and giving.
+- Negative: - Haughty.
+- Negative: - but will taunt & tease about it.
+- Mixed: +/- With her specializing in making potions that go boom, she’ll frequently make reasons and excuses to test them.
+- Quote: _*“You raided WHERE!? That bombmaker alchemist has a shop there! We need to go-”* \*Many explosions\* *- A bandit camp... crater.*_
+
+An alchemist pyromaniac, goes by bomb-bad-bomb, only friends can call her Cherry. She’s got a bit of “8th-grade syndrome”, a chuunibyou, despite being well regarded as the best alchemist among many. She fixates on grenade and splash potions, but has a perfect memory of every formula she’s come across and fine skills to brew the most delicate of elixirs. Her laboratory only sometimes explodes.
+
+BBB has Witch 4, Alchemy 5, Cosmic Pearl, Alchemist Stash, Alchemist Stone, Nightlight, Magic Shop\\*2.
