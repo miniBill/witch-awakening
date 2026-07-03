@@ -6,13 +6,14 @@ import Gen.Color
 import String.Extra
 
 
-{-| Call `String.Extra.classify`, after replacing æ => ae, Æ => AE and stripping `"`.
+{-| Call `String.Extra.classify`, after replacing æ => ae, Æ => AE, ç => c and stripping `"`.
 -}
 yassify : String -> String
 yassify str =
     str
         |> String.replace "Æ" "Ae"
         |> String.replace "æ" "ae"
+        |> String.replace "ç" "c"
         |> String.replace "\"" ""
         |> String.Extra.classify
 
