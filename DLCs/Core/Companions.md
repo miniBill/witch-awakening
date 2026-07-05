@@ -1612,11 +1612,10 @@ A well liked public figure of the Winter Court. She isn’t high in the ranks, b
 - Negative: - Almost always occupied.
 - Negative: - Exhausting to be around.
 - Mixed: +/- To walk with her is to walk in a world full of social etiquettes and expectations, and it’s easy to get burned.
+- Has: M8 has Digi 3, Metal 4, Familiar 4, Covenant 4, Portal 5, Suggestion, Fascinate, Prestidigitation, Windsong
 - Quote: _*“The candle that burns the brightest, dies the fastest...” - ominous scrawl in Matrix’s penthouse apartment.*_
 
 M8tr1x is a high class socialite that runs through various upper class hollywood and financial circles. You might think a chrome lady would stand out until you remember the masquerade exists, where in practice only those who know of the supernatural notice anything different about her so it becomes more like a calling card. She has an incredible way with words and insight into character and conversation.
-
-M8 has Digi 3, Metal 4, Familiar 4, Covenant 4, Portal 5, Suggestion, Fascinate, Prestidigitation, Windsong.
 
 
 ## Companion: Françoise Hopps
@@ -1633,11 +1632,10 @@ M8 has Digi 3, Metal 4, Familiar 4, Covenant 4, Portal 5, Suggestion, Fascinate,
 - Negative: - Hyperfixates.
 - Negative: - Talks too fast for many.
 - Mixed: +/- Her fixations tend to mean that once she decides to do something she’ll do it or spin out for days trying.
+- Has: Hop has Aether 4, Divine 4, Portal 4, Witch 5, Wand 5, Witch...Hut?, Broom Beast, HexVPN, Improved Rod
 - Quote: _*“A red rabbit girl? YEAH I saw her! She was here for 3 days bouncing around like she was late for something.” - Deco Resident*_
 
 A Hawthorne dropout who learned enough to get started then went off on her own, never sticking around in one spot for more than a few weeks. Her wanderlust is almost a mania, like something is calling out to her but with no direction. Just the drive to move. She has been to every non-criminal faction hub and dozens of realms. Tends to go back and forth between Alfheimr and Stackhold a lot.
-
-Hop has Aether 4, Divine 4, Portal 4, Witch 5, Wand 5, Witch...Hut?, Broom Beast, HexVPN, Improved Rod.
 
 
 ## Companion: D4n93r54URU2
@@ -1654,11 +1652,10 @@ Hop has Aether 4, Divine 4, Portal 4, Witch 5, Wand 5, Witch...Hut?, Broom Beast
 - Negative: - Ever see a robot dinosaur sweat?
 - Negative: - Well, at least on the internet.
 - Mixed: +/- He’s not actually opposed to the world and stuff, he’s just shy and followed the path of least resistance.
+- Has: D4n has Digi 3, Divine 4, Witch 5, Comfy Pocket, Witch...Hut?, Miniaturization, HexVPN
 - Quote: _*“D..4..n9... Dan... Danger... five...four... SAUR! Dangersaurus!?”* \*Nervous sweat\* *- D4n trying to get a date with a business card.*_
 
 Dangersaurus’s origins is an enigma, nobody knows where he came from and it’s not clear if he likes it that way or doesn’t know himself. He’s a Hikikomori, a shut-in, hardcore full time internet denizen living under layers of isolation, except for his one weakness: He ventures out once a year to purchase a large supply of Pumpkin Spice snacks every November, & make his 1 attempt at being social for the year.
-
-D4n has Digi 3, Divine 4, Witch 5, Comfy Pocket, Witch...Hut?, Miniaturization, HexVPN.
 
 
 ## Companion: Cherry Bombadbomb
@@ -1673,8 +1670,86 @@ D4n has Digi 3, Divine 4, Witch 5, Comfy Pocket, Witch...Hut?, Miniaturization, 
 - Negative: - Haughty.
 - Negative: - but will taunt & tease about it.
 - Mixed: +/- With her specializing in making potions that go boom, she’ll frequently make reasons and excuses to test them.
+- Has: BBB has Witch 4, Alchemy 5, Cosmic Pearl, Alchemist Stash, Alchemist Stone, Nightlight, Magic Shop
 - Quote: _*“You raided WHERE!? That bombmaker alchemist has a shop there! We need to go-”* \*Many explosions\* *- A bandit camp... crater.*_
 
 An alchemist pyromaniac, goes by bomb-bad-bomb, only friends can call her Cherry. She’s got a bit of “8th-grade syndrome”, a chuunibyou, despite being well regarded as the best alchemist among many. She fixates on grenade and splash potions, but has a perfect memory of every formula she’s come across and fine skills to brew the most delicate of elixirs. Her laboratory only sometimes explodes.
 
-BBB has Witch 4, Alchemy 5, Cosmic Pearl, Alchemist Stash, Alchemist Stone, Nightlight, Magic Shop\\*2.
+
+## Companion: Batki al-Azif
+- Faction: The Outsiders
+- Cost: 15
+- Race: Sword
+- Power: 10
+- Teamwork: 6
+- Sociability: 8
+- Morality: 5
+- Quote: “𝕀 𝕔𝕒𝕟 𝕣𝕖𝕒𝕕 𝕪𝕠𝕦 𝕝𝕚𝕜𝕖 𝕒𝕟 𝕠𝕡𝕖𝕟 𝕓𝕠𝕠𝕜.” _*- al-Azif*_
+- Has: Az has Psycho 4, Consort 4, Monster 4, +Blood Witch, Levitation “built-in” Far Talisman & Witch-Deck.
+- Positive: + Likes to play support.
+- Positive: + Basically multiple relics in one.
+- Negative: - Kill steals.
+- Negative: - But with personality.
+- Mixed: +/- Can “Leak” monsters and illusions from its pages, which might not always be under control.
+
+al-Azif is a twisted variant of the Sword race, having the form of a tome of forbidden knowledge. Its pages can't be read, appearing as shifting glyphs that rapidly drain mana and cause psychic pain. It can behave like the _Far Talisman_ while held or worn, and can mimic the effects of the _Witch Deck_. It wants to serve a master it can dramatically refer to as “Dark Lord”. Was once human and “isekai'd” here, it wants to live an “easy life” of a pervert exploiting its power.
+
+
+## Companion: MURD3RB0T
+- Full name: M[_]RD3RB0T
+- Faction: The Outsiders
+- Cost: 4
+- Race: Mechanoid
+- Power: 7
+- Teamwork: 5
+- Sociability: 3
+- Morality: 1
+- Quote: _*“Die die die die die die die die die die die” - heard at the crime scene*_
+- Positive: + Wears skins as disguises.
+- Positive: + Will do whatever you want
+- Negative: - Neglects to... maintain...
+- Negative: - If kept murderhappy.
+- Mixed: +/- 0 aggression against non-living and outsiders.
+- Has: Murderbot has Viscera 3, Monster 3, Metal 4, +Beauty Sleep, Energized, Aberration.
+
+Murderbot began as a Hespatian assassin until she ran into the den of an Outsider incursion where she was corrupted beyond repair, where once there was calculating precision, is now simply murder. Her sole driving force is to take life, acting as a predator that only mimics human characteristics to better pursue her craft. Other outsiders or non-living beings don't trigger her murder impulse, and can have simple conversations with her like talking to a child, but mostly about when and how to kill next.
+
+
+## Companion: Macy Daisies
+- Faction: The Outsiders
+- Cost: 8
+- Race: Neutral
+- Has Perk: True
+- Power: 9
+- Teamwork: 6
+- Sociability: 7
+- Morality: 4
+- Quote: _\*gasping\* *“Do you”* ... \*shifty glances, ans whispers\* *“want to play a gaaaame...?” - An ORC Records analyst.*_
+- Positive: + Relatively normal
+- Positive: + “But hear me out...”
+- Negative: - For an Outsider. Once made...
+- Negative: - ...baloon animals out of scrotum.
+- Mixed: +/- Can be bribed to do anything for magic grimoires.
+- Has: Macy has Curses 3, Necro 3, Occult 3, Monster 3, +Aberration, Far Talisman, HexVPN
+
+Macy was the archetypical genki girl who got caught up in a paranormal research school club that somehow got too close to home due to some clubmember's familial connections to actual magic, getting caught up with a low grade secret society that got its hands on Occultism texts... and a little *extra*. The strange talisman seemed to “choose her”, not knowing she was a latent witch, and start a rabbit hole that lead to reaching for futher and further extremes.
+
+
+## Companion: Eos Lampetie
+- Faction: The Outsiders
+- Cost: 12
+- Race: Elf
+- Has Perk: True
+- Power: 1
+- Teamwork: 8
+- Sociability: 8
+- Morality: 10
+- Quote: _*“Thou shalt never again profane these halls” - Eos of the Dawn*_
+- Positive: + Eos is kind and insightful.
+- Positive: + Motivated & Selfless.
+- Negative: - But her mindset is ancient.
+- Negative: - Untrusting & feels homeless.
+- Mixed: +/- She is weirded out by the current human dominated reality and- compared to her time- near extinction of her people who were in her time as humans are now on Earth.
+- Has: Eos has Runes 4, Witch 4, Monster 4, Life 5, Fire 5 +Aberration, Sun Adapt., Beauty Sleep, Sun Shard
+
+Eos is a long lost witch once regarded as a light goddess in times past. She expertly wields fire and light separately and in fusion as “Sunfire”. She was lost to the Outsiders long ago, but has reappeared more radiant than before now as one of the Sanctified. She lived in the time of the elves at the height of their civilization, which for her feels like it was just a few weeks ago discounting the corrupted hazy memories.
