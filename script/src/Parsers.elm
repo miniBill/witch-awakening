@@ -211,7 +211,7 @@ race =
 type alias Perk =
     { name : String
     , elements : List String
-    , synonym : Maybe String 
+    , synonym : Maybe String
     , class : String
     , requires : Maybe String
     , isMeta : Bool
@@ -230,7 +230,7 @@ perk : Parser Perk
 perk =
     (section "##"
         "Perk"
-        (\name   element elements -> Perk name   (elements |> Maybe.withDefault element))
+        (\name element elements -> Perk name (elements |> Maybe.withDefault element))
         |> manyItems "Element" Ok
         |> maybeItem "Elements" stringListParser
         |> maybeItem "Synonym" Ok
@@ -683,6 +683,7 @@ companion =
 
 type alias Quest =
     { name : String
+    , disabled : Bool
     , slot : String
     , evil : Evil
     , repeatable : Bool
@@ -749,6 +750,7 @@ quest =
                     ctor description [] sidebars
         )
         |= (section "##" "Quest" Quest
+                |> optionalItem "Disabled" False boolParser
                 |> requiredItem "Slot" Ok
                 |> oneOfItems
                     [ requiredItem "Evil Route" (evilFlagParser EvilMaybe)

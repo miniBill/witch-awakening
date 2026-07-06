@@ -129,7 +129,11 @@ fromParsed { name, items } =
                     { dlc | companions = companion :: dlc.companions }
 
                 Parsers.DLCQuest v ->
-                    { dlc | quests = variant v.name Nothing :: dlc.quests }
+                    if not v.disabled then
+                        { dlc | quests = variant v.name Nothing :: dlc.quests }
+
+                    else
+                        dlc
 
                 Parsers.DLCComplication v ->
                     { dlc

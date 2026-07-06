@@ -47,7 +47,11 @@ dlcToFiles image dlcList =
                             { acc | dlcCompanions = ( dlcName, companion ) :: acc.dlcCompanions }
 
                         Parsers.DLCQuest quest ->
-                            { acc | dlcQuests = ( dlcName, quest ) :: acc.dlcQuests }
+                            if not quest.disabled then
+                                { acc | dlcQuests = ( dlcName, quest ) :: acc.dlcQuests }
+
+                            else
+                                acc
 
                         Parsers.DLCComplication complication ->
                             { acc | dlcComplications = ( dlcName, complication ) :: acc.dlcComplications }
