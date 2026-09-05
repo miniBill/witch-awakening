@@ -3,6 +3,7 @@ module Generate.Utils exposing (Color(..), color, yassify)
 import Bitwise
 import Elm exposing (Expression)
 import Gen.Color
+import Json.Encode
 import String.Extra
 
 
@@ -28,3 +29,8 @@ color (Color c) =
         (c |> Bitwise.shiftRightBy 16)
         (c |> Bitwise.shiftRightBy 8 |> modBy 256)
         (c |> modBy 256)
+
+
+escape : String -> String
+escape s =
+    Json.Encode.encode 0 (Json.Encode.string s)

@@ -2,11 +2,11 @@ module Generate.Gradient exposing (gradient, suffix)
 
 import Elm
 import List.Extra
-import Path exposing (Path)
+import Path.Posix as Path exposing (Path)
 import ResultME exposing (ResultME)
 
 
-gradient : { path : Path, content : String } -> ResultME String Elm.Declaration
+gradient : { path : Path base Path.File, content : String } -> ResultME String Elm.Declaration
 gradient { path, content } =
     case
         content
@@ -28,7 +28,9 @@ gradient { path, content } =
                         let
                             name : String
                             name =
-                                String.dropRight (String.length suffix) (Path.filename path)
+                                Path.filename path
+                                    |> Path.toString
+                                    |> String.dropRight (String.length suffix)
                         in
                         expr
                             |> Elm.declaration (name ++ "Gradient")

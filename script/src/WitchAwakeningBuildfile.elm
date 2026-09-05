@@ -1,16 +1,19 @@
-module WitchAwakeningBuildfile exposing (buildAction, getInputs)
+module WitchAwakeningBuildfile exposing (buildAction, buildFile, getInputs)
 
 import BackendTask exposing (BackendTask)
+import BackendTask.File.Extra
 import BackendTask.Glob as Glob
+import Build exposing (BuildFile)
 import BuildTask exposing (BuildTask, FileOrDirectory)
 import BuildTask.Do as Do
 import BuildTask.Elm as Elm
 import BuildTask.Font as Font
 import BuildTask.Image as Image
+import BuildTask.Unsafe
 import BuildTask.Unsafe.Do
-import Buildfile
 import Elm
 import Elm.Declare
+import Example
 import FatalError exposing (FatalError)
 import Gen.CodeGen.Generate
 import Gen.Html.Attributes
@@ -22,7 +25,15 @@ import List.Extra
 import List.Nonempty
 import Maybe.Extra
 import Parsers exposing (DLC)
-import Path exposing (Path)
+import Path.Posix as Path exposing (Path)
+import Utils
+
+
+buildFile : BuildFile { inputPath : String } Inputs
+buildFile =
+    { getInputs = getInputs
+    , buildAction = buildAction
+    }
 
 
 type ProcessedFile
@@ -30,70 +41,106 @@ type ProcessedFile
         { original : HashedFileWith { width : Int, height : Int }
         , converted : List (HashedFileWith { width : Int })
         }
-    | ProcessedCss (HashedFileWith {})
+    | ProcessedCss HashedFile
     | ProcessedSvg (HashedFileWith { width : Int, height : Int })
     | ProcessedFont (HashedFileWith Font.Data)
     | ProcessedDLC (HashedFileWith { data : DLC })
 
 
+type alias HashedFile =
+    { filename : Path Path.Relative Path.File
+    , hash : FileOrDirectory
+    }
+
+
 type alias HashedFileWith a =
     { a
-        | filename : Path
+        | filename : Path Path.Relative Path.File
         , hash : FileOrDirectory
     }
 
 
 type alias Inputs =
-    { images : List ( Path, BuildTask FileOrDirectory )
-    , gradients : List ( Path, BuildTask FileOrDirectory )
+    { inputPath : Path Path.Absolute Path.Directory
+    , images : List ( Path Path.Absolute Path.File, BuildTask FatalError FileOrDirectory )
+    , gradients : List ( Path Path.Absolute Path.File, BuildTask FatalError FileOrDirectory )
     }
 
 
-getInputs : { a | inputDirectory : Path } -> BackendTask FatalError Inputs
+getInputs :
+    { config
+        | inputPath : String
+        , buildPath : String
+        , debug : Bool
+    }
+    -> BackendTask FatalError Inputs
 getInputs config =
-    let
-        glob : String -> BackendTask error (List String)
-        glob path =
-            Glob.fromStringWithOptions
-                (let
-                    defaultOptions : Glob.Options
-                    defaultOptions =
-                        Glob.defaultOptions
-                 in
-                 { defaultOptions | include = Glob.OnlyFiles }
-                )
-                path
-    in
-    BackendTask.map2 Tuple.pair
-        (glob (Path.toString config.inputDirectory ++ "/**"))
-        (glob "../DLCs/**")
+    BackendTask.File.Extra.resolveDirectory config.inputPath
         |> BackendTask.andThen
-            (\( found1, found2 ) ->
+            (\inputPath ->
                 let
-                    ( gradients, notGradients ) =
-                        (found1 ++ found2)
-                            |> List.sort
-                            |> List.partition (String.endsWith Generate.Gradient.suffix)
-                in
-                BackendTask.map2 Inputs
-                    (notGradients
-                        |> List.Extra.removeWhen
-                            (\p ->
-                                String.contains "/raw/" p
-                                    || String.contains "/originals/" p
+                    glob : String -> BackendTask FatalError (List (Path Path.Absolute Path.File))
+                    glob path =
+                        Glob.fromStringWithOptions
+                            (let
+                                defaultOptions : Glob.Options
+                                defaultOptions =
+                                    Glob.defaultOptions
+                             in
+                             { defaultOptions | include = Glob.OnlyFiles }
                             )
-                        |> List.map Path.path
-                        |> BuildTask.inputs
-                    )
-                    (gradients
-                        |> List.map Path.path
-                        |> BuildTask.inputs
-                    )
+                            path
+                            |> BackendTask.andThen
+                                (\paths ->
+                                    paths
+                                        |> List.map
+                                            (\pathString ->
+                                                case Path.parseAbsoluteFile pathString of
+                                                    Nothing ->
+                                                        BackendTask.fail (FatalError.fromString ("Invalid path: " ++ path))
+
+                                                    Just parsed ->
+                                                        BackendTask.succeed parsed
+                                            )
+                                        |> BackendTask.combine
+                                )
+                in
+                BackendTask.map2 Tuple.pair
+                    (glob (Path.toString inputPath ++ "/**"))
+                    (glob (Path.toString inputPath ++ "../DLCs/**"))
+                    |> BackendTask.andThen
+                        (\( found1, found2 ) ->
+                            let
+                                ( gradients, notGradients ) =
+                                    (found1 ++ found2)
+                                        |> List.sortBy Path.toString
+                                        |> List.partition isGradient
+                            in
+                            BackendTask.map2 (Inputs inputPath)
+                                (notGradients
+                                    |> List.Extra.removeWhen
+                                        (\p ->
+                                            String.contains "/raw/" (Path.toString p)
+                                                || String.contains "/originals/" (Path.toString p)
+                                        )
+                                    |> BuildTask.inputs config
+                                )
+                                (gradients
+                                    |> BuildTask.inputs config
+                                )
+                        )
             )
 
 
-buildAction : { config | inputDirectory : Path } -> Inputs -> BuildTask FileOrDirectory
-buildAction config inputs =
+isGradient : Path Path.Absolute Path.File -> Bool
+isGradient path =
+    Path.toString path
+        |> String.endsWith Generate.Gradient.suffix
+
+
+buildAction : Inputs -> BuildTask FatalError FileOrDirectory
+buildAction inputs =
+    BuildTask.do Example.getTools <| \tools ->
     BuildTask.andThen2
         (\gradients i ->
             BuildTask.combineInto
@@ -101,17 +148,18 @@ buildAction config inputs =
                     ++ i.other
                 )
         )
-        (buildGradients inputs.gradients)
-        (buildImages config inputs.images)
+        (buildGradients tools inputs)
+        (buildImages tools inputs)
 
 
-buildGradients : List ( Path, BuildTask FileOrDirectory ) -> BuildTask { filename : Path, hash : FileOrDirectory }
-buildGradients inputs =
+buildGradients : Example.Tools -> Inputs -> BuildTask FatalError HashedFile
+buildGradients tools inputs =
     Do.all
         (\( path, file ) ->
             BuildTask.do file <| \gradientPng ->
-            BuildTask.Unsafe.Do.pipeThrough "magick" [ "-", "-compress", "none", "ppm:-" ] gradientPng <| \gradientPpm ->
-            BuildTask.withFile gradientPpm <| \content ->
+            BuildTask.do (BuildTask.which "magick") <| \magick ->
+            Do.allowFatal (BuildTask.Unsafe.pipeThrough magick [ "-", "-compress", "none", "ppm:-" ] gradientPng) <| \gradientPpm ->
+            BuildTask.withFileFatal gradientPpm <| \content ->
             case
                 Generate.Gradient.gradient
                     { path = path
@@ -125,31 +173,33 @@ buildGradients inputs =
                     errs
                         |> List.Nonempty.toList
                         |> String.join ", "
+                        |> FatalError.fromString
                         |> BuildTask.fail
         )
-        inputs
+        inputs.gradients
     <| \declarations ->
-    Elm.codegen (Elm.file [ "Generated", "Gradient" ] declarations)
+    elmCodegen tools (Elm.file [ "Generated", "Gradient" ] declarations)
 
 
 buildImages :
-    { config | inputDirectory : Path }
-    -> List ( Path, BuildTask FileOrDirectory )
+    Example.Tools
+    -> Inputs
     ->
         BuildTask
-            { generated : List { filename : Path, hash : FileOrDirectory }
-            , other : List { filename : Path, hash : FileOrDirectory }
+            FatalError
+            { generated : List HashedFile
+            , other : List HashedFile
             }
-buildImages config inputs =
+buildImages tools inputs =
     let
         inputSize : Int
         inputSize =
-            List.length inputs
+            List.length inputs.images
     in
     BuildTask.do
         (Do.jobs <| \parallelism ->
-        inputs
-            |> List.indexedMap (processFile config inputSize)
+        inputs.images
+            |> List.indexedMap (processFile inputs tools inputSize)
             |> BuildTask.combineBy parallelism
             |> BuildTask.map Maybe.Extra.values
         )
@@ -171,10 +221,10 @@ buildImages config inputs =
         dlcFiles =
             List.filterMap asDLC processedFiles
 
-        publicFolder : BuildTask FileOrDirectory
+        publicFolder : BuildTask FatalError FileOrDirectory
         publicFolder =
-            Do.writeFile (Font.toCssFile fontFiles) <| \fontsCssHash ->
-            ({ filename = Path.path "fonts.css"
+            Do.allowFatal (BuildTask.writeFile (Font.toCssFile fontFiles)) <| \fontsCssHash ->
+            ({ filename = Path.parseRelativeFile "fonts.css" |> orDie
              , hash = fontsCssHash
              }
                 :: List.concatMap processedFileToFileList processedFiles
@@ -182,11 +232,11 @@ buildImages config inputs =
                 |> BuildTask.combineInto
                 |> BuildTask.withPrefix ("[" ++ String.fromInt inputSize ++ "/" ++ String.fromInt inputSize ++ "]")
     in
-    imagesElmFile processedFiles
+    imagesElmFile tools processedFiles
         |> BuildTask.andThen
             (\imagesElm ->
                 let
-                    generateTask : BuildTask (List Elm.File)
+                    generateTask : BuildTask FatalError (List Elm.File)
                     generateTask =
                         dlcFiles
                             |> Parsers.combineDLCs
@@ -197,26 +247,45 @@ buildImages config inputs =
                                         |> List.Nonempty.toList
                                         |> List.map .description
                                         |> String.join ", "
+                                        |> FatalError.fromString
                                 )
                             |> BuildTask.fromResult
                 in
                 BuildTask.do generateTask <| \generated ->
-                Do.all Elm.codegen generated <| \dlcs ->
+                Do.all (elmCodegen tools) generated <| \dlcs ->
                 BuildTask.succeed ( imagesElm, dlcs )
             )
         |> BuildTask.map4
             (\fontsElm imageSizes public ( imagesElm, dlcs ) ->
                 { generated = [ imagesElm.file, fontsElm ]
                 , other =
-                    [ { filename = Path.path "image-sizes", hash = imageSizes }
-                    , { filename = Path.path "public", hash = public }
-                    ]
-                        ++ dlcs
+                    let
+                        common : List HashedFile
+                        common =
+                            [ { filename = Path.parseRelativeFile "image-sizes" |> orDie, hash = imageSizes }
+                            , { filename = Path.parseRelativeFile "public" |> orDie, hash = public }
+                            ]
+                    in
+                    common ++ dlcs
                 }
             )
-            (Elm.codegen (fontsElmFile fontFiles))
+            (elmCodegen tools (fontsElmFile fontFiles))
             (imagesSizesFile imageFiles)
             publicFolder
+
+
+orDie : Maybe (Path base kind) -> Path base kind
+orDie path =
+    case path of
+        Just p ->
+            p
+
+        Nothing ->
+            let
+                _ =
+                    modBy 0 0
+            in
+            orDie path
 
 
 asImage :
@@ -287,7 +356,7 @@ imagesSizesFile :
         { a
             | original : HashedFileWith { width : Int, height : Int }
         }
-    -> BuildTask FileOrDirectory
+    -> BuildTask FatalError FileOrDirectory
 imagesSizesFile processedFiles =
     let
         content : String
@@ -310,6 +379,7 @@ imagesSizesFile processedFiles =
                 |> String.join "\n"
     in
     BuildTask.writeFile content
+        |> BuildTask.allowFatal
 
 
 fontsElmFile : List (HashedFileWith Font.Data) -> Elm.File
@@ -326,20 +396,22 @@ fontsElmFile files =
 
 
 imagesElmFile :
-    List ProcessedFile
+    Example.Tools
+    -> List ProcessedFile
     ->
         BuildTask
+            FatalError
             { module_ : Generate.Image.ImageModule
-            , file : { filename : Path, hash : FileOrDirectory }
+            , file : HashedFile
             }
-imagesElmFile list =
+imagesElmFile tools list =
     let
         asImage_ :
             ProcessedFile
             ->
                 Maybe
                     { svg : Bool
-                    , filename : Path
+                    , filename : Path Path.Relative Path.File
                     , hash : FileOrDirectory
                     , width : Int
                     , height : Int
@@ -373,7 +445,7 @@ imagesElmFile list =
                 ProcessedDLC _ ->
                     Nothing
 
-        imagesList : List { svg : Bool, filename : Path, hash : FileOrDirectory, width : Int, height : Int }
+        imagesList : List { svg : Bool, filename : Path Path.Relative Path.File, hash : FileOrDirectory, width : Int, height : Int }
         imagesList =
             List.filterMap asImage_ list
 
@@ -386,21 +458,50 @@ imagesElmFile list =
     in
     BuildTask.do
         (Generate.Image.file imagesList
-            |> Result.mapError errorsToString
+            |> Result.mapError (\e -> e |> errorsToString |> FatalError.fromString)
             |> BuildTask.fromResult
         )
     <| \module_ ->
-    BuildTask.do (Elm.codegen (Elm.Declare.toFile module_)) <| \file ->
+    let
+        elmFile : Elm.File
+        elmFile =
+            Elm.Declare.toFile module_
+    in
+    BuildTask.do (elmCodegen tools elmFile) <| \file ->
     { module_ = module_.call
     , file = file
     }
         |> BuildTask.succeed
 
 
-processedFileToFileList : ProcessedFile -> List { filename : Path, hash : FileOrDirectory }
+elmCodegen :
+    { tools | elm_format : BuildTask.Command }
+    -> Elm.File
+    -> BuildTask FatalError HashedFile
+elmCodegen tools elmFile =
+    case Path.parseRelativeFile elmFile.path of
+        Just path ->
+            { warnings = elmFile.warnings
+            , contents = elmFile.contents
+            , path = path
+            }
+                |> Elm.codegen tools
+                |> BuildTask.allowFatal
+
+        Nothing ->
+            BuildTask.fail (FatalError.fromString ("Invalid path: " ++ Utils.escape elmFile.path))
+
+
+processedFileToFileList :
+    ProcessedFile
+    ->
+        List
+            { filename : Path Path.Relative Path.File
+            , hash : FileOrDirectory
+            }
 processedFileToFileList file =
     let
-        extract : HashedFileWith a -> HashedFileWith {}
+        extract : HashedFileWith a -> HashedFile
         extract original =
             { filename = original.filename
             , hash = original.hash
@@ -424,13 +525,19 @@ processedFileToFileList file =
             []
 
 
-processFile : { config | inputDirectory : Path } -> Int -> Int -> ( Path, BuildTask FileOrDirectory ) -> BuildTask (Maybe ProcessedFile)
-processFile config total index ( path, copyFile ) =
+processFile :
+    { config | inputPath : Path Path.Absolute Path.Directory }
+    -> Example.Tools
+    -> Int
+    -> Int
+    -> ( Path Path.Absolute Path.File, BuildTask FatalError FileOrDirectory )
+    -> BuildTask FatalError (Maybe ProcessedFile)
+processFile config tools total index ( path, copyFile ) =
     let
-        relative : Path
+        relative : Path Path.Relative Path.File
         relative =
-            Path.relativeTo config.inputDirectory path
-                |> Path.replaceAll " " "_"
+            Path.relativeTo config.inputPath path
+                |> Path.replace " " "_"
 
         prefix : String
         prefix =
@@ -440,19 +547,19 @@ processFile config total index ( path, copyFile ) =
                 ++ String.fromInt total
                 ++ "]"
 
-        doImage : () -> BuildTask (Maybe ProcessedFile)
+        doImage : () -> BuildTask FatalError (Maybe ProcessedFile)
         doImage () =
             BuildTask.do copyFile <| \hash ->
-            BuildTask.do (Buildfile.image relative hash) <| \data ->
+            BuildTask.do (Example.image tools relative hash) <| \data ->
             data
                 |> ProcessedImage
                 |> Just
                 |> BuildTask.succeed
 
-        doSvg : () -> BuildTask (Maybe ProcessedFile)
+        doSvg : () -> BuildTask FatalError (Maybe ProcessedFile)
         doSvg () =
             BuildTask.do copyFile <| \hash ->
-            BuildTask.do (Image.getSvgSize hash) <| \size ->
+            Do.allowFatal (Image.getSvgSize hash) <| \size ->
             { filename = relative
             , hash = hash
             , width = size.width
@@ -462,10 +569,10 @@ processFile config total index ( path, copyFile ) =
                 |> Just
                 |> BuildTask.succeed
 
-        doFont : () -> BuildTask (Maybe ProcessedFile)
+        doFont : () -> BuildTask FatalError (Maybe ProcessedFile)
         doFont () =
             BuildTask.do copyFile <| \hash ->
-            BuildTask.do (Font.parse hash) <| \fontData ->
+            Do.allowFatal (Font.parse tools hash) <| \fontData ->
             { style = fontData.style
             , weight = fontData.weight
             , family = fontData.family
@@ -476,20 +583,24 @@ processFile config total index ( path, copyFile ) =
                 |> Just
                 |> BuildTask.succeed
 
-        doDlc : () -> BuildTask (Maybe ProcessedFile)
+        doDlc : () -> BuildTask FatalError (Maybe ProcessedFile)
         doDlc () =
             BuildTask.do copyFile <| \hash ->
-            BuildTask.withFile hash <| \content ->
-            BuildTask.do (BuildTask.fromResult (Parsers.parseDLC { path = path, content = content })) <| \parsed ->
-            { data = parsed
-            , filename = relative
-            , hash = hash
-            }
-                |> ProcessedDLC
-                |> Just
-                |> BuildTask.succeed
+            BuildTask.withFileFatal hash <| \content ->
+            case Parsers.parseDLC { path = path, content = content } of
+                Ok parsed ->
+                    { data = parsed
+                    , filename = relative
+                    , hash = hash
+                    }
+                        |> ProcessedDLC
+                        |> Just
+                        |> BuildTask.succeed
+
+                Err e ->
+                    BuildTask.fail (FatalError.fromString e)
     in
-    (case Path.extension path of
+    (case Path.fileExtension path of
         Just "webp" ->
             doImage ()
 
@@ -520,7 +631,7 @@ processFile config total index ( path, copyFile ) =
             BuildTask.succeed Nothing
 
         Just "md" ->
-            case Path.filename path of
+            case Path.toString (Path.filename path) of
                 "attribution.md" ->
                     BuildTask.succeed Nothing
 

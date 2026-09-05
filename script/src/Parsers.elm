@@ -1,6 +1,8 @@
 module Parsers exposing (Affinity, Class, Companion, Complication, Content(..), DLC, DLCItem(..), Evil(..), Faction, GameMode, Magic, MagicAffinity(..), Perk, Quest, Race, Relic, Score(..), combineDLCs, parseDLC)
 
 import Ansi.Color
+import Bitwise
+import Bytes.Decode
 import Dict exposing (Dict)
 import Dict.Extra
 import Generate.Enum exposing (Argument(..))
@@ -12,10 +14,11 @@ import Maybe.Extra
 import Parser exposing ((|.), (|=), Parser, andThen, backtrackable, getChompedString, int, keyword, map, oneOf, sequence, spaces, succeed, symbol)
 import Parser.Error exposing (DeadEnd)
 import Parser.Workaround exposing (chompUntilAfter, chompUntilEndOrAfter)
-import Path exposing (Path)
+import Path.Posix as Path exposing (Path)
 import Regex exposing (Regex)
 import ResultME exposing (ResultME)
 import Set exposing (Set)
+import XBytes
 
 
 type alias DLC =
@@ -71,7 +74,7 @@ combineDLCs dlcList =
             []
 
 
-parseDLC : { path : Path, content : String } -> Result String DLC
+parseDLC : { path : Path base Path.File, content : String } -> Result String DLC
 parseDLC { path, content } =
     case Parser.run dlc content of
         Ok parsed ->
@@ -916,11 +919,30 @@ colorParser raw =
             else
                 raw
     in
-    String.toLower cut
-        |> Hex.fromString
-        |> Result.mapError (\e -> cut ++ " is not a valid color: " ++ e)
-        |> ResultME.fromResult
-        |> Result.map Color
+    case Hex.toBytes (String.toLower cut) of
+        Nothing ->
+            ResultME.error (cut ++ " is not a valid color")
+
+        Just bytes ->
+            case
+                Bytes.Decode.decode
+                    (Bytes.Decode.map3
+                        (\r g b ->
+                            Bitwise.shiftLeftBy 16 r
+                                + Bitwise.shiftLeftBy 8 g
+                                + b
+                        )
+                        Bytes.Decode.unsignedInt8
+                        Bytes.Decode.unsignedInt8
+                        Bytes.Decode.unsignedInt8
+                    )
+                    bytes
+            of
+                Nothing ->
+                    ResultME.error (cut ++ " is not a valid color, failed to decode")
+
+                Just int ->
+                    Ok (Color int)
 
 
 intParser : String -> ResultME String Int
